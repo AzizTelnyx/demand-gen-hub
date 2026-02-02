@@ -4,10 +4,11 @@ import { cookies } from "next/headers";
 export async function POST(request: NextRequest) {
   const { password } = await request.json();
   
-  // Simple shared password auth
-  const validPassword = process.env.APP_PASSWORD || "telnyx-dg-2026";
+  // Simple shared password auth - trim any whitespace
+  const validPassword = (process.env.APP_PASSWORD || "telnyx-dg-2026").trim();
+  const inputPassword = (password || "").trim();
   
-  if (password === validPassword) {
+  if (inputPassword === validPassword) {
     // Set a simple session cookie
     const cookieStore = await cookies();
     cookieStore.set("dg-hub-session", "authenticated", {

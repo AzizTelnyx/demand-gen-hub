@@ -60,7 +60,6 @@ export default function CampaignsDashboard() {
   const [platformFilter, setPlatformFilter] = useState<string>("all");
   const [funnelFilter, setFunnelFilter] = useState<string>("all");
   const [statusFilter, setStatusFilter] = useState<string>("live"); // Default to live
-  const [dateRange, setDateRange] = useState<string>("all");
   
   // Sorting
   const [sortField, setSortField] = useState<SortField>("spend");
@@ -105,40 +104,6 @@ export default function CampaignsDashboard() {
     });
   }, [campaigns]);
 
-  // Date range helper
-  const isInDateRange = (campaign: EnrichedCampaign): boolean => {
-    if (dateRange === "all") return true;
-    
-    const now = new Date();
-    const startDate = campaign.startDate ? new Date(campaign.startDate) : null;
-    const endDate = campaign.endDate ? new Date(campaign.endDate) : null;
-    
-    switch (dateRange) {
-      case "active":
-        // Currently running (started and not ended)
-        return (!startDate || startDate <= now) && (!endDate || endDate >= now);
-      case "last30":
-        // Started in last 30 days
-        const thirtyDaysAgo = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
-        return startDate ? startDate >= thirtyDaysAgo : false;
-      case "last90":
-        // Started in last 90 days
-        const ninetyDaysAgo = new Date(now.getTime() - 90 * 24 * 60 * 60 * 1000);
-        return startDate ? startDate >= ninetyDaysAgo : false;
-      case "thisMonth":
-        // Started this month
-        const monthStart = new Date(now.getFullYear(), now.getMonth(), 1);
-        return startDate ? startDate >= monthStart : false;
-      case "lastMonth":
-        // Started last month
-        const lastMonthStart = new Date(now.getFullYear(), now.getMonth() - 1, 1);
-        const lastMonthEnd = new Date(now.getFullYear(), now.getMonth(), 0);
-        return startDate ? startDate >= lastMonthStart && startDate <= lastMonthEnd : false;
-      default:
-        return true;
-    }
-  };
-
   // Filter and sort campaigns
   const filteredCampaigns = useMemo(() => {
     let result = enrichedCampaigns.filter(c => {
@@ -155,9 +120,6 @@ export default function CampaignsDashboard() {
       if (statusFilter === "live" && !["live", "active", "enabled"].includes(c.status)) return false;
       if (statusFilter === "paused" && c.status !== "paused") return false;
       if (statusFilter === "ended" && !["ended", "removed"].includes(c.status)) return false;
-      
-      // Date range
-      if (!isInDateRange(c)) return false;
       
       return true;
     });
@@ -182,7 +144,7 @@ export default function CampaignsDashboard() {
     });
 
     return result;
-  }, [enrichedCampaigns, searchQuery, platformFilter, funnelFilter, statusFilter, dateRange, sortField, sortDirection]);
+  }, [enrichedCampaigns, searchQuery, platformFilter, funnelFilter, statusFilter, sortField, sortDirection]);
 
   // Stats for filtered campaigns
   const stats = useMemo(() => {
@@ -344,19 +306,13 @@ export default function CampaignsDashboard() {
           <option value="BOFU">🟢 BOFU</option>
         </select>
 
-        {/* Date Range */}
-        <select
-          value={dateRange}
-          onChange={(e) => setDateRange(e.target.value)}
-          className="border border-gray-200 rounded-lg px-3 py-2 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-indigo-500"
-        >
-          <option value="all">All Time</option>
-          <option value="active">Currently Active</option>
-          <option value="thisMonth">This Month</option>
-          <option value="lastMonth">Last Month</option>
-          <option value="last30">Last 30 Days</option>
-          <option value="last90">Last 90 Days</option>
-        </select>
+        <div className="h-6 w-px bg-gray-200" />
+
+        {/* Data Period Indicator */}
+        <div className="flex items-center gap-2 text-sm text-gray-500">
+          <span className="inline-block w-2 h-2 rounded-full bg-green-400"></span>
+          <span>Last 30 days</span>
+        </div>
       </div>
 
       {/* Campaign List */}

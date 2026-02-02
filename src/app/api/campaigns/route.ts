@@ -19,15 +19,17 @@ export async function GET(request: NextRequest) {
     // Get sync states
     const syncStates = await prisma.syncState.findMany();
 
+    const syncStatesMap: Record<string, { lastSyncedAt: Date | null; status: string }> = {};
+    for (const s of syncStates) {
+      syncStatesMap[s.platform] = {
+        lastSyncedAt: s.lastSyncedAt,
+        status: s.status,
+      };
+    }
+
     return NextResponse.json({
       campaigns,
-      syncStates: syncStates.reduce((acc, s) => {
-        acc[s.platform] = {
-          lastSyncedAt: s.lastSyncedAt,
-          status: s.status,
-        };
-        return acc;
-      }, {} as Record<string, { lastSyncedAt: Date | null; status: string }>),
+      syncStates: syncStatesMap,
     });
   } catch (error) {
     console.error("Error fetching campaigns:", error);

@@ -31,23 +31,22 @@ interface SyncState {
   status: string;
 }
 
-type SortField = "name" | "spend" | "budget" | "pacing" | "ctr" | "clicks" | "impressions";
+type SortField = "name" | "spend" | "pacing" | "ctr" | "clicks";
 type SortDirection = "asc" | "desc";
 
-const statusColors: Record<string, string> = {
-  live: "bg-green-100 text-green-800",
-  active: "bg-green-100 text-green-800",
-  enabled: "bg-green-100 text-green-800",
-  paused: "bg-yellow-100 text-yellow-800",
-  ended: "bg-gray-100 text-gray-800",
-  removed: "bg-red-100 text-red-800",
-  draft: "bg-blue-100 text-blue-800",
+const statusConfig: Record<string, { label: string; color: string }> = {
+  enabled: { label: "Live", color: "bg-green-500" },
+  active: { label: "Live", color: "bg-green-500" },
+  live: { label: "Live", color: "bg-green-500" },
+  paused: { label: "Paused", color: "bg-yellow-500" },
+  ended: { label: "Ended", color: "bg-gray-400" },
+  removed: { label: "Removed", color: "bg-red-400" },
 };
 
-const platformConfig: Record<string, { icon: string; name: string; color: string }> = {
-  google_ads: { icon: "🔍", name: "Google Ads", color: "text-blue-600" },
-  stackadapt: { icon: "📺", name: "StackAdapt", color: "text-purple-600" },
-  linkedin: { icon: "💼", name: "LinkedIn", color: "text-blue-800" },
+const platformConfig: Record<string, { icon: string; name: string }> = {
+  google_ads: { icon: "🔍", name: "Google Ads" },
+  stackadapt: { icon: "📺", name: "StackAdapt" },
+  linkedin: { icon: "💼", name: "LinkedIn" },
 };
 
 export default function CampaignsDashboard() {
@@ -57,15 +56,18 @@ export default function CampaignsDashboard() {
   const [syncing, setSyncing] = useState(false);
   
   // Filters
-  const [statusFilter, setStatusFilter] = useState<string>("all");
+  const [searchQuery, setSearchQuery] = useState("");
   const [platformFilter, setPlatformFilter] = useState<string>("all");
   const [funnelFilter, setFunnelFilter] = useState<string>("all");
-  const [productFilter, setProductFilter] = useState<string>("all");
-  const [searchQuery, setSearchQuery] = useState<string>("");
+  const [statusFilter, setStatusFilter] = useState<string>("live"); // Default to live
+  const [dateRange, setDateRange] = useState<string>("all");
   
   // Sorting
   const [sortField, setSortField] = useState<SortField>("spend");
   const [sortDirection, setSortDirection] = useState<SortDirection>("desc");
+
+  // Expanded rows
+  const [expandedId, setExpandedId] = useState<string | null>(null);
 
   const fetchCampaigns = async () => {
     try {
@@ -103,23 +105,60 @@ export default function CampaignsDashboard() {
     });
   }, [campaigns]);
 
-  // Get unique values for filters
-  const products = useMemo(() => {
-    const set = new Set<string>();
-    enrichedCampaigns.forEach(c => {
-      if (c.parsed.product) set.add(c.parsed.product);
-    });
-    return Array.from(set).sort();
-  }, [enrichedCampaigns]);
+  // Date range helper
+  const isInDateRange = (campaign: EnrichedCampaign): boolean => {
+    if (dateRange === "all") return true;
+    
+    const now = new Date();
+    const startDate = campaign.startDate ? new Date(campaign.startDate) : null;
+    const endDate = campaign.endDate ? new Date(campaign.endDate) : null;
+    
+    switch (dateRange) {
+      case "active":
+        // Currently running (started and not ended)
+        return (!startDate || startDate <= now) && (!endDate || endDate >= now);
+      case "last30":
+        // Started in last 30 days
+        const thirtyDaysAgo = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
+        return startDate ? startDate >= thirtyDaysAgo : false;
+      case "last90":
+        // Started in last 90 days
+        const ninetyDaysAgo = new Date(now.getTime() - 90 * 24 * 60 * 60 * 1000);
+        return startDate ? startDate >= ninetyDaysAgo : false;
+      case "thisMonth":
+        // Started this month
+        const monthStart = new Date(now.getFullYear(), now.getMonth(), 1);
+        return startDate ? startDate >= monthStart : false;
+      case "lastMonth":
+        // Started last month
+        const lastMonthStart = new Date(now.getFullYear(), now.getMonth() - 1, 1);
+        const lastMonthEnd = new Date(now.getFullYear(), now.getMonth(), 0);
+        return startDate ? startDate >= lastMonthStart && startDate <= lastMonthEnd : false;
+      default:
+        return true;
+    }
+  };
 
   // Filter and sort campaigns
   const filteredCampaigns = useMemo(() => {
     let result = enrichedCampaigns.filter(c => {
-      if (statusFilter !== "all" && c.status !== statusFilter) return false;
-      if (platformFilter !== "all" && c.platform !== platformFilter) return false;
-      if (funnelFilter !== "all" && c.parsed.funnelStage !== funnelFilter) return false;
-      if (productFilter !== "all" && c.parsed.product !== productFilter) return false;
+      // Search
       if (searchQuery && !c.name.toLowerCase().includes(searchQuery.toLowerCase())) return false;
+      
+      // Platform
+      if (platformFilter !== "all" && c.platform !== platformFilter) return false;
+      
+      // Funnel
+      if (funnelFilter !== "all" && c.parsed.funnelStage !== funnelFilter) return false;
+      
+      // Status
+      if (statusFilter === "live" && !["live", "active", "enabled"].includes(c.status)) return false;
+      if (statusFilter === "paused" && c.status !== "paused") return false;
+      if (statusFilter === "ended" && !["ended", "removed"].includes(c.status)) return false;
+      
+      // Date range
+      if (!isInDateRange(c)) return false;
+      
       return true;
     });
 
@@ -131,34 +170,27 @@ export default function CampaignsDashboard() {
       switch (sortField) {
         case "name": aVal = a.name; bVal = b.name; break;
         case "spend": aVal = a.spend || 0; bVal = b.spend || 0; break;
-        case "budget": aVal = a.budget || 0; bVal = b.budget || 0; break;
         case "pacing": aVal = a.pacing; bVal = b.pacing; break;
         case "ctr": aVal = a.ctr; bVal = b.ctr; break;
         case "clicks": aVal = a.clicks || 0; bVal = b.clicks || 0; break;
-        case "impressions": aVal = a.impressions || 0; bVal = b.impressions || 0; break;
       }
 
       if (typeof aVal === "string") {
-        return sortDirection === "asc" 
-          ? aVal.localeCompare(bVal as string)
-          : (bVal as string).localeCompare(aVal);
+        return sortDirection === "asc" ? aVal.localeCompare(bVal as string) : (bVal as string).localeCompare(aVal);
       }
       return sortDirection === "asc" ? aVal - (bVal as number) : (bVal as number) - aVal;
     });
 
     return result;
-  }, [enrichedCampaigns, statusFilter, platformFilter, funnelFilter, productFilter, searchQuery, sortField, sortDirection]);
+  }, [enrichedCampaigns, searchQuery, platformFilter, funnelFilter, statusFilter, dateRange, sortField, sortDirection]);
 
-  // Stats
+  // Stats for filtered campaigns
   const stats = useMemo(() => {
-    const live = filteredCampaigns.filter(c => ["live", "active", "enabled"].includes(c.status));
     return {
-      total: filteredCampaigns.length,
-      live: live.length,
-      totalBudget: filteredCampaigns.reduce((acc, c) => acc + (c.budget || 0), 0),
-      totalSpend: filteredCampaigns.reduce((acc, c) => acc + (c.spend || 0), 0),
-      totalClicks: filteredCampaigns.reduce((acc, c) => acc + (c.clicks || 0), 0),
-      totalImpressions: filteredCampaigns.reduce((acc, c) => acc + (c.impressions || 0), 0),
+      count: filteredCampaigns.length,
+      spend: filteredCampaigns.reduce((acc, c) => acc + (c.spend || 0), 0),
+      clicks: filteredCampaigns.reduce((acc, c) => acc + (c.clicks || 0), 0),
+      impressions: filteredCampaigns.reduce((acc, c) => acc + (c.impressions || 0), 0),
     };
   }, [filteredCampaigns]);
 
@@ -185,262 +217,274 @@ export default function CampaignsDashboard() {
     }
   };
 
-  const SortIcon = ({ field }: { field: SortField }) => {
-    if (sortField !== field) return <span className="text-gray-300">↕</span>;
-    return <span>{sortDirection === "asc" ? "↑" : "↓"}</span>;
+  const formatNumber = (n: number) => {
+    if (n >= 1000000) return `${(n / 1000000).toFixed(1)}M`;
+    if (n >= 1000) return `${(n / 1000).toFixed(1)}K`;
+    return n.toLocaleString();
+  };
+
+  const formatCurrency = (n: number) => {
+    if (n >= 1000) return `$${(n / 1000).toFixed(1)}K`;
+    return `$${n.toFixed(0)}`;
   };
 
   const formatLastSync = (dateStr: string | null) => {
     if (!dateStr) return "Never";
-    const date = new Date(dateStr);
-    const now = new Date();
-    const diffMs = now.getTime() - date.getTime();
-    const diffMins = Math.floor(diffMs / 60000);
+    const diffMins = Math.floor((Date.now() - new Date(dateStr).getTime()) / 60000);
     if (diffMins < 1) return "Just now";
     if (diffMins < 60) return `${diffMins}m ago`;
-    const diffHours = Math.floor(diffMins / 60);
-    if (diffHours < 24) return `${diffHours}h ago`;
-    return date.toLocaleDateString();
+    return `${Math.floor(diffMins / 60)}h ago`;
   };
 
   if (loading) {
     return (
       <div className="flex items-center justify-center h-64">
-        <div className="text-gray-500">Loading campaigns...</div>
+        <div className="animate-pulse text-gray-400">Loading campaigns...</div>
       </div>
     );
   }
 
   return (
-    <div>
-      {/* Stats Cards */}
-      <div className="grid grid-cols-6 gap-4 mb-6">
-        <div className="bg-white rounded-lg shadow p-4">
-          <p className="text-gray-500 text-sm">Campaigns</p>
-          <p className="text-2xl font-bold">{stats.total}</p>
-        </div>
-        <div className="bg-white rounded-lg shadow p-4">
-          <p className="text-gray-500 text-sm">Live</p>
-          <p className="text-2xl font-bold text-green-600">{stats.live}</p>
-        </div>
-        <div className="bg-white rounded-lg shadow p-4">
-          <p className="text-gray-500 text-sm">Budget</p>
-          <p className="text-2xl font-bold">${stats.totalBudget.toLocaleString(undefined, { maximumFractionDigits: 0 })}</p>
-        </div>
-        <div className="bg-white rounded-lg shadow p-4">
-          <p className="text-gray-500 text-sm">Spend</p>
-          <p className="text-2xl font-bold">${stats.totalSpend.toLocaleString(undefined, { maximumFractionDigits: 0 })}</p>
-        </div>
-        <div className="bg-white rounded-lg shadow p-4">
-          <p className="text-gray-500 text-sm">Clicks</p>
-          <p className="text-2xl font-bold">{stats.totalClicks.toLocaleString()}</p>
-        </div>
-        <div className="bg-white rounded-lg shadow p-4">
-          <p className="text-gray-500 text-sm">Impressions</p>
-          <p className="text-2xl font-bold">{(stats.totalImpressions / 1000).toFixed(1)}K</p>
-        </div>
-      </div>
-
-      {/* Sync Status */}
-      <div className="bg-white rounded-lg shadow p-4 mb-4">
-        <div className="flex items-center justify-between">
-          <div className="flex gap-6">
-            {Object.entries(syncStates).map(([platform, state]) => (
-              <div key={platform} className="flex items-center gap-2 text-sm">
-                <span>{platformConfig[platform]?.icon}</span>
-                <span className={platformConfig[platform]?.color}>{platformConfig[platform]?.name}:</span>
-                <span className="text-gray-500">{formatLastSync(state.lastSyncedAt)}</span>
-                {state.status === "error" && <span className="text-red-500 text-xs">⚠️</span>}
-              </div>
-            ))}
+    <div className="space-y-4">
+      {/* Header with stats */}
+      <div className="flex items-center justify-between">
+        <div className="flex items-center gap-6">
+          <div>
+            <span className="text-3xl font-bold">{stats.count}</span>
+            <span className="text-gray-500 ml-2">campaigns</span>
           </div>
+          <div className="h-8 w-px bg-gray-200" />
+          <div>
+            <span className="text-2xl font-semibold">{formatCurrency(stats.spend)}</span>
+            <span className="text-gray-500 ml-2">spend</span>
+          </div>
+          <div className="h-8 w-px bg-gray-200" />
+          <div>
+            <span className="text-2xl font-semibold">{formatNumber(stats.clicks)}</span>
+            <span className="text-gray-500 ml-2">clicks</span>
+          </div>
+        </div>
+        
+        <div className="flex items-center gap-3">
+          {Object.entries(syncStates).map(([platform, state]) => (
+            <span key={platform} className="text-xs text-gray-400">
+              {platformConfig[platform]?.icon} {formatLastSync(state.lastSyncedAt)}
+            </span>
+          ))}
           <button
             onClick={handleSync}
             disabled={syncing}
-            className="bg-indigo-600 text-white px-4 py-2 rounded-lg text-sm hover:bg-indigo-700 transition disabled:opacity-50"
+            className="bg-indigo-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-indigo-700 disabled:opacity-50 transition"
           >
-            {syncing ? "⏳ Syncing..." : "🔄 Sync Now"}
+            {syncing ? "Syncing..." : "Sync"}
           </button>
         </div>
       </div>
 
-      {/* Filters */}
-      <div className="bg-white rounded-lg shadow p-4 mb-4">
-        <div className="flex flex-wrap gap-4 items-center">
-          {/* Search */}
-          <div className="flex-1 min-w-64">
-            <input
-              type="text"
-              placeholder="Search campaigns..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full border border-gray-300 rounded-lg px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
-            />
-          </div>
-
-          {/* Status */}
-          <select
-            value={statusFilter}
-            onChange={(e) => setStatusFilter(e.target.value)}
-            className="border border-gray-300 rounded-lg px-3 py-2 text-sm"
-          >
-            <option value="all">All Status</option>
-            <option value="enabled">Enabled</option>
-            <option value="paused">Paused</option>
-            <option value="removed">Removed</option>
-          </select>
-
-          {/* Platform */}
-          <select
-            value={platformFilter}
-            onChange={(e) => setPlatformFilter(e.target.value)}
-            className="border border-gray-300 rounded-lg px-3 py-2 text-sm"
-          >
-            <option value="all">All Platforms</option>
-            <option value="google_ads">🔍 Google Ads</option>
-            <option value="stackadapt">📺 StackAdapt</option>
-            <option value="linkedin">💼 LinkedIn</option>
-          </select>
-
-          {/* Funnel Stage */}
-          <select
-            value={funnelFilter}
-            onChange={(e) => setFunnelFilter(e.target.value)}
-            className="border border-gray-300 rounded-lg px-3 py-2 text-sm"
-          >
-            <option value="all">All Funnel</option>
-            <option value="TOFU">🔵 TOFU</option>
-            <option value="MOFU">🟣 MOFU</option>
-            <option value="BOFU">🟢 BOFU</option>
-          </select>
-
-          {/* Product */}
-          <select
-            value={productFilter}
-            onChange={(e) => setProductFilter(e.target.value)}
-            className="border border-gray-300 rounded-lg px-3 py-2 text-sm"
-          >
-            <option value="all">All Products</option>
-            {products.map(p => (
-              <option key={p} value={p}>{p}</option>
-            ))}
-          </select>
+      {/* Filters - Single Row */}
+      <div className="flex items-center gap-3 bg-white rounded-xl p-3 shadow-sm border border-gray-100">
+        {/* Search */}
+        <div className="relative flex-1 max-w-xs">
+          <input
+            type="text"
+            placeholder="Search campaigns..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="w-full pl-9 pr-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+          />
+          <span className="absolute left-3 top-2.5 text-gray-400">🔎</span>
         </div>
+
+        <div className="h-6 w-px bg-gray-200" />
+
+        {/* Status Toggle */}
+        <div className="flex bg-gray-100 rounded-lg p-0.5">
+          {[
+            { value: "live", label: "Live" },
+            { value: "paused", label: "Paused" },
+            { value: "ended", label: "Ended" },
+            { value: "all", label: "All" },
+          ].map(opt => (
+            <button
+              key={opt.value}
+              onClick={() => setStatusFilter(opt.value)}
+              className={`px-3 py-1.5 text-sm rounded-md transition ${
+                statusFilter === opt.value 
+                  ? "bg-white shadow text-gray-900 font-medium" 
+                  : "text-gray-500 hover:text-gray-700"
+              }`}
+            >
+              {opt.label}
+            </button>
+          ))}
+        </div>
+
+        <div className="h-6 w-px bg-gray-200" />
+
+        {/* Platform */}
+        <select
+          value={platformFilter}
+          onChange={(e) => setPlatformFilter(e.target.value)}
+          className="border border-gray-200 rounded-lg px-3 py-2 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-indigo-500"
+        >
+          <option value="all">All Platforms</option>
+          <option value="google_ads">🔍 Google Ads</option>
+          <option value="stackadapt">📺 StackAdapt</option>
+        </select>
+
+        {/* Funnel */}
+        <select
+          value={funnelFilter}
+          onChange={(e) => setFunnelFilter(e.target.value)}
+          className="border border-gray-200 rounded-lg px-3 py-2 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-indigo-500"
+        >
+          <option value="all">All Funnel</option>
+          <option value="TOFU">🔵 TOFU</option>
+          <option value="MOFU">🟣 MOFU</option>
+          <option value="BOFU">🟢 BOFU</option>
+        </select>
+
+        {/* Date Range */}
+        <select
+          value={dateRange}
+          onChange={(e) => setDateRange(e.target.value)}
+          className="border border-gray-200 rounded-lg px-3 py-2 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-indigo-500"
+        >
+          <option value="all">All Time</option>
+          <option value="active">Currently Active</option>
+          <option value="thisMonth">This Month</option>
+          <option value="lastMonth">Last Month</option>
+          <option value="last30">Last 30 Days</option>
+          <option value="last90">Last 90 Days</option>
+        </select>
       </div>
 
-      {/* Campaigns Table */}
-      <div className="bg-white rounded-lg shadow overflow-hidden">
+      {/* Campaign List */}
+      <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
         {filteredCampaigns.length === 0 ? (
-          <div className="p-8 text-center text-gray-500">
-            <p className="mb-2">No campaigns found</p>
-            <p className="text-sm">Try adjusting your filters or sync data from your ad platforms</p>
+          <div className="p-12 text-center text-gray-400">
+            <p className="text-lg">No campaigns match your filters</p>
+            <p className="text-sm mt-1">Try adjusting your search or filters</p>
           </div>
         ) : (
-          <div className="overflow-x-auto">
-            <table className="w-full">
-              <thead className="bg-gray-50 border-b">
-                <tr>
-                  <th className="text-left px-4 py-3 text-sm font-medium text-gray-500">
-                    <button onClick={() => handleSort("name")} className="flex items-center gap-1 hover:text-gray-700">
-                      Campaign <SortIcon field="name" />
-                    </button>
-                  </th>
-                  <th className="text-left px-4 py-3 text-sm font-medium text-gray-500">Platform</th>
-                  <th className="text-left px-4 py-3 text-sm font-medium text-gray-500">Status</th>
-                  <th className="text-left px-4 py-3 text-sm font-medium text-gray-500">Funnel</th>
-                  <th className="text-right px-4 py-3 text-sm font-medium text-gray-500">
-                    <button onClick={() => handleSort("budget")} className="flex items-center gap-1 hover:text-gray-700 ml-auto">
-                      Budget <SortIcon field="budget" />
-                    </button>
-                  </th>
-                  <th className="text-right px-4 py-3 text-sm font-medium text-gray-500">
-                    <button onClick={() => handleSort("spend")} className="flex items-center gap-1 hover:text-gray-700 ml-auto">
-                      Spend <SortIcon field="spend" />
-                    </button>
-                  </th>
-                  <th className="text-right px-4 py-3 text-sm font-medium text-gray-500">
-                    <button onClick={() => handleSort("pacing")} className="flex items-center gap-1 hover:text-gray-700 ml-auto">
-                      Pacing <SortIcon field="pacing" />
-                    </button>
-                  </th>
-                  <th className="text-right px-4 py-3 text-sm font-medium text-gray-500">
-                    <button onClick={() => handleSort("clicks")} className="flex items-center gap-1 hover:text-gray-700 ml-auto">
-                      Clicks <SortIcon field="clicks" />
-                    </button>
-                  </th>
-                  <th className="text-right px-4 py-3 text-sm font-medium text-gray-500">
-                    <button onClick={() => handleSort("ctr")} className="flex items-center gap-1 hover:text-gray-700 ml-auto">
-                      CTR <SortIcon field="ctr" />
-                    </button>
-                  </th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-gray-100">
-                {filteredCampaigns.map((campaign) => {
-                  const pacingColor = campaign.pacing > 90 ? "text-red-600" : campaign.pacing > 70 ? "text-yellow-600" : "text-green-600";
-                  const platform = platformConfig[campaign.platform] || { icon: "📊", name: campaign.platform, color: "text-gray-600" };
+          <table className="w-full">
+            <thead>
+              <tr className="border-b border-gray-100">
+                <th className="text-left px-4 py-3 text-xs font-medium text-gray-400 uppercase tracking-wider">
+                  Campaign
+                </th>
+                <th className="text-center px-4 py-3 text-xs font-medium text-gray-400 uppercase tracking-wider w-20">
+                  Status
+                </th>
+                <th 
+                  className="text-right px-4 py-3 text-xs font-medium text-gray-400 uppercase tracking-wider cursor-pointer hover:text-gray-600 w-28"
+                  onClick={() => handleSort("spend")}
+                >
+                  Spend {sortField === "spend" && (sortDirection === "asc" ? "↑" : "↓")}
+                </th>
+                <th 
+                  className="text-right px-4 py-3 text-xs font-medium text-gray-400 uppercase tracking-wider cursor-pointer hover:text-gray-600 w-24"
+                  onClick={() => handleSort("pacing")}
+                >
+                  Pacing {sortField === "pacing" && (sortDirection === "asc" ? "↑" : "↓")}
+                </th>
+                <th 
+                  className="text-right px-4 py-3 text-xs font-medium text-gray-400 uppercase tracking-wider cursor-pointer hover:text-gray-600 w-24"
+                  onClick={() => handleSort("clicks")}
+                >
+                  Clicks {sortField === "clicks" && (sortDirection === "asc" ? "↑" : "↓")}
+                </th>
+                <th 
+                  className="text-right px-4 py-3 text-xs font-medium text-gray-400 uppercase tracking-wider cursor-pointer hover:text-gray-600 w-20"
+                  onClick={() => handleSort("ctr")}
+                >
+                  CTR {sortField === "ctr" && (sortDirection === "asc" ? "↑" : "↓")}
+                </th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-gray-50">
+              {filteredCampaigns.map((campaign) => {
+                const platform = platformConfig[campaign.platform] || { icon: "📊", name: campaign.platform };
+                const status = statusConfig[campaign.status] || { label: campaign.status, color: "bg-gray-400" };
+                const isExpanded = expandedId === campaign.id;
 
-                  return (
-                    <tr key={campaign.id} className="hover:bg-gray-50">
-                      <td className="px-4 py-3">
-                        <p className="font-medium text-gray-900 text-sm">{campaign.name}</p>
-                        <div className="flex gap-2 mt-1">
-                          {campaign.parsed.product && (
-                            <span className="text-xs text-gray-500">{campaign.parsed.product}</span>
-                          )}
-                          {campaign.parsed.region && (
-                            <span className="text-xs text-gray-400">• {campaign.parsed.region}</span>
-                          )}
-                          {campaign.parsed.isCompetitor && (
-                            <span className="text-xs text-orange-600">• vs {campaign.parsed.competitorName}</span>
-                          )}
+                return (
+                  <tr 
+                    key={campaign.id} 
+                    className="hover:bg-gray-50 cursor-pointer transition"
+                    onClick={() => setExpandedId(isExpanded ? null : campaign.id)}
+                  >
+                    <td className="px-4 py-3">
+                      <div className="flex items-start gap-3">
+                        <span className="text-lg mt-0.5" title={platform.name}>{platform.icon}</span>
+                        <div className="min-w-0">
+                          <p className="font-medium text-gray-900 text-sm truncate">{campaign.name}</p>
+                          <div className="flex items-center gap-2 mt-1">
+                            {campaign.parsed.funnelStage && (
+                              <span className={`px-1.5 py-0.5 rounded text-xs font-medium ${getFunnelStageColor(campaign.parsed.funnelStage)}`}>
+                                {campaign.parsed.funnelStage}
+                              </span>
+                            )}
+                            {campaign.parsed.product && (
+                              <span className="text-xs text-gray-400">{campaign.parsed.product}</span>
+                            )}
+                            {campaign.parsed.isCompetitor && (
+                              <span className="text-xs text-orange-500">vs {campaign.parsed.competitorName}</span>
+                            )}
+                            {campaign.channel && (
+                              <span className="text-xs text-gray-300">• {campaign.channel}</span>
+                            )}
+                          </div>
                         </div>
-                      </td>
-                      <td className="px-4 py-3">
-                        <span className={`text-sm ${platform.color}`} title={platform.name}>
-                          {platform.icon} {platform.name}
+                      </div>
+                    </td>
+                    <td className="px-4 py-3 text-center">
+                      <span className={`inline-block w-2 h-2 rounded-full ${status.color}`} title={status.label} />
+                    </td>
+                    <td className="px-4 py-3 text-right">
+                      <span className="font-medium text-gray-900">
+                        {campaign.spend ? formatCurrency(campaign.spend) : "—"}
+                      </span>
+                      {campaign.budget && (
+                        <span className="text-xs text-gray-400 ml-1">
+                          / {formatCurrency(campaign.budget)}
                         </span>
-                      </td>
-                      <td className="px-4 py-3">
-                        <span className={`px-2 py-1 rounded-full text-xs font-medium ${statusColors[campaign.status] || "bg-gray-100 text-gray-800"}`}>
-                          {campaign.status}
-                        </span>
-                      </td>
-                      <td className="px-4 py-3">
-                        {campaign.parsed.funnelStage ? (
-                          <span className={`px-2 py-1 rounded-full text-xs font-medium ${getFunnelStageColor(campaign.parsed.funnelStage)}`}>
-                            {campaign.parsed.funnelStage}
-                          </span>
-                        ) : (
-                          <span className="text-gray-400 text-xs">—</span>
-                        )}
-                      </td>
-                      <td className="px-4 py-3 text-sm text-gray-900 text-right">
-                        {campaign.budget ? `$${campaign.budget.toLocaleString(undefined, { maximumFractionDigits: 0 })}` : "—"}
-                      </td>
-                      <td className="px-4 py-3 text-sm text-gray-900 text-right font-medium">
-                        {campaign.spend ? `$${campaign.spend.toLocaleString(undefined, { maximumFractionDigits: 0 })}` : "—"}
-                      </td>
-                      <td className={`px-4 py-3 text-sm font-medium text-right ${pacingColor}`}>
-                        {campaign.budget ? `${campaign.pacing.toFixed(0)}%` : "—"}
-                      </td>
-                      <td className="px-4 py-3 text-sm text-gray-900 text-right">
-                        {(campaign.clicks || 0).toLocaleString()}
-                      </td>
-                      <td className="px-4 py-3 text-sm text-gray-900 text-right">
-                        {campaign.ctr > 0 ? `${campaign.ctr.toFixed(2)}%` : "—"}
-                      </td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
-          </div>
+                      )}
+                    </td>
+                    <td className="px-4 py-3 text-right">
+                      {campaign.budget ? (
+                        <div className="flex items-center justify-end gap-2">
+                          <div className="w-16 h-1.5 bg-gray-100 rounded-full overflow-hidden">
+                            <div 
+                              className={`h-full rounded-full ${
+                                campaign.pacing > 90 ? "bg-red-500" : 
+                                campaign.pacing > 70 ? "bg-yellow-500" : "bg-green-500"
+                              }`}
+                              style={{ width: `${Math.min(campaign.pacing, 100)}%` }}
+                            />
+                          </div>
+                          <span className="text-xs text-gray-500 w-8">{campaign.pacing.toFixed(0)}%</span>
+                        </div>
+                      ) : (
+                        <span className="text-gray-300">—</span>
+                      )}
+                    </td>
+                    <td className="px-4 py-3 text-right font-medium text-gray-900">
+                      {formatNumber(campaign.clicks || 0)}
+                    </td>
+                    <td className="px-4 py-3 text-right text-gray-600">
+                      {campaign.ctr > 0 ? `${campaign.ctr.toFixed(2)}%` : "—"}
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
         )}
       </div>
 
-      {/* Results count */}
-      <div className="mt-4 text-sm text-gray-500 text-right">
+      {/* Footer */}
+      <div className="text-xs text-gray-400 text-right">
         Showing {filteredCampaigns.length} of {enrichedCampaigns.length} campaigns
       </div>
     </div>

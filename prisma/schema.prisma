@@ -1,0 +1,85 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  password  String
+  name      String?
+  role      String   @default("user")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Campaign {
+  id            String   @id @default(cuid())
+  name          String
+  platform      String   // google_ads | stackadapt | linkedin
+  platformId    String?  // ID in the source platform
+  status        String   // live | paused | ended | draft
+  funnelStage   String?  // tofu | mofu | bofu
+  region        String?
+  channel       String?  // search | display | native | video | dooh
+  budget        Float?
+  spend         Float?
+  impressions   Int?
+  clicks        Int?
+  conversions   Int?
+  startDate     DateTime?
+  endDate       DateTime?
+  lastSyncedAt  DateTime?
+  metadata      String?  // JSON string
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+model AdCopy {
+  id          String   @id @default(cuid())
+  campaignId  String?
+  name        String?
+  headlines   String?  // JSON string
+  descriptions String? // JSON string
+  status      String   @default("draft") // draft | review | approved | live
+  feedback    String?  // JSON string
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model ABMList {
+  id           String   @id @default(cuid())
+  name         String
+  description  String?
+  criteria     String?  // JSON string
+  accountCount Int      @default(0)
+  status       String   @default("draft") // draft | building | ready | active
+  accounts     String?  // JSON string
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model Activity {
+  id         String   @id @default(cuid())
+  timestamp  DateTime @default(now())
+  actor      String   // user | agent
+  actorId    String?  // User ID if human
+  action     String   // created | updated | reviewed | flagged | synced | etc.
+  entityType String   // campaign | abm_list | ad_copy
+  entityId   String?
+  entityName String?
+  details    String?  // JSON string
+}
+
+model SyncState {
+  id           String   @id @default(cuid())
+  platform     String   @unique // google_ads | stackadapt
+  lastSyncedAt DateTime?
+  status       String   @default("idle") // idle | running | error
+  error        String?
+  metadata     String?
+  updatedAt    DateTime @updatedAt
+}

@@ -154,36 +154,32 @@ def sync_stackadapt(supabase: Client):
         with open(creds_path) as f:
             creds = json.load(f)
         
-        # Get GraphQL token or REST API key
+        # Get GraphQL token
         graphql_config = creds.get("graphql", {})
-        api_token = graphql_config.get("token") or creds.get("rest_api_key")
+        api_token = graphql_config.get("token")
         if not api_token:
-            raise ValueError("StackAdapt API token not found")
+            raise ValueError("StackAdapt GraphQL token not found")
         
         headers = {
-            "X-Authorization": api_token,
+            "Authorization": f"Bearer {api_token}",
             "Content-Type": "application/json",
         }
         
-        # Query campaigns
+        # Query campaigns with correct schema
         query = """
         query {
-            campaigns(advertiserId: 93053, first: 100) {
+            campaigns(first: 100, filterBy: { advertiserIds: [93053], archived: false }) {
                 edges {
                     node {
                         id
                         name
-                        state
-                        budget
-                        startDate
-                        endDate
-                        pacing {
-                            spent
-                        }
-                        stats {
-                            impressions
-                            clicks
-                            conversions
+                        channelType
+                        isArchived
+                        isDraft
+                        currentFlight {
+                            startTime
+                            endTime
+                            impressionGoal
                         }
                     }
                 }
@@ -206,19 +202,33 @@ def sync_stackadapt(supabase: Client):
             node = edge["node"]
             campaign_id = str(node["id"])
             
+            # Skip drafts
+            if node.get("isDraft"):
+                continue
+            
+            # Map channel type
+            channel_type = node.get("channelType", "").lower()
+            channel = "display" if channel_type == "display" else \
+                      "native" if channel_type == "native" else \
+                      "video" if channel_type == "video" else \
+                      "dooh" if channel_type == "dooh" else channel_type
+            
+            # Get flight info
+            flight = node.get("currentFlight") or {}
+            
             campaign_data = {
                 "name": node["name"],
                 "platform": "stackadapt",
                 "platformId": campaign_id,
-                "status": node["state"].lower() if node["state"] else "unknown",
-                "budget": float(node["budget"]) if node.get("budget") else None,
-                "spend": float(node.get("pacing", {}).get("spent", 0) or 0),
-                "impressions": int(node.get("stats", {}).get("impressions", 0) or 0),
-                "clicks": int(node.get("stats", {}).get("clicks", 0) or 0),
-                "conversions": int(node.get("stats", {}).get("conversions", 0) or 0),
-                "startDate": node.get("startDate"),
-                "endDate": node.get("endDate"),
-                "channel": "display",
+                "status": "live" if not node.get("isArchived") else "ended",
+                "budget": None,  # Will need separate delivery query for spend data
+                "spend": None,
+                "impressions": None,
+                "clicks": None,
+                "conversions": None,
+                "startDate": flight.get("startTime"),
+                "endDate": flight.get("endTime"),
+                "channel": channel,
                 "lastSyncedAt": now_iso(),
                 "updatedAt": now_iso(),
             }

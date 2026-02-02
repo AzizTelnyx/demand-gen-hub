@@ -1,36 +1,89 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Demand Gen Hub
+
+Unified operations platform for Demand Generation at Telnyx.
+
+## Features
+
+- **Campaigns Dashboard** — View all campaigns across Google Ads, StackAdapt, LinkedIn
+- **Activity Log** — Track agent and user actions
+- **Chat Interface** — Talk to the DG agent for queries and workflows
+- **Campaign Builder** — Create campaigns via forms or chat (coming soon)
+- **Ad Review** — Review ad copy against brand guidelines (coming soon)
+- **ABM Lists** — Build and manage target account lists (coming soon)
+
+## Tech Stack
+
+- **Frontend:** Next.js 16, React, Tailwind CSS
+- **Database:** SQLite (dev) / Postgres (prod)
+- **ORM:** Prisma
+- **Auth:** Simple shared password
+- **Hosting:** Vercel
 
 ## Getting Started
 
-First, run the development server:
-
 ```bash
+# Install dependencies
+npm install
+
+# Set up database
+npx prisma generate
+npx prisma db push
+
+# Run development server
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Environment Variables
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Copy `.env.example` to `.env` and configure:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```
+DATABASE_URL="file:./dev.db"
+APP_PASSWORD="your-shared-password"
+```
 
-## Learn More
+## Deployment
 
-To learn more about Next.js, take a look at the following resources:
+Deploy to Vercel:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+vercel
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+For production, use Postgres:
 
-## Deploy on Vercel
+```
+DATABASE_URL="postgresql://..."
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Modules
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### Campaigns Dashboard
+- Unified view of all campaigns
+- Filter by platform, status, channel
+- Budget and spend tracking
+- Pacing alerts
+
+### Activity Log
+- All agent and user actions
+- Timestamps and details
+- Filter by actor type
+
+### Chat (WIP)
+- Natural language interface
+- Trigger workflows
+- Query campaign data
+
+## Agent Integration
+
+The hub connects to Clawdbot agents in `~/clawd/agents/`:
+- `ad-review` — Ad copy review
+- `ad-copy-agent` — Ad copy generation
+- `campaign-orchestrator` — Campaign building
+- `campaign-analysis-agent` — Performance analysis
+- `budget-pacing-agent` — Pacing monitoring
+- `abm-list-builder` — ABM list creation
+
+## License
+
+Internal use only — Telnyx Marketing

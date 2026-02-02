@@ -4,6 +4,8 @@ generator client {
 
 datasource db {
   provider = "postgresql"
+  url      = env("POSTGRES_PRISMA_URL")
+  directUrl = env("POSTGRES_URL_NON_POOLING")
 }
 
 model User {
@@ -19,12 +21,12 @@ model User {
 model Campaign {
   id            String   @id @default(cuid())
   name          String
-  platform      String   // google_ads | stackadapt | linkedin
-  platformId    String?  // ID in the source platform
-  status        String   // live | paused | ended | draft
-  funnelStage   String?  // tofu | mofu | bofu
+  platform      String
+  platformId    String?
+  status        String
+  funnelStage   String?
   region        String?
-  channel       String?  // search | display | native | video | dooh
+  channel       String?
   budget        Float?
   spend         Float?
   impressions   Int?
@@ -33,7 +35,7 @@ model Campaign {
   startDate     DateTime?
   endDate       DateTime?
   lastSyncedAt  DateTime?
-  metadata      String?  // JSON string
+  metadata      String?
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
 }
@@ -42,10 +44,10 @@ model AdCopy {
   id          String   @id @default(cuid())
   campaignId  String?
   name        String?
-  headlines   String?  // JSON string
-  descriptions String? // JSON string
-  status      String   @default("draft") // draft | review | approved | live
-  feedback    String?  // JSON string
+  headlines   String?
+  descriptions String?
+  status      String   @default("draft")
+  feedback    String?
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 }
@@ -54,10 +56,10 @@ model ABMList {
   id           String   @id @default(cuid())
   name         String
   description  String?
-  criteria     String?  // JSON string
+  criteria     String?
   accountCount Int      @default(0)
-  status       String   @default("draft") // draft | building | ready | active
-  accounts     String?  // JSON string
+  status       String   @default("draft")
+  accounts     String?
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
 }
@@ -65,20 +67,20 @@ model ABMList {
 model Activity {
   id         String   @id @default(cuid())
   timestamp  DateTime @default(now())
-  actor      String   // user | agent
-  actorId    String?  // User ID if human
-  action     String   // created | updated | reviewed | flagged | synced | etc.
-  entityType String   // campaign | abm_list | ad_copy
+  actor      String
+  actorId    String?
+  action     String
+  entityType String
   entityId   String?
   entityName String?
-  details    String?  // JSON string
+  details    String?
 }
 
 model SyncState {
   id           String   @id @default(cuid())
-  platform     String   @unique // google_ads | stackadapt
+  platform     String   @unique
   lastSyncedAt DateTime?
-  status       String   @default("idle") // idle | running | error
+  status       String   @default("idle")
   error        String?
   metadata     String?
   updatedAt    DateTime @updatedAt

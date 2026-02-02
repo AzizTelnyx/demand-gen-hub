@@ -8,7 +8,7 @@ import os
 import json
 import sys
 import uuid
-from datetime import datetime, timezone
+from datetime import datetime, timezone, timedelta
 from typing import Optional
 
 # Add parent path for imports
@@ -145,7 +145,7 @@ def sync_google_ads(supabase: Client):
             print(f"  Error updating sync state: {e2}")
 
 def sync_stackadapt(supabase: Client):
-    """Sync campaigns from StackAdapt."""
+    """Sync campaigns from StackAdapt with delivery metrics."""
     print("Syncing StackAdapt campaigns...")
     
     try:
@@ -165,8 +165,8 @@ def sync_stackadapt(supabase: Client):
             "Content-Type": "application/json",
         }
         
-        # Query campaigns with correct schema
-        query = """
+        # Step 1: Get campaign list
+        campaigns_query = """
         query {
             campaigns(first: 100, filterBy: { advertiserIds: [93053], archived: false }) {
                 edges {
@@ -179,7 +179,6 @@ def sync_stackadapt(supabase: Client):
                         currentFlight {
                             startTime
                             endTime
-                            impressionGoal
                         }
                     }
                 }
@@ -190,7 +189,7 @@ def sync_stackadapt(supabase: Client):
         response = requests.post(
             STACKADAPT_API_URL,
             headers=headers,
-            json={"query": query},
+            json={"query": campaigns_query},
             timeout=30
         )
         response.raise_for_status()
@@ -198,6 +197,59 @@ def sync_stackadapt(supabase: Client):
         
         campaigns = data.get("data", {}).get("campaigns", {}).get("edges", [])
         
+        # Step 2: Get delivery metrics for all campaigns
+        today = datetime.now(timezone.utc).strftime("%Y-%m-%d")
+        year_ago = (datetime.now(timezone.utc) - timedelta(days=365)).strftime("%Y-%m-%d")
+        
+        metrics_query = """
+        query {
+            campaignDelivery(
+                filterBy: { advertiserIds: [93053] }
+                date: { from: "%s", to: "%s" }
+                granularity: TOTAL
+                dataType: TABLE
+            ) {
+                ... on CampaignDeliveryOutcome {
+                    records {
+                        nodes {
+                            campaign {
+                                id
+                            }
+                            metrics {
+                                impressionsBigint
+                                clicksBigint
+                                cost
+                                ctr
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        """ % (year_ago, today)
+        
+        metrics_response = requests.post(
+            STACKADAPT_API_URL,
+            headers=headers,
+            json={"query": metrics_query},
+            timeout=60
+        )
+        metrics_response.raise_for_status()
+        metrics_data = metrics_response.json()
+        
+        # Build metrics lookup
+        metrics_by_id = {}
+        nodes = metrics_data.get("data", {}).get("campaignDelivery", {}).get("records", {}).get("nodes", [])
+        for node in nodes:
+            campaign_id = str(node["campaign"]["id"])
+            metrics_by_id[campaign_id] = {
+                "impressions": int(node["metrics"].get("impressionsBigint", 0) or 0),
+                "clicks": int(node["metrics"].get("clicksBigint", 0) or 0),
+                "spend": float(node["metrics"].get("cost", 0) or 0),
+                "ctr": float(node["metrics"].get("ctr", 0) or 0),
+            }
+        
+        synced_count = 0
         for edge in campaigns:
             node = edge["node"]
             campaign_id = str(node["id"])
@@ -216,16 +268,17 @@ def sync_stackadapt(supabase: Client):
             # Get flight info
             flight = node.get("currentFlight") or {}
             
+            # Get metrics
+            metrics = metrics_by_id.get(campaign_id, {})
+            
             campaign_data = {
                 "name": node["name"],
                 "platform": "stackadapt",
                 "platformId": campaign_id,
                 "status": "live" if not node.get("isArchived") else "ended",
-                "budget": None,  # Will need separate delivery query for spend data
-                "spend": None,
-                "impressions": None,
-                "clicks": None,
-                "conversions": None,
+                "spend": metrics.get("spend"),
+                "impressions": metrics.get("impressions"),
+                "clicks": metrics.get("clicks"),
                 "startDate": flight.get("startTime"),
                 "endDate": flight.get("endTime"),
                 "channel": channel,
@@ -242,6 +295,8 @@ def sync_stackadapt(supabase: Client):
                 campaign_data["id"] = f"sa_{campaign_id}"
                 campaign_data["createdAt"] = now_iso()
                 supabase.table("Campaign").insert(campaign_data).execute()
+            
+            synced_count += 1
         
         # Update sync state
         supabase.table("SyncState").upsert({
@@ -253,7 +308,7 @@ def sync_stackadapt(supabase: Client):
             "updatedAt": now_iso(),
         }, on_conflict="id").execute()
         
-        print(f"  Synced {len(campaigns)} StackAdapt campaigns")
+        print(f"  Synced {synced_count} StackAdapt campaigns with metrics")
         
         # Log activity
         supabase.table("Activity").insert({
@@ -262,12 +317,14 @@ def sync_stackadapt(supabase: Client):
             "action": "synced",
             "entityType": "campaigns",
             "entityName": "StackAdapt",
-            "details": json.dumps({"count": len(campaigns)}),
+            "details": json.dumps({"count": synced_count, "with_metrics": len(metrics_by_id)}),
             "timestamp": now_iso(),
         }).execute()
         
     except Exception as e:
         print(f"  Error syncing StackAdapt: {e}")
+        import traceback
+        traceback.print_exc()
         try:
             supabase.table("SyncState").upsert({
                 "id": "stackadapt",

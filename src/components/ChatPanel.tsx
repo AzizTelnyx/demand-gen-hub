@@ -48,17 +48,33 @@ export default function ChatPanel({ onClose }: ChatPanelProps) {
     setInput("");
     setLoading(true);
 
-    // TODO: Replace with actual API call to Clawdbot
-    setTimeout(() => {
+    try {
+      const res = await fetch("/api/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ message: input }),
+      });
+      
+      const data = await res.json();
+      
       const assistantMessage: Message = {
         id: (Date.now() + 1).toString(),
         role: "assistant",
-        content: "I received your message. The chat integration with the agent backend is coming soon. For now, this is a placeholder response.\n\nIn the full version, I'll be able to:\n• Query your campaigns in real-time\n• Trigger workflows\n• Answer questions about performance",
+        content: data.response || data.error || "Sorry, something went wrong.",
         timestamp: new Date(),
       };
       setMessages((prev) => [...prev, assistantMessage]);
+    } catch (error) {
+      const errorMessage: Message = {
+        id: (Date.now() + 1).toString(),
+        role: "assistant",
+        content: "Sorry, I couldn't process that. Please try again.",
+        timestamp: new Date(),
+      };
+      setMessages((prev) => [...prev, errorMessage]);
+    } finally {
       setLoading(false);
-    }, 1000);
+    }
   };
 
   const handleKeyPress = (e: React.KeyboardEvent) => {

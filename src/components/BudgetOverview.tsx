@@ -59,7 +59,6 @@ const channelLabels: Record<string, string> = {
 export default function BudgetOverview() {
   const [campaigns, setCampaigns] = useState<Campaign[]>([]);
   const [loading, setLoading] = useState(true);
-  const [statusFilter, setStatusFilter] = useState<"all" | "live">("live");
   const [expandedDimension, setExpandedDimension] = useState<Dimension | null>(null);
 
   useEffect(() => {
@@ -75,15 +74,15 @@ export default function BudgetOverview() {
       });
   }, []);
 
-  // Enrich campaigns with parsed data
+  // Enrich campaigns with parsed data (only live campaigns for budget planning)
   const enrichedCampaigns: EnrichedCampaign[] = useMemo(() => {
     return campaigns
-      .filter(c => statusFilter === "all" || ["live", "active", "enabled"].includes(c.status))
+      .filter(c => ["live", "active", "enabled"].includes(c.status))
       .map(c => ({
         ...c,
         parsed: parseCampaignName(c.name),
       }));
-  }, [campaigns, statusFilter]);
+  }, [campaigns]);
 
   // Calculate totals
   const totals = useMemo(() => {
@@ -198,28 +197,14 @@ export default function BudgetOverview() {
 
   return (
     <div className="space-y-6">
-      {/* Status Toggle */}
+      {/* Header */}
       <div className="flex items-center justify-between">
-        <div className="flex bg-gray-100 rounded-lg p-0.5">
-          {[
-            { value: "live", label: "Live Campaigns" },
-            { value: "all", label: "All Campaigns" },
-          ].map(opt => (
-            <button
-              key={opt.value}
-              onClick={() => setStatusFilter(opt.value as "live" | "all")}
-              className={`px-4 py-2 text-sm rounded-md transition ${
-                statusFilter === opt.value
-                  ? "bg-white shadow text-gray-900 font-medium"
-                  : "text-gray-500 hover:text-gray-700"
-              }`}
-            >
-              {opt.label}
-            </button>
-          ))}
+        <div className="flex items-center gap-2 text-sm text-gray-500">
+          <span className="inline-block w-2 h-2 rounded-full bg-green-500"></span>
+          <span>Live campaigns only</span>
         </div>
         <div className="text-sm text-gray-500">
-          Data period: <span className="font-medium">Last 30 days</span>
+          Performance: <span className="font-medium">Last 30 days</span>
         </div>
       </div>
 

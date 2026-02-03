@@ -2,6 +2,9 @@
 
 import { useState, useEffect, useMemo } from "react";
 import { parseCampaignName, ParsedCampaign } from "@/lib/parseCampaignName";
+import { 
+  PieChart, Pie, Cell, BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Legend 
+} from "recharts";
 
 interface Campaign {
   id: string;
@@ -22,21 +25,22 @@ interface EnrichedCampaign extends Campaign {
 
 type Dimension = "platform" | "region" | "channel" | "product" | "funnel";
 
-interface BreakdownItem {
-  key: string;
-  label: string;
-  budget: number;
-  spend: number;
-  campaigns: number;
-  pacing: number;
-}
-
-const dimensionConfig: Record<Dimension, { label: string; icon: string }> = {
-  platform: { label: "Platform", icon: "🔌" },
-  region: { label: "Region", icon: "🌍" },
-  channel: { label: "Channel", icon: "📺" },
-  product: { label: "Product", icon: "📦" },
-  funnel: { label: "Funnel Stage", icon: "🎯" },
+const COLORS = {
+  funnel: {
+    TOFU: "#3B82F6",
+    MOFU: "#8B5CF6", 
+    BOFU: "#10B981",
+    ABM: "#F59E0B",
+    UPSELL: "#EC4899",
+    PARTNERSHIP: "#6366F1",
+    Unknown: "#9CA3AF",
+  },
+  platform: {
+    google_ads: "#4285F4",
+    stackadapt: "#8B5CF6",
+    linkedin: "#0A66C2",
+    reddit: "#FF4500",
+  },
 };
 
 const platformLabels: Record<string, string> = {
@@ -46,20 +50,10 @@ const platformLabels: Record<string, string> = {
   reddit: "Reddit",
 };
 
-const channelLabels: Record<string, string> = {
-  search: "Search",
-  display: "Display",
-  native: "Native",
-  video: "Video",
-  dooh: "DOOH",
-  ctv: "CTV",
-  social: "Social",
-};
-
 export default function BudgetOverview() {
   const [campaigns, setCampaigns] = useState<Campaign[]>([]);
   const [loading, setLoading] = useState(true);
-  const [expandedDimension, setExpandedDimension] = useState<Dimension | null>(null);
+  const [plannerInput, setPlannerInput] = useState("");
 
   useEffect(() => {
     fetch("/api/campaigns")
@@ -74,7 +68,7 @@ export default function BudgetOverview() {
       });
   }, []);
 
-  // Enrich campaigns with parsed data (only live campaigns for budget planning)
+  // Enrich campaigns with parsed data (only live campaigns)
   const enrichedCampaigns: EnrichedCampaign[] = useMemo(() => {
     return campaigns
       .filter(c => ["live", "active", "enabled"].includes(c.status))
@@ -86,24 +80,23 @@ export default function BudgetOverview() {
 
   // Calculate totals
   const totals = useMemo(() => {
-    const budget = enrichedCampaigns.reduce((acc, c) => acc + (c.budget || 0), 0);
     const spend = enrichedCampaigns.reduce((acc, c) => acc + (c.spend || 0), 0);
     const impressions = enrichedCampaigns.reduce((acc, c) => acc + (c.impressions || 0), 0);
     const clicks = enrichedCampaigns.reduce((acc, c) => acc + (c.clicks || 0), 0);
     
     return {
-      budget,
       spend,
-      pacing: budget > 0 ? (spend / budget) * 100 : 0,
       impressions,
       clicks,
       campaigns: enrichedCampaigns.length,
+      ctr: impressions > 0 ? (clicks / impressions) * 100 : 0,
+      cpc: clicks > 0 ? spend / clicks : 0,
     };
   }, [enrichedCampaigns]);
 
   // Generate breakdown by dimension
-  const getBreakdown = (dimension: Dimension): BreakdownItem[] => {
-    const groups: Record<string, { budget: number; spend: number; campaigns: number }> = {};
+  const getBreakdown = (dimension: Dimension) => {
+    const groups: Record<string, { spend: number; clicks: number; impressions: number; campaigns: number }> = {};
 
     enrichedCampaigns.forEach(c => {
       let key: string;
@@ -129,62 +122,39 @@ export default function BudgetOverview() {
       }
 
       if (!groups[key]) {
-        groups[key] = { budget: 0, spend: 0, campaigns: 0 };
+        groups[key] = { spend: 0, clicks: 0, impressions: 0, campaigns: 0 };
       }
-      groups[key].budget += c.budget || 0;
       groups[key].spend += c.spend || 0;
+      groups[key].clicks += c.clicks || 0;
+      groups[key].impressions += c.impressions || 0;
       groups[key].campaigns += 1;
     });
 
     return Object.entries(groups)
       .map(([key, data]) => ({
+        name: dimension === "platform" ? (platformLabels[key] || key) : key,
         key,
-        label: dimension === "platform" ? (platformLabels[key] || key) :
-               dimension === "channel" ? (channelLabels[key] || key) :
-               key,
         ...data,
-        pacing: data.budget > 0 ? (data.spend / data.budget) * 100 : 0,
+        percentage: totals.spend > 0 ? (data.spend / totals.spend) * 100 : 0,
       }))
       .sort((a, b) => b.spend - a.spend);
   };
 
-  const formatCurrency = (n: number, short = false) => {
-    if (short) {
-      if (n >= 1000000) return `$${(n / 1000000).toFixed(1)}M`;
-      if (n >= 1000) return `$${(n / 1000).toFixed(1)}K`;
-      return `$${n.toFixed(0)}`;
-    }
-    return `$${n.toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 0 })}`;
+  const funnelData = getBreakdown("funnel");
+  const platformData = getBreakdown("platform");
+  const regionData = getBreakdown("region");
+  const channelData = getBreakdown("channel");
+
+  const formatCurrency = (n: number) => {
+    if (n >= 1000000) return `$${(n / 1000000).toFixed(1)}M`;
+    if (n >= 1000) return `$${(n / 1000).toFixed(1)}K`;
+    return `$${n.toFixed(0)}`;
   };
 
   const formatNumber = (n: number) => {
     if (n >= 1000000) return `${(n / 1000000).toFixed(1)}M`;
     if (n >= 1000) return `${(n / 1000).toFixed(1)}K`;
     return n.toLocaleString();
-  };
-
-  const getPacingColor = (pacing: number) => {
-    if (pacing > 95) return "text-red-600";
-    if (pacing > 80) return "text-yellow-600";
-    return "text-green-600";
-  };
-
-  const getBarColor = (dimension: Dimension, key: string) => {
-    if (dimension === "funnel") {
-      if (key === "TOFU") return "bg-blue-500";
-      if (key === "MOFU") return "bg-purple-500";
-      if (key === "BOFU") return "bg-green-500";
-      if (key === "ABM") return "bg-orange-500";
-      return "bg-gray-400";
-    }
-    if (dimension === "platform") {
-      if (key === "google_ads") return "bg-blue-500";
-      if (key === "stackadapt") return "bg-purple-500";
-      if (key === "linkedin") return "bg-sky-500";
-      if (key === "reddit") return "bg-orange-500";
-      return "bg-gray-400";
-    }
-    return "bg-indigo-500";
   };
 
   if (loading) {
@@ -198,29 +168,28 @@ export default function BudgetOverview() {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-2 text-sm text-gray-500">
-          <span className="inline-block w-2 h-2 rounded-full bg-green-500"></span>
-          <span>Live campaigns only</span>
+      <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+        <div className="flex items-center gap-2 text-blue-800">
+          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+          <span className="font-medium">Data Explanation</span>
         </div>
-        <div className="text-sm text-gray-500">
-          Performance: <span className="font-medium">Last 30 days</span>
-        </div>
+        <p className="text-sm text-blue-700 mt-1">
+          <strong>Spend:</strong> Actual spend over the last 30 days across all live campaigns. 
+          <strong className="ml-2">Budget:</strong> Google Ads = daily budgets × 30, StackAdapt = flight lifetime budgets.
+        </p>
       </div>
 
       {/* Summary Cards */}
-      <div className="grid grid-cols-4 gap-4">
+      <div className="grid grid-cols-5 gap-4">
         <div className="bg-white rounded-xl p-5 shadow-sm border border-gray-100">
-          <div className="text-sm text-gray-500 mb-1">Total Budget</div>
-          <div className="text-2xl font-bold text-gray-900">{formatCurrency(totals.budget)}</div>
-          <div className="text-xs text-gray-400 mt-1">{totals.campaigns} campaigns</div>
+          <div className="text-sm text-gray-500 mb-1">Live Campaigns</div>
+          <div className="text-2xl font-bold text-gray-900">{totals.campaigns}</div>
         </div>
         <div className="bg-white rounded-xl p-5 shadow-sm border border-gray-100">
-          <div className="text-sm text-gray-500 mb-1">Total Spend</div>
+          <div className="text-sm text-gray-500 mb-1">30-Day Spend</div>
           <div className="text-2xl font-bold text-gray-900">{formatCurrency(totals.spend)}</div>
-          <div className={`text-xs mt-1 ${getPacingColor(totals.pacing)}`}>
-            {totals.pacing.toFixed(0)}% of budget
-          </div>
         </div>
         <div className="bg-white rounded-xl p-5 shadow-sm border border-gray-100">
           <div className="text-sm text-gray-500 mb-1">Impressions</div>
@@ -229,105 +198,187 @@ export default function BudgetOverview() {
         <div className="bg-white rounded-xl p-5 shadow-sm border border-gray-100">
           <div className="text-sm text-gray-500 mb-1">Clicks</div>
           <div className="text-2xl font-bold text-gray-900">{formatNumber(totals.clicks)}</div>
-          <div className="text-xs text-gray-400 mt-1">
-            {totals.impressions > 0 ? ((totals.clicks / totals.impressions) * 100).toFixed(2) : 0}% CTR
+        </div>
+        <div className="bg-white rounded-xl p-5 shadow-sm border border-gray-100">
+          <div className="text-sm text-gray-500 mb-1">Avg CPC</div>
+          <div className="text-2xl font-bold text-gray-900">${totals.cpc.toFixed(2)}</div>
+        </div>
+      </div>
+
+      {/* Charts Row */}
+      <div className="grid grid-cols-2 gap-6">
+        {/* Funnel Pie Chart */}
+        <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+          <h3 className="font-semibold text-gray-900 mb-4">Spend by Funnel Stage</h3>
+          <div className="h-64">
+            <ResponsiveContainer width="100%" height="100%">
+              <PieChart>
+                <Pie
+                  data={funnelData}
+                  cx="50%"
+                  cy="50%"
+                  innerRadius={60}
+                  outerRadius={90}
+                  paddingAngle={2}
+                  dataKey="spend"
+                  label={({ name, percentage }) => `${name} ${percentage.toFixed(0)}%`}
+                  labelLine={false}
+                >
+                  {funnelData.map((entry) => (
+                    <Cell 
+                      key={entry.key} 
+                      fill={COLORS.funnel[entry.key as keyof typeof COLORS.funnel] || COLORS.funnel.Unknown} 
+                    />
+                  ))}
+                </Pie>
+                <Tooltip 
+                  formatter={(value: number) => formatCurrency(value)}
+                  labelFormatter={(name) => `${name}`}
+                />
+              </PieChart>
+            </ResponsiveContainer>
+          </div>
+          <div className="mt-4 grid grid-cols-3 gap-2 text-sm">
+            {funnelData.map(item => (
+              <div key={item.key} className="flex items-center gap-2">
+                <div 
+                  className="w-3 h-3 rounded-full" 
+                  style={{ backgroundColor: COLORS.funnel[item.key as keyof typeof COLORS.funnel] || COLORS.funnel.Unknown }}
+                />
+                <span className="text-gray-600">{item.name}: {formatCurrency(item.spend)}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Platform Pie Chart */}
+        <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+          <h3 className="font-semibold text-gray-900 mb-4">Spend by Platform</h3>
+          <div className="h-64">
+            <ResponsiveContainer width="100%" height="100%">
+              <PieChart>
+                <Pie
+                  data={platformData}
+                  cx="50%"
+                  cy="50%"
+                  innerRadius={60}
+                  outerRadius={90}
+                  paddingAngle={2}
+                  dataKey="spend"
+                  label={({ name, percentage }) => `${name} ${percentage.toFixed(0)}%`}
+                  labelLine={false}
+                >
+                  {platformData.map((entry) => (
+                    <Cell 
+                      key={entry.key} 
+                      fill={COLORS.platform[entry.key as keyof typeof COLORS.platform] || "#9CA3AF"} 
+                    />
+                  ))}
+                </Pie>
+                <Tooltip 
+                  formatter={(value: number) => formatCurrency(value)}
+                />
+              </PieChart>
+            </ResponsiveContainer>
+          </div>
+          <div className="mt-4 flex justify-center gap-6 text-sm">
+            {platformData.map(item => (
+              <div key={item.key} className="flex items-center gap-2">
+                <div 
+                  className="w-3 h-3 rounded-full" 
+                  style={{ backgroundColor: COLORS.platform[item.key as keyof typeof COLORS.platform] || "#9CA3AF" }}
+                />
+                <span className="text-gray-600">{item.name}: {formatCurrency(item.spend)}</span>
+              </div>
+            ))}
           </div>
         </div>
       </div>
 
-      {/* Dimension Breakdowns */}
-      <div className="grid grid-cols-2 gap-4">
-        {(["platform", "funnel", "region", "channel", "product"] as Dimension[]).map(dim => {
-          const breakdown = getBreakdown(dim);
-          const config = dimensionConfig[dim];
-          const isExpanded = expandedDimension === dim;
-          const maxSpend = Math.max(...breakdown.map(b => b.spend), 1);
+      {/* Bar Charts Row */}
+      <div className="grid grid-cols-2 gap-6">
+        {/* Region Bar Chart */}
+        <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+          <h3 className="font-semibold text-gray-900 mb-4">Spend by Region</h3>
+          <div className="h-64">
+            <ResponsiveContainer width="100%" height="100%">
+              <BarChart data={regionData} layout="vertical">
+                <XAxis type="number" tickFormatter={(v) => formatCurrency(v)} />
+                <YAxis type="category" dataKey="name" width={80} />
+                <Tooltip formatter={(value: number) => formatCurrency(value)} />
+                <Bar dataKey="spend" fill="#6366F1" radius={[0, 4, 4, 0]} />
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
+        </div>
 
-          return (
-            <div 
-              key={dim} 
-              className={`bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden ${
-                isExpanded ? "col-span-2" : ""
-              }`}
-            >
-              <div 
-                className="px-5 py-4 border-b border-gray-100 flex items-center justify-between cursor-pointer hover:bg-gray-50"
-                onClick={() => setExpandedDimension(isExpanded ? null : dim)}
-              >
-                <div className="flex items-center gap-2">
-                  <span>{config.icon}</span>
-                  <span className="font-medium text-gray-900">{config.label}</span>
-                  <span className="text-xs text-gray-400">({breakdown.length})</span>
-                </div>
-                <span className="text-gray-400">{isExpanded ? "▼" : "▶"}</span>
-              </div>
-              
-              <div className={`p-4 ${isExpanded ? "" : "max-h-64 overflow-y-auto"}`}>
-                {breakdown.length === 0 ? (
-                  <div className="text-gray-400 text-sm text-center py-4">No data</div>
-                ) : (
-                  <div className="space-y-3">
-                    {breakdown.map(item => (
-                      <div key={item.key} className="group">
-                        <div className="flex items-center justify-between mb-1">
-                          <div className="flex items-center gap-2">
-                            <span className="font-medium text-sm text-gray-900">{item.label}</span>
-                            <span className="text-xs text-gray-400">({item.campaigns})</span>
-                          </div>
-                          <div className="flex items-center gap-3 text-sm">
-                            <span className="text-gray-900 font-medium">{formatCurrency(item.spend, true)}</span>
-                            {item.budget > 0 && (
-                              <span className={`text-xs ${getPacingColor(item.pacing)}`}>
-                                {item.pacing.toFixed(0)}%
-                              </span>
-                            )}
-                          </div>
-                        </div>
-                        <div className="h-2 bg-gray-100 rounded-full overflow-hidden">
-                          <div
-                            className={`h-full rounded-full transition-all ${getBarColor(dim, item.key)}`}
-                            style={{ width: `${(item.spend / maxSpend) * 100}%` }}
-                          />
-                        </div>
-                        {isExpanded && (
-                          <div className="flex items-center gap-4 mt-1 text-xs text-gray-400">
-                            <span>Budget: {formatCurrency(item.budget, true)}</span>
-                            <span>Spend: {formatCurrency(item.spend, true)}</span>
-                          </div>
-                        )}
-                      </div>
-                    ))}
-                  </div>
-                )}
-              </div>
-            </div>
-          );
-        })}
+        {/* Channel Bar Chart */}
+        <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+          <h3 className="font-semibold text-gray-900 mb-4">Spend by Channel</h3>
+          <div className="h-64">
+            <ResponsiveContainer width="100%" height="100%">
+              <BarChart data={channelData} layout="vertical">
+                <XAxis type="number" tickFormatter={(v) => formatCurrency(v)} />
+                <YAxis type="category" dataKey="name" width={80} />
+                <Tooltip formatter={(value: number) => formatCurrency(value)} />
+                <Bar dataKey="spend" fill="#10B981" radius={[0, 4, 4, 0]} />
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
+        </div>
       </div>
 
-      {/* Budget Planning Section (Placeholder) */}
+      {/* Budget Planner Section */}
       <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
         <div className="flex items-center gap-3 mb-4">
           <span className="text-xl">💡</span>
-          <h3 className="font-medium text-gray-900">Budget Planner</h3>
+          <h3 className="font-semibold text-gray-900">Budget Planner</h3>
           <span className="text-xs bg-yellow-100 text-yellow-700 px-2 py-0.5 rounded">Coming Soon</span>
         </div>
-        <p className="text-gray-500 text-sm mb-4">
-          Plan budget changes with natural language. Example: &quot;Shift $5K from TOFU to BOFU&quot; or &quot;Increase Voice AI budget by 20%&quot;
+        
+        <p className="text-gray-600 text-sm mb-4">
+          Describe how you want to reallocate budget. I&apos;ll show you the exact changes and projected impact before you approve.
         </p>
+        
+        <div className="bg-gray-50 rounded-lg p-4 mb-4">
+          <p className="text-sm text-gray-500 mb-2">Example commands:</p>
+          <ul className="text-sm text-gray-700 space-y-1">
+            <li>• &quot;Shift $5K from TOFU to BOFU&quot;</li>
+            <li>• &quot;Increase Voice AI budget by 20%&quot;</li>
+            <li>• &quot;Move $3K from StackAdapt to Google Ads&quot;</li>
+            <li>• &quot;Reduce APAC spend by $2K and add to AMER&quot;</li>
+          </ul>
+        </div>
+
         <div className="flex gap-3">
           <input
             type="text"
             placeholder="Describe your budget change..."
-            className="flex-1 px-4 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 disabled:bg-gray-50"
-            disabled
+            value={plannerInput}
+            onChange={(e) => setPlannerInput(e.target.value)}
+            className="flex-1 px-4 py-3 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
           />
           <button 
-            className="px-4 py-2 bg-indigo-600 text-white rounded-lg text-sm font-medium opacity-50 cursor-not-allowed"
-            disabled
+            className="px-6 py-3 bg-indigo-600 text-white rounded-lg text-sm font-medium hover:bg-indigo-700 transition"
+            onClick={() => alert("Budget planning coming soon! For now, tell me in the main chat what changes you want.")}
           >
             Plan Change
           </button>
+        </div>
+
+        {/* Placeholder for results */}
+        <div className="mt-6 border-t border-gray-100 pt-6 hidden">
+          <h4 className="font-medium text-gray-900 mb-4">Proposed Changes</h4>
+          <div className="grid grid-cols-2 gap-6">
+            <div className="bg-red-50 rounded-lg p-4">
+              <h5 className="text-sm font-medium text-red-800 mb-2">Before</h5>
+              {/* Before state */}
+            </div>
+            <div className="bg-green-50 rounded-lg p-4">
+              <h5 className="text-sm font-medium text-green-800 mb-2">After</h5>
+              {/* After state */}
+            </div>
+          </div>
         </div>
       </div>
     </div>

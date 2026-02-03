@@ -232,8 +232,7 @@ export default function BudgetOverview() {
                   ))}
                 </Pie>
                 <Tooltip 
-                  formatter={(value: number) => formatCurrency(value)}
-                  labelFormatter={(name) => `${name}`}
+                  formatter={(value) => formatCurrency(Number(value) || 0)}
                 />
               </PieChart>
             </ResponsiveContainer>
@@ -276,7 +275,7 @@ export default function BudgetOverview() {
                   ))}
                 </Pie>
                 <Tooltip 
-                  formatter={(value: number) => formatCurrency(value)}
+                  formatter={(value) => formatCurrency(Number(value) || 0)}
                 />
               </PieChart>
             </ResponsiveContainer>
@@ -305,7 +304,7 @@ export default function BudgetOverview() {
               <BarChart data={regionData} layout="vertical">
                 <XAxis type="number" tickFormatter={(v) => formatCurrency(v)} />
                 <YAxis type="category" dataKey="name" width={80} />
-                <Tooltip formatter={(value: number) => formatCurrency(value)} />
+                <Tooltip formatter={(value) => formatCurrency(Number(value) || 0)} />
                 <Bar dataKey="spend" fill="#6366F1" radius={[0, 4, 4, 0]} />
               </BarChart>
             </ResponsiveContainer>
@@ -320,7 +319,7 @@ export default function BudgetOverview() {
               <BarChart data={channelData} layout="vertical">
                 <XAxis type="number" tickFormatter={(v) => formatCurrency(v)} />
                 <YAxis type="category" dataKey="name" width={80} />
-                <Tooltip formatter={(value: number) => formatCurrency(value)} />
+                <Tooltip formatter={(value) => formatCurrency(Number(value) || 0)} />
                 <Bar dataKey="spend" fill="#10B981" radius={[0, 4, 4, 0]} />
               </BarChart>
             </ResponsiveContainer>

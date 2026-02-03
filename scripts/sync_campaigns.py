@@ -165,7 +165,7 @@ def sync_stackadapt(supabase: Client):
             "Content-Type": "application/json",
         }
         
-        # Step 1: Get campaign list with proper status
+        # Step 1: Get campaign list with proper status and budget
         campaigns_query = """
         query {
             campaigns(first: 100, filterBy: { advertiserIds: [93053], archived: false }) {
@@ -183,6 +183,8 @@ def sync_stackadapt(supabase: Client):
                         currentFlight {
                             startTime
                             endTime
+                            grossLifetimeBudget
+                            grossDailyBudget
                         }
                     }
                 }
@@ -287,11 +289,17 @@ def sync_stackadapt(supabase: Client):
             else:
                 status = "paused"
             
+            # Get budget - prefer lifetime, fall back to daily * 30
+            budget = flight.get("grossLifetimeBudget")
+            if not budget and flight.get("grossDailyBudget"):
+                budget = flight.get("grossDailyBudget") * 30  # Approximate monthly
+            
             campaign_data = {
                 "name": node["name"],
                 "platform": "stackadapt",
                 "platformId": campaign_id,
                 "status": status,
+                "budget": budget,
                 "spend": metrics.get("spend"),
                 "impressions": metrics.get("impressions"),
                 "clicks": metrics.get("clicks"),

@@ -7,6 +7,7 @@ interface SidebarProps {
 
 const navItems = [
   { id: "campaigns", label: "Campaigns", icon: "📊" },
+  { id: "budget", label: "Budget", icon: "💰" },
   { id: "activity", label: "Activity", icon: "📋" },
   { id: "builder", label: "Builder", icon: "🔧" },
   { id: "review", label: "Ad Review", icon: "✍️" },

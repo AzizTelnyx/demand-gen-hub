@@ -6,7 +6,7 @@
 
 export interface ParsedCampaign {
   yearMonth: string | null;
-  funnelStage: "TOFU" | "MOFU" | "BOFU" | null;
+  funnelStage: "TOFU" | "MOFU" | "BOFU" | "ABM" | "UPSELL" | "PARTNERSHIP" | null;
   product: string | null;
   channel: string | null;
   region: string | null;
@@ -14,8 +14,8 @@ export interface ParsedCampaign {
   competitorName: string | null;
 }
 
-const FUNNEL_STAGES = ["TOFU", "MOFU", "BOFU"];
-const CHANNELS = ["SA", "DA", "Video", "DOOH", "Native"];
+const FUNNEL_STAGES = ["ABM", "TOFU", "MOFU", "BOFU", "UPSELL", "PARTNERSHIP"];
+const CHANNELS = ["SA", "DA", "NA", "Video", "DOOH", "Native", "Display", "CTV"];
 const REGIONS = ["GLOBAL", "AMER", "EMEA", "APAC", "MENA", "US", "UK", "EU"];
 
 const PRODUCTS = [
@@ -23,12 +23,22 @@ const PRODUCTS = [
   "Voice AI", 
   "Voice API",
   "SMS API",
+  "SMS",
   "TTS API",
   "SIP Trunking",
+  "SIP",
   "Messaging",
   "IoT",
   "Number Lookup",
   "Verify",
+  "RCS",
+  "Wireless",
+  "Brand",
+  "MS Teams",
+  "Healthcare",
+  "Insurance",
+  "Banking",
+  "UCaaS",
 ];
 
 const COMPETITORS = [
@@ -68,7 +78,7 @@ export function parseCampaignName(name: string): ParsedCampaign {
   // Extract funnel stage
   for (const stage of FUNNEL_STAGES) {
     if (upperName.includes(stage)) {
-      result.funnelStage = stage as "TOFU" | "MOFU" | "BOFU";
+      result.funnelStage = stage as "TOFU" | "MOFU" | "BOFU" | "ABM" | "UPSELL" | "PARTNERSHIP";
       break;
     }
   }
@@ -83,11 +93,12 @@ export function parseCampaignName(name: string): ParsedCampaign {
 
   // Extract channel
   for (const channel of CHANNELS) {
-    // Match channel codes like "SA" (Search Ads), "DA" (Display Ads)
+    // Match channel codes like "SA" (Search Ads), "DA" (Display Ads), "NA" (Native Ads)
     const regex = new RegExp(`\\b${channel}\\b`, "i");
     if (regex.test(name)) {
       result.channel = channel === "SA" ? "Search" : 
                        channel === "DA" ? "Display" : 
+                       channel === "NA" ? "Native" :
                        channel;
       break;
     }

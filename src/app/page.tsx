@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import Sidebar from "@/components/Sidebar";
 import CampaignsDashboard from "@/components/CampaignsDashboard";
+import BudgetOverview from "@/components/BudgetOverview";
 import ActivityLog from "@/components/ActivityLog";
 import ChatPanel from "@/components/ChatPanel";
 
@@ -23,6 +24,7 @@ export default function Home() {
             <div>
               <h1 className="text-2xl font-bold text-gray-900">
                 {activeTab === "campaigns" && "Campaigns"}
+                {activeTab === "budget" && "Budget Planner"}
                 {activeTab === "activity" && "Activity Log"}
                 {activeTab === "builder" && "Campaign Builder"}
                 {activeTab === "review" && "Ad Review"}
@@ -30,6 +32,7 @@ export default function Home() {
               </h1>
               <p className="text-gray-500 text-sm mt-1">
                 {activeTab === "campaigns" && "All campaigns across platforms"}
+                {activeTab === "budget" && "Allocation, pacing, and planning across all channels"}
                 {activeTab === "activity" && "Agent and user actions"}
                 {activeTab === "builder" && "Create new campaigns"}
                 {activeTab === "review" && "Review ad copy"}
@@ -49,6 +52,7 @@ export default function Home() {
 
           {/* Content */}
           {activeTab === "campaigns" && <CampaignsDashboard />}
+          {activeTab === "budget" && <BudgetOverview />}
           {activeTab === "activity" && <ActivityLog />}
           {activeTab === "builder" && (
             <div className="bg-white rounded-lg shadow p-6">

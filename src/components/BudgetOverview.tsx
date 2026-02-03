@@ -221,7 +221,7 @@ export default function BudgetOverview() {
                   outerRadius={90}
                   paddingAngle={2}
                   dataKey="spend"
-                  label={({ name, percentage }) => `${name} ${percentage.toFixed(0)}%`}
+                  label={({ name, percent }) => `${name} ${((percent || 0) * 100).toFixed(0)}%`}
                   labelLine={false}
                 >
                   {funnelData.map((entry) => (
@@ -265,7 +265,7 @@ export default function BudgetOverview() {
                   outerRadius={90}
                   paddingAngle={2}
                   dataKey="spend"
-                  label={({ name, percentage }) => `${name} ${percentage.toFixed(0)}%`}
+                  label={({ name, percent }) => `${name} ${((percent || 0) * 100).toFixed(0)}%`}
                   labelLine={false}
                 >
                   {platformData.map((entry) => (

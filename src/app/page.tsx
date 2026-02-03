@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import Sidebar from "@/components/Sidebar";
 import CampaignsDashboard from "@/components/CampaignsDashboard";
 import BudgetOverview from "@/components/BudgetOverview";
+import CampaignBuilder from "@/components/CampaignBuilder";
 import ActivityLog from "@/components/ActivityLog";
 import ChatPanel from "@/components/ChatPanel";
 
@@ -54,11 +55,7 @@ export default function Home() {
           {activeTab === "campaigns" && <CampaignsDashboard />}
           {activeTab === "budget" && <BudgetOverview />}
           {activeTab === "activity" && <ActivityLog />}
-          {activeTab === "builder" && (
-            <div className="bg-white rounded-lg shadow p-6">
-              <p className="text-gray-500">Campaign Builder coming soon...</p>
-            </div>
-          )}
+          {activeTab === "builder" && <CampaignBuilder />}
           {activeTab === "review" && (
             <div className="bg-white rounded-lg shadow p-6">
               <p className="text-gray-500">Ad Review coming soon...</p>

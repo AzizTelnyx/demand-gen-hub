@@ -165,7 +165,7 @@ def sync_stackadapt(supabase: Client):
             "Content-Type": "application/json",
         }
         
-        # Step 1: Get campaign list
+        # Step 1: Get campaign list with proper status
         campaigns_query = """
         query {
             campaigns(first: 100, filterBy: { advertiserIds: [93053], archived: false }) {
@@ -176,6 +176,10 @@ def sync_stackadapt(supabase: Client):
                         channelType
                         isArchived
                         isDraft
+                        campaignStatus {
+                            state
+                            status
+                        }
                         currentFlight {
                             startTime
                             endTime
@@ -271,11 +275,23 @@ def sync_stackadapt(supabase: Client):
             # Get metrics
             metrics = metrics_by_id.get(campaign_id, {})
             
+            # Map status from campaignStatus.state
+            campaign_status = node.get("campaignStatus", {})
+            state = campaign_status.get("state", "").upper()
+            if state == "LIVE":
+                status = "live"
+            elif state == "ENDED":
+                status = "ended"
+            elif state == "DRAFT":
+                status = "paused"  # Map draft to paused for consistency
+            else:
+                status = "paused"
+            
             campaign_data = {
                 "name": node["name"],
                 "platform": "stackadapt",
                 "platformId": campaign_id,
-                "status": "live" if not node.get("isArchived") else "ended",
+                "status": status,
                 "spend": metrics.get("spend"),
                 "impressions": metrics.get("impressions"),
                 "clicks": metrics.get("clicks"),

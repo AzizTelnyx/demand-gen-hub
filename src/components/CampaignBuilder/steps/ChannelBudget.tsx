@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { ExtractedBrief, IcpAnalysis, ChannelResearch } from '../index';
 
 interface Props {
@@ -11,122 +11,140 @@ interface Props {
   onBack: () => void;
 }
 
+interface ExtendedChannelResearch extends ChannelResearch {
+  priority?: number;
+  estimatedMetrics?: {
+    audienceSize?: number;
+    estimatedCTR?: string;
+    estimatedCPC?: number;
+    estimatedCPM?: number;
+  };
+  expectedOutcomes?: {
+    impressions?: number;
+    clicks?: number;
+    estimatedLeads?: number;
+  };
+}
+
+interface OverlapResult {
+  hasOverlap: boolean;
+  overlappingKeywords: Array<{
+    keyword: string;
+    existingCampaign: string;
+    existingAdGroup: string;
+    matchType: string;
+  }>;
+  warnings: string[];
+  recommendations: string[];
+}
+
 export function ChannelBudget({ extractedBrief, icpAnalysis, channelResearch, onConfirm, onBack }: Props) {
-  const [isLoading, setIsLoading] = useState(true);
-  const [loadingStage, setLoadingStage] = useState('');
-  const [channels, setChannels] = useState<ChannelResearch[]>([]);
-  const [totalBudget, setTotalBudget] = useState(0);
+  const hasFetched = useRef(false);
+  const hasCachedData = channelResearch && channelResearch.length > 0;
+  
+  const [isLoading, setIsLoading] = useState(!hasCachedData);
+  const [error, setError] = useState<string | null>(null);
+  const [channels, setChannels] = useState<ExtendedChannelResearch[]>(hasCachedData ? channelResearch : []);
+  const [totalBudget, setTotalBudget] = useState(hasCachedData ? channelResearch.reduce((sum, c) => sum + (c.recommendedBudget || 0), 0) : 0);
   const [customBudget, setCustomBudget] = useState<number | null>(null);
+  
+  // Overlap check state
+  const [overlapResult, setOverlapResult] = useState<OverlapResult | null>(null);
+  const [checkingOverlap, setCheckingOverlap] = useState(false);
 
   useEffect(() => {
+    if (hasCachedData || hasFetched.current) {
+      setIsLoading(false);
+      return;
+    }
+    
+    hasFetched.current = true;
+    
     const runResearch = async () => {
       setIsLoading(true);
-      
-      setLoadingStage('Researching Google keywords...');
-      await new Promise(resolve => setTimeout(resolve, 1200));
-      
-      setLoadingStage('Building LinkedIn audiences...');
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
-      setLoadingStage('Analyzing StackAdapt segments...');
-      await new Promise(resolve => setTimeout(resolve, 800));
-      
-      setLoadingStage('Calculating budgets...');
-      await new Promise(resolve => setTimeout(resolve, 600));
+      setError(null);
 
-      // Mock channel research results
-      const mockChannels: ChannelResearch[] = [
-        {
-          channel: 'google_search',
-          recommended: true,
-          rationale: 'High-intent searches for contact center AI solutions',
-          targeting: {
-            keywords: [
-              { keyword: 'contact center AI', volume: 2400, cpc: 8.5, intent: 'high' },
-              { keyword: 'voice AI platform', volume: 1900, cpc: 12.2, intent: 'high' },
-              { keyword: 'IVR replacement', volume: 880, cpc: 15.4, intent: 'high' },
-              { keyword: 'five9 alternative', volume: 590, cpc: 18.0, intent: 'bofu' },
-              { keyword: 'AI customer service', volume: 4200, cpc: 6.2, intent: 'medium' },
-            ],
-          },
-          keywords: [
-            { keyword: 'contact center AI', volume: 2400, cpc: 8.5, intent: 'high' },
-            { keyword: 'voice AI platform', volume: 1900, cpc: 12.2, intent: 'high' },
-            { keyword: 'IVR replacement', volume: 880, cpc: 15.4, intent: 'high' },
-            { keyword: 'five9 alternative', volume: 590, cpc: 18.0, intent: 'bofu' },
-            { keyword: 'AI customer service', volume: 4200, cpc: 6.2, intent: 'medium' },
-          ],
-          audienceSize: 10000,
-          estimatedCpc: 10.5,
-          budgetCalculation: {
-            formula: '10,000 searches × 4% CTR × $10.50 CPC × 1.2 buffer',
-            result: 5040,
-          },
-          recommendedBudget: 4500,
-        },
-        {
-          channel: 'linkedin',
-          recommended: true,
-          rationale: 'Reaches decision makers by title and company',
-          targeting: {
-            jobTitles: icpAnalysis?.jobTitles || [],
-            industries: icpAnalysis?.industries || [],
-            companySize: ['500-1000', '1000-5000', '5000+'],
-            geo: extractedBrief?.regions || [],
-          },
-          audienceSize: 48000,
-          estimatedCpm: 45,
-          budgetCalculation: {
-            formula: '48K audience × 40% reach × 4 freq × $45 CPM',
-            result: 3456,
-          },
-          recommendedBudget: 3500,
-        },
-        {
-          channel: 'stackadapt',
-          recommended: true,
-          rationale: 'Intent-based targeting and retargeting',
-          targeting: {
-            intentSegments: ['Contact Center Software', 'Voice AI', 'IVR Solutions'],
-            firmographics: {
-              employeeCount: '500+',
-              industries: icpAnalysis?.industries || [],
-            },
-            geo: extractedBrief?.regions || [],
-          },
-          audienceSize: 185000,
-          estimatedCpm: 12,
-          budgetCalculation: {
-            formula: '185K × 30% reach × 5 freq × $12 CPM',
-            result: 3330,
-          },
-          recommendedBudget: 3500,
-        },
-        {
-          channel: 'reddit',
-          recommended: false,
-          rationale: 'Limited enterprise B2B audience for contact centers',
-          targeting: {
-            subreddits: ['r/customerservice', 'r/callcentres'],
-            note: 'Better for developer audiences than enterprise contact centers',
-          },
-          audienceSize: 50000,
-          estimatedCpm: 8,
-          budgetCalculation: {
-            formula: 'Not recommended for this audience',
-            result: 0,
-          },
-          recommendedBudget: 0,
-        },
-      ];
+      try {
+        const response = await fetch('/api/builder/research-channels', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            product: extractedBrief?.product,
+            targetAudience: extractedBrief?.targetAudience,
+            icpAnalysis,
+            regions: extractedBrief?.regions,
+            goal: extractedBrief?.goal,
+            budget: extractedBrief?.budget,
+            funnelFocus: extractedBrief?.funnelFocus,
+            isCompetitorCampaign: (extractedBrief as any)?.isCompetitorCampaign,
+            competitorMentioned: (extractedBrief as any)?.competitorMentioned,
+          }),
+        });
 
-      setChannels(mockChannels);
-      setTotalBudget(mockChannels.reduce((sum, c) => sum + c.recommendedBudget, 0));
+        const data = await response.json();
+
+        if (data.success && data.channelResearch) {
+          const mappedChannels = data.channelResearch.map((ch: any) => ({
+            channel: ch.channel,
+            recommended: ch.recommended,
+            priority: ch.priority,
+            rationale: ch.rationale,
+            targeting: ch.targeting || {},
+            keywords: ch.targeting?.keywords || ch.keywords || [],
+            audienceSize: ch.estimatedMetrics?.audienceSize || ch.audienceSize || 0,
+            estimatedCpc: ch.estimatedMetrics?.estimatedCPC || ch.estimatedCpc,
+            estimatedCpm: ch.estimatedMetrics?.estimatedCPM || ch.estimatedCpm,
+            estimatedMetrics: ch.estimatedMetrics,
+            budgetCalculation: ch.budgetCalculation || { formula: '', result: 0 },
+            recommendedBudget: ch.budgetCalculation?.monthlyBudget || ch.recommendedBudget || 0,
+            expectedOutcomes: ch.expectedOutcomes,
+          }));
+          
+          mappedChannels.sort((a: any, b: any) => (a.priority || 99) - (b.priority || 99));
+          
+          setChannels(mappedChannels);
+          setTotalBudget(data.totalRecommendedBudget || mappedChannels.reduce((sum: number, c: any) => sum + (c.recommendedBudget || 0), 0));
+          
+          // Auto-check for overlap with Google keywords
+          const googleChannel = mappedChannels.find((c: any) => c.channel === 'google_search');
+          if (googleChannel?.keywords?.length > 0) {
+            checkOverlap(googleChannel.keywords.map((k: any) => k.keyword || k));
+          }
+        } else {
+          setError('Failed to research channels');
+        }
+      } catch (err) {
+        console.error('Error researching channels:', err);
+        setError('Failed to research channels. Please try again.');
+      }
+
       setIsLoading(false);
     };
 
     runResearch();
-  }, [extractedBrief, icpAnalysis]);
+  }, [extractedBrief, icpAnalysis, hasCachedData]);
+
+  const checkOverlap = async (keywords: string[]) => {
+    setCheckingOverlap(true);
+    try {
+      const response = await fetch('/api/builder/check-overlap', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          keywords,
+          region: extractedBrief?.regions?.[0],
+          product: extractedBrief?.product,
+        }),
+      });
+      const data = await response.json();
+      if (data.success) {
+        setOverlapResult(data.overlap);
+      }
+    } catch (err) {
+      console.error('Overlap check failed:', err);
+    }
+    setCheckingOverlap(false);
+  };
 
   const toggleChannel = (channelName: string) => {
     setChannels(prev => prev.map(c => 
@@ -146,7 +164,6 @@ export function ChannelBudget({ extractedBrief, icpAnalysis, channelResearch, on
     const recommendedChannels = channels.filter(c => c.recommended);
     const totalRecommended = recommendedChannels.reduce((sum, c) => sum + c.recommendedBudget, 0);
     
-    // Redistribute proportionally
     setChannels(prev => prev.map(c => {
       if (!c.recommended) return c;
       const proportion = c.recommendedBudget / totalRecommended;
@@ -162,7 +179,32 @@ export function ChannelBudget({ extractedBrief, icpAnalysis, channelResearch, on
     return (
       <div className="flex flex-col items-center justify-center py-20">
         <div className="w-16 h-16 border-4 border-blue-600 border-t-transparent rounded-full animate-spin mb-4" />
-        <p className="text-gray-400">{loadingStage}</p>
+        <p className="text-gray-400">Researching channels with AI...</p>
+        <p className="text-gray-500 text-sm mt-2">Analyzing keywords, audiences, and calculating optimal budgets</p>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="py-20 text-center">
+        <div className="text-red-400 mb-4">⚠️ {error}</div>
+        <button
+          onClick={() => {
+            hasFetched.current = false;
+            setError(null);
+            setIsLoading(true);
+          }}
+          className="px-6 py-3 rounded-lg font-medium bg-blue-600 hover:bg-blue-500 text-white transition-colors mr-3"
+        >
+          Retry
+        </button>
+        <button
+          onClick={onBack}
+          className="px-6 py-3 rounded-lg font-medium bg-gray-700 hover:bg-gray-600 text-white transition-colors"
+        >
+          ← Back
+        </button>
       </div>
     );
   }
@@ -190,32 +232,74 @@ export function ChannelBudget({ extractedBrief, icpAnalysis, channelResearch, on
   return (
     <div className="space-y-6">
       <div>
-        <h2 className="text-2xl font-bold text-white mb-2">Channel Research</h2>
-        <p className="text-gray-400">Based on your ICP, here's what I found:</p>
+        <h2 className="text-2xl font-bold text-white mb-2">Channel & Budget Research</h2>
+        <p className="text-gray-400">AI-recommended channels and budgets based on your ICP and goals</p>
       </div>
 
+      {/* Overlap Warning */}
+      {overlapResult && overlapResult.hasOverlap && (
+        <div className="bg-amber-900/30 border border-amber-500/50 rounded-xl p-4">
+          <h3 className="text-amber-400 font-semibold mb-2">⚠️ Keyword Overlap Detected</h3>
+          <p className="text-gray-300 text-sm mb-3">
+            Some keywords already exist in your Google Ads account:
+          </p>
+          <div className="space-y-2 mb-3">
+            {overlapResult.overlappingKeywords.slice(0, 5).map((kw, idx) => (
+              <div key={idx} className="text-sm bg-gray-800/50 rounded p-2">
+                <span className="text-amber-300">{kw.keyword}</span>
+                <span className="text-gray-500"> → </span>
+                <span className="text-gray-400">{kw.existingCampaign}</span>
+              </div>
+            ))}
+          </div>
+          {overlapResult.recommendations.map((rec, idx) => (
+            <p key={idx} className="text-sm text-gray-400">💡 {rec}</p>
+          ))}
+        </div>
+      )}
+      
+      {checkingOverlap && (
+        <div className="bg-blue-900/30 border border-blue-500/30 rounded-xl p-4 flex items-center gap-3">
+          <div className="w-5 h-5 border-2 border-blue-500 border-t-transparent rounded-full animate-spin" />
+          <span className="text-blue-300">Checking for keyword overlap in existing campaigns...</span>
+        </div>
+      )}
+
+      {overlapResult && !overlapResult.hasOverlap && (
+        <div className="bg-emerald-900/30 border border-emerald-500/30 rounded-xl p-4">
+          <span className="text-emerald-400">✓ No keyword overlap detected with existing campaigns</span>
+        </div>
+      )}
+
       {/* Channel Cards */}
-      {channels.map(channel => (
+      {channels.map((channel, idx) => (
         <div
           key={channel.channel}
-          className={`bg-gray-800 rounded-lg p-5 border-2 transition-colors ${
-            channel.recommended ? 'border-blue-600' : 'border-gray-700 opacity-60'
+          className={`bg-gray-800/50 backdrop-blur rounded-xl border-2 p-5 transition-colors ${
+            channel.recommended ? 'border-blue-500/50' : 'border-gray-700/50 opacity-60'
           }`}
         >
           <div className="flex items-start justify-between mb-4">
             <div className="flex items-center gap-3">
               <span className="text-2xl">{getChannelIcon(channel.channel)}</span>
               <div>
-                <h3 className="text-lg font-semibold text-white">{getChannelName(channel.channel)}</h3>
+                <div className="flex items-center gap-2">
+                  <h3 className="text-lg font-semibold text-white">{getChannelName(channel.channel)}</h3>
+                  {channel.priority && channel.priority <= 2 && (
+                    <span className="px-2 py-0.5 bg-amber-500/20 text-amber-400 border border-amber-500/30 rounded text-xs">
+                      Priority {channel.priority}
+                    </span>
+                  )}
+                </div>
                 <p className="text-sm text-gray-400">{channel.rationale}</p>
               </div>
             </div>
             <button
               onClick={() => toggleChannel(channel.channel)}
-              className={`px-3 py-1 rounded-lg text-sm font-medium transition-colors ${
+              className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-colors ${
                 channel.recommended
-                  ? 'bg-green-600 text-white'
-                  : 'bg-gray-700 text-gray-400'
+                  ? 'bg-emerald-600 text-white'
+                  : 'bg-gray-700 text-gray-400 hover:bg-gray-600'
               }`}
             >
               {channel.recommended ? '✓ Included' : 'Add'}
@@ -224,62 +308,66 @@ export function ChannelBudget({ extractedBrief, icpAnalysis, channelResearch, on
 
           {channel.recommended && (
             <>
-              {/* Keywords Table (for Google) */}
+              {/* Keywords Table (for Google Search) */}
               {channel.keywords && channel.keywords.length > 0 && (
                 <div className="mb-4">
                   <p className="text-sm font-medium text-gray-300 mb-2">Keywords researched:</p>
-                  <table className="w-full text-sm">
-                    <thead>
-                      <tr className="text-gray-500">
-                        <th className="text-left py-1">Keyword</th>
-                        <th className="text-right py-1">Volume</th>
-                        <th className="text-right py-1">CPC</th>
-                        <th className="text-right py-1">Intent</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {channel.keywords.slice(0, 5).map((kw, i) => (
-                        <tr key={i} className="text-gray-300 border-t border-gray-700">
-                          <td className="py-1">{kw.keyword}</td>
-                          <td className="text-right">{kw.volume.toLocaleString()}</td>
-                          <td className="text-right">${kw.cpc.toFixed(2)}</td>
-                          <td className="text-right">
-                            <span className={`px-2 py-0.5 rounded text-xs ${
-                              kw.intent === 'bofu' ? 'bg-green-900 text-green-400' :
-                              kw.intent === 'high' ? 'bg-blue-900 text-blue-400' :
-                              'bg-gray-700 text-gray-400'
-                            }`}>
-                              {kw.intent}
-                            </span>
-                          </td>
+                  <div className="bg-gray-900/50 rounded-lg overflow-hidden">
+                    <table className="w-full text-sm">
+                      <thead>
+                        <tr className="text-gray-500 border-b border-gray-700/50">
+                          <th className="text-left py-2 px-3">Keyword</th>
+                          <th className="text-right py-2 px-3">Volume</th>
+                          <th className="text-right py-2 px-3">CPC</th>
+                          <th className="text-right py-2 px-3">Intent</th>
                         </tr>
-                      ))}
-                    </tbody>
-                  </table>
+                      </thead>
+                      <tbody>
+                        {channel.keywords.slice(0, 8).map((kw: any, i: number) => (
+                          <tr key={i} className="text-gray-300 border-t border-gray-700/30">
+                            <td className="py-2 px-3">{typeof kw === 'string' ? kw : kw.keyword}</td>
+                            <td className="text-right py-2 px-3">{kw.volume?.toLocaleString() || '-'}</td>
+                            <td className="text-right py-2 px-3">{kw.cpc ? `$${kw.cpc.toFixed(2)}` : '-'}</td>
+                            <td className="text-right py-2 px-3">
+                              <span className={`px-2 py-0.5 rounded text-xs ${
+                                kw.intent === 'bofu' || kw.intent === 'high' ? 'bg-emerald-500/20 text-emerald-400' :
+                                kw.intent === 'medium' ? 'bg-blue-500/20 text-blue-400' :
+                                'bg-gray-700 text-gray-400'
+                              }`}>
+                                {kw.intent || 'N/A'}
+                              </span>
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
                 </div>
               )}
 
-              {/* Targeting Summary (for LinkedIn/StackAdapt) */}
+              {/* Targeting Summary (for LinkedIn/StackAdapt/Reddit) */}
               {channel.channel !== 'google_search' && channel.targeting && (
-                <div className="mb-4 text-sm text-gray-300">
-                  <p className="font-medium text-gray-400 mb-1">Targeting:</p>
+                <div className="mb-4 text-sm text-gray-300 bg-gray-900/50 rounded-lg p-3">
+                  <p className="font-medium text-gray-400 mb-2">Targeting:</p>
                   {channel.targeting.jobTitles && (
-                    <p>• Titles: {channel.targeting.jobTitles.slice(0, 3).join(', ')}</p>
+                    <p>• Titles: {channel.targeting.jobTitles.slice(0, 4).join(', ')}</p>
                   )}
                   {channel.targeting.industries && (
-                    <p>• Industries: {channel.targeting.industries.slice(0, 3).join(', ')}</p>
+                    <p>• Industries: {channel.targeting.industries.slice(0, 4).join(', ')}</p>
                   )}
-                  {channel.targeting.intentSegments && (
-                    <p>• Intent: {channel.targeting.intentSegments.join(', ')}</p>
+                  {channel.targeting.audiences && (
+                    <p>• Audiences: {channel.targeting.audiences.slice(0, 3).join(', ')}</p>
                   )}
-                  <p className="mt-1">📊 Estimated Audience: {channel.audienceSize.toLocaleString()}</p>
+                  {channel.targeting.subreddits && (
+                    <p>• Subreddits: {channel.targeting.subreddits.slice(0, 4).join(', ')}</p>
+                  )}
                 </div>
               )}
 
               {/* Budget Calculation */}
-              <div className="bg-gray-900 rounded-lg p-3">
-                <p className="text-sm text-gray-400 mb-2">💰 Budget Calculation:</p>
-                <p className="text-sm text-gray-300 mb-2">{channel.budgetCalculation.formula}</p>
+              <div className="bg-indigo-900/20 border border-indigo-500/30 rounded-lg p-3">
+                <p className="text-sm text-indigo-300 mb-2">💰 Budget Calculation:</p>
+                <p className="text-sm text-gray-400 mb-2">{channel.budgetCalculation?.formula}</p>
                 <div className="flex items-center justify-between">
                   <span className="text-gray-400">Recommended:</span>
                   <div className="flex items-center gap-2">
@@ -288,7 +376,7 @@ export function ChannelBudget({ extractedBrief, icpAnalysis, channelResearch, on
                       type="number"
                       value={channel.recommendedBudget}
                       onChange={(e) => updateBudget(channel.channel, parseInt(e.target.value) || 0)}
-                      className="w-24 bg-gray-800 border border-gray-700 rounded px-2 py-1 text-white text-right focus:outline-none focus:border-blue-500"
+                      className="w-24 bg-gray-800 border border-gray-700 rounded px-2 py-1 text-white text-right focus:outline-none focus:border-indigo-500"
                     />
                     <span className="text-gray-400">/mo</span>
                   </div>
@@ -300,10 +388,9 @@ export function ChannelBudget({ extractedBrief, icpAnalysis, channelResearch, on
       ))}
 
       {/* Total Budget Summary */}
-      <div className="bg-gray-800 rounded-lg p-5 border-2 border-green-600">
+      <div className="bg-gray-800/50 backdrop-blur rounded-xl p-5 border-2 border-emerald-500/50">
         <h3 className="text-lg font-semibold text-white mb-4">📊 Total Recommended Budget</h3>
         
-        {/* Budget Bars */}
         <div className="space-y-2 mb-4">
           {channels.filter(c => c.recommended).map(channel => {
             const percent = totalBudget > 0 ? (channel.recommendedBudget / totalBudget) * 100 : 0;
@@ -312,11 +399,11 @@ export function ChannelBudget({ extractedBrief, icpAnalysis, channelResearch, on
                 <span className="w-32 text-sm text-gray-300">{getChannelName(channel.channel)}</span>
                 <div className="flex-1 bg-gray-700 rounded-full h-4">
                   <div
-                    className="bg-blue-600 h-4 rounded-full transition-all"
+                    className="bg-indigo-600 h-4 rounded-full transition-all"
                     style={{ width: `${percent}%` }}
                   />
                 </div>
-                <span className="w-24 text-sm text-gray-300 text-right">
+                <span className="w-28 text-sm text-gray-300 text-right">
                   ${channel.recommendedBudget.toLocaleString()} ({percent.toFixed(0)}%)
                 </span>
               </div>
@@ -326,19 +413,18 @@ export function ChannelBudget({ extractedBrief, icpAnalysis, channelResearch, on
 
         <div className="flex items-center justify-between border-t border-gray-700 pt-4">
           <span className="text-lg font-medium text-white">TOTAL</span>
-          <span className="text-2xl font-bold text-green-400">${totalBudget.toLocaleString()}/month</span>
+          <span className="text-2xl font-bold text-emerald-400">${totalBudget.toLocaleString()}/month</span>
         </div>
 
-        {/* Adjust Total */}
         <div className="mt-4 pt-4 border-t border-gray-700">
           <label className="flex items-center gap-3">
             <input
               type="checkbox"
               checked={customBudget !== null}
               onChange={(e) => setCustomBudget(e.target.checked ? totalBudget : null)}
-              className="text-blue-600"
+              className="text-indigo-600"
             />
-            <span className="text-gray-300">Adjust total budget to:</span>
+            <span className="text-gray-300">Adjust total budget:</span>
             {customBudget !== null && (
               <>
                 <span className="text-gray-400">$</span>
@@ -346,18 +432,17 @@ export function ChannelBudget({ extractedBrief, icpAnalysis, channelResearch, on
                   type="number"
                   value={customBudget}
                   onChange={(e) => setCustomBudget(parseInt(e.target.value) || 0)}
-                  className="w-32 bg-gray-700 border border-gray-600 rounded px-3 py-1 text-white focus:outline-none focus:border-blue-500"
+                  className="w-32 bg-gray-700 border border-gray-600 rounded px-3 py-1 text-white focus:outline-none focus:border-indigo-500"
                 />
                 <button
                   onClick={applyCustomBudget}
-                  className="px-3 py-1 bg-blue-600 hover:bg-blue-700 text-white rounded text-sm transition-colors"
+                  className="px-3 py-1 bg-indigo-600 hover:bg-indigo-500 text-white rounded text-sm transition-colors"
                 >
                   Apply
                 </button>
               </>
             )}
           </label>
-          <p className="text-sm text-gray-500 mt-1">(I'll redistribute proportionally)</p>
         </div>
       </div>
 
@@ -371,9 +456,9 @@ export function ChannelBudget({ extractedBrief, icpAnalysis, channelResearch, on
         </button>
         <button
           onClick={() => onConfirm(channels.filter(c => c.recommended))}
-          className="px-6 py-3 rounded-lg font-medium bg-blue-600 hover:bg-blue-700 text-white transition-colors"
+          className="px-6 py-3 rounded-lg font-medium bg-blue-600 hover:bg-blue-500 text-white transition-colors"
         >
-          Generate Plan →
+          Generate Campaign Plan →
         </button>
       </div>
     </div>

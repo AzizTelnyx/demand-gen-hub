@@ -7,8 +7,8 @@ import { AudienceResearch } from './steps/AudienceResearch';
 import { ChannelBudget } from './steps/ChannelBudget';
 import { CampaignPlan } from './steps/CampaignPlan';
 import { AdCopyReview } from './steps/AdCopyReview';
-import { FinalReview } from './steps/FinalReview';
-import { BuildProgress } from './steps/BuildProgress';
+import CopyReviewAgent from './steps/CopyReviewAgent';
+import LaunchCampaign from './steps/LaunchCampaign';
 
 export interface BriefData {
   notes: string;
@@ -26,6 +26,9 @@ export interface ExtractedBrief {
   funnelFocus: 'tofu' | 'mofu' | 'bofu' | 'full';
   timeline: { start: string; durationMonths: number };
   abm: { type: 'broad' | 'list' | 'build'; listUrl?: string };
+  isCompetitorCampaign?: boolean;
+  competitor?: string;
+  campaignType?: string;
 }
 
 export interface IcpAnalysis {
@@ -78,7 +81,8 @@ const STEPS = [
   { id: 4, name: 'Channels' },
   { id: 5, name: 'Plan' },
   { id: 6, name: 'Copy' },
-  { id: 7, name: 'Launch' },
+  { id: 7, name: 'QA' },
+  { id: 8, name: 'Launch' },
 ];
 
 export function CampaignBuilder() {
@@ -89,46 +93,50 @@ export function CampaignBuilder() {
   const [channelResearch, setChannelResearch] = useState<ChannelResearch[]>([]);
   const [campaignPlan, setCampaignPlan] = useState<CampaignPlanItem[]>([]);
   const [adCopy, setAdCopy] = useState<AdCopy[]>([]);
-  const [isBuilding, setIsBuilding] = useState(false);
+  const [generatedPlan, setGeneratedPlan] = useState<any>(null);
+  const [generatedCopy, setGeneratedCopy] = useState<any>(null);
+  const [copyReview, setCopyReview] = useState<any>(null);
+  const [launchResult, setLaunchResult] = useState<any>(null);
 
   const handleBriefSubmit = async (data: BriefData) => {
     setBriefData(data);
-    // TODO: Call API to parse brief
     setCurrentStep(2);
   };
 
   const handleBriefConfirm = async (data: ExtractedBrief) => {
     setExtractedBrief(data);
-    // TODO: Call audience research API
     setCurrentStep(3);
   };
 
   const handleIcpConfirm = async (data: IcpAnalysis) => {
     setIcpAnalysis(data);
-    // TODO: Call channel research API
     setCurrentStep(4);
   };
 
   const handleChannelConfirm = async (data: ChannelResearch[]) => {
     setChannelResearch(data);
-    // TODO: Generate campaign plan
     setCurrentStep(5);
   };
 
-  const handlePlanConfirm = async (data: CampaignPlanItem[]) => {
+  const handlePlanConfirm = async (data: CampaignPlanItem[], fullPlan?: any) => {
     setCampaignPlan(data);
-    // TODO: Generate ad copy
+    if (fullPlan) setGeneratedPlan(fullPlan);
     setCurrentStep(6);
   };
 
-  const handleCopyConfirm = async (data: AdCopy[]) => {
+  const handleCopyConfirm = async (data: AdCopy[], fullCopy?: any) => {
     setAdCopy(data);
+    if (fullCopy) setGeneratedCopy(fullCopy);
     setCurrentStep(7);
   };
 
-  const handleLaunch = async () => {
-    setIsBuilding(true);
-    // TODO: Call build API
+  const handleReviewComplete = async (review: any) => {
+    setCopyReview(review);
+    setCurrentStep(8);
+  };
+
+  const handleLaunchComplete = async (result: any) => {
+    setLaunchResult(result);
   };
 
   const renderStep = () => {
@@ -165,8 +173,11 @@ export function CampaignBuilder() {
       case 5:
         return (
           <CampaignPlan
+            extractedBrief={extractedBrief}
+            icpAnalysis={icpAnalysis}
             channelResearch={channelResearch}
             campaignPlan={campaignPlan}
+            generatedPlan={generatedPlan}
             onConfirm={handlePlanConfirm}
             onBack={() => setCurrentStep(4)}
           />
@@ -174,23 +185,37 @@ export function CampaignBuilder() {
       case 6:
         return (
           <AdCopyReview
+            extractedBrief={extractedBrief}
+            icpAnalysis={icpAnalysis}
             campaignPlan={campaignPlan}
             adCopy={adCopy}
+            generatedCopy={generatedCopy}
             onConfirm={handleCopyConfirm}
             onBack={() => setCurrentStep(5)}
           />
         );
       case 7:
-        if (isBuilding) {
-          return <BuildProgress campaignPlan={campaignPlan} />;
-        }
         return (
-          <FinalReview
-            extractedBrief={extractedBrief}
-            channelResearch={channelResearch}
-            campaignPlan={campaignPlan}
-            onLaunch={handleLaunch}
+          <CopyReviewAgent
+            adCopy={generatedCopy}
+            product={extractedBrief?.product || ''}
+            targetAudience={extractedBrief?.targetAudience || ''}
+            funnelStage={extractedBrief?.funnelFocus || 'mofu'}
+            channels={channelResearch.map(c => c.channel)}
+            cachedReview={copyReview}
+            onComplete={handleReviewComplete}
             onBack={() => setCurrentStep(6)}
+          />
+        );
+      case 8:
+        return (
+          <LaunchCampaign
+            plan={generatedPlan}
+            adCopy={generatedCopy}
+            channelResearch={channelResearch}
+            review={copyReview}
+            onComplete={handleLaunchComplete}
+            onBack={() => setCurrentStep(7)}
           />
         );
       default:
@@ -202,7 +227,7 @@ export function CampaignBuilder() {
     <div className="h-full flex flex-col">
       {/* Progress Steps */}
       <div className="bg-gray-800 border-b border-gray-700 px-6 py-4">
-        <div className="flex items-center justify-between max-w-4xl mx-auto">
+        <div className="flex items-center justify-between max-w-5xl mx-auto">
           {STEPS.map((step, index) => (
             <div key={step.id} className="flex items-center">
               <div
@@ -217,7 +242,7 @@ export function CampaignBuilder() {
                 {currentStep > step.id ? '✓' : step.id}
               </div>
               <span
-                className={`ml-2 text-sm ${
+                className={`ml-2 text-sm hidden sm:inline ${
                   currentStep === step.id ? 'text-white' : 'text-gray-400'
                 }`}
               >
@@ -225,7 +250,7 @@ export function CampaignBuilder() {
               </span>
               {index < STEPS.length - 1 && (
                 <div
-                  className={`w-12 h-0.5 mx-4 ${
+                  className={`w-8 h-0.5 mx-2 ${
                     currentStep > step.id ? 'bg-green-600' : 'bg-gray-700'
                   }`}
                 />

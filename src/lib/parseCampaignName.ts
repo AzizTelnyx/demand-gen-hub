@@ -126,10 +126,13 @@ export function parseCampaignName(name: string): ParsedCampaign {
 
 export function getFunnelStageColor(stage: string | null): string {
   switch (stage) {
-    case "TOFU": return "bg-blue-100 text-blue-800";
-    case "MOFU": return "bg-purple-100 text-purple-800";
-    case "BOFU": return "bg-green-100 text-green-800";
-    default: return "bg-gray-100 text-gray-800";
+    case "TOFU": return "bg-blue-500/20 text-blue-400 border border-blue-500/30";
+    case "MOFU": return "bg-purple-500/20 text-purple-400 border border-purple-500/30";
+    case "BOFU": return "bg-emerald-500/20 text-emerald-400 border border-emerald-500/30";
+    case "ABM": return "bg-amber-500/20 text-amber-400 border border-amber-500/30";
+    case "UPSELL": return "bg-pink-500/20 text-pink-400 border border-pink-500/30";
+    case "PARTNERSHIP": return "bg-indigo-500/20 text-indigo-400 border border-indigo-500/30";
+    default: return "bg-gray-500/20 text-gray-400 border border-gray-500/30";
   }
 }
 

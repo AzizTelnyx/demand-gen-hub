@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { ExtractedBrief, IcpAnalysis } from '../index';
 
 interface Props {
@@ -10,73 +10,89 @@ interface Props {
   onBack: () => void;
 }
 
+interface ExtendedIcpAnalysis extends IcpAnalysis {
+  buyingTriggers?: string[];
+  objections?: string[];
+  valueProps?: string[];
+}
+
 export function AudienceResearch({ extractedBrief, icpAnalysis, onConfirm, onBack }: Props) {
-  const [isLoading, setIsLoading] = useState(true);
-  const [loadingStage, setLoadingStage] = useState('Analyzing ICP...');
-  const [analysis, setAnalysis] = useState<IcpAnalysis>({
-    jobTitles: [],
-    industries: [],
-    companySize: '',
-    painPoints: [],
-    buyingStage: '',
-    competitorsEvaluating: [],
+  // Track if we've already fetched to prevent re-fetching on back navigation
+  const hasFetched = useRef(false);
+  const hasCachedData = icpAnalysis !== null;
+  
+  const [isLoading, setIsLoading] = useState(!hasCachedData);
+  const [error, setError] = useState<string | null>(null);
+  const [analysis, setAnalysis] = useState<ExtendedIcpAnalysis>(() => {
+    if (icpAnalysis) {
+      return {
+        ...icpAnalysis,
+        buyingTriggers: (icpAnalysis as any).buyingTriggers || [],
+        objections: (icpAnalysis as any).objections || [],
+        valueProps: (icpAnalysis as any).valueProps || [],
+      };
+    }
+    return {
+      jobTitles: [],
+      industries: [],
+      companySize: '',
+      painPoints: [],
+      buyingStage: '',
+      competitorsEvaluating: [],
+      buyingTriggers: [],
+      objections: [],
+      valueProps: [],
+    };
   });
 
   useEffect(() => {
+    // Skip if we have cached data OR we've already fetched
+    if (hasCachedData || hasFetched.current) {
+      setIsLoading(false);
+      return;
+    }
+    
+    hasFetched.current = true;
+    
     const runResearch = async () => {
       setIsLoading(true);
+      setError(null);
       
-      // Simulate research stages
-      setLoadingStage('Analyzing ICP...');
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
-      setLoadingStage('Loading knowledge base...');
-      await new Promise(resolve => setTimeout(resolve, 800));
-      
-      setLoadingStage('Identifying decision makers...');
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
-      setLoadingStage('Mapping pain points...');
-      await new Promise(resolve => setTimeout(resolve, 600));
-
-      // Mock analysis based on extracted brief
-      const audience = extractedBrief?.targetAudience?.toLowerCase() || '';
-      
-      if (audience.includes('contact center') || audience.includes('enterprise')) {
-        setAnalysis({
-          jobTitles: ['VP Customer Experience', 'Contact Center Director', 'CIO', 'CTO', 'VP Operations'],
-          industries: ['Insurance', 'Healthcare', 'Banking', 'Retail', 'Financial Services'],
-          companySize: '500+ employees',
-          painPoints: [
-            'High agent costs and turnover (30-50% annually)',
-            'Long wait times affecting CSAT',
-            'Legacy IVR frustrating customers',
-            'Difficulty scaling for peak periods',
-          ],
-          buyingStage: 'Evaluating solutions',
-          competitorsEvaluating: ['Five9', 'NICE', 'Genesys', 'Talkdesk', 'Twilio Flex'],
+      try {
+        const response = await fetch('/api/builder/research-audience', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            product: extractedBrief?.product,
+            targetAudience: extractedBrief?.targetAudience,
+            regions: extractedBrief?.regions,
+            isCompetitorCampaign: (extractedBrief as any)?.isCompetitorCampaign,
+            competitorMentioned: (extractedBrief as any)?.competitorMentioned,
+          }),
         });
-      } else {
-        setAnalysis({
-          jobTitles: ['Software Engineer', 'Backend Developer', 'Full Stack Developer', 'DevOps Engineer', 'CTO'],
-          industries: ['Technology', 'SaaS', 'FinTech', 'HealthTech', 'Startups'],
-          companySize: '50-5000 employees',
-          painPoints: [
-            'Poor API documentation',
-            'High costs with current provider',
-            'Reliability issues',
-            'Complex pricing',
-          ],
-          buyingStage: 'Comparing alternatives',
-          competitorsEvaluating: ['Twilio', 'Vonage', 'Bandwidth', 'Plivo'],
-        });
+        
+        const data = await response.json();
+        
+        if (data.success && data.icpAnalysis) {
+          setAnalysis({
+            ...data.icpAnalysis,
+            buyingTriggers: data.icpAnalysis.buyingTriggers || [],
+            objections: data.icpAnalysis.objections || [],
+            valueProps: data.icpAnalysis.valueProps || [],
+          });
+        } else {
+          setError('Failed to analyze audience');
+        }
+      } catch (err) {
+        console.error('Error researching audience:', err);
+        setError('Failed to research audience. Please try again.');
       }
 
       setIsLoading(false);
     };
 
     runResearch();
-  }, [extractedBrief]);
+  }, [extractedBrief, hasCachedData]);
 
   const toggleItem = (field: 'jobTitles' | 'industries' | 'competitorsEvaluating', item: string) => {
     setAnalysis(prev => ({
@@ -90,94 +106,82 @@ export function AudienceResearch({ extractedBrief, icpAnalysis, onConfirm, onBac
   if (isLoading) {
     return (
       <div className="flex flex-col items-center justify-center py-20">
-        <div className="w-16 h-16 border-4 border-blue-600 border-t-transparent rounded-full animate-spin mb-4" />
-        <p className="text-gray-400">{loadingStage}</p>
-        <div className="mt-6 w-64 bg-gray-800 rounded-full h-2">
-          <div className="bg-blue-600 h-2 rounded-full animate-pulse" style={{ width: '60%' }} />
-        </div>
+        <div className="w-16 h-16 border-4 border-blue-500 border-t-transparent rounded-full animate-spin mb-4" />
+        <p className="text-gray-400 text-lg">Researching target audience...</p>
+        <p className="text-gray-500 text-sm mt-2">Analyzing ICPs, pain points, and buying signals</p>
       </div>
     );
   }
 
-  // Additional options for toggling
-  const additionalTitles = ['IT Director', 'Customer Service Manager', 'Head of Digital', 'VP Technology'];
-  const additionalIndustries = ['Telecom', 'Travel', 'Hospitality', 'E-commerce', 'Manufacturing'];
+  if (error) {
+    return (
+      <div className="text-center py-20">
+        <p className="text-red-400 mb-4">{error}</p>
+        <button
+          onClick={() => {
+            hasFetched.current = false;
+            setError(null);
+            setIsLoading(true);
+          }}
+          className="px-4 py-2 bg-blue-600 hover:bg-blue-500 rounded-lg text-white"
+        >
+          Retry
+        </button>
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-6">
-      <div>
-        <h2 className="text-2xl font-bold text-white mb-2">Audience Research</h2>
-        <p className="text-gray-400">
-          Based on "{extractedBrief?.targetAudience}", here's the ICP analysis:
-        </p>
+      <div className="text-center mb-6">
+        <h2 className="text-xl font-semibold text-white">🎯 Audience Research</h2>
+        <p className="text-gray-400 text-sm mt-1">AI-generated ICP analysis based on your brief</p>
       </div>
 
       {/* Job Titles */}
-      <div className="bg-gray-800 rounded-lg p-5">
-        <h3 className="text-lg font-semibold text-white mb-3">👤 Job Titles (Decision Makers)</h3>
+      <div className="bg-gray-800 rounded-lg p-4">
+        <h3 className="font-semibold text-white mb-3">Job Titles</h3>
         <div className="flex flex-wrap gap-2">
-          {[...analysis.jobTitles, ...additionalTitles].map(title => (
-            <button
-              key={title}
+          {analysis.jobTitles.map((title, idx) => (
+            <span
+              key={idx}
               onClick={() => toggleItem('jobTitles', title)}
-              className={`px-3 py-1.5 rounded-lg text-sm transition-colors ${
-                analysis.jobTitles.includes(title)
-                  ? 'bg-blue-600 text-white'
-                  : 'bg-gray-700 text-gray-400 hover:bg-gray-600'
-              }`}
+              className="px-3 py-1 bg-blue-600/30 text-blue-300 rounded-full text-sm cursor-pointer hover:bg-blue-600/50"
             >
-              {analysis.jobTitles.includes(title) ? '✓ ' : ''}{title}
-            </button>
+              {title}
+            </span>
           ))}
         </div>
       </div>
 
       {/* Industries */}
-      <div className="bg-gray-800 rounded-lg p-5">
-        <h3 className="text-lg font-semibold text-white mb-3">🏢 Industries</h3>
+      <div className="bg-gray-800 rounded-lg p-4">
+        <h3 className="font-semibold text-white mb-3">Industries</h3>
         <div className="flex flex-wrap gap-2">
-          {[...analysis.industries, ...additionalIndustries].map(industry => (
-            <button
-              key={industry}
+          {analysis.industries.map((industry, idx) => (
+            <span
+              key={idx}
               onClick={() => toggleItem('industries', industry)}
-              className={`px-3 py-1.5 rounded-lg text-sm transition-colors ${
-                analysis.industries.includes(industry)
-                  ? 'bg-blue-600 text-white'
-                  : 'bg-gray-700 text-gray-400 hover:bg-gray-600'
-              }`}
+              className="px-3 py-1 bg-purple-600/30 text-purple-300 rounded-full text-sm cursor-pointer hover:bg-purple-600/50"
             >
-              {analysis.industries.includes(industry) ? '✓ ' : ''}{industry}
-            </button>
+              {industry}
+            </span>
           ))}
         </div>
       </div>
 
       {/* Company Size */}
-      <div className="bg-gray-800 rounded-lg p-5">
-        <h3 className="text-lg font-semibold text-white mb-3">📊 Company Size</h3>
-        <div className="flex flex-wrap gap-2">
-          {['1-50', '51-200', '201-500', '501-1000', '1001-5000', '5001+'].map(size => (
-            <button
-              key={size}
-              onClick={() => setAnalysis({ ...analysis, companySize: size })}
-              className={`px-3 py-1.5 rounded-lg text-sm transition-colors ${
-                analysis.companySize.includes(size.split('-')[0]) || analysis.companySize === size
-                  ? 'bg-blue-600 text-white'
-                  : 'bg-gray-700 text-gray-400 hover:bg-gray-600'
-              }`}
-            >
-              {size} employees
-            </button>
-          ))}
-        </div>
+      <div className="bg-gray-800 rounded-lg p-4">
+        <h3 className="font-semibold text-white mb-3">Company Size</h3>
+        <p className="text-gray-300">{analysis.companySize}</p>
       </div>
 
       {/* Pain Points */}
-      <div className="bg-gray-800 rounded-lg p-5">
-        <h3 className="text-lg font-semibold text-white mb-3">😤 Pain Points Identified</h3>
+      <div className="bg-gray-800 rounded-lg p-4">
+        <h3 className="font-semibold text-white mb-3">🔥 Pain Points</h3>
         <ul className="space-y-2">
-          {analysis.painPoints.map((pain, index) => (
-            <li key={index} className="flex items-start gap-2 text-gray-300">
+          {analysis.painPoints.map((pain, idx) => (
+            <li key={idx} className="text-gray-300 flex items-start gap-2">
               <span className="text-red-400">•</span>
               {pain}
             </li>
@@ -185,39 +189,71 @@ export function AudienceResearch({ extractedBrief, icpAnalysis, onConfirm, onBac
         </ul>
       </div>
 
+      {/* Buying Triggers */}
+      {analysis.buyingTriggers && analysis.buyingTriggers.length > 0 && (
+        <div className="bg-gray-800 rounded-lg p-4">
+          <h3 className="font-semibold text-white mb-3">⚡ Buying Triggers</h3>
+          <ul className="space-y-2">
+            {analysis.buyingTriggers.map((trigger, idx) => (
+              <li key={idx} className="text-gray-300 flex items-start gap-2">
+                <span className="text-yellow-400">•</span>
+                {trigger}
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+
+      {/* Objections */}
+      {analysis.objections && analysis.objections.length > 0 && (
+        <div className="bg-gray-800 rounded-lg p-4">
+          <h3 className="font-semibold text-white mb-3">🚧 Common Objections</h3>
+          <ul className="space-y-2">
+            {analysis.objections.map((obj, idx) => (
+              <li key={idx} className="text-gray-300 flex items-start gap-2">
+                <span className="text-orange-400">•</span>
+                {obj}
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+
+      {/* Value Props */}
+      {analysis.valueProps && analysis.valueProps.length > 0 && (
+        <div className="bg-gray-800 rounded-lg p-4">
+          <h3 className="font-semibold text-white mb-3">✅ Value Propositions</h3>
+          <ul className="space-y-2">
+            {analysis.valueProps.map((val, idx) => (
+              <li key={idx} className="text-gray-300 flex items-start gap-2">
+                <span className="text-green-400">•</span>
+                {val}
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+
       {/* Competitors */}
-      <div className="bg-gray-800 rounded-lg p-5">
-        <h3 className="text-lg font-semibold text-white mb-3">🎯 Competitors They're Evaluating</h3>
+      <div className="bg-gray-800 rounded-lg p-4">
+        <h3 className="font-semibold text-white mb-3">🎯 Competitors Evaluating</h3>
         <div className="flex flex-wrap gap-2">
-          {analysis.competitorsEvaluating.map(competitor => (
+          {analysis.competitorsEvaluating.map((comp, idx) => (
             <span
-              key={competitor}
-              className="px-3 py-1.5 bg-red-900/30 text-red-400 rounded-lg text-sm"
+              key={idx}
+              onClick={() => toggleItem('competitorsEvaluating', comp)}
+              className="px-3 py-1 bg-red-600/30 text-red-300 rounded-full text-sm cursor-pointer hover:bg-red-600/50"
             >
-              {competitor}
+              {comp}
             </span>
           ))}
         </div>
       </div>
 
       {/* Buying Stage */}
-      <div className="bg-gray-800 rounded-lg p-5">
-        <h3 className="text-lg font-semibold text-white mb-3">📍 Buying Stage</h3>
-        <div className="flex gap-2">
-          {['Problem aware', 'Solution aware', 'Evaluating solutions', 'Ready to buy'].map(stage => (
-            <button
-              key={stage}
-              onClick={() => setAnalysis({ ...analysis, buyingStage: stage })}
-              className={`px-4 py-2 rounded-lg text-sm transition-colors ${
-                analysis.buyingStage === stage
-                  ? 'bg-green-600 text-white'
-                  : 'bg-gray-700 text-gray-400 hover:bg-gray-600'
-              }`}
-            >
-              {stage}
-            </button>
-          ))}
-        </div>
+      <div className="bg-gray-800 rounded-lg p-4">
+        <h3 className="font-semibold text-white mb-3">📍 Buying Stage</h3>
+        <p className="text-gray-300">{analysis.buyingStage}</p>
       </div>
 
       {/* Actions */}
@@ -230,7 +266,7 @@ export function AudienceResearch({ extractedBrief, icpAnalysis, onConfirm, onBac
         </button>
         <button
           onClick={() => onConfirm(analysis)}
-          className="px-6 py-3 rounded-lg font-medium bg-blue-600 hover:bg-blue-700 text-white transition-colors"
+          className="px-6 py-3 rounded-lg font-medium bg-blue-600 hover:bg-blue-500 text-white transition-colors"
         >
           Research Channels →
         </button>

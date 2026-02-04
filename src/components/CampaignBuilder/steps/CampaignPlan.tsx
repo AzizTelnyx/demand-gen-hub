@@ -1,334 +1,376 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import { ChannelResearch, CampaignPlanItem } from '../index';
+import { useState, useEffect, useRef } from 'react';
+import { ExtractedBrief, IcpAnalysis, ChannelResearch, CampaignPlanItem } from '../index';
+
+interface ExtendedBrief extends ExtractedBrief {
+  campaignType?: string;
+  competitor?: string;
+  isCompetitorCampaign?: boolean;
+  duration?: { type: string; value: number | null; unit: string | null };
+  channels?: string[];
+}
 
 interface Props {
+  extractedBrief: ExtendedBrief | null;
+  icpAnalysis: IcpAnalysis | null;
   channelResearch: ChannelResearch[];
   campaignPlan: CampaignPlanItem[];
-  onConfirm: (data: CampaignPlanItem[]) => void;
+  generatedPlan?: PlanData | null;
+  onConfirm: (data: CampaignPlanItem[], fullPlan?: any) => void;
   onBack: () => void;
 }
 
-export function CampaignPlan({ channelResearch, campaignPlan, onConfirm, onBack }: Props) {
-  const [isLoading, setIsLoading] = useState(true);
-  const [campaigns, setCampaigns] = useState<CampaignPlanItem[]>([]);
-  const [expandedCampaigns, setExpandedCampaigns] = useState<Set<string>>(new Set());
+interface PlanData {
+  summary: {
+    campaignName: string;
+    objective: string;
+    duration: string;
+    totalMonthlyBudget: number;
+    expectedResults: {
+      impressions: string;
+      clicks: string;
+      leads: string;
+    };
+  };
+  channels: Array<{
+    name: string;
+    monthlyBudget: number;
+    allocation: string;
+    funnelStage: string;
+    calculation: {
+      method: string;
+      inputs: Record<string, any>;
+      result: number;
+    };
+    targeting: string[];
+    expectedMetrics: {
+      impressions: number;
+      clicks: number;
+      ctr: string;
+      cpc: number;
+      conversions: string;
+    };
+    adGroups: string[];
+  }>;
+  timeline: Record<string, string>;
+  successMetrics: string[];
+  risks: string[];
+  recommendations: string[];
+}
+
+export function CampaignPlan({ extractedBrief, icpAnalysis, channelResearch, campaignPlan, generatedPlan, onConfirm, onBack }: Props) {
+  const hasFetched = useRef(false);
+  const hasCachedData = generatedPlan !== null && generatedPlan !== undefined;
+  
+  const [isLoading, setIsLoading] = useState(!hasCachedData);
+  const [error, setError] = useState<string | null>(null);
+  const [plan, setPlan] = useState<PlanData | null>(generatedPlan || null);
+  const [expandedChannels, setExpandedChannels] = useState<Set<string>>(new Set());
 
   useEffect(() => {
+    // Skip if we already have cached data OR already fetched
+    if (hasCachedData || hasFetched.current) {
+      setIsLoading(false);
+      return;
+    }
+    
+    hasFetched.current = true;
+    
     const generatePlan = async () => {
       setIsLoading(true);
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      setError(null);
+      
+      try {
+        const response = await fetch('/api/builder/generate-plan', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            campaignType: extractedBrief?.campaignType || 'lead_gen',
+            product: extractedBrief?.product,
+            targetAudience: extractedBrief?.targetAudience,
+            regions: extractedBrief?.regions,
+            channels: extractedBrief?.channels || channelResearch.map(c => c.channel),
+            icpAnalysis,
+            channelResearch,
+            budget: extractedBrief?.budget,
+            funnelFocus: extractedBrief?.funnelFocus,
+            duration: extractedBrief?.duration,
+            goal: extractedBrief?.goal,
+            isCompetitorCampaign: extractedBrief?.isCompetitorCampaign,
+            competitor: extractedBrief?.competitor,
+          }),
+        });
 
-      const now = new Date();
-      const monthYear = `${(now.getMonth() + 1).toString().padStart(2, '0')}${now.getFullYear().toString().slice(-2)}`;
-
-      // Generate campaigns based on channel research
-      const generatedCampaigns: CampaignPlanItem[] = [];
-      let id = 1;
-
-      // Google Ads campaigns
-      const googleChannel = channelResearch.find(c => c.channel === 'google_search');
-      if (googleChannel) {
-        const budget = googleChannel.recommendedBudget;
-        generatedCampaigns.push(
-          {
-            id: `campaign-${id++}`,
-            name: `2026${monthYear} BOFU Voice AI Contact Center SA US`,
-            platform: 'google_ads',
-            funnel: 'bofu',
-            budget: Math.round(budget * 0.45),
-            adGroups: [
-              { name: 'High Intent', keywords: ['contact center AI', 'voice AI platform', 'AI customer service'] },
-              { name: 'Solutions', keywords: ['IVR replacement', 'automated contact center', 'AI voice agents'] },
-            ],
-            status: 'planned',
-          },
-          {
-            id: `campaign-${id++}`,
-            name: `2026${monthYear} BOFU Voice AI Competitors SA US/UK`,
-            platform: 'google_ads',
-            funnel: 'bofu',
-            budget: Math.round(budget * 0.33),
-            adGroups: [
-              { name: 'Competitor Terms', keywords: ['five9 alternative', 'nice alternative', 'genesys competitor'] },
-            ],
-            status: 'planned',
-          },
-          {
-            id: `campaign-${id++}`,
-            name: `2026${monthYear} MOFU AI Customer Service SA US/UK`,
-            platform: 'google_ads',
-            funnel: 'mofu',
-            budget: Math.round(budget * 0.22),
-            adGroups: [
-              { name: 'Solution Aware', keywords: ['conversational AI', 'AI for customer service', 'contact center automation'] },
-            ],
-            status: 'planned',
-          }
-        );
+        const data = await response.json();
+        
+        if (data.success && data.plan) {
+          setPlan(data.plan);
+        } else {
+          setError(data.error || 'Failed to generate plan');
+        }
+      } catch (err) {
+        console.error('Generate plan error:', err);
+        setError('Failed to generate plan. Please try again.');
+      } finally {
+        setIsLoading(false);
       }
-
-      // LinkedIn campaigns
-      const linkedInChannel = channelResearch.find(c => c.channel === 'linkedin');
-      if (linkedInChannel) {
-        const budget = linkedInChannel.recommendedBudget;
-        generatedCampaigns.push(
-          {
-            id: `campaign-${id++}`,
-            name: `2026${monthYear} MOFU Voice AI LinkedIn US`,
-            platform: 'linkedin',
-            funnel: 'mofu',
-            budget: Math.round(budget * 0.57),
-            adGroups: [
-              { name: 'Decision Makers', targeting: 'VP CX, CC Directors, CIO at 500+ enterprises' },
-            ],
-            status: 'planned',
-          },
-          {
-            id: `campaign-${id++}`,
-            name: `2026${monthYear} TOFU AI CX Trends LinkedIn UK`,
-            platform: 'linkedin',
-            funnel: 'tofu',
-            budget: Math.round(budget * 0.43),
-            adGroups: [
-              { name: 'Awareness', targeting: 'CX Leaders at Insurance, Healthcare, Banking' },
-            ],
-            status: 'planned',
-          }
-        );
-      }
-
-      // StackAdapt campaigns
-      const stackAdaptChannel = channelResearch.find(c => c.channel === 'stackadapt');
-      if (stackAdaptChannel) {
-        const budget = stackAdaptChannel.recommendedBudget;
-        generatedCampaigns.push(
-          {
-            id: `campaign-${id++}`,
-            name: `2026${monthYear} TOFU Voice AI DA US/UK`,
-            platform: 'stackadapt',
-            funnel: 'tofu',
-            budget: Math.round(budget * 0.43),
-            adGroups: [
-              { name: 'Display Awareness', targeting: 'Intent: Contact Center + Voice AI' },
-            ],
-            status: 'planned',
-          },
-          {
-            id: `campaign-${id++}`,
-            name: `2026${monthYear} MOFU Contact Center AI NA US/UK`,
-            platform: 'stackadapt',
-            funnel: 'mofu',
-            budget: Math.round(budget * 0.43),
-            adGroups: [
-              { name: 'Native Consideration', targeting: 'Firmographic: 500+ employees, target industries' },
-            ],
-            status: 'planned',
-          },
-          {
-            id: `campaign-${id++}`,
-            name: `2026${monthYear} RETAR Voice AI DA GLOBAL`,
-            platform: 'stackadapt',
-            funnel: 'retargeting',
-            budget: Math.round(budget * 0.14),
-            adGroups: [
-              { name: 'Retargeting', targeting: 'Website visitors (30 days), exclude converters' },
-            ],
-            status: 'planned',
-          }
-        );
-      }
-
-      setCampaigns(generatedCampaigns);
-      setIsLoading(false);
     };
 
     generatePlan();
-  }, [channelResearch]);
+  }, [extractedBrief, icpAnalysis, channelResearch]);
 
-  const toggleExpand = (id: string) => {
-    setExpandedCampaigns(prev => {
-      const next = new Set(prev);
-      if (next.has(id)) {
-        next.delete(id);
-      } else {
-        next.add(id);
-      }
-      return next;
-    });
-  };
-
-  const updateCampaignBudget = (id: string, budget: number) => {
-    setCampaigns(prev => prev.map(c => c.id === id ? { ...c, budget } : c));
-  };
-
-  const removeCampaign = (id: string) => {
-    setCampaigns(prev => prev.filter(c => c.id !== id));
-  };
-
-  const getPlatformIcon = (platform: string) => {
-    switch (platform) {
-      case 'google_ads': return '🔍';
-      case 'linkedin': return '💼';
-      case 'stackadapt': return '📺';
-      case 'reddit': return '🤖';
-      default: return '📣';
+  const toggleChannel = (channelName: string) => {
+    const newSet = new Set(expandedChannels);
+    if (newSet.has(channelName)) {
+      newSet.delete(channelName);
+    } else {
+      newSet.add(channelName);
     }
+    setExpandedChannels(newSet);
   };
 
-  const getFunnelColor = (funnel: string) => {
-    switch (funnel) {
-      case 'tofu': return 'bg-purple-900 text-purple-400';
-      case 'mofu': return 'bg-blue-900 text-blue-400';
-      case 'bofu': return 'bg-green-900 text-green-400';
-      case 'retargeting': return 'bg-orange-900 text-orange-400';
-      default: return 'bg-gray-700 text-gray-400';
-    }
+  const handleConfirm = () => {
+    if (!plan) return;
+    
+    // Convert plan to CampaignPlanItem format
+    const campaigns: CampaignPlanItem[] = plan.channels.map((ch, idx) => ({
+      id: `campaign-${idx + 1}`,
+      name: `${plan.summary.campaignName} - ${ch.name}`,
+      platform: mapChannelToPlatform(ch.name),
+      funnel: ch.funnelStage as any || 'full',
+      budget: ch.monthlyBudget,
+      adGroups: ch.adGroups.map(ag => ({ name: ag, keywords: [] })),
+      status: 'planned' as const,
+    }));
+    
+    onConfirm(campaigns, plan);
   };
-
-  const groupedCampaigns = campaigns.reduce((acc, campaign) => {
-    if (!acc[campaign.platform]) acc[campaign.platform] = [];
-    acc[campaign.platform].push(campaign);
-    return acc;
-  }, {} as Record<string, CampaignPlanItem[]>);
-
-  const totalBudget = campaigns.reduce((sum, c) => sum + c.budget, 0);
-  const funnelBreakdown = campaigns.reduce((acc, c) => {
-    acc[c.funnel] = (acc[c.funnel] || 0) + c.budget;
-    return acc;
-  }, {} as Record<string, number>);
 
   if (isLoading) {
     return (
       <div className="flex flex-col items-center justify-center py-20">
         <div className="w-16 h-16 border-4 border-blue-600 border-t-transparent rounded-full animate-spin mb-4" />
-        <p className="text-gray-400">Generating campaign plan...</p>
+        <p className="text-gray-400">Generating campaign plan with AI...</p>
+        <p className="text-gray-500 text-sm mt-2">Calculating budgets and building structure</p>
       </div>
     );
   }
+
+  if (error) {
+    return (
+      <div className="py-20 text-center">
+        <div className="text-red-400 mb-4">⚠️ {error}</div>
+        <button onClick={onBack} className="px-6 py-3 rounded-lg font-medium bg-gray-700 hover:bg-gray-600 text-white">← Back</button>
+      </div>
+    );
+  }
+
+  if (!plan) {
+    return <div className="text-gray-400 text-center py-20">No plan generated</div>;
+  }
+
+  const totalBudget = plan.channels.reduce((sum, ch) => sum + ch.monthlyBudget, 0);
 
   return (
     <div className="space-y-6">
       <div>
         <h2 className="text-2xl font-bold text-white mb-2">Campaign Plan</h2>
-        <p className="text-gray-400">{campaigns.length} campaigns to create</p>
+        <p className="text-gray-400">AI-generated plan with justified budgets. Review and adjust.</p>
       </div>
 
-      {/* Campaign Groups */}
-      {Object.entries(groupedCampaigns).map(([platform, platformCampaigns]) => (
-        <div key={platform} className="space-y-3">
-          <h3 className="text-lg font-semibold text-white flex items-center gap-2">
-            {getPlatformIcon(platform)}
-            {platform === 'google_ads' ? 'Google Ads' : platform === 'linkedin' ? 'LinkedIn' : 'StackAdapt'}
-          </h3>
-          
-          <div className="bg-gray-800 rounded-lg divide-y divide-gray-700">
-            {platformCampaigns.map(campaign => (
-              <div key={campaign.id} className="p-4">
-                <div 
-                  className="flex items-center justify-between cursor-pointer"
-                  onClick={() => toggleExpand(campaign.id)}
-                >
-                  <div className="flex items-center gap-3">
-                    <span className="text-gray-400">{expandedCampaigns.has(campaign.id) ? '▼' : '▶'}</span>
-                    <span className="text-white font-medium">{campaign.name}</span>
-                    <span className={`px-2 py-0.5 rounded text-xs font-medium ${getFunnelColor(campaign.funnel)}`}>
-                      {campaign.funnel.toUpperCase()}
-                    </span>
-                  </div>
-                  <div className="flex items-center gap-4">
-                    <div className="flex items-center gap-1">
-                      <span className="text-gray-400">$</span>
-                      <input
-                        type="number"
-                        value={campaign.budget}
-                        onChange={(e) => {
-                          e.stopPropagation();
-                          updateCampaignBudget(campaign.id, parseInt(e.target.value) || 0);
-                        }}
-                        onClick={(e) => e.stopPropagation()}
-                        className="w-20 bg-gray-700 border border-gray-600 rounded px-2 py-1 text-white text-right focus:outline-none focus:border-blue-500"
-                      />
-                    </div>
-                    <button
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        removeCampaign(campaign.id);
-                      }}
-                      className="text-gray-500 hover:text-red-400 transition-colors"
-                    >
-                      ✕
-                    </button>
-                  </div>
-                </div>
-
-                {expandedCampaigns.has(campaign.id) && campaign.adGroups && (
-                  <div className="mt-3 ml-8 space-y-2">
-                    {campaign.adGroups.map((ag, i) => (
-                      <div key={i} className="bg-gray-900 rounded p-3">
-                        <p className="text-sm font-medium text-gray-300">{ag.name}</p>
-                        {ag.keywords && (
-                          <p className="text-sm text-gray-500 mt-1">
-                            Keywords: {ag.keywords.join(', ')}
-                          </p>
-                        )}
-                        {ag.targeting && (
-                          <p className="text-sm text-gray-500 mt-1">
-                            Targeting: {ag.targeting}
-                          </p>
-                        )}
-                      </div>
-                    ))}
-                  </div>
-                )}
-              </div>
-            ))}
+      {/* Summary Card */}
+      <div className="bg-gradient-to-br from-blue-600/20 to-purple-600/20 border border-blue-500/30 rounded-xl p-6">
+        <div className="flex items-start justify-between mb-4">
+          <div>
+            <h3 className="text-xl font-bold text-white">{plan.summary.campaignName}</h3>
+            <p className="text-gray-300 mt-1">{plan.summary.objective}</p>
+          </div>
+          <div className="text-right">
+            <p className="text-3xl font-bold text-green-400">${totalBudget.toLocaleString()}</p>
+            <p className="text-gray-400 text-sm">monthly budget</p>
           </div>
         </div>
-      ))}
+        
+        <div className="grid grid-cols-4 gap-4 mt-6">
+          <div className="bg-gray-800/50 rounded-lg p-3 text-center">
+            <p className="text-gray-400 text-xs">Duration</p>
+            <p className="text-white font-medium">{plan.summary.duration}</p>
+          </div>
+          <div className="bg-gray-800/50 rounded-lg p-3 text-center">
+            <p className="text-gray-400 text-xs">Est. Impressions</p>
+            <p className="text-white font-medium">{plan.summary.expectedResults.impressions}</p>
+          </div>
+          <div className="bg-gray-800/50 rounded-lg p-3 text-center">
+            <p className="text-gray-400 text-xs">Est. Clicks</p>
+            <p className="text-white font-medium">{plan.summary.expectedResults.clicks}</p>
+          </div>
+          <div className="bg-gray-800/50 rounded-lg p-3 text-center">
+            <p className="text-gray-400 text-xs">Est. Leads</p>
+            <p className="text-white font-medium">{plan.summary.expectedResults.leads}</p>
+          </div>
+        </div>
+      </div>
 
-      {/* Summary */}
-      <div className="bg-gray-800 rounded-lg p-5">
-        <h3 className="text-lg font-semibold text-white mb-4">💡 Rationale</h3>
-        <p className="text-gray-300 mb-4">
-          BOFU-heavy split ({Math.round((funnelBreakdown.bofu || 0) / totalBudget * 100)}%) given lead gen goal. 
-          Google captures high-intent searches. LinkedIn reaches decision makers directly. 
-          StackAdapt provides awareness reach and retargeting to warm up prospects.
-        </p>
-
-        <div className="grid grid-cols-4 gap-4 text-center">
-          {['tofu', 'mofu', 'bofu', 'retargeting'].map(funnel => {
-            const amount = funnelBreakdown[funnel] || 0;
-            const percent = totalBudget > 0 ? (amount / totalBudget) * 100 : 0;
-            return (
-              <div key={funnel} className="bg-gray-900 rounded-lg p-3">
-                <p className={`text-xs font-medium ${getFunnelColor(funnel)} bg-transparent`}>
-                  {funnel.toUpperCase()}
-                </p>
-                <p className="text-xl font-bold text-white mt-1">{percent.toFixed(0)}%</p>
-                <p className="text-sm text-gray-500">${amount.toLocaleString()}</p>
+      {/* Channel Breakdown */}
+      <div className="space-y-3">
+        <h3 className="text-lg font-semibold text-white">Budget Allocation by Channel</h3>
+        
+        {plan.channels.map((channel, idx) => (
+          <div key={idx} className="bg-gray-800 rounded-xl overflow-hidden">
+            <button
+              onClick={() => toggleChannel(channel.name)}
+              className="w-full px-4 py-4 flex items-center justify-between hover:bg-gray-700/50 transition-colors"
+            >
+              <div className="flex items-center gap-4">
+                <span className="text-2xl">{getChannelIcon(channel.name)}</span>
+                <div className="text-left">
+                  <p className="text-white font-medium">{channel.name}</p>
+                  <p className="text-gray-400 text-sm">{channel.funnelStage.toUpperCase()} • {channel.allocation}</p>
+                </div>
               </div>
-            );
-          })}
+              <div className="flex items-center gap-4">
+                <p className="text-xl font-bold text-green-400">${channel.monthlyBudget.toLocaleString()}</p>
+                <span className="text-gray-400">{expandedChannels.has(channel.name) ? '▲' : '▼'}</span>
+              </div>
+            </button>
+            
+            {expandedChannels.has(channel.name) && (
+              <div className="px-4 pb-4 border-t border-gray-700 pt-4 space-y-4">
+                {/* Calculation */}
+                <div className="bg-gray-900/50 rounded-lg p-3">
+                  <p className="text-xs text-gray-500 mb-1">Budget Calculation</p>
+                  <p className="text-gray-300 text-sm">{channel.calculation.method}</p>
+                  <div className="flex flex-wrap gap-2 mt-2">
+                    {Object.entries(channel.calculation.inputs).map(([key, val]) => (
+                      <span key={key} className="px-2 py-1 bg-gray-800 rounded text-xs text-gray-400">
+                        {key}: {typeof val === 'number' ? val.toLocaleString() : val}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+                
+                {/* Expected Metrics */}
+                <div>
+                  <p className="text-xs text-gray-500 mb-2">Expected Metrics</p>
+                  <div className="grid grid-cols-5 gap-2">
+                    <div className="bg-gray-900/50 rounded p-2 text-center">
+                      <p className="text-white font-medium">{channel.expectedMetrics.impressions.toLocaleString()}</p>
+                      <p className="text-gray-500 text-xs">Impressions</p>
+                    </div>
+                    <div className="bg-gray-900/50 rounded p-2 text-center">
+                      <p className="text-white font-medium">{channel.expectedMetrics.clicks.toLocaleString()}</p>
+                      <p className="text-gray-500 text-xs">Clicks</p>
+                    </div>
+                    <div className="bg-gray-900/50 rounded p-2 text-center">
+                      <p className="text-white font-medium">{channel.expectedMetrics.ctr}</p>
+                      <p className="text-gray-500 text-xs">CTR</p>
+                    </div>
+                    <div className="bg-gray-900/50 rounded p-2 text-center">
+                      <p className="text-white font-medium">${channel.expectedMetrics.cpc}</p>
+                      <p className="text-gray-500 text-xs">CPC</p>
+                    </div>
+                    <div className="bg-gray-900/50 rounded p-2 text-center">
+                      <p className="text-white font-medium">{channel.expectedMetrics.conversions}</p>
+                      <p className="text-gray-500 text-xs">Conversions</p>
+                    </div>
+                  </div>
+                </div>
+                
+                {/* Ad Groups */}
+                <div>
+                  <p className="text-xs text-gray-500 mb-2">Ad Groups</p>
+                  <div className="flex flex-wrap gap-2">
+                    {channel.adGroups.map((ag, i) => (
+                      <span key={i} className="px-3 py-1 bg-blue-600/20 text-blue-400 rounded-lg text-sm">{ag}</span>
+                    ))}
+                  </div>
+                </div>
+                
+                {/* Targeting */}
+                <div>
+                  <p className="text-xs text-gray-500 mb-2">Targeting</p>
+                  <div className="flex flex-wrap gap-2">
+                    {channel.targeting.map((t, i) => (
+                      <span key={i} className="px-2 py-1 bg-gray-700 text-gray-300 rounded text-xs">{t}</span>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
+
+      {/* Timeline */}
+      <div className="bg-gray-800 rounded-xl p-4">
+        <h3 className="text-lg font-semibold text-white mb-3">Timeline</h3>
+        <div className="space-y-2">
+          {Object.entries(plan.timeline).map(([phase, desc]) => (
+            <div key={phase} className="flex items-start gap-3">
+              <span className="text-blue-400 font-mono text-sm w-24">{phase}</span>
+              <span className="text-gray-300">{desc}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Recommendations & Risks */}
+      <div className="grid grid-cols-2 gap-4">
+        <div className="bg-emerald-500/10 border border-emerald-500/30 rounded-xl p-4">
+          <h3 className="text-emerald-400 font-semibold mb-2">✅ Recommendations</h3>
+          <ul className="space-y-1">
+            {plan.recommendations.map((rec, i) => (
+              <li key={i} className="text-gray-300 text-sm">• {rec}</li>
+            ))}
+          </ul>
+        </div>
+        <div className="bg-amber-500/10 border border-amber-500/30 rounded-xl p-4">
+          <h3 className="text-amber-400 font-semibold mb-2">⚠️ Risks</h3>
+          <ul className="space-y-1">
+            {plan.risks.map((risk, i) => (
+              <li key={i} className="text-gray-300 text-sm">• {risk}</li>
+            ))}
+          </ul>
+        </div>
+      </div>
+
+      {/* Success Metrics */}
+      <div className="bg-gray-800 rounded-xl p-4">
+        <h3 className="text-lg font-semibold text-white mb-3">Success Metrics</h3>
+        <div className="flex flex-wrap gap-2">
+          {plan.successMetrics.map((metric, i) => (
+            <span key={i} className="px-3 py-1.5 bg-purple-600/20 text-purple-400 rounded-lg text-sm">{metric}</span>
+          ))}
         </div>
       </div>
 
       {/* Actions */}
       <div className="flex justify-between pt-4">
-        <button
-          onClick={onBack}
-          className="px-6 py-3 rounded-lg font-medium bg-gray-700 hover:bg-gray-600 text-white transition-colors"
-        >
-          ← Back
-        </button>
-        <button
-          onClick={() => onConfirm(campaigns)}
-          className="px-6 py-3 rounded-lg font-medium bg-blue-600 hover:bg-blue-700 text-white transition-colors"
-        >
-          Generate Ad Copy →
-        </button>
+        <button onClick={onBack} className="px-6 py-3 rounded-lg font-medium bg-gray-700 hover:bg-gray-600 text-white transition-colors">← Back</button>
+        <button onClick={handleConfirm} className="px-6 py-3 rounded-lg font-medium bg-blue-600 hover:bg-blue-500 text-white transition-colors">Generate Ad Copy →</button>
       </div>
     </div>
   );
+}
+
+function getChannelIcon(channel: string): string {
+  const icons: Record<string, string> = {
+    'Google Search': '🔍',
+    'Google Display': '🖼️',
+    'YouTube': '▶️',
+    'LinkedIn': '💼',
+    'Reddit': '🤖',
+    'StackAdapt': '📊',
+    'Meta': '📘',
+  };
+  return icons[channel] || '📢';
+}
+
+function mapChannelToPlatform(channel: string): 'google_ads' | 'linkedin' | 'stackadapt' | 'reddit' {
+  if (channel.toLowerCase().includes('google') || channel.toLowerCase().includes('youtube')) return 'google_ads';
+  if (channel.toLowerCase().includes('linkedin')) return 'linkedin';
+  if (channel.toLowerCase().includes('stackadapt')) return 'stackadapt';
+  if (channel.toLowerCase().includes('reddit')) return 'reddit';
+  return 'google_ads';
 }

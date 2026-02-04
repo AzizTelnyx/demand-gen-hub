@@ -35,12 +35,12 @@ type SortField = "name" | "spend" | "pacing" | "ctr" | "clicks";
 type SortDirection = "asc" | "desc";
 
 const statusConfig: Record<string, { label: string; color: string }> = {
-  enabled: { label: "Live", color: "bg-green-500" },
-  active: { label: "Live", color: "bg-green-500" },
-  live: { label: "Live", color: "bg-green-500" },
-  paused: { label: "Paused", color: "bg-yellow-500" },
-  ended: { label: "Ended", color: "bg-gray-400" },
-  removed: { label: "Removed", color: "bg-red-400" },
+  enabled: { label: "Live", color: "bg-emerald-500" },
+  active: { label: "Live", color: "bg-emerald-500" },
+  live: { label: "Live", color: "bg-emerald-500" },
+  paused: { label: "Paused", color: "bg-amber-500" },
+  ended: { label: "Ended", color: "bg-gray-500" },
+  removed: { label: "Removed", color: "bg-red-500" },
 };
 
 const platformConfig: Record<string, { icon: string; name: string }> = {
@@ -59,7 +59,7 @@ export default function CampaignsDashboard() {
   const [searchQuery, setSearchQuery] = useState("");
   const [platformFilter, setPlatformFilter] = useState<string>("all");
   const [funnelFilter, setFunnelFilter] = useState<string>("all");
-  const [statusFilter, setStatusFilter] = useState<string>("live"); // Default to live
+  const [statusFilter, setStatusFilter] = useState<string>("live");
   
   // Sorting
   const [sortField, setSortField] = useState<SortField>("spend");
@@ -94,12 +94,18 @@ export default function CampaignsDashboard() {
       const spend = c.spend || 0;
       const budget = c.budget || 0;
       
+      // Normalize budget to monthly for pacing comparison
+      // Google Ads: budget is daily → multiply by 30
+      // StackAdapt: budget is lifetime/flight → use as-is (roughly monthly)
+      const monthlyBudget = c.platform === "google_ads" ? budget * 30 : budget;
+      
       return {
         ...c,
         parsed,
         ctr: impressions > 0 ? (clicks / impressions) * 100 : 0,
         cpc: clicks > 0 ? spend / clicks : 0,
-        pacing: budget > 0 ? (spend / budget) * 100 : 0,
+        pacing: monthlyBudget > 0 ? (spend / monthlyBudget) * 100 : 0,
+        monthlyBudget,
       };
     });
   }, [campaigns]);
@@ -107,24 +113,15 @@ export default function CampaignsDashboard() {
   // Filter and sort campaigns
   const filteredCampaigns = useMemo(() => {
     let result = enrichedCampaigns.filter(c => {
-      // Search
       if (searchQuery && !c.name.toLowerCase().includes(searchQuery.toLowerCase())) return false;
-      
-      // Platform
       if (platformFilter !== "all" && c.platform !== platformFilter) return false;
-      
-      // Funnel
       if (funnelFilter !== "all" && c.parsed.funnelStage !== funnelFilter) return false;
-      
-      // Status
       if (statusFilter === "live" && !["live", "active", "enabled"].includes(c.status)) return false;
       if (statusFilter === "paused" && c.status !== "paused") return false;
       if (statusFilter === "ended" && !["ended", "removed"].includes(c.status)) return false;
-      
       return true;
     });
 
-    // Sort
     result.sort((a, b) => {
       let aVal: number | string = 0;
       let bVal: number | string = 0;
@@ -212,39 +209,39 @@ export default function CampaignsDashboard() {
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-6">
           <div>
-            <span className="text-3xl font-bold">{stats.count}</span>
-            <span className="text-gray-500 ml-2">campaigns</span>
+            <span className="text-3xl font-bold text-white">{stats.count}</span>
+            <span className="text-gray-400 ml-2">campaigns</span>
           </div>
-          <div className="h-8 w-px bg-gray-200" />
+          <div className="h-8 w-px bg-gray-700" />
           <div>
-            <span className="text-2xl font-semibold">{formatCurrency(stats.spend)}</span>
-            <span className="text-gray-500 ml-2">spend</span>
+            <span className="text-2xl font-semibold text-white">{formatCurrency(stats.spend)}</span>
+            <span className="text-gray-400 ml-2">spend</span>
           </div>
-          <div className="h-8 w-px bg-gray-200" />
+          <div className="h-8 w-px bg-gray-700" />
           <div>
-            <span className="text-2xl font-semibold">{formatNumber(stats.clicks)}</span>
-            <span className="text-gray-500 ml-2">clicks</span>
+            <span className="text-2xl font-semibold text-white">{formatNumber(stats.clicks)}</span>
+            <span className="text-gray-400 ml-2">clicks</span>
           </div>
         </div>
         
         <div className="flex items-center gap-3">
           {Object.entries(syncStates).map(([platform, state]) => (
-            <span key={platform} className="text-xs text-gray-400">
+            <span key={platform} className="text-xs text-gray-500">
               {platformConfig[platform]?.icon} {formatLastSync(state.lastSyncedAt)}
             </span>
           ))}
           <button
             onClick={handleSync}
             disabled={syncing}
-            className="bg-indigo-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-indigo-700 disabled:opacity-50 transition"
+            className="bg-indigo-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-indigo-500 disabled:opacity-50 transition"
           >
             {syncing ? "Syncing..." : "Sync"}
           </button>
         </div>
       </div>
 
-      {/* Filters - Single Row */}
-      <div className="flex items-center gap-3 bg-white rounded-xl p-3 shadow-sm border border-gray-100">
+      {/* Filters */}
+      <div className="flex items-center gap-3 bg-gray-800/50 backdrop-blur rounded-xl p-3 border border-gray-700/50">
         {/* Search */}
         <div className="relative flex-1 max-w-xs">
           <input
@@ -252,15 +249,15 @@ export default function CampaignsDashboard() {
             placeholder="Search campaigns..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full pl-9 pr-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+            className="w-full pl-9 pr-3 py-2 bg-gray-900 border border-gray-700 rounded-lg text-sm text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
           />
-          <span className="absolute left-3 top-2.5 text-gray-400">🔎</span>
+          <span className="absolute left-3 top-2.5 text-gray-500">🔎</span>
         </div>
 
-        <div className="h-6 w-px bg-gray-200" />
+        <div className="h-6 w-px bg-gray-700" />
 
         {/* Status Toggle */}
-        <div className="flex bg-gray-100 rounded-lg p-0.5">
+        <div className="flex bg-gray-900 rounded-lg p-0.5">
           {[
             { value: "live", label: "Live" },
             { value: "paused", label: "Paused" },
@@ -272,8 +269,8 @@ export default function CampaignsDashboard() {
               onClick={() => setStatusFilter(opt.value)}
               className={`px-3 py-1.5 text-sm rounded-md transition ${
                 statusFilter === opt.value 
-                  ? "bg-white shadow text-gray-900 font-medium" 
-                  : "text-gray-500 hover:text-gray-700"
+                  ? "bg-gray-700 text-white font-medium" 
+                  : "text-gray-400 hover:text-gray-200"
               }`}
             >
               {opt.label}
@@ -281,13 +278,13 @@ export default function CampaignsDashboard() {
           ))}
         </div>
 
-        <div className="h-6 w-px bg-gray-200" />
+        <div className="h-6 w-px bg-gray-700" />
 
         {/* Platform */}
         <select
           value={platformFilter}
           onChange={(e) => setPlatformFilter(e.target.value)}
-          className="border border-gray-200 rounded-lg px-3 py-2 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-indigo-500"
+          className="bg-gray-900 border border-gray-700 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:ring-2 focus:ring-indigo-500"
         >
           <option value="all">All Platforms</option>
           <option value="google_ads">🔍 Google Ads</option>
@@ -298,7 +295,7 @@ export default function CampaignsDashboard() {
         <select
           value={funnelFilter}
           onChange={(e) => setFunnelFilter(e.target.value)}
-          className="border border-gray-200 rounded-lg px-3 py-2 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-indigo-500"
+          className="bg-gray-900 border border-gray-700 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:ring-2 focus:ring-indigo-500"
         >
           <option value="all">All Funnel</option>
           <option value="TOFU">🔵 TOFU</option>
@@ -306,26 +303,26 @@ export default function CampaignsDashboard() {
           <option value="BOFU">🟢 BOFU</option>
         </select>
 
-        <div className="h-6 w-px bg-gray-200" />
+        <div className="h-6 w-px bg-gray-700" />
 
         {/* Data Period Indicator */}
-        <div className="flex items-center gap-2 text-sm text-gray-500">
-          <span className="inline-block w-2 h-2 rounded-full bg-green-400"></span>
+        <div className="flex items-center gap-2 text-sm text-gray-400">
+          <span className="inline-block w-2 h-2 rounded-full bg-emerald-500"></span>
           <span>Last 30 days</span>
         </div>
       </div>
 
       {/* Campaign List */}
-      <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+      <div className="bg-gray-800/50 backdrop-blur rounded-xl border border-gray-700/50 overflow-hidden">
         {filteredCampaigns.length === 0 ? (
-          <div className="p-12 text-center text-gray-400">
+          <div className="p-12 text-center text-gray-500">
             <p className="text-lg">No campaigns match your filters</p>
             <p className="text-sm mt-1">Try adjusting your search or filters</p>
           </div>
         ) : (
           <table className="w-full">
             <thead>
-              <tr className="border-b border-gray-100">
+              <tr className="border-b border-gray-700/50">
                 <th className="text-left px-4 py-3 text-xs font-medium text-gray-400 uppercase tracking-wider">
                   Campaign
                 </th>
@@ -333,48 +330,47 @@ export default function CampaignsDashboard() {
                   Status
                 </th>
                 <th 
-                  className="text-right px-4 py-3 text-xs font-medium text-gray-400 uppercase tracking-wider cursor-pointer hover:text-gray-600 w-28"
+                  className="text-right px-4 py-3 text-xs font-medium text-gray-400 uppercase tracking-wider cursor-pointer hover:text-gray-200 w-28"
                   onClick={() => handleSort("spend")}
                 >
                   Spend {sortField === "spend" && (sortDirection === "asc" ? "↑" : "↓")}
                 </th>
                 <th 
-                  className="text-right px-4 py-3 text-xs font-medium text-gray-400 uppercase tracking-wider cursor-pointer hover:text-gray-600 w-24"
+                  className="text-right px-4 py-3 text-xs font-medium text-gray-400 uppercase tracking-wider cursor-pointer hover:text-gray-200 w-24"
                   onClick={() => handleSort("pacing")}
                 >
                   Pacing {sortField === "pacing" && (sortDirection === "asc" ? "↑" : "↓")}
                 </th>
                 <th 
-                  className="text-right px-4 py-3 text-xs font-medium text-gray-400 uppercase tracking-wider cursor-pointer hover:text-gray-600 w-24"
+                  className="text-right px-4 py-3 text-xs font-medium text-gray-400 uppercase tracking-wider cursor-pointer hover:text-gray-200 w-24"
                   onClick={() => handleSort("clicks")}
                 >
                   Clicks {sortField === "clicks" && (sortDirection === "asc" ? "↑" : "↓")}
                 </th>
                 <th 
-                  className="text-right px-4 py-3 text-xs font-medium text-gray-400 uppercase tracking-wider cursor-pointer hover:text-gray-600 w-20"
+                  className="text-right px-4 py-3 text-xs font-medium text-gray-400 uppercase tracking-wider cursor-pointer hover:text-gray-200 w-20"
                   onClick={() => handleSort("ctr")}
                 >
                   CTR {sortField === "ctr" && (sortDirection === "asc" ? "↑" : "↓")}
                 </th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-gray-50">
+            <tbody className="divide-y divide-gray-700/30">
               {filteredCampaigns.map((campaign) => {
                 const platform = platformConfig[campaign.platform] || { icon: "📊", name: campaign.platform };
-                const status = statusConfig[campaign.status] || { label: campaign.status, color: "bg-gray-400" };
-                const isExpanded = expandedId === campaign.id;
+                const status = statusConfig[campaign.status] || { label: campaign.status, color: "bg-gray-500" };
 
                 return (
                   <tr 
                     key={campaign.id} 
-                    className="hover:bg-gray-50 cursor-pointer transition"
-                    onClick={() => setExpandedId(isExpanded ? null : campaign.id)}
+                    className="hover:bg-gray-700/30 cursor-pointer transition"
+                    onClick={() => setExpandedId(expandedId === campaign.id ? null : campaign.id)}
                   >
                     <td className="px-4 py-3">
                       <div className="flex items-start gap-3">
                         <span className="text-lg mt-0.5" title={platform.name}>{platform.icon}</span>
                         <div className="min-w-0">
-                          <p className="font-medium text-gray-900 text-sm truncate">{campaign.name}</p>
+                          <p className="font-medium text-white text-sm truncate">{campaign.name}</p>
                           <div className="flex items-center gap-2 mt-1">
                             {campaign.parsed.funnelStage && (
                               <span className={`px-1.5 py-0.5 rounded text-xs font-medium ${getFunnelStageColor(campaign.parsed.funnelStage)}`}>
@@ -382,13 +378,13 @@ export default function CampaignsDashboard() {
                               </span>
                             )}
                             {campaign.parsed.product && (
-                              <span className="text-xs text-gray-400">{campaign.parsed.product}</span>
+                              <span className="text-xs text-gray-500">{campaign.parsed.product}</span>
                             )}
                             {campaign.parsed.isCompetitor && (
-                              <span className="text-xs text-orange-500">vs {campaign.parsed.competitorName}</span>
+                              <span className="text-xs text-orange-400">vs {campaign.parsed.competitorName}</span>
                             )}
                             {campaign.channel && (
-                              <span className="text-xs text-gray-300">• {campaign.channel}</span>
+                              <span className="text-xs text-gray-600">• {campaign.channel}</span>
                             )}
                           </div>
                         </div>
@@ -398,11 +394,11 @@ export default function CampaignsDashboard() {
                       <span className={`inline-block w-2 h-2 rounded-full ${status.color}`} title={status.label} />
                     </td>
                     <td className="px-4 py-3 text-right">
-                      <span className="font-medium text-gray-900">
+                      <span className="font-medium text-white">
                         {campaign.spend ? formatCurrency(campaign.spend) : "—"}
                       </span>
                       {campaign.budget && (
-                        <span className="text-xs text-gray-400 ml-1">
+                        <span className="text-xs text-gray-500 ml-1">
                           / {formatCurrency(campaign.budget)}
                         </span>
                       )}
@@ -410,25 +406,25 @@ export default function CampaignsDashboard() {
                     <td className="px-4 py-3 text-right">
                       {campaign.budget ? (
                         <div className="flex items-center justify-end gap-2">
-                          <div className="w-16 h-1.5 bg-gray-100 rounded-full overflow-hidden">
+                          <div className="w-16 h-1.5 bg-gray-700 rounded-full overflow-hidden">
                             <div 
                               className={`h-full rounded-full ${
                                 campaign.pacing > 90 ? "bg-red-500" : 
-                                campaign.pacing > 70 ? "bg-yellow-500" : "bg-green-500"
+                                campaign.pacing > 70 ? "bg-amber-500" : "bg-emerald-500"
                               }`}
                               style={{ width: `${Math.min(campaign.pacing, 100)}%` }}
                             />
                           </div>
-                          <span className="text-xs text-gray-500 w-8">{campaign.pacing.toFixed(0)}%</span>
+                          <span className="text-xs text-gray-400 w-8">{campaign.pacing.toFixed(0)}%</span>
                         </div>
                       ) : (
-                        <span className="text-gray-300">—</span>
+                        <span className="text-gray-600">—</span>
                       )}
                     </td>
-                    <td className="px-4 py-3 text-right font-medium text-gray-900">
+                    <td className="px-4 py-3 text-right font-medium text-white">
                       {formatNumber(campaign.clicks || 0)}
                     </td>
-                    <td className="px-4 py-3 text-right text-gray-600">
+                    <td className="px-4 py-3 text-right text-gray-300">
                       {campaign.ctr > 0 ? `${campaign.ctr.toFixed(2)}%` : "—"}
                     </td>
                   </tr>
@@ -440,7 +436,7 @@ export default function CampaignsDashboard() {
       </div>
 
       {/* Footer */}
-      <div className="text-xs text-gray-400 text-right">
+      <div className="text-xs text-gray-500 text-right">
         Showing {filteredCampaigns.length} of {enrichedCampaigns.length} campaigns
       </div>
     </div>

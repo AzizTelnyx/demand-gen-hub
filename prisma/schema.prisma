@@ -85,3 +85,33 @@ model SyncState {
   metadata     String?
   updatedAt    DateTime @updatedAt
 }
+
+model BudgetPlan {
+  id          String   @id @default(cuid())
+  year        Int
+  month       Int
+  channel     String   // google_ads, stackadapt, linkedin, reddit
+  region      String?  // AMER, EMEA, APAC, Global
+  funnelStage String?  // TOFU, MOFU, BOFU, ABM
+  planned     Float    // Planned budget
+  actual      Float    @default(0) // Actual spend (updated from campaigns)
+  notes       String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@unique([year, month, channel, region, funnelStage])
+}
+
+model BudgetChange {
+  id          String   @id @default(cuid())
+  description String   // Natural language description
+  fromChannel String?
+  toChannel   String?
+  fromRegion  String?
+  toRegion    String?
+  amount      Float
+  reason      String?
+  status      String   @default("proposed") // proposed, approved, applied
+  appliedAt   DateTime?
+  createdAt   DateTime @default(now())
+}

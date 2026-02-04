@@ -1,18 +1,25 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
+import OpenAI from "openai";
+
+const openai = new OpenAI({
+  apiKey: process.env.OPENAI_API_KEY,
+});
 
 export async function POST(request: NextRequest) {
   try {
-    const { message } = await request.json();
+    const { message, history = [] } = await request.json();
     
     if (!message) {
       return NextResponse.json({ error: "Message required" }, { status: 400 });
     }
 
-    const lowerMessage = message.toLowerCase();
-    
     // Get campaign data for context
-    const campaigns = await prisma.campaign.findMany();
+    const campaigns = await prisma.campaign.findMany({
+      orderBy: { spend: 'desc' },
+      take: 100,
+    });
+    
     const liveCampaigns = campaigns.filter(c => ["live", "active", "enabled"].includes(c.status));
     
     // Calculate stats
@@ -20,119 +27,88 @@ export async function POST(request: NextRequest) {
     const totalBudget = liveCampaigns.reduce((acc, c) => acc + (c.budget || 0), 0);
     const totalClicks = liveCampaigns.reduce((acc, c) => acc + (c.clicks || 0), 0);
     const totalImpressions = liveCampaigns.reduce((acc, c) => acc + (c.impressions || 0), 0);
+    const totalConversions = liveCampaigns.reduce((acc, c) => acc + (c.conversions || 0), 0);
     
     // Platform breakdown
-    const byPlatform: Record<string, { count: number; spend: number }> = {};
-    liveCampaigns.forEach(c => {
-      if (!byPlatform[c.platform]) byPlatform[c.platform] = { count: 0, spend: 0 };
-      byPlatform[c.platform].count++;
-      byPlatform[c.platform].spend += c.spend || 0;
+    const googleCampaigns = liveCampaigns.filter(c => c.platform === "google_ads");
+    const stackadaptCampaigns = liveCampaigns.filter(c => c.platform === "stackadapt");
+    
+    // Top campaigns by spend
+    const topBySpend = liveCampaigns.slice(0, 10).map(c => ({
+      name: c.name,
+      platform: c.platform,
+      spend: c.spend,
+      budget: c.budget,
+      clicks: c.clicks,
+      impressions: c.impressions,
+      conversions: c.conversions,
+      ctr: c.impressions && c.impressions > 0 ? ((c.clicks || 0) / c.impressions * 100).toFixed(2) : '0',
+    }));
+
+    const systemPrompt = `You are Lil Aziz, an AI assistant for Telnyx's Demand Generation team. You help with campaign analysis, performance insights, and marketing operations.
+
+CURRENT DATA (Last 30 days):
+- Live Campaigns: ${liveCampaigns.length}
+- Total Spend: $${totalSpend.toLocaleString()}
+- Total Budget: $${totalBudget.toLocaleString()}
+- Pacing: ${totalBudget > 0 ? ((totalSpend / totalBudget) * 100).toFixed(0) : 0}%
+- Clicks: ${totalClicks.toLocaleString()}
+- Impressions: ${totalImpressions.toLocaleString()}
+- CTR: ${totalImpressions > 0 ? ((totalClicks / totalImpressions) * 100).toFixed(2) : 0}%
+- Conversions: ${totalConversions}
+
+PLATFORM BREAKDOWN:
+- Google Ads: ${googleCampaigns.length} campaigns, $${googleCampaigns.reduce((a, c) => a + (c.spend || 0), 0).toLocaleString()} spend
+- StackAdapt: ${stackadaptCampaigns.length} campaigns, $${stackadaptCampaigns.reduce((a, c) => a + (c.spend || 0), 0).toLocaleString()} spend
+
+TOP 10 CAMPAIGNS BY SPEND:
+${topBySpend.map((c, i) => `${i + 1}. ${c.name} (${c.platform === 'google_ads' ? 'Google' : 'StackAdapt'}) - Spend: $${(c.spend || 0).toLocaleString()}, Budget: $${(c.budget || 0).toLocaleString()}, CTR: ${c.ctr}%, Conv: ${c.conversions || 0}`).join('\n')}
+
+GUIDELINES:
+- Be concise and actionable
+- Use bullet points and formatting for readability
+- When discussing campaigns, always include the full campaign name
+- Proactively suggest optimizations when you see issues
+- For complex actions (creating campaigns, budget changes), explain what's needed but note that execution requires the main Clawdbot interface
+- Be conversational but efficient`;
+
+    // Build messages for OpenAI
+    const messages: OpenAI.Chat.ChatCompletionMessageParam[] = [
+      { role: "system", content: systemPrompt },
+      ...history.slice(-10).map((h: { role: string; content: string }) => ({
+        role: h.role as "user" | "assistant",
+        content: h.content,
+      })),
+      { role: "user", content: message },
+    ];
+
+    // Check if OpenAI key is available
+    if (!process.env.OPENAI_API_KEY) {
+      // Fallback to basic response
+      return NextResponse.json({
+        response: `I received: "${message}"\n\nOpenAI is not configured. Here's a quick summary:\n\n• ${liveCampaigns.length} live campaigns\n• $${totalSpend.toLocaleString()} total spend\n• ${((totalClicks / totalImpressions) * 100).toFixed(2)}% CTR\n\nFor full AI capabilities, add OPENAI_API_KEY to your environment.`,
+        timestamp: new Date().toISOString(),
+      });
+    }
+
+    const completion = await openai.chat.completions.create({
+      model: "gpt-4o-mini",
+      messages,
+      temperature: 0.7,
+      max_tokens: 1000,
     });
 
-    // Simple intent matching
-    let response = "";
-
-    // Status/Overview queries
-    if (lowerMessage.includes("status") || lowerMessage.includes("overview") || lowerMessage.includes("how are") || lowerMessage.includes("what's running")) {
-      response = `**Campaign Overview**\n\n`;
-      response += `• **${liveCampaigns.length}** live campaigns\n`;
-      response += `• **$${totalSpend.toLocaleString()}** total spend (last 30 days)\n`;
-      response += `• **$${totalBudget.toLocaleString()}** total budget\n`;
-      response += `• **${totalClicks.toLocaleString()}** clicks\n`;
-      response += `• **${((totalClicks / totalImpressions) * 100).toFixed(2)}%** avg CTR\n\n`;
-      response += `**By Platform:**\n`;
-      Object.entries(byPlatform).forEach(([platform, data]) => {
-        const name = platform === "google_ads" ? "Google Ads" : platform === "stackadapt" ? "StackAdapt" : platform;
-        response += `• ${name}: ${data.count} campaigns, $${data.spend.toLocaleString()} spend\n`;
-      });
-    }
-    // Spend queries
-    else if (lowerMessage.includes("spend") || lowerMessage.includes("budget") || lowerMessage.includes("cost")) {
-      const pacing = totalBudget > 0 ? ((totalSpend / totalBudget) * 100).toFixed(0) : "N/A";
-      response = `**Budget & Spend**\n\n`;
-      response += `• Total Budget: **$${totalBudget.toLocaleString()}**\n`;
-      response += `• Total Spend: **$${totalSpend.toLocaleString()}**\n`;
-      response += `• Pacing: **${pacing}%**\n\n`;
-      
-      // Top spenders
-      const topSpenders = [...liveCampaigns].sort((a, b) => (b.spend || 0) - (a.spend || 0)).slice(0, 5);
-      response += `**Top Spending Campaigns:**\n`;
-      topSpenders.forEach((c, i) => {
-        response += `${i + 1}. ${c.name.slice(0, 40)}... — $${(c.spend || 0).toLocaleString()}\n`;
-      });
-    }
-    // Performance queries
-    else if (lowerMessage.includes("performance") || lowerMessage.includes("ctr") || lowerMessage.includes("clicks")) {
-      const avgCTR = totalImpressions > 0 ? ((totalClicks / totalImpressions) * 100).toFixed(2) : "0";
-      response = `**Performance Summary**\n\n`;
-      response += `• Impressions: **${totalImpressions.toLocaleString()}**\n`;
-      response += `• Clicks: **${totalClicks.toLocaleString()}**\n`;
-      response += `• CTR: **${avgCTR}%**\n\n`;
-      
-      // Best CTR
-      const withCTR = liveCampaigns
-        .map(c => ({ ...c, ctr: (c.impressions || 0) > 100 ? ((c.clicks || 0) / (c.impressions || 1)) * 100 : 0 }))
-        .filter(c => c.ctr > 0)
-        .sort((a, b) => b.ctr - a.ctr)
-        .slice(0, 5);
-      
-      if (withCTR.length > 0) {
-        response += `**Top CTR Campaigns:**\n`;
-        withCTR.forEach((c, i) => {
-          response += `${i + 1}. ${c.name.slice(0, 35)}... — ${c.ctr.toFixed(2)}% CTR\n`;
-        });
-      }
-    }
-    // Platform specific
-    else if (lowerMessage.includes("google") || lowerMessage.includes("search")) {
-      const googleCampaigns = liveCampaigns.filter(c => c.platform === "google_ads");
-      const spend = googleCampaigns.reduce((acc, c) => acc + (c.spend || 0), 0);
-      const clicks = googleCampaigns.reduce((acc, c) => acc + (c.clicks || 0), 0);
-      
-      response = `**Google Ads Summary**\n\n`;
-      response += `• **${googleCampaigns.length}** live campaigns\n`;
-      response += `• **$${spend.toLocaleString()}** spend\n`;
-      response += `• **${clicks.toLocaleString()}** clicks\n`;
-    }
-    else if (lowerMessage.includes("stackadapt") || lowerMessage.includes("display") || lowerMessage.includes("native")) {
-      const saCampaigns = liveCampaigns.filter(c => c.platform === "stackadapt");
-      const spend = saCampaigns.reduce((acc, c) => acc + (c.spend || 0), 0);
-      const clicks = saCampaigns.reduce((acc, c) => acc + (c.clicks || 0), 0);
-      
-      response = `**StackAdapt Summary**\n\n`;
-      response += `• **${saCampaigns.length}** live campaigns\n`;
-      response += `• **$${spend.toLocaleString()}** spend\n`;
-      response += `• **${clicks.toLocaleString()}** clicks\n`;
-    }
-    // Help
-    else if (lowerMessage.includes("help") || lowerMessage.includes("what can you")) {
-      response = `I can help you with:\n\n`;
-      response += `• **"What's the status?"** — Overview of all campaigns\n`;
-      response += `• **"How's the spend?"** — Budget and spend breakdown\n`;
-      response += `• **"Show performance"** — Clicks, CTR, impressions\n`;
-      response += `• **"Google Ads summary"** — Google-specific stats\n`;
-      response += `• **"StackAdapt summary"** — StackAdapt stats\n\n`;
-      response += `For complex tasks (creating campaigns, budget changes), use the main Clawdbot chat.`;
-    }
-    // Default
-    else {
-      response = `I understood: "${message}"\n\n`;
-      response += `I can answer questions about your campaigns. Try:\n`;
-      response += `• "What's running?"\n`;
-      response += `• "How's the spend?"\n`;
-      response += `• "Show performance"\n\n`;
-      response += `For complex requests, use the main Clawdbot chat (Slack/Telegram).`;
-    }
+    const response = completion.choices[0]?.message?.content || "Sorry, I couldn't generate a response.";
 
     return NextResponse.json({ 
       response,
-      timestamp: new Date().toISOString()
+      timestamp: new Date().toISOString(),
     });
 
   } catch (error) {
     console.error("Chat API error:", error);
     return NextResponse.json(
-      { error: "Failed to process message" },
+      { error: "Failed to process message", details: String(error) },
       { status: 500 }
     );
   }

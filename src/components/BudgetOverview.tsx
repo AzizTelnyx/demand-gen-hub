@@ -3,7 +3,7 @@
 import { useState, useEffect, useMemo } from "react";
 import { parseCampaignName, ParsedCampaign } from "@/lib/parseCampaignName";
 import { 
-  PieChart, Pie, Cell, BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Legend 
+  PieChart, Pie, Cell, BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer 
 } from "recharts";
 
 interface Campaign {
@@ -33,7 +33,7 @@ const COLORS = {
     ABM: "#F59E0B",
     UPSELL: "#EC4899",
     PARTNERSHIP: "#6366F1",
-    Unknown: "#9CA3AF",
+    Unknown: "#6B7280",
   },
   platform: {
     google_ads: "#4285F4",
@@ -48,6 +48,18 @@ const platformLabels: Record<string, string> = {
   stackadapt: "StackAdapt",
   linkedin: "LinkedIn",
   reddit: "Reddit",
+};
+
+const CustomTooltip = ({ active, payload }: any) => {
+  if (active && payload && payload.length) {
+    return (
+      <div className="bg-gray-900 border border-gray-700 rounded-lg px-3 py-2 shadow-xl">
+        <p className="text-white text-sm font-medium">{payload[0].name}</p>
+        <p className="text-gray-300 text-sm">${payload[0].value?.toLocaleString()}</p>
+      </div>
+    );
+  }
+  return null;
 };
 
 export default function BudgetOverview() {
@@ -167,15 +179,15 @@ export default function BudgetOverview() {
 
   return (
     <div className="space-y-6">
-      {/* Header */}
-      <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-        <div className="flex items-center gap-2 text-blue-800">
+      {/* Header Info */}
+      <div className="bg-indigo-900/30 border border-indigo-700/50 rounded-xl p-4">
+        <div className="flex items-center gap-2 text-indigo-300">
           <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
           </svg>
           <span className="font-medium">Data Explanation</span>
         </div>
-        <p className="text-sm text-blue-700 mt-1">
+        <p className="text-sm text-indigo-200/70 mt-1">
           <strong>Spend:</strong> Actual spend over the last 30 days across all live campaigns. 
           <strong className="ml-2">Budget:</strong> Google Ads = daily budgets × 30, StackAdapt = flight lifetime budgets.
         </p>
@@ -183,33 +195,33 @@ export default function BudgetOverview() {
 
       {/* Summary Cards */}
       <div className="grid grid-cols-5 gap-4">
-        <div className="bg-white rounded-xl p-5 shadow-sm border border-gray-100">
-          <div className="text-sm text-gray-500 mb-1">Live Campaigns</div>
-          <div className="text-2xl font-bold text-gray-900">{totals.campaigns}</div>
+        <div className="bg-gray-800/50 backdrop-blur rounded-xl p-5 border border-gray-700/50">
+          <div className="text-sm text-gray-400 mb-1">Live Campaigns</div>
+          <div className="text-2xl font-bold text-white">{totals.campaigns}</div>
         </div>
-        <div className="bg-white rounded-xl p-5 shadow-sm border border-gray-100">
-          <div className="text-sm text-gray-500 mb-1">30-Day Spend</div>
-          <div className="text-2xl font-bold text-gray-900">{formatCurrency(totals.spend)}</div>
+        <div className="bg-gray-800/50 backdrop-blur rounded-xl p-5 border border-gray-700/50">
+          <div className="text-sm text-gray-400 mb-1">30-Day Spend</div>
+          <div className="text-2xl font-bold text-white">{formatCurrency(totals.spend)}</div>
         </div>
-        <div className="bg-white rounded-xl p-5 shadow-sm border border-gray-100">
-          <div className="text-sm text-gray-500 mb-1">Impressions</div>
-          <div className="text-2xl font-bold text-gray-900">{formatNumber(totals.impressions)}</div>
+        <div className="bg-gray-800/50 backdrop-blur rounded-xl p-5 border border-gray-700/50">
+          <div className="text-sm text-gray-400 mb-1">Impressions</div>
+          <div className="text-2xl font-bold text-white">{formatNumber(totals.impressions)}</div>
         </div>
-        <div className="bg-white rounded-xl p-5 shadow-sm border border-gray-100">
-          <div className="text-sm text-gray-500 mb-1">Clicks</div>
-          <div className="text-2xl font-bold text-gray-900">{formatNumber(totals.clicks)}</div>
+        <div className="bg-gray-800/50 backdrop-blur rounded-xl p-5 border border-gray-700/50">
+          <div className="text-sm text-gray-400 mb-1">Clicks</div>
+          <div className="text-2xl font-bold text-white">{formatNumber(totals.clicks)}</div>
         </div>
-        <div className="bg-white rounded-xl p-5 shadow-sm border border-gray-100">
-          <div className="text-sm text-gray-500 mb-1">Avg CPC</div>
-          <div className="text-2xl font-bold text-gray-900">${totals.cpc.toFixed(2)}</div>
+        <div className="bg-gray-800/50 backdrop-blur rounded-xl p-5 border border-gray-700/50">
+          <div className="text-sm text-gray-400 mb-1">Avg CPC</div>
+          <div className="text-2xl font-bold text-white">${totals.cpc.toFixed(2)}</div>
         </div>
       </div>
 
       {/* Charts Row */}
       <div className="grid grid-cols-2 gap-6">
         {/* Funnel Pie Chart */}
-        <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
-          <h3 className="font-semibold text-gray-900 mb-4">Spend by Funnel Stage</h3>
+        <div className="bg-gray-800/50 backdrop-blur rounded-xl border border-gray-700/50 p-6">
+          <h3 className="font-semibold text-white mb-4">Spend by Funnel Stage</h3>
           <div className="h-64">
             <ResponsiveContainer width="100%" height="100%">
               <PieChart>
@@ -231,9 +243,7 @@ export default function BudgetOverview() {
                     />
                   ))}
                 </Pie>
-                <Tooltip 
-                  formatter={(value) => formatCurrency(Number(value) || 0)}
-                />
+                <Tooltip content={<CustomTooltip />} />
               </PieChart>
             </ResponsiveContainer>
           </div>
@@ -241,18 +251,18 @@ export default function BudgetOverview() {
             {funnelData.map(item => (
               <div key={item.key} className="flex items-center gap-2">
                 <div 
-                  className="w-3 h-3 rounded-full" 
+                  className="w-3 h-3 rounded-full flex-shrink-0" 
                   style={{ backgroundColor: COLORS.funnel[item.key as keyof typeof COLORS.funnel] || COLORS.funnel.Unknown }}
                 />
-                <span className="text-gray-600">{item.name}: {formatCurrency(item.spend)}</span>
+                <span className="text-gray-300 truncate">{item.name}: {formatCurrency(item.spend)}</span>
               </div>
             ))}
           </div>
         </div>
 
         {/* Platform Pie Chart */}
-        <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
-          <h3 className="font-semibold text-gray-900 mb-4">Spend by Platform</h3>
+        <div className="bg-gray-800/50 backdrop-blur rounded-xl border border-gray-700/50 p-6">
+          <h3 className="font-semibold text-white mb-4">Spend by Platform</h3>
           <div className="h-64">
             <ResponsiveContainer width="100%" height="100%">
               <PieChart>
@@ -270,13 +280,11 @@ export default function BudgetOverview() {
                   {platformData.map((entry) => (
                     <Cell 
                       key={entry.key} 
-                      fill={COLORS.platform[entry.key as keyof typeof COLORS.platform] || "#9CA3AF"} 
+                      fill={COLORS.platform[entry.key as keyof typeof COLORS.platform] || "#6B7280"} 
                     />
                   ))}
                 </Pie>
-                <Tooltip 
-                  formatter={(value) => formatCurrency(Number(value) || 0)}
-                />
+                <Tooltip content={<CustomTooltip />} />
               </PieChart>
             </ResponsiveContainer>
           </div>
@@ -284,10 +292,10 @@ export default function BudgetOverview() {
             {platformData.map(item => (
               <div key={item.key} className="flex items-center gap-2">
                 <div 
-                  className="w-3 h-3 rounded-full" 
-                  style={{ backgroundColor: COLORS.platform[item.key as keyof typeof COLORS.platform] || "#9CA3AF" }}
+                  className="w-3 h-3 rounded-full flex-shrink-0" 
+                  style={{ backgroundColor: COLORS.platform[item.key as keyof typeof COLORS.platform] || "#6B7280" }}
                 />
-                <span className="text-gray-600">{item.name}: {formatCurrency(item.spend)}</span>
+                <span className="text-gray-300">{item.name}: {formatCurrency(item.spend)}</span>
               </div>
             ))}
           </div>
@@ -297,14 +305,27 @@ export default function BudgetOverview() {
       {/* Bar Charts Row */}
       <div className="grid grid-cols-2 gap-6">
         {/* Region Bar Chart */}
-        <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
-          <h3 className="font-semibold text-gray-900 mb-4">Spend by Region</h3>
+        <div className="bg-gray-800/50 backdrop-blur rounded-xl border border-gray-700/50 p-6">
+          <h3 className="font-semibold text-white mb-4">Spend by Region</h3>
           <div className="h-64">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={regionData} layout="vertical">
-                <XAxis type="number" tickFormatter={(v) => formatCurrency(v)} />
-                <YAxis type="category" dataKey="name" width={80} />
-                <Tooltip formatter={(value) => formatCurrency(Number(value) || 0)} />
+                <XAxis 
+                  type="number" 
+                  tickFormatter={(v) => formatCurrency(v)} 
+                  tick={{ fill: '#9CA3AF', fontSize: 12 }}
+                  axisLine={{ stroke: '#374151' }}
+                  tickLine={{ stroke: '#374151' }}
+                />
+                <YAxis 
+                  type="category" 
+                  dataKey="name" 
+                  width={80} 
+                  tick={{ fill: '#D1D5DB', fontSize: 12 }}
+                  axisLine={{ stroke: '#374151' }}
+                  tickLine={{ stroke: '#374151' }}
+                />
+                <Tooltip content={<CustomTooltip />} />
                 <Bar dataKey="spend" fill="#6366F1" radius={[0, 4, 4, 0]} />
               </BarChart>
             </ResponsiveContainer>
@@ -312,14 +333,27 @@ export default function BudgetOverview() {
         </div>
 
         {/* Channel Bar Chart */}
-        <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
-          <h3 className="font-semibold text-gray-900 mb-4">Spend by Channel</h3>
+        <div className="bg-gray-800/50 backdrop-blur rounded-xl border border-gray-700/50 p-6">
+          <h3 className="font-semibold text-white mb-4">Spend by Channel</h3>
           <div className="h-64">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={channelData} layout="vertical">
-                <XAxis type="number" tickFormatter={(v) => formatCurrency(v)} />
-                <YAxis type="category" dataKey="name" width={80} />
-                <Tooltip formatter={(value) => formatCurrency(Number(value) || 0)} />
+                <XAxis 
+                  type="number" 
+                  tickFormatter={(v) => formatCurrency(v)} 
+                  tick={{ fill: '#9CA3AF', fontSize: 12 }}
+                  axisLine={{ stroke: '#374151' }}
+                  tickLine={{ stroke: '#374151' }}
+                />
+                <YAxis 
+                  type="category" 
+                  dataKey="name" 
+                  width={80} 
+                  tick={{ fill: '#D1D5DB', fontSize: 12 }}
+                  axisLine={{ stroke: '#374151' }}
+                  tickLine={{ stroke: '#374151' }}
+                />
+                <Tooltip content={<CustomTooltip />} />
                 <Bar dataKey="spend" fill="#10B981" radius={[0, 4, 4, 0]} />
               </BarChart>
             </ResponsiveContainer>
@@ -328,20 +362,20 @@ export default function BudgetOverview() {
       </div>
 
       {/* Budget Planner Section */}
-      <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+      <div className="bg-gray-800/50 backdrop-blur rounded-xl border border-gray-700/50 p-6">
         <div className="flex items-center gap-3 mb-4">
           <span className="text-xl">💡</span>
-          <h3 className="font-semibold text-gray-900">Budget Planner</h3>
-          <span className="text-xs bg-yellow-100 text-yellow-700 px-2 py-0.5 rounded">Coming Soon</span>
+          <h3 className="font-semibold text-white">Budget Planner</h3>
+          <span className="text-xs bg-amber-500/20 text-amber-400 px-2 py-0.5 rounded-full border border-amber-500/30">Coming Soon</span>
         </div>
         
-        <p className="text-gray-600 text-sm mb-4">
+        <p className="text-gray-400 text-sm mb-4">
           Describe how you want to reallocate budget. I&apos;ll show you the exact changes and projected impact before you approve.
         </p>
         
-        <div className="bg-gray-50 rounded-lg p-4 mb-4">
+        <div className="bg-gray-900/50 rounded-lg p-4 mb-4 border border-gray-700/30">
           <p className="text-sm text-gray-500 mb-2">Example commands:</p>
-          <ul className="text-sm text-gray-700 space-y-1">
+          <ul className="text-sm text-gray-300 space-y-1">
             <li>• &quot;Shift $5K from TOFU to BOFU&quot;</li>
             <li>• &quot;Increase Voice AI budget by 20%&quot;</li>
             <li>• &quot;Move $3K from StackAdapt to Google Ads&quot;</li>
@@ -355,29 +389,14 @@ export default function BudgetOverview() {
             placeholder="Describe your budget change..."
             value={plannerInput}
             onChange={(e) => setPlannerInput(e.target.value)}
-            className="flex-1 px-4 py-3 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            className="flex-1 px-4 py-3 bg-gray-900 border border-gray-700 rounded-lg text-sm text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500"
           />
           <button 
-            className="px-6 py-3 bg-indigo-600 text-white rounded-lg text-sm font-medium hover:bg-indigo-700 transition"
+            className="px-6 py-3 bg-indigo-600 text-white rounded-lg text-sm font-medium hover:bg-indigo-500 transition"
             onClick={() => alert("Budget planning coming soon! For now, tell me in the main chat what changes you want.")}
           >
             Plan Change
           </button>
-        </div>
-
-        {/* Placeholder for results */}
-        <div className="mt-6 border-t border-gray-100 pt-6 hidden">
-          <h4 className="font-medium text-gray-900 mb-4">Proposed Changes</h4>
-          <div className="grid grid-cols-2 gap-6">
-            <div className="bg-red-50 rounded-lg p-4">
-              <h5 className="text-sm font-medium text-red-800 mb-2">Before</h5>
-              {/* Before state */}
-            </div>
-            <div className="bg-green-50 rounded-lg p-4">
-              <h5 className="text-sm font-medium text-green-800 mb-2">After</h5>
-              {/* After state */}
-            </div>
-          </div>
         </div>
       </div>
     </div>

@@ -15,6 +15,22 @@ interface OverlapResult {
   recommendations: string[];
 }
 
+// Known existing campaign keywords (hardcoded for speed - update as needed)
+const EXISTING_KEYWORDS: Record<string, { campaign: string; adGroup: string }> = {
+  'bandwidth alternative': { campaign: '202502 MOFU Bandwidth SA', adGroup: 'Competitor - Bandwidth' },
+  'bandwidth vs telnyx': { campaign: '202502 MOFU Bandwidth SA', adGroup: 'Competitor - Bandwidth' },
+  'twilio alternative': { campaign: '202501 MOFU Twilio SA', adGroup: 'Competitor - Twilio' },
+  'twilio vs telnyx': { campaign: '202501 MOFU Twilio SA', adGroup: 'Competitor - Twilio' },
+  'vonage alternative': { campaign: '202501 MOFU Vonage SA', adGroup: 'Competitor - Vonage' },
+  'plivo alternative': { campaign: '202501 MOFU Plivo SA', adGroup: 'Competitor - Plivo' },
+  'sip trunking': { campaign: '202501 TOFU SIP Trunking', adGroup: 'SIP Generic' },
+  'sip trunk provider': { campaign: '202501 TOFU SIP Trunking', adGroup: 'SIP Generic' },
+  'voice api': { campaign: '202501 TOFU Voice API', adGroup: 'Voice Generic' },
+  'programmable voice': { campaign: '202501 TOFU Voice API', adGroup: 'Voice Generic' },
+  'sms api': { campaign: '202501 TOFU SMS API', adGroup: 'SMS Generic' },
+  'bulk sms': { campaign: '202501 TOFU SMS API', adGroup: 'SMS Bulk' },
+};
+
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
@@ -27,88 +43,62 @@ export async function POST(request: NextRequest) {
       }, { status: 400 });
     }
 
-    // Call internal Clawdbot to check Google Ads
-    const CLAWDBOT_URL = process.env.CLAWDBOT_URL || 'http://127.0.0.1:18789/v1/chat/completions';
-    const CLAWDBOT_TOKEN = process.env.CLAWDBOT_TOKEN || '';
+    // Quick local check against known keywords
+    const overlappingKeywords: OverlapResult['overlappingKeywords'] = [];
+    const warnings: string[] = [];
+    const recommendations: string[] = [];
 
-    const prompt = `Check for keyword overlap in Google Ads account ${GOOGLE_ADS_CUSTOMER_ID}.
-
-I need to check if any of these keywords already exist in active campaigns:
-
-KEYWORDS TO CHECK:
-${keywords.map((k: string) => `- ${k}`).join('\n')}
-
-REGION: ${region || 'All'}
-PRODUCT: ${product || 'General'}
-
-Use the Google Ads API to:
-1. Search for existing campaigns/ad groups targeting these exact keywords or close variants
-2. Check if any campaigns with similar names exist (e.g., "Bandwidth" in campaign name if checking Bandwidth keywords)
-3. Report any potential overlap
-
-Return JSON:
-{
-  "hasOverlap": boolean,
-  "overlappingKeywords": [
-    {
-      "keyword": "the keyword",
-      "existingCampaign": "campaign name",
-      "existingAdGroup": "ad group name",
-      "matchType": "exact|phrase|broad"
-    }
-  ],
-  "warnings": ["any warnings about potential conflicts"],
-  "recommendations": ["what to do about overlaps"]
-}`;
-
-    const response = await fetch(CLAWDBOT_URL, {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${CLAWDBOT_TOKEN}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        model: 'clawdbot:main',
-        messages: [{ role: 'user', content: prompt }],
-        max_tokens: 2000,
-        temperature: 0.2,
-      }),
-    });
-
-    if (!response.ok) {
-      // Fallback: Return no overlap if API fails
-      return NextResponse.json({
-        success: true,
-        overlap: {
-          hasOverlap: false,
-          overlappingKeywords: [],
-          warnings: ['Could not check Google Ads API - please verify manually'],
-          recommendations: ['Review existing campaigns before launching']
-        },
-        usedFallback: true
-      });
+    for (const keyword of keywords) {
+      const normalizedKw = keyword.toLowerCase().trim();
+      
+      // Check exact match
+      if (EXISTING_KEYWORDS[normalizedKw]) {
+        overlappingKeywords.push({
+          keyword: keyword,
+          existingCampaign: EXISTING_KEYWORDS[normalizedKw].campaign,
+          existingAdGroup: EXISTING_KEYWORDS[normalizedKw].adGroup,
+          matchType: 'exact',
+        });
+        continue;
+      }
+      
+      // Check partial match (keyword contains existing or vice versa)
+      for (const [existingKw, info] of Object.entries(EXISTING_KEYWORDS)) {
+        if (normalizedKw.includes(existingKw) || existingKw.includes(normalizedKw)) {
+          overlappingKeywords.push({
+            keyword: keyword,
+            existingCampaign: info.campaign,
+            existingAdGroup: info.adGroup,
+            matchType: 'partial',
+          });
+          break;
+        }
+      }
     }
 
-    const data = await response.json();
-    const content = data.choices?.[0]?.message?.content || '';
-    
-    // Extract JSON from response
-    const jsonMatch = content.match(/\{[\s\S]*\}/);
-    if (jsonMatch) {
-      const overlap = JSON.parse(jsonMatch[0]) as OverlapResult;
-      return NextResponse.json({ success: true, overlap });
+    const hasOverlap = overlappingKeywords.length > 0;
+
+    if (hasOverlap) {
+      warnings.push(`Found ${overlappingKeywords.length} keyword(s) that may conflict with existing campaigns`);
+      recommendations.push('Consider using negative keywords or adjusting match types to avoid internal competition');
+      recommendations.push('Review the existing campaigns to ensure targeting doesn\'t overlap');
+    } else {
+      recommendations.push('No obvious overlaps detected. Verify in Google Ads before launching.');
     }
 
-    // Fallback response
+    // Always add a note to verify manually
+    warnings.push('This is a quick check against known keywords. Always verify in Google Ads UI before launch.');
+
     return NextResponse.json({
       success: true,
       overlap: {
-        hasOverlap: false,
-        overlappingKeywords: [],
-        warnings: ['Could not parse overlap check results'],
-        recommendations: ['Review existing campaigns before launching']
+        hasOverlap,
+        overlappingKeywords,
+        warnings,
+        recommendations,
       },
-      usedFallback: true
+      checkedAt: new Date().toISOString(),
+      keywordsChecked: keywords.length,
     });
 
   } catch (error: any) {
@@ -118,10 +108,10 @@ Return JSON:
       overlap: {
         hasOverlap: false,
         overlappingKeywords: [],
-        warnings: [`Error checking overlap: ${error.message}`],
-        recommendations: ['Review existing campaigns manually before launching']
+        warnings: [`Error checking overlap: ${error.message}`, 'Please verify manually in Google Ads'],
+        recommendations: ['Review existing campaigns before launching'],
       },
-      usedFallback: true
+      usedFallback: true,
     });
   }
 }

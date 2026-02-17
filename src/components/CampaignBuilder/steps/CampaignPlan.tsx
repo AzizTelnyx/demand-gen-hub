@@ -140,7 +140,18 @@ export function CampaignPlan({ extractedBrief, icpAnalysis, channelResearch, cam
       platform: mapChannelToPlatform(ch.name),
       funnel: ch.funnelStage as any || 'full',
       budget: ch.monthlyBudget,
-      adGroups: ch.adGroups.map(ag => ({ name: ag, keywords: [] })),
+      adGroups: ch.adGroups.map((ag: any) => {
+        // Handle both string and object formats
+        if (typeof ag === 'string') {
+          return { name: ag, keywords: [] };
+        }
+        return { 
+          name: ag.name || ag, 
+          keywords: ag.keywords || [],
+          matchTypes: ag.matchTypes || [],
+          theme: ag.theme || ''
+        };
+      }),
       status: 'planned' as const,
     }));
     
@@ -280,10 +291,40 @@ export function CampaignPlan({ extractedBrief, icpAnalysis, channelResearch, cam
                 {/* Ad Groups */}
                 <div>
                   <p className="text-xs text-gray-500 mb-2">Ad Groups</p>
-                  <div className="flex flex-wrap gap-2">
-                    {channel.adGroups.map((ag, i) => (
-                      <span key={i} className="px-3 py-1 bg-blue-600/20 text-blue-400 rounded-lg text-sm">{ag}</span>
-                    ))}
+                  <div className="space-y-3">
+                    {channel.adGroups.map((ag: any, i: number) => {
+                      // Handle both string format and object format
+                      const isObject = typeof ag === 'object' && ag !== null;
+                      const name = isObject ? ag.name : ag;
+                      const keywords = isObject ? ag.keywords : null;
+                      const matchTypes = isObject ? ag.matchTypes : null;
+                      const theme = isObject ? ag.theme : null;
+                      
+                      return (
+                        <div key={i} className="bg-gray-900/50 rounded-lg p-3">
+                          <div className="flex items-center justify-between mb-2">
+                            <span className="text-blue-400 font-medium">{name}</span>
+                            {matchTypes && (
+                              <div className="flex gap-1">
+                                {matchTypes.map((mt: string, j: number) => (
+                                  <span key={j} className="px-2 py-0.5 bg-gray-700 text-gray-400 rounded text-xs">{mt}</span>
+                                ))}
+                              </div>
+                            )}
+                          </div>
+                          {theme && <p className="text-gray-500 text-xs mb-2">{theme}</p>}
+                          {keywords && keywords.length > 0 && (
+                            <div className="flex flex-wrap gap-1.5">
+                              {keywords.map((kw: string, j: number) => (
+                                <span key={j} className="px-2 py-1 bg-indigo-600/20 text-indigo-300 rounded text-xs border border-indigo-500/30">
+                                  {kw}
+                                </span>
+                              ))}
+                            </div>
+                          )}
+                        </div>
+                      );
+                    })}
                   </div>
                 </div>
                 

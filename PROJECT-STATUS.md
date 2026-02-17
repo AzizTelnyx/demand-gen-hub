@@ -236,6 +236,37 @@ git log --oneline -5  # Recent commits
 
 ---
 
+## Session Notes (2026-02-04 Evening)
+
+### Fixes Applied This Session
+
+1. **Overlap Check — Now Instant**
+   - Removed slow 60+ second AI call
+   - Now uses local keyword dictionary for instant results
+   - Checks against known campaigns: Bandwidth, Twilio, Vonage, Voice API, SIP, SMS
+   - Made it a **manual button** instead of auto-running
+
+2. **Ad Group Structure — Now Shows Keywords**
+   - Updated `generate-plan` API to request keywords per ad group
+   - Updated CampaignPlan.tsx UI to display:
+     - Ad group name and theme
+     - Keywords with match types (exact, phrase, broad)
+   - Handles both old string format and new object format
+
+3. **Debug Logging Added**
+   - ChannelBudget.tsx now logs caching behavior to browser console
+   - Look for `[ChannelBudget]` logs to debug back navigation
+
+4. **CLAWDBOT_URL Added**
+   - Was missing from .env.local, now properly set
+
+### Still To Test
+
+- Back navigation caching (check browser console for logs)
+- Google Ads launch flow (API connected, needs end-to-end test)
+
+---
+
 ## Session Notes (2026-02-04)
 
 ### What We Did

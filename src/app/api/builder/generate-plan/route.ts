@@ -51,14 +51,23 @@ Return ONLY valid JSON:
       "calculation": { "method": "description", "inputs": {}, "result": number },
       "targeting": ["criteria"],
       "expectedMetrics": { "impressions": number, "clicks": number, "ctr": "percent", "cpc": number, "conversions": "range" },
-      "adGroups": ["themes"]
+      "adGroups": [
+        {
+          "name": "Ad Group Name",
+          "theme": "brief description",
+          "keywords": ["keyword 1", "keyword 2", "keyword 3"],
+          "matchTypes": ["exact", "phrase"]
+        }
+      ]
     }
   ],
   "timeline": { "week1": "Setup", "week2_4": "Optimize", "month2": "Scale" },
   "successMetrics": ["KPIs"],
   "risks": ["challenges"],
   "recommendations": ["suggestions"]
-}`;
+}
+
+IMPORTANT: For Google Search channels, include 3-5 specific keywords per ad group with recommended match types.`;
 
     const response = await createCompletion({ messages: [{ role: 'user', content: prompt }], maxTokens: 2500, temperature: 0.3 });
     const jsonMatch = response.match(/\{[\s\S]*\}/);
@@ -105,7 +114,11 @@ function fallbackPlan(channels: string[], budget: any, duration: any) {
       calculation: { method: 'Budget allocated based on channel mix', inputs: { totalBudget: monthlyBudget }, result: perChannel },
       targeting: ['Job titles', 'Industries', 'Company size'],
       expectedMetrics: { impressions: Math.round(perChannel * 30), clicks: Math.round(perChannel * 0.3), ctr: '1-3%', cpc: 15, conversions: '8-20' },
-      adGroups: ['Brand', 'Product', 'Use Case']
+      adGroups: [
+        { name: 'Brand', theme: 'Branded searches', keywords: ['telnyx', 'telnyx voice', 'telnyx api'], matchTypes: ['exact', 'phrase'] },
+        { name: 'Product', theme: 'Product features', keywords: ['voice api', 'sip trunking', 'programmable voice'], matchTypes: ['phrase', 'broad'] },
+        { name: 'Use Case', theme: 'Solution-focused', keywords: ['contact center solution', 'ivr system', 'call routing'], matchTypes: ['phrase'] }
+      ]
     })),
     timeline: { week1: 'Campaign setup and launch', week2_4: 'Monitor and optimize', month2: 'Scale top performers' },
     successMetrics: ['Cost per lead < $150', 'Lead to SQO rate > 15%', 'Pipeline generated'],

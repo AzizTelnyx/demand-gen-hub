@@ -7,6 +7,7 @@ const navItems = [
   { id: "dashboard", label: "Dashboard", icon: "📊", href: "/dashboard" },
   { id: "campaigns", label: "Campaigns", icon: "📈", href: "/" },
   { id: "budget", label: "Budget", icon: "💰", href: "/budget" },
+  { id: "agents", label: "Agents", icon: "🤖", href: "/agents" },
 ];
 
 const workflowItems = [
@@ -19,6 +20,7 @@ const agentItems = [
   { id: "budget-calc", label: "Budget Calculator", icon: "🧮", href: "/agents/budget" },
   { id: "ad-copy", label: "Ad Copy Generator", icon: "✍️", href: "/agents/copy" },
   { id: "health", label: "Health Monitor", icon: "🏥", href: "/agents/health" },
+  { id: "deep-dive", label: "Deep Dive", icon: "🔍", href: "/agents/deep-dive" },
 ];
 
 export default function Sidebar() {

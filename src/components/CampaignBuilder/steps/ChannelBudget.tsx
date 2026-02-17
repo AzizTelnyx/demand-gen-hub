@@ -42,6 +42,9 @@ export function ChannelBudget({ extractedBrief, icpAnalysis, channelResearch, on
   const hasFetched = useRef(false);
   const hasCachedData = channelResearch && channelResearch.length > 0;
   
+  // Debug logging
+  console.log('[ChannelBudget] Render - hasCachedData:', hasCachedData, 'channelResearch length:', channelResearch?.length, 'hasFetched:', hasFetched.current);
+  
   const [isLoading, setIsLoading] = useState(!hasCachedData);
   const [error, setError] = useState<string | null>(null);
   const [channels, setChannels] = useState<ExtendedChannelResearch[]>(hasCachedData ? channelResearch : []);
@@ -53,11 +56,15 @@ export function ChannelBudget({ extractedBrief, icpAnalysis, channelResearch, on
   const [checkingOverlap, setCheckingOverlap] = useState(false);
 
   useEffect(() => {
+    console.log('[ChannelBudget] useEffect - hasCachedData:', hasCachedData, 'hasFetched.current:', hasFetched.current);
+    
     if (hasCachedData || hasFetched.current) {
+      console.log('[ChannelBudget] Skipping fetch - using cached data');
       setIsLoading(false);
       return;
     }
     
+    console.log('[ChannelBudget] Running fetch...');
     hasFetched.current = true;
     
     const runResearch = async () => {
@@ -105,11 +112,7 @@ export function ChannelBudget({ extractedBrief, icpAnalysis, channelResearch, on
           setChannels(mappedChannels);
           setTotalBudget(data.totalRecommendedBudget || mappedChannels.reduce((sum: number, c: any) => sum + (c.recommendedBudget || 0), 0));
           
-          // Auto-check for overlap with Google keywords
-          const googleChannel = mappedChannels.find((c: any) => c.channel === 'google_search');
-          if (googleChannel?.keywords?.length > 0) {
-            checkOverlap(googleChannel.keywords.map((k: any) => k.keyword || k));
-          }
+          // Don't auto-check overlap - let user trigger manually
         } else {
           setError('Failed to research channels');
         }
@@ -235,6 +238,27 @@ export function ChannelBudget({ extractedBrief, icpAnalysis, channelResearch, on
         <h2 className="text-2xl font-bold text-white mb-2">Channel & Budget Research</h2>
         <p className="text-gray-400">AI-recommended channels and budgets based on your ICP and goals</p>
       </div>
+
+      {/* Manual Overlap Check Button */}
+      {!overlapResult && !checkingOverlap && channels.some(c => c.channel === 'google_search' && (c.keywords?.length ?? 0) > 0) && (
+        <div className="bg-gray-800/50 border border-gray-600 rounded-xl p-4 flex items-center justify-between">
+          <div>
+            <p className="text-white font-medium">🔍 Check Keyword Overlap</p>
+            <p className="text-gray-400 text-sm">Verify these keywords don't conflict with existing campaigns</p>
+          </div>
+          <button
+            onClick={() => {
+              const googleChannel = channels.find(c => c.channel === 'google_search');
+              if (googleChannel?.keywords) {
+                checkOverlap(googleChannel.keywords.map((k: any) => k.keyword || k));
+              }
+            }}
+            className="px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-lg text-sm font-medium transition-colors"
+          >
+            Check Now
+          </button>
+        </div>
+      )}
 
       {/* Overlap Warning */}
       {overlapResult && overlapResult.hasOverlap && (

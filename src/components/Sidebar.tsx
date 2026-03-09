@@ -7,7 +7,7 @@ import {
   LayoutDashboard, BarChart3, Wallet, MessageSquare,
   Sword, Crosshair, History, Image, TrendingUp,
   Sun, Moon, PanelLeftClose, PanelLeftOpen, Bot, Workflow,
-  ClipboardList, Target, Radar,
+  ClipboardList, Target, Radar, Activity, HeartPulse,
 } from "lucide-react";
 import { useTheme } from "./ThemeProvider";
 
@@ -15,11 +15,12 @@ const navItems = [
   { id: "dashboard", label: "Dashboard", icon: LayoutDashboard, href: "/dashboard" },
   { id: "campaigns", label: "Command Center", icon: Radar, href: "/" },
   { id: "pipeline", label: "Pipeline", icon: TrendingUp, href: "/pipeline" },
-  { id: "optimizations", label: "Optimizations", icon: History, href: "/agents" },
   { id: "ads", label: "Ads Library", icon: Image, href: "/ads" },
   { id: "budget", label: "Budget & Spend", icon: Wallet, href: "/budget" },
   { id: "abm", label: "ABM", icon: Crosshair, href: "/abm" },
   { id: "agents", label: "Agents", icon: Bot, href: "/agents" },
+  { id: "activity", label: "Activity Log", icon: Activity, href: "/activity" },
+  { id: "health", label: "System Health", icon: HeartPulse, href: "/health" },
   { id: "work", label: "Work Tracker", icon: ClipboardList, href: "/work" },
 ];
 

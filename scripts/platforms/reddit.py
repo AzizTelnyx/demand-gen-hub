@@ -394,3 +394,24 @@ class RedditConnector(PlatformConnector):
             return WriteResult(success=True, resource_name=f"campaigns/{campaign_id}")
         except Exception as e:
             return WriteResult(success=False, error=str(e))
+
+    def update_budget(self, campaign_id: str, new_budget: float, budget_type: str = "daily") -> WriteResult:
+        """Update a Reddit campaign's budget (in dollars, converted to cents for API)."""
+        if not self._access_token:
+            self.load_credentials()
+        try:
+            budget_cents = int(new_budget * 100)
+            self._api("PATCH", f"/campaigns/{campaign_id}", {"data": {"budget_cents": budget_cents}})
+            return WriteResult(success=True, resource_name=f"campaigns/{campaign_id}")
+        except Exception as e:
+            return WriteResult(success=False, error=str(e))
+
+    def update_ad_group_targeting(self, ad_group_id: str, targeting_changes: dict) -> WriteResult:
+        """Update targeting for a Reddit ad group (communities, interests, geolocations, etc.)."""
+        if not self._access_token:
+            self.load_credentials()
+        try:
+            self._api("PATCH", f"/ad_groups/{ad_group_id}", {"data": {"targeting": targeting_changes}})
+            return WriteResult(success=True, resource_name=f"ad_groups/{ad_group_id}")
+        except Exception as e:
+            return WriteResult(success=False, error=str(e))

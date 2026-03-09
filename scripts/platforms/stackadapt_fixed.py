@@ -5,10 +5,16 @@ import os
 import urllib.request
 from typing import Optional
 
-from .base import (
-    PlatformConnector, MetricsResult, CampaignMetrics, CampaignData,
-    CreativeData, WriteResult,
-)
+try:
+    from .base import (
+        PlatformConnector, MetricsResult, CampaignMetrics, CampaignData,
+        CreativeData, WriteResult,
+    )
+except ImportError:
+    from base import (
+        PlatformConnector, MetricsResult, CampaignMetrics, CampaignData,
+        CreativeData, WriteResult,
+    )
 
 
 class StackAdaptConnector(PlatformConnector):

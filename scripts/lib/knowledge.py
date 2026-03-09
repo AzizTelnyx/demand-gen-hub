@@ -162,6 +162,40 @@ def load_knowledge_for_agent(agent_type):
             "telnyx-strategy.md",
             "product-groups.md",
         ],
+        "budget_pacing_manager": [
+            "telnyx-strategy.md",
+            "product-groups.md",
+        ],
+        "google_search_manager": [
+            "telnyx-strategy.md",
+            "product-groups.md",
+            "brand/brand-messaging-q1-2026.md",
+            "standards/google-ads-rsa-best-practices.md",
+            "standards/ad-copy-rules.md",
+        ],
+        "audience_targeting_optimizer": [
+            "telnyx-strategy.md",
+            "brand/brand-messaging-q1-2026.md",
+            "product-groups.md",
+        ],
+        "creative_manager": [
+            "brand/brand-messaging-q1-2026.md",
+            "standards/b2b-ad-creative-guide.md",
+            "standards/b2b-ad-copy-guide.md",
+            "standards/ad-copy-rules.md",
+        ],
+        "domain_publisher_manager": [
+            "telnyx-strategy.md",
+            "product-groups.md",
+        ],
+        "device_geo_optimizer": [
+            "telnyx-strategy.md",
+            "product-groups.md",
+        ],
+        "frequency_reach_manager": [
+            "telnyx-strategy.md",
+            "product-groups.md",
+        ],
     }
 
     files = agent_files.get(agent_type, DEFAULT_FILES)

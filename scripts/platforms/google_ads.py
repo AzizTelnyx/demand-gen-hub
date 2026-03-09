@@ -269,6 +269,172 @@ class GoogleAdsConnector(PlatformConnector):
         except Exception as e:
             return WriteResult(success=False, error=str(e))
 
+    def update_device_bid(self, campaign_id: str, device_type: str, modifier_pct: float) -> WriteResult:
+        """Update device bid modifier for a campaign.
+        device_type: MOBILE, DESKTOP, TABLET
+        modifier_pct: e.g. -0.15 for -15%, 0.20 for +20%
+        """
+        if not self._creds:
+            self.load_credentials()
+        client = self._get_client()
+        from google.protobuf import field_mask_pb2
+
+        DEVICE_MAP = {"MOBILE": 30001, "DESKTOP": 30000, "TABLET": 30002}
+        device_id = DEVICE_MAP.get(device_type.upper())
+        if device_id is None:
+            return WriteResult(success=False, error=f"Unknown device type: {device_type}")
+
+        service = client.get_service("CampaignCriterionService")
+        resource_name = (
+            f"customers/{self._customer_id}/campaignCriteria/{campaign_id}~{device_id}"
+        )
+
+        op = client.get_type("CampaignCriterionOperation")
+        criterion = op.update
+        criterion.resource_name = resource_name
+        criterion.bid_modifier = 1.0 + modifier_pct
+        client.copy_from(op.update_mask, field_mask_pb2.FieldMask(paths=["bid_modifier"]))
+
+        try:
+            response = service.mutate_campaign_criteria(
+                customer_id=self._customer_id, operations=[op]
+            )
+            return WriteResult(success=True, resource_name=response.results[0].resource_name)
+        except Exception as e:
+            return WriteResult(success=False, error=str(e))
+
+    def get_device_metrics(self, date_from: str, date_to: str, active_only: bool = True) -> list[dict]:
+        """Get device-segmented campaign metrics."""
+        if not self._creds:
+            self.load_credentials()
+        ga = self._service()
+        where = [f"segments.date >= '{date_from}'", f"segments.date <= '{date_to}'"]
+        if active_only:
+            where.append("campaign.status = 'ENABLED'")
+        query = f"""
+            SELECT campaign.id, campaign.name, segments.device,
+                   metrics.cost_micros, metrics.clicks, metrics.impressions,
+                   metrics.conversions, metrics.all_conversions
+            FROM campaign
+            WHERE {' AND '.join(where)}
+        """
+        results = []
+        try:
+            for row in ga.search(customer_id=self._customer_id, query=query):
+                results.append({
+                    "campaign_id": str(row.campaign.id),
+                    "campaign_name": row.campaign.name,
+                    "device": str(row.segments.device).replace("Device.", ""),
+                    "spend": row.metrics.cost_micros / 1_000_000,
+                    "clicks": row.metrics.clicks,
+                    "impressions": row.metrics.impressions,
+                    "conversions": row.metrics.all_conversions,
+                })
+        except Exception as e:
+            print(f"  Google device metrics error: {e}")
+        return results
+
+    def get_geo_metrics(self, date_from: str, date_to: str, active_only: bool = True) -> list[dict]:
+        """Get geo-segmented campaign metrics."""
+        if not self._creds:
+            self.load_credentials()
+        ga = self._service()
+        where = [f"segments.date >= '{date_from}'", f"segments.date <= '{date_to}'"]
+        if active_only:
+            where.append("campaign.status = 'ENABLED'")
+        query = f"""
+            SELECT campaign.id, campaign.name,
+                   geographic_view.country_criterion_id,
+                   metrics.cost_micros, metrics.clicks, metrics.impressions,
+                   metrics.conversions, metrics.all_conversions
+            FROM geographic_view
+            WHERE {' AND '.join(where)}
+        """
+        results = []
+        try:
+            for row in ga.search(customer_id=self._customer_id, query=query):
+                results.append({
+                    "campaign_id": str(row.campaign.id),
+                    "campaign_name": row.campaign.name,
+                    "country_id": str(row.geographic_view.country_criterion_id),
+                    "spend": row.metrics.cost_micros / 1_000_000,
+                    "clicks": row.metrics.clicks,
+                    "impressions": row.metrics.impressions,
+                    "conversions": row.metrics.all_conversions,
+                })
+        except Exception as e:
+            print(f"  Google geo metrics error: {e}")
+        return results
+
+    def pause_keyword(self, campaign_id: str, ad_group_id: str, criterion_id: str) -> WriteResult:
+        """Pause a keyword (ad group criterion) via Google Ads API."""
+        if not self._creds:
+            self.load_credentials()
+        client = self._get_client()
+        from google.protobuf import field_mask_pb2
+
+        service = client.get_service("AdGroupCriterionService")
+        resource_name = service.ad_group_criterion_path(self._customer_id, ad_group_id, criterion_id)
+
+        op = client.get_type("AdGroupCriterionOperation")
+        criterion = op.update
+        criterion.resource_name = resource_name
+        criterion.status = client.enums.AdGroupCriterionStatusEnum.PAUSED
+        client.copy_from(op.update_mask, field_mask_pb2.FieldMask(paths=["status"]))
+
+        try:
+            response = service.mutate_ad_group_criteria(customer_id=self._customer_id, operations=[op])
+            return WriteResult(success=True, resource_name=response.results[0].resource_name)
+        except Exception as e:
+            return WriteResult(success=False, error=str(e))
+
+    def update_device_bid(self, campaign_id: str, device_type: str, modifier: float) -> WriteResult:
+        """Update device bid modifier for a campaign. modifier is relative (e.g., -0.15 = -15%)."""
+        if not self._creds:
+            self.load_credentials()
+        client = self._get_client()
+        from google.protobuf import field_mask_pb2
+
+        service = client.get_service("CampaignCriterionService")
+        ga = self._service()
+
+        # Check if device criterion exists
+        query = f"""
+            SELECT campaign_criterion.resource_name
+            FROM campaign_criterion
+            WHERE campaign.id = {campaign_id}
+              AND campaign_criterion.type = 'DEVICE'
+              AND campaign_criterion.device.type = '{device_type.upper()}'
+        """
+        existing_rn = None
+        try:
+            for row in ga.search(customer_id=self._customer_id, query=query):
+                existing_rn = row.campaign_criterion.resource_name
+                break
+        except Exception:
+            pass
+
+        bid_value = 1.0 + modifier
+
+        try:
+            if existing_rn:
+                op = client.get_type("CampaignCriterionOperation")
+                criterion = op.update
+                criterion.resource_name = existing_rn
+                criterion.bid_modifier = bid_value
+                client.copy_from(op.update_mask, field_mask_pb2.FieldMask(paths=["bid_modifier"]))
+            else:
+                op = client.get_type("CampaignCriterionOperation")
+                criterion = op.create
+                criterion.campaign = client.get_service("CampaignService").campaign_path(self._customer_id, campaign_id)
+                criterion.device.type_ = client.enums.DeviceEnum[device_type.upper()].value
+                criterion.bid_modifier = bid_value
+
+            response = service.mutate_campaign_criteria(customer_id=self._customer_id, operations=[op])
+            return WriteResult(success=True, resource_name=response.results[0].resource_name)
+        except Exception as e:
+            return WriteResult(success=False, error=str(e))
+
     def _set_campaign_status(self, campaign_id: str, status: int) -> WriteResult:
         if not self._creds:
             self.load_credentials()

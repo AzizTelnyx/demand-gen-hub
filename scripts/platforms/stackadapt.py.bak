@@ -1,4 +1,4 @@
-"""Fixed StackAdapt platform connector methods."""
+"""StackAdapt platform connector."""
 
 import json
 import os
@@ -47,235 +47,7 @@ class StackAdaptConnector(PlatformConnector):
         with urllib.request.urlopen(req, timeout=timeout) as resp:
             return json.loads(resp.read())
 
-    # ─── Fixed Frequency Cap Management ─────────────────────────────
-
-    def get_frequency_cap(self, campaign_group_id: str) -> dict:
-        """Get frequency cap from campaign delivery settings."""
-        if not self._token:
-            self.load_credentials()
-        # Query campaign via lookup to get freq cap settings
-        query = """
-        {
-          campaigns(filterBy: { campaignGroupIds: [%s] }) {
-            nodes {
-              id
-              name
-              campaignGroup { id frequencyCap { amount period } }
-            }
-          }
-        }
-        """ % campaign_group_id
-        try:
-            data = self._gql(query, timeout=30)
-            nodes = data.get("data", {}).get("campaigns", {}).get("nodes", [])
-            if nodes:
-                cg = nodes[0].get("campaignGroup") or {}
-                fc = cg.get("frequencyCap") or {}
-                return {
-                    "cap": fc.get("amount"),
-                    "period": fc.get("period"),
-                    "campaign_group_id": cg.get("id")
-                }
-            return {}
-        except Exception as e:
-            print(f"  StackAdapt get_frequency_cap error: {e}")
-            return {}
-
-    def update_frequency_cap(self, campaign_group_id: str, cap: int, period: str) -> WriteResult:
-        """Update frequency cap for a campaign group."""
-        if not self._token:
-            self.load_credentials()
-        mutation = """
-        mutation {
-          updateCampaignGroup(input: {
-            id: %s
-            frequencyCap: { amount: %d, period: %s }
-          }) {
-            campaignGroup { id frequencyCap { amount period } }
-          }
-        }
-        """ % (campaign_group_id, cap, period)
-        try:
-            data = self._gql(mutation, timeout=30)
-            errors = data.get("errors", [])
-            if errors:
-                return WriteResult(success=False, error=str(errors[0].get("message", errors)))
-            return WriteResult(success=True, resource_name=f"campaignGroups/{campaign_group_id}")
-        except Exception as e:
-            return WriteResult(success=False, error=str(e))
-
-    # ─── Fixed Domain Report ───────────────────────────────────────
-
-    def get_domain_report(self, campaign_group_id: str, date_from: str, date_to: str, limit: int = 500) -> list[dict]:
-        """Get domain-level delivery report using campaignGroup filter."""
-        if not self._token:
-            self.load_credentials()
-        query = """
-        {
-          campaignDelivery(
-            filterBy: { campaignGroupIds: [%s] }
-            date: { from: "%s", to: "%s" }
-            granularity: TOTAL
-            dataType: TABLE
-            adBreakdowns: [DOMAIN]
-          ) {
-            ... on CampaignDeliveryOutcome {
-              records(first: %d) { nodes {
-                breakdown { domain }
-                metrics { impressionsBigint clicksBigint cost ctr conversionsBigint viewability }
-              } }
-            }
-          }
-        }
-        """ % (campaign_group_id, date_from, date_to, limit)
-        try:
-            data = self._gql(query, timeout=60)
-            nodes = data.get("data", {}).get("campaignDelivery", {}).get("records", {}).get("nodes", [])
-            results = []
-            for n in nodes:
-                domain = (n.get("breakdown") or {}).get("domain", "")
-                m = n.get("metrics", {})
-                results.append({
-                    "domain": domain,
-                    "impressions": int(m.get("impressionsBigint", 0) or 0),
-                    "clicks": int(m.get("clicksBigint", 0) or 0),
-                    "spend": float(m.get("cost", 0) or 0),
-                    "ctr": float(m.get("ctr", 0) or 0),
-                    "conversions": int(m.get("conversionsBigint", 0) or 0),
-                    "viewability": float(m.get("viewability", 0) or 0),
-                })
-            return results
-        except Exception as e:
-            print(f"  StackAdapt domain report error: {e}")
-            return []
-
-    # ─── Fixed Creative Metrics ────────────────────────────────────
-
-    def get_creative_metrics(self, campaign_group_id: str, date_from: str, date_to: str, limit: int = 500) -> list[dict]:
-        """Get per-creative metrics using nativeAd breakdown."""
-        if not self._token:
-            self.load_credentials()
-        query = """
-        {
-          campaignDelivery(
-            filterBy: { campaignGroupIds: [%s] }
-            date: { from: "%s", to: "%s" }
-            granularity: TOTAL
-            dataType: TABLE
-            adBreakdowns: [NATIVE_AD]
-          ) {
-            ... on CampaignDeliveryOutcome {
-              records(first: %d) { nodes {
-                breakdown { nativeAd { id name headline } }
-                metrics { impressionsBigint clicksBigint cost ctr conversionsBigint }
-              } }
-            }
-          }
-        }
-        """ % (campaign_group_id, date_from, date_to, limit)
-        try:
-            data = self._gql(query, timeout=60)
-            nodes = data.get("data", {}).get("campaignDelivery", {}).get("records", {}).get("nodes", [])
-            results = []
-            for n in nodes:
-                ad = (n.get("breakdown") or {}).get("nativeAd") or {}
-                m = n.get("metrics", {})
-                results.append({
-                    "creative_id": str(ad.get("id", "")),
-                    "name": ad.get("name", ""),
-                    "headline": ad.get("headline", ""),
-                    "impressions": int(m.get("impressionsBigint", 0) or 0),
-                    "clicks": int(m.get("clicksBigint", 0) or 0),
-                    "spend": float(m.get("cost", 0) or 0),
-                    "ctr": float(m.get("ctr", 0) or 0),
-                    "conversions": int(m.get("conversionsBigint", 0) or 0),
-                })
-            return results
-        except Exception as e:
-            print(f"  StackAdapt creative metrics error: {e}")
-            return []
-
-    # ─── Geo Report (works) ───────────────────────────────────────
-
-    def get_geo_report(self, campaign_group_id: str, date_from: str, date_to: str, limit: int = 500) -> list[dict]:
-        """Get geo-level delivery report."""
-        if not self._token:
-            self.load_credentials()
-        query = """
-        {
-          campaignDelivery(
-            filterBy: { campaignGroupIds: [%s] }
-            date: { from: "%s", to: "%s" }
-            granularity: TOTAL
-            dataType: TABLE
-            adBreakdowns: [COUNTRY]
-          ) {
-            ... on CampaignDeliveryOutcome {
-              records(first: %d) { nodes {
-                breakdown { country }
-                metrics { impressionsBigint clicksBigint cost ctr conversionsBigint }
-              } }
-            }
-          }
-        }
-        """ % (campaign_group_id, date_from, date_to, limit)
-        try:
-            data = self._gql(query, timeout=60)
-            nodes = data.get("data", {}).get("campaignDelivery", {}).get("records", {}).get("nodes", [])
-            results = []
-            for n in nodes:
-                country = (n.get("breakdown") or {}).get("country", "")
-                m = n.get("metrics", {})
-                results.append({
-                    "country": country,
-                    "impressions": int(m.get("impressionsBigint", 0) or 0),
-                    "clicks": int(m.get("clicksBigint", 0) or 0),
-                    "spend": float(m.get("cost", 0) or 0),
-                    "conversions": int(m.get("conversionsBigint", 0) or 0),
-                })
-            return results
-        except Exception as e:
-            print(f"  StackAdapt geo report error: {e}")
-            return []
-
-    # ─── Campaign fetch with campaignGroupId ──────────────────────
-
-    def fetch_campaigns_with_groups(self, active_only: bool = True) -> list[dict]:
-        """Fetch campaigns with their campaign group IDs."""
-        if not self._token:
-            self.load_credentials()
-
-        query = """
-        {
-          campaigns(filterBy: { advertiserIds: [%d] }, first: 500) {
-            nodes {
-              id
-              name
-              campaignStatus { state }
-              campaignGroup { id }
-            }
-          }
-        }
-        """ % self.ADVERTISER_ID
-
-        data = self._gql(query, timeout=30)
-        nodes = data.get("data", {}).get("campaigns", {}).get("nodes", [])
-
-        results = []
-        for c in nodes:
-            status_raw = (c.get("campaignStatus", {}).get("state", "")).upper()
-            status = self.normalize_status(status_raw)
-            if active_only and status != "active":
-                continue
-            results.append({
-                "campaign_id": str(c["id"]),
-                "campaign_group_id": str((c.get("campaignGroup") or {}).get("id", c["id"])),
-                "name": c.get("name", ""),
-                "status": status,
-            })
-        return results
-
-    # ─── Original methods (keep for compatibility) ───────────────
+    # ─── Query ────────────────────────────────────────
 
     def query_metrics(self, date_from: str, date_to: str, search: Optional[str] = None, active_only: bool = True) -> MetricsResult:
         if not self._token:
@@ -293,16 +65,15 @@ class StackAdaptConnector(PlatformConnector):
         camp_query = """
         {
           campaigns(filterBy: { advertiserIds: [%d] }, first: 500) {
-            nodes { id name campaignStatus { state } campaignGroup { id } }
+            nodes { id name campaignStatus { state } }
           }
         }
         """ % self.ADVERTISER_ID
         camp_data = self._gql(camp_query, timeout=30)
         camp_nodes = camp_data.get("data", {}).get("campaigns", {}).get("nodes", [])
         camp_status = {str(c["id"]): (c.get("campaignStatus", {}).get("state", "")).upper() for c in camp_nodes}
-        camp_group = {str(c["id"]): str((c.get("campaignGroup") or {}).get("id", c["id"])) for c in camp_nodes}
 
-        # Get metrics using campaign group filter
+        # Get metrics
         delivery_query = """
         {
           campaignDelivery(
@@ -361,6 +132,8 @@ class StackAdaptConnector(PlatformConnector):
             campaigns=campaigns,
         )
 
+    # ─── Sync ─────────────────────────────────────────
+
     def fetch_campaigns(self, active_only: bool = True) -> list[CampaignData]:
         if not self._token:
             self.load_credentials()
@@ -398,9 +171,11 @@ class StackAdaptConnector(PlatformConnector):
         if not self._token:
             self.load_credentials()
 
+        # Get active campaign IDs first
         camps = self.fetch_campaigns(active_only=active_only)
         camp_ids = {c.external_id for c in camps}
 
+        # Fetch native ads
         query = """
         {
           nativeAds(filterBy: { advertiserIds: [%d] }, first: 500) {
@@ -436,6 +211,8 @@ class StackAdaptConnector(PlatformConnector):
                 final_url=n.get("clickUri", ""),
             ))
         return creatives
+
+    # ─── Write (R/W token available) ──────────────────
 
     def pause_campaign(self, campaign_id: str) -> WriteResult:
         if not self._token:
@@ -516,19 +293,64 @@ class StackAdaptConnector(PlatformConnector):
         except Exception as e:
             return WriteResult(success=False, error=str(e))
 
+    # ─── Domain / Publisher Management ────────────────
+
+    def get_domain_report(self, campaign_id: str, date_from: str, date_to: str) -> list[dict]:
+        """Get domain-level delivery report for a campaign."""
+        if not self._token:
+            self.load_credentials()
+        query = """
+        {
+          campaignDelivery(
+            filterBy: { campaignIds: [%s] }
+            date: { from: "%s", to: "%s" }
+            granularity: TOTAL
+            dataType: TABLE
+            breakdowns: [DOMAIN]
+          ) {
+            ... on CampaignDeliveryOutcome {
+              records { nodes {
+                breakdown { domain }
+                metrics { impressionsBigint clicksBigint cost ctr conversionsBigint viewability }
+              } }
+            }
+          }
+        }
+        """ % (campaign_id, date_from, date_to)
+        try:
+            data = self._gql(query, timeout=90)
+            nodes = data.get("data", {}).get("campaignDelivery", {}).get("records", {}).get("nodes", [])
+            results = []
+            for n in nodes:
+                domain = (n.get("breakdown") or {}).get("domain", "")
+                m = n.get("metrics", {})
+                results.append({
+                    "domain": domain,
+                    "impressions": int(m.get("impressionsBigint", 0) or 0),
+                    "clicks": int(m.get("clicksBigint", 0) or 0),
+                    "spend": float(m.get("cost", 0) or 0),
+                    "ctr": float(m.get("ctr", 0) or 0),
+                    "conversions": int(m.get("conversionsBigint", 0) or 0),
+                    "viewability": float(m.get("viewability", 0) or 0),
+                })
+            return results
+        except Exception as e:
+            print(f"  StackAdapt domain report error: {e}")
+            return []
+
     def exclude_domains(self, campaign_group_id: str, domains: list[str]) -> WriteResult:
-        """Add domains to campaign group exclusion list."""
+        """Add domains to campaign exclusion list."""
         if not self._token:
             self.load_credentials()
         domain_list = ", ".join(f'"{d}"' for d in domains)
         mutation = """
         mutation {
-          updateCampaignGroup(input: {
+          updateCampaign(input: {
             id: %s
             domainBlacklist: [%s]
             domainBlacklistAppend: true
           }) {
-            campaignGroup { id name }
+            campaign { id name }
           }
         }
         """ % (campaign_group_id, domain_list)
@@ -537,9 +359,101 @@ class StackAdaptConnector(PlatformConnector):
             errors = data.get("errors", [])
             if errors:
                 return WriteResult(success=False, error=str(errors[0].get("message", errors)))
-            return WriteResult(success=True, resource_name=f"campaignGroups/{campaign_group_id}")
+            return WriteResult(success=True, resource_name=f"campaigns/{campaign_group_id}")
         except Exception as e:
             return WriteResult(success=False, error=str(e))
+
+    # ─── Frequency Cap Management ─────────────────────
+
+    def get_frequency_cap(self, campaign_id: str) -> dict:
+        """Get current frequency cap settings for a campaign."""
+        if not self._token:
+            self.load_credentials()
+        query = """
+        {
+          campaigns(filterBy: { ids: [%s] }) {
+            nodes { id name frequencyCap { amount period } }
+          }
+        }
+        """ % campaign_id
+        try:
+            data = self._gql(query)
+            nodes = data.get("data", {}).get("campaigns", {}).get("nodes", [])
+            if nodes:
+                fc = nodes[0].get("frequencyCap") or {}
+                return {"cap": fc.get("amount"), "period": fc.get("period")}
+            return {}
+        except Exception:
+            return {}
+
+    def update_frequency_cap(self, campaign_group_id: str, cap: int, period: str) -> WriteResult:
+        """Update frequency cap for a campaign. period: DAY, WEEK, MONTH, LIFETIME."""
+        if not self._token:
+            self.load_credentials()
+        mutation = """
+        mutation {
+          updateCampaign(input: {
+            id: %s
+            frequencyCap: { amount: %d, period: %s }
+          }) {
+            campaign { id name frequencyCap { amount period } }
+          }
+        }
+        """ % (campaign_group_id, cap, period)
+        try:
+            data = self._gql(mutation)
+            errors = data.get("errors", [])
+            if errors:
+                return WriteResult(success=False, error=str(errors[0].get("message", errors)))
+            return WriteResult(success=True, resource_name=f"campaigns/{campaign_group_id}")
+        except Exception as e:
+            return WriteResult(success=False, error=str(e))
+
+    # ─── Creative-Level Metrics ───────────────────────
+
+    def get_creative_metrics(self, campaign_id: str, date_from: str, date_to: str) -> list[dict]:
+        """Get per-creative metrics for a campaign."""
+        if not self._token:
+            self.load_credentials()
+        query = """
+        {
+          campaignDelivery(
+            filterBy: { campaignIds: [%s] }
+            date: { from: "%s", to: "%s" }
+            granularity: TOTAL
+            dataType: TABLE
+            breakdowns: [NATIVE_AD]
+          ) {
+            ... on CampaignDeliveryOutcome {
+              records { nodes {
+                breakdown { nativeAd { id name headline } }
+                metrics { impressionsBigint clicksBigint cost ctr conversionsBigint }
+              } }
+            }
+          }
+        }
+        """ % (campaign_id, date_from, date_to)
+        try:
+            data = self._gql(query, timeout=90)
+            nodes = data.get("data", {}).get("campaignDelivery", {}).get("records", {}).get("nodes", [])
+            results = []
+            for n in nodes:
+                ad = (n.get("breakdown") or {}).get("nativeAd") or {}
+                m = n.get("metrics", {})
+                results.append({
+                    "creative_id": str(ad.get("id", "")),
+                    "name": ad.get("name", ""),
+                    "headline": ad.get("headline", ""),
+                    "impressions": int(m.get("impressionsBigint", 0) or 0),
+                    "clicks": int(m.get("clicksBigint", 0) or 0),
+                    "spend": float(m.get("cost", 0) or 0),
+                    "ctr": float(m.get("ctr", 0) or 0),
+                    "conversions": int(m.get("conversionsBigint", 0) or 0),
+                })
+            return results
+        except Exception as e:
+            print(f"  StackAdapt creative metrics error: {e}")
+            return []
 
     def update_creative_impression_share(self, campaign_id: str, creative_id: str, weight: int) -> WriteResult:
         """Update native ad weight (impression share) within a campaign."""
@@ -563,3 +477,46 @@ class StackAdaptConnector(PlatformConnector):
             return WriteResult(success=True, resource_name=f"nativeAds/{creative_id}")
         except Exception as e:
             return WriteResult(success=False, error=str(e))
+
+    # ─── Geo Breakdown ────────────────────────────────
+
+    def get_geo_report(self, campaign_id: str, date_from: str, date_to: str) -> list[dict]:
+        """Get geo-level delivery report for a campaign."""
+        if not self._token:
+            self.load_credentials()
+        query = """
+        {
+          campaignDelivery(
+            filterBy: { campaignIds: [%s] }
+            date: { from: "%s", to: "%s" }
+            granularity: TOTAL
+            dataType: TABLE
+            breakdowns: [COUNTRY]
+          ) {
+            ... on CampaignDeliveryOutcome {
+              records { nodes {
+                breakdown { country }
+                metrics { impressionsBigint clicksBigint cost ctr conversionsBigint }
+              } }
+            }
+          }
+        }
+        """ % (campaign_id, date_from, date_to)
+        try:
+            data = self._gql(query, timeout=90)
+            nodes = data.get("data", {}).get("campaignDelivery", {}).get("records", {}).get("nodes", [])
+            results = []
+            for n in nodes:
+                country = (n.get("breakdown") or {}).get("country", "")
+                m = n.get("metrics", {})
+                results.append({
+                    "country": country,
+                    "impressions": int(m.get("impressionsBigint", 0) or 0),
+                    "clicks": int(m.get("clicksBigint", 0) or 0),
+                    "spend": float(m.get("cost", 0) or 0),
+                    "conversions": int(m.get("conversionsBigint", 0) or 0),
+                })
+            return results
+        except Exception as e:
+            print(f"  StackAdapt geo report error: {e}")
+            return []

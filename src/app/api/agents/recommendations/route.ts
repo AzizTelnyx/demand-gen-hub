@@ -11,9 +11,12 @@ export async function GET(request: NextRequest) {
   const type = url.searchParams.get("type");
   const limit = parseInt(url.searchParams.get("limit") || "50");
 
+  const agentSlug = url.searchParams.get("agent");
+
   const where: any = {};
   if (status) where.status = status;
   if (type) where.type = type;
+  if (agentSlug) where.agentRun = { agent: { slug: agentSlug } };
 
   const recs = await prisma.recommendation.findMany({
     where,
@@ -62,7 +65,10 @@ export async function GET(request: NextRequest) {
   const counts = await prisma.recommendation.groupBy({
     by: ["status"],
     _count: true,
-    where: type ? { type } : undefined,
+    where: {
+      ...(type ? { type } : {}),
+      ...(agentSlug ? { agentRun: { agent: { slug: agentSlug } } } : {}),
+    },
   });
 
   return NextResponse.json({

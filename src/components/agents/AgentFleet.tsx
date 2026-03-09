@@ -1,11 +1,12 @@
 'use client';
 
 import React, { useState, useEffect, useCallback } from 'react';
+import Link from 'next/link';
 import {
   Bot, ChevronDown, ChevronRight, CheckCircle2, XCircle,
   Loader2, Clock, Shield, ThumbsUp, ThumbsDown,
   AlertCircle, Sparkles, Copy, Hash, Eye, EyeOff, Type,
-  Activity,
+  Activity, ArrowRight,
 } from 'lucide-react';
 
 /* ── helpers shared across agent components ── */
@@ -163,13 +164,19 @@ export default function AgentFleet({ agents, schedules }: AgentFleetProps) {
                 )}
 
                 {/* Stats */}
-                <div className="flex items-center gap-3 text-xs text-[var(--text-muted)]">
+                <div className="flex items-center justify-between text-xs text-[var(--text-muted)]">
                   <span>{agent.totalRuns} runs{agent.recentRuns > 0 ? ` · ${agent.recentRuns} this week` : ''}</span>
-                  {(agent.lastRunFindings || agent.lastRunRecs) && (
-                    <span className="text-[var(--text-secondary)]">
-                      {agent.lastRunFindings || 0}f / {agent.lastRunRecs || 0}r
-                    </span>
-                  )}
+                  <div className="flex items-center gap-3">
+                    {(agent.lastRunFindings || agent.lastRunRecs) && (
+                      <span className="text-[var(--text-secondary)]">
+                        {agent.lastRunFindings || 0}f / {agent.lastRunRecs || 0}r
+                      </span>
+                    )}
+                    <Link href={`/agents/${agent.slug}`} onClick={e => e.stopPropagation()}
+                      className="flex items-center gap-1 text-[var(--accent)] hover:underline">
+                      Details <ArrowRight size={10} />
+                    </Link>
+                  </div>
                 </div>
               </div>
 

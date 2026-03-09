@@ -18,7 +18,7 @@ interface DashboardData {
   channelPerformance: Array<{ channel: string; spend: number; clicks: number; impressions: number; conversions: number | null; conversionType: string; ctr: number; cpc: number; costPerConv: number | null; count: number }>;
   topCampaigns: Array<{ name: string; platform: string; spend: number; budget: number; clicks: number; impressions: number; conversions: number; ctr: number }>;
   criticalAlerts: Array<{ severity: string; title: string; detail: string; count?: number }>;
-  automationRuns: Array<{ id: string; automation: string; status: string; summary: string; startedAt: string; completedAt: string | null }>;
+  agentRuns: Array<{ id: string; agentSlug: string; agentName: string; status: string; findingsCount: number; recsCount: number; output: string | null; startedAt: string; completedAt: string | null }>;
   trackers: Array<{ id: string; category: string; title: string; status: string; priority: string; dueDate: string | null; assignee: string | null; details: any }>;
   campaignsByStatus?: Array<{ status: string; count: number }>;
 }
@@ -89,7 +89,7 @@ export default function DashboardPage() {
   if (loading) return <div className="p-8 flex items-center justify-center h-full"><div className="animate-pulse text-[var(--text-muted)] text-sm">Loading dashboard...</div></div>;
   if (!data) return <div className="p-8 text-red-400">Failed to load dashboard</div>;
 
-  const { metrics, channelPerformance, topCampaigns, criticalAlerts, automationRuns, trackers } = data;
+  const { metrics, channelPerformance, topCampaigns, criticalAlerts, agentRuns, trackers } = data;
   const visibleAlerts = criticalAlerts.filter((_, i) => !dismissedAlerts.has(i));
   const maxSpend = Math.max(...topCampaigns.map(c => c.spend), 1);
 
@@ -303,33 +303,32 @@ export default function DashboardPage() {
 
       {/* Bottom Row: Automations + Trackers */}
       <div className="grid grid-cols-2 gap-5">
-        {/* Automations */}
+        {/* Agent Runs */}
         <div className="bg-[var(--bg-card)] border border-[var(--border-primary)] rounded-xl p-5">
-          <h2 className="text-[10px] font-semibold text-[var(--text-muted)] uppercase tracking-widest mb-3">Automations</h2>
-          {automationRuns.length === 0 ? (
+          <h2 className="text-[10px] font-semibold text-[var(--text-muted)] uppercase tracking-widest mb-3">Agent Runs</h2>
+          {agentRuns.length === 0 ? (
             <div className="text-center py-4">
               <Bot size={20} className="text-[var(--text-muted)] mx-auto mb-2" />
-              <p className="text-xs text-[var(--text-muted)]">No automation runs yet</p>
-              <p className="text-[10px] text-[var(--text-muted)] mt-1">Health monitor, sync, and optimizer runs will appear here</p>
+              <p className="text-xs text-[var(--text-muted)]">No agent runs yet</p>
+              <p className="text-[10px] text-[var(--text-muted)] mt-1">Negative keyword, ad copy, budget pacing runs will appear here</p>
             </div>
           ) : (
             <div className="space-y-2 max-h-48 overflow-y-auto">
-              {automationRuns.map(run => {
-                const config = automationLabels[run.automation] || { label: run.automation, icon: Zap };
-                const RunIcon = config.icon;
-                return (
-                  <div key={run.id} className="flex items-start gap-2.5 p-2 rounded-lg hover:bg-[var(--bg-primary)]/50 transition-colors">
-                    <RunIcon size={13} className={run.status === "success" ? "text-emerald-500" : run.status === "failed" ? "text-red-500" : "text-blue-500"} />
-                    <div className="flex-1 min-w-0">
-                      <p className="text-xs text-[var(--text-secondary)] font-medium">{config.label}</p>
-                      {run.summary && <p className="text-[10px] text-[var(--text-muted)] truncate">{run.summary}</p>}
+              {agentRuns.map(run => (
+                <div key={run.id} className="flex items-start gap-2.5 p-2 rounded-lg hover:bg-[var(--bg-primary)]/50 transition-colors">
+                  <Bot size={13} className={run.status === "done" ? "text-emerald-500" : run.status === "failed" ? "text-red-500" : "text-blue-500"} />
+                  <div className="flex-1 min-w-0">
+                    <p className="text-xs text-[var(--text-secondary)] font-medium">{run.agentName || run.agentSlug}</p>
+                    <div className="flex items-center gap-2 mt-0.5">
+                      {run.findingsCount > 0 && <span className="text-[10px] text-amber-400">{run.findingsCount} findings</span>}
+                      {run.recsCount > 0 && <span className="text-[10px] text-blue-400">{run.recsCount} recs</span>}
                     </div>
-                    <span className="text-[10px] text-[var(--text-muted)] shrink-0">
-                      {new Date(run.startedAt).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
-                    </span>
                   </div>
-                );
-              })}
+                  <span className="text-[10px] text-[var(--text-muted)] shrink-0">
+                    {run.startedAt ? new Date(run.startedAt).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }) : "—"}
+                  </span>
+                </div>
+              ))}
             </div>
           )}
         </div>

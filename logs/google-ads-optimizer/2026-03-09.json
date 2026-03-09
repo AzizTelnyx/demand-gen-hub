@@ -1,0 +1,4541 @@
+{
+  "timestamp": "2026-03-09T12:55:26.259004+00:00",
+  "runtime_seconds": 25.992389,
+  "dry_run": true,
+  "campaigns_analyzed": 43,
+  "keywords_analyzed": 5351,
+  "total_findings": 293,
+  "actionable": 52,
+  "recommend_only": 241,
+  "recommendations": [
+    {
+      "type": "keyword_performance",
+      "campaign_id": "23578096203",
+      "campaign_name": "202602 TOFU AI Agent Contact Center SA AMER",
+      "title": "Keyword \"ai call center\" \u2014 $615 spent, 0 conversions",
+      "detail": "Match type: 3, 512 clicks. Consider pausing or tightening match type.",
+      "confidence": 100,
+      "severity": "high",
+      "action": "Pause keyword \"ai call center\"",
+      "metadata": {
+        "keyword": "ai call center",
+        "match_type": "3",
+        "spend": 614.83,
+        "clicks": 512
+      }
+    },
+    {
+      "type": "keyword_performance",
+      "campaign_id": "23583442793",
+      "campaign_name": "202602 TOFU AI Agent Contact Center SA EMEA",
+      "title": "Keyword \"ai call center\" \u2014 $604 spent, 0 conversions",
+      "detail": "Match type: 3, 521 clicks. Consider pausing or tightening match type.",
+      "confidence": 100,
+      "severity": "high",
+      "action": "Pause keyword \"ai call center\"",
+      "metadata": {
+        "keyword": "ai call center",
+        "match_type": "3",
+        "spend": 603.96,
+        "clicks": 521
+      }
+    },
+    {
+      "type": "keyword_performance",
+      "campaign_id": "23584242652",
+      "campaign_name": "202602 TOFU AI Agent Vapi SA EMEA",
+      "title": "Keyword \"voice ai\" \u2014 $509 spent, 0 conversions",
+      "detail": "Match type: 2, 725 clicks. Consider pausing or tightening match type.",
+      "confidence": 100,
+      "severity": "high",
+      "action": "Pause keyword \"voice ai\"",
+      "metadata": {
+        "keyword": "voice ai",
+        "match_type": "2",
+        "spend": 508.87,
+        "clicks": 725
+      }
+    },
+    {
+      "type": "keyword_performance",
+      "campaign_id": "23578096203",
+      "campaign_name": "202602 TOFU AI Agent Contact Center SA AMER",
+      "title": "Keyword \"ai agent contact center\" \u2014 $272 spent, 0 conversions",
+      "detail": "Match type: 2, 215 clicks. Consider pausing or tightening match type.",
+      "confidence": 95,
+      "severity": "high",
+      "action": "Pause keyword \"ai agent contact center\"",
+      "metadata": {
+        "keyword": "ai agent contact center",
+        "match_type": "2",
+        "spend": 272.21,
+        "clicks": 215
+      }
+    },
+    {
+      "type": "keyword_performance",
+      "campaign_id": "23578096203",
+      "campaign_name": "202602 TOFU AI Agent Contact Center SA AMER",
+      "title": "Keyword \"ai agent contact center\" \u2014 $246 spent, 0 conversions",
+      "detail": "Match type: 3, 220 clicks. Consider pausing or tightening match type.",
+      "confidence": 95,
+      "severity": "high",
+      "action": "Pause keyword \"ai agent contact center\"",
+      "metadata": {
+        "keyword": "ai agent contact center",
+        "match_type": "3",
+        "spend": 245.89,
+        "clicks": 220
+      }
+    },
+    {
+      "type": "keyword_performance",
+      "campaign_id": "23372928600",
+      "campaign_name": "202512 TOFU AI Agent STT API SA GLOBAL",
+      "title": "Keyword \"speech to text real time\" \u2014 $116 spent, 0 conversions",
+      "detail": "Match type: 2, 216 clicks. Consider pausing or tightening match type.",
+      "confidence": 95,
+      "severity": "high",
+      "action": "Pause keyword \"speech to text real time\"",
+      "metadata": {
+        "keyword": "speech to text real time",
+        "match_type": "2",
+        "spend": 116.03,
+        "clicks": 216
+      }
+    },
+    {
+      "type": "impression_share",
+      "campaign_id": "23277159104",
+      "campaign_name": "202511 TOFU AI Agents TTS API Global",
+      "title": "Losing 36% IS to budget",
+      "detail": "Campaign is budget-limited, missing 36% of available impressions. Current IS: 11%. Daily budget: $250.",
+      "confidence": 90,
+      "severity": "medium",
+      "action": "Increase budget for 202511 TOFU AI Agents TTS API Global",
+      "metadata": {
+        "budget_lost_is": 36.0,
+        "current_is": 11.2,
+        "daily_budget": 250.0
+      }
+    },
+    {
+      "type": "impression_share",
+      "campaign_id": "20329204785",
+      "campaign_name": "202306 MOFU Numbers SA EMEA",
+      "title": "Losing 49% IS to budget",
+      "detail": "Campaign is budget-limited, missing 49% of available impressions. Current IS: 23%. Daily budget: $175.",
+      "confidence": 90,
+      "severity": "medium",
+      "action": "Increase budget for 202306 MOFU Numbers SA EMEA",
+      "metadata": {
+        "budget_lost_is": 49.3,
+        "current_is": 23.2,
+        "daily_budget": 175.0
+      }
+    },
+    {
+      "type": "impression_share",
+      "campaign_id": "23372928600",
+      "campaign_name": "202512 TOFU AI Agent STT API SA GLOBAL",
+      "title": "Losing 35% IS to budget",
+      "detail": "Campaign is budget-limited, missing 35% of available impressions. Current IS: 10%. Daily budget: $100.",
+      "confidence": 90,
+      "severity": "medium",
+      "action": "Increase budget for 202512 TOFU AI Agent STT API SA GLOBAL",
+      "metadata": {
+        "budget_lost_is": 34.8,
+        "current_is": 10.0,
+        "daily_budget": 100.0
+      }
+    },
+    {
+      "type": "impression_share",
+      "campaign_id": "23584242652",
+      "campaign_name": "202602 TOFU AI Agent Vapi SA EMEA",
+      "title": "Losing 45% IS to budget",
+      "detail": "Campaign is budget-limited, missing 45% of available impressions. Current IS: 19%. Daily budget: $75.",
+      "confidence": 90,
+      "severity": "medium",
+      "action": "Increase budget for 202602 TOFU AI Agent Vapi SA EMEA",
+      "metadata": {
+        "budget_lost_is": 44.7,
+        "current_is": 19.1,
+        "daily_budget": 75.0
+      }
+    },
+    {
+      "type": "impression_share",
+      "campaign_id": "23584242154",
+      "campaign_name": "202602 MOFU AI Agent SA EMEA",
+      "title": "Losing 35% IS to budget",
+      "detail": "Campaign is budget-limited, missing 35% of available impressions. Current IS: 17%. Daily budget: $75.",
+      "confidence": 90,
+      "severity": "medium",
+      "action": "Increase budget for 202602 MOFU AI Agent SA EMEA",
+      "metadata": {
+        "budget_lost_is": 34.9,
+        "current_is": 17.0,
+        "daily_budget": 75.0
+      }
+    },
+    {
+      "type": "impression_share",
+      "campaign_id": "23584242697",
+      "campaign_name": "202602 TOFU AI Agent ElevenLabs SA EMEA",
+      "title": "Losing 37% IS to budget",
+      "detail": "Campaign is budget-limited, missing 37% of available impressions. Current IS: 11%. Daily budget: $75.",
+      "confidence": 90,
+      "severity": "medium",
+      "action": "Increase budget for 202602 TOFU AI Agent ElevenLabs SA EMEA",
+      "metadata": {
+        "budget_lost_is": 36.9,
+        "current_is": 10.6,
+        "daily_budget": 75.0
+      }
+    },
+    {
+      "type": "impression_share",
+      "campaign_id": "23583442793",
+      "campaign_name": "202602 TOFU AI Agent Contact Center SA EMEA",
+      "title": "Losing 53% IS to budget",
+      "detail": "Campaign is budget-limited, missing 53% of available impressions. Current IS: 10%. Daily budget: $75.",
+      "confidence": 90,
+      "severity": "high",
+      "action": "Increase budget for 202602 TOFU AI Agent Contact Center SA EMEA",
+      "metadata": {
+        "budget_lost_is": 52.9,
+        "current_is": 10.3,
+        "daily_budget": 75.0
+      }
+    },
+    {
+      "type": "impression_share",
+      "campaign_id": "23583187853",
+      "campaign_name": "202602 MOFU AI Agent SA APAC",
+      "title": "Losing 44% IS to budget",
+      "detail": "Campaign is budget-limited, missing 44% of available impressions. Current IS: 32%. Daily budget: $75.",
+      "confidence": 90,
+      "severity": "medium",
+      "action": "Increase budget for 202602 MOFU AI Agent SA APAC",
+      "metadata": {
+        "budget_lost_is": 44.4,
+        "current_is": 32.4,
+        "daily_budget": 75.0
+      }
+    },
+    {
+      "type": "impression_share",
+      "campaign_id": "23583186449",
+      "campaign_name": "202602 TOFU AI Agent Vapi SA APAC",
+      "title": "Losing 50% IS to budget",
+      "detail": "Campaign is budget-limited, missing 50% of available impressions. Current IS: 36%. Daily budget: $75.",
+      "confidence": 90,
+      "severity": "medium",
+      "action": "Increase budget for 202602 TOFU AI Agent Vapi SA APAC",
+      "metadata": {
+        "budget_lost_is": 49.9,
+        "current_is": 36.0,
+        "daily_budget": 75.0
+      }
+    },
+    {
+      "type": "impression_share",
+      "campaign_id": "23559393583",
+      "campaign_name": "202310 MOFU IoT SIM SA APAC-SEA",
+      "title": "Losing 90% IS to budget",
+      "detail": "Campaign is budget-limited, missing 90% of available impressions. Current IS: 10%. Daily budget: $20.",
+      "confidence": 90,
+      "severity": "high",
+      "action": "Increase budget for 202310 MOFU IoT SIM SA APAC-SEA",
+      "metadata": {
+        "budget_lost_is": 90.0,
+        "current_is": 10.0,
+        "daily_budget": 20.0
+      }
+    },
+    {
+      "type": "impression_share",
+      "campaign_id": "23588051725",
+      "campaign_name": "202602 MOFU AI Agent SA MENA",
+      "title": "Losing 43% IS to budget",
+      "detail": "Campaign is budget-limited, missing 43% of available impressions. Current IS: 22%. Daily budget: $50.",
+      "confidence": 90,
+      "severity": "medium",
+      "action": "Increase budget for 202602 MOFU AI Agent SA MENA",
+      "metadata": {
+        "budget_lost_is": 43.4,
+        "current_is": 22.4,
+        "daily_budget": 50.0
+      }
+    },
+    {
+      "type": "impression_share",
+      "campaign_id": "23583187406",
+      "campaign_name": "202602 TOFU AI Agent ElevenLabs SA APAC",
+      "title": "Losing 55% IS to budget",
+      "detail": "Campaign is budget-limited, missing 55% of available impressions. Current IS: 23%. Daily budget: $50.",
+      "confidence": 90,
+      "severity": "high",
+      "action": "Increase budget for 202602 TOFU AI Agent ElevenLabs SA APAC",
+      "metadata": {
+        "budget_lost_is": 55.5,
+        "current_is": 23.5,
+        "daily_budget": 50.0
+      }
+    },
+    {
+      "type": "keyword_performance",
+      "campaign_id": "23578096203",
+      "campaign_name": "202602 TOFU AI Agent Contact Center SA AMER",
+      "title": "Keyword \"custom contact center\" \u2014 $206 spent, 0 conversions",
+      "detail": "Match type: 3, 179 clicks. Consider pausing or tightening match type.",
+      "confidence": 90,
+      "severity": "high",
+      "action": "Pause keyword \"custom contact center\"",
+      "metadata": {
+        "keyword": "custom contact center",
+        "match_type": "3",
+        "spend": 206.16,
+        "clicks": 179
+      }
+    },
+    {
+      "type": "keyword_performance",
+      "campaign_id": "23578096203",
+      "campaign_name": "202602 TOFU AI Agent Contact Center SA AMER",
+      "title": "Keyword \"contact center voice ai\" \u2014 $181 spent, 0 conversions",
+      "detail": "Match type: 3, 168 clicks. Consider pausing or tightening match type.",
+      "confidence": 90,
+      "severity": "high",
+      "action": "Pause keyword \"contact center voice ai\"",
+      "metadata": {
+        "keyword": "contact center voice ai",
+        "match_type": "3",
+        "spend": 181.32,
+        "clicks": 168
+      }
+    },
+    {
+      "type": "budget_efficiency",
+      "campaign_id": "22634140704",
+      "campaign_name": "202506 BOFU AI Agent DA VA GLOBAL",
+      "title": "CPA increased 73% (7d vs 30d)",
+      "detail": "30d CPA: $18.72 \u2192 7d CPA: $32.36. Consider reducing budget or reviewing targeting.",
+      "confidence": 85,
+      "severity": "high",
+      "action": "Reduce budget for 202506 BOFU AI Agent DA VA GLOBAL",
+      "metadata": {
+        "cpa_30d": 18.72,
+        "cpa_7d": 32.36,
+        "cpa_change_pct": 72.9,
+        "product_group": "voice_ai"
+      }
+    },
+    {
+      "type": "budget_efficiency",
+      "campaign_id": "23579649257",
+      "campaign_name": "202602 MOFU AI Agent SA AMER",
+      "title": "CPA increased 55% (7d vs 30d)",
+      "detail": "30d CPA: $36.21 \u2192 7d CPA: $56.14. Consider reducing budget or reviewing targeting.",
+      "confidence": 85,
+      "severity": "high",
+      "action": "Reduce budget for 202602 MOFU AI Agent SA AMER",
+      "metadata": {
+        "cpa_30d": 36.21,
+        "cpa_7d": 56.14,
+        "cpa_change_pct": 55.0,
+        "product_group": "voice_ai"
+      }
+    },
+    {
+      "type": "impression_share",
+      "campaign_id": "20258572711",
+      "campaign_name": "202306 MOFU Numbers SA AMER",
+      "title": "Losing 31% IS to budget",
+      "detail": "Campaign is budget-limited, missing 31% of available impressions. Current IS: 21%. Daily budget: $150.",
+      "confidence": 85,
+      "severity": "medium",
+      "action": "Increase budget for 202306 MOFU Numbers SA AMER",
+      "metadata": {
+        "budget_lost_is": 31.0,
+        "current_is": 20.9,
+        "daily_budget": 150.0
+      }
+    },
+    {
+      "type": "impression_share",
+      "campaign_id": "19600918299",
+      "campaign_name": "202301 MOFU SMS SA AMER",
+      "title": "Losing 36% IS to budget",
+      "detail": "Campaign is budget-limited, missing 36% of available impressions. Current IS: 10%. Daily budget: $100.",
+      "confidence": 85,
+      "severity": "medium",
+      "action": "Increase budget for 202301 MOFU SMS SA AMER",
+      "metadata": {
+        "budget_lost_is": 36.1,
+        "current_is": 10.0,
+        "daily_budget": 100.0
+      }
+    },
+    {
+      "type": "keyword_performance",
+      "campaign_id": "23277159104",
+      "campaign_name": "202511 TOFU AI Agents TTS API Global",
+      "title": "Keyword \"ai voices api\" \u2014 $63 spent, 0 conversions",
+      "detail": "Match type: 3, 105 clicks. Consider pausing or tightening match type.",
+      "confidence": 85,
+      "severity": "medium",
+      "action": "Pause keyword \"ai voices api\"",
+      "metadata": {
+        "keyword": "ai voices api",
+        "match_type": "3",
+        "spend": 63.09,
+        "clicks": 105
+      }
+    },
+    {
+      "type": "budget_efficiency",
+      "campaign_id": "23277159104",
+      "campaign_name": "202511 TOFU AI Agents TTS API Global",
+      "title": "CPA improved 26% \u2014 consider budget increase",
+      "detail": "30d CPA: $35.20 \u2192 7d CPA: $26.11. Campaign trending well, may benefit from more budget.",
+      "confidence": 80,
+      "severity": "low",
+      "action": "Increase budget for 202511 TOFU AI Agents TTS API Global",
+      "metadata": {
+        "cpa_30d": 35.2,
+        "cpa_7d": 26.11,
+        "cpa_change_pct": -25.8,
+        "product_group": "voice_ai"
+      }
+    },
+    {
+      "type": "budget_efficiency",
+      "campaign_id": "23372928600",
+      "campaign_name": "202512 TOFU AI Agent STT API SA GLOBAL",
+      "title": "CPA improved 45% \u2014 consider budget increase",
+      "detail": "30d CPA: $68.25 \u2192 7d CPA: $37.52. Campaign trending well, may benefit from more budget.",
+      "confidence": 80,
+      "severity": "low",
+      "action": "Increase budget for 202512 TOFU AI Agent STT API SA GLOBAL",
+      "metadata": {
+        "cpa_30d": 68.25,
+        "cpa_7d": 37.52,
+        "cpa_change_pct": -45.0,
+        "product_group": "voice_ai"
+      }
+    },
+    {
+      "type": "budget_efficiency",
+      "campaign_id": "23578096203",
+      "campaign_name": "202602 TOFU AI Agent Contact Center SA AMER",
+      "title": "CPA improved 61% \u2014 consider budget increase",
+      "detail": "30d CPA: $928.96 \u2192 7d CPA: $363.61. Campaign trending well, may benefit from more budget.",
+      "confidence": 80,
+      "severity": "low",
+      "action": "Increase budget for 202602 TOFU AI Agent Contact Center SA AMER",
+      "metadata": {
+        "cpa_30d": 928.96,
+        "cpa_7d": 363.61,
+        "cpa_change_pct": -60.9,
+        "product_group": "voice_ai"
+      }
+    },
+    {
+      "type": "budget_efficiency",
+      "campaign_id": "23584242652",
+      "campaign_name": "202602 TOFU AI Agent Vapi SA EMEA",
+      "title": "CPA improved 41% \u2014 consider budget increase",
+      "detail": "30d CPA: $30.00 \u2192 7d CPA: $17.71. Campaign trending well, may benefit from more budget.",
+      "confidence": 80,
+      "severity": "low",
+      "action": "Increase budget for 202602 TOFU AI Agent Vapi SA EMEA",
+      "metadata": {
+        "cpa_30d": 30.0,
+        "cpa_7d": 17.71,
+        "cpa_change_pct": -41.0,
+        "product_group": "voice_ai"
+      }
+    },
+    {
+      "type": "budget_efficiency",
+      "campaign_id": "23584242697",
+      "campaign_name": "202602 TOFU AI Agent ElevenLabs SA EMEA",
+      "title": "CPA improved 20% \u2014 consider budget increase",
+      "detail": "30d CPA: $20.89 \u2192 7d CPA: $16.75. Campaign trending well, may benefit from more budget.",
+      "confidence": 80,
+      "severity": "low",
+      "action": "Increase budget for 202602 TOFU AI Agent ElevenLabs SA EMEA",
+      "metadata": {
+        "cpa_30d": 20.89,
+        "cpa_7d": 16.75,
+        "cpa_change_pct": -19.8,
+        "product_group": "voice_ai"
+      }
+    },
+    {
+      "type": "budget_efficiency",
+      "campaign_id": "23583442793",
+      "campaign_name": "202602 TOFU AI Agent Contact Center SA EMEA",
+      "title": "CPA improved 22% \u2014 consider budget increase",
+      "detail": "30d CPA: $349.05 \u2192 7d CPA: $271.58. Campaign trending well, may benefit from more budget.",
+      "confidence": 80,
+      "severity": "low",
+      "action": "Increase budget for 202602 TOFU AI Agent Contact Center SA EMEA",
+      "metadata": {
+        "cpa_30d": 349.05,
+        "cpa_7d": 271.58,
+        "cpa_change_pct": -22.2,
+        "product_group": "voice_ai"
+      }
+    },
+    {
+      "type": "budget_efficiency",
+      "campaign_id": "23583186449",
+      "campaign_name": "202602 TOFU AI Agent Vapi SA APAC",
+      "title": "CPA improved 38% \u2014 consider budget increase",
+      "detail": "30d CPA: $24.11 \u2192 7d CPA: $14.90. Campaign trending well, may benefit from more budget.",
+      "confidence": 80,
+      "severity": "low",
+      "action": "Increase budget for 202602 TOFU AI Agent Vapi SA APAC",
+      "metadata": {
+        "cpa_30d": 24.11,
+        "cpa_7d": 14.9,
+        "cpa_change_pct": -38.2,
+        "product_group": "voice_ai"
+      }
+    },
+    {
+      "type": "budget_efficiency",
+      "campaign_id": "23588051725",
+      "campaign_name": "202602 MOFU AI Agent SA MENA",
+      "title": "CPA improved 16% \u2014 consider budget increase",
+      "detail": "30d CPA: $18.05 \u2192 7d CPA: $15.09. Campaign trending well, may benefit from more budget.",
+      "confidence": 80,
+      "severity": "low",
+      "action": "Increase budget for 202602 MOFU AI Agent SA MENA",
+      "metadata": {
+        "cpa_30d": 18.05,
+        "cpa_7d": 15.09,
+        "cpa_change_pct": -16.4,
+        "product_group": "voice_ai"
+      }
+    },
+    {
+      "type": "budget_efficiency",
+      "campaign_id": "23583187406",
+      "campaign_name": "202602 TOFU AI Agent ElevenLabs SA APAC",
+      "title": "CPA improved 32% \u2014 consider budget increase",
+      "detail": "30d CPA: $12.28 \u2192 7d CPA: $8.40. Campaign trending well, may benefit from more budget.",
+      "confidence": 80,
+      "severity": "low",
+      "action": "Increase budget for 202602 TOFU AI Agent ElevenLabs SA APAC",
+      "metadata": {
+        "cpa_30d": 12.28,
+        "cpa_7d": 8.4,
+        "cpa_change_pct": -31.6,
+        "product_group": "voice_ai"
+      }
+    },
+    {
+      "type": "impression_share",
+      "campaign_id": "19598019744",
+      "campaign_name": "202301 TOFU SIP SA EMEA",
+      "title": "Losing 56% IS to ad rank",
+      "detail": "Campaign losing 56% of impressions due to low ad rank. Consider increasing bids or improving Quality Score.",
+      "confidence": 80,
+      "severity": "high",
+      "action": "Improve ad rank for 202301 TOFU SIP SA EMEA",
+      "metadata": {
+        "rank_lost_is": 55.5,
+        "current_is": 21.3,
+        "bidding_strategy": "10"
+      }
+    },
+    {
+      "type": "impression_share",
+      "campaign_id": "23277159104",
+      "campaign_name": "202511 TOFU AI Agents TTS API Global",
+      "title": "Losing 53% IS to ad rank",
+      "detail": "Campaign losing 53% of impressions due to low ad rank. Consider increasing bids or improving Quality Score.",
+      "confidence": 80,
+      "severity": "high",
+      "action": "Improve ad rank for 202511 TOFU AI Agents TTS API Global",
+      "metadata": {
+        "rank_lost_is": 52.8,
+        "current_is": 11.2,
+        "bidding_strategy": "10"
+      }
+    },
+    {
+      "type": "impression_share",
+      "campaign_id": "19573151169",
+      "campaign_name": "202301 TOFU SIP SA AMER",
+      "title": "Losing 31% IS to budget",
+      "detail": "Campaign is budget-limited, missing 31% of available impressions. Current IS: 20%. Daily budget: $100.",
+      "confidence": 80,
+      "severity": "medium",
+      "action": "Increase budget for 202301 TOFU SIP SA AMER",
+      "metadata": {
+        "budget_lost_is": 31.5,
+        "current_is": 19.7,
+        "daily_budget": 100.0
+      }
+    },
+    {
+      "type": "impression_share",
+      "campaign_id": "23372928600",
+      "campaign_name": "202512 TOFU AI Agent STT API SA GLOBAL",
+      "title": "Losing 56% IS to ad rank",
+      "detail": "Campaign losing 56% of impressions due to low ad rank. Consider increasing bids or improving Quality Score.",
+      "confidence": 80,
+      "severity": "high",
+      "action": "Improve ad rank for 202512 TOFU AI Agent STT API SA GLOBAL",
+      "metadata": {
+        "rank_lost_is": 55.5,
+        "current_is": 10.0,
+        "bidding_strategy": "10"
+      }
+    },
+    {
+      "type": "impression_share",
+      "campaign_id": "20548679680",
+      "campaign_name": "202309 MOFU Voice API SA EMEA",
+      "title": "Losing 40% IS to budget",
+      "detail": "Campaign is budget-limited, missing 40% of available impressions. Current IS: 27%. Daily budget: $30.",
+      "confidence": 80,
+      "severity": "medium",
+      "action": "Increase budget for 202309 MOFU Voice API SA EMEA",
+      "metadata": {
+        "budget_lost_is": 39.5,
+        "current_is": 26.7,
+        "daily_budget": 30.0
+      }
+    },
+    {
+      "type": "impression_share",
+      "campaign_id": "23579649257",
+      "campaign_name": "202602 MOFU AI Agent SA AMER",
+      "title": "Losing 75% IS to ad rank",
+      "detail": "Campaign losing 75% of impressions due to low ad rank. Consider increasing bids or improving Quality Score.",
+      "confidence": 80,
+      "severity": "high",
+      "action": "Improve ad rank for 202602 MOFU AI Agent SA AMER",
+      "metadata": {
+        "rank_lost_is": 75.4,
+        "current_is": 10.3,
+        "bidding_strategy": "9"
+      }
+    },
+    {
+      "type": "impression_share",
+      "campaign_id": "23584242475",
+      "campaign_name": "202602 TOFU AI Agent Vapi SA AMER",
+      "title": "Losing 57% IS to ad rank",
+      "detail": "Campaign losing 57% of impressions due to low ad rank. Consider increasing bids or improving Quality Score.",
+      "confidence": 80,
+      "severity": "high",
+      "action": "Improve ad rank for 202602 TOFU AI Agent Vapi SA AMER",
+      "metadata": {
+        "rank_lost_is": 56.6,
+        "current_is": 14.5,
+        "bidding_strategy": "9"
+      }
+    },
+    {
+      "type": "impression_share",
+      "campaign_id": "23578096203",
+      "campaign_name": "202602 TOFU AI Agent Contact Center SA AMER",
+      "title": "Losing 80% IS to ad rank",
+      "detail": "Campaign losing 80% of impressions due to low ad rank. Consider increasing bids or improving Quality Score.",
+      "confidence": 80,
+      "severity": "high",
+      "action": "Improve ad rank for 202602 TOFU AI Agent Contact Center SA AMER",
+      "metadata": {
+        "rank_lost_is": 79.9,
+        "current_is": 10.0,
+        "bidding_strategy": "9"
+      }
+    },
+    {
+      "type": "impression_share",
+      "campaign_id": "23584242652",
+      "campaign_name": "202602 TOFU AI Agent Vapi SA EMEA",
+      "title": "Losing 36% IS to ad rank",
+      "detail": "Campaign losing 36% of impressions due to low ad rank. Consider increasing bids or improving Quality Score.",
+      "confidence": 80,
+      "severity": "medium",
+      "action": "Improve ad rank for 202602 TOFU AI Agent Vapi SA EMEA",
+      "metadata": {
+        "rank_lost_is": 36.2,
+        "current_is": 19.1,
+        "bidding_strategy": "9"
+      }
+    },
+    {
+      "type": "impression_share",
+      "campaign_id": "23574277866",
+      "campaign_name": "202602 TOFU AI Agent ElevenLabs SA AMER",
+      "title": "Losing 64% IS to ad rank",
+      "detail": "Campaign losing 64% of impressions due to low ad rank. Consider increasing bids or improving Quality Score.",
+      "confidence": 80,
+      "severity": "high",
+      "action": "Improve ad rank for 202602 TOFU AI Agent ElevenLabs SA AMER",
+      "metadata": {
+        "rank_lost_is": 64.1,
+        "current_is": 10.2,
+        "bidding_strategy": "9"
+      }
+    },
+    {
+      "type": "impression_share",
+      "campaign_id": "23584242154",
+      "campaign_name": "202602 MOFU AI Agent SA EMEA",
+      "title": "Losing 48% IS to ad rank",
+      "detail": "Campaign losing 48% of impressions due to low ad rank. Consider increasing bids or improving Quality Score.",
+      "confidence": 80,
+      "severity": "medium",
+      "action": "Improve ad rank for 202602 MOFU AI Agent SA EMEA",
+      "metadata": {
+        "rank_lost_is": 48.1,
+        "current_is": 17.0,
+        "bidding_strategy": "9"
+      }
+    },
+    {
+      "type": "impression_share",
+      "campaign_id": "23584242697",
+      "campaign_name": "202602 TOFU AI Agent ElevenLabs SA EMEA",
+      "title": "Losing 53% IS to ad rank",
+      "detail": "Campaign losing 53% of impressions due to low ad rank. Consider increasing bids or improving Quality Score.",
+      "confidence": 80,
+      "severity": "high",
+      "action": "Improve ad rank for 202602 TOFU AI Agent ElevenLabs SA EMEA",
+      "metadata": {
+        "rank_lost_is": 52.5,
+        "current_is": 10.6,
+        "bidding_strategy": "9"
+      }
+    },
+    {
+      "type": "impression_share",
+      "campaign_id": "23583442793",
+      "campaign_name": "202602 TOFU AI Agent Contact Center SA EMEA",
+      "title": "Losing 37% IS to ad rank",
+      "detail": "Campaign losing 37% of impressions due to low ad rank. Consider increasing bids or improving Quality Score.",
+      "confidence": 80,
+      "severity": "medium",
+      "action": "Improve ad rank for 202602 TOFU AI Agent Contact Center SA EMEA",
+      "metadata": {
+        "rank_lost_is": 36.7,
+        "current_is": 10.3,
+        "bidding_strategy": "9"
+      }
+    },
+    {
+      "type": "impression_share",
+      "campaign_id": "23578113243",
+      "campaign_name": "202602 TOFU AI Agent Contact Center SA APAC",
+      "title": "Losing 55% IS to ad rank",
+      "detail": "Campaign losing 55% of impressions due to low ad rank. Consider increasing bids or improving Quality Score.",
+      "confidence": 80,
+      "severity": "high",
+      "action": "Improve ad rank for 202602 TOFU AI Agent Contact Center SA APAC",
+      "metadata": {
+        "rank_lost_is": 54.8,
+        "current_is": 22.6,
+        "bidding_strategy": "9"
+      }
+    },
+    {
+      "type": "impression_share",
+      "campaign_id": "23577831258",
+      "campaign_name": "202602 TOFU Voice API Twilio SA APAC",
+      "title": "Losing 41% IS to ad rank",
+      "detail": "Campaign losing 41% of impressions due to low ad rank. Consider increasing bids or improving Quality Score.",
+      "confidence": 80,
+      "severity": "medium",
+      "action": "Improve ad rank for 202602 TOFU Voice API Twilio SA APAC",
+      "metadata": {
+        "rank_lost_is": 41.3,
+        "current_is": 40.2,
+        "bidding_strategy": "9"
+      }
+    },
+    {
+      "type": "impression_share",
+      "campaign_id": "23588051725",
+      "campaign_name": "202602 MOFU AI Agent SA MENA",
+      "title": "Losing 34% IS to ad rank",
+      "detail": "Campaign losing 34% of impressions due to low ad rank. Consider increasing bids or improving Quality Score.",
+      "confidence": 80,
+      "severity": "medium",
+      "action": "Improve ad rank for 202602 MOFU AI Agent SA MENA",
+      "metadata": {
+        "rank_lost_is": 34.2,
+        "current_is": 22.4,
+        "bidding_strategy": "9"
+      }
+    },
+    {
+      "type": "campaign_health",
+      "campaign_id": "22634140704",
+      "campaign_name": "202506 BOFU AI Agent DA VA GLOBAL",
+      "title": "Conv. rate dropped 50%",
+      "detail": "30d CVR: 6.60% \u2192 7d CVR: 3.29%. Check landing page, audience, or ad relevance.",
+      "confidence": 80,
+      "severity": "high",
+      "action": "Conv. rate dropped 50%",
+      "metadata": {
+        "cvr_30d": 6.6,
+        "cvr_7d": 3.29,
+        "cvr_change_pct": -50.1
+      }
+    },
+    {
+      "type": "campaign_health",
+      "campaign_id": "23579649257",
+      "campaign_name": "202602 MOFU AI Agent SA AMER",
+      "title": "Conv. rate dropped 34%",
+      "detail": "30d CVR: 2.90% \u2192 7d CVR: 1.91%. Check landing page, audience, or ad relevance.",
+      "confidence": 80,
+      "severity": "medium",
+      "action": "Conv. rate dropped 34%",
+      "metadata": {
+        "cvr_30d": 2.9,
+        "cvr_7d": 1.91,
+        "cvr_change_pct": -34.2
+      }
+    },
+    {
+      "type": "budget_efficiency",
+      "campaign_id": "20329204785",
+      "campaign_name": "202306 MOFU Numbers SA EMEA",
+      "title": "CPA improved 23% \u2014 consider budget increase",
+      "detail": "30d CPA: $62.94 \u2192 7d CPA: $48.15. Campaign trending well, may benefit from more budget.",
+      "confidence": 75,
+      "severity": "low",
+      "action": "Increase budget for 202306 MOFU Numbers SA EMEA",
+      "metadata": {
+        "cpa_30d": 62.94,
+        "cpa_7d": 48.15,
+        "cpa_change_pct": -23.5,
+        "product_group": "connectivity"
+      }
+    },
+    {
+      "type": "budget_efficiency",
+      "campaign_id": "23574277866",
+      "campaign_name": "202602 TOFU AI Agent ElevenLabs SA AMER",
+      "title": "CPA improved 39% \u2014 consider budget increase",
+      "detail": "30d CPA: $42.18 \u2192 7d CPA: $25.82. Campaign trending well, may benefit from more budget.",
+      "confidence": 75,
+      "severity": "low",
+      "action": "Increase budget for 202602 TOFU AI Agent ElevenLabs SA AMER",
+      "metadata": {
+        "cpa_30d": 42.18,
+        "cpa_7d": 25.82,
+        "cpa_change_pct": -38.8,
+        "product_group": "voice_ai"
+      }
+    },
+    {
+      "type": "budget_efficiency",
+      "campaign_id": "23578113243",
+      "campaign_name": "202602 TOFU AI Agent Contact Center SA APAC",
+      "title": "CPA improved 47% \u2014 consider budget increase",
+      "detail": "30d CPA: $264.12 \u2192 7d CPA: $140.99. Campaign trending well, may benefit from more budget.",
+      "confidence": 75,
+      "severity": "low",
+      "action": "Increase budget for 202602 TOFU AI Agent Contact Center SA APAC",
+      "metadata": {
+        "cpa_30d": 264.12,
+        "cpa_7d": 140.99,
+        "cpa_change_pct": -46.6,
+        "product_group": "voice_ai"
+      }
+    },
+    {
+      "type": "budget_efficiency",
+      "campaign_id": "23577831258",
+      "campaign_name": "202602 TOFU Voice API Twilio SA APAC",
+      "title": "CPA improved 32% \u2014 consider budget increase",
+      "detail": "30d CPA: $29.33 \u2192 7d CPA: $20.00. Campaign trending well, may benefit from more budget.",
+      "confidence": 75,
+      "severity": "low",
+      "action": "Increase budget for 202602 TOFU Voice API Twilio SA APAC",
+      "metadata": {
+        "cpa_30d": 29.33,
+        "cpa_7d": 20.0,
+        "cpa_change_pct": -31.8,
+        "product_group": "voice_infrastructure"
+      }
+    },
+    {
+      "type": "impression_share",
+      "campaign_id": "21778360532",
+      "campaign_name": "202211 TOFU Voice API Twilio SA AMER",
+      "title": "Losing 41% IS to ad rank",
+      "detail": "Campaign losing 41% of impressions due to low ad rank. Consider increasing bids or improving Quality Score.",
+      "confidence": 75,
+      "severity": "medium",
+      "action": "Improve ad rank for 202211 TOFU Voice API Twilio SA AMER",
+      "metadata": {
+        "rank_lost_is": 40.7,
+        "current_is": 59.3,
+        "bidding_strategy": "9"
+      }
+    },
+    {
+      "type": "impression_share",
+      "campaign_id": "20258572711",
+      "campaign_name": "202306 MOFU Numbers SA AMER",
+      "title": "Losing 48% IS to ad rank",
+      "detail": "Campaign losing 48% of impressions due to low ad rank. Consider increasing bids or improving Quality Score.",
+      "confidence": 75,
+      "severity": "medium",
+      "action": "Improve ad rank for 202306 MOFU Numbers SA AMER",
+      "metadata": {
+        "rank_lost_is": 48.1,
+        "current_is": 20.9,
+        "bidding_strategy": "11"
+      }
+    },
+    {
+      "type": "impression_share",
+      "campaign_id": "22216728203",
+      "campaign_name": "202502 TOFU SIP SA APAC",
+      "title": "Losing 44% IS to ad rank",
+      "detail": "Campaign losing 44% of impressions due to low ad rank. Consider increasing bids or improving Quality Score.",
+      "confidence": 75,
+      "severity": "medium",
+      "action": "Improve ad rank for 202502 TOFU SIP SA APAC",
+      "metadata": {
+        "rank_lost_is": 44.1,
+        "current_is": 31.5,
+        "bidding_strategy": "11"
+      }
+    },
+    {
+      "type": "impression_share",
+      "campaign_id": "19600918299",
+      "campaign_name": "202301 MOFU SMS SA AMER",
+      "title": "Losing 55% IS to ad rank",
+      "detail": "Campaign losing 55% of impressions due to low ad rank. Consider increasing bids or improving Quality Score.",
+      "confidence": 75,
+      "severity": "high",
+      "action": "Improve ad rank for 202301 MOFU SMS SA AMER",
+      "metadata": {
+        "rank_lost_is": 55.1,
+        "current_is": 10.0,
+        "bidding_strategy": "11"
+      }
+    },
+    {
+      "type": "impression_share",
+      "campaign_id": "19905048363",
+      "campaign_name": "202304 MOFU Voice API SA AMER",
+      "title": "Losing 61% IS to ad rank",
+      "detail": "Campaign losing 61% of impressions due to low ad rank. Consider increasing bids or improving Quality Score.",
+      "confidence": 75,
+      "severity": "high",
+      "action": "Improve ad rank for 202304 MOFU Voice API SA AMER",
+      "metadata": {
+        "rank_lost_is": 61.3,
+        "current_is": 23.9,
+        "bidding_strategy": "9"
+      }
+    },
+    {
+      "type": "impression_share",
+      "campaign_id": "20642614284",
+      "campaign_name": "202310 MOFU IoT SIM SA APAC-AU",
+      "title": "Losing 43% IS to ad rank",
+      "detail": "Campaign losing 43% of impressions due to low ad rank. Consider increasing bids or improving Quality Score.",
+      "confidence": 75,
+      "severity": "medium",
+      "action": "Improve ad rank for 202310 MOFU IoT SIM SA APAC-AU",
+      "metadata": {
+        "rank_lost_is": 42.7,
+        "current_is": 36.3,
+        "bidding_strategy": "10"
+      }
+    },
+    {
+      "type": "keyword_quality",
+      "campaign_id": "23277159104",
+      "campaign_name": "202511 TOFU AI Agents TTS API Global",
+      "title": "Keyword \"text to speech api\" QS=4/10",
+      "detail": "Low Quality Score hurts ad rank and increases CPC. Review ad copy alignment and landing page relevance.",
+      "confidence": 75,
+      "severity": "medium",
+      "action": "Improve QS for \"text to speech api\"",
+      "metadata": {
+        "keyword": "text to speech api",
+        "quality_score": 4,
+        "impressions": 37090
+      }
+    },
+    {
+      "type": "keyword_quality",
+      "campaign_id": "20329204785",
+      "campaign_name": "202306 MOFU Numbers SA EMEA",
+      "title": "Keyword \"global phone numbers\" QS=3/10",
+      "detail": "Low Quality Score hurts ad rank and increases CPC. Review ad copy alignment and landing page relevance.",
+      "confidence": 75,
+      "severity": "medium",
+      "action": "Improve QS for \"global phone numbers\"",
+      "metadata": {
+        "keyword": "global phone numbers",
+        "quality_score": 3,
+        "impressions": 5442
+      }
+    },
+    {
+      "type": "keyword_quality",
+      "campaign_id": "23583442793",
+      "campaign_name": "202602 TOFU AI Agent Contact Center SA EMEA",
+      "title": "Keyword \"ai call center\" QS=4/10",
+      "detail": "Low Quality Score hurts ad rank and increases CPC. Review ad copy alignment and landing page relevance.",
+      "confidence": 75,
+      "severity": "medium",
+      "action": "Improve QS for \"ai call center\"",
+      "metadata": {
+        "keyword": "ai call center",
+        "quality_score": 4,
+        "impressions": 2446
+      }
+    },
+    {
+      "type": "keyword_performance",
+      "campaign_id": "23583479729",
+      "campaign_name": "202602 TOFU AI Agent LiveKit SA EMEA",
+      "title": "Keyword \"livekit\" \u2014 $600 spent, 0 conversions",
+      "detail": "Match type: 2, 70 clicks. Consider pausing or tightening match type.",
+      "confidence": 75,
+      "severity": "high",
+      "action": "Pause keyword \"livekit\"",
+      "metadata": {
+        "keyword": "livekit",
+        "match_type": "2",
+        "spend": 599.95,
+        "clicks": 70
+      }
+    },
+    {
+      "type": "keyword_quality",
+      "campaign_id": "23277159104",
+      "campaign_name": "202511 TOFU AI Agents TTS API Global",
+      "title": "Keyword \"text-to-speech api\" QS=4/10",
+      "detail": "Low Quality Score hurts ad rank and increases CPC. Review ad copy alignment and landing page relevance.",
+      "confidence": 75,
+      "severity": "medium",
+      "action": "Improve QS for \"text-to-speech api\"",
+      "metadata": {
+        "keyword": "text-to-speech api",
+        "quality_score": 4,
+        "impressions": 3227
+      }
+    },
+    {
+      "type": "keyword_performance",
+      "campaign_id": "21778360532",
+      "campaign_name": "202211 TOFU Voice API Twilio SA AMER",
+      "title": "Keyword \"twilio call api\" \u2014 $377 spent, 0 conversions",
+      "detail": "Match type: 2, 20 clicks. Consider pausing or tightening match type.",
+      "confidence": 75,
+      "severity": "high",
+      "action": "Pause keyword \"twilio call api\"",
+      "metadata": {
+        "keyword": "twilio call api",
+        "match_type": "2",
+        "spend": 376.57,
+        "clicks": 20
+      }
+    },
+    {
+      "type": "keyword_performance",
+      "campaign_id": "16559802209",
+      "campaign_name": "202203 MOFU IoT SIM SA EMEA",
+      "title": "Keyword \"sim iot\" \u2014 $366 spent, 0 conversions",
+      "detail": "Match type: 3, 31 clicks. Consider pausing or tightening match type.",
+      "confidence": 75,
+      "severity": "high",
+      "action": "Pause keyword \"sim iot\"",
+      "metadata": {
+        "keyword": "sim iot",
+        "match_type": "3",
+        "spend": 365.64,
+        "clicks": 31
+      }
+    },
+    {
+      "type": "keyword_performance",
+      "campaign_id": "16559802209",
+      "campaign_name": "202203 MOFU IoT SIM SA EMEA",
+      "title": "Keyword \"iot card\" \u2014 $358 spent, 0 conversions",
+      "detail": "Match type: 3, 34 clicks. Consider pausing or tightening match type.",
+      "confidence": 75,
+      "severity": "high",
+      "action": "Pause keyword \"iot card\"",
+      "metadata": {
+        "keyword": "iot card",
+        "match_type": "3",
+        "spend": 357.86,
+        "clicks": 34
+      }
+    },
+    {
+      "type": "keyword_performance",
+      "campaign_id": "20258572711",
+      "campaign_name": "202306 MOFU Numbers SA AMER",
+      "title": "Keyword \"virtual numbers telephony\" \u2014 $338 spent, 0 conversions",
+      "detail": "Match type: 2, 17 clicks. Consider pausing or tightening match type.",
+      "confidence": 75,
+      "severity": "high",
+      "action": "Pause keyword \"virtual numbers telephony\"",
+      "metadata": {
+        "keyword": "virtual numbers telephony",
+        "match_type": "2",
+        "spend": 337.86,
+        "clicks": 17
+      }
+    },
+    {
+      "type": "keyword_performance",
+      "campaign_id": "23546680743",
+      "campaign_name": "202602 BRAND ClawdTalk SA GLOBAL",
+      "title": "Keyword \"clawdtalk ai\" \u2014 $319 spent, 0 conversions",
+      "detail": "Match type: 2, 13 clicks. Consider pausing or tightening match type.",
+      "confidence": 75,
+      "severity": "high",
+      "action": "Pause keyword \"clawdtalk ai\"",
+      "metadata": {
+        "keyword": "clawdtalk ai",
+        "match_type": "2",
+        "spend": 318.79,
+        "clicks": 13
+      }
+    },
+    {
+      "type": "keyword_quality",
+      "campaign_id": "23277159104",
+      "campaign_name": "202511 TOFU AI Agents TTS API Global",
+      "title": "Keyword \"text to speech api\" QS=4/10",
+      "detail": "Low Quality Score hurts ad rank and increases CPC. Review ad copy alignment and landing page relevance.",
+      "confidence": 75,
+      "severity": "medium",
+      "action": "Improve QS for \"text to speech api\"",
+      "metadata": {
+        "keyword": "text to speech api",
+        "quality_score": 4,
+        "impressions": 3224
+      }
+    },
+    {
+      "type": "keyword_performance",
+      "campaign_id": "20304732701",
+      "campaign_name": "202305 TOFU Voice API Twilio SA EMEA",
+      "title": "Keyword \"Twilio competitors\" \u2014 $285 spent, 0 conversions",
+      "detail": "Match type: 3, 12 clicks. Consider pausing or tightening match type.",
+      "confidence": 75,
+      "severity": "high",
+      "action": "Pause keyword \"Twilio competitors\"",
+      "metadata": {
+        "keyword": "Twilio competitors",
+        "match_type": "3",
+        "spend": 284.52,
+        "clicks": 12
+      }
+    },
+    {
+      "type": "keyword_performance",
+      "campaign_id": "20258572711",
+      "campaign_name": "202306 MOFU Numbers SA AMER",
+      "title": "Keyword \"local business numbers\" \u2014 $270 spent, 0 conversions",
+      "detail": "Match type: 3, 11 clicks. Consider pausing or tightening match type.",
+      "confidence": 75,
+      "severity": "high",
+      "action": "Pause keyword \"local business numbers\"",
+      "metadata": {
+        "keyword": "local business numbers",
+        "match_type": "3",
+        "spend": 270.21,
+        "clicks": 11
+      }
+    },
+    {
+      "type": "keyword_performance",
+      "campaign_id": "20304732701",
+      "campaign_name": "202305 TOFU Voice API Twilio SA EMEA",
+      "title": "Keyword \"twilio status\" \u2014 $253 spent, 0 conversions",
+      "detail": "Match type: 3, 6 clicks. Consider pausing or tightening match type.",
+      "confidence": 75,
+      "severity": "high",
+      "action": "Pause keyword \"twilio status\"",
+      "metadata": {
+        "keyword": "twilio status",
+        "match_type": "3",
+        "spend": 252.8,
+        "clicks": 6
+      }
+    },
+    {
+      "type": "keyword_performance",
+      "campaign_id": "23583479729",
+      "campaign_name": "202602 TOFU AI Agent LiveKit SA EMEA",
+      "title": "Keyword \"pipecat\" \u2014 $243 spent, 0 conversions",
+      "detail": "Match type: 2, 26 clicks. Consider pausing or tightening match type.",
+      "confidence": 75,
+      "severity": "high",
+      "action": "Pause keyword \"pipecat\"",
+      "metadata": {
+        "keyword": "pipecat",
+        "match_type": "2",
+        "spend": 242.53,
+        "clicks": 26
+      }
+    },
+    {
+      "type": "keyword_performance",
+      "campaign_id": "20258572711",
+      "campaign_name": "202306 MOFU Numbers SA AMER",
+      "title": "Keyword \"local phone numbers for business\" \u2014 $234 spent, 0 conversions",
+      "detail": "Match type: 2, 12 clicks. Consider pausing or tightening match type.",
+      "confidence": 75,
+      "severity": "high",
+      "action": "Pause keyword \"local phone numbers for business\"",
+      "metadata": {
+        "keyword": "local phone numbers for business",
+        "match_type": "2",
+        "spend": 233.53,
+        "clicks": 12
+      }
+    },
+    {
+      "type": "keyword_performance",
+      "campaign_id": "19702945341",
+      "campaign_name": "202509 BOFU SMS RLSA GLOBAL",
+      "title": "Keyword \"twilio sms\" \u2014 $196 spent, 0 conversions",
+      "detail": "Match type: 4, 24 clicks. Consider pausing or tightening match type.",
+      "confidence": 75,
+      "severity": "high",
+      "action": "Pause keyword \"twilio sms\"",
+      "metadata": {
+        "keyword": "twilio sms",
+        "match_type": "4",
+        "spend": 195.61,
+        "clicks": 24
+      }
+    },
+    {
+      "type": "keyword_performance",
+      "campaign_id": "20304732701",
+      "campaign_name": "202305 TOFU Voice API Twilio SA EMEA",
+      "title": "Keyword \"twilio voice api pricing\" \u2014 $170 spent, 0 conversions",
+      "detail": "Match type: 2, 10 clicks. Consider pausing or tightening match type.",
+      "confidence": 75,
+      "severity": "high",
+      "action": "Pause keyword \"twilio voice api pricing\"",
+      "metadata": {
+        "keyword": "twilio voice api pricing",
+        "match_type": "2",
+        "spend": 169.87,
+        "clicks": 10
+      }
+    },
+    {
+      "type": "keyword_performance",
+      "campaign_id": "19686969281",
+      "campaign_name": "202509 BOFU SIP SA GLOBAL",
+      "title": "Keyword \"sip voip provider\" \u2014 $161 spent, 0 conversions",
+      "detail": "Match type: 3, 18 clicks. Consider pausing or tightening match type.",
+      "confidence": 75,
+      "severity": "high",
+      "action": "Pause keyword \"sip voip provider\"",
+      "metadata": {
+        "keyword": "sip voip provider",
+        "match_type": "3",
+        "spend": 161.49,
+        "clicks": 18
+      }
+    },
+    {
+      "type": "keyword_performance",
+      "campaign_id": "23583442793",
+      "campaign_name": "202602 TOFU AI Agent Contact Center SA EMEA",
+      "title": "Keyword \"ai call center\" \u2014 $160 spent, 0 conversions",
+      "detail": "Match type: 2, 91 clicks. Consider pausing or tightening match type.",
+      "confidence": 75,
+      "severity": "high",
+      "action": "Pause keyword \"ai call center\"",
+      "metadata": {
+        "keyword": "ai call center",
+        "match_type": "2",
+        "spend": 159.88,
+        "clicks": 91
+      }
+    },
+    {
+      "type": "keyword_performance",
+      "campaign_id": "16559802209",
+      "campaign_name": "202203 MOFU IoT SIM SA EMEA",
+      "title": "Keyword \"m2m iot\" \u2014 $154 spent, 0 conversions",
+      "detail": "Match type: 3, 17 clicks. Consider pausing or tightening match type.",
+      "confidence": 75,
+      "severity": "high",
+      "action": "Pause keyword \"m2m iot\"",
+      "metadata": {
+        "keyword": "m2m iot",
+        "match_type": "3",
+        "spend": 154.14,
+        "clicks": 17
+      }
+    },
+    {
+      "type": "keyword_performance",
+      "campaign_id": "16559802209",
+      "campaign_name": "202203 MOFU IoT SIM SA EMEA",
+      "title": "Keyword \"iot sims\" \u2014 $150 spent, 0 conversions",
+      "detail": "Match type: 2, 12 clicks. Consider pausing or tightening match type.",
+      "confidence": 75,
+      "severity": "high",
+      "action": "Pause keyword \"iot sims\"",
+      "metadata": {
+        "keyword": "iot sims",
+        "match_type": "2",
+        "spend": 150.49,
+        "clicks": 12
+      }
+    },
+    {
+      "type": "keyword_performance",
+      "campaign_id": "20304732701",
+      "campaign_name": "202305 TOFU Voice API Twilio SA EMEA",
+      "title": "Keyword \"twilio programmable voice api\" \u2014 $146 spent, 0 conversions",
+      "detail": "Match type: 2, 11 clicks. Consider pausing or tightening match type.",
+      "confidence": 75,
+      "severity": "high",
+      "action": "Pause keyword \"twilio programmable voice api\"",
+      "metadata": {
+        "keyword": "twilio programmable voice api",
+        "match_type": "2",
+        "spend": 145.88,
+        "clicks": 11
+      }
+    },
+    {
+      "type": "keyword_performance",
+      "campaign_id": "20304732701",
+      "campaign_name": "202305 TOFU Voice API Twilio SA EMEA",
+      "title": "Keyword \"twilio alternative europe\" \u2014 $145 spent, 0 conversions",
+      "detail": "Match type: 3, 9 clicks. Consider pausing or tightening match type.",
+      "confidence": 75,
+      "severity": "high",
+      "action": "Pause keyword \"twilio alternative europe\"",
+      "metadata": {
+        "keyword": "twilio alternative europe",
+        "match_type": "3",
+        "spend": 144.95,
+        "clicks": 9
+      }
+    },
+    {
+      "type": "keyword_performance",
+      "campaign_id": "21778360532",
+      "campaign_name": "202211 TOFU Voice API Twilio SA AMER",
+      "title": "Keyword \"twilio programmable voice api\" \u2014 $143 spent, 0 conversions",
+      "detail": "Match type: 2, 8 clicks. Consider pausing or tightening match type.",
+      "confidence": 75,
+      "severity": "high",
+      "action": "Pause keyword \"twilio programmable voice api\"",
+      "metadata": {
+        "keyword": "twilio programmable voice api",
+        "match_type": "2",
+        "spend": 143.27,
+        "clicks": 8
+      }
+    },
+    {
+      "type": "keyword_performance",
+      "campaign_id": "20304732701",
+      "campaign_name": "202305 TOFU Voice API Twilio SA EMEA",
+      "title": "Keyword \"twilio voice sdk\" \u2014 $134 spent, 0 conversions",
+      "detail": "Match type: 3, 5 clicks. Consider pausing or tightening match type.",
+      "confidence": 75,
+      "severity": "high",
+      "action": "Pause keyword \"twilio voice sdk\"",
+      "metadata": {
+        "keyword": "twilio voice sdk",
+        "match_type": "3",
+        "spend": 134.26,
+        "clicks": 5
+      }
+    },
+    {
+      "type": "keyword_performance",
+      "campaign_id": "20258572711",
+      "campaign_name": "202306 MOFU Numbers SA AMER",
+      "title": "Keyword \"global phone numbers\" \u2014 $133 spent, 0 conversions",
+      "detail": "Match type: 2, 20 clicks. Consider pausing or tightening match type.",
+      "confidence": 75,
+      "severity": "high",
+      "action": "Pause keyword \"global phone numbers\"",
+      "metadata": {
+        "keyword": "global phone numbers",
+        "match_type": "2",
+        "spend": 133.28,
+        "clicks": 20
+      }
+    },
+    {
+      "type": "keyword_quality",
+      "campaign_id": "23588051725",
+      "campaign_name": "202602 MOFU AI Agent SA MENA",
+      "title": "Keyword \"build ai agent\" QS=3/10",
+      "detail": "Low Quality Score hurts ad rank and increases CPC. Review ad copy alignment and landing page relevance.",
+      "confidence": 75,
+      "severity": "medium",
+      "action": "Improve QS for \"build ai agent\"",
+      "metadata": {
+        "keyword": "build ai agent",
+        "quality_score": 3,
+        "impressions": 2237
+      }
+    },
+    {
+      "type": "keyword_performance",
+      "campaign_id": "16559802209",
+      "campaign_name": "202203 MOFU IoT SIM SA EMEA",
+      "title": "Keyword \"esim iot\" \u2014 $126 spent, 0 conversions",
+      "detail": "Match type: 3, 5 clicks. Consider pausing or tightening match type.",
+      "confidence": 75,
+      "severity": "high",
+      "action": "Pause keyword \"esim iot\"",
+      "metadata": {
+        "keyword": "esim iot",
+        "match_type": "3",
+        "spend": 125.55,
+        "clicks": 5
+      }
+    },
+    {
+      "type": "keyword_performance",
+      "campaign_id": "20258572711",
+      "campaign_name": "202306 MOFU Numbers SA AMER",
+      "title": "Keyword \"local business number\" \u2014 $125 spent, 0 conversions",
+      "detail": "Match type: 2, 3 clicks. Consider pausing or tightening match type.",
+      "confidence": 75,
+      "severity": "high",
+      "action": "Pause keyword \"local business number\"",
+      "metadata": {
+        "keyword": "local business number",
+        "match_type": "2",
+        "spend": 124.9,
+        "clicks": 3
+      }
+    },
+    {
+      "type": "keyword_performance",
+      "campaign_id": "19598019744",
+      "campaign_name": "202301 TOFU SIP SA EMEA",
+      "title": "Keyword \"international sip trunk provider\" \u2014 $124 spent, 0 conversions",
+      "detail": "Match type: 3, 12 clicks. Consider pausing or tightening match type.",
+      "confidence": 75,
+      "severity": "high",
+      "action": "Pause keyword \"international sip trunk provider\"",
+      "metadata": {
+        "keyword": "international sip trunk provider",
+        "match_type": "3",
+        "spend": 124.09,
+        "clicks": 12
+      }
+    },
+    {
+      "type": "keyword_performance",
+      "campaign_id": "16559802209",
+      "campaign_name": "202203 MOFU IoT SIM SA EMEA",
+      "title": "Keyword \"m2m sim\" \u2014 $123 spent, 0 conversions",
+      "detail": "Match type: 2, 7 clicks. Consider pausing or tightening match type.",
+      "confidence": 75,
+      "severity": "high",
+      "action": "Pause keyword \"m2m sim\"",
+      "metadata": {
+        "keyword": "m2m sim",
+        "match_type": "2",
+        "spend": 123.4,
+        "clicks": 7
+      }
+    },
+    {
+      "type": "keyword_performance",
+      "campaign_id": "19600918299",
+      "campaign_name": "202301 MOFU SMS SA AMER",
+      "title": "Keyword \"2 way sms\" \u2014 $122 spent, 0 conversions",
+      "detail": "Match type: 3, 9 clicks. Consider pausing or tightening match type.",
+      "confidence": 75,
+      "severity": "high",
+      "action": "Pause keyword \"2 way sms\"",
+      "metadata": {
+        "keyword": "2 way sms",
+        "match_type": "3",
+        "spend": 121.71,
+        "clicks": 9
+      }
+    },
+    {
+      "type": "keyword_performance",
+      "campaign_id": "19598019744",
+      "campaign_name": "202301 TOFU SIP SA EMEA",
+      "title": "Keyword \"SIp trunking provider\" \u2014 $120 spent, 0 conversions",
+      "detail": "Match type: 2, 8 clicks. Consider pausing or tightening match type.",
+      "confidence": 75,
+      "severity": "high",
+      "action": "Pause keyword \"SIp trunking provider\"",
+      "metadata": {
+        "keyword": "SIp trunking provider",
+        "match_type": "2",
+        "spend": 119.55,
+        "clicks": 8
+      }
+    },
+    {
+      "type": "keyword_performance",
+      "campaign_id": "19598019744",
+      "campaign_name": "202301 TOFU SIP SA EMEA",
+      "title": "Keyword \"vonage sip trunk\" \u2014 $118 spent, 0 conversions",
+      "detail": "Match type: 2, 4 clicks. Consider pausing or tightening match type.",
+      "confidence": 75,
+      "severity": "high",
+      "action": "Pause keyword \"vonage sip trunk\"",
+      "metadata": {
+        "keyword": "vonage sip trunk",
+        "match_type": "2",
+        "spend": 118.49,
+        "clicks": 4
+      }
+    },
+    {
+      "type": "keyword_performance",
+      "campaign_id": "19598019744",
+      "campaign_name": "202301 TOFU SIP SA EMEA",
+      "title": "Keyword \"sip trunk belgium\" \u2014 $114 spent, 0 conversions",
+      "detail": "Match type: 2, 13 clicks. Consider pausing or tightening match type.",
+      "confidence": 75,
+      "severity": "high",
+      "action": "Pause keyword \"sip trunk belgium\"",
+      "metadata": {
+        "keyword": "sip trunk belgium",
+        "match_type": "2",
+        "spend": 114.16,
+        "clicks": 13
+      }
+    },
+    {
+      "type": "keyword_performance",
+      "campaign_id": "21778360532",
+      "campaign_name": "202211 TOFU Voice API Twilio SA AMER",
+      "title": "Keyword \"twilio voice api pricing\" \u2014 $114 spent, 0 conversions",
+      "detail": "Match type: 2, 8 clicks. Consider pausing or tightening match type.",
+      "confidence": 75,
+      "severity": "high",
+      "action": "Pause keyword \"twilio voice api pricing\"",
+      "metadata": {
+        "keyword": "twilio voice api pricing",
+        "match_type": "2",
+        "spend": 113.82,
+        "clicks": 8
+      }
+    },
+    {
+      "type": "keyword_performance",
+      "campaign_id": "20304732701",
+      "campaign_name": "202305 TOFU Voice API Twilio SA EMEA",
+      "title": "Keyword \"vonage voice api\" \u2014 $113 spent, 0 conversions",
+      "detail": "Match type: 3, 5 clicks. Consider pausing or tightening match type.",
+      "confidence": 75,
+      "severity": "high",
+      "action": "Pause keyword \"vonage voice api\"",
+      "metadata": {
+        "keyword": "vonage voice api",
+        "match_type": "3",
+        "spend": 112.94,
+        "clicks": 5
+      }
+    },
+    {
+      "type": "keyword_performance",
+      "campaign_id": "19598019744",
+      "campaign_name": "202301 TOFU SIP SA EMEA",
+      "title": "Keyword \"carrier sip trunk\" \u2014 $109 spent, 0 conversions",
+      "detail": "Match type: 2, 5 clicks. Consider pausing or tightening match type.",
+      "confidence": 75,
+      "severity": "high",
+      "action": "Pause keyword \"carrier sip trunk\"",
+      "metadata": {
+        "keyword": "carrier sip trunk",
+        "match_type": "2",
+        "spend": 109.2,
+        "clicks": 5
+      }
+    },
+    {
+      "type": "keyword_performance",
+      "campaign_id": "20304732701",
+      "campaign_name": "202305 TOFU Voice API Twilio SA EMEA",
+      "title": "Keyword \"services like twilio\" \u2014 $105 spent, 0 conversions",
+      "detail": "Match type: 3, 5 clicks. Consider pausing or tightening match type.",
+      "confidence": 75,
+      "severity": "high",
+      "action": "Pause keyword \"services like twilio\"",
+      "metadata": {
+        "keyword": "services like twilio",
+        "match_type": "3",
+        "spend": 104.54,
+        "clicks": 5
+      }
+    },
+    {
+      "type": "keyword_performance",
+      "campaign_id": "16559802209",
+      "campaign_name": "202203 MOFU IoT SIM SA EMEA",
+      "title": "Keyword \"m2m data sim cards\" \u2014 $102 spent, 0 conversions",
+      "detail": "Match type: 3, 2 clicks. Consider pausing or tightening match type.",
+      "confidence": 75,
+      "severity": "high",
+      "action": "Pause keyword \"m2m data sim cards\"",
+      "metadata": {
+        "keyword": "m2m data sim cards",
+        "match_type": "3",
+        "spend": 101.82,
+        "clicks": 2
+      }
+    },
+    {
+      "type": "budget_efficiency",
+      "campaign_id": "19598019744",
+      "campaign_name": "202301 TOFU SIP SA EMEA",
+      "title": "CPA improved 36% \u2014 consider budget increase",
+      "detail": "30d CPA: $151.10 \u2192 7d CPA: $96.70. Campaign trending well, may benefit from more budget.",
+      "confidence": 70,
+      "severity": "low",
+      "action": "Increase budget for 202301 TOFU SIP SA EMEA",
+      "metadata": {
+        "cpa_30d": 151.1,
+        "cpa_7d": 96.7,
+        "cpa_change_pct": -36.0,
+        "product_group": "sip_trunking"
+      }
+    },
+    {
+      "type": "budget_efficiency",
+      "campaign_id": "21778360532",
+      "campaign_name": "202211 TOFU Voice API Twilio SA AMER",
+      "title": "CPA improved 27% \u2014 consider budget increase",
+      "detail": "30d CPA: $81.23 \u2192 7d CPA: $59.30. Campaign trending well, may benefit from more budget.",
+      "confidence": 70,
+      "severity": "low",
+      "action": "Increase budget for 202211 TOFU Voice API Twilio SA AMER",
+      "metadata": {
+        "cpa_30d": 81.23,
+        "cpa_7d": 59.3,
+        "cpa_change_pct": -27.0,
+        "product_group": "voice_infrastructure"
+      }
+    },
+    {
+      "type": "impression_share",
+      "campaign_id": "19573151169",
+      "campaign_name": "202301 TOFU SIP SA AMER",
+      "title": "Losing 49% IS to ad rank",
+      "detail": "Campaign losing 49% of impressions due to low ad rank. Consider increasing bids or improving Quality Score.",
+      "confidence": 70,
+      "severity": "medium",
+      "action": "Improve ad rank for 202301 TOFU SIP SA AMER",
+      "metadata": {
+        "rank_lost_is": 48.9,
+        "current_is": 19.7,
+        "bidding_strategy": "11"
+      }
+    },
+    {
+      "type": "impression_share",
+      "campaign_id": "16559802209",
+      "campaign_name": "202203 MOFU IoT SIM SA EMEA",
+      "title": "Losing 55% IS to ad rank",
+      "detail": "Campaign losing 55% of impressions due to low ad rank. Consider increasing bids or improving Quality Score.",
+      "confidence": 70,
+      "severity": "high",
+      "action": "Improve ad rank for 202203 MOFU IoT SIM SA EMEA",
+      "metadata": {
+        "rank_lost_is": 55.5,
+        "current_is": 16.8,
+        "bidding_strategy": "10"
+      }
+    },
+    {
+      "type": "impression_share",
+      "campaign_id": "20548679680",
+      "campaign_name": "202309 MOFU Voice API SA EMEA",
+      "title": "Losing 34% IS to ad rank",
+      "detail": "Campaign losing 34% of impressions due to low ad rank. Consider increasing bids or improving Quality Score.",
+      "confidence": 70,
+      "severity": "medium",
+      "action": "Improve ad rank for 202309 MOFU Voice API SA EMEA",
+      "metadata": {
+        "rank_lost_is": 33.7,
+        "current_is": 26.7,
+        "bidding_strategy": "11"
+      }
+    },
+    {
+      "type": "impression_share",
+      "campaign_id": "23583479729",
+      "campaign_name": "202602 TOFU AI Agent LiveKit SA EMEA",
+      "title": "Losing 42% IS to ad rank",
+      "detail": "Campaign losing 42% of impressions due to low ad rank. Consider increasing bids or improving Quality Score.",
+      "confidence": 70,
+      "severity": "medium",
+      "action": "Improve ad rank for 202602 TOFU AI Agent LiveKit SA EMEA",
+      "metadata": {
+        "rank_lost_is": 42.3,
+        "current_is": 56.5,
+        "bidding_strategy": "9"
+      }
+    },
+    {
+      "type": "impression_share",
+      "campaign_id": "19702945341",
+      "campaign_name": "202509 BOFU SMS RLSA GLOBAL",
+      "title": "Losing 34% IS to ad rank",
+      "detail": "Campaign losing 34% of impressions due to low ad rank. Consider increasing bids or improving Quality Score.",
+      "confidence": 70,
+      "severity": "medium",
+      "action": "Improve ad rank for 202509 BOFU SMS RLSA GLOBAL",
+      "metadata": {
+        "rank_lost_is": 33.6,
+        "current_is": 59.0,
+        "bidding_strategy": "9"
+      }
+    },
+    {
+      "type": "keyword_quality",
+      "campaign_id": "19905048363",
+      "campaign_name": "202304 MOFU Voice API SA AMER",
+      "title": "Keyword \"voice api\" QS=3/10",
+      "detail": "Low Quality Score hurts ad rank and increases CPC. Review ad copy alignment and landing page relevance.",
+      "confidence": 70,
+      "severity": "medium",
+      "action": "Improve QS for \"voice api\"",
+      "metadata": {
+        "keyword": "voice api",
+        "quality_score": 3,
+        "impressions": 7034
+      }
+    },
+    {
+      "type": "keyword_quality",
+      "campaign_id": "19598019744",
+      "campaign_name": "202301 TOFU SIP SA EMEA",
+      "title": "Keyword \"sip provider\" QS=2/10",
+      "detail": "Low Quality Score hurts ad rank and increases CPC. Review ad copy alignment and landing page relevance.",
+      "confidence": 70,
+      "severity": "medium",
+      "action": "Improve QS for \"sip provider\"",
+      "metadata": {
+        "keyword": "sip provider",
+        "quality_score": 2,
+        "impressions": 6949
+      }
+    },
+    {
+      "type": "keyword_quality",
+      "campaign_id": "23578113243",
+      "campaign_name": "202602 TOFU AI Agent Contact Center SA APAC",
+      "title": "Keyword \"ai call center\" QS=2/10",
+      "detail": "Low Quality Score hurts ad rank and increases CPC. Review ad copy alignment and landing page relevance.",
+      "confidence": 70,
+      "severity": "medium",
+      "action": "Improve QS for \"ai call center\"",
+      "metadata": {
+        "keyword": "ai call center",
+        "quality_score": 2,
+        "impressions": 3724
+      }
+    },
+    {
+      "type": "keyword_performance",
+      "campaign_id": "19598019744",
+      "campaign_name": "202301 TOFU SIP SA EMEA",
+      "title": "Keyword \"Sip Price\" \u2014 $97 spent, 0 conversions",
+      "detail": "Match type: 3, 13 clicks. Consider pausing or tightening match type.",
+      "confidence": 70,
+      "severity": "medium",
+      "action": "Pause keyword \"Sip Price\"",
+      "metadata": {
+        "keyword": "Sip Price",
+        "match_type": "3",
+        "spend": 96.75,
+        "clicks": 13
+      }
+    },
+    {
+      "type": "keyword_performance",
+      "campaign_id": "16559802209",
+      "campaign_name": "202203 MOFU IoT SIM SA EMEA",
+      "title": "Keyword \"sim for iot devices\" \u2014 $92 spent, 0 conversions",
+      "detail": "Match type: 3, 3 clicks. Consider pausing or tightening match type.",
+      "confidence": 70,
+      "severity": "medium",
+      "action": "Pause keyword \"sim for iot devices\"",
+      "metadata": {
+        "keyword": "sim for iot devices",
+        "match_type": "3",
+        "spend": 92.29,
+        "clicks": 3
+      }
+    },
+    {
+      "type": "keyword_performance",
+      "campaign_id": "20304732701",
+      "campaign_name": "202305 TOFU Voice API Twilio SA EMEA",
+      "title": "Keyword \"bandwidth alternative\" \u2014 $87 spent, 0 conversions",
+      "detail": "Match type: 3, 5 clicks. Consider pausing or tightening match type.",
+      "confidence": 70,
+      "severity": "medium",
+      "action": "Pause keyword \"bandwidth alternative\"",
+      "metadata": {
+        "keyword": "bandwidth alternative",
+        "match_type": "3",
+        "spend": 87.29,
+        "clicks": 5
+      }
+    },
+    {
+      "type": "keyword_performance",
+      "campaign_id": "19702945341",
+      "campaign_name": "202509 BOFU SMS RLSA GLOBAL",
+      "title": "Keyword \"10dlc\" \u2014 $86 spent, 0 conversions",
+      "detail": "Match type: 3, 10 clicks. Consider pausing or tightening match type.",
+      "confidence": 70,
+      "severity": "medium",
+      "action": "Pause keyword \"10dlc\"",
+      "metadata": {
+        "keyword": "10dlc",
+        "match_type": "3",
+        "spend": 86.18,
+        "clicks": 10
+      }
+    },
+    {
+      "type": "keyword_performance",
+      "campaign_id": "16559802209",
+      "campaign_name": "202203 MOFU IoT SIM SA EMEA",
+      "title": "Keyword \"iot data plans\" \u2014 $84 spent, 0 conversions",
+      "detail": "Match type: 3, 7 clicks. Consider pausing or tightening match type.",
+      "confidence": 70,
+      "severity": "medium",
+      "action": "Pause keyword \"iot data plans\"",
+      "metadata": {
+        "keyword": "iot data plans",
+        "match_type": "3",
+        "spend": 84.06,
+        "clicks": 7
+      }
+    },
+    {
+      "type": "keyword_performance",
+      "campaign_id": "19600918299",
+      "campaign_name": "202301 MOFU SMS SA AMER",
+      "title": "Keyword \"send text message api\" \u2014 $84 spent, 0 conversions",
+      "detail": "Match type: 2, 6 clicks. Consider pausing or tightening match type.",
+      "confidence": 70,
+      "severity": "medium",
+      "action": "Pause keyword \"send text message api\"",
+      "metadata": {
+        "keyword": "send text message api",
+        "match_type": "2",
+        "spend": 83.69,
+        "clicks": 6
+      }
+    },
+    {
+      "type": "keyword_performance",
+      "campaign_id": "19598019744",
+      "campaign_name": "202301 TOFU SIP SA EMEA",
+      "title": "Keyword \"microsoft teams sip trunk\" \u2014 $78 spent, 0 conversions",
+      "detail": "Match type: 3, 7 clicks. Consider pausing or tightening match type.",
+      "confidence": 70,
+      "severity": "medium",
+      "action": "Pause keyword \"microsoft teams sip trunk\"",
+      "metadata": {
+        "keyword": "microsoft teams sip trunk",
+        "match_type": "3",
+        "spend": 78.1,
+        "clicks": 7
+      }
+    },
+    {
+      "type": "keyword_performance",
+      "campaign_id": "19598019744",
+      "campaign_name": "202301 TOFU SIP SA EMEA",
+      "title": "Keyword \"international sip provider\" \u2014 $77 spent, 0 conversions",
+      "detail": "Match type: 2, 5 clicks. Consider pausing or tightening match type.",
+      "confidence": 70,
+      "severity": "medium",
+      "action": "Pause keyword \"international sip provider\"",
+      "metadata": {
+        "keyword": "international sip provider",
+        "match_type": "2",
+        "spend": 76.58,
+        "clicks": 5
+      }
+    },
+    {
+      "type": "keyword_performance",
+      "campaign_id": "20548679680",
+      "campaign_name": "202309 MOFU Voice API SA EMEA",
+      "title": "Keyword \"voice api\" \u2014 $76 spent, 0 conversions",
+      "detail": "Match type: 2, 6 clicks. Consider pausing or tightening match type.",
+      "confidence": 70,
+      "severity": "medium",
+      "action": "Pause keyword \"voice api\"",
+      "metadata": {
+        "keyword": "voice api",
+        "match_type": "2",
+        "spend": 76.14,
+        "clicks": 6
+      }
+    },
+    {
+      "type": "keyword_performance",
+      "campaign_id": "20329204785",
+      "campaign_name": "202306 MOFU Numbers SA EMEA",
+      "title": "Keyword \"global phone number\" \u2014 $74 spent, 0 conversions",
+      "detail": "Match type: 2, 17 clicks. Consider pausing or tightening match type.",
+      "confidence": 70,
+      "severity": "medium",
+      "action": "Pause keyword \"global phone number\"",
+      "metadata": {
+        "keyword": "global phone number",
+        "match_type": "2",
+        "spend": 73.61,
+        "clicks": 17
+      }
+    },
+    {
+      "type": "keyword_performance",
+      "campaign_id": "20304732701",
+      "campaign_name": "202305 TOFU Voice API Twilio SA EMEA",
+      "title": "Keyword \"twilio voice sdk\" \u2014 $73 spent, 0 conversions",
+      "detail": "Match type: 2, 3 clicks. Consider pausing or tightening match type.",
+      "confidence": 70,
+      "severity": "medium",
+      "action": "Pause keyword \"twilio voice sdk\"",
+      "metadata": {
+        "keyword": "twilio voice sdk",
+        "match_type": "2",
+        "spend": 72.8,
+        "clicks": 3
+      }
+    },
+    {
+      "type": "keyword_performance",
+      "campaign_id": "19598019744",
+      "campaign_name": "202301 TOFU SIP SA EMEA",
+      "title": "Keyword \"global sip trunk providers\" \u2014 $72 spent, 0 conversions",
+      "detail": "Match type: 3, 8 clicks. Consider pausing or tightening match type.",
+      "confidence": 70,
+      "severity": "medium",
+      "action": "Pause keyword \"global sip trunk providers\"",
+      "metadata": {
+        "keyword": "global sip trunk providers",
+        "match_type": "3",
+        "spend": 72.19,
+        "clicks": 8
+      }
+    },
+    {
+      "type": "keyword_performance",
+      "campaign_id": "16559802209",
+      "campaign_name": "202203 MOFU IoT SIM SA EMEA",
+      "title": "Keyword \"iot sim providers\" \u2014 $71 spent, 0 conversions",
+      "detail": "Match type: 2, 1 clicks. Consider pausing or tightening match type.",
+      "confidence": 70,
+      "severity": "medium",
+      "action": "Pause keyword \"iot sim providers\"",
+      "metadata": {
+        "keyword": "iot sim providers",
+        "match_type": "2",
+        "spend": 70.87,
+        "clicks": 1
+      }
+    },
+    {
+      "type": "keyword_performance",
+      "campaign_id": "23578096203",
+      "campaign_name": "202602 TOFU AI Agent Contact Center SA AMER",
+      "title": "Keyword \"ai call center\" \u2014 $71 spent, 0 conversions",
+      "detail": "Match type: 2, 57 clicks. Consider pausing or tightening match type.",
+      "confidence": 70,
+      "severity": "medium",
+      "action": "Pause keyword \"ai call center\"",
+      "metadata": {
+        "keyword": "ai call center",
+        "match_type": "2",
+        "spend": 70.74,
+        "clicks": 57
+      }
+    },
+    {
+      "type": "keyword_performance",
+      "campaign_id": "20329204785",
+      "campaign_name": "202306 MOFU Numbers SA EMEA",
+      "title": "Keyword \"did numbers\" \u2014 $71 spent, 0 conversions",
+      "detail": "Match type: 2, 10 clicks. Consider pausing or tightening match type.",
+      "confidence": 70,
+      "severity": "medium",
+      "action": "Pause keyword \"did numbers\"",
+      "metadata": {
+        "keyword": "did numbers",
+        "match_type": "2",
+        "spend": 70.55,
+        "clicks": 10
+      }
+    },
+    {
+      "type": "keyword_performance",
+      "campaign_id": "19600918299",
+      "campaign_name": "202301 MOFU SMS SA AMER",
+      "title": "Keyword \"2 way sms service provider\" \u2014 $68 spent, 0 conversions",
+      "detail": "Match type: 3, 3 clicks. Consider pausing or tightening match type.",
+      "confidence": 70,
+      "severity": "medium",
+      "action": "Pause keyword \"2 way sms service provider\"",
+      "metadata": {
+        "keyword": "2 way sms service provider",
+        "match_type": "3",
+        "spend": 67.96,
+        "clicks": 3
+      }
+    },
+    {
+      "type": "keyword_performance",
+      "campaign_id": "23578096203",
+      "campaign_name": "202602 TOFU AI Agent Contact Center SA AMER",
+      "title": "Keyword \"contact center voice ai\" \u2014 $67 spent, 0 conversions",
+      "detail": "Match type: 2, 47 clicks. Consider pausing or tightening match type.",
+      "confidence": 70,
+      "severity": "medium",
+      "action": "Pause keyword \"contact center voice ai\"",
+      "metadata": {
+        "keyword": "contact center voice ai",
+        "match_type": "2",
+        "spend": 67.28,
+        "clicks": 47
+      }
+    },
+    {
+      "type": "keyword_performance",
+      "campaign_id": "21778360532",
+      "campaign_name": "202211 TOFU Voice API Twilio SA AMER",
+      "title": "Keyword \"better than vonage\" \u2014 $67 spent, 0 conversions",
+      "detail": "Match type: 3, 4 clicks. Consider pausing or tightening match type.",
+      "confidence": 70,
+      "severity": "medium",
+      "action": "Pause keyword \"better than vonage\"",
+      "metadata": {
+        "keyword": "better than vonage",
+        "match_type": "3",
+        "spend": 66.55,
+        "clicks": 4
+      }
+    },
+    {
+      "type": "keyword_performance",
+      "campaign_id": "20469421648",
+      "campaign_name": "202308 BOFU Voice API Twilio RLSA GLOBAL",
+      "title": "Keyword \"twilio pricing\" \u2014 $65 spent, 0 conversions",
+      "detail": "Match type: 3, 6 clicks. Consider pausing or tightening match type.",
+      "confidence": 70,
+      "severity": "medium",
+      "action": "Pause keyword \"twilio pricing\"",
+      "metadata": {
+        "keyword": "twilio pricing",
+        "match_type": "3",
+        "spend": 64.94,
+        "clicks": 6
+      }
+    },
+    {
+      "type": "keyword_quality",
+      "campaign_id": "23583187406",
+      "campaign_name": "202602 TOFU AI Agent ElevenLabs SA APAC",
+      "title": "Keyword \"text to speech api\" QS=3/10",
+      "detail": "Low Quality Score hurts ad rank and increases CPC. Review ad copy alignment and landing page relevance.",
+      "confidence": 70,
+      "severity": "medium",
+      "action": "Improve QS for \"text to speech api\"",
+      "metadata": {
+        "keyword": "text to speech api",
+        "quality_score": 3,
+        "impressions": 1549
+      }
+    },
+    {
+      "type": "keyword_performance",
+      "campaign_id": "16559802209",
+      "campaign_name": "202203 MOFU IoT SIM SA EMEA",
+      "title": "Keyword \"m2m sim card\" \u2014 $61 spent, 0 conversions",
+      "detail": "Match type: 3, 6 clicks. Consider pausing or tightening match type.",
+      "confidence": 70,
+      "severity": "medium",
+      "action": "Pause keyword \"m2m sim card\"",
+      "metadata": {
+        "keyword": "m2m sim card",
+        "match_type": "3",
+        "spend": 61.27,
+        "clicks": 6
+      }
+    },
+    {
+      "type": "keyword_performance",
+      "campaign_id": "23372928600",
+      "campaign_name": "202512 TOFU AI Agent STT API SA GLOBAL",
+      "title": "Keyword \"real time speech to text transcription\" \u2014 $61 spent, 0 conversions",
+      "detail": "Match type: 3, 91 clicks. Consider pausing or tightening match type.",
+      "confidence": 70,
+      "severity": "medium",
+      "action": "Pause keyword \"real time speech to text transcription\"",
+      "metadata": {
+        "keyword": "real time speech to text transcription",
+        "match_type": "3",
+        "spend": 60.52,
+        "clicks": 91
+      }
+    },
+    {
+      "type": "keyword_performance",
+      "campaign_id": "23546680743",
+      "campaign_name": "202602 BRAND ClawdTalk SA GLOBAL",
+      "title": "Keyword \"clawdtalk.com\" \u2014 $57 spent, 0 conversions",
+      "detail": "Match type: 2, 5 clicks. Consider pausing or tightening match type.",
+      "confidence": 70,
+      "severity": "medium",
+      "action": "Pause keyword \"clawdtalk.com\"",
+      "metadata": {
+        "keyword": "clawdtalk.com",
+        "match_type": "2",
+        "spend": 56.92,
+        "clicks": 5
+      }
+    },
+    {
+      "type": "keyword_performance",
+      "campaign_id": "19905048363",
+      "campaign_name": "202304 MOFU Voice API SA AMER",
+      "title": "Keyword \"voice call api\" \u2014 $57 spent, 0 conversions",
+      "detail": "Match type: 2, 5 clicks. Consider pausing or tightening match type.",
+      "confidence": 70,
+      "severity": "medium",
+      "action": "Pause keyword \"voice call api\"",
+      "metadata": {
+        "keyword": "voice call api",
+        "match_type": "2",
+        "spend": 56.53,
+        "clicks": 5
+      }
+    },
+    {
+      "type": "keyword_performance",
+      "campaign_id": "19598019744",
+      "campaign_name": "202301 TOFU SIP SA EMEA",
+      "title": "Keyword \"sip trunk cost\" \u2014 $57 spent, 0 conversions",
+      "detail": "Match type: 2, 15 clicks. Consider pausing or tightening match type.",
+      "confidence": 70,
+      "severity": "medium",
+      "action": "Pause keyword \"sip trunk cost\"",
+      "metadata": {
+        "keyword": "sip trunk cost",
+        "match_type": "2",
+        "spend": 56.51,
+        "clicks": 15
+      }
+    },
+    {
+      "type": "keyword_performance",
+      "campaign_id": "23584242652",
+      "campaign_name": "202602 TOFU AI Agent Vapi SA EMEA",
+      "title": "Keyword \"text to speech api\" \u2014 $55 spent, 0 conversions",
+      "detail": "Match type: 2, 68 clicks. Consider pausing or tightening match type.",
+      "confidence": 70,
+      "severity": "medium",
+      "action": "Pause keyword \"text to speech api\"",
+      "metadata": {
+        "keyword": "text to speech api",
+        "match_type": "2",
+        "spend": 55.46,
+        "clicks": 68
+      }
+    },
+    {
+      "type": "keyword_performance",
+      "campaign_id": "20329204785",
+      "campaign_name": "202306 MOFU Numbers SA EMEA",
+      "title": "Keyword \"did number\" \u2014 $53 spent, 0 conversions",
+      "detail": "Match type: 2, 8 clicks. Consider pausing or tightening match type.",
+      "confidence": 70,
+      "severity": "medium",
+      "action": "Pause keyword \"did number\"",
+      "metadata": {
+        "keyword": "did number",
+        "match_type": "2",
+        "spend": 53.24,
+        "clicks": 8
+      }
+    },
+    {
+      "type": "keyword_performance",
+      "campaign_id": "21778360532",
+      "campaign_name": "202211 TOFU Voice API Twilio SA AMER",
+      "title": "Keyword \"vonage competitor\" \u2014 $53 spent, 0 conversions",
+      "detail": "Match type: 2, 3 clicks. Consider pausing or tightening match type.",
+      "confidence": 70,
+      "severity": "medium",
+      "action": "Pause keyword \"vonage competitor\"",
+      "metadata": {
+        "keyword": "vonage competitor",
+        "match_type": "2",
+        "spend": 52.73,
+        "clicks": 3
+      }
+    },
+    {
+      "type": "budget_efficiency",
+      "campaign_id": "19598019744",
+      "campaign_name": "202301 TOFU SIP SA EMEA",
+      "title": "CPC spiked 37% (7d vs 30d)",
+      "detail": "30d CPC: $10.90 \u2192 7d CPC: $14.93. Check competition or bid strategy.",
+      "confidence": 65,
+      "severity": "medium",
+      "action": "CPC spiked 37% (7d vs 30d)",
+      "metadata": {
+        "cpc_30d": 10.9,
+        "cpc_7d": 14.93
+      }
+    },
+    {
+      "type": "keyword_quality",
+      "campaign_id": "19573151169",
+      "campaign_name": "202301 TOFU SIP SA AMER",
+      "title": "Keyword \"business sip provider\" QS=4/10",
+      "detail": "Low Quality Score hurts ad rank and increases CPC. Review ad copy alignment and landing page relevance.",
+      "confidence": 65,
+      "severity": "medium",
+      "action": "Improve QS for \"business sip provider\"",
+      "metadata": {
+        "keyword": "business sip provider",
+        "quality_score": 4,
+        "impressions": 3532
+      }
+    },
+    {
+      "type": "keyword_quality",
+      "campaign_id": "22216728203",
+      "campaign_name": "202502 TOFU SIP SA APAC",
+      "title": "Keyword \"sip provider\" QS=4/10",
+      "detail": "Low Quality Score hurts ad rank and increases CPC. Review ad copy alignment and landing page relevance.",
+      "confidence": 65,
+      "severity": "medium",
+      "action": "Improve QS for \"sip provider\"",
+      "metadata": {
+        "keyword": "sip provider",
+        "quality_score": 4,
+        "impressions": 2599
+      }
+    },
+    {
+      "type": "keyword_quality",
+      "campaign_id": "20548679680",
+      "campaign_name": "202309 MOFU Voice API SA EMEA",
+      "title": "Keyword \"programmable voice api\" QS=3/10",
+      "detail": "Low Quality Score hurts ad rank and increases CPC. Review ad copy alignment and landing page relevance.",
+      "confidence": 65,
+      "severity": "medium",
+      "action": "Improve QS for \"programmable voice api\"",
+      "metadata": {
+        "keyword": "programmable voice api",
+        "quality_score": 3,
+        "impressions": 3239
+      }
+    },
+    {
+      "type": "keyword_quality",
+      "campaign_id": "19600918299",
+      "campaign_name": "202301 MOFU SMS SA AMER",
+      "title": "Keyword \"sms text api\" QS=4/10",
+      "detail": "Low Quality Score hurts ad rank and increases CPC. Review ad copy alignment and landing page relevance.",
+      "confidence": 65,
+      "severity": "medium",
+      "action": "Improve QS for \"sms text api\"",
+      "metadata": {
+        "keyword": "sms text api",
+        "quality_score": 4,
+        "impressions": 4263
+      }
+    },
+    {
+      "type": "keyword_quality",
+      "campaign_id": "23577831282",
+      "campaign_name": "202602 TOFU AI Agent LiveKit SA APAC",
+      "title": "Keyword \"livekit\" QS=3/10",
+      "detail": "Low Quality Score hurts ad rank and increases CPC. Review ad copy alignment and landing page relevance.",
+      "confidence": 65,
+      "severity": "medium",
+      "action": "Improve QS for \"livekit\"",
+      "metadata": {
+        "keyword": "livekit",
+        "quality_score": 3,
+        "impressions": 2906
+      }
+    },
+    {
+      "type": "keyword_quality",
+      "campaign_id": "20329204785",
+      "campaign_name": "202306 MOFU Numbers SA EMEA",
+      "title": "Keyword \"business numbers\" QS=3/10",
+      "detail": "Low Quality Score hurts ad rank and increases CPC. Review ad copy alignment and landing page relevance.",
+      "confidence": 65,
+      "severity": "medium",
+      "action": "Improve QS for \"business numbers\"",
+      "metadata": {
+        "keyword": "business numbers",
+        "quality_score": 3,
+        "impressions": 1251
+      }
+    },
+    {
+      "type": "keyword_quality",
+      "campaign_id": "23574277866",
+      "campaign_name": "202602 TOFU AI Agent ElevenLabs SA AMER",
+      "title": "Keyword \"text to speech api\" QS=3/10",
+      "detail": "Low Quality Score hurts ad rank and increases CPC. Review ad copy alignment and landing page relevance.",
+      "confidence": 65,
+      "severity": "medium",
+      "action": "Improve QS for \"text to speech api\"",
+      "metadata": {
+        "keyword": "text to speech api",
+        "quality_score": 3,
+        "impressions": 1004
+      }
+    },
+    {
+      "type": "keyword_quality",
+      "campaign_id": "23583187853",
+      "campaign_name": "202602 MOFU AI Agent SA APAC",
+      "title": "Keyword \"build ai agent\" QS=4/10",
+      "detail": "Low Quality Score hurts ad rank and increases CPC. Review ad copy alignment and landing page relevance.",
+      "confidence": 65,
+      "severity": "medium",
+      "action": "Improve QS for \"build ai agent\"",
+      "metadata": {
+        "keyword": "build ai agent",
+        "quality_score": 4,
+        "impressions": 4710
+      }
+    },
+    {
+      "type": "keyword_quality",
+      "campaign_id": "23588051725",
+      "campaign_name": "202602 MOFU AI Agent SA MENA",
+      "title": "Keyword \"Best AI Agents\" QS=1/10",
+      "detail": "Low Quality Score hurts ad rank and increases CPC. Review ad copy alignment and landing page relevance.",
+      "confidence": 65,
+      "severity": "medium",
+      "action": "Improve QS for \"Best AI Agents\"",
+      "metadata": {
+        "keyword": "Best AI Agents",
+        "quality_score": 1,
+        "impressions": 350
+      }
+    },
+    {
+      "type": "budget_efficiency",
+      "campaign_id": "19573151169",
+      "campaign_name": "202301 TOFU SIP SA AMER",
+      "title": "CPA increased 199% (7d vs 30d)",
+      "detail": "30d CPA: $273.03 \u2192 7d CPA: $815.46. Consider reducing budget or reviewing targeting.",
+      "confidence": 60,
+      "severity": "high",
+      "action": "Reduce budget for 202301 TOFU SIP SA AMER",
+      "metadata": {
+        "cpa_30d": 273.03,
+        "cpa_7d": 815.46,
+        "cpa_change_pct": 198.7,
+        "product_group": "sip_trunking"
+      }
+    },
+    {
+      "type": "budget_efficiency",
+      "campaign_id": "20304732701",
+      "campaign_name": "202305 TOFU Voice API Twilio SA EMEA",
+      "title": "CPA improved 33% \u2014 consider budget increase",
+      "detail": "30d CPA: $195.57 \u2192 7d CPA: $131.17. Campaign trending well, may benefit from more budget.",
+      "confidence": 55,
+      "severity": "low",
+      "action": "Increase budget for 202305 TOFU Voice API Twilio SA EMEA",
+      "metadata": {
+        "cpa_30d": 195.57,
+        "cpa_7d": 131.17,
+        "cpa_change_pct": -32.9,
+        "product_group": "voice_infrastructure"
+      }
+    },
+    {
+      "type": "budget_efficiency",
+      "campaign_id": "20258572711",
+      "campaign_name": "202306 MOFU Numbers SA AMER",
+      "title": "CPA improved 57% \u2014 consider budget increase",
+      "detail": "30d CPA: $261.20 \u2192 7d CPA: $112.75. Campaign trending well, may benefit from more budget.",
+      "confidence": 55,
+      "severity": "low",
+      "action": "Increase budget for 202306 MOFU Numbers SA AMER",
+      "metadata": {
+        "cpa_30d": 261.2,
+        "cpa_7d": 112.75,
+        "cpa_change_pct": -56.8,
+        "product_group": "connectivity"
+      }
+    },
+    {
+      "type": "budget_efficiency",
+      "campaign_id": "22216728203",
+      "campaign_name": "202502 TOFU SIP SA APAC",
+      "title": "CPA improved 29% \u2014 consider budget increase",
+      "detail": "30d CPA: $110.95 \u2192 7d CPA: $78.55. Campaign trending well, may benefit from more budget.",
+      "confidence": 55,
+      "severity": "low",
+      "action": "Increase budget for 202502 TOFU SIP SA APAC",
+      "metadata": {
+        "cpa_30d": 110.95,
+        "cpa_7d": 78.55,
+        "cpa_change_pct": -29.2,
+        "product_group": "sip_trunking"
+      }
+    },
+    {
+      "type": "budget_efficiency",
+      "campaign_id": "19600918299",
+      "campaign_name": "202301 MOFU SMS SA AMER",
+      "title": "CPA improved 46% \u2014 consider budget increase",
+      "detail": "30d CPA: $60.75 \u2192 7d CPA: $32.79. Campaign trending well, may benefit from more budget.",
+      "confidence": 55,
+      "severity": "low",
+      "action": "Increase budget for 202301 MOFU SMS SA AMER",
+      "metadata": {
+        "cpa_30d": 60.75,
+        "cpa_7d": 32.79,
+        "cpa_change_pct": -46.0,
+        "product_group": "messaging"
+      }
+    },
+    {
+      "type": "budget_efficiency",
+      "campaign_id": "19905048363",
+      "campaign_name": "202304 MOFU Voice API SA AMER",
+      "title": "CPA improved 44% \u2014 consider budget increase",
+      "detail": "30d CPA: $316.08 \u2192 7d CPA: $177.14. Campaign trending well, may benefit from more budget.",
+      "confidence": 55,
+      "severity": "low",
+      "action": "Increase budget for 202304 MOFU Voice API SA AMER",
+      "metadata": {
+        "cpa_30d": 316.08,
+        "cpa_7d": 177.14,
+        "cpa_change_pct": -44.0,
+        "product_group": "voice_infrastructure"
+      }
+    },
+    {
+      "type": "budget_efficiency",
+      "campaign_id": "23546680743",
+      "campaign_name": "202602 BRAND ClawdTalk SA GLOBAL",
+      "title": "CPA improved 37% \u2014 consider budget increase",
+      "detail": "30d CPA: $340.26 \u2192 7d CPA: $214.92. Campaign trending well, may benefit from more budget.",
+      "confidence": 55,
+      "severity": "low",
+      "action": "Increase budget for 202602 BRAND ClawdTalk SA GLOBAL",
+      "metadata": {
+        "cpa_30d": 340.26,
+        "cpa_7d": 214.92,
+        "cpa_change_pct": -36.8,
+        "product_group": null
+      }
+    },
+    {
+      "type": "budget_efficiency",
+      "campaign_id": "20642614284",
+      "campaign_name": "202310 MOFU IoT SIM SA APAC-AU",
+      "title": "CPA improved 82% \u2014 consider budget increase",
+      "detail": "30d CPA: $440.71 \u2192 7d CPA: $80.42. Campaign trending well, may benefit from more budget.",
+      "confidence": 55,
+      "severity": "low",
+      "action": "Increase budget for 202310 MOFU IoT SIM SA APAC-AU",
+      "metadata": {
+        "cpa_30d": 440.71,
+        "cpa_7d": 80.42,
+        "cpa_change_pct": -81.8,
+        "product_group": "connectivity"
+      }
+    },
+    {
+      "type": "budget_efficiency",
+      "campaign_id": "19702945341",
+      "campaign_name": "202509 BOFU SMS RLSA GLOBAL",
+      "title": "CPA improved 41% \u2014 consider budget increase",
+      "detail": "30d CPA: $66.84 \u2192 7d CPA: $39.45. Campaign trending well, may benefit from more budget.",
+      "confidence": 55,
+      "severity": "low",
+      "action": "Increase budget for 202509 BOFU SMS RLSA GLOBAL",
+      "metadata": {
+        "cpa_30d": 66.84,
+        "cpa_7d": 39.45,
+        "cpa_change_pct": -41.0,
+        "product_group": "messaging"
+      }
+    },
+    {
+      "type": "budget_efficiency",
+      "campaign_id": "23583479504",
+      "campaign_name": "202602 TOFU AI Agent LiveKit SA AMER",
+      "title": "CPA improved 27% \u2014 consider budget increase",
+      "detail": "30d CPA: $84.31 \u2192 7d CPA: $61.71. Campaign trending well, may benefit from more budget.",
+      "confidence": 55,
+      "severity": "low",
+      "action": "Increase budget for 202602 TOFU AI Agent LiveKit SA AMER",
+      "metadata": {
+        "cpa_30d": 84.31,
+        "cpa_7d": 61.71,
+        "cpa_change_pct": -26.8,
+        "product_group": "voice_ai"
+      }
+    },
+    {
+      "type": "impression_share",
+      "campaign_id": "23583479504",
+      "campaign_name": "202602 TOFU AI Agent LiveKit SA AMER",
+      "title": "Losing 74% IS to ad rank",
+      "detail": "Campaign losing 74% of impressions due to low ad rank. Consider increasing bids or improving Quality Score.",
+      "confidence": 55,
+      "severity": "high",
+      "action": "Improve ad rank for 202602 TOFU AI Agent LiveKit SA AMER",
+      "metadata": {
+        "rank_lost_is": 74.1,
+        "current_is": 25.9,
+        "bidding_strategy": "9"
+      }
+    },
+    {
+      "type": "campaign_health",
+      "campaign_id": "19573151169",
+      "campaign_name": "202301 TOFU SIP SA AMER",
+      "title": "Conv. rate dropped 64%",
+      "detail": "30d CVR: 6.12% \u2192 7d CVR: 2.17%. Check landing page, audience, or ad relevance.",
+      "confidence": 55,
+      "severity": "high",
+      "action": "Conv. rate dropped 64%",
+      "metadata": {
+        "cvr_30d": 6.12,
+        "cvr_7d": 2.17,
+        "cvr_change_pct": -64.5
+      }
+    },
+    {
+      "type": "budget_efficiency",
+      "campaign_id": "23583187853",
+      "campaign_name": "202602 MOFU AI Agent SA APAC",
+      "title": "CPA increased 25% (7d vs 30d)",
+      "detail": "30d CPA: $10.78 \u2192 7d CPA: $13.47. Consider reducing budget or reviewing targeting.",
+      "confidence": 50,
+      "severity": "medium",
+      "action": "Reduce budget for 202602 MOFU AI Agent SA APAC",
+      "metadata": {
+        "cpa_30d": 10.78,
+        "cpa_7d": 13.47,
+        "cpa_change_pct": 25.0,
+        "product_group": "voice_ai"
+      }
+    },
+    {
+      "type": "budget_efficiency",
+      "campaign_id": "23559393583",
+      "campaign_name": "202310 MOFU IoT SIM SA APAC-SEA",
+      "title": "CPC spiked 65% (7d vs 30d)",
+      "detail": "30d CPC: $1.38 \u2192 7d CPC: $2.29. Check competition or bid strategy.",
+      "confidence": 50,
+      "severity": "medium",
+      "action": "CPC spiked 65% (7d vs 30d)",
+      "metadata": {
+        "cpc_30d": 1.38,
+        "cpc_7d": 2.29
+      }
+    },
+    {
+      "type": "keyword_quality",
+      "campaign_id": "20304732701",
+      "campaign_name": "202305 TOFU Voice API Twilio SA EMEA",
+      "title": "Keyword \"Twilio replacement\" QS=3/10",
+      "detail": "Low Quality Score hurts ad rank and increases CPC. Review ad copy alignment and landing page relevance.",
+      "confidence": 50,
+      "severity": "medium",
+      "action": "Improve QS for \"Twilio replacement\"",
+      "metadata": {
+        "keyword": "Twilio replacement",
+        "quality_score": 3,
+        "impressions": 683
+      }
+    },
+    {
+      "type": "keyword_quality",
+      "campaign_id": "19598019744",
+      "campaign_name": "202301 TOFU SIP SA EMEA",
+      "title": "Keyword \"sip trunking service\" QS=4/10",
+      "detail": "Low Quality Score hurts ad rank and increases CPC. Review ad copy alignment and landing page relevance.",
+      "confidence": 50,
+      "severity": "medium",
+      "action": "Improve QS for \"sip trunking service\"",
+      "metadata": {
+        "keyword": "sip trunking service",
+        "quality_score": 4,
+        "impressions": 1182
+      }
+    },
+    {
+      "type": "keyword_performance",
+      "campaign_id": "23577831282",
+      "campaign_name": "202602 TOFU AI Agent LiveKit SA APAC",
+      "title": "Keyword \"livekit\" \u2014 $646 spent, 0 conversions",
+      "detail": "Match type: 2, 131 clicks. Consider pausing or tightening match type.",
+      "confidence": 50,
+      "severity": "high",
+      "action": "Pause keyword \"livekit\"",
+      "metadata": {
+        "keyword": "livekit",
+        "match_type": "2",
+        "spend": 645.68,
+        "clicks": 131
+      }
+    },
+    {
+      "type": "keyword_quality",
+      "campaign_id": "23583479729",
+      "campaign_name": "202602 TOFU AI Agent LiveKit SA EMEA",
+      "title": "Keyword \"livekit\" QS=1/10",
+      "detail": "Low Quality Score hurts ad rank and increases CPC. Review ad copy alignment and landing page relevance.",
+      "confidence": 50,
+      "severity": "medium",
+      "action": "Improve QS for \"livekit\"",
+      "metadata": {
+        "keyword": "livekit",
+        "quality_score": 1,
+        "impressions": 4370
+      }
+    },
+    {
+      "type": "keyword_quality",
+      "campaign_id": "19598019744",
+      "campaign_name": "202301 TOFU SIP SA EMEA",
+      "title": "Keyword \"sip provider\" QS=2/10",
+      "detail": "Low Quality Score hurts ad rank and increases CPC. Review ad copy alignment and landing page relevance.",
+      "confidence": 50,
+      "severity": "medium",
+      "action": "Improve QS for \"sip provider\"",
+      "metadata": {
+        "keyword": "sip provider",
+        "quality_score": 2,
+        "impressions": 742
+      }
+    },
+    {
+      "type": "keyword_quality",
+      "campaign_id": "23583479504",
+      "campaign_name": "202602 TOFU AI Agent LiveKit SA AMER",
+      "title": "Keyword \"livekit\" QS=1/10",
+      "detail": "Low Quality Score hurts ad rank and increases CPC. Review ad copy alignment and landing page relevance.",
+      "confidence": 50,
+      "severity": "medium",
+      "action": "Improve QS for \"livekit\"",
+      "metadata": {
+        "keyword": "livekit",
+        "quality_score": 1,
+        "impressions": 3099
+      }
+    },
+    {
+      "type": "keyword_quality",
+      "campaign_id": "21778360532",
+      "campaign_name": "202211 TOFU Voice API Twilio SA AMER",
+      "title": "Keyword \"twilio call api\" QS=1/10",
+      "detail": "Low Quality Score hurts ad rank and increases CPC. Review ad copy alignment and landing page relevance.",
+      "confidence": 50,
+      "severity": "medium",
+      "action": "Improve QS for \"twilio call api\"",
+      "metadata": {
+        "keyword": "twilio call api",
+        "quality_score": 1,
+        "impressions": 608
+      }
+    },
+    {
+      "type": "keyword_quality",
+      "campaign_id": "21778360532",
+      "campaign_name": "202211 TOFU Voice API Twilio SA AMER",
+      "title": "Keyword \"twilio programmable voice api\" QS=2/10",
+      "detail": "Low Quality Score hurts ad rank and increases CPC. Review ad copy alignment and landing page relevance.",
+      "confidence": 50,
+      "severity": "medium",
+      "action": "Improve QS for \"twilio programmable voice api\"",
+      "metadata": {
+        "keyword": "twilio programmable voice api",
+        "quality_score": 2,
+        "impressions": 702
+      }
+    },
+    {
+      "type": "keyword_quality",
+      "campaign_id": "20304732701",
+      "campaign_name": "202305 TOFU Voice API Twilio SA EMEA",
+      "title": "Keyword \"Twilio Competitors\" QS=3/10",
+      "detail": "Low Quality Score hurts ad rank and increases CPC. Review ad copy alignment and landing page relevance.",
+      "confidence": 50,
+      "severity": "medium",
+      "action": "Improve QS for \"Twilio Competitors\"",
+      "metadata": {
+        "keyword": "Twilio Competitors",
+        "quality_score": 3,
+        "impressions": 299
+      }
+    },
+    {
+      "type": "keyword_quality",
+      "campaign_id": "20304732701",
+      "campaign_name": "202305 TOFU Voice API Twilio SA EMEA",
+      "title": "Keyword \"twilio call api\" QS=1/10",
+      "detail": "Low Quality Score hurts ad rank and increases CPC. Review ad copy alignment and landing page relevance.",
+      "confidence": 50,
+      "severity": "medium",
+      "action": "Improve QS for \"twilio call api\"",
+      "metadata": {
+        "keyword": "twilio call api",
+        "quality_score": 1,
+        "impressions": 389
+      }
+    },
+    {
+      "type": "keyword_quality",
+      "campaign_id": "20304732701",
+      "campaign_name": "202305 TOFU Voice API Twilio SA EMEA",
+      "title": "Keyword \"Twilio competitors\" QS=3/10",
+      "detail": "Low Quality Score hurts ad rank and increases CPC. Review ad copy alignment and landing page relevance.",
+      "confidence": 50,
+      "severity": "medium",
+      "action": "Improve QS for \"Twilio competitors\"",
+      "metadata": {
+        "keyword": "Twilio competitors",
+        "quality_score": 3,
+        "impressions": 567
+      }
+    },
+    {
+      "type": "keyword_quality",
+      "campaign_id": "19598019744",
+      "campaign_name": "202301 TOFU SIP SA EMEA",
+      "title": "Keyword \"uk sip trunk providers\" QS=4/10",
+      "detail": "Low Quality Score hurts ad rank and increases CPC. Review ad copy alignment and landing page relevance.",
+      "confidence": 50,
+      "severity": "medium",
+      "action": "Improve QS for \"uk sip trunk providers\"",
+      "metadata": {
+        "keyword": "uk sip trunk providers",
+        "quality_score": 4,
+        "impressions": 216
+      }
+    },
+    {
+      "type": "keyword_quality",
+      "campaign_id": "20258572711",
+      "campaign_name": "202306 MOFU Numbers SA AMER",
+      "title": "Keyword \"local business numbers\" QS=2/10",
+      "detail": "Low Quality Score hurts ad rank and increases CPC. Review ad copy alignment and landing page relevance.",
+      "confidence": 50,
+      "severity": "medium",
+      "action": "Improve QS for \"local business numbers\"",
+      "metadata": {
+        "keyword": "local business numbers",
+        "quality_score": 2,
+        "impressions": 153
+      }
+    },
+    {
+      "type": "keyword_quality",
+      "campaign_id": "20304732701",
+      "campaign_name": "202305 TOFU Voice API Twilio SA EMEA",
+      "title": "Keyword \"twilio status\" QS=1/10",
+      "detail": "Low Quality Score hurts ad rank and increases CPC. Review ad copy alignment and landing page relevance.",
+      "confidence": 50,
+      "severity": "medium",
+      "action": "Improve QS for \"twilio status\"",
+      "metadata": {
+        "keyword": "twilio status",
+        "quality_score": 1,
+        "impressions": 1373
+      }
+    },
+    {
+      "type": "keyword_quality",
+      "campaign_id": "19598019744",
+      "campaign_name": "202301 TOFU SIP SA EMEA",
+      "title": "Keyword \"sip trunk uk\" QS=4/10",
+      "detail": "Low Quality Score hurts ad rank and increases CPC. Review ad copy alignment and landing page relevance.",
+      "confidence": 50,
+      "severity": "medium",
+      "action": "Improve QS for \"sip trunk uk\"",
+      "metadata": {
+        "keyword": "sip trunk uk",
+        "quality_score": 4,
+        "impressions": 121
+      }
+    },
+    {
+      "type": "keyword_performance",
+      "campaign_id": "23559393583",
+      "campaign_name": "202310 MOFU IoT SIM SA APAC-SEA",
+      "title": "Keyword \"Connectivity for IoT\" \u2014 $250 spent, 0 conversions",
+      "detail": "Match type: 3, 165 clicks. Consider pausing or tightening match type.",
+      "confidence": 50,
+      "severity": "high",
+      "action": "Pause keyword \"Connectivity for IoT\"",
+      "metadata": {
+        "keyword": "Connectivity for IoT",
+        "match_type": "3",
+        "spend": 249.5,
+        "clicks": 165
+      }
+    },
+    {
+      "type": "keyword_performance",
+      "campaign_id": "20642614284",
+      "campaign_name": "202310 MOFU IoT SIM SA APAC-AU",
+      "title": "Keyword \"iot connectivity provider\" \u2014 $247 spent, 0 conversions",
+      "detail": "Match type: 3, 20 clicks. Consider pausing or tightening match type.",
+      "confidence": 50,
+      "severity": "high",
+      "action": "Pause keyword \"iot connectivity provider\"",
+      "metadata": {
+        "keyword": "iot connectivity provider",
+        "match_type": "3",
+        "spend": 247.25,
+        "clicks": 20
+      }
+    },
+    {
+      "type": "keyword_quality",
+      "campaign_id": "20642614284",
+      "campaign_name": "202310 MOFU IoT SIM SA APAC-AU",
+      "title": "Keyword \"iot connectivity provider\" QS=3/10",
+      "detail": "Low Quality Score hurts ad rank and increases CPC. Review ad copy alignment and landing page relevance.",
+      "confidence": 50,
+      "severity": "medium",
+      "action": "Improve QS for \"iot connectivity provider\"",
+      "metadata": {
+        "keyword": "iot connectivity provider",
+        "quality_score": 3,
+        "impressions": 497
+      }
+    },
+    {
+      "type": "keyword_quality",
+      "campaign_id": "23583479729",
+      "campaign_name": "202602 TOFU AI Agent LiveKit SA EMEA",
+      "title": "Keyword \"pipecat\" QS=1/10",
+      "detail": "Low Quality Score hurts ad rank and increases CPC. Review ad copy alignment and landing page relevance.",
+      "confidence": 50,
+      "severity": "medium",
+      "action": "Improve QS for \"pipecat\"",
+      "metadata": {
+        "keyword": "pipecat",
+        "quality_score": 1,
+        "impressions": 1020
+      }
+    },
+    {
+      "type": "keyword_quality",
+      "campaign_id": "20258572711",
+      "campaign_name": "202306 MOFU Numbers SA AMER",
+      "title": "Keyword \"local phone numbers for business\" QS=3/10",
+      "detail": "Low Quality Score hurts ad rank and increases CPC. Review ad copy alignment and landing page relevance.",
+      "confidence": 50,
+      "severity": "medium",
+      "action": "Improve QS for \"local phone numbers for business\"",
+      "metadata": {
+        "keyword": "local phone numbers for business",
+        "quality_score": 3,
+        "impressions": 143
+      }
+    },
+    {
+      "type": "keyword_performance",
+      "campaign_id": "23559393583",
+      "campaign_name": "202310 MOFU IoT SIM SA APAC-SEA",
+      "title": "Keyword \"esim platform\" \u2014 $221 spent, 0 conversions",
+      "detail": "Match type: 2, 54 clicks. Consider pausing or tightening match type.",
+      "confidence": 50,
+      "severity": "high",
+      "action": "Pause keyword \"esim platform\"",
+      "metadata": {
+        "keyword": "esim platform",
+        "match_type": "2",
+        "spend": 221.32,
+        "clicks": 54
+      }
+    },
+    {
+      "type": "keyword_quality",
+      "campaign_id": "22216728203",
+      "campaign_name": "202502 TOFU SIP SA APAC",
+      "title": "Keyword \"sip trunking service\" QS=4/10",
+      "detail": "Low Quality Score hurts ad rank and increases CPC. Review ad copy alignment and landing page relevance.",
+      "confidence": 50,
+      "severity": "medium",
+      "action": "Improve QS for \"sip trunking service\"",
+      "metadata": {
+        "keyword": "sip trunking service",
+        "quality_score": 4,
+        "impressions": 209
+      }
+    },
+    {
+      "type": "keyword_quality",
+      "campaign_id": "16559802209",
+      "campaign_name": "202203 MOFU IoT SIM SA EMEA",
+      "title": "Keyword \"iot sim plan\" QS=2/10",
+      "detail": "Low Quality Score hurts ad rank and increases CPC. Review ad copy alignment and landing page relevance.",
+      "confidence": 50,
+      "severity": "medium",
+      "action": "Improve QS for \"iot sim plan\"",
+      "metadata": {
+        "keyword": "iot sim plan",
+        "quality_score": 2,
+        "impressions": 457
+      }
+    },
+    {
+      "type": "keyword_quality",
+      "campaign_id": "20642614284",
+      "campaign_name": "202310 MOFU IoT SIM SA APAC-AU",
+      "title": "Keyword \"iot card\" QS=2/10",
+      "detail": "Low Quality Score hurts ad rank and increases CPC. Review ad copy alignment and landing page relevance.",
+      "confidence": 50,
+      "severity": "medium",
+      "action": "Improve QS for \"iot card\"",
+      "metadata": {
+        "keyword": "iot card",
+        "quality_score": 2,
+        "impressions": 152
+      }
+    },
+    {
+      "type": "keyword_quality",
+      "campaign_id": "19702945341",
+      "campaign_name": "202509 BOFU SMS RLSA GLOBAL",
+      "title": "Keyword \"twilio sms\" QS=4/10",
+      "detail": "Low Quality Score hurts ad rank and increases CPC. Review ad copy alignment and landing page relevance.",
+      "confidence": 50,
+      "severity": "medium",
+      "action": "Improve QS for \"twilio sms\"",
+      "metadata": {
+        "keyword": "twilio sms",
+        "quality_score": 4,
+        "impressions": 596
+      }
+    },
+    {
+      "type": "keyword_performance",
+      "campaign_id": "20642614284",
+      "campaign_name": "202310 MOFU IoT SIM SA APAC-AU",
+      "title": "Keyword \"4g lte iot\" \u2014 $190 spent, 0 conversions",
+      "detail": "Match type: 3, 11 clicks. Consider pausing or tightening match type.",
+      "confidence": 50,
+      "severity": "high",
+      "action": "Pause keyword \"4g lte iot\"",
+      "metadata": {
+        "keyword": "4g lte iot",
+        "match_type": "3",
+        "spend": 189.55,
+        "clicks": 11
+      }
+    },
+    {
+      "type": "keyword_quality",
+      "campaign_id": "20304732701",
+      "campaign_name": "202305 TOFU Voice API Twilio SA EMEA",
+      "title": "Keyword \"vonage voice api\" QS=2/10",
+      "detail": "Low Quality Score hurts ad rank and increases CPC. Review ad copy alignment and landing page relevance.",
+      "confidence": 50,
+      "severity": "medium",
+      "action": "Improve QS for \"vonage voice api\"",
+      "metadata": {
+        "keyword": "vonage voice api",
+        "quality_score": 2,
+        "impressions": 391
+      }
+    },
+    {
+      "type": "keyword_quality",
+      "campaign_id": "20304732701",
+      "campaign_name": "202305 TOFU Voice API Twilio SA EMEA",
+      "title": "Keyword \"twilio voice api pricing\" QS=1/10",
+      "detail": "Low Quality Score hurts ad rank and increases CPC. Review ad copy alignment and landing page relevance.",
+      "confidence": 50,
+      "severity": "medium",
+      "action": "Improve QS for \"twilio voice api pricing\"",
+      "metadata": {
+        "keyword": "twilio voice api pricing",
+        "quality_score": 1,
+        "impressions": 434
+      }
+    },
+    {
+      "type": "keyword_quality",
+      "campaign_id": "20304732701",
+      "campaign_name": "202305 TOFU Voice API Twilio SA EMEA",
+      "title": "Keyword \"twilio voice api pricing\" QS=1/10",
+      "detail": "Low Quality Score hurts ad rank and increases CPC. Review ad copy alignment and landing page relevance.",
+      "confidence": 50,
+      "severity": "medium",
+      "action": "Improve QS for \"twilio voice api pricing\"",
+      "metadata": {
+        "keyword": "twilio voice api pricing",
+        "quality_score": 1,
+        "impressions": 192
+      }
+    },
+    {
+      "type": "keyword_performance",
+      "campaign_id": "20642614284",
+      "campaign_name": "202310 MOFU IoT SIM SA APAC-AU",
+      "title": "Keyword \"iot sims\" \u2014 $165 spent, 0 conversions",
+      "detail": "Match type: 3, 20 clicks. Consider pausing or tightening match type.",
+      "confidence": 50,
+      "severity": "high",
+      "action": "Pause keyword \"iot sims\"",
+      "metadata": {
+        "keyword": "iot sims",
+        "match_type": "3",
+        "spend": 165.16,
+        "clicks": 20
+      }
+    },
+    {
+      "type": "keyword_quality",
+      "campaign_id": "20329204785",
+      "campaign_name": "202306 MOFU Numbers SA EMEA",
+      "title": "Keyword \"toll-free numbers\" QS=3/10",
+      "detail": "Low Quality Score hurts ad rank and increases CPC. Review ad copy alignment and landing page relevance.",
+      "confidence": 50,
+      "severity": "medium",
+      "action": "Improve QS for \"toll-free numbers\"",
+      "metadata": {
+        "keyword": "toll-free numbers",
+        "quality_score": 3,
+        "impressions": 646
+      }
+    },
+    {
+      "type": "keyword_quality",
+      "campaign_id": "21778360532",
+      "campaign_name": "202211 TOFU Voice API Twilio SA AMER",
+      "title": "Keyword \"twilio voice api pricing\" QS=3/10",
+      "detail": "Low Quality Score hurts ad rank and increases CPC. Review ad copy alignment and landing page relevance.",
+      "confidence": 50,
+      "severity": "medium",
+      "action": "Improve QS for \"twilio voice api pricing\"",
+      "metadata": {
+        "keyword": "twilio voice api pricing",
+        "quality_score": 3,
+        "impressions": 368
+      }
+    },
+    {
+      "type": "keyword_performance",
+      "campaign_id": "23578113243",
+      "campaign_name": "202602 TOFU AI Agent Contact Center SA APAC",
+      "title": "Keyword \"ai agent contact center\" \u2014 $162 spent, 0 conversions",
+      "detail": "Match type: 3, 121 clicks. Consider pausing or tightening match type.",
+      "confidence": 50,
+      "severity": "high",
+      "action": "Pause keyword \"ai agent contact center\"",
+      "metadata": {
+        "keyword": "ai agent contact center",
+        "match_type": "3",
+        "spend": 161.71,
+        "clicks": 121
+      }
+    },
+    {
+      "type": "keyword_quality",
+      "campaign_id": "19573151169",
+      "campaign_name": "202301 TOFU SIP SA AMER",
+      "title": "Keyword \"voip sip trunk\" QS=4/10",
+      "detail": "Low Quality Score hurts ad rank and increases CPC. Review ad copy alignment and landing page relevance.",
+      "confidence": 50,
+      "severity": "medium",
+      "action": "Improve QS for \"voip sip trunk\"",
+      "metadata": {
+        "keyword": "voip sip trunk",
+        "quality_score": 4,
+        "impressions": 309
+      }
+    },
+    {
+      "type": "keyword_quality",
+      "campaign_id": "23583442793",
+      "campaign_name": "202602 TOFU AI Agent Contact Center SA EMEA",
+      "title": "Keyword \"ai call center\" QS=4/10",
+      "detail": "Low Quality Score hurts ad rank and increases CPC. Review ad copy alignment and landing page relevance.",
+      "confidence": 50,
+      "severity": "medium",
+      "action": "Improve QS for \"ai call center\"",
+      "metadata": {
+        "keyword": "ai call center",
+        "quality_score": 4,
+        "impressions": 334
+      }
+    },
+    {
+      "type": "keyword_quality",
+      "campaign_id": "16559802209",
+      "campaign_name": "202203 MOFU IoT SIM SA EMEA",
+      "title": "Keyword \"m2m iot\" QS=3/10",
+      "detail": "Low Quality Score hurts ad rank and increases CPC. Review ad copy alignment and landing page relevance.",
+      "confidence": 50,
+      "severity": "medium",
+      "action": "Improve QS for \"m2m iot\"",
+      "metadata": {
+        "keyword": "m2m iot",
+        "quality_score": 3,
+        "impressions": 564
+      }
+    },
+    {
+      "type": "keyword_quality",
+      "campaign_id": "16559802209",
+      "campaign_name": "202203 MOFU IoT SIM SA EMEA",
+      "title": "Keyword \"iot sims\" QS=3/10",
+      "detail": "Low Quality Score hurts ad rank and increases CPC. Review ad copy alignment and landing page relevance.",
+      "confidence": 50,
+      "severity": "medium",
+      "action": "Improve QS for \"iot sims\"",
+      "metadata": {
+        "keyword": "iot sims",
+        "quality_score": 3,
+        "impressions": 146
+      }
+    },
+    {
+      "type": "keyword_performance",
+      "campaign_id": "20642614284",
+      "campaign_name": "202310 MOFU IoT SIM SA APAC-AU",
+      "title": "Keyword \"sim card iot devices\" \u2014 $145 spent, 0 conversions",
+      "detail": "Match type: 3, 17 clicks. Consider pausing or tightening match type.",
+      "confidence": 50,
+      "severity": "high",
+      "action": "Pause keyword \"sim card iot devices\"",
+      "metadata": {
+        "keyword": "sim card iot devices",
+        "match_type": "3",
+        "spend": 145.19,
+        "clicks": 17
+      }
+    },
+    {
+      "type": "keyword_quality",
+      "campaign_id": "21778360532",
+      "campaign_name": "202211 TOFU Voice API Twilio SA AMER",
+      "title": "Keyword \"twilio programmable voice api\" QS=2/10",
+      "detail": "Low Quality Score hurts ad rank and increases CPC. Review ad copy alignment and landing page relevance.",
+      "confidence": 50,
+      "severity": "medium",
+      "action": "Improve QS for \"twilio programmable voice api\"",
+      "metadata": {
+        "keyword": "twilio programmable voice api",
+        "quality_score": 2,
+        "impressions": 131
+      }
+    },
+    {
+      "type": "keyword_performance",
+      "campaign_id": "20642614284",
+      "campaign_name": "202310 MOFU IoT SIM SA APAC-AU",
+      "title": "Keyword \"m2m iot sim\" \u2014 $139 spent, 0 conversions",
+      "detail": "Match type: 3, 3 clicks. Consider pausing or tightening match type.",
+      "confidence": 50,
+      "severity": "high",
+      "action": "Pause keyword \"m2m iot sim\"",
+      "metadata": {
+        "keyword": "m2m iot sim",
+        "match_type": "3",
+        "spend": 139.46,
+        "clicks": 3
+      }
+    },
+    {
+      "type": "keyword_performance",
+      "campaign_id": "20642614284",
+      "campaign_name": "202310 MOFU IoT SIM SA APAC-AU",
+      "title": "Keyword \"m2m sim\" \u2014 $134 spent, 0 conversions",
+      "detail": "Match type: 3, 17 clicks. Consider pausing or tightening match type.",
+      "confidence": 50,
+      "severity": "high",
+      "action": "Pause keyword \"m2m sim\"",
+      "metadata": {
+        "keyword": "m2m sim",
+        "match_type": "3",
+        "spend": 134.35,
+        "clicks": 17
+      }
+    },
+    {
+      "type": "keyword_quality",
+      "campaign_id": "20304732701",
+      "campaign_name": "202305 TOFU Voice API Twilio SA EMEA",
+      "title": "Keyword \"twilio voice sdk\" QS=1/10",
+      "detail": "Low Quality Score hurts ad rank and increases CPC. Review ad copy alignment and landing page relevance.",
+      "confidence": 50,
+      "severity": "medium",
+      "action": "Improve QS for \"twilio voice sdk\"",
+      "metadata": {
+        "keyword": "twilio voice sdk",
+        "quality_score": 1,
+        "impressions": 222
+      }
+    },
+    {
+      "type": "keyword_performance",
+      "campaign_id": "22216728203",
+      "campaign_name": "202502 TOFU SIP SA APAC",
+      "title": "Keyword \"sip trunk provider\" \u2014 $129 spent, 0 conversions",
+      "detail": "Match type: 2, 8 clicks. Consider pausing or tightening match type.",
+      "confidence": 50,
+      "severity": "high",
+      "action": "Pause keyword \"sip trunk provider\"",
+      "metadata": {
+        "keyword": "sip trunk provider",
+        "match_type": "2",
+        "spend": 129.41,
+        "clicks": 8
+      }
+    },
+    {
+      "type": "keyword_quality",
+      "campaign_id": "19600918299",
+      "campaign_name": "202301 MOFU SMS SA AMER",
+      "title": "Keyword \"2 way sms\" QS=3/10",
+      "detail": "Low Quality Score hurts ad rank and increases CPC. Review ad copy alignment and landing page relevance.",
+      "confidence": 50,
+      "severity": "medium",
+      "action": "Improve QS for \"2 way sms\"",
+      "metadata": {
+        "keyword": "2 way sms",
+        "quality_score": 3,
+        "impressions": 166
+      }
+    },
+    {
+      "type": "keyword_performance",
+      "campaign_id": "22216728203",
+      "campaign_name": "202502 TOFU SIP SA APAC",
+      "title": "Keyword \"telnyx sip\" \u2014 $118 spent, 0 conversions",
+      "detail": "Match type: 3, 9 clicks. Consider pausing or tightening match type.",
+      "confidence": 50,
+      "severity": "high",
+      "action": "Pause keyword \"telnyx sip\"",
+      "metadata": {
+        "keyword": "telnyx sip",
+        "match_type": "3",
+        "spend": 118.01,
+        "clicks": 9
+      }
+    },
+    {
+      "type": "keyword_performance",
+      "campaign_id": "20642614284",
+      "campaign_name": "202310 MOFU IoT SIM SA APAC-AU",
+      "title": "Keyword \"Iot sim\" \u2014 $115 spent, 0 conversions",
+      "detail": "Match type: 2, 20 clicks. Consider pausing or tightening match type.",
+      "confidence": 50,
+      "severity": "high",
+      "action": "Pause keyword \"Iot sim\"",
+      "metadata": {
+        "keyword": "Iot sim",
+        "match_type": "2",
+        "spend": 114.57,
+        "clicks": 20
+      }
+    },
+    {
+      "type": "keyword_quality",
+      "campaign_id": "21778360532",
+      "campaign_name": "202211 TOFU Voice API Twilio SA AMER",
+      "title": "Keyword \"twilio voice api pricing\" QS=3/10",
+      "detail": "Low Quality Score hurts ad rank and increases CPC. Review ad copy alignment and landing page relevance.",
+      "confidence": 50,
+      "severity": "medium",
+      "action": "Improve QS for \"twilio voice api pricing\"",
+      "metadata": {
+        "keyword": "twilio voice api pricing",
+        "quality_score": 3,
+        "impressions": 236
+      }
+    },
+    {
+      "type": "keyword_quality",
+      "campaign_id": "23583479504",
+      "campaign_name": "202602 TOFU AI Agent LiveKit SA AMER",
+      "title": "Keyword \"pipecat\" QS=1/10",
+      "detail": "Low Quality Score hurts ad rank and increases CPC. Review ad copy alignment and landing page relevance.",
+      "confidence": 50,
+      "severity": "medium",
+      "action": "Improve QS for \"pipecat\"",
+      "metadata": {
+        "keyword": "pipecat",
+        "quality_score": 1,
+        "impressions": 762
+      }
+    },
+    {
+      "type": "keyword_quality",
+      "campaign_id": "20304732701",
+      "campaign_name": "202305 TOFU Voice API Twilio SA EMEA",
+      "title": "Keyword \"vonage voice api\" QS=2/10",
+      "detail": "Low Quality Score hurts ad rank and increases CPC. Review ad copy alignment and landing page relevance.",
+      "confidence": 50,
+      "severity": "medium",
+      "action": "Improve QS for \"vonage voice api\"",
+      "metadata": {
+        "keyword": "vonage voice api",
+        "quality_score": 2,
+        "impressions": 222
+      }
+    },
+    {
+      "type": "keyword_performance",
+      "campaign_id": "20642614284",
+      "campaign_name": "202310 MOFU IoT SIM SA APAC-AU",
+      "title": "Keyword \"m2m sim card\" \u2014 $112 spent, 0 conversions",
+      "detail": "Match type: 3, 7 clicks. Consider pausing or tightening match type.",
+      "confidence": 50,
+      "severity": "high",
+      "action": "Pause keyword \"m2m sim card\"",
+      "metadata": {
+        "keyword": "m2m sim card",
+        "match_type": "3",
+        "spend": 111.9,
+        "clicks": 7
+      }
+    },
+    {
+      "type": "keyword_quality",
+      "campaign_id": "19598019744",
+      "campaign_name": "202301 TOFU SIP SA EMEA",
+      "title": "Keyword \"carrier sip trunk\" QS=4/10",
+      "detail": "Low Quality Score hurts ad rank and increases CPC. Review ad copy alignment and landing page relevance.",
+      "confidence": 50,
+      "severity": "medium",
+      "action": "Improve QS for \"carrier sip trunk\"",
+      "metadata": {
+        "keyword": "carrier sip trunk",
+        "quality_score": 4,
+        "impressions": 136
+      }
+    },
+    {
+      "type": "keyword_performance",
+      "campaign_id": "23577831282",
+      "campaign_name": "202602 TOFU AI Agent LiveKit SA APAC",
+      "title": "Keyword \"pipecat\" \u2014 $105 spent, 0 conversions",
+      "detail": "Match type: 2, 16 clicks. Consider pausing or tightening match type.",
+      "confidence": 50,
+      "severity": "high",
+      "action": "Pause keyword \"pipecat\"",
+      "metadata": {
+        "keyword": "pipecat",
+        "match_type": "2",
+        "spend": 105.09,
+        "clicks": 16
+      }
+    },
+    {
+      "type": "keyword_quality",
+      "campaign_id": "23577831282",
+      "campaign_name": "202602 TOFU AI Agent LiveKit SA APAC",
+      "title": "Keyword \"pipecat\" QS=1/10",
+      "detail": "Low Quality Score hurts ad rank and increases CPC. Review ad copy alignment and landing page relevance.",
+      "confidence": 50,
+      "severity": "medium",
+      "action": "Improve QS for \"pipecat\"",
+      "metadata": {
+        "keyword": "pipecat",
+        "quality_score": 1,
+        "impressions": 348
+      }
+    },
+    {
+      "type": "keyword_performance",
+      "campaign_id": "22216728203",
+      "campaign_name": "202502 TOFU SIP SA APAC",
+      "title": "Keyword \"Sip Price\" \u2014 $102 spent, 0 conversions",
+      "detail": "Match type: 3, 16 clicks. Consider pausing or tightening match type.",
+      "confidence": 50,
+      "severity": "high",
+      "action": "Pause keyword \"Sip Price\"",
+      "metadata": {
+        "keyword": "Sip Price",
+        "match_type": "3",
+        "spend": 101.62,
+        "clicks": 16
+      }
+    },
+    {
+      "type": "keyword_quality",
+      "campaign_id": "22216728203",
+      "campaign_name": "202502 TOFU SIP SA APAC",
+      "title": "Keyword \"Sip Price\" QS=2/10",
+      "detail": "Low Quality Score hurts ad rank and increases CPC. Review ad copy alignment and landing page relevance.",
+      "confidence": 50,
+      "severity": "medium",
+      "action": "Improve QS for \"Sip Price\"",
+      "metadata": {
+        "keyword": "Sip Price",
+        "quality_score": 2,
+        "impressions": 110
+      }
+    },
+    {
+      "type": "keyword_performance",
+      "campaign_id": "23578113243",
+      "campaign_name": "202602 TOFU AI Agent Contact Center SA APAC",
+      "title": "Keyword \"ai call center\" \u2014 $101 spent, 0 conversions",
+      "detail": "Match type: 2, 51 clicks. Consider pausing or tightening match type.",
+      "confidence": 50,
+      "severity": "high",
+      "action": "Pause keyword \"ai call center\"",
+      "metadata": {
+        "keyword": "ai call center",
+        "match_type": "2",
+        "spend": 101.28,
+        "clicks": 51
+      }
+    },
+    {
+      "type": "keyword_quality",
+      "campaign_id": "23578113243",
+      "campaign_name": "202602 TOFU AI Agent Contact Center SA APAC",
+      "title": "Keyword \"ai call center\" QS=2/10",
+      "detail": "Low Quality Score hurts ad rank and increases CPC. Review ad copy alignment and landing page relevance.",
+      "confidence": 50,
+      "severity": "medium",
+      "action": "Improve QS for \"ai call center\"",
+      "metadata": {
+        "keyword": "ai call center",
+        "quality_score": 2,
+        "impressions": 202
+      }
+    },
+    {
+      "type": "keyword_performance",
+      "campaign_id": "23588051725",
+      "campaign_name": "202602 MOFU AI Agent SA MENA",
+      "title": "Keyword \"contact centre ai\" \u2014 $96 spent, 0 conversions",
+      "detail": "Match type: 3, 587 clicks. Consider pausing or tightening match type.",
+      "confidence": 50,
+      "severity": "medium",
+      "action": "Pause keyword \"contact centre ai\"",
+      "metadata": {
+        "keyword": "contact centre ai",
+        "match_type": "3",
+        "spend": 95.72,
+        "clicks": 587
+      }
+    },
+    {
+      "type": "keyword_performance",
+      "campaign_id": "23559393583",
+      "campaign_name": "202310 MOFU IoT SIM SA APAC-SEA",
+      "title": "Keyword \"5g iot\" \u2014 $93 spent, 0 conversions",
+      "detail": "Match type: 3, 92 clicks. Consider pausing or tightening match type.",
+      "confidence": 50,
+      "severity": "medium",
+      "action": "Pause keyword \"5g iot\"",
+      "metadata": {
+        "keyword": "5g iot",
+        "match_type": "3",
+        "spend": 92.72,
+        "clicks": 92
+      }
+    },
+    {
+      "type": "keyword_quality",
+      "campaign_id": "23578096203",
+      "campaign_name": "202602 TOFU AI Agent Contact Center SA AMER",
+      "title": "Keyword \"call center agent\" QS=2/10",
+      "detail": "Low Quality Score hurts ad rank and increases CPC. Review ad copy alignment and landing page relevance.",
+      "confidence": 50,
+      "severity": "medium",
+      "action": "Improve QS for \"call center agent\"",
+      "metadata": {
+        "keyword": "call center agent",
+        "quality_score": 2,
+        "impressions": 200
+      }
+    },
+    {
+      "type": "keyword_performance",
+      "campaign_id": "22216728203",
+      "campaign_name": "202502 TOFU SIP SA APAC",
+      "title": "Keyword \"sip trunks\" \u2014 $81 spent, 0 conversions",
+      "detail": "Match type: 2, 5 clicks. Consider pausing or tightening match type.",
+      "confidence": 50,
+      "severity": "medium",
+      "action": "Pause keyword \"sip trunks\"",
+      "metadata": {
+        "keyword": "sip trunks",
+        "match_type": "2",
+        "spend": 81.38,
+        "clicks": 5
+      }
+    },
+    {
+      "type": "keyword_quality",
+      "campaign_id": "19598019744",
+      "campaign_name": "202301 TOFU SIP SA EMEA",
+      "title": "Keyword \"sip voip provider\" QS=4/10",
+      "detail": "Low Quality Score hurts ad rank and increases CPC. Review ad copy alignment and landing page relevance.",
+      "confidence": 50,
+      "severity": "medium",
+      "action": "Improve QS for \"sip voip provider\"",
+      "metadata": {
+        "keyword": "sip voip provider",
+        "quality_score": 4,
+        "impressions": 162
+      }
+    },
+    {
+      "type": "keyword_quality",
+      "campaign_id": "19598019744",
+      "campaign_name": "202301 TOFU SIP SA EMEA",
+      "title": "Keyword \"microsoft teams sip trunk\" QS=1/10",
+      "detail": "Low Quality Score hurts ad rank and increases CPC. Review ad copy alignment and landing page relevance.",
+      "confidence": 50,
+      "severity": "medium",
+      "action": "Improve QS for \"microsoft teams sip trunk\"",
+      "metadata": {
+        "keyword": "microsoft teams sip trunk",
+        "quality_score": 1,
+        "impressions": 241
+      }
+    },
+    {
+      "type": "keyword_quality",
+      "campaign_id": "20548679680",
+      "campaign_name": "202309 MOFU Voice API SA EMEA",
+      "title": "Keyword \"voice api\" QS=3/10",
+      "detail": "Low Quality Score hurts ad rank and increases CPC. Review ad copy alignment and landing page relevance.",
+      "confidence": 50,
+      "severity": "medium",
+      "action": "Improve QS for \"voice api\"",
+      "metadata": {
+        "keyword": "voice api",
+        "quality_score": 3,
+        "impressions": 141
+      }
+    },
+    {
+      "type": "keyword_performance",
+      "campaign_id": "20642614284",
+      "campaign_name": "202310 MOFU IoT SIM SA APAC-AU",
+      "title": "Keyword \"iot sim card\" \u2014 $74 spent, 0 conversions",
+      "detail": "Match type: 2, 15 clicks. Consider pausing or tightening match type.",
+      "confidence": 50,
+      "severity": "medium",
+      "action": "Pause keyword \"iot sim card\"",
+      "metadata": {
+        "keyword": "iot sim card",
+        "match_type": "2",
+        "spend": 74.12,
+        "clicks": 15
+      }
+    },
+    {
+      "type": "keyword_performance",
+      "campaign_id": "22216728203",
+      "campaign_name": "202502 TOFU SIP SA APAC",
+      "title": "Keyword \"sip provider\" \u2014 $72 spent, 0 conversions",
+      "detail": "Match type: 2, 7 clicks. Consider pausing or tightening match type.",
+      "confidence": 50,
+      "severity": "medium",
+      "action": "Pause keyword \"sip provider\"",
+      "metadata": {
+        "keyword": "sip provider",
+        "match_type": "2",
+        "spend": 71.69,
+        "clicks": 7
+      }
+    },
+    {
+      "type": "keyword_performance",
+      "campaign_id": "20642614284",
+      "campaign_name": "202310 MOFU IoT SIM SA APAC-AU",
+      "title": "Keyword \"hologram sim\" \u2014 $71 spent, 0 conversions",
+      "detail": "Match type: 3, 3 clicks. Consider pausing or tightening match type.",
+      "confidence": 50,
+      "severity": "medium",
+      "action": "Pause keyword \"hologram sim\"",
+      "metadata": {
+        "keyword": "hologram sim",
+        "match_type": "3",
+        "spend": 71.5,
+        "clicks": 3
+      }
+    },
+    {
+      "type": "keyword_performance",
+      "campaign_id": "23559393583",
+      "campaign_name": "202310 MOFU IoT SIM SA APAC-SEA",
+      "title": "Keyword \"iot vendors\" \u2014 $66 spent, 0 conversions",
+      "detail": "Match type: 3, 27 clicks. Consider pausing or tightening match type.",
+      "confidence": 50,
+      "severity": "medium",
+      "action": "Pause keyword \"iot vendors\"",
+      "metadata": {
+        "keyword": "iot vendors",
+        "match_type": "3",
+        "spend": 65.63,
+        "clicks": 27
+      }
+    },
+    {
+      "type": "keyword_quality",
+      "campaign_id": "23559393583",
+      "campaign_name": "202310 MOFU IoT SIM SA APAC-SEA",
+      "title": "Keyword \"iot vendors\" QS=1/10",
+      "detail": "Low Quality Score hurts ad rank and increases CPC. Review ad copy alignment and landing page relevance.",
+      "confidence": 50,
+      "severity": "medium",
+      "action": "Improve QS for \"iot vendors\"",
+      "metadata": {
+        "keyword": "iot vendors",
+        "quality_score": 1,
+        "impressions": 221
+      }
+    },
+    {
+      "type": "keyword_performance",
+      "campaign_id": "23583186449",
+      "campaign_name": "202602 TOFU AI Agent Vapi SA APAC",
+      "title": "Keyword \"conversational ai\" \u2014 $63 spent, 0 conversions",
+      "detail": "Match type: 2, 144 clicks. Consider pausing or tightening match type.",
+      "confidence": 50,
+      "severity": "medium",
+      "action": "Pause keyword \"conversational ai\"",
+      "metadata": {
+        "keyword": "conversational ai",
+        "match_type": "2",
+        "spend": 62.8,
+        "clicks": 144
+      }
+    },
+    {
+      "type": "keyword_quality",
+      "campaign_id": "23583479504",
+      "campaign_name": "202602 TOFU AI Agent LiveKit SA AMER",
+      "title": "Keyword \"livekit agents\" QS=1/10",
+      "detail": "Low Quality Score hurts ad rank and increases CPC. Review ad copy alignment and landing page relevance.",
+      "confidence": 50,
+      "severity": "medium",
+      "action": "Improve QS for \"livekit agents\"",
+      "metadata": {
+        "keyword": "livekit agents",
+        "quality_score": 1,
+        "impressions": 319
+      }
+    },
+    {
+      "type": "keyword_performance",
+      "campaign_id": "23559393583",
+      "campaign_name": "202310 MOFU IoT SIM SA APAC-SEA",
+      "title": "Keyword \"esim platform\" \u2014 $57 spent, 0 conversions",
+      "detail": "Match type: 3, 12 clicks. Consider pausing or tightening match type.",
+      "confidence": 50,
+      "severity": "medium",
+      "action": "Pause keyword \"esim platform\"",
+      "metadata": {
+        "keyword": "esim platform",
+        "match_type": "3",
+        "spend": 56.54,
+        "clicks": 12
+      }
+    },
+    {
+      "type": "keyword_quality",
+      "campaign_id": "19905048363",
+      "campaign_name": "202304 MOFU Voice API SA AMER",
+      "title": "Keyword \"voice call api\" QS=4/10",
+      "detail": "Low Quality Score hurts ad rank and increases CPC. Review ad copy alignment and landing page relevance.",
+      "confidence": 50,
+      "severity": "medium",
+      "action": "Improve QS for \"voice call api\"",
+      "metadata": {
+        "keyword": "voice call api",
+        "quality_score": 4,
+        "impressions": 139
+      }
+    },
+    {
+      "type": "keyword_quality",
+      "campaign_id": "20329204785",
+      "campaign_name": "202306 MOFU Numbers SA EMEA",
+      "title": "Keyword \"toll-free numbers\" QS=3/10",
+      "detail": "Low Quality Score hurts ad rank and increases CPC. Review ad copy alignment and landing page relevance.",
+      "confidence": 50,
+      "severity": "medium",
+      "action": "Improve QS for \"toll-free numbers\"",
+      "metadata": {
+        "keyword": "toll-free numbers",
+        "quality_score": 3,
+        "impressions": 231
+      }
+    },
+    {
+      "type": "keyword_performance",
+      "campaign_id": "20642614284",
+      "campaign_name": "202310 MOFU IoT SIM SA APAC-AU",
+      "title": "Keyword \"iot cellular data plans\" \u2014 $56 spent, 0 conversions",
+      "detail": "Match type: 3, 7 clicks. Consider pausing or tightening match type.",
+      "confidence": 50,
+      "severity": "medium",
+      "action": "Pause keyword \"iot cellular data plans\"",
+      "metadata": {
+        "keyword": "iot cellular data plans",
+        "match_type": "3",
+        "spend": 55.76,
+        "clicks": 7
+      }
+    },
+    {
+      "type": "keyword_performance",
+      "campaign_id": "23559393583",
+      "campaign_name": "202310 MOFU IoT SIM SA APAC-SEA",
+      "title": "Keyword \"global iot sim card\" \u2014 $55 spent, 0 conversions",
+      "detail": "Match type: 4, 27 clicks. Consider pausing or tightening match type.",
+      "confidence": 50,
+      "severity": "medium",
+      "action": "Pause keyword \"global iot sim card\"",
+      "metadata": {
+        "keyword": "global iot sim card",
+        "match_type": "4",
+        "spend": 54.71,
+        "clicks": 27
+      }
+    },
+    {
+      "type": "keyword_quality",
+      "campaign_id": "23584242697",
+      "campaign_name": "202602 TOFU AI Agent ElevenLabs SA EMEA",
+      "title": "Keyword \"text to speech api\" QS=3/10",
+      "detail": "Low Quality Score hurts ad rank and increases CPC. Review ad copy alignment and landing page relevance.",
+      "confidence": 50,
+      "severity": "medium",
+      "action": "Improve QS for \"text to speech api\"",
+      "metadata": {
+        "keyword": "text to speech api",
+        "quality_score": 3,
+        "impressions": 689
+      }
+    },
+    {
+      "type": "keyword_performance",
+      "campaign_id": "23578113243",
+      "campaign_name": "202602 TOFU AI Agent Contact Center SA APAC",
+      "title": "Keyword \"contact center api\" \u2014 $51 spent, 0 conversions",
+      "detail": "Match type: 3, 11 clicks. Consider pausing or tightening match type.",
+      "confidence": 50,
+      "severity": "medium",
+      "action": "Pause keyword \"contact center api\"",
+      "metadata": {
+        "keyword": "contact center api",
+        "match_type": "3",
+        "spend": 51.49,
+        "clicks": 11
+      }
+    },
+    {
+      "type": "keyword_performance",
+      "campaign_id": "20642614284",
+      "campaign_name": "202310 MOFU IoT SIM SA APAC-AU",
+      "title": "Keyword \"iot sim plan\" \u2014 $50 spent, 0 conversions",
+      "detail": "Match type: 3, 9 clicks. Consider pausing or tightening match type.",
+      "confidence": 50,
+      "severity": "medium",
+      "action": "Pause keyword \"iot sim plan\"",
+      "metadata": {
+        "keyword": "iot sim plan",
+        "match_type": "3",
+        "spend": 50.47,
+        "clicks": 9
+      }
+    },
+    {
+      "type": "keyword_quality",
+      "campaign_id": "23583479729",
+      "campaign_name": "202602 TOFU AI Agent LiveKit SA EMEA",
+      "title": "Keyword \"livekit agents\" QS=1/10",
+      "detail": "Low Quality Score hurts ad rank and increases CPC. Review ad copy alignment and landing page relevance.",
+      "confidence": 50,
+      "severity": "medium",
+      "action": "Improve QS for \"livekit agents\"",
+      "metadata": {
+        "keyword": "livekit agents",
+        "quality_score": 1,
+        "impressions": 473
+      }
+    },
+    {
+      "type": "keyword_quality",
+      "campaign_id": "23583479729",
+      "campaign_name": "202602 TOFU AI Agent LiveKit SA EMEA",
+      "title": "Keyword \"livekit vs\" QS=1/10",
+      "detail": "Low Quality Score hurts ad rank and increases CPC. Review ad copy alignment and landing page relevance.",
+      "confidence": 50,
+      "severity": "medium",
+      "action": "Improve QS for \"livekit vs\"",
+      "metadata": {
+        "keyword": "livekit vs",
+        "quality_score": 1,
+        "impressions": 190
+      }
+    },
+    {
+      "type": "keyword_quality",
+      "campaign_id": "21778360532",
+      "campaign_name": "202211 TOFU Voice API Twilio SA AMER",
+      "title": "Keyword \"twilio voice sdk\" QS=1/10",
+      "detail": "Low Quality Score hurts ad rank and increases CPC. Review ad copy alignment and landing page relevance.",
+      "confidence": 50,
+      "severity": "medium",
+      "action": "Improve QS for \"twilio voice sdk\"",
+      "metadata": {
+        "keyword": "twilio voice sdk",
+        "quality_score": 1,
+        "impressions": 108
+      }
+    },
+    {
+      "type": "keyword_quality",
+      "campaign_id": "23577831282",
+      "campaign_name": "202602 TOFU AI Agent LiveKit SA APAC",
+      "title": "Keyword \"livekit agents\" QS=2/10",
+      "detail": "Low Quality Score hurts ad rank and increases CPC. Review ad copy alignment and landing page relevance.",
+      "confidence": 50,
+      "severity": "medium",
+      "action": "Improve QS for \"livekit agents\"",
+      "metadata": {
+        "keyword": "livekit agents",
+        "quality_score": 2,
+        "impressions": 227
+      }
+    },
+    {
+      "type": "keyword_quality",
+      "campaign_id": "23577831282",
+      "campaign_name": "202602 TOFU AI Agent LiveKit SA APAC",
+      "title": "Keyword \"livekit pricing\" QS=3/10",
+      "detail": "Low Quality Score hurts ad rank and increases CPC. Review ad copy alignment and landing page relevance.",
+      "confidence": 50,
+      "severity": "medium",
+      "action": "Improve QS for \"livekit pricing\"",
+      "metadata": {
+        "keyword": "livekit pricing",
+        "quality_score": 3,
+        "impressions": 186
+      }
+    },
+    {
+      "type": "keyword_quality",
+      "campaign_id": "23583479504",
+      "campaign_name": "202602 TOFU AI Agent LiveKit SA AMER",
+      "title": "Keyword \"livekit vs\" QS=1/10",
+      "detail": "Low Quality Score hurts ad rank and increases CPC. Review ad copy alignment and landing page relevance.",
+      "confidence": 50,
+      "severity": "medium",
+      "action": "Improve QS for \"livekit vs\"",
+      "metadata": {
+        "keyword": "livekit vs",
+        "quality_score": 1,
+        "impressions": 235
+      }
+    },
+    {
+      "type": "keyword_quality",
+      "campaign_id": "23583479729",
+      "campaign_name": "202602 TOFU AI Agent LiveKit SA EMEA",
+      "title": "Keyword \"livekit pricing\" QS=1/10",
+      "detail": "Low Quality Score hurts ad rank and increases CPC. Review ad copy alignment and landing page relevance.",
+      "confidence": 50,
+      "severity": "medium",
+      "action": "Improve QS for \"livekit pricing\"",
+      "metadata": {
+        "keyword": "livekit pricing",
+        "quality_score": 1,
+        "impressions": 192
+      }
+    },
+    {
+      "type": "keyword_quality",
+      "campaign_id": "19905048363",
+      "campaign_name": "202304 MOFU Voice API SA AMER",
+      "title": "Keyword \"Twilio voice API\" QS=4/10",
+      "detail": "Low Quality Score hurts ad rank and increases CPC. Review ad copy alignment and landing page relevance.",
+      "confidence": 50,
+      "severity": "medium",
+      "action": "Improve QS for \"Twilio voice API\"",
+      "metadata": {
+        "keyword": "Twilio voice API",
+        "quality_score": 4,
+        "impressions": 243
+      }
+    },
+    {
+      "type": "keyword_quality",
+      "campaign_id": "23583479729",
+      "campaign_name": "202602 TOFU AI Agent LiveKit SA EMEA",
+      "title": "Keyword \"pipecat ai\" QS=1/10",
+      "detail": "Low Quality Score hurts ad rank and increases CPC. Review ad copy alignment and landing page relevance.",
+      "confidence": 50,
+      "severity": "medium",
+      "action": "Improve QS for \"pipecat ai\"",
+      "metadata": {
+        "keyword": "pipecat ai",
+        "quality_score": 1,
+        "impressions": 278
+      }
+    },
+    {
+      "type": "keyword_quality",
+      "campaign_id": "23577831282",
+      "campaign_name": "202602 TOFU AI Agent LiveKit SA APAC",
+      "title": "Keyword \"livekit vs\" QS=2/10",
+      "detail": "Low Quality Score hurts ad rank and increases CPC. Review ad copy alignment and landing page relevance.",
+      "confidence": 50,
+      "severity": "medium",
+      "action": "Improve QS for \"livekit vs\"",
+      "metadata": {
+        "keyword": "livekit vs",
+        "quality_score": 2,
+        "impressions": 138
+      }
+    },
+    {
+      "type": "keyword_quality",
+      "campaign_id": "19600918299",
+      "campaign_name": "202301 MOFU SMS SA AMER",
+      "title": "Keyword \"twilio verify\" QS=4/10",
+      "detail": "Low Quality Score hurts ad rank and increases CPC. Review ad copy alignment and landing page relevance.",
+      "confidence": 50,
+      "severity": "medium",
+      "action": "Improve QS for \"twilio verify\"",
+      "metadata": {
+        "keyword": "twilio verify",
+        "quality_score": 4,
+        "impressions": 187
+      }
+    },
+    {
+      "type": "keyword_quality",
+      "campaign_id": "16559802209",
+      "campaign_name": "202203 MOFU IoT SIM SA EMEA",
+      "title": "Keyword \"iot sim providers\" QS=2/10",
+      "detail": "Low Quality Score hurts ad rank and increases CPC. Review ad copy alignment and landing page relevance.",
+      "confidence": 50,
+      "severity": "medium",
+      "action": "Improve QS for \"iot sim providers\"",
+      "metadata": {
+        "keyword": "iot sim providers",
+        "quality_score": 2,
+        "impressions": 277
+      }
+    },
+    {
+      "type": "keyword_quality",
+      "campaign_id": "23584242652",
+      "campaign_name": "202602 TOFU AI Agent Vapi SA EMEA",
+      "title": "Keyword \"conversational ai\" QS=1/10",
+      "detail": "Low Quality Score hurts ad rank and increases CPC. Review ad copy alignment and landing page relevance.",
+      "confidence": 50,
+      "severity": "medium",
+      "action": "Improve QS for \"conversational ai\"",
+      "metadata": {
+        "keyword": "conversational ai",
+        "quality_score": 1,
+        "impressions": 461
+      }
+    },
+    {
+      "type": "keyword_quality",
+      "campaign_id": "23583187406",
+      "campaign_name": "202602 TOFU AI Agent ElevenLabs SA APAC",
+      "title": "Keyword \"conversational ai\" QS=3/10",
+      "detail": "Low Quality Score hurts ad rank and increases CPC. Review ad copy alignment and landing page relevance.",
+      "confidence": 50,
+      "severity": "medium",
+      "action": "Improve QS for \"conversational ai\"",
+      "metadata": {
+        "keyword": "conversational ai",
+        "quality_score": 3,
+        "impressions": 461
+      }
+    },
+    {
+      "type": "keyword_quality",
+      "campaign_id": "23583479504",
+      "campaign_name": "202602 TOFU AI Agent LiveKit SA AMER",
+      "title": "Keyword \"pipecat ai\" QS=1/10",
+      "detail": "Low Quality Score hurts ad rank and increases CPC. Review ad copy alignment and landing page relevance.",
+      "confidence": 50,
+      "severity": "medium",
+      "action": "Improve QS for \"pipecat ai\"",
+      "metadata": {
+        "keyword": "pipecat ai",
+        "quality_score": 1,
+        "impressions": 172
+      }
+    },
+    {
+      "type": "keyword_quality",
+      "campaign_id": "23583187853",
+      "campaign_name": "202602 MOFU AI Agent SA APAC",
+      "title": "Keyword \"text to speech api\" QS=3/10",
+      "detail": "Low Quality Score hurts ad rank and increases CPC. Review ad copy alignment and landing page relevance.",
+      "confidence": 50,
+      "severity": "medium",
+      "action": "Improve QS for \"text to speech api\"",
+      "metadata": {
+        "keyword": "text to speech api",
+        "quality_score": 3,
+        "impressions": 213
+      }
+    },
+    {
+      "type": "keyword_quality",
+      "campaign_id": "23559393583",
+      "campaign_name": "202310 MOFU IoT SIM SA APAC-SEA",
+      "title": "Keyword \"sim iot\" QS=3/10",
+      "detail": "Low Quality Score hurts ad rank and increases CPC. Review ad copy alignment and landing page relevance.",
+      "confidence": 50,
+      "severity": "medium",
+      "action": "Improve QS for \"sim iot\"",
+      "metadata": {
+        "keyword": "sim iot",
+        "quality_score": 3,
+        "impressions": 119
+      }
+    },
+    {
+      "type": "keyword_quality",
+      "campaign_id": "23579649257",
+      "campaign_name": "202602 MOFU AI Agent SA AMER",
+      "title": "Keyword \"Voice AI platform\" QS=4/10",
+      "detail": "Low Quality Score hurts ad rank and increases CPC. Review ad copy alignment and landing page relevance.",
+      "confidence": 50,
+      "severity": "medium",
+      "action": "Improve QS for \"Voice AI platform\"",
+      "metadata": {
+        "keyword": "Voice AI platform",
+        "quality_score": 4,
+        "impressions": 271
+      }
+    },
+    {
+      "type": "keyword_quality",
+      "campaign_id": "19598019744",
+      "campaign_name": "202301 TOFU SIP SA EMEA",
+      "title": "Keyword \"voip sip provider\" QS=4/10",
+      "detail": "Low Quality Score hurts ad rank and increases CPC. Review ad copy alignment and landing page relevance.",
+      "confidence": 50,
+      "severity": "medium",
+      "action": "Improve QS for \"voip sip provider\"",
+      "metadata": {
+        "keyword": "voip sip provider",
+        "quality_score": 4,
+        "impressions": 138
+      }
+    },
+    {
+      "type": "keyword_quality",
+      "campaign_id": "23584242697",
+      "campaign_name": "202602 TOFU AI Agent ElevenLabs SA EMEA",
+      "title": "Keyword \"conversational ai\" QS=1/10",
+      "detail": "Low Quality Score hurts ad rank and increases CPC. Review ad copy alignment and landing page relevance.",
+      "confidence": 50,
+      "severity": "medium",
+      "action": "Improve QS for \"conversational ai\"",
+      "metadata": {
+        "keyword": "conversational ai",
+        "quality_score": 1,
+        "impressions": 201
+      }
+    },
+    {
+      "type": "keyword_quality",
+      "campaign_id": "23588051725",
+      "campaign_name": "202602 MOFU AI Agent SA MENA",
+      "title": "Keyword \"conversational ai\" QS=1/10",
+      "detail": "Low Quality Score hurts ad rank and increases CPC. Review ad copy alignment and landing page relevance.",
+      "confidence": 50,
+      "severity": "medium",
+      "action": "Improve QS for \"conversational ai\"",
+      "metadata": {
+        "keyword": "conversational ai",
+        "quality_score": 1,
+        "impressions": 211
+      }
+    },
+    {
+      "type": "keyword_quality",
+      "campaign_id": "23584242154",
+      "campaign_name": "202602 MOFU AI Agent SA EMEA",
+      "title": "Keyword \"ai voice agents\" QS=4/10",
+      "detail": "Low Quality Score hurts ad rank and increases CPC. Review ad copy alignment and landing page relevance.",
+      "confidence": 50,
+      "severity": "medium",
+      "action": "Improve QS for \"ai voice agents\"",
+      "metadata": {
+        "keyword": "ai voice agents",
+        "quality_score": 4,
+        "impressions": 376
+      }
+    },
+    {
+      "type": "keyword_quality",
+      "campaign_id": "23584242154",
+      "campaign_name": "202602 MOFU AI Agent SA EMEA",
+      "title": "Keyword \"ai voice agent\" QS=4/10",
+      "detail": "Low Quality Score hurts ad rank and increases CPC. Review ad copy alignment and landing page relevance.",
+      "confidence": 50,
+      "severity": "medium",
+      "action": "Improve QS for \"ai voice agent\"",
+      "metadata": {
+        "keyword": "ai voice agent",
+        "quality_score": 4,
+        "impressions": 431
+      }
+    },
+    {
+      "type": "keyword_quality",
+      "campaign_id": "23584242154",
+      "campaign_name": "202602 MOFU AI Agent SA EMEA",
+      "title": "Keyword \"text to speech api\" QS=3/10",
+      "detail": "Low Quality Score hurts ad rank and increases CPC. Review ad copy alignment and landing page relevance.",
+      "confidence": 50,
+      "severity": "medium",
+      "action": "Improve QS for \"text to speech api\"",
+      "metadata": {
+        "keyword": "text to speech api",
+        "quality_score": 3,
+        "impressions": 125
+      }
+    },
+    {
+      "type": "keyword_quality",
+      "campaign_id": "23559393583",
+      "campaign_name": "202310 MOFU IoT SIM SA APAC-SEA",
+      "title": "Keyword \"iot vendors\" QS=1/10",
+      "detail": "Low Quality Score hurts ad rank and increases CPC. Review ad copy alignment and landing page relevance.",
+      "confidence": 50,
+      "severity": "medium",
+      "action": "Improve QS for \"iot vendors\"",
+      "metadata": {
+        "keyword": "iot vendors",
+        "quality_score": 1,
+        "impressions": 473
+      }
+    },
+    {
+      "type": "keyword_quality",
+      "campaign_id": "23577831258",
+      "campaign_name": "202602 TOFU Voice API Twilio SA APAC",
+      "title": "Keyword \"twilio numbers\" QS=4/10",
+      "detail": "Low Quality Score hurts ad rank and increases CPC. Review ad copy alignment and landing page relevance.",
+      "confidence": 50,
+      "severity": "medium",
+      "action": "Improve QS for \"twilio numbers\"",
+      "metadata": {
+        "keyword": "twilio numbers",
+        "quality_score": 4,
+        "impressions": 117
+      }
+    },
+    {
+      "type": "keyword_quality",
+      "campaign_id": "23583187853",
+      "campaign_name": "202602 MOFU AI Agent SA APAC",
+      "title": "Keyword \"ai call center\" QS=3/10",
+      "detail": "Low Quality Score hurts ad rank and increases CPC. Review ad copy alignment and landing page relevance.",
+      "confidence": 50,
+      "severity": "medium",
+      "action": "Improve QS for \"ai call center\"",
+      "metadata": {
+        "keyword": "ai call center",
+        "quality_score": 3,
+        "impressions": 743
+      }
+    },
+    {
+      "type": "keyword_quality",
+      "campaign_id": "23577831258",
+      "campaign_name": "202602 TOFU Voice API Twilio SA APAC",
+      "title": "Keyword \"twilio messaging api\" QS=1/10",
+      "detail": "Low Quality Score hurts ad rank and increases CPC. Review ad copy alignment and landing page relevance.",
+      "confidence": 50,
+      "severity": "medium",
+      "action": "Improve QS for \"twilio messaging api\"",
+      "metadata": {
+        "keyword": "twilio messaging api",
+        "quality_score": 1,
+        "impressions": 162
+      }
+    },
+    {
+      "type": "keyword_quality",
+      "campaign_id": "23583186449",
+      "campaign_name": "202602 TOFU AI Agent Vapi SA APAC",
+      "title": "Keyword \"ai dialer\" QS=1/10",
+      "detail": "Low Quality Score hurts ad rank and increases CPC. Review ad copy alignment and landing page relevance.",
+      "confidence": 50,
+      "severity": "medium",
+      "action": "Improve QS for \"ai dialer\"",
+      "metadata": {
+        "keyword": "ai dialer",
+        "quality_score": 1,
+        "impressions": 514
+      }
+    },
+    {
+      "type": "keyword_quality",
+      "campaign_id": "23584242652",
+      "campaign_name": "202602 TOFU AI Agent Vapi SA EMEA",
+      "title": "Keyword \"vapi\" QS=3/10",
+      "detail": "Low Quality Score hurts ad rank and increases CPC. Review ad copy alignment and landing page relevance.",
+      "confidence": 50,
+      "severity": "medium",
+      "action": "Improve QS for \"vapi\"",
+      "metadata": {
+        "keyword": "vapi",
+        "quality_score": 3,
+        "impressions": 601
+      }
+    },
+    {
+      "type": "keyword_quality",
+      "campaign_id": "23584242475",
+      "campaign_name": "202602 TOFU AI Agent Vapi SA AMER",
+      "title": "Keyword \"voice agents\" QS=3/10",
+      "detail": "Low Quality Score hurts ad rank and increases CPC. Review ad copy alignment and landing page relevance.",
+      "confidence": 50,
+      "severity": "medium",
+      "action": "Improve QS for \"voice agents\"",
+      "metadata": {
+        "keyword": "voice agents",
+        "quality_score": 3,
+        "impressions": 153
+      }
+    },
+    {
+      "type": "keyword_quality",
+      "campaign_id": "23583186449",
+      "campaign_name": "202602 TOFU AI Agent Vapi SA APAC",
+      "title": "Keyword \"vapi\" QS=3/10",
+      "detail": "Low Quality Score hurts ad rank and increases CPC. Review ad copy alignment and landing page relevance.",
+      "confidence": 50,
+      "severity": "medium",
+      "action": "Improve QS for \"vapi\"",
+      "metadata": {
+        "keyword": "vapi",
+        "quality_score": 3,
+        "impressions": 390
+      }
+    },
+    {
+      "type": "keyword_quality",
+      "campaign_id": "23583187853",
+      "campaign_name": "202602 MOFU AI Agent SA APAC",
+      "title": "Keyword \"ai agent\" QS=4/10",
+      "detail": "Low Quality Score hurts ad rank and increases CPC. Review ad copy alignment and landing page relevance.",
+      "confidence": 50,
+      "severity": "medium",
+      "action": "Improve QS for \"ai agent\"",
+      "metadata": {
+        "keyword": "ai agent",
+        "quality_score": 4,
+        "impressions": 1245
+      }
+    },
+    {
+      "type": "keyword_quality",
+      "campaign_id": "23583186449",
+      "campaign_name": "202602 TOFU AI Agent Vapi SA APAC",
+      "title": "Keyword \"ai voice agents\" QS=3/10",
+      "detail": "Low Quality Score hurts ad rank and increases CPC. Review ad copy alignment and landing page relevance.",
+      "confidence": 50,
+      "severity": "medium",
+      "action": "Improve QS for \"ai voice agents\"",
+      "metadata": {
+        "keyword": "ai voice agents",
+        "quality_score": 3,
+        "impressions": 459
+      }
+    },
+    {
+      "type": "keyword_quality",
+      "campaign_id": "20642614284",
+      "campaign_name": "202310 MOFU IoT SIM SA APAC-AU",
+      "title": "Keyword \"sim iot\" QS=3/10",
+      "detail": "Low Quality Score hurts ad rank and increases CPC. Review ad copy alignment and landing page relevance.",
+      "confidence": 50,
+      "severity": "medium",
+      "action": "Improve QS for \"sim iot\"",
+      "metadata": {
+        "keyword": "sim iot",
+        "quality_score": 3,
+        "impressions": 111
+      }
+    },
+    {
+      "type": "keyword_quality",
+      "campaign_id": "23579649257",
+      "campaign_name": "202602 MOFU AI Agent SA AMER",
+      "title": "Keyword \"ai agent\" QS=2/10",
+      "detail": "Low Quality Score hurts ad rank and increases CPC. Review ad copy alignment and landing page relevance.",
+      "confidence": 50,
+      "severity": "medium",
+      "action": "Improve QS for \"ai agent\"",
+      "metadata": {
+        "keyword": "ai agent",
+        "quality_score": 2,
+        "impressions": 268
+      }
+    },
+    {
+      "type": "keyword_quality",
+      "campaign_id": "23584242475",
+      "campaign_name": "202602 TOFU AI Agent Vapi SA AMER",
+      "title": "Keyword \"vapi ai\" QS=4/10",
+      "detail": "Low Quality Score hurts ad rank and increases CPC. Review ad copy alignment and landing page relevance.",
+      "confidence": 50,
+      "severity": "medium",
+      "action": "Improve QS for \"vapi ai\"",
+      "metadata": {
+        "keyword": "vapi ai",
+        "quality_score": 4,
+        "impressions": 118
+      }
+    },
+    {
+      "type": "keyword_quality",
+      "campaign_id": "23583186449",
+      "campaign_name": "202602 TOFU AI Agent Vapi SA APAC",
+      "title": "Keyword \"ai agent\" QS=3/10",
+      "detail": "Low Quality Score hurts ad rank and increases CPC. Review ad copy alignment and landing page relevance.",
+      "confidence": 50,
+      "severity": "medium",
+      "action": "Improve QS for \"ai agent\"",
+      "metadata": {
+        "keyword": "ai agent",
+        "quality_score": 3,
+        "impressions": 204
+      }
+    },
+    {
+      "type": "keyword_quality",
+      "campaign_id": "23583187406",
+      "campaign_name": "202602 TOFU AI Agent ElevenLabs SA APAC",
+      "title": "Keyword \"vapi ai\" QS=3/10",
+      "detail": "Low Quality Score hurts ad rank and increases CPC. Review ad copy alignment and landing page relevance.",
+      "confidence": 50,
+      "severity": "medium",
+      "action": "Improve QS for \"vapi ai\"",
+      "metadata": {
+        "keyword": "vapi ai",
+        "quality_score": 3,
+        "impressions": 191
+      }
+    },
+    {
+      "type": "keyword_quality",
+      "campaign_id": "23583186449",
+      "campaign_name": "202602 TOFU AI Agent Vapi SA APAC",
+      "title": "Keyword \"ai agents\" QS=3/10",
+      "detail": "Low Quality Score hurts ad rank and increases CPC. Review ad copy alignment and landing page relevance.",
+      "confidence": 50,
+      "severity": "medium",
+      "action": "Improve QS for \"ai agents\"",
+      "metadata": {
+        "keyword": "ai agents",
+        "quality_score": 3,
+        "impressions": 108
+      }
+    },
+    {
+      "type": "keyword_quality",
+      "campaign_id": "23583186449",
+      "campaign_name": "202602 TOFU AI Agent Vapi SA APAC",
+      "title": "Keyword \"ai voice agent\" QS=1/10",
+      "detail": "Low Quality Score hurts ad rank and increases CPC. Review ad copy alignment and landing page relevance.",
+      "confidence": 50,
+      "severity": "medium",
+      "action": "Improve QS for \"ai voice agent\"",
+      "metadata": {
+        "keyword": "ai voice agent",
+        "quality_score": 1,
+        "impressions": 159
+      }
+    },
+    {
+      "type": "keyword_quality",
+      "campaign_id": "23583187853",
+      "campaign_name": "202602 MOFU AI Agent SA APAC",
+      "title": "Keyword \"ai agents\" QS=4/10",
+      "detail": "Low Quality Score hurts ad rank and increases CPC. Review ad copy alignment and landing page relevance.",
+      "confidence": 50,
+      "severity": "medium",
+      "action": "Improve QS for \"ai agents\"",
+      "metadata": {
+        "keyword": "ai agents",
+        "quality_score": 4,
+        "impressions": 614
+      }
+    },
+    {
+      "type": "keyword_quality",
+      "campaign_id": "23583187853",
+      "campaign_name": "202602 MOFU AI Agent SA APAC",
+      "title": "Keyword \"call center agent\" QS=1/10",
+      "detail": "Low Quality Score hurts ad rank and increases CPC. Review ad copy alignment and landing page relevance.",
+      "confidence": 50,
+      "severity": "medium",
+      "action": "Improve QS for \"call center agent\"",
+      "metadata": {
+        "keyword": "call center agent",
+        "quality_score": 1,
+        "impressions": 108
+      }
+    },
+    {
+      "type": "keyword_quality",
+      "campaign_id": "23583187853",
+      "campaign_name": "202602 MOFU AI Agent SA APAC",
+      "title": "Keyword \"Build AI Agent\" QS=4/10",
+      "detail": "Low Quality Score hurts ad rank and increases CPC. Review ad copy alignment and landing page relevance.",
+      "confidence": 50,
+      "severity": "medium",
+      "action": "Improve QS for \"Build AI Agent\"",
+      "metadata": {
+        "keyword": "Build AI Agent",
+        "quality_score": 4,
+        "impressions": 299
+      }
+    },
+    {
+      "type": "keyword_quality",
+      "campaign_id": "23584242652",
+      "campaign_name": "202602 TOFU AI Agent Vapi SA EMEA",
+      "title": "Keyword \"ai agent\" QS=3/10",
+      "detail": "Low Quality Score hurts ad rank and increases CPC. Review ad copy alignment and landing page relevance.",
+      "confidence": 50,
+      "severity": "medium",
+      "action": "Improve QS for \"ai agent\"",
+      "metadata": {
+        "keyword": "ai agent",
+        "quality_score": 3,
+        "impressions": 163
+      }
+    },
+    {
+      "type": "keyword_quality",
+      "campaign_id": "23584242154",
+      "campaign_name": "202602 MOFU AI Agent SA EMEA",
+      "title": "Keyword \"ai agents\" QS=2/10",
+      "detail": "Low Quality Score hurts ad rank and increases CPC. Review ad copy alignment and landing page relevance.",
+      "confidence": 50,
+      "severity": "medium",
+      "action": "Improve QS for \"ai agents\"",
+      "metadata": {
+        "keyword": "ai agents",
+        "quality_score": 2,
+        "impressions": 118
+      }
+    },
+    {
+      "type": "keyword_quality",
+      "campaign_id": "23584242154",
+      "campaign_name": "202602 MOFU AI Agent SA EMEA",
+      "title": "Keyword \"ai agent\" QS=2/10",
+      "detail": "Low Quality Score hurts ad rank and increases CPC. Review ad copy alignment and landing page relevance.",
+      "confidence": 50,
+      "severity": "medium",
+      "action": "Improve QS for \"ai agent\"",
+      "metadata": {
+        "keyword": "ai agent",
+        "quality_score": 2,
+        "impressions": 234
+      }
+    },
+    {
+      "type": "keyword_quality",
+      "campaign_id": "23583187853",
+      "campaign_name": "202602 MOFU AI Agent SA APAC",
+      "title": "Keyword \"call center agent\" QS=1/10",
+      "detail": "Low Quality Score hurts ad rank and increases CPC. Review ad copy alignment and landing page relevance.",
+      "confidence": 50,
+      "severity": "medium",
+      "action": "Improve QS for \"call center agent\"",
+      "metadata": {
+        "keyword": "call center agent",
+        "quality_score": 1,
+        "impressions": 126
+      }
+    },
+    {
+      "type": "keyword_quality",
+      "campaign_id": "23583479504",
+      "campaign_name": "202602 TOFU AI Agent LiveKit SA AMER",
+      "title": "Keyword \"pipecat voice agent\" QS=1/10",
+      "detail": "Low Quality Score hurts ad rank and increases CPC. Review ad copy alignment and landing page relevance.",
+      "confidence": 50,
+      "severity": "medium",
+      "action": "Improve QS for \"pipecat voice agent\"",
+      "metadata": {
+        "keyword": "pipecat voice agent",
+        "quality_score": 1,
+        "impressions": 112
+      }
+    }
+  ],
+  "guardrails": {
+    "budget_floor_min": 10.0,
+    "budget_change_max_no_approval": 500.0,
+    "confidence_threshold": 80,
+    "protect_non_conquest": true,
+    "learning_period_days": 14
+  }
+}

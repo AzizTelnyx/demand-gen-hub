@@ -152,17 +152,17 @@ def main():
                 record_id = f"li_{org_id}_{camp_id}_{month_date.strftime('%Y%m')}"
                 cur.execute("""
                     INSERT INTO "AdImpression" (id, domain, "campaignId", "campaignName",
-                        impressions, clicks, cost, "dateFrom", "dateTo", date,
+                        impressions, clicks, cost, "dateFrom", "dateTo",
                         "lastSyncedAt", "createdAt", "updatedAt", platform)
-                    VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, 'linkedin')
-                    ON CONFLICT (domain, "campaignId", COALESCE(date, '1970-01-01')) DO UPDATE SET
+                    VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, 'linkedin')
+                    ON CONFLICT (id) DO UPDATE SET
                         "campaignName" = EXCLUDED."campaignName",
                         impressions = EXCLUDED.impressions, clicks = EXCLUDED.clicks,
                         cost = EXCLUDED.cost, "lastSyncedAt" = EXCLUDED."lastSyncedAt",
                         "updatedAt" = EXCLUDED."updatedAt", platform = 'linkedin'
                 """, (record_id, domain, f"li_{camp_id}", camp_name,
                       impressions, clicks, cost,
-                      win_start, win_end, month_date,
+                      win_start, win_end,
                       now, now, now))
                 camp_records += 1
 
@@ -174,7 +174,7 @@ def main():
             print(f"  → {camp_records} domain-month records")
 
     # Summary
-    cur.execute('SELECT COUNT(*) FROM "AdImpression" WHERE platform = \'linkedin\' AND date IS NOT NULL')
+    cur.execute('SELECT COUNT(*) FROM "AdImpression" WHERE platform = \'linkedin\' AND "dateTo" IS NOT NULL')
     monthly_count = cur.fetchone()[0]
     cur.execute('SELECT COUNT(*) FROM "AdImpression" WHERE platform = \'linkedin\' AND date IS NULL')
     legacy_count = cur.fetchone()[0]

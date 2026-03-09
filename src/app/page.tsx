@@ -34,35 +34,75 @@ interface AudienceGroup {
   [type: string]: { id: string; name: string; value: string | null; matchType: string | null; status: string | null }[];
 }
 
+// ── Theme hook ───────────────────────────────────────────
+function useTheme() {
+  const [theme, setTheme] = useState<"dark" | "light">("dark");
+  useEffect(() => {
+    const el = document.documentElement;
+    const update = () => setTheme((el.getAttribute("data-theme") as "dark" | "light") || "dark");
+    update();
+    const obs = new MutationObserver(update);
+    obs.observe(el, { attributes: true, attributeFilter: ["data-theme"] });
+    return () => obs.disconnect();
+  }, []);
+  return theme;
+}
+
 // ── Constants ────────────────────────────────────────────
-const PLATFORM_META: Record<string, { label: string; color: string; bg: string }> = {
-  google_ads: { label: "Google", color: "#4285F4", bg: "rgba(66,133,244,0.18)" },
-  linkedin: { label: "LinkedIn", color: "#0A66C2", bg: "rgba(10,102,194,0.22)" },
-  stackadapt: { label: "StackAdapt", color: "#7C3AED", bg: "rgba(124,58,237,0.18)" },
-  reddit: { label: "Reddit", color: "#FF4500", bg: "rgba(255,69,0,0.18)" },
+const PLATFORM_META_DARK: Record<string, { label: string; color: string; bg: string }> = {
+  google_ads: { label: "Google", color: "#60a5fa", bg: "rgba(66,133,244,0.18)" },
+  linkedin: { label: "LinkedIn", color: "#38bdf8", bg: "rgba(10,102,194,0.22)" },
+  stackadapt: { label: "StackAdapt", color: "#a78bfa", bg: "rgba(124,58,237,0.18)" },
+  reddit: { label: "Reddit", color: "#fb923c", bg: "rgba(255,69,0,0.18)" },
+};
+const PLATFORM_META_LIGHT: Record<string, { label: string; color: string; bg: string }> = {
+  google_ads: { label: "Google", color: "#1d4ed8", bg: "rgba(37,99,235,0.08)" },
+  linkedin: { label: "LinkedIn", color: "#0369a1", bg: "rgba(10,102,194,0.08)" },
+  stackadapt: { label: "StackAdapt", color: "#7e22ce", bg: "rgba(126,34,206,0.08)" },
+  reddit: { label: "Reddit", color: "#c2410c", bg: "rgba(234,88,12,0.08)" },
 };
 
-const INTENT_COLORS: Record<string, { color: string; bg: string }> = {
-  TOFU: { color: "#3b82f6", bg: "rgba(59,130,246,0.16)" },
-  MOFU: { color: "#8b5cf6", bg: "rgba(139,92,246,0.16)" },
-  BOFU: { color: "#10b981", bg: "rgba(16,185,129,0.16)" },
-  CONQUEST: { color: "#f97316", bg: "rgba(249,115,22,0.18)" },
-  UPSELL: { color: "#ec4899", bg: "rgba(236,72,153,0.16)" },
-  COMMERCIAL: { color: "#14b8a6", bg: "rgba(20,184,166,0.16)" },
-  BRAND: { color: "#eab308", bg: "rgba(234,179,8,0.16)" },
-  PARTNER: { color: "#64748b", bg: "rgba(100,116,139,0.16)" },
-  EVENT: { color: "#06b6d4", bg: "rgba(6,182,212,0.16)" },
+const INTENT_COLORS_DARK: Record<string, { color: string; bg: string }> = {
+  TOFU: { color: "#60a5fa", bg: "rgba(59,130,246,0.16)" },
+  MOFU: { color: "#a78bfa", bg: "rgba(139,92,246,0.16)" },
+  BOFU: { color: "#34d399", bg: "rgba(16,185,129,0.16)" },
+  CONQUEST: { color: "#fb923c", bg: "rgba(249,115,22,0.18)" },
+  UPSELL: { color: "#f472b6", bg: "rgba(236,72,153,0.16)" },
+  COMMERCIAL: { color: "#2dd4bf", bg: "rgba(20,184,166,0.16)" },
+  BRAND: { color: "#facc15", bg: "rgba(234,179,8,0.16)" },
+  PARTNER: { color: "#94a3b8", bg: "rgba(100,116,139,0.16)" },
+  EVENT: { color: "#22d3ee", bg: "rgba(6,182,212,0.16)" },
 };
+const INTENT_COLORS_LIGHT: Record<string, { color: string; bg: string }> = {
+  TOFU: { color: "#1d4ed8", bg: "rgba(37,99,235,0.08)" },
+  MOFU: { color: "#6d28d9", bg: "rgba(109,40,217,0.08)" },
+  BOFU: { color: "#047857", bg: "rgba(4,120,87,0.08)" },
+  CONQUEST: { color: "#c2410c", bg: "rgba(194,65,12,0.08)" },
+  UPSELL: { color: "#be185d", bg: "rgba(190,24,93,0.08)" },
+  COMMERCIAL: { color: "#0f766e", bg: "rgba(15,118,110,0.08)" },
+  BRAND: { color: "#a16207", bg: "rgba(161,98,7,0.08)" },
+  PARTNER: { color: "#475569", bg: "rgba(71,85,105,0.08)" },
+  EVENT: { color: "#0e7490", bg: "rgba(14,116,144,0.08)" },
+};
+
+type Theme = "dark" | "light";
+function getPlatformMeta(t: Theme) { return t === "dark" ? PLATFORM_META_DARK : PLATFORM_META_LIGHT; }
+function getIntentColors(t: Theme) { return t === "dark" ? INTENT_COLORS_DARK : INTENT_COLORS_LIGHT; }
 
 const PRODUCTS = ["AI Agent", "Voice API", "SIP", "SMS", "RCS", "Numbers", "IoT SIM"];
 const ACTIVE_STATUSES = ["enabled", "active", "live"];
 
 // ── Helpers ──────────────────────────────────────────────
-function platformLabel(p: string) { return PLATFORM_META[p]?.label || p; }
-function platformColor(p: string) { return PLATFORM_META[p]?.color || "#666"; }
+// platformLabel/platformColor moved inside component for theme awareness
 
 // ── Main Component ───────────────────────────────────────
 export default function CommandCenter() {
+  const theme = useTheme();
+  const PLATFORM_META = theme === "dark" ? PLATFORM_META_DARK : PLATFORM_META_LIGHT;
+  const INTENT_COLORS = theme === "dark" ? INTENT_COLORS_DARK : INTENT_COLORS_LIGHT;
+  const platformLabel = (p: string) => PLATFORM_META[p]?.label || p;
+  const platformColor = (p: string) => PLATFORM_META[p]?.color || "#666";
+
   const [campaigns, setCampaigns] = useState<Campaign[]>([]);
   const [loading, setLoading] = useState(true);
   const [view, setView] = useState<"board" | "table">("board");
@@ -216,11 +256,13 @@ export default function CommandCenter() {
             onSelectProduct={setSelectedProduct}
             onSelectCampaign={loadDetail}
             groupBy={groupBy}
+            theme={theme}
           />
         ) : (
           <TableView
             campaigns={active}
             onSelectCampaign={loadDetail}
+            theme={theme}
           />
         )}
       </div>
@@ -231,6 +273,7 @@ export default function CommandCenter() {
           campaign={selectedCampaign}
           audiences={audiences}
           onClose={() => setSelectedCampaign(null)}
+          theme={theme}
         />
       )}
     </div>
@@ -238,14 +281,16 @@ export default function CommandCenter() {
 }
 
 // ── Board View ───────────────────────────────────────────
-function BoardView({ productGroups, active, selectedProduct, onSelectProduct, onSelectCampaign, groupBy = "product-group" }: {
+function BoardView({ productGroups, active, selectedProduct, onSelectProduct, onSelectCampaign, groupBy = "product-group", theme }: {
   productGroups: Record<string, Campaign[]>;
   active: Campaign[];
   selectedProduct: string | null;
   onSelectProduct: (p: string | null) => void;
   onSelectCampaign: (c: Campaign) => void;
   groupBy?: "product-group" | "product";
+  theme: Theme;
 }) {
+  const INTENT_COLORS = getIntentColors(theme);
   return (
     <div className="space-y-6">
       {/* Product rows with platform bars */}
@@ -317,7 +362,7 @@ function BoardView({ productGroups, active, selectedProduct, onSelectProduct, on
           </div>
         </div>
         <div className="p-4 overflow-x-auto">
-          <HeatmapMatrix campaigns={active} />
+          <HeatmapMatrix campaigns={active} theme={theme} />
         </div>
       </div>
     </div>
@@ -325,7 +370,9 @@ function BoardView({ productGroups, active, selectedProduct, onSelectProduct, on
 }
 
 // ── Heatmap Matrix ───────────────────────────────────────
-function HeatmapMatrix({ campaigns }: { campaigns: Campaign[] }) {
+function HeatmapMatrix({ campaigns, theme }: { campaigns: Campaign[]; theme: Theme }) {
+  const PLATFORM_META = getPlatformMeta(theme);
+  const INTENT_COLORS = getIntentColors(theme);
   const platforms = Object.keys(PLATFORM_META);
   const allIntents = ["TOFU", "MOFU", "BOFU", "CONQUEST", "UPSELL", "BRAND", "PARTNER", "EVENT"];
   const usedIntents = allIntents.filter(i => campaigns.some(c => c.parsedIntent === i));
@@ -371,7 +418,7 @@ function HeatmapMatrix({ campaigns }: { campaigns: Campaign[] }) {
                         className="mx-auto w-8 h-8 rounded-lg flex items-center justify-center text-[11px] font-bold transition-all"
                         style={{
                           backgroundColor: INTENT_COLORS[i]?.bg?.replace(/[\d.]+\)$/, `${0.3 + intensity * 0.5})`) || `rgba(100,100,100,${0.2 + intensity * 0.4})`,
-                          color: intensity > 0.5 ? "#fff" : (INTENT_COLORS[i]?.color || "var(--accent)"),
+                          color: intensity > 0.5 ? (theme === "dark" ? "#fff" : "#0f172a") : (INTENT_COLORS[i]?.color || "var(--accent)"),
                           border: `1px solid ${INTENT_COLORS[i]?.color || "var(--accent)"}33`,
                         }}
                       >
@@ -394,10 +441,12 @@ function HeatmapMatrix({ campaigns }: { campaigns: Campaign[] }) {
 }
 
 // ── Table View ───────────────────────────────────────────
-function TableView({ campaigns, onSelectCampaign }: {
+function TableView({ campaigns, onSelectCampaign, theme }: {
+  theme: Theme;
   campaigns: Campaign[];
   onSelectCampaign: (c: Campaign) => void;
 }) {
+  const INTENT_COLORS = getIntentColors(theme);
   const [sortKey, setSortKey] = useState<string>("name");
   const [sortDir, setSortDir] = useState<1 | -1>(1);
 
@@ -480,11 +529,13 @@ function TableView({ campaigns, onSelectCampaign }: {
 }
 
 // ── Detail Panel ─────────────────────────────────────────
-function DetailPanel({ campaign: c, audiences, onClose }: {
+function DetailPanel({ campaign: c, audiences, onClose, theme }: {
+  theme: Theme;
   campaign: Campaign;
   audiences: AudienceGroup | null;
   onClose: () => void;
 }) {
+  const INTENT_COLORS = getIntentColors(theme);
   return (
     <div className="fixed inset-y-0 right-0 w-[420px] bg-[var(--bg-card)] border-l border-[var(--border)] shadow-2xl z-50 flex flex-col overflow-hidden">
       {/* Header */}

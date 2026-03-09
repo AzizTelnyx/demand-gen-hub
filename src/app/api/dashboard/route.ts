@@ -160,16 +160,19 @@ export async function GET() {
       });
     }
 
-    // === AUTOMATION RUNS ===
-    let automationRuns: any[] = [];
+    // === AGENT RUNS ===
+    let agentRuns: any[] = [];
     try {
-      const runs = await prisma.automationRun.findMany({
+      const runs = await prisma.agentRun.findMany({
         orderBy: { startedAt: "desc" },
-        take: 10,
+        take: 20,
+        include: { agent: { select: { slug: true, name: true } } },
       });
-      automationRuns = runs.map(r => ({
-        id: r.id, automation: r.automation, status: r.status,
-        summary: r.summary, startedAt: r.startedAt.toISOString(),
+      agentRuns = runs.map(r => ({
+        id: r.id, agentSlug: r.agent?.slug, agentName: r.agent?.name,
+        status: r.status, findingsCount: r.findingsCount, recsCount: r.recsCount,
+        output: r.output ? (r.output.length > 300 ? r.output.slice(0, 300) + "…" : r.output) : null,
+        startedAt: r.startedAt?.toISOString(),
         completedAt: r.completedAt?.toISOString(),
       }));
     } catch { /* table might be empty */ }
@@ -210,7 +213,7 @@ export async function GET() {
       channelPerformance,
       topCampaigns,
       criticalAlerts,
-      automationRuns,
+      agentRuns,
       trackers,
     });
   } catch (error) {

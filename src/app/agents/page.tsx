@@ -15,16 +15,16 @@ import {
    ═══════════════════════════════════════════════════════ */
 
 const statusColors: Record<string, { bg: string; text: string; icon: any }> = {
-  running: { bg: 'bg-blue-900/30', text: 'text-blue-400', icon: Loader2 },
-  done: { bg: 'bg-emerald-900/30', text: 'text-emerald-400', icon: CheckCircle2 },
-  completed: { bg: 'bg-emerald-900/30', text: 'text-emerald-400', icon: CheckCircle2 },
-  failed: { bg: 'bg-red-900/30', text: 'text-red-400', icon: XCircle },
-  cancelled: { bg: 'bg-gray-800', text: 'text-gray-500', icon: X },
-  error: { bg: 'bg-red-900/30', text: 'text-red-400', icon: XCircle },
+  running: { bg: 'status-running', text: '', icon: Loader2 },
+  done: { bg: 'status-done', text: '', icon: CheckCircle2 },
+  completed: { bg: 'status-done', text: '', icon: CheckCircle2 },
+  failed: { bg: 'status-failed', text: '', icon: XCircle },
+  cancelled: { bg: 'status-cancelled', text: '', icon: X },
+  error: { bg: 'status-failed', text: '', icon: XCircle },
 };
 
 function StatusBadge({ status }: { status: string }) {
-  const s = statusColors[status] || { bg: 'bg-gray-800', text: 'text-gray-400' };
+  const s = statusColors[status] || { bg: 'status-cancelled', text: '' };
   return (
     <span className={`text-xs px-2 py-0.5 rounded font-medium ${s.bg} ${s.text}`}>
       {status.replace(/_/g, ' ')}
@@ -34,10 +34,10 @@ function StatusBadge({ status }: { status: string }) {
 
 function SeverityBadge({ severity }: { severity: string }) {
   const colors: Record<string, string> = {
-    critical: 'text-red-400 bg-red-900/30',
-    high: 'text-amber-400 bg-amber-900/30',
-    medium: 'text-blue-400 bg-blue-900/30',
-    low: 'text-gray-400 bg-gray-800',
+    critical: 'severity-critical',
+    high: 'severity-high',
+    medium: 'severity-medium',
+    low: 'severity-low',
   };
   return (
     <span className={`text-xs px-2 py-0.5 rounded font-medium shrink-0 ${colors[severity] || colors.low}`}>
@@ -50,7 +50,7 @@ function Toast({ message, type, onDismiss }: { message: string; type: 'success' 
   useEffect(() => { const t = setTimeout(onDismiss, 3000); return () => clearTimeout(t); }, [onDismiss]);
   return (
     <div className={`fixed bottom-6 right-6 z-50 flex items-center gap-2 px-4 py-3 rounded-xl shadow-lg border text-sm font-medium animate-in slide-in-from-bottom-4 ${
-      type === 'success' ? 'bg-emerald-900/90 border-emerald-700/50 text-emerald-200' : 'bg-red-900/90 border-red-700/50 text-red-200'
+      type === 'success' ? 'toast-success' : 'toast-error'
     }`}>
       {type === 'success' ? <CheckCircle2 size={16} /> : <XCircle size={16} />}
       {message}
@@ -74,7 +74,7 @@ function timeAgo(date: string) {
    SECTION: AGENT GUARDRAILS
    ═══════════════════════════════════════════════════════ */
 
-type GuardrailTab = 'budget' | 'campaigns' | 'regional';
+type GuardrailTab = 'budget' | 'campaigns' | 'regional' | 'allocation';
 
 interface Guardrail { id: string; key: string; value: string; label: string; category: string; }
 interface RegPriority { id: string; quarter: string; region: string; product: string; priority: string; protected: boolean; }
@@ -83,10 +83,10 @@ const REGIONS = ['GLOBAL', 'AMER', 'EMEA', 'APAC', 'MENA'];
 const PRODUCTS = ['AI Agent', 'Voice API', 'SIP', 'SMS', 'Numbers', 'IoT SIM'];
 const QUARTERS = ['2026-Q1', '2026-Q2', '2026-Q3', '2026-Q4'];
 const PRIORITY_COLORS: Record<string, string> = {
-  high: 'bg-emerald-900/40 text-emerald-400 border-emerald-700/40',
-  medium: 'bg-amber-900/40 text-amber-400 border-amber-700/40',
-  low: 'bg-gray-800/60 text-gray-400 border-gray-700/40',
-  none: 'bg-transparent text-gray-600 border-gray-800/30',
+  high: 'prio-high',
+  medium: 'prio-medium',
+  low: 'prio-low',
+  none: 'prio-none',
 };
 
 function AgentGuardrailsSection() {
@@ -159,9 +159,9 @@ function AgentGuardrailsSection() {
       {toast && <Toast message={toast.message} type={toast.type} onDismiss={() => setToast(null)} />}
       <button onClick={() => setOpen(!open)} className="w-full flex items-center gap-2 text-left group">
         {open ? <ChevronDown size={14} className="text-[var(--text-muted)]" /> : <ChevronRight size={14} className="text-[var(--text-muted)]" />}
-        <Shield size={18} className="text-violet-400" />
+        <Shield size={18} className="text-accent-violet" />
         <h2 className="text-base font-semibold text-[var(--text-primary)]">Agent Guardrails</h2>
-        <span className="text-xs text-[var(--text-muted)] font-normal">Configuration</span>
+        <span className="text-xs text-[var(--text-muted)] font-normal">— Safety limits and rules that all optimizer agents enforce. Changes apply immediately.</span>
       </button>
 
       {open && (
@@ -172,6 +172,7 @@ function AgentGuardrailsSection() {
               { key: 'budget' as GuardrailTab, label: 'Budget Rules', icon: DollarSign },
               { key: 'campaigns' as GuardrailTab, label: 'Campaign Rules', icon: ShieldCheck },
               { key: 'regional' as GuardrailTab, label: 'Regional Priorities', icon: Activity },
+              { key: 'allocation' as GuardrailTab, label: 'Platform Budgets', icon: Hash },
             ]).map(t => (
               <button key={t.key} onClick={() => setTab(t.key)}
                 className={`flex-1 flex items-center justify-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all ${
@@ -185,19 +186,26 @@ function AgentGuardrailsSection() {
           {loading ? (
             <div className="text-sm text-[var(--text-muted)] animate-pulse p-4">Loading guardrails...</div>
           ) : tab === 'budget' ? (
-            <div className="bg-[var(--bg-card)] border border-[var(--border-primary)] rounded-xl divide-y divide-[var(--border-primary)]/30">
-              <GuardrailNumberField label="Min Daily Budget" suffix="$" gKey="budget_floor_min" value={getVal('budget_floor_min')} saving={saving} onSave={saveGuardrail} />
-              <GuardrailNumberField label="Max Budget Change Without Approval" suffix="$" gKey="budget_change_max_no_approval" value={getVal('budget_change_max_no_approval')} saving={saving} onSave={saveGuardrail} />
-              <GuardrailToggleField label="Allow Cross-Product Reallocation" gKey="cross_product_realloc" value={getVal('cross_product_realloc') === 'true'} saving={saving} onSave={(k, v) => saveGuardrail(k, v ? 'true' : 'false')} />
+            <div className="space-y-3">
+              <p className="text-xs text-[var(--text-muted)] px-1">Controls how optimizer agents handle budget changes across campaigns. These limits apply to all automated budget actions.</p>
+              <div className="bg-[var(--bg-card)] border border-[var(--border-primary)] rounded-xl divide-y divide-[var(--border-primary)]/30">
+                <GuardrailNumberField label="Campaign Budget Floor" desc="Agents will never reduce any campaign's daily budget below this amount. Protects campaigns from being starved." suffix="$" gKey="budget_floor_min" value={getVal('budget_floor_min')} saving={saving} onSave={saveGuardrail} />
+                <GuardrailNumberField label="Max Budget Change Without Approval" desc="Single budget change exceeding this amount requires human approval via Telegram. Smaller changes can auto-execute if confidence is high enough." suffix="$" gKey="budget_change_max_no_approval" value={getVal('budget_change_max_no_approval')} saving={saving} onSave={saveGuardrail} />
+                <GuardrailToggleField label="Allow Cross-Product Budget Reallocation" desc="When OFF (recommended), agents can only move budget within the same product group (e.g. Voice API EMEA → Voice API AMER). Moving budget between product groups (e.g. AI Agent → SMS) always requires human approval." gKey="cross_product_realloc" value={getVal('cross_product_realloc') === 'true'} saving={saving} onSave={(k, v) => saveGuardrail(k, v ? 'true' : 'false')} />
+              </div>
             </div>
           ) : tab === 'campaigns' ? (
-            <div className="bg-[var(--bg-card)] border border-[var(--border-primary)] rounded-xl divide-y divide-[var(--border-primary)]/30">
-              <GuardrailNumberField label="Learning Period" suffix="days" gKey="learning_period_days" value={getVal('learning_period_days')} saving={saving} onSave={saveGuardrail} />
-              <GuardrailToggleField label="Auto-Protect Non-Conquest Campaigns" gKey="protect_non_conquest" value={getVal('protect_non_conquest') === 'true'} saving={saving} onSave={(k, v) => saveGuardrail(k, v ? 'true' : 'false')} />
-              <GuardrailNumberField label="Min Confidence to Execute" suffix="%" gKey="confidence_threshold" value={getVal('confidence_threshold')} saving={saving} onSave={saveGuardrail} />
-            </div>
-          ) : (
             <div className="space-y-3">
+              <p className="text-xs text-[var(--text-muted)] px-1">Controls how agents treat campaigns based on age, type, and confidence. Protected campaigns can be optimized but never paused or budget-cut.</p>
+              <div className="bg-[var(--bg-card)] border border-[var(--border-primary)] rounded-xl divide-y divide-[var(--border-primary)]/30">
+                <GuardrailNumberField label="Learning Period" desc="New campaigns within this window are immune to pause or budget cuts. Agents can still optimize bids, keywords, and copy. Gives new campaigns time to gather meaningful data." suffix="days" gKey="learning_period_days" value={getVal('learning_period_days')} saving={saving} onSave={saveGuardrail} />
+                <GuardrailToggleField label="Auto-Protect Non-Conquest Campaigns" desc="When ON, all campaigns that aren't competitor conquest or branded competitor campaigns are automatically protected. Protected campaigns can't be paused or have budget reduced by agents — only optimized." gKey="protect_non_conquest" value={getVal('protect_non_conquest') === 'true'} saving={saving} onSave={(k, v) => saveGuardrail(k, v ? 'true' : 'false')} />
+                <GuardrailNumberField label="Min Confidence to Execute" desc="Agent recommendations scoring below this threshold are shown as 'recommend only' and require human approval. Above this threshold, actions can auto-execute (still gated by budget limits above)." suffix="%" gKey="confidence_threshold" value={getVal('confidence_threshold')} saving={saving} onSave={saveGuardrail} />
+              </div>
+            </div>
+          ) : tab === 'regional' ? (
+            <div className="space-y-3">
+              <p className="text-xs text-[var(--text-muted)] px-1">Set which products to prioritize per region each quarter. <strong className="text-[var(--text-secondary)]">High</strong> priority products get more budget headroom and are protected from cuts. <strong className="text-[var(--text-secondary)]">Locked</strong> campaigns cannot be paused or budget-reduced by any agent.</p>
               <div className="flex items-center gap-3">
                 <select value={quarter} onChange={e => { setQuarter(e.target.value); load(e.target.value); }}
                   className="bg-[var(--bg-card)] border border-[var(--border-primary)] rounded-lg px-3 py-1.5 text-xs text-[var(--text-secondary)] focus:outline-none">
@@ -215,24 +223,29 @@ function AgentGuardrailsSection() {
                   <tbody>
                     {REGIONS.map(region => (
                       <tr key={region} className="border-b border-[var(--border-primary)]/20 last:border-0">
-                        <td className="px-3 py-2 text-[var(--text-primary)] font-medium">{region}</td>
+                        <td className="px-3 py-3 text-[var(--text-primary)] font-semibold text-sm">{region}</td>
                         {PRODUCTS.map(product => {
                           const p = priorities.find(x => x.region === region && x.product === product);
+                          const prio = p?.priority || 'none';
+                          const isProtected = p?.protected || false;
+                          const cycle = () => {
+                            const order = ['none', 'low', 'medium', 'high'];
+                            const next = order[(order.indexOf(prio) + 1) % order.length];
+                            savePriority(region, product, 'priority', next);
+                          };
+                          const PRIO_LABELS: Record<string, string> = { high: 'HIGH', medium: 'MED', low: 'LOW', none: '' };
                           return (
-                            <td key={product} className="px-1 py-1.5 text-center">
-                              <div className="flex flex-col items-center gap-1">
-                                <select value={p?.priority || 'none'} onChange={e => savePriority(region, product, 'priority', e.target.value)}
-                                  className={`w-20 text-center px-1.5 py-1 rounded text-[10px] font-semibold border cursor-pointer focus:outline-none ${PRIORITY_COLORS[p?.priority || 'none']}`}>
-                                  <option value="none">—</option>
-                                  <option value="high">High</option>
-                                  <option value="medium">Med</option>
-                                  <option value="low">Low</option>
-                                </select>
-                                <label className="flex items-center gap-1 cursor-pointer">
-                                  <input type="checkbox" checked={p?.protected || false} onChange={e => savePriority(region, product, 'protected', e.target.checked)}
-                                    className="w-3 h-3 rounded border-gray-600 bg-transparent accent-violet-500" />
-                                  <span className="text-[9px] text-[var(--text-muted)]">lock</span>
-                                </label>
+                            <td key={product} className="px-1.5 py-2 text-center">
+                              <div className="flex items-center justify-center gap-1.5">
+                                <button onClick={cycle} title={`Click to cycle priority (current: ${prio})`}
+                                  className={`w-16 h-8 rounded-lg text-[11px] font-bold tracking-wide transition-all hover:scale-105 ${PRIORITY_COLORS[prio]}`}>
+                                  {PRIO_LABELS[prio] || '—'}
+                                </button>
+                                <button onClick={() => savePriority(region, product, 'protected', !isProtected)}
+                                  title={isProtected ? 'Protected — agents cannot pause or cut budget' : 'Unprotected — click to lock'}
+                                  className={`w-6 h-6 rounded-md flex items-center justify-center transition-all ${isProtected ? 'prio-protected' : 'text-[var(--text-muted)] hover:text-[var(--text-secondary)]'}`}>
+                                  {isProtected ? '🔒' : '·'}
+                                </button>
                               </div>
                             </td>
                           );
@@ -243,6 +256,8 @@ function AgentGuardrailsSection() {
                 </table>
               </div>
             </div>
+          ) : (
+            <AllocationTab />
           )}
         </div>
       )}
@@ -250,39 +265,233 @@ function AgentGuardrailsSection() {
   );
 }
 
-function GuardrailNumberField({ label, suffix, gKey, value, saving, onSave }: {
-  label: string; suffix: string; gKey: string; value: string; saving: string | null; onSave: (key: string, value: string) => void;
+/* ═══════════════════════════════════════════════════════
+   SECTION: PLATFORM BUDGET ALLOCATION TAB
+   ═══════════════════════════════════════════════════════ */
+
+const PLATFORMS = ['google_ads', 'linkedin', 'stackadapt', 'reddit'];
+const PLATFORM_LABELS: Record<string, string> = {
+  google_ads: 'Google Ads',
+  linkedin: 'LinkedIn',
+  stackadapt: 'StackAdapt',
+  reddit: 'Reddit',
+};
+
+interface Allocation {
+  platform: string;
+  planned: number;
+  actual: number;
+  notes: string;
+}
+
+function AllocationTab() {
+  const now = new Date();
+  const [year, setYear] = useState(now.getFullYear());
+  const [month, setMonth] = useState(now.getMonth() + 1);
+  const [allocations, setAllocations] = useState<Allocation[]>(
+    PLATFORMS.map(p => ({ platform: p, planned: 0, actual: 0, notes: '' }))
+  );
+  const [cap, setCap] = useState(140000);
+  const [loading, setLoading] = useState(true);
+  const [saving, setSaving] = useState(false);
+  const [toast, setToast] = useState<{ message: string; type: 'success' | 'error' } | null>(null);
+
+  const loadAllocations = useCallback(async (y: number, m: number) => {
+    setLoading(true);
+    try {
+      const res = await fetch(`/api/budget-allocations?year=${y}&month=${m}`);
+      const data = await res.json();
+      setCap(data.cap || 140000);
+      const loaded = PLATFORMS.map(p => {
+        const found = data.allocations?.find((a: Allocation) => a.platform === p);
+        return {
+          platform: p,
+          planned: found?.planned || 0,
+          actual: found?.actual || 0,
+          notes: found?.notes || '',
+        };
+      });
+      setAllocations(loaded);
+    } catch {}
+    setLoading(false);
+  }, []);
+
+  useEffect(() => { loadAllocations(year, month); }, [year, month, loadAllocations]);
+
+  const totalPlanned = allocations.reduce((s, a) => s + a.planned, 0);
+  const totalActual = allocations.reduce((s, a) => s + a.actual, 0);
+  const mismatch = Math.abs(totalPlanned - cap) > 1;
+
+  const updateAlloc = (platform: string, field: 'planned' | 'notes', value: string | number) => {
+    setAllocations(prev => prev.map(a => a.platform === platform ? { ...a, [field]: value } : a));
+  };
+
+  const save = async () => {
+    setSaving(true);
+    try {
+      const res = await fetch('/api/budget-allocations', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          allocations: allocations.map(a => ({ platform: a.platform, year, month, planned: a.planned, notes: a.notes })),
+        }),
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        setToast({ message: data.error || 'Failed to save', type: 'error' });
+      } else {
+        setToast({ message: 'Allocations saved', type: 'success' });
+      }
+    } catch {
+      setToast({ message: 'Failed to save', type: 'error' });
+    }
+    setSaving(false);
+  };
+
+  const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+  return (
+    <div className="space-y-3">
+      {toast && <Toast message={toast.message} type={toast.type} onDismiss={() => setToast(null)} />}
+      <div className="flex items-center justify-between">
+        <p className="text-xs text-[var(--text-muted)] px-1">Set per-platform budget targets for each month. Total must match the monthly cap.</p>
+        <div className="flex items-center gap-2">
+          <select value={month} onChange={e => setMonth(parseInt(e.target.value))}
+            className="bg-[var(--bg-card)] border border-[var(--border-primary)] rounded-lg px-3 py-1.5 text-xs text-[var(--text-secondary)] focus:outline-none">
+            {MONTHS.map((m, i) => <option key={i} value={i + 1}>{m}</option>)}
+          </select>
+          <select value={year} onChange={e => setYear(parseInt(e.target.value))}
+            className="bg-[var(--bg-card)] border border-[var(--border-primary)] rounded-lg px-3 py-1.5 text-xs text-[var(--text-secondary)] focus:outline-none">
+            {[2025, 2026, 2027].map(y => <option key={y} value={y}>{y}</option>)}
+          </select>
+        </div>
+      </div>
+
+      {loading ? (
+        <div className="text-sm text-[var(--text-muted)] animate-pulse p-4">Loading allocations...</div>
+      ) : (
+        <>
+          <div className="bg-[var(--bg-card)] border border-[var(--border-primary)] rounded-xl overflow-x-auto">
+            <table className="w-full text-xs">
+              <thead>
+                <tr className="border-b border-[var(--border-primary)]/30">
+                  <th className="px-4 py-3 text-left text-[var(--text-muted)] font-medium">Platform</th>
+                  <th className="px-4 py-3 text-right text-[var(--text-muted)] font-medium">Planned</th>
+                  <th className="px-4 py-3 text-right text-[var(--text-muted)] font-medium">Actual MTD</th>
+                  <th className="px-4 py-3 text-right text-[var(--text-muted)] font-medium">Variance</th>
+                  <th className="px-4 py-3 text-left text-[var(--text-muted)] font-medium">Notes</th>
+                </tr>
+              </thead>
+              <tbody>
+                {allocations.map(a => {
+                  const variance = a.planned > 0 ? ((a.actual - a.planned) / a.planned) * 100 : 0;
+                  const varColor = variance > 5 ? 'text-red-400' : variance < -5 ? 'text-amber-400' : 'text-green-400';
+                  return (
+                    <tr key={a.platform} className="border-b border-[var(--border-primary)]/20 last:border-0">
+                      <td className="px-4 py-3 text-sm font-medium text-[var(--text-primary)]">
+                        {PLATFORM_LABELS[a.platform] || a.platform}
+                      </td>
+                      <td className="px-4 py-3 text-right">
+                        <div className="flex items-center justify-end gap-1">
+                          <span className="text-xs text-[var(--text-muted)]">$</span>
+                          <input type="number" value={a.planned} onChange={e => updateAlloc(a.platform, 'planned', parseFloat(e.target.value) || 0)}
+                            className="w-24 bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-1.5 text-sm text-[var(--text-primary)] text-right focus:outline-none focus:border-[var(--accent)]" />
+                        </div>
+                      </td>
+                      <td className="px-4 py-3 text-right text-sm text-[var(--text-secondary)]">
+                        ${a.actual.toLocaleString(undefined, { maximumFractionDigits: 0 })}
+                      </td>
+                      <td className={`px-4 py-3 text-right text-sm font-medium ${varColor}`}>
+                        {a.planned > 0 ? `${variance > 0 ? '+' : ''}${variance.toFixed(1)}%` : '—'}
+                      </td>
+                      <td className="px-4 py-3">
+                        <input type="text" value={a.notes} onChange={e => updateAlloc(a.platform, 'notes', e.target.value)}
+                          placeholder="Notes..."
+                          className="w-full bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-1.5 text-xs text-[var(--text-secondary)] focus:outline-none focus:border-[var(--accent)]" />
+                      </td>
+                    </tr>
+                  );
+                })}
+                {/* Total row */}
+                <tr className="bg-[var(--bg-primary)]/50">
+                  <td className="px-4 py-3 text-sm font-bold text-[var(--text-primary)]">Total</td>
+                  <td className="px-4 py-3 text-right text-sm font-bold text-[var(--text-primary)]">
+                    ${totalPlanned.toLocaleString()}
+                  </td>
+                  <td className="px-4 py-3 text-right text-sm font-bold text-[var(--text-secondary)]">
+                    ${totalActual.toLocaleString(undefined, { maximumFractionDigits: 0 })}
+                  </td>
+                  <td className="px-4 py-3 text-right text-sm font-medium text-[var(--text-muted)]">
+                    Cap: ${cap.toLocaleString()}
+                  </td>
+                  <td className="px-4 py-3"></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          {mismatch && (
+            <div className="flex items-center gap-2 px-4 py-2.5 bg-amber-500/10 border border-amber-500/30 rounded-xl text-xs text-amber-400">
+              <AlertTriangle size={14} />
+              Total planned (${totalPlanned.toLocaleString()}) doesn&apos;t match cap (${cap.toLocaleString()}). Remaining: ${(cap - totalPlanned).toLocaleString()}
+            </div>
+          )}
+
+          <div className="flex justify-end">
+            <button onClick={save} disabled={saving}
+              className="px-5 py-2 rounded-xl text-sm font-medium btn-accent-violet disabled:opacity-50">
+              {saving ? 'Saving...' : 'Save Allocations'}
+            </button>
+          </div>
+        </>
+      )}
+    </div>
+  );
+}
+
+function GuardrailNumberField({ label, desc, suffix, gKey, value, saving, onSave }: {
+  label: string; desc?: string; suffix: string; gKey: string; value: string; saving: string | null; onSave: (key: string, value: string) => void;
 }) {
   const [localVal, setLocalVal] = useState(value);
   useEffect(() => { setLocalVal(value); }, [value]);
   const changed = localVal !== value;
   return (
-    <div className="px-5 py-4 flex items-center justify-between gap-4">
-      <span className="text-sm text-[var(--text-secondary)]">{label}</span>
-      <div className="flex items-center gap-2">
-        {suffix === '$' && <span className="text-xs text-[var(--text-muted)]">$</span>}
-        <input type="number" value={localVal} onChange={e => setLocalVal(e.target.value)}
-          className="w-20 bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-1.5 text-sm text-[var(--text-primary)] text-right focus:outline-none focus:border-[var(--accent)]" />
-        {suffix !== '$' && <span className="text-xs text-[var(--text-muted)]">{suffix}</span>}
-        <button onClick={() => onSave(gKey, localVal)} disabled={!changed || saving === gKey}
-          className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${changed ? 'bg-violet-900/30 border border-violet-700/40 text-violet-400 hover:bg-violet-900/50' : 'bg-[var(--bg-primary)] border border-[var(--border-primary)] text-[var(--text-muted)] opacity-50 cursor-default'}`}>
-          {saving === gKey ? '...' : 'Save'}
-        </button>
+    <div className="px-5 py-4">
+      <div className="flex items-center justify-between gap-4">
+        <div className="flex-1 min-w-0">
+          <span className="text-sm font-medium text-[var(--text-primary)]">{label}</span>
+          {desc && <p className="text-[11px] text-[var(--text-muted)] mt-0.5 leading-relaxed">{desc}</p>}
+        </div>
+        <div className="flex items-center gap-2 shrink-0">
+          {suffix === '$' && <span className="text-xs text-[var(--text-muted)]">$</span>}
+          <input type="number" value={localVal} onChange={e => setLocalVal(e.target.value)}
+            className="w-20 bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-1.5 text-sm text-[var(--text-primary)] text-right focus:outline-none focus:border-[var(--accent)]" />
+          {suffix !== '$' && <span className="text-xs text-[var(--text-muted)]">{suffix}</span>}
+          <button onClick={() => onSave(gKey, localVal)} disabled={!changed || saving === gKey}
+            className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${changed ? 'btn-accent-violet' : 'bg-[var(--bg-primary)] border border-[var(--border-primary)] text-[var(--text-muted)] opacity-50 cursor-default'}`}>
+            {saving === gKey ? '...' : 'Save'}
+          </button>
+        </div>
       </div>
     </div>
   );
 }
 
-function GuardrailToggleField({ label, gKey, value, saving, onSave }: {
-  label: string; gKey: string; value: boolean; saving: string | null; onSave: (key: string, value: boolean) => void;
+function GuardrailToggleField({ label, desc, gKey, value, saving, onSave }: {
+  label: string; desc?: string; gKey: string; value: boolean; saving: string | null; onSave: (key: string, value: boolean) => void;
 }) {
   return (
-    <div className="px-5 py-4 flex items-center justify-between gap-4">
-      <span className="text-sm text-[var(--text-secondary)]">{label}</span>
-      <button onClick={() => onSave(gKey, !value)} disabled={saving === gKey}
-        className={`relative w-10 h-5 rounded-full transition-colors ${value ? 'bg-violet-600' : 'bg-gray-700'}`}>
-        <span className={`absolute top-0.5 w-4 h-4 rounded-full bg-white shadow transition-transform ${value ? 'left-5' : 'left-0.5'}`} />
-      </button>
+    <div className="px-5 py-4">
+      <div className="flex items-center justify-between gap-4">
+        <div className="flex-1 min-w-0">
+          <span className="text-sm font-medium text-[var(--text-primary)]">{label}</span>
+          {desc && <p className="text-[11px] text-[var(--text-muted)] mt-0.5 leading-relaxed">{desc}</p>}
+        </div>
+        <button onClick={() => onSave(gKey, !value)} disabled={saving === gKey}
+          className={`relative w-10 h-5 rounded-full transition-colors shrink-0 ${value ? 'bg-[var(--accent)]' : 'bg-[var(--bg-tertiary)]'}`}>
+          <span className={`absolute top-0.5 w-4 h-4 rounded-full bg-white shadow transition-transform ${value ? 'left-5' : 'left-0.5'}`} />
+        </button>
+      </div>
     </div>
   );
 }
@@ -371,15 +580,15 @@ function NegativeKeywordsSection() {
       
       <div className="flex items-center justify-between">
         <h2 className="text-base font-semibold text-[var(--text-primary)] flex items-center gap-2">
-          <Shield size={18} className="text-amber-400" />
+          <Shield size={18} className="text-accent-amber" />
           Negative Keywords
           {pending.length > 0 && (
-            <span className="px-2 py-0.5 rounded-full text-xs font-semibold bg-amber-900/30 text-amber-400">{pending.length}</span>
+            <span className="px-2 py-0.5 rounded-full text-xs font-semibold badge-amber">{pending.length}</span>
           )}
         </h2>
         {tab === 'pending' && pending.length > 1 && (
           <div className="flex items-center gap-2">
-            <button onClick={handleBulkApprove} className="flex items-center gap-1.5 px-3 py-1.5 bg-emerald-900/20 border border-emerald-800/30 text-emerald-400 rounded-lg text-xs font-medium hover:bg-emerald-900/30 transition-colors">
+            <button onClick={handleBulkApprove} className="flex items-center gap-1.5 px-3 py-1.5 btn-accent-emerald rounded-lg text-xs font-medium  transition-colors">
               <ThumbsUp size={12} /> Approve All ({pending.length})
             </button>
           </div>
@@ -390,13 +599,13 @@ function NegativeKeywordsSection() {
       <div className="grid grid-cols-3 gap-3">
         <div className="bg-[var(--bg-card)] border border-[var(--border-primary)] rounded-xl px-4 py-3">
           <p className="text-xs text-[var(--text-muted)]">Pending Review</p>
-          <p className="text-xl font-bold text-amber-400 mt-1">{pending.length}</p>
+          <p className="text-xl font-bold text-accent-amber mt-1">{pending.length}</p>
           {totalWaste > 0 && <p className="text-xs text-[var(--text-muted)] mt-0.5">${totalWaste.toFixed(2)} wasted</p>}
         </div>
         <div className="bg-[var(--bg-card)] border border-[var(--border-primary)] rounded-xl px-4 py-3">
           <p className="text-xs text-[var(--text-muted)]">Auto-Applied + Approved</p>
-          <p className="text-xl font-bold text-emerald-400 mt-1">{applied.length}</p>
-          {totalSaved > 0 && <p className="text-xs text-emerald-500/70 mt-0.5">${totalSaved.toFixed(2)} blocked</p>}
+          <p className="text-xl font-bold text-accent-emerald mt-1">{applied.length}</p>
+          {totalSaved > 0 && <p className="text-xs text-accent-emerald opacity-70 mt-0.5">${totalSaved.toFixed(2)} blocked</p>}
         </div>
         <div className="bg-[var(--bg-card)] border border-[var(--border-primary)] rounded-xl px-4 py-3">
           <p className="text-xs text-[var(--text-muted)]">Rejected</p>
@@ -407,9 +616,9 @@ function NegativeKeywordsSection() {
       {/* Tabs */}
       <div className="flex items-center gap-1 p-1 bg-[var(--bg-card)] border border-[var(--border-primary)] rounded-xl">
         {([
-          { key: 'pending' as NKTab, label: 'Needs Review', count: pending.length, color: 'text-amber-400' },
-          { key: 'applied' as NKTab, label: 'Applied', count: applied.length, color: 'text-emerald-400' },
-          { key: 'rejected' as NKTab, label: 'Rejected', count: rejected.length, color: 'text-red-400' },
+          { key: 'pending' as NKTab, label: 'Needs Review', count: pending.length, color: 'text-accent-amber' },
+          { key: 'applied' as NKTab, label: 'Applied', count: applied.length, color: 'text-accent-emerald' },
+          { key: 'rejected' as NKTab, label: 'Rejected', count: rejected.length, color: 'text-accent-red' },
         ]).map((t) => (
           <button key={t.key} onClick={() => setTab(t.key)}
             className={`flex-1 flex items-center justify-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all ${
@@ -430,7 +639,7 @@ function NegativeKeywordsSection() {
         </div>
       ) : (
         <div className="bg-[var(--bg-card)] border border-[var(--border-primary)] rounded-xl p-8 text-center">
-          <ShieldCheck size={24} className="mx-auto text-emerald-400 mb-2" />
+          <ShieldCheck size={24} className="mx-auto text-accent-emerald mb-2" />
           <p className="text-sm text-[var(--text-muted)]">
             {tab === 'pending' ? 'No pending reviews. All clear.' : tab === 'applied' ? 'No applied keywords yet.' : 'No rejected items.'}
           </p>
@@ -458,16 +667,16 @@ function NKCard({ rec, acting, onAction, isPending }: { rec: NKRec; acting: stri
           <p className="text-xs text-[var(--text-muted)] truncate mt-1">{rec.target}</p>
         </div>
         <div className="flex items-center gap-4 shrink-0">
-          {m.spend > 0 && <span className="text-sm font-semibold text-amber-400">${m.spend.toFixed(2)}</span>}
+          {m.spend > 0 && <span className="text-sm font-semibold text-accent-amber">${m.spend.toFixed(2)}</span>}
           <span className="text-xs text-[var(--text-muted)]">{timeAgo(rec.createdAt)}</span>
           {isPending && (
             <div className="flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
               <button onClick={(e) => { e.stopPropagation(); onAction(rec.id, 'approve'); }} disabled={isActing}
-                className="flex items-center gap-1.5 px-3 py-2 bg-emerald-900/20 border border-emerald-800/30 text-emerald-400 rounded-lg text-xs font-medium hover:bg-emerald-900/40 transition-colors disabled:opacity-50">
+                className="flex items-center gap-1.5 px-3 py-2 btn-accent-emerald rounded-lg text-xs font-medium  transition-colors disabled:opacity-50">
                 {isActing ? <Loader2 size={12} className="animate-spin" /> : <ThumbsUp size={12} />} Apply
               </button>
               <button onClick={(e) => { e.stopPropagation(); onAction(rec.id, 'reject'); }} disabled={isActing}
-                className="flex items-center gap-1.5 px-2.5 py-2 bg-red-900/20 border border-red-800/30 text-red-400 rounded-lg text-xs font-medium hover:bg-red-900/40 transition-colors disabled:opacity-50">
+                className="flex items-center gap-1.5 px-2.5 py-2 btn-accent-red rounded-lg text-xs font-medium  transition-colors disabled:opacity-50">
                 <ThumbsDown size={12} />
               </button>
             </div>
@@ -577,8 +786,8 @@ function AdCopyHealthSection() {
 
   const categoryInfo: { key: CopyCategory | 'all'; label: string; icon: any; color: string }[] = [
     { key: 'all', label: `All (${findings.length})`, icon: Type, color: 'text-[var(--text-secondary)]' },
-    { key: 'char_limit', label: `Over Limit (${categoryCounts.char_limit || 0})`, icon: AlertCircle, color: 'text-red-400' },
-    { key: 'filler_word', label: `Filler Words (${categoryCounts.filler_word || 0})`, icon: Sparkles, color: 'text-amber-400' },
+    { key: 'char_limit', label: `Over Limit (${categoryCounts.char_limit || 0})`, icon: AlertCircle, color: 'text-accent-red' },
+    { key: 'filler_word', label: `Filler Words (${categoryCounts.filler_word || 0})`, icon: Sparkles, color: 'text-accent-amber' },
     { key: 'duplicate', label: `Duplicates (${categoryCounts.duplicate || 0})`, icon: Copy, color: 'text-blue-400' },
   ];
 
@@ -623,7 +832,7 @@ function AdCopyHealthSection() {
         </div>
       ) : (
         <div className="bg-[var(--bg-card)] border border-[var(--border-primary)] rounded-xl p-8 text-center">
-          <CheckCircle2 size={24} className="mx-auto text-emerald-400 mb-2" />
+          <CheckCircle2 size={24} className="mx-auto text-accent-emerald mb-2" />
           <p className="text-sm text-[var(--text-muted)]">No issues in this category</p>
         </div>
       )}
@@ -654,8 +863,8 @@ function CopyFindingRow({ finding }: { finding: CopyFinding }) {
   const [expanded, setExpanded] = useState(false);
   const m = finding.metadata || {};
 
-  const icon = finding.category === 'char_limit' ? <AlertCircle size={14} className="text-red-400 shrink-0" />
-    : finding.category === 'filler_word' ? <Sparkles size={14} className="text-amber-400 shrink-0" />
+  const icon = finding.category === 'char_limit' ? <AlertCircle size={14} className="text-accent-red shrink-0" />
+    : finding.category === 'filler_word' ? <Sparkles size={14} className="text-accent-amber shrink-0" />
     : finding.category === 'duplicate' ? <Copy size={14} className="text-blue-400 shrink-0" />
     : <Type size={14} className="text-[var(--text-muted)] shrink-0" />;
 
@@ -728,7 +937,7 @@ function AgentSummaryCards({ agents }: { agents: any[] }) {
     <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
       {agents.map((agent) => {
         const dotColor = agent.status === 'done' ? 'bg-emerald-400' : agent.status === 'running' ? 'bg-blue-400' : agent.status === 'failed' ? 'bg-red-400' : 'bg-gray-600';
-        const statusColor = agent.status === 'done' ? 'text-emerald-400' : agent.status === 'running' ? 'text-blue-400' : agent.status === 'failed' ? 'text-red-400' : 'text-[var(--text-muted)]';
+        const statusColor = agent.status === 'done' ? 'text-accent-emerald' : agent.status === 'running' ? 'text-blue-400' : agent.status === 'failed' ? 'text-accent-red' : 'text-[var(--text-muted)]';
         const statusLabel = agent.status === 'done' ? 'Last run OK' : agent.status === 'running' ? 'Running...' : agent.status === 'failed' ? 'Last run failed' : 'No runs';
         return (
           <div key={agent.slug} className="bg-[var(--bg-card)] border border-[var(--border-primary)] rounded-xl p-4 space-y-3">
@@ -918,7 +1127,7 @@ function RunRow({ run, expandedRun, onToggle, runDetail, reportContent, exportin
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 flex-wrap">
             <span className="text-sm font-medium text-[var(--text-primary)]">{run.agentName}</span>
-            {run.autonomous && <span className="text-xs px-2 py-0.5 rounded bg-violet-900/30 text-violet-400">auto</span>}
+            {run.autonomous && <span className="text-xs px-2 py-0.5 rounded bg-violet-900/30 text-accent-violet">auto</span>}
           </div>
           <p className="text-xs text-[var(--text-muted)] truncate mt-1">{run.task}</p>
         </div>

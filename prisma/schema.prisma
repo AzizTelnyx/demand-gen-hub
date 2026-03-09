@@ -301,6 +301,7 @@ model AdImpression {
   impressions  Int       @default(0)
   clicks       Int       @default(0)
   cost         Float     @default(0)
+  conversions  Int       @default(0)
   dateFrom     DateTime?
   dateTo       DateTime?
   lastSyncedAt DateTime?
@@ -581,4 +582,18 @@ model CampaignAudience {
 
   @@index([campaignId], map: "idx_campaign_audience_campaign")
   @@index([audienceType], map: "idx_campaign_audience_type")
+}
+
+model BudgetAllocation {
+  id        String   @id @default(uuid())
+  platform  String
+  year      Int
+  month     Int
+  planned   Float    @default(0)
+  actual    Float?   @default(0)
+  notes     String?
+  updatedAt DateTime? @default(now())
+  updatedBy String?
+
+  @@unique([platform, year, month])
 }

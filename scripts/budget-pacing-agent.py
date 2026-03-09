@@ -43,6 +43,26 @@ def load_config():
         return json.load(f)
 
 
+def load_platform_allocations() -> dict:
+    """Load per-platform budget allocations for the current month from BudgetAllocation table."""
+    now = datetime.now()
+    try:
+        import psycopg2
+        conn = psycopg2.connect(DB_URL)
+        cur = conn.cursor()
+        cur.execute(
+            'SELECT platform, planned, actual, notes FROM "BudgetAllocation" WHERE year = %s AND month = %s',
+            (now.year, now.month)
+        )
+        rows = cur.fetchall()
+        cur.close()
+        conn.close()
+        return {row[0]: {"planned": row[1], "actual": row[2] or 0, "notes": row[3] or ""} for row in rows}
+    except Exception as e:
+        print(f"  Warning: Could not load platform allocations: {e}", file=sys.stderr)
+        return {}
+
+
 def is_excluded(name: str, patterns: list[str]) -> bool:
     name_lower = name.lower()
     return any(p.lower() in name_lower for p in patterns)
@@ -333,7 +353,7 @@ def generate_recommendations(cap_data: dict, budget_limited: list, pacing: dict)
 
 # ─── Format Telegram Message ─────────────────────────
 
-def format_telegram(cap_data: dict, budget_limited: list, pacing: dict, recs: list) -> str:
+def format_telegram(cap_data: dict, budget_limited: list, pacing: dict, recs: list, platform_pacing: dict = None) -> str:
     lines = []
     now = datetime.now()
 
@@ -354,6 +374,16 @@ def format_telegram(cap_data: dict, budget_limited: list, pacing: dict, recs: li
     ps = cap_data["platformSpend"]
     breakdown = " · ".join(f"{k}: ${v:,.0f}" for k, v in sorted(ps.items(), key=lambda x: -x[1]))
     lines.append(f"Split: {breakdown}")
+
+    # Per-platform allocation pacing
+    if platform_pacing:
+        flagged = {k: v for k, v in platform_pacing.items() if v["status"] != "on_track"}
+        if flagged:
+            lines.append("")
+            lines.append("📋 Platform Allocation Pacing:")
+            for slug, pp in platform_pacing.items():
+                icon = "🔴" if pp["status"] == "overpacing" else "🟡" if pp["status"] == "underpacing" else "🟢"
+                lines.append(f"  {icon} {slug}: ${pp['mtdSpend']:,.0f} / ${pp['planned']:,.0f} ({pp['pacePct']:.0f}%)")
 
     if cap_data["headroom"] >= 0:
         lines.append(f"Headroom: ${cap_data['headroom']:,.0f} ({cap_data['daysRemaining']}d left)")
@@ -483,6 +513,36 @@ def main():
     cap_data = check_cap(config)
     print(f"  MTD: ${cap_data['mtdSpend']:,.0f} | Rate: ${cap_data['dailyRate']:,.0f}/day | Projected: ${cap_data['projected']:,.0f} | Level: {cap_data['level']}")
 
+    # Check 1b: Per-platform allocation pacing
+    print("\n[1b] Per-platform allocation pacing...")
+    platform_allocations = load_platform_allocations()
+    platform_pacing = {}
+    if platform_allocations:
+        days_in_month = cap_data["daysInMonth"]
+        days_elapsed = cap_data["daysElapsed"]
+        for slug, alloc in platform_allocations.items():
+            mtd_spend = cap_data["platformSpend"].get(slug, 0)
+            planned = alloc["planned"]
+            if planned > 0:
+                expected_pace = (planned / days_in_month) * days_elapsed
+                pace_pct = (mtd_spend / expected_pace * 100) if expected_pace > 0 else 0
+                status = "on_track"
+                if pace_pct > 115:
+                    status = "overpacing"
+                elif pace_pct < 85:
+                    status = "underpacing"
+                platform_pacing[slug] = {
+                    "planned": planned,
+                    "mtdSpend": round(mtd_spend, 2),
+                    "expectedPace": round(expected_pace, 2),
+                    "pacePct": round(pace_pct, 1),
+                    "status": status,
+                }
+                icon = "🔴" if status == "overpacing" else "🟡" if status == "underpacing" else "🟢"
+                print(f"  {icon} {slug}: ${mtd_spend:,.0f} / ${planned:,.0f} ({pace_pct:.0f}% of expected pace) — {status}")
+    else:
+        print("  No platform allocations found, skipping per-platform pacing")
+
     # Check 2: Budget-limited
     print("\n[2/3] Budget-limited campaigns...")
     budget_limited = check_budget_limited(config)
@@ -506,10 +566,11 @@ def main():
         "budgetLimited": budget_limited,
         "pacing": pacing,
         "recommendations": recs,
+        "platformPacing": platform_pacing,
     }
 
     # Format message
-    message = format_telegram(cap_data, budget_limited, pacing, recs)
+    message = format_telegram(cap_data, budget_limited, pacing, recs, platform_pacing)
 
     print("\n" + "=" * 50)
     print(message)

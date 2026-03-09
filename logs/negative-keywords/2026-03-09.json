@@ -1,16 +1,16 @@
 {
-  "timestamp": "2026-03-09T10:00:04.432663+00:00",
-  "runtime_seconds": 133.35663,
-  "dry_run": false,
+  "timestamp": "2026-03-09T11:10:24.175197+00:00",
+  "runtime_seconds": 114.173649,
+  "dry_run": true,
   "days_analyzed": 7,
   "campaigns_processed": 36,
   "search_terms_analyzed": 92,
   "skipped": 9908,
   "decisions": {
-    "blocked": 9,
-    "review": 0,
+    "blocked": 6,
+    "review": 2,
     "monitored": 4,
-    "kept": 79
+    "kept": 80
   },
   "blocks_applied": [
     {
@@ -24,8 +24,8 @@
       "intent_type": "WRONG_CATEGORY",
       "confidence": 82,
       "match_type": "PHRASE",
-      "applied": true,
-      "resource_name": "customers/2356650573/campaignCriteria/23584242475~397774641009"
+      "applied": false,
+      "resource_name": null
     },
     {
       "search_term": "call center companies near me",
@@ -34,12 +34,12 @@
       "spend": 45.63,
       "clicks": 25,
       "conversions": 0.0,
-      "relevancy_score": 82,
+      "relevancy_score": 85,
       "intent_type": "CONSUMER",
-      "confidence": 82,
+      "confidence": 85,
       "match_type": "PHRASE",
-      "applied": true,
-      "resource_name": "customers/2356650573/campaignCriteria/23578096203~306643540250"
+      "applied": false,
+      "resource_name": null
     },
     {
       "search_term": "speechace api",
@@ -48,40 +48,12 @@
       "spend": 31.48,
       "clicks": 2,
       "conversions": 0.0,
-      "relevancy_score": 80,
-      "intent_type": "WRONG_CATEGORY",
-      "confidence": 80,
-      "match_type": "EXACT",
-      "applied": true,
-      "resource_name": "customers/2356650573/campaignCriteria/19905048363~1534318828734"
-    },
-    {
-      "search_term": "talk cloud",
-      "campaign_id": 23546680743,
-      "campaign_name": "202602 BRAND ClawdTalk SA GLOBAL",
-      "spend": 29.31,
-      "clicks": 1,
-      "conversions": 0.0,
       "relevancy_score": 82,
-      "intent_type": "IRRELEVANT",
+      "intent_type": "WRONG_CATEGORY",
       "confidence": 82,
       "match_type": "EXACT",
-      "applied": true,
-      "resource_name": "customers/2356650573/campaignCriteria/23546680743~299150362774"
-    },
-    {
-      "search_term": "voice over ai",
-      "campaign_id": 23583187853,
-      "campaign_name": "202602 MOFU AI Agent SA APAC",
-      "spend": 27.972791,
-      "clicks": 122,
-      "conversions": 0.0,
-      "relevancy_score": 80,
-      "intent_type": "WRONG_CATEGORY",
-      "confidence": 80,
-      "match_type": "PHRASE",
-      "applied": true,
-      "resource_name": "customers/2356650573/campaignCriteria/23583187853~617666985723"
+      "applied": false,
+      "resource_name": null
     },
     {
       "search_term": "ai voice over",
@@ -94,8 +66,8 @@
       "intent_type": "WRONG_CATEGORY",
       "confidence": 85,
       "match_type": "PHRASE",
-      "applied": true,
-      "resource_name": "customers/2356650573/campaignCriteria/23579649257~907468893997"
+      "applied": false,
+      "resource_name": null
     },
     {
       "search_term": "imessage api",
@@ -104,12 +76,12 @@
       "spend": 22.3,
       "clicks": 4,
       "conversions": 0.0,
-      "relevancy_score": 82,
+      "relevancy_score": 80,
       "intent_type": "WRONG_CATEGORY",
-      "confidence": 82,
+      "confidence": 80,
       "match_type": "PHRASE",
-      "applied": true,
-      "resource_name": "customers/2356650573/campaignCriteria/19600918299~1454254319496"
+      "applied": false,
+      "resource_name": null
     },
     {
       "search_term": "ai suara",
@@ -118,31 +90,34 @@
       "spend": 21.828915,
       "clicks": 93,
       "conversions": 0.0,
-      "relevancy_score": 80,
+      "relevancy_score": 82,
       "intent_type": "CONSUMER",
-      "confidence": 80,
+      "confidence": 82,
       "match_type": "EXACT",
-      "applied": true,
-      "resource_name": "customers/2356650573/campaignCriteria/23583187853~1647323503155"
+      "applied": false,
+      "resource_name": null
+    }
+  ],
+  "review_items": [
+    {
+      "search_term": "voice over ai",
+      "campaign_id": 23583187853,
+      "campaign_name": "202602 MOFU AI Agent SA APAC",
+      "spend": 27.972791,
+      "confidence": 78,
+      "reason": "Voice over AI \u2014 content creator/voiceover use case, not enterprise voice AI agents. 122 clicks, $28 spend, 0 conversions. Consumer intent."
     },
     {
       "search_term": "ai voice text to speech",
       "campaign_id": 23277159104,
       "campaign_name": "202511 TOFU AI Agents TTS API Global",
       "spend": 21.108915,
-      "clicks": 46,
-      "conversions": 0.0,
-      "relevancy_score": 80,
-      "intent_type": "CONSUMER",
-      "confidence": 80,
-      "match_type": "PHRASE",
-      "applied": true,
-      "resource_name": "customers/2356650573/campaignCriteria/23277159104~836403806817"
+      "confidence": 78,
+      "reason": "Text-to-speech consumer tool search, not enterprise TTS API buyers. 46 clicks 0 conversions"
     }
   ],
-  "review_items": [],
   "estimated_savings": {
-    "weekly": 325.65472000000005,
-    "monthly": 1400.3152960000002
+    "weekly": 296.34472000000005,
+    "monthly": 1274.282296
   }
 }

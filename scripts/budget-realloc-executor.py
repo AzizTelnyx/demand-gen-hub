@@ -58,27 +58,30 @@ def load_guardrails(cur) -> dict:
 def load_pending_recommendations(cur) -> list[dict]:
     """Load approved budget-realloc recommendations from DB."""
     cur.execute("""
-        SELECT r.id, r.data, r."campaignId", c."platformId", c.platform, c.name, c."productGroup"
+        SELECT r.id, r.action, r.rationale, r.impact, r.target, r."targetId",
+               c."platformId", c.platform, c.name, c."parsedProduct"
         FROM "Recommendation" r
-        JOIN "Campaign" c ON c.id = r."campaignId"
+        LEFT JOIN "Campaign" c ON c.id = r."targetId"
         WHERE r.status = 'approved' AND r.type = 'budget-realloc'
         ORDER BY r."createdAt" ASC
     """)
     rows = cur.fetchall()
     results = []
     for row in rows:
-        rec_id, data, campaign_db_id, platform_id, platform, campaign_name, product_group = row
-        rec_data = data if isinstance(data, dict) else json.loads(data) if data else {}
+        rec_id, action, rationale, impact_raw, target, target_id, platform_id, platform, campaign_name, product_group = row
+        impact = json.loads(impact_raw) if impact_raw else {}
         results.append({
             "id": rec_id,
-            "data": rec_data,
-            "campaignDbId": campaign_db_id,
-            "platformId": platform_id,
-            "platform": platform,
-            "campaignName": campaign_name,
+            "data": {"action": action, "rationale": rationale},
+            "campaignDbId": target_id,
+            "platformId": impact.get("platformId") or platform_id,
+            "platform": impact.get("platform") or platform or "google_ads",
+            "campaignName": campaign_name or target,
             "productGroup": product_group,
-            "newBudget": rec_data.get("newBudget") or rec_data.get("new_budget"),
-            "oldBudget": rec_data.get("oldBudget") or rec_data.get("old_budget"),
+            "newBudget": impact.get("newBudget"),
+            "oldBudget": impact.get("oldBudget"),
+            "change": impact.get("change"),
+            "direction": impact.get("direction"),
         })
     return results
 
@@ -164,18 +167,21 @@ def log_change(cur, rec: dict, result: dict):
     try:
         # Log to CampaignChange
         cur.execute("""
-            INSERT INTO "CampaignChange" (id, "campaignId", field, "oldValue", "newValue", source, "createdAt")
-            VALUES (gen_random_uuid(), %s, 'daily_budget', %s, %s, 'budget-realloc-executor', NOW())
+            INSERT INTO "CampaignChange" (id, "campaignId", "campaignName", platform, "changeType", description, "oldValue", "newValue", source, actor)
+            VALUES (gen_random_uuid(), %s, %s, %s, 'budget', %s, %s, %s, 'budget-realloc-executor', 'ares')
         """, (
             rec["campaignDbId"],
+            rec["campaignName"],
+            rec["platform"],
+            f"Budget {rec.get('direction', 'change')}: ${rec.get('oldBudget', '?')} → ${rec.get('newBudget', '?')}/day",
             str(rec.get("oldBudget", "")),
-            str(rec["newBudget"]),
+            str(rec.get("newBudget", "")),
         ))
 
         # Update recommendation status
         new_status = "applied" if result["status"] == "applied" else "failed"
         cur.execute("""
-            UPDATE "Recommendation" SET status = %s, "updatedAt" = NOW() WHERE id = %s
+            UPDATE "Recommendation" SET status = %s, "appliedAt" = NOW() WHERE id = %s
         """, (new_status, rec["id"]))
     except Exception as e:
         print(f"  Warning: DB logging failed for rec {rec['id']}: {e}", file=sys.stderr)
@@ -221,7 +227,7 @@ def main():
             # Mark as failed in DB
             if not args.dry_run:
                 cur.execute("""
-                    UPDATE "Recommendation" SET status = 'rejected', "updatedAt" = NOW() WHERE id = %s
+                    UPDATE "Recommendation" SET status = 'rejected' WHERE id = %s
                 """, (rec["id"],))
                 conn.commit()
             results.append({"recId": rec["id"], "status": "rejected", "message": reason})

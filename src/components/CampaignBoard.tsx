@@ -1,8 +1,29 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useMemo, useState, useEffect, createContext, useContext } from "react";
 import { ChevronDown, ChevronRight } from "lucide-react";
 import PlatformIcon from "./PlatformIcon";
+
+interface ThemeColors {
+  PLATFORM_COLORS: Record<string, { fill: string; text: string }>;
+  INTENT_COLORS: Record<string, { color: string; bg: string }>;
+  PRODUCT_ACCENT: Record<string, string>;
+  PRODUCT_GROUPS: Record<string, { products: string[]; color: string }>;
+}
+const ThemeColorsCtx = createContext<ThemeColors>(null!);
+
+function useTheme() {
+  const [theme, setTheme] = useState<"dark" | "light">("dark");
+  useEffect(() => {
+    const el = document.documentElement;
+    const update = () => setTheme((el.getAttribute("data-theme") as "dark" | "light") || "dark");
+    update();
+    const obs = new MutationObserver(update);
+    obs.observe(el, { attributes: true, attributeFilter: ["data-theme"] });
+    return () => obs.disconnect();
+  }, []);
+  return theme;
+}
 
 interface Campaign {
   id: string;
@@ -26,11 +47,17 @@ interface Campaign {
 }
 
 const PLATFORM_ORDER = ["google_ads", "linkedin", "stackadapt", "reddit"];
-const PLATFORM_COLORS: Record<string, { fill: string; text: string }> = {
-  google_ads: { fill: "rgba(66,133,244,0.22)", text: "#2563eb" },
-  linkedin: { fill: "rgba(10,102,194,0.28)", text: "#0A66C2" },
-  stackadapt: { fill: "rgba(147,51,234,0.22)", text: "#9333ea" },
-  reddit: { fill: "rgba(255,69,0,0.22)", text: "#ea580c" },
+const PLATFORM_COLORS_DARK: Record<string, { fill: string; text: string }> = {
+  google_ads: { fill: "rgba(66,133,244,0.22)", text: "#60a5fa" },
+  linkedin: { fill: "rgba(10,102,194,0.28)", text: "#38bdf8" },
+  stackadapt: { fill: "rgba(147,51,234,0.22)", text: "#a78bfa" },
+  reddit: { fill: "rgba(255,69,0,0.22)", text: "#fb923c" },
+};
+const PLATFORM_COLORS_LIGHT: Record<string, { fill: string; text: string }> = {
+  google_ads: { fill: "rgba(37,99,235,0.10)", text: "#1d4ed8" },
+  linkedin: { fill: "rgba(10,102,194,0.10)", text: "#0369a1" },
+  stackadapt: { fill: "rgba(126,34,206,0.10)", text: "#7e22ce" },
+  reddit: { fill: "rgba(234,88,12,0.10)", text: "#c2410c" },
 };
 const PLATFORM_LABELS: Record<string, string> = {
   google_ads: "Google Ads",
@@ -39,37 +66,53 @@ const PLATFORM_LABELS: Record<string, string> = {
   reddit: "Reddit",
 };
 
-const INTENT_COLORS: Record<string, { color: string; bg: string }> = {
-  TOFU: { color: "#3b82f6", bg: "rgba(59,130,246,0.16)" },
-  MOFU: { color: "#8b5cf6", bg: "rgba(139,92,246,0.16)" },
-  BOFU: { color: "#10b981", bg: "rgba(16,185,129,0.16)" },
-  CONQUEST: { color: "#f97316", bg: "rgba(249,115,22,0.18)" },
-  UPSELL: { color: "#ec4899", bg: "rgba(236,72,153,0.16)" },
-  COMMERCIAL: { color: "#14b8a6", bg: "rgba(20,184,166,0.16)" },
-  BRAND: { color: "#eab308", bg: "rgba(234,179,8,0.16)" },
-  PARTNER: { color: "#64748b", bg: "rgba(100,116,139,0.16)" },
-  EVENT: { color: "#06b6d4", bg: "rgba(6,182,212,0.16)" },
+const INTENT_COLORS_DARK: Record<string, { color: string; bg: string }> = {
+  TOFU: { color: "#60a5fa", bg: "rgba(59,130,246,0.16)" },
+  MOFU: { color: "#a78bfa", bg: "rgba(139,92,246,0.16)" },
+  BOFU: { color: "#34d399", bg: "rgba(16,185,129,0.16)" },
+  CONQUEST: { color: "#fb923c", bg: "rgba(249,115,22,0.18)" },
+  UPSELL: { color: "#f472b6", bg: "rgba(236,72,153,0.16)" },
+  COMMERCIAL: { color: "#2dd4bf", bg: "rgba(20,184,166,0.16)" },
+  BRAND: { color: "#facc15", bg: "rgba(234,179,8,0.16)" },
+  PARTNER: { color: "#94a3b8", bg: "rgba(100,116,139,0.16)" },
+  EVENT: { color: "#22d3ee", bg: "rgba(6,182,212,0.16)" },
+};
+const INTENT_COLORS_LIGHT: Record<string, { color: string; bg: string }> = {
+  TOFU: { color: "#1d4ed8", bg: "rgba(37,99,235,0.08)" },
+  MOFU: { color: "#6d28d9", bg: "rgba(109,40,217,0.08)" },
+  BOFU: { color: "#047857", bg: "rgba(4,120,87,0.08)" },
+  CONQUEST: { color: "#c2410c", bg: "rgba(194,65,12,0.08)" },
+  UPSELL: { color: "#be185d", bg: "rgba(190,24,93,0.08)" },
+  COMMERCIAL: { color: "#0f766e", bg: "rgba(15,118,110,0.08)" },
+  BRAND: { color: "#a16207", bg: "rgba(161,98,7,0.08)" },
+  PARTNER: { color: "#475569", bg: "rgba(71,85,105,0.08)" },
+  EVENT: { color: "#0e7490", bg: "rgba(14,116,144,0.08)" },
 };
 
 const PRODUCTS = ["AI Agent", "Voice API", "SIP", "SMS", "RCS", "Numbers", "IoT SIM"];
 
-const PRODUCT_ACCENT: Record<string, string> = {
-  "AI Agent": "#3b82f6",
-  "Voice API": "#10b981",
-  "SIP": "#f59e0b",
-  "SMS": "#ec4899",
-  "RCS": "#f472b6",
-  "Numbers": "#8b5cf6",
-  "IoT SIM": "#06b6d4",
-  "Contact Center": "#f97316",
-  "Other": "#94a3b8",
+const PRODUCT_ACCENT_DARK: Record<string, string> = {
+  "AI Agent": "#60a5fa", "Voice API": "#34d399", "SIP": "#fbbf24",
+  "SMS": "#f472b6", "RCS": "#f9a8d4", "Numbers": "#a78bfa",
+  "IoT SIM": "#22d3ee", "Contact Center": "#fb923c", "Other": "#94a3b8",
+};
+const PRODUCT_ACCENT_LIGHT: Record<string, string> = {
+  "AI Agent": "#1d4ed8", "Voice API": "#047857", "SIP": "#b45309",
+  "SMS": "#be185d", "RCS": "#9d174d", "Numbers": "#6d28d9",
+  "IoT SIM": "#0e7490", "Contact Center": "#c2410c", "Other": "#475569",
 };
 
-const PRODUCT_GROUPS: Record<string, { products: string[]; color: string }> = {
-  "Voice AI": { products: ["AI Agent"], color: "#3b82f6" },
-  "Voice Infrastructure": { products: ["Voice API", "SIP"], color: "#10b981" },
-  "Messaging": { products: ["SMS", "RCS"], color: "#ec4899" },
-  "Connectivity": { products: ["Numbers", "IoT SIM"], color: "#06b6d4" },
+const PRODUCT_GROUPS_DARK: Record<string, { products: string[]; color: string }> = {
+  "Voice AI": { products: ["AI Agent"], color: "#60a5fa" },
+  "Voice Infrastructure": { products: ["Voice API", "SIP"], color: "#34d399" },
+  "Messaging": { products: ["SMS", "RCS"], color: "#f472b6" },
+  "Connectivity": { products: ["Numbers", "IoT SIM"], color: "#22d3ee" },
+};
+const PRODUCT_GROUPS_LIGHT: Record<string, { products: string[]; color: string }> = {
+  "Voice AI": { products: ["AI Agent"], color: "#1d4ed8" },
+  "Voice Infrastructure": { products: ["Voice API", "SIP"], color: "#047857" },
+  "Messaging": { products: ["SMS", "RCS"], color: "#be185d" },
+  "Connectivity": { products: ["Numbers", "IoT SIM"], color: "#0e7490" },
 };
 
 interface ProductData {
@@ -108,6 +151,7 @@ function computeProductData(campaigns: Campaign[]) {
 
 // ── Platform Bar (shared) ──────────────────────────────
 function PlatformBar({ byPlatform, total, maxTotal }: { byPlatform: Record<string, number>; total: number; maxTotal: number }) {
+  const { PLATFORM_COLORS } = useContext(ThemeColorsCtx);
   const barWidth = (total / maxTotal) * 100;
   return (
     <div className="flex h-11 rounded-lg overflow-hidden" style={{ width: `${barWidth}%`, minWidth: "60px" }}>
@@ -140,6 +184,7 @@ function PlatformBar({ byPlatform, total, maxTotal }: { byPlatform: Record<strin
 
 // ── Intent Pills (shared) ──────────────────────────────
 function IntentPills({ byIntent }: { byIntent: Record<string, number> }) {
+  const { INTENT_COLORS } = useContext(ThemeColorsCtx);
   return (
     <div className="w-[200px] shrink-0 flex flex-wrap gap-1">
       {Object.entries(byIntent)
@@ -185,6 +230,7 @@ function ProductRow({ product, d, maxTotal, onSelectProduct }: {
   maxTotal: number;
   onSelectProduct: (p: string) => void;
 }) {
+  const { PRODUCT_ACCENT } = useContext(ThemeColorsCtx);
   return (
     <button
       onClick={() => onSelectProduct(product)}
@@ -212,6 +258,7 @@ function ProductGroupView({ campaigns, onSelectProduct, onSelectCampaign }: {
   onSelectProduct: (p: string) => void;
   onSelectCampaign: (c: Campaign) => void;
 }) {
+  const { PRODUCT_GROUPS } = useContext(ThemeColorsCtx);
   const [expanded, setExpanded] = useState<Record<string, boolean>>(() => {
     const init: Record<string, boolean> = {};
     for (const g of Object.keys(PRODUCT_GROUPS)) init[g] = true;
@@ -264,7 +311,7 @@ function ProductGroupView({ campaigns, onSelectProduct, onSelectCampaign }: {
     const maxPT = Math.max(1, ...Object.values(pd).map(d => d.total));
 
     return { groupData: gd, productData: pd, maxGroupTotal: maxGT, maxProductTotal: maxPT };
-  }, [campaigns]);
+  }, [campaigns, PRODUCT_GROUPS]);
 
   const toggle = (group: string) => setExpanded(e => ({ ...e, [group]: !e[group] }));
 
@@ -399,8 +446,20 @@ function FlatProductView({ campaigns, onSelectProduct }: {
 
 // ── Main Export ─────────────────────────────────────────
 export default function CampaignBoard({ campaigns, onSelectProduct, onSelectCampaign, groupBy = "product-group" }: BoardProps) {
-  if (groupBy === "product") {
-    return <FlatProductView campaigns={campaigns} onSelectProduct={onSelectProduct} />;
-  }
-  return <ProductGroupView campaigns={campaigns} onSelectProduct={onSelectProduct} onSelectCampaign={onSelectCampaign} />;
+  const theme = useTheme();
+  const colors = useMemo<ThemeColors>(() => ({
+    PLATFORM_COLORS: theme === "dark" ? PLATFORM_COLORS_DARK : PLATFORM_COLORS_LIGHT,
+    INTENT_COLORS: theme === "dark" ? INTENT_COLORS_DARK : INTENT_COLORS_LIGHT,
+    PRODUCT_ACCENT: theme === "dark" ? PRODUCT_ACCENT_DARK : PRODUCT_ACCENT_LIGHT,
+    PRODUCT_GROUPS: theme === "dark" ? PRODUCT_GROUPS_DARK : PRODUCT_GROUPS_LIGHT,
+  }), [theme]);
+
+  return (
+    <ThemeColorsCtx.Provider value={colors}>
+      {groupBy === "product"
+        ? <FlatProductView campaigns={campaigns} onSelectProduct={onSelectProduct} />
+        : <ProductGroupView campaigns={campaigns} onSelectProduct={onSelectProduct} onSelectCampaign={onSelectCampaign} />
+      }
+    </ThemeColorsCtx.Provider>
+  );
 }

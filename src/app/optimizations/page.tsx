@@ -20,6 +20,22 @@ interface CampaignChange {
   timestamp: string;
 }
 
+interface Recommendation {
+  id: string;
+  type: string;
+  severity: string;
+  target: string | null;
+  targetId: string | null;
+  action: string;
+  rationale: string;
+  impact: any;
+  status: string;
+  appliedAt: string | null;
+  createdAt: string;
+  agentName: string | null;
+  agentSlug: string | null;
+}
+
 const changeTypeConfig: Record<string, { icon: any; color: string; label: string }> = {
   budget: { icon: DollarSign, color: "text-emerald-400", label: "Budget" },
   status: { icon: Play, color: "text-blue-400", label: "Status" },
@@ -55,9 +71,12 @@ import PlatformIcon from "@/components/PlatformIcon";
 
 export default function OptimizationsPage() {
   const [changes, setChanges] = useState<CampaignChange[]>([]);
+  const [recommendations, setRecommendations] = useState<Recommendation[]>([]);
+  const [recStats, setRecStats] = useState<any>(null);
   const [stats, setStats] = useState<any>(null);
   const [filters, setFilters] = useState<any>({});
   const [loading, setLoading] = useState(true);
+  const [activeTab, setActiveTab] = useState<'recommendations' | 'changes'>('recommendations');
 
   const [platformFilter, setPlatformFilter] = useState('all');
   const [typeFilter, setTypeFilter] = useState('all');
@@ -75,6 +94,8 @@ export default function OptimizationsPage() {
       const res = await fetch(`/api/optimizations?${params}`);
       const data = await res.json();
       setChanges(data.changes || []);
+      setRecommendations(data.recommendations || []);
+      setRecStats(data.recStats || {});
       setStats(data.stats || {});
       setFilters(data.filters || {});
       setLoading(false);
@@ -108,8 +129,88 @@ export default function OptimizationsPage() {
         <p className="text-[var(--text-muted)] text-sm mt-0.5">Every campaign change across all platforms</p>
       </div>
 
+      {/* Tabs */}
+      <div className="flex items-center gap-1 bg-[var(--bg-card)] rounded-xl p-1 border border-[var(--border-primary)] w-fit">
+        <button onClick={() => setActiveTab('recommendations')}
+          className={`px-4 py-2 text-xs font-medium rounded-lg transition ${activeTab === 'recommendations' ? 'bg-[var(--bg-primary)] text-[var(--text-primary)]' : 'text-[var(--text-muted)] hover:text-[var(--text-secondary)]'}`}>
+          <Bot size={12} className="inline mr-1.5" />Recommendations {recStats?.total ? `(${recStats.total})` : ''}
+        </button>
+        <button onClick={() => setActiveTab('changes')}
+          className={`px-4 py-2 text-xs font-medium rounded-lg transition ${activeTab === 'changes' ? 'bg-[var(--bg-primary)] text-[var(--text-primary)]' : 'text-[var(--text-muted)] hover:text-[var(--text-secondary)]'}`}>
+          <History size={12} className="inline mr-1.5" />Change History {stats?.total ? `(${stats.total})` : ''}
+        </button>
+      </div>
+
+      {/* Recommendations Tab */}
+      {activeTab === 'recommendations' && (
+        <div className="space-y-3">
+          {recommendations.length === 0 ? (
+            <div className="bg-[var(--bg-card)] border border-[var(--border-primary)] rounded-xl p-12 text-center">
+              <Bot size={24} className="text-[var(--text-muted)] mx-auto mb-3" />
+              <p className="text-sm text-[var(--text-muted)]">No agent recommendations yet</p>
+              <p className="text-xs text-[var(--text-muted)] mt-1">Negative keyword, ad copy, and budget recommendations will appear here</p>
+            </div>
+          ) : (
+            <>
+              {/* Rec stats */}
+              {recStats && (
+                <div className="flex items-center gap-3 flex-wrap">
+                  <div className="flex items-center gap-2 bg-[var(--bg-card)] border border-[var(--border-primary)] rounded-lg px-3 py-2">
+                    <Bot size={14} className="text-indigo-400" />
+                    <span className="text-lg font-semibold text-[var(--text-primary)]">{recStats.total}</span>
+                    <span className="text-xs text-[var(--text-muted)]">recommendations</span>
+                  </div>
+                  {Object.entries(recStats.byStatus || {}).map(([status, count]) => (
+                    <div key={status} className={`px-2.5 py-1.5 rounded-lg text-[11px] font-medium bg-[var(--bg-card)] border border-[var(--border-primary)] ${
+                      status === 'pending' ? 'text-amber-400' : status === 'applied' ? 'text-emerald-400' : status === 'rejected' ? 'text-red-400' : 'text-[var(--text-muted)]'
+                    }`}>
+                      {status}: {count as number}
+                    </div>
+                  ))}
+                </div>
+              )}
+              {/* Rec list */}
+              <div className="space-y-2">
+                {recommendations.map(rec => {
+                  const severityColor = rec.severity === 'high' ? 'text-red-400 bg-red-900/20' : rec.severity === 'medium' ? 'text-amber-400 bg-amber-900/20' : 'text-blue-400 bg-blue-900/20';
+                  const statusColor = rec.status === 'pending' ? 'text-amber-400' : rec.status === 'applied' ? 'text-emerald-400' : rec.status === 'rejected' ? 'text-red-400' : 'text-[var(--text-muted)]';
+                  return (
+                    <div key={rec.id} className="px-4 py-3 bg-[var(--bg-card)] border border-[var(--border-primary)] rounded-xl hover:bg-[var(--bg-primary)]/50 transition-colors">
+                      <div className="flex items-start gap-3">
+                        <div className={`w-8 h-8 rounded-lg flex items-center justify-center shrink-0 ${severityColor}`}>
+                          <Target size={14} />
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-center gap-2">
+                            <span className="text-sm text-[var(--text-primary)] font-medium">{rec.action}</span>
+                            <span className={`text-[10px] font-medium ${statusColor}`}>{rec.status}</span>
+                          </div>
+                          <p className="text-[11px] text-[var(--text-muted)] mt-0.5">{rec.rationale}</p>
+                          <div className="flex items-center gap-3 mt-1.5 flex-wrap">
+                            {rec.target && <span className="text-[10px] text-[var(--text-muted)] truncate max-w-[300px]">{rec.target}</span>}
+                            {rec.agentName && (
+                              <span className="text-[10px] text-indigo-400 flex items-center gap-1">
+                                <Bot size={9} />{rec.agentName}
+                              </span>
+                            )}
+                            <span className="text-[10px] text-[var(--text-muted)]">
+                              {new Date(rec.createdAt).toLocaleDateString([], { month: 'short', day: 'numeric' })} {new Date(rec.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                            </span>
+                          </div>
+                        </div>
+                        <span className={`px-2 py-0.5 rounded text-[10px] font-medium ${severityColor}`}>{rec.severity}</span>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </>
+          )}
+        </div>
+      )}
+
       {/* Stats */}
-      {stats && (
+      {activeTab === 'changes' && stats && (
         <div className="flex items-center gap-3 flex-wrap">
           <div className="flex items-center gap-2 bg-[var(--bg-card)] border border-[var(--border-primary)] rounded-lg px-3 py-2">
             <History size={14} className="text-[var(--text-muted)]" />
@@ -130,6 +231,7 @@ export default function OptimizationsPage() {
         </div>
       )}
 
+      {activeTab === 'changes' && <>
       {/* Filters */}
       <div className="flex items-center gap-3 bg-[var(--bg-card)] border border-[var(--border-primary)] rounded-xl p-3">
         <div className="relative flex-1 max-w-xs">
@@ -235,6 +337,7 @@ export default function OptimizationsPage() {
           ))}
         </div>
       )}
+      </>}
     </div>
   );
 }

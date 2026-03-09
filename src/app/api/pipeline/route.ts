@@ -84,11 +84,24 @@ export async function GET(request: NextRequest) {
       },
     });
 
-    // --- Ad impressions with platform column ---
+    // --- Ad impressions with platform column + date filtering ---
     const impressionWhere: any = {};
     if (platformFilter) impressionWhere.platform = platformFilter;
+    // Apply date range to impression records too (filter by dateFrom/dateTo overlap)
+    if (from || to) {
+      impressionWhere.AND = [];
+      if (from) impressionWhere.AND.push({ dateTo: { gte: new Date(from) } });
+      if (to) {
+        const toEnd = new Date(to);
+        toEnd.setHours(23, 59, 59, 999);
+        impressionWhere.AND.push({ dateFrom: { lte: toEnd } });
+      }
+      if (impressionWhere.AND.length === 0) delete impressionWhere.AND;
+    }
+    // Only load company-level impressions (StackAdapt domains + LinkedIn org IDs)
+    // Exclude __campaign__ records (Google/Reddit) — they don't do company-level reporting
     const allImpressions = await prisma.adImpression.findMany({
-      where: impressionWhere,
+      where: { ...impressionWhere, domain: { not: "__campaign__" } },
       select: { domain: true, campaignId: true, campaignName: true, impressions: true, clicks: true, cost: true, dateFrom: true, dateTo: true, platform: true },
     });
 
@@ -140,7 +153,7 @@ export async function GET(request: NextRequest) {
         result.totalImpressions += imp.impressions;
         result.totalClicks += imp.clicks;
         result.totalCost += imp.cost;
-        const platform = imp.platform || (imp.campaignId?.startsWith("li_") ? "linkedin" : imp.campaignId?.startsWith("rd_") ? "reddit" : "stackadapt");
+        const platform = imp.platform || (imp.campaignId?.startsWith("ga_") ? "google_ads" : imp.campaignId?.startsWith("li_") ? "linkedin" : imp.campaignId?.startsWith("rd_") ? "reddit" : "stackadapt");
         if (!result.byPlatform[platform]) result.byPlatform[platform] = { impressions: 0, clicks: 0, cost: 0 };
         result.byPlatform[platform].impressions += imp.impressions;
         result.byPlatform[platform].clicks += imp.clicks;
@@ -276,8 +289,9 @@ export async function GET(request: NextRequest) {
       .sort((a, b) => b.amount - a.amount)
       .slice(0, 30);
 
-    // Platform totals
+    // Platform totals — include both domain-matched (deal attribution) and campaign-level records
     const platformTotals: Record<string, { impressions: number; clicks: number; cost: number; dealCount: number; pipeline: number }> = {};
+    // First: totals from deal-attributed impressions
     for (const opp of enriched.filter(o => o.isExposed)) {
       for (const [plat, stats] of Object.entries(opp.adPlatforms)) {
         if (!platformTotals[plat]) platformTotals[plat] = { impressions: 0, clicks: 0, cost: 0, dealCount: 0, pipeline: 0 };
@@ -287,6 +301,25 @@ export async function GET(request: NextRequest) {
         platformTotals[plat].dealCount++;
         platformTotals[plat].pipeline += opp.amount;
       }
+    }
+    // Second: add campaign-level records (domain='__campaign__') that aren't in deal attribution
+    // These represent total platform spend/impressions for platforms without domain-level data
+    const campaignLevelImpressions = filteredImpressions.filter(imp => imp.domain === "__campaign__");
+    const campaignLevelByPlatform: Record<string, { impressions: number; clicks: number; cost: number }> = {};
+    for (const imp of campaignLevelImpressions) {
+      const plat = imp.platform || "unknown";
+      if (!campaignLevelByPlatform[plat]) campaignLevelByPlatform[plat] = { impressions: 0, clicks: 0, cost: 0 };
+      campaignLevelByPlatform[plat].impressions += imp.impressions;
+      campaignLevelByPlatform[plat].clicks += imp.clicks;
+      campaignLevelByPlatform[plat].cost += imp.cost;
+    }
+    // Merge campaign-level totals (use campaign-level as the authoritative total for those platforms)
+    for (const [plat, stats] of Object.entries(campaignLevelByPlatform)) {
+      if (!platformTotals[plat]) platformTotals[plat] = { impressions: 0, clicks: 0, cost: 0, dealCount: 0, pipeline: 0 };
+      // Campaign-level records represent the platform total — override impressions/clicks/cost
+      platformTotals[plat].impressions = stats.impressions;
+      platformTotals[plat].clicks = stats.clicks;
+      platformTotals[plat].cost = stats.cost;
     }
 
     return NextResponse.json({

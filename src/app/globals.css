@@ -86,6 +86,64 @@ body {
   transition: background-color 0.2s ease, color 0.2s ease;
 }
 
+/* === PRIORITY BADGES (theme-aware) === */
+[data-theme="dark"] .prio-high { background: rgba(5,150,105,0.25); color: #34d399; border: 1px solid rgba(5,150,105,0.35); }
+[data-theme="dark"] .prio-medium { background: rgba(217,119,6,0.25); color: #fbbf24; border: 1px solid rgba(217,119,6,0.35); }
+[data-theme="dark"] .prio-low { background: rgba(75,85,99,0.4); color: #9ca3af; border: 1px solid rgba(75,85,99,0.4); }
+[data-theme="dark"] .prio-none { background: transparent; color: #4b5563; border: 1px solid rgba(55,65,81,0.3); }
+[data-theme="dark"] .prio-protected { background: rgba(109,40,217,0.3); color: #a78bfa; border: 1px solid rgba(109,40,217,0.35); }
+
+[data-theme="light"] .prio-high { background: rgba(5,150,105,0.12); color: #047857; border: 1px solid rgba(5,150,105,0.25); }
+[data-theme="light"] .prio-medium { background: rgba(217,119,6,0.12); color: #b45309; border: 1px solid rgba(217,119,6,0.25); }
+[data-theme="light"] .prio-low { background: rgba(107,114,128,0.12); color: #4b5563; border: 1px solid rgba(107,114,128,0.2); }
+[data-theme="light"] .prio-none { background: transparent; color: #9ca3af; border: 1px solid rgba(209,213,219,0.5); }
+[data-theme="light"] .prio-protected { background: rgba(109,40,217,0.08); color: #6d28d9; border: 1px solid rgba(109,40,217,0.2); }
+
+/* === STATUS BADGES (theme-aware) === */
+[data-theme="dark"] .status-running { background: rgba(37,99,235,0.2); color: #60a5fa; }
+[data-theme="dark"] .status-done { background: rgba(5,150,105,0.2); color: #34d399; }
+[data-theme="dark"] .status-failed { background: rgba(220,38,38,0.2); color: #f87171; }
+[data-theme="dark"] .status-cancelled { background: rgba(55,65,81,0.6); color: #6b7280; }
+[data-theme="dark"] .severity-critical { color: #f87171; background: rgba(220,38,38,0.2); }
+[data-theme="dark"] .severity-high { color: #fbbf24; background: rgba(217,119,6,0.2); }
+[data-theme="dark"] .severity-medium { color: #60a5fa; background: rgba(37,99,235,0.2); }
+[data-theme="dark"] .severity-low { color: #9ca3af; background: rgba(55,65,81,0.6); }
+[data-theme="dark"] .toast-success { background: rgba(5,150,105,0.9); border: 1px solid rgba(5,150,105,0.5); color: #d1fae5; }
+[data-theme="dark"] .toast-error { background: rgba(185,28,28,0.9); border: 1px solid rgba(185,28,28,0.5); color: #fecaca; }
+[data-theme="dark"] .btn-accent-violet { background: rgba(109,40,217,0.2); border: 1px solid rgba(109,40,217,0.3); color: #a78bfa; }
+[data-theme="dark"] .btn-accent-violet:hover { background: rgba(109,40,217,0.35); }
+[data-theme="dark"] .btn-accent-emerald { background: rgba(5,150,105,0.15); border: 1px solid rgba(5,150,105,0.25); color: #34d399; }
+[data-theme="dark"] .btn-accent-emerald:hover { background: rgba(5,150,105,0.25); }
+[data-theme="dark"] .btn-accent-red { background: rgba(220,38,38,0.15); border: 1px solid rgba(220,38,38,0.25); color: #f87171; }
+[data-theme="dark"] .btn-accent-red:hover { background: rgba(220,38,38,0.25); }
+[data-theme="dark"] .badge-amber { background: rgba(217,119,6,0.2); color: #fbbf24; }
+[data-theme="dark"] .text-accent-violet { color: #a78bfa; }
+[data-theme="dark"] .text-accent-amber { color: #fbbf24; }
+[data-theme="dark"] .text-accent-emerald { color: #34d399; }
+[data-theme="dark"] .text-accent-red { color: #f87171; }
+
+[data-theme="light"] .status-running { background: rgba(37,99,235,0.08); color: #1d4ed8; }
+[data-theme="light"] .status-done { background: rgba(5,150,105,0.08); color: #047857; }
+[data-theme="light"] .status-failed { background: rgba(220,38,38,0.08); color: #b91c1c; }
+[data-theme="light"] .status-cancelled { background: rgba(107,114,128,0.1); color: #4b5563; }
+[data-theme="light"] .severity-critical { color: #b91c1c; background: rgba(220,38,38,0.08); }
+[data-theme="light"] .severity-high { color: #b45309; background: rgba(217,119,6,0.08); }
+[data-theme="light"] .severity-medium { color: #1d4ed8; background: rgba(37,99,235,0.08); }
+[data-theme="light"] .severity-low { color: #4b5563; background: rgba(107,114,128,0.08); }
+[data-theme="light"] .toast-success { background: rgba(5,150,105,0.95); border: 1px solid rgba(5,150,105,0.5); color: #fff; }
+[data-theme="light"] .toast-error { background: rgba(185,28,28,0.95); border: 1px solid rgba(185,28,28,0.5); color: #fff; }
+[data-theme="light"] .btn-accent-violet { background: rgba(109,40,217,0.08); border: 1px solid rgba(109,40,217,0.2); color: #6d28d9; }
+[data-theme="light"] .btn-accent-violet:hover { background: rgba(109,40,217,0.15); }
+[data-theme="light"] .btn-accent-emerald { background: rgba(5,150,105,0.08); border: 1px solid rgba(5,150,105,0.2); color: #047857; }
+[data-theme="light"] .btn-accent-emerald:hover { background: rgba(5,150,105,0.12); }
+[data-theme="light"] .btn-accent-red { background: rgba(220,38,38,0.08); border: 1px solid rgba(220,38,38,0.2); color: #b91c1c; }
+[data-theme="light"] .btn-accent-red:hover { background: rgba(220,38,38,0.12); }
+[data-theme="light"] .badge-amber { background: rgba(217,119,6,0.08); color: #b45309; }
+[data-theme="light"] .text-accent-violet { color: #6d28d9; }
+[data-theme="light"] .text-accent-amber { color: #b45309; }
+[data-theme="light"] .text-accent-emerald { color: #047857; }
+[data-theme="light"] .text-accent-red { color: #b91c1c; }
+
 /* === SIDEBAR ACTIVE STATE === */
 .sidebar-active {
   background: var(--accent-bg);

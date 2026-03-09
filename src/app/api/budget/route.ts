@@ -1,110 +1,181 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 
-// GET: Fetch budget plans and calculate pacing
+// GET: Budget/spend data from synced AdImpression + Campaign tables (fast, DB-only)
 export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
-  const year = parseInt(searchParams.get("year") || new Date().getFullYear().toString());
-  const month = searchParams.get("month") ? parseInt(searchParams.get("month")!) : null;
+  const now = new Date();
+  const defaultFrom = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}-01`;
+  const defaultTo = now.toISOString().split("T")[0];
+
+  const from = searchParams.get("from") || defaultFrom;
+  const to = searchParams.get("to") || defaultTo;
+  const platformFilter = searchParams.get("platform") || "all";
+  const fromDate = new Date(from);
+  const toDate = new Date(to + "T23:59:59.999Z");
 
   try {
-    // Get budget plans
-    const whereClause: any = { year };
-    if (month) whereClause.month = month;
+    // Parallel queries: impressions aggregated + campaign snapshot data + budget plans + changes
+    const platformWhere = platformFilter !== "all" ? `AND platform = '${platformFilter}'` : "";
 
-    const budgetPlans = await prisma.budgetPlan.findMany({
-      where: whereClause,
-      orderBy: [{ month: "asc" }, { channel: "asc" }],
-    });
+    const [impByPlatform, impByCampaign, budgetPlans, recentChanges, campaigns] = await Promise.all([
+      // Aggregated by platform
+      prisma.$queryRawUnsafe<{ platform: string; spend: number; impressions: number; clicks: number; conversions: number; campaigns: number }[]>(`
+        SELECT platform,
+               ROUND(SUM(cost)::numeric, 2)::float AS spend,
+               SUM(impressions)::int AS impressions,
+               SUM(clicks)::int AS clicks,
+               SUM(conversions)::int AS conversions,
+               COUNT(DISTINCT "campaignName")::int AS campaigns
+        FROM "AdImpression"
+        WHERE "dateFrom" <= $1 AND "dateTo" >= $2 ${platformWhere}
+        GROUP BY platform
+        ORDER BY SUM(cost) DESC
+      `, toDate, fromDate),
 
-    // Get actual spend from campaigns for the period
-    const campaigns = await prisma.campaign.findMany({
-      where: {
-        status: { in: ["live", "active", "enabled", "ENABLED", "ACTIVE", "LIVE"] },
-      },
-      select: {
-        platform: true,
-        spend: true,
-        funnelStage: true,
-        region: true,
-      },
-    });
+      // Top campaigns by spend
+      prisma.$queryRawUnsafe<{ campaignName: string; platform: string; spend: number; impressions: number; clicks: number; conversions: number }[]>(`
+        SELECT "campaignName", platform,
+               ROUND(SUM(cost)::numeric, 2)::float AS spend,
+               SUM(impressions)::int AS impressions,
+               SUM(clicks)::int AS clicks,
+               SUM(conversions)::int AS conversions
+        FROM "AdImpression"
+        WHERE "dateFrom" <= $1 AND "dateTo" >= $2 ${platformWhere}
+        GROUP BY "campaignName", platform
+        ORDER BY SUM(cost) DESC
+        LIMIT 20
+      `, toDate, fromDate),
 
-    // Calculate actual spend by channel
-    const actualByChannel: Record<string, number> = {};
-    campaigns.forEach((c) => {
-      const channel = c.platform;
-      actualByChannel[channel] = (actualByChannel[channel] || 0) + (c.spend || 0);
-    });
+      // Budget plans
+      prisma.budgetPlan.findMany({
+        where: {
+          OR: [
+            { year: fromDate.getFullYear(), month: { gte: fromDate.getMonth() + 1 } },
+            { year: toDate.getFullYear(), month: { lte: toDate.getMonth() + 1 } },
+          ],
+        },
+        orderBy: [{ year: "asc" }, { month: "asc" }],
+      }),
 
-    // Enrich budget plans with pacing info
-    // NOTE: Campaign spend is rolling 30-day, not calendar month
-    // So we compare against monthly planned budget (close enough)
-    const enrichedPlans = budgetPlans.map((plan) => {
-      const actual = actualByChannel[plan.channel] || 0;
-      const daysInMonth = new Date(plan.year, plan.month, 0).getDate();
-      const today = new Date();
-      const isCurrentMonth = today.getMonth() + 1 === plan.month && today.getFullYear() === plan.year;
-      const currentDay = isCurrentMonth ? today.getDate() : (plan.month < today.getMonth() + 1 ? daysInMonth : 0);
-      
-      // Since spend is 30-day rolling (not calendar month), pacing = utilization
-      // For current month, estimate based on days elapsed
-      const monthProgress = isCurrentMonth ? currentDay / daysInMonth : 1;
-      const expectedSpend = plan.planned * monthProgress;
-      
-      // Estimate current month's portion of 30-day spend
-      // Assumption: spend is roughly even, so ~(currentDay/30) of 30-day spend is this month
-      const estimatedMonthSpend = isCurrentMonth ? actual * (currentDay / 30) : actual;
-      
-      const pacePercentage = expectedSpend > 0 ? (estimatedMonthSpend / expectedSpend) * 100 : 0;
-      const utilization = plan.planned > 0 ? (actual / plan.planned) * 100 : 0;
+      // Recent budget changes
+      prisma.budgetChange.findMany({
+        where: { createdAt: { gte: fromDate, lte: toDate } },
+        orderBy: { createdAt: "desc" },
+        take: 20,
+      }),
 
-      return {
-        ...plan,
-        actual,                    // 30-day rolling spend
-        estimatedMonthSpend,       // Estimated current month spend
-        expectedSpend,             // What we should have spent by now
-        pacePercentage,            // Are we on track for this month?
-        daysElapsed: currentDay,
-        daysInMonth,
-        monthProgress: monthProgress * 100,
-        utilization,               // 30-day spend vs monthly plan
-      };
-    });
+      // Campaign names for parsing (only campaigns that have impressions in range)
+      prisma.$queryRawUnsafe<{ campaignName: string; platform: string; spend: number; impressions: number; clicks: number; conversions: number }[]>(`
+        SELECT "campaignName", platform,
+               ROUND(SUM(cost)::numeric, 2)::float AS spend,
+               SUM(impressions)::int AS impressions,
+               SUM(clicks)::int AS clicks,
+               SUM(conversions)::int AS conversions
+        FROM "AdImpression"
+        WHERE "dateFrom" <= $1 AND "dateTo" >= $2 ${platformWhere}
+        GROUP BY "campaignName", platform
+      `, toDate, fromDate),
+    ]);
 
-    // Calculate totals
-    const totalPlanned = budgetPlans.reduce((sum, p) => sum + p.planned, 0);
-    const totalActual = Object.values(actualByChannel).reduce((sum, v) => sum + v, 0);
+    // Parse campaign names for breakdowns
+    const { parseCampaignName } = await import("@/lib/parseCampaignName");
+    const breakdowns = { product: {} as Record<string, any>, funnel: {} as Record<string, any>, region: {} as Record<string, any> };
 
-    // Get recent budget changes
-    const recentChanges = await prisma.budgetChange.findMany({
-      orderBy: { createdAt: "desc" },
-      take: 10,
-    });
+    for (const c of campaigns) {
+      const parsed = parseCampaignName(c.campaignName);
+      for (const [dimKey, dimVal] of [
+        ["product", parsed.product || "Other"],
+        ["funnel", parsed.funnelStage || "Other"],
+        ["region", parsed.region || "Other"],
+      ] as [string, string][]) {
+        const map = breakdowns[dimKey as keyof typeof breakdowns];
+        if (!map[dimVal]) map[dimVal] = { spend: 0, impressions: 0, clicks: 0, conversions: 0, count: 0 };
+        map[dimVal].spend += c.spend || 0;
+        map[dimVal].impressions += c.impressions || 0;
+        map[dimVal].clicks += c.clicks || 0;
+        map[dimVal].conversions += c.conversions || 0;
+        map[dimVal].count += 1;
+      }
+    }
+
+    const mapToArray = (m: Record<string, any>) =>
+      Object.entries(m).map(([name, d]) => ({ name, ...d })).sort((a: any, b: any) => b.spend - a.spend);
+
+    const totalSpend = impByPlatform.reduce((s, p) => s + p.spend, 0);
+    const totalImpressions = impByPlatform.reduce((s, p) => s + p.impressions, 0);
+    const totalClicks = impByPlatform.reduce((s, p) => s + p.clicks, 0);
+    const totalConversions = impByPlatform.reduce((s, p) => s + (p.conversions || 0), 0);
+    const daysInRange = Math.max(1, Math.ceil((toDate.getTime() - fromDate.getTime()) / 86400000));
+    const dailyRate = totalSpend / daysInRange;
+    const totalPlanned = budgetPlans.reduce((s, p) => s + p.planned, 0);
 
     return NextResponse.json({
-      plans: enrichedPlans,
+      dateFrom: from,
+      dateTo: to,
+      daysInRange,
       totals: {
-        planned: totalPlanned,
-        actual: totalActual,
-        utilization: totalPlanned > 0 ? (totalActual / totalPlanned) * 100 : 0,
+        spend: totalSpend,
+        impressions: totalImpressions,
+        clicks: totalClicks,
+        conversions: totalConversions,
+        dailyRate: Math.round(dailyRate * 100) / 100,
+        ctr: totalImpressions > 0 ? Math.round((totalClicks / totalImpressions) * 10000) / 100 : 0,
+        cpc: totalClicks > 0 ? Math.round((totalSpend / totalClicks) * 100) / 100 : 0,
+        cpa: totalConversions > 0 ? Math.round((totalSpend / totalConversions) * 100) / 100 : 0,
+        campaignCount: campaigns.length,
       },
-      actualByChannel,
+      pacing: {
+        totalPlanned,
+        totalSpend,
+        utilization: totalPlanned > 0 ? Math.round((totalSpend / totalPlanned) * 10000) / 100 : 0,
+        dailyRate: Math.round(dailyRate * 100) / 100,
+        projectedMonthly: Math.round(dailyRate * 30 * 100) / 100,
+      },
+      byPlatform: impByPlatform.map(p => ({
+        name: p.platform,
+        platform: p.platform,
+        spend: p.spend,
+        impressions: p.impressions,
+        clicks: p.clicks,
+        conversions: p.conversions || 0,
+        count: p.campaigns,
+        campaignCount: p.campaigns,
+      })),
+      byProduct: mapToArray(breakdowns.product),
+      byFunnel: mapToArray(breakdowns.funnel),
+      byRegion: mapToArray(breakdowns.region),
+      topCampaigns: impByCampaign.map(c => ({
+        name: c.campaignName,
+        campaignId: c.campaignName,
+        platform: c.platform,
+        status: "active",
+        spend: c.spend,
+        impressions: c.impressions,
+        clicks: c.clicks,
+        conversions: c.conversions || 0,
+        ctr: c.impressions > 0 ? Math.round((c.clicks / c.impressions) * 10000) / 100 : 0,
+        avgCpc: c.clicks > 0 ? Math.round((c.spend / c.clicks) * 100) / 100 : 0,
+        cpa: (c.conversions || 0) > 0 ? Math.round((c.spend / c.conversions) * 100) / 100 : 0,
+      })),
+      budgetPlans,
       recentChanges,
     });
-  } catch (error) {
+  } catch (error: any) {
     console.error("Error fetching budget:", error);
-    return NextResponse.json({ error: "Failed to fetch budget data" }, { status: 500 });
+    return NextResponse.json(
+      { error: "Failed to fetch budget data", detail: error?.message },
+      { status: 500 }
+    );
   }
 }
 
-// POST: Create or update budget plan
+// POST: Create or update budget plan (keep existing)
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
     const { year, month, channel, region, funnelStage, planned, notes } = body;
 
-    // Upsert budget plan
     const plan = await prisma.budgetPlan.upsert({
       where: {
         year_month_channel_region_funnelStage: {
@@ -126,7 +197,7 @@ export async function POST(req: NextRequest) {
   }
 }
 
-// DELETE: Remove a budget plan
+// DELETE: Remove a budget plan (keep existing)
 export async function DELETE(req: NextRequest) {
   const { searchParams } = new URL(req.url);
   const id = searchParams.get("id");

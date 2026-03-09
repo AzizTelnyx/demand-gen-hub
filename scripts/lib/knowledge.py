@@ -152,6 +152,12 @@ def load_knowledge_for_agent(agent_type):
             "telnyx-strategy.md",
             "product-groups.md",
         ],
+        "google_ads_optimizer": [
+            "telnyx-strategy.md",
+            "product-groups.md",
+            "brand/brand-messaging-q1-2026.md",
+            "standards/google-ads-rsa-best-practices.md",
+        ],
         "spend_report": [
             "telnyx-strategy.md",
             "product-groups.md",

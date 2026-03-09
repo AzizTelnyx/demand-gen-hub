@@ -44,6 +44,43 @@ export async function GET(request: NextRequest) {
     const platforms = [...new Set(allRecent.map(c => c.platform))].sort();
     const sources = [...new Set(allRecent.map(c => c.source))].sort();
 
+    // === Agent Recommendations ===
+    const recommendations = await prisma.recommendation.findMany({
+      orderBy: { createdAt: "desc" },
+      take: 100,
+      include: {
+        agentRun: {
+          select: { id: true, status: true, startedAt: true, agent: { select: { slug: true, name: true } } },
+        },
+      },
+    });
+
+    const recsFormatted = recommendations.map(r => ({
+      id: r.id,
+      type: r.type,
+      severity: r.severity,
+      target: r.target,
+      targetId: r.targetId,
+      action: r.action,
+      rationale: r.rationale,
+      impact: r.impact ? (typeof r.impact === "string" ? (() => { try { return JSON.parse(r.impact as string); } catch { return r.impact; } })() : r.impact) : null,
+      status: r.status,
+      appliedAt: r.appliedAt?.toISOString() ?? null,
+      createdAt: r.createdAt.toISOString(),
+      agentName: r.agentRun?.agent?.name ?? null,
+      agentSlug: r.agentRun?.agent?.slug ?? null,
+      agentRunId: r.agentRunId,
+    }));
+
+    const recsByType: Record<string, number> = {};
+    const recsBySeverity: Record<string, number> = {};
+    const recsByStatus: Record<string, number> = {};
+    recsFormatted.forEach(r => {
+      recsByType[r.type] = (recsByType[r.type] || 0) + 1;
+      recsBySeverity[r.severity] = (recsBySeverity[r.severity] || 0) + 1;
+      recsByStatus[r.status] = (recsByStatus[r.status] || 0) + 1;
+    });
+
     return NextResponse.json({
       changes: changes.map(c => ({
         ...c,
@@ -52,6 +89,8 @@ export async function GET(request: NextRequest) {
       })),
       stats: { total: allRecent.length, byType, byPlatform, bySource },
       filters: { changeTypes, platforms, sources },
+      recommendations: recsFormatted,
+      recStats: { total: recsFormatted.length, byType: recsByType, bySeverity: recsBySeverity, byStatus: recsByStatus },
     });
   } catch (error) {
     console.error("Optimizations API error:", error);

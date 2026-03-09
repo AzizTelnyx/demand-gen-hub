@@ -6,6 +6,25 @@ const fs = require("fs");
 const os = require("os");
 const path = require("path");
 
+const HOME = process.env.HOME || "/Users/azizalsinafi";
+
+// Types that can be auto-applied via API
+const EXECUTABLE_TYPES: Record<string, string> = {
+  "add-negative": "Block this search term as a negative keyword",
+  "community_removal": "Remove this subreddit community from ad targeting",
+  "frequency_cap": "Adjust the frequency cap on this campaign",
+  "pause_keyword": "Pause this keyword",
+  "budget_change": "Adjust campaign budget",
+  "device_bid": "Adjust device bid modifier",
+  "geo_bid": "Adjust geographic bid modifier",
+};
+
+// Types that are acknowledge-only (no API action, just mark as reviewed)
+const ACKNOWLEDGE_TYPES = [
+  "review", "audit", "creative_fatigue", "landing_page",
+  "utm_issue", "audience_overlap", "saturation",
+];
+
 /**
  * POST /api/agents/recommendations/apply
  * Apply or reject a pending recommendation
@@ -31,41 +50,64 @@ export async function POST(request: NextRequest) {
         where: { id },
         data: { status: action === "reject" ? "rejected" : "dismissed" },
       });
-      return NextResponse.json({ ok: true, status: action === "reject" ? "rejected" : "dismissed" });
+      return NextResponse.json({
+        ok: true,
+        status: action === "reject" ? "rejected" : "dismissed",
+        message: action === "reject" ? "Rejected — no changes made" : "Dismissed",
+      });
     }
 
     if (action === "approve") {
-      // Only add-negative type has a real apply path
-      if (rec.type !== "add-negative") {
-        return NextResponse.json({ error: `Cannot auto-apply type: ${rec.type}. Only negative keywords are supported.` }, { status: 400 });
-      }
-
       let metadata: any = {};
       try { metadata = JSON.parse(rec.impact || "{}"); } catch {}
 
-      const searchTerm = metadata.search_term;
-      const campaignId = metadata.campaign_id || rec.targetId;
-      const matchType = metadata.match_type || "EXACT";
-
-      if (!searchTerm || !campaignId) {
-        return NextResponse.json({ error: "Missing search_term or campaign_id in metadata" }, { status: 400 });
-      }
-
-      const result = await applyNegativeKeyword(searchTerm, String(campaignId), matchType);
-
-      if (result.success) {
+      // Check if this is an acknowledge-only type
+      const isAcknowledge = ACKNOWLEDGE_TYPES.some(t => rec.type.includes(t));
+      
+      if (isAcknowledge) {
         await prisma.recommendation.update({
           where: { id },
-          data: {
-            status: "applied",
-            appliedAt: new Date(),
-            impact: JSON.stringify({ ...metadata, resource_name: result.resourceName }),
-          },
+          data: { status: "acknowledged", appliedAt: new Date() },
         });
-        return NextResponse.json({ ok: true, status: "applied", resourceName: result.resourceName });
-      } else {
-        return NextResponse.json({ error: result.error }, { status: 500 });
+        return NextResponse.json({
+          ok: true,
+          status: "acknowledged",
+          message: "Acknowledged — marked as reviewed. No automated action taken.",
+        });
       }
+
+      // Executable types
+      if (rec.type === "add-negative") {
+        return await handleNegativeKeyword(rec, metadata);
+      }
+
+      if (rec.type === "community_removal") {
+        return await handleCommunityRemoval(rec, metadata);
+      }
+
+      // For other executable types, mark as approved (agent will pick up on next run)
+      if (EXECUTABLE_TYPES[rec.type]) {
+        await prisma.recommendation.update({
+          where: { id },
+          data: { status: "approved", appliedAt: new Date() },
+        });
+        return NextResponse.json({
+          ok: true,
+          status: "approved",
+          message: `Approved — will be applied on next agent run. Action: ${EXECUTABLE_TYPES[rec.type]}`,
+        });
+      }
+
+      // Unknown type — still allow approval but flag it
+      await prisma.recommendation.update({
+        where: { id },
+        data: { status: "approved", appliedAt: new Date() },
+      });
+      return NextResponse.json({
+        ok: true,
+        status: "approved",
+        message: `Approved (type: ${rec.type}). No automated executor available — agent will handle on next run.`,
+      });
     }
 
     return NextResponse.json({ error: "Invalid action" }, { status: 400 });
@@ -75,12 +117,56 @@ export async function POST(request: NextRequest) {
   }
 }
 
+async function handleNegativeKeyword(rec: any, metadata: any) {
+  const searchTerm = metadata.search_term;
+  const campaignId = metadata.campaign_id || rec.targetId;
+  const matchType = metadata.match_type || "EXACT";
+
+  if (!searchTerm || !campaignId) {
+    return NextResponse.json({ error: "Missing search_term or campaign_id in metadata" }, { status: 400 });
+  }
+
+  const result = await applyNegativeKeyword(searchTerm, String(campaignId), matchType);
+
+  if (result.success) {
+    await prisma.recommendation.update({
+      where: { id: rec.id },
+      data: {
+        status: "applied",
+        appliedAt: new Date(),
+        impact: JSON.stringify({ ...metadata, resource_name: result.resourceName }),
+      },
+    });
+    return NextResponse.json({
+      ok: true,
+      status: "applied",
+      message: `Blocked "${searchTerm}" (${matchType}) as negative keyword in Google Ads.`,
+      resourceName: result.resourceName,
+    });
+  } else {
+    return NextResponse.json({ error: result.error }, { status: 500 });
+  }
+}
+
+async function handleCommunityRemoval(rec: any, metadata: any) {
+  // Reddit community removal — mark as approved, agent applies on next run
+  // Reddit API doesn't have a simple "remove community" endpoint we can call inline
+  await prisma.recommendation.update({
+    where: { id: rec.id },
+    data: { status: "approved", appliedAt: new Date() },
+  });
+  return NextResponse.json({
+    ok: true,
+    status: "approved",
+    message: `Approved — community will be removed from targeting on next Reddit agent run.`,
+  });
+}
+
 async function applyNegativeKeyword(
   searchTerm: string,
   campaignId: string,
   matchType: string
 ): Promise<{ success: boolean; resourceName?: string; error?: string }> {
-  const HOME = process.env.HOME || "/Users/azizalsinafi";
   const scriptPath = path.join(os.tmpdir(), `nk-apply-${Date.now()}.py`);
 
   const script = `
@@ -125,7 +211,6 @@ except Exception as e:
       `source ${HOME}/.venv/bin/activate && python3 ${scriptPath}`,
       { encoding: "utf-8", timeout: 30000, shell: "/bin/zsh" }
     );
-    // Clean up temp file
     try { execSync(`rm ${scriptPath}`, { shell: "/bin/zsh" }); } catch {}
     return JSON.parse(result.trim());
   } catch (error: any) {

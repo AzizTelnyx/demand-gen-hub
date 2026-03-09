@@ -42,3 +42,10 @@ next-env.d.ts
 
 /src/generated/prisma
 .env*.local
+
+# backups
+backups/*.dump
+backups/.git
+
+# python
+__pycache__/

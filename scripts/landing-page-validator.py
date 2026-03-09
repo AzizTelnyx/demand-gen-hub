@@ -1,19 +1,10 @@
 #!/usr/bin/env python3
 """
-Landing Page & UTM Validator
+Landing Page & UTM Validator - Focused on broken URLs, not missing UTMs
+Scans only production campaigns (excludes test, internal, partner)
+Level 2 — never auto-executes
 
-Validates landing pages and UTM parameters for all live campaigns across all platforms.
-
-Checks:
-1. UTM parameters present and correctly formatted
-2. UTM source matches platform (google_ads → utm_source=google)
-3. UTM campaign matches naming convention
-4. Landing page returns 200 OK (no 404s or redirects)
-5. Landing page relevance to campaign product/funnel
-6. No UTMs on internal page links
-
-Platforms: Google Ads, LinkedIn, StackAdapt, Reddit
-Level: Recommendations only (no auto-execution — URLs are too risky to change automatically)
+Run: python scripts/landing-page-validator.py [--dry-run]
 """
 
 import os
@@ -23,435 +14,344 @@ import argparse
 import re
 import urllib.request
 from urllib.parse import urlparse, parse_qs
-from datetime import datetime, timedelta
-from typing import Dict, List, Any, Optional
+from datetime import datetime
+from typing import Dict, List, Any
 import ssl
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), 'lib'))
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), 'platforms'))
 
-from agent_base import BaseAgent, CampaignContext
+from agent_base import BaseAgent
+from platforms import get_connector
 
-# Disable SSL verification for some edge cases
 ssl_context = ssl.create_default_context()
 ssl_context.check_hostname = False
 ssl_context.verify_mode = ssl.CERT_NONE
 
+HTTP_TIMEOUT = 10
+
+# Campagins to skip
+SKIP_NAME_PATTERNS = [
+    'test', 'internal', 'partner', 'partnership', 'brand da', 
+    'clawdtalk', 'clawd', 'employee'
+]
+SKIP_IF_UTM_ISSUES_ONLY = True  # Only report broken URLs, not missing UTMs
+
 
 class LandingPageValidator(BaseAgent):
-    """Agent for validating landing pages and UTM parameters."""
-    
-    SLUG = "landing-page-validator"
-    NAME = "Landing Page & UTM Validator"
-    DESCRIPTION = "Validates landing pages and UTM parameters for all live campaigns"
-    PLATFORM = "all"
-    SCHEDULE = "Daily 6 AM PST"
-    
-    # UTM parameter rules
-    PLATFORM_UTM_SOURCES = {
-        'google_ads': 'google',
-        'linkedin': 'linkedin',
-        'stackadapt': 'stackadapt',
-        'reddit': 'reddit',
-    }
-    
-    REQUIRED_UTMS = ['utm_source', 'utm_medium', 'utm_campaign']
-    OPTIONAL_UTMS = ['utm_content', 'utm_term']
-    
-    # HTTP timeout for landing page checks
-    HTTP_TIMEOUT = 10
-    MAX_REDIRECTS = 3
-    
-    def __init__(self, dry_run: bool = False):
-        super().__init__(
-            slug=self.SLUG,
-            name=self.NAME,
-            dry_run=dry_run
-        )
-        self.dry_run = dry_run
-        
-    def load_knowledge(self) -> Dict[str, Any]:
-        """Load landing page and UTM standards."""
-        knowledge = {}
-        
+    AGENT_SLUG = "landing-page-validator"
+    AGENT_NAME = "🌐 Landing Page Validator"
+    KNOWLEDGE_FILES = ["telnyx-strategy.md"]
+
+    def __init__(self, dry_run=False):
+        super().__init__(dry_run=dry_run)
+        self.url_results = []
+        self.seen_campaigns = set()  # Track checked campaigns to avoid duplicates
+
+    def should_skip_campaign(self, name: str) -> bool:
+        """Skip test, internal, partner campaigns."""
+        name_lower = name.lower()
+        for pattern in SKIP_NAME_PATTERNS:
+            if pattern in name_lower:
+                return True
+        return False
+
+    def analyze(self):
+        """Check URLs across all platforms."""
+        print("\n  [Google Ads] Checking production ad URLs...")
         try:
-            # Load product info for landing page validation
-            products = self.knowledge.get('product-groups', 'product-groups')
-            knowledge['products'] = products
-        except:
-            pass
-            
-        return knowledge
-        
-    def validate_url(self, url: str, campaign_context: Dict) -> Dict:
-        """Validate a URL — check status and extract UTMs."""
-        result = {
-            'url': url,
-            'valid': True,
-            'issues': [],
-            'utm_params': {},
-            'status_code': None,
-            'redirect_chain': [],
-            'final_url': url,
-        }
-        
-        if not url or not url.startswith('http'):
-            result['valid'] = False
-            result['issues'].append("Invalid or missing URL")
-            return result
-            
-        # Parse URL
-        try:
-            parsed = urlparse(url)
-            utm_params = parse_qs(parsed.query)
-            # Flatten single-value params
-            result['utm_params'] = {k: v[0] if len(v) == 1 else v for k, v in utm_params.items()}
+            self._check_google_ads()
         except Exception as e:
-            result['valid'] = False
-            result['issues'].append(f"URL parse error: {str(e)}")
+            print(f"    Error: {e}")
+        print("  [StackAdapt] Checking creative URLs...")
+        self._check_stackadapt()
+        print("  [Reddit] Checking campaign URLs...")
+        self._check_reddit()
+        print(f"\n  Total broken URLs found: {len(self.url_results)}")
+
+    def execute(self):
+        """Record findings as recommendations (never auto-execute)."""
+        for finding in self.url_results:
+            self.record_recommendation(
+                type="landing_page",
+                target=finding.get('campaign_name', 'Unknown'),
+                action=f"Fix broken URL: {finding['issues'][0][:50]}",
+                rationale=finding.get('rationale', 'Landing page error detected'),
+                severity='high',
+                platform=finding.get('platform', ''),
+                campaign_id=finding.get('campaign_id', ''),
+                campaign_name=finding.get('campaign_name', ''),
+            )
+
+    def _check_url(self, url: str) -> Dict:
+        """Check a URL for HTTP status — HEAD request first, fallback to GET."""
+        result = {'url': url, 'status_code': None, 'issues': [], 'final_url': url}
+        if not url or not url.startswith('http'):
+            result['issues'].append('Invalid URL')
             return result
-            
-        # Check HTTP status
+
+        # Try HEAD first
         try:
             req = urllib.request.Request(
                 url,
                 headers={'User-Agent': 'Mozilla/5.0 (compatible; TelnyxBot/1.0)'},
                 method='HEAD'
             )
-            
-            redirect_count = 0
-            current_url = url
-            
-            while redirect_count < self.MAX_REDIRECTS:
-                try:
-                    with urllib.request.urlopen(
-                        req, 
-                        timeout=self.HTTP_TIMEOUT,
-                        context=ssl_context
-                    ) as response:
-                        result['status_code'] = response.getcode()
-                        result['final_url'] = response.geturl()
-                        break
-                except urllib.error.HTTPError as e:
-                    result['status_code'] = e.code
-                    if e.code in (301, 302, 307, 308):
-                        redirect_count += 1
-                        result['redirect_chain'].append(current_url)
-                        if 'Location' in e.headers:
-                            current_url = e.headers['Location']
-                            req = urllib.request.Request(
-                                current_url,
-                                headers={'User-Agent': 'Mozilla/5.0 (compatible; TelnyxBot/1.0)'},
-                                method='HEAD'
-                            )
-                        else:
-                            break
-                    else:
-                        result['valid'] = False
-                        result['issues'].append(f"HTTP {e.code} error")
-                        break
-                        
-            if redirect_count >= self.MAX_REDIRECTS:
-                result['issues'].append(f"Too many redirects ({self.MAX_REDIRECTS}+)")
-                
-        except Exception as e:
-            result['valid'] = False
-            result['issues'].append(f"Connection error: {str(e)}")
-            
-        return result
-        
-    def validate_utms(self, utm_params: Dict, platform: str, campaign_context: Dict) -> List[str]:
-        """Validate UTM parameters against standards."""
-        issues = []
-        
-        # Check required params
-        for param in self.REQUIRED_UTMS:
-            if param not in utm_params:
-                issues.append(f"Missing {param}")
-                
-        # Check utm_source matches platform
-        expected_source = self.PLATFORM_UTM_SOURCES.get(platform)
-        actual_source = utm_params.get('utm_source', '').lower()
-        
-        if expected_source and actual_source:
-            if expected_source not in actual_source and actual_source not in expected_source:
-                issues.append(f"utm_source mismatch: expected '{expected_source}', got '{actual_source}'")
-        elif not actual_source and 'utm_source' in utm_params:
-            issues.append("utm_source is empty")
-            
-        # Check utm_campaign matches naming convention
-        campaign_name = utm_params.get('utm_campaign', '')
-        if campaign_name:
-            # Campaign name should be: YYYYMM_FUNNEL_PRODUCT_FORMAT_REGION
-            if not re.match(r'^\d{6}_[A-Z]+_[A-Z]', campaign_name):
-                issues.append(f"utm_campaign doesn't match naming convention: {campaign_name}")
-                
-        # Check utm_medium is valid
-        medium = utm_params.get('utm_medium', '').lower()
-        valid_mediums = ['cpc', 'ppc', 'paidsearch', 'paidsocial', 'display', 'programmatic', 'social']
-        if medium and medium not in valid_mediums:
-            issues.append(f"Unusual utm_medium: '{medium}'")
-            
-        return issues
-        
-    def check_internal_links(self, url: str) -> List[str]:
-        """Check if internal links on landing page have UTMs (they shouldn't)."""
-        issues = []
-        
+            with urllib.request.urlopen(req, timeout=HTTP_TIMEOUT, context=ssl_context) as resp:
+                result['status_code'] = resp.getcode()
+                result['final_url'] = resp.geturl()
+                if resp.getcode() >= 400:
+                    result['issues'].append(f'HTTP {resp.getcode()}')
+                return result
+        except urllib.error.HTTPError as e:
+            # 405 = Method not allowed, try GET
+            if e.code == 405:
+                pass
+            elif e.code >= 400:
+                result['status_code'] = e.code
+                result['issues'].append(f'HTTP {e.code}')
+                return result
+        except Exception:
+            pass
+
+        # Fallback to GET for sites that don't support HEAD
         try:
             req = urllib.request.Request(
                 url,
                 headers={'User-Agent': 'Mozilla/5.0 (compatible; TelnyxBot/1.0)'}
             )
-            
-            with urllib.request.urlopen(
-                req, 
-                timeout=self.HTTP_TIMEOUT,
-                context=ssl_context
-            ) as response:
-                content = response.read().decode('utf-8', errors='ignore')
-                
-                # Find all links on page
-                links = re.findall(r'href=["\'](.*?)["\']', content)
-                
-                # Check for UTMs on internal links
-                base_domain = urlparse(url).netloc
-                
-                for link in links[:20]:  # Check first 20 links
-                    if link.startswith('/') or base_domain in link:
-                        if 'utm_' in link:
-                            issues.append(f"Internal link has UTM: {link}")
-                            
+            with urllib.request.urlopen(req, timeout=HTTP_TIMEOUT, context=ssl_context) as resp:
+                result['status_code'] = resp.getcode()
+                result['final_url'] = resp.geturl()
+                if resp.getcode() >= 400:
+                    result['issues'].append(f'HTTP {resp.getcode()}')
+        except urllib.error.HTTPError as e:
+            result['status_code'] = e.code
+            result['issues'].append(f'HTTP {e.code}')
         except Exception as e:
-            issues.append(f"Could not check internal links: {str(e)}")
-            
-        return issues
-        
-    def analyze_google_ads(self) -> List[Dict]:
-        """Analyze Google Ads campaigns."""
-        findings = []
-        
+            result['issues'].append(f'Error: {str(e)[:50]}')
+
+        return result
+
+    def _check_google_ads(self):
+        """Check Google Ads ad URLs — max 1 per campaign to avoid spam."""
         try:
-            from scripts.platforms.google_ads import GoogleAdsConnector
-            conn = GoogleAdsConnector()
-            
-            if not conn.load_credentials():
-                return findings
-                
-            campaigns = conn.fetch_campaigns(active_only=True)
-            
-            for camp in campaigns:
-                context = self.parse_campaign_name(camp.name)
-                
-                # Get final URL from campaign (simplified — in reality may need ad group level)
-                # For now, we flag campaigns that might have missing UTMs
-                
-                # Just note campaigns for manual review if they don't have URLs set
-                if not camp.final_url:
-                    findings.append({
-                        'platform': 'google_ads',
-                        'campaign_id': camp.external_id,
-                        'campaign_name': camp.name,
-                        'action': 'missing_final_url',
-                        'reason': 'Campaign has no final URL set',
-                        'severity': 'high',
-                        'confidence': 90,
-                        'context': context,
-                        'auto_execute': False,
-                    })
-                    
-        except Exception as e:
-            self.log_error(f"Google Ads analysis error: {e}")
-            
-        return findings
-        
-    def analyze_stackadapt(self) -> List[Dict]:
-        """Analyze StackAdapt creatives."""
-        findings = []
-        
-        try:
-            from scripts.platforms.stackadapt import StackAdaptConnector
-            conn = StackAdaptConnector()
-            
-            if not conn.load_credentials():
-                return findings
-                
-            creatives = conn.fetch_creatives(active_only=True)
-            
-            for creative in creatives:
-                if not creative.final_url:
+            conn = get_connector("google_ads")
+            conn.load_credentials()
+
+            client = conn._get_client()
+            ga = client.get_service("GoogleAdsService")
+
+            # Get only 1 active ad per campaign (avoid duplicates)
+            query = """
+                SELECT
+                    campaign.id, campaign.name,
+                    ad_group_ad.ad.final_urls
+                FROM ad_group_ad
+                WHERE campaign.status = 'ENABLED'
+                AND ad_group_ad.status = 'ENABLED'
+                ORDER BY campaign.id
+                LIMIT 100
+            """
+            rows = ga.search(customer_id=conn._customer_id, query=query)
+
+            campaigns_checked = 0
+            for row in rows:
+                camp_id = str(row.campaign.id)
+                camp_name = row.campaign.name
+
+                # Skip if already checked this campaign
+                if camp_id in self.seen_campaigns:
                     continue
-                    
-                context = self.parse_campaign_name(creative.campaign_name)
-                
-                # Validate URL
-                url_check = self.validate_url(creative.final_url, context)
-                
-                # Validate UTMs
-                utm_issues = self.validate_utms(
-                    url_check['utm_params'], 
-                    'stackadapt',
-                    context
-                )
-                
-                all_issues = url_check['issues'] + utm_issues
-                
-                if all_issues:
-                    findings.append({
-                        'platform': 'stackadapt',
-                        'campaign_id': creative.campaign_id,
-                        'campaign_name': creative.campaign_name,
-                        'creative_id': creative.external_id,
-                        'creative_name': creative.name,
-                        'url': creative.final_url,
-                        'action': 'fix_url_utms',
-                        'issues': all_issues,
-                        'reason': '; '.join(all_issues[:3]),
-                        'severity': 'high' if '404' in str(all_issues) else 'medium',
-                        'confidence': 85,
-                        'context': context,
-                        'auto_execute': False,
-                        'utm_params': url_check['utm_params'],
-                        'status_code': url_check['status_code'],
+                self.seen_campaigns.add(camp_id)
+
+                # Skip test/internal/partner campaigns
+                if self.should_skip_campaign(camp_name):
+                    continue
+
+                urls = list(row.ad_group_ad.ad.final_urls)
+                if not urls:
+                    continue
+
+                url = urls[0]
+                result = self._check_url(url)
+
+                # Only report actual HTTP errors (4xx, 5xx), not missing UTMs
+                has_http_error = any('HTTP 4' in i or 'HTTP 5' in i or 'Error:' in i for i in result['issues'])
+
+                if has_http_error:
+                    self.url_results.append({
+                        'platform': 'google_ads',
+                        'campaign_id': camp_id,
+                        'campaign_name': camp_name,
+                        'url': url,
+                        'issues': result['issues'],
+                        'status_code': result['status_code'],
+                        'rationale': f'Landing page returned HTTP {result["status_code"]}: {url[:60]}',
                     })
-                    
+
+                campaigns_checked += 1
+                if campaigns_checked >= 50:  # Max 50 campaigns
+                    break
+
+            print(f"    {campaigns_checked} campaigns checked, {len([r for r in self.url_results if r['platform']=='google_ads'])} broken URLs")
+
         except Exception as e:
-            self.log_error(f"StackAdapt analysis error: {e}")
-            
-        return findings
-        
-    def analyze_linkedin(self) -> List[Dict]:
-        """Analyze LinkedIn campaigns."""
-        findings = []
-        
+            print(f"    Error: {e}")
+
+    def _check_stackadapt(self):
+        """Check StackAdapt creative URLs — max 1 per campaign."""
         try:
-            from scripts.platforms.linkedin import LinkedInConnector
-            conn = LinkedInConnector()
-            
-            if not conn.load_credentials():
-                return findings
-                
-            # LinkedIn API doesn't expose creative URLs easily
-            # Flag active campaigns for manual URL review
-            campaigns = conn.fetch_campaigns(active_only=True)
-            
+            conn = get_connector("stackadapt")
+            if not conn._token:
+                conn.load_credentials()
+
+            # Get active campaigns first
+            query = """
+            query {
+                campaigns(filter: { advertiserId: 93053, status: { eq: "active" } }, first: 50) {
+                    nodes { id name }
+                }
+            }
+            """
+            data = conn._gql(query)
+            campaigns = data.get('campaigns', {}).get('nodes', [])
+
+            checked = 0
             for camp in campaigns:
-                context = self.parse_campaign_name(camp.name)
-                
-                # Recommend periodic URL audit
-                findings.append({
-                    'platform': 'linkedin',
-                    'campaign_id': camp.external_id,
-                    'campaign_name': camp.name,
-                    'action': 'audit_url_utms',
-                    'reason': 'Manual URL/UTM audit recommended for LinkedIn campaign',
-                    'severity': 'low',
-                    'confidence': 50,
-                    'context': context,
-                    'auto_execute': False,
-                })
-                    
+                camp_id = str(camp.get('id', ''))
+                camp_name = camp.get('name', 'Unknown')
+
+                if camp_id in self.seen_campaigns:
+                    continue
+                self.seen_campaigns.add(f"sa_{camp_id}")
+
+                if self.should_skip_campaign(camp_name):
+                    continue
+
+                # Get one creative for this campaign
+                cquery = f"""
+                query {{
+                    nativeAds(filter: {{ advertiserId: 93053, campaignId: {camp_id} }}, first: 1) {{
+                        nodes {{ id name landingPageUrl }}
+                    }}
+                }}
+                """
+                try:
+                    cdata = conn._gql(cquery)
+                    creatives = cdata.get('nativeAds', {}).get('nodes', [])
+                    if not creatives:
+                        continue
+
+                    creative = creatives[0]
+                    url = creative.get('landingPageUrl', '')
+                    if not url:
+                        continue
+
+                    result = self._check_url(url)
+                    has_http_error = any('HTTP 4' in i or 'HTTP 5' in i or 'Error:' in i for i in result['issues'])
+
+                    if has_http_error:
+                        self.url_results.append({
+                            'platform': 'stackadapt',
+                            'campaign_id': camp_id,
+                            'campaign_name': camp_name,
+                            'url': url,
+                            'issues': result['issues'],
+                            'status_code': result['status_code'],
+                            'rationale': f'StackAdapt creative returned HTTP {result["status_code"]}',
+                        })
+
+                    checked += 1
+                except Exception:
+                    pass
+
+            print(f"    {checked} campaigns checked, {len([r for r in self.url_results if r['platform']=='stackadapt'])} broken URLs")
+
         except Exception as e:
-            self.log_error(f"LinkedIn analysis error: {e}")
-            
-        return findings
-        
-    def analyze_reddit(self) -> List[Dict]:
-        """Analyze Reddit campaigns."""
-        findings = []
-        
+            print(f"    Error: {e}")
+
+    def _check_reddit(self):
+        """Check Reddit campaign URLs — max 1 per campaign."""
         try:
-            from scripts.platforms.reddit import RedditConnector
-            conn = RedditConnector()
-            
-            if not conn.load_credentials():
-                return findings
-                
+            conn = get_connector("reddit")
             campaigns = conn.fetch_campaigns(active_only=True)
-            
+
+            checked = 0
             for camp in campaigns:
-                context = self.parse_campaign_name(camp.name)
-                
-                findings.append({
-                    'platform': 'reddit',
-                    'campaign_id': camp.external_id,
-                    'campaign_name': camp.name,
-                    'action': 'audit_url_utms',
-                    'reason': 'Manual URL/UTM audit recommended for Reddit campaign',
-                    'severity': 'low',
-                    'confidence': 50,
-                    'context': context,
-                    'auto_execute': False,
-                })
-                    
+                camp_id = str(camp.external_id)
+                camp_name = camp.name
+
+                if f"reddit_{camp_id}" in self.seen_campaigns:
+                    continue
+                self.seen_campaigns.add(f"reddit_{camp_id}")
+
+                if self.should_skip_campaign(camp_name):
+                    continue
+
+                url = getattr(camp, 'final_url', '') or getattr(camp, 'click_url', '')
+                if not url:
+                    continue
+
+                result = self._check_url(url)
+                has_http_error = any('HTTP 4' in i or 'HTTP 5' in i or 'Error:' in i for i in result['issues'])
+
+                if has_http_error:
+                    self.url_results.append({
+                        'platform': 'reddit',
+                        'campaign_id': camp_id,
+                        'campaign_name': camp_name,
+                        'url': url,
+                        'issues': result['issues'],
+                        'status_code': result['status_code'],
+                        'rationale': f'Reddit campaign URL returned HTTP {result["status_code"]}',
+                    })
+
+                checked += 1
+                if checked >= 25:  # Max 25 Reddit campaigns
+                    break
+
+            print(f"    {checked} campaigns checked, {len([r for r in self.url_results if r['platform']=='reddit'])} broken URLs")
+
         except Exception as e:
-            self.log_error(f"Reddit analysis error: {e}")
-            
-        return findings
-        
-    def run(self) -> Dict:
-        """Run the Landing Page Validator agent."""
-        self.log_run_start()
-        
-        all_findings = []
-        
-        self.logger.info("Analyzing Google Ads campaigns...")
-        all_findings.extend(self.analyze_google_ads())
-        
-        self.logger.info("Analyzing StackAdapt creatives...")
-        all_findings.extend(self.analyze_stackadapt())
-        
-        self.logger.info("Analyzing LinkedIn campaigns...")
-        all_findings.extend(self.analyze_linkedin())
-        
-        self.logger.info("Analyzing Reddit campaigns...")
-        all_findings.extend(self.analyze_reddit())
-        
-        # All findings are recommendations (no auto-execution)
-        high_severity = [f for f in all_findings if f.get('severity') == 'high']
-        medium_severity = [f for f in all_findings if f.get('severity') == 'medium']
-        low_severity = [f for f in all_findings if f.get('severity') == 'low']
-        
-        # Post summary to Telegram
-        summary = f"🌐 Landing Page & UTM Validation\n\n"
-        summary += f"Campaigns checked: Google Ads, LinkedIn, StackAdapt, Reddit\n"
-        summary += f"Issues found: {len(all_findings)}\n"
-        summary += f"  🔴 High: {len(high_severity)}\n"
-        summary += f"  🟡 Medium: {len(medium_severity)}\n"
-        summary += f"  🟢 Low: {len(low_severity)}\n\n"
-        
-        if high_severity:
-            summary += "⚠️ High priority issues:\n"
-            for f in high_severity[:5]:
-                summary += f"  • {f['campaign_name'][:40]}: {f['reason'][:50]}\n"
-                
-        self.post_to_telegram(summary)
-        
-        # Log run
-        self.log_run_complete(
-            findings_count=len(all_findings),
-            recs_count=len(all_findings),
-            auto_executed_count=0  # Never auto-execute URL changes
-        )
-        
-        return {
-            'total_findings': len(all_findings),
-            'high_severity': len(high_severity),
-            'medium_severity': len(medium_severity),
-            'low_severity': len(low_severity),
-            'dry_run': self.dry_run,
-        }
+            print(f"    Error: {e}")
+
+    def send_telegram_summary(self):
+        """Custom Telegram summary with focus on broken URLs."""
+        now = datetime.now()
+        lines = [f"<b>{self.AGENT_NAME}</b> — {now.strftime('%b %-d')}"]
+        if self.dry_run:
+            lines.append("<i>🧪 DRY RUN</i>")
+
+        total = len(self.url_results)
+        lines.append(f"\n🔗 <b>Broken Landing Pages: {total}</b>")
+        lines.append("   (production campaigns only, excludes test/partner)")
+
+        if total:
+            for r in self.url_results[:10]:
+                status = r.get('status_code', 'ERR')
+                lines.append(f"\n  🔴 <b>[{r['platform'].upper()}] HTTP {status}</b>")
+                lines.append(f"     {r['campaign_name'][:40]}")
+                lines.append(f"     {r['url'][:70]}")
+        else:
+            lines.append("\n✨ All landing pages OK!")
+
+        if self.recommendations:
+            lines.append(f"\n⏳ <b>{len(self.recommendations)} need URL fix</b>")
+
+        self._send_telegram("\n".join(lines))
 
 
 def main():
-    parser = argparse.ArgumentParser(description='Landing Page & UTM Validator')
+    parser = argparse.ArgumentParser(description='Landing Page Validator')
     parser.add_argument('--dry-run', action='store_true')
     args = parser.parse_args()
-    
+
     agent = LandingPageValidator(dry_run=args.dry_run)
-    result = agent.run()
-    print(json.dumps(result, indent=2, default=str))
-    sys.exit(0)
+    print(f"🌐 Landing Page Validator — {datetime.now().strftime('%Y-%m-%d %H:%M')}")
+    if args.dry_run:
+        print("   ⚠️  DRY RUN")
+    agent.run()
 
 
 if __name__ == '__main__':

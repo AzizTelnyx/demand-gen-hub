@@ -1,0 +1,15 @@
+{
+  "monthlyCap": 140000,
+  "excludePatterns": ["clawdtalk", "clawd"],
+  "platforms": ["google_ads", "linkedin", "stackadapt"],
+  "redditEstimateDailySpend": 183,
+  "alertThresholds": {
+    "capWarning": 0.96,
+    "capCritical": 1.0,
+    "budgetLostMin": 0.15,
+    "budgetLostCampaignMinSpend": 50,
+    "underpacingMin": 0.70,
+    "overpacingMax": 1.30,
+    "anomalyChangePercent": 0.30
+  }
+}

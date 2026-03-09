@@ -1,0 +1,105 @@
+{
+  "timestamp": "2026-02-24T10:00:03.901721+00:00",
+  "runtime_seconds": 8.158708,
+  "dry_run": false,
+  "days_analyzed": 7,
+  "campaigns_processed": 38,
+  "search_terms_analyzed": 100,
+  "skipped": 9900,
+  "decisions": {
+    "blocked": 3,
+    "review": 5,
+    "monitored": 21,
+    "kept": 71
+  },
+  "blocks_applied": [
+    {
+      "search_term": "esim",
+      "campaign_id": 23559393583,
+      "campaign_name": "202310 MOFU IoT SIM SA APAC - SEA",
+      "spend": 76.88,
+      "clicks": 18,
+      "conversions": 0.0,
+      "relevancy_score": 30,
+      "intent_type": "CONSUMER_ESIM",
+      "confidence": 85,
+      "match_type": "PHRASE",
+      "applied": true,
+      "resource_name": "customers/2356650573/campaignCriteria/23559393583~126832342"
+    },
+    {
+      "search_term": "ai voice generator",
+      "campaign_id": 23584242652,
+      "campaign_name": "202602 TOFU Vapi AI Agent SA EMEA",
+      "spend": 57.994949,
+      "clicks": 79,
+      "conversions": 0.0,
+      "relevancy_score": 50,
+      "intent_type": "TTS_ONLY",
+      "confidence": 85,
+      "match_type": "PHRASE",
+      "applied": true,
+      "resource_name": "customers/2356650573/campaignCriteria/23584242652~397774641009"
+    },
+    {
+      "search_term": "ai voice generator",
+      "campaign_id": 23584242697,
+      "campaign_name": "202602 TOFU ElevenLabs SA EMEA",
+      "spend": 30.921146,
+      "clicks": 48,
+      "conversions": 0.0,
+      "relevancy_score": 35,
+      "intent_type": "TTS_ONLY",
+      "confidence": 85,
+      "match_type": "PHRASE",
+      "applied": true,
+      "resource_name": "customers/2356650573/campaignCriteria/23584242697~397774641009"
+    }
+  ],
+  "review_items": [
+    {
+      "search_term": "call center automation",
+      "campaign_id": 23583442793,
+      "campaign_name": "202602 TOFU Contact Center SA EMEA",
+      "spend": 82.08,
+      "confidence": 75,
+      "reason": "Medium relevancy (45/100) + 49 clicks, 0 conversions (statistically significant)"
+    },
+    {
+      "search_term": "call center automation",
+      "campaign_id": 23578096203,
+      "campaign_name": "202602 TOFU Contact Center SA AMER",
+      "spend": 79.3,
+      "confidence": 75,
+      "reason": "Medium relevancy (45/100) + 62 clicks, 0 conversions (statistically significant)"
+    },
+    {
+      "search_term": "eleven labs",
+      "campaign_id": 23584242475,
+      "campaign_name": "202602 TOFU Vapi AI Agent SA AMER",
+      "spend": 76.31,
+      "confidence": 75,
+      "reason": "Medium relevancy (30/100) + 57 clicks, 0 conversions (statistically significant)"
+    },
+    {
+      "search_term": "chatbot call center",
+      "campaign_id": 23583442793,
+      "campaign_name": "202602 TOFU Contact Center SA EMEA",
+      "spend": 44.35,
+      "confidence": 75,
+      "reason": "Medium relevancy (45/100) + 32 clicks, 0 conversions (statistically significant)"
+    },
+    {
+      "search_term": "ai voice",
+      "campaign_id": 23574277866,
+      "campaign_name": "202602 TOFU ElevenLabs SA AMER",
+      "spend": 26.532134,
+      "confidence": 75,
+      "reason": "Medium relevancy (45/100) + 27 clicks, 0 conversions (statistically significant)"
+    }
+  ],
+  "estimated_savings": {
+    "weekly": 474.36822900000004,
+    "monthly": 2039.7833847000002
+  }
+}

@@ -1,0 +1,64 @@
+{
+  "timestamp": "2026-03-03T10:00:20.857985+00:00",
+  "runtime_seconds": 140.751549,
+  "dry_run": false,
+  "days_analyzed": 7,
+  "campaigns_processed": 38,
+  "search_terms_analyzed": 95,
+  "skipped": 9905,
+  "decisions": {
+    "blocked": 3,
+    "review": 0,
+    "monitored": 8,
+    "kept": 84
+  },
+  "blocks_applied": [
+    {
+      "search_term": "text to speech ai",
+      "campaign_id": 23574277866,
+      "campaign_name": "202602 TOFU ElevenLabs SA AMER",
+      "spend": 50.09211,
+      "clicks": 52,
+      "conversions": 0.0,
+      "relevancy_score": 82,
+      "intent_type": "WRONG_CATEGORY",
+      "confidence": 82,
+      "match_type": "PHRASE",
+      "applied": true,
+      "resource_name": "customers/2356650573/campaignCriteria/23574277866~854855096777"
+    },
+    {
+      "search_term": "global call forwarding",
+      "campaign_id": 20329204785,
+      "campaign_name": "202306 MOFU Numbers SA EMEA",
+      "spend": 39.24,
+      "clicks": 2,
+      "conversions": 0.0,
+      "relevancy_score": 85,
+      "intent_type": "CONSUMER",
+      "confidence": 85,
+      "match_type": "PHRASE",
+      "applied": true,
+      "resource_name": "customers/2356650573/campaignCriteria/20329204785~5884491068"
+    },
+    {
+      "search_term": "free agentic ai",
+      "campaign_id": 23588051725,
+      "campaign_name": "202602 MOFU AI Agent SA MENA",
+      "spend": 29.34,
+      "clicks": 207,
+      "conversions": 0.0,
+      "relevancy_score": 85,
+      "intent_type": "CONSUMER",
+      "confidence": 85,
+      "match_type": "PHRASE",
+      "applied": true,
+      "resource_name": "customers/2356650573/campaignCriteria/23588051725~2462988733160"
+    }
+  ],
+  "review_items": [],
+  "estimated_savings": {
+    "weekly": 118.67211,
+    "monthly": 510.290073
+  }
+}

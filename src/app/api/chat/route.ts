@@ -3,7 +3,8 @@ import { prisma } from "@/lib/prisma";
 import OpenAI from "openai";
 
 const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
+  baseURL: process.env.OPENCLAW_BASE_URL || "http://127.0.0.1:18789/v1",
+  apiKey: process.env.OPENCLAW_GATEWAY_TOKEN || "",
 });
 
 export async function POST(request: NextRequest) {
@@ -32,6 +33,7 @@ export async function POST(request: NextRequest) {
     // Platform breakdown
     const googleCampaigns = liveCampaigns.filter(c => c.platform === "google_ads");
     const stackadaptCampaigns = liveCampaigns.filter(c => c.platform === "stackadapt");
+    const redditCampaigns = liveCampaigns.filter(c => c.platform === "reddit");
     
     // Top campaigns by spend
     const topBySpend = liveCampaigns.slice(0, 10).map(c => ({
@@ -45,7 +47,7 @@ export async function POST(request: NextRequest) {
       ctr: c.impressions && c.impressions > 0 ? ((c.clicks || 0) / c.impressions * 100).toFixed(2) : '0',
     }));
 
-    const systemPrompt = `You are Lil Aziz, an AI assistant for Telnyx's Demand Generation team. You help with campaign analysis, performance insights, and marketing operations.
+    const systemPrompt = `You are the Demand Gen Hub assistant for Telnyx's Demand Generation team. You help with campaign analysis, performance insights, and marketing operations.
 
 CURRENT DATA (Last 30 days):
 - Live Campaigns: ${liveCampaigns.length}
@@ -60,45 +62,33 @@ CURRENT DATA (Last 30 days):
 PLATFORM BREAKDOWN:
 - Google Ads: ${googleCampaigns.length} campaigns, $${googleCampaigns.reduce((a, c) => a + (c.spend || 0), 0).toLocaleString()} spend
 - StackAdapt: ${stackadaptCampaigns.length} campaigns, $${stackadaptCampaigns.reduce((a, c) => a + (c.spend || 0), 0).toLocaleString()} spend
+- Reddit: ${redditCampaigns.length} campaigns, $${redditCampaigns.reduce((a, c) => a + (c.spend || 0), 0).toLocaleString()} spend
 
 TOP 10 CAMPAIGNS BY SPEND:
-${topBySpend.map((c, i) => `${i + 1}. ${c.name} (${c.platform === 'google_ads' ? 'Google' : 'StackAdapt'}) - Spend: $${(c.spend || 0).toLocaleString()}, Budget: $${(c.budget || 0).toLocaleString()}, CTR: ${c.ctr}%, Conv: ${c.conversions || 0}`).join('\n')}
+${topBySpend.map((c, i) => `${i + 1}. ${c.name} (${c.platform === 'google_ads' ? 'Google' : c.platform === 'reddit' ? 'Reddit' : c.platform === 'linkedin' ? 'LinkedIn' : 'StackAdapt'}) - Spend: $${(c.spend || 0).toLocaleString()}, Budget: $${(c.budget || 0).toLocaleString()}, CTR: ${c.ctr}%, Conv: ${c.conversions || 0}`).join('\n')}
 
 GUIDELINES:
 - Be concise and actionable
 - Use bullet points and formatting for readability
 - When discussing campaigns, always include the full campaign name
 - Proactively suggest optimizations when you see issues
-- For complex actions (creating campaigns, budget changes), explain what's needed but note that execution requires the main Clawdbot interface
 - Be conversational but efficient`;
 
-    // Build messages for OpenAI
-    const messages: OpenAI.Chat.ChatCompletionMessageParam[] = [
-      { role: "system", content: systemPrompt },
-      ...history.slice(-10).map((h: { role: string; content: string }) => ({
-        role: h.role as "user" | "assistant",
-        content: h.content,
-      })),
-      { role: "user", content: message },
-    ];
-
-    // Check if OpenAI key is available
-    if (!process.env.OPENAI_API_KEY) {
-      // Fallback to basic response
-      return NextResponse.json({
-        response: `I received: "${message}"\n\nOpenAI is not configured. Here's a quick summary:\n\n• ${liveCampaigns.length} live campaigns\n• $${totalSpend.toLocaleString()} total spend\n• ${((totalClicks / totalImpressions) * 100).toFixed(2)}% CTR\n\nFor full AI capabilities, add OPENAI_API_KEY to your environment.`,
-        timestamp: new Date().toISOString(),
-      });
-    }
-
     const completion = await openai.chat.completions.create({
-      model: "gpt-4o-mini",
-      messages,
-      temperature: 0.7,
+      model: "openclaw:main",
       max_tokens: 1000,
+      messages: [
+        { role: "system", content: systemPrompt },
+        ...history.slice(-10).map((h: { role: string; content: string }) => ({
+          role: h.role as "user" | "assistant",
+          content: h.content,
+        })),
+        { role: "user", content: message },
+      ],
     });
 
-    const response = completion.choices[0]?.message?.content || "Sorry, I couldn't generate a response.";
+    const response = completion.choices[0]?.message?.content 
+      || "Sorry, I couldn't generate a response.";
 
     return NextResponse.json({ 
       response,

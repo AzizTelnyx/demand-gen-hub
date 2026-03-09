@@ -27,6 +27,7 @@ CHANNEL EXPERTISE:
 - Google Ads Search: High-intent, $5-25 CPC for B2B tech, 2-5% CTR
 - LinkedIn Ads: Best for job title targeting, $40-80 CPM, 0.4-0.8% CTR
 - StackAdapt: Programmatic display/native, $10-20 CPM, intent-based targeting
+- Reddit: Promoted posts in subreddits, $2-8 CPC, community/interest targeting — great for developers
 - Reddit Ads: Good for developers, $8-15 CPM, community targeting
 - Facebook/Meta: Limited B2B effectiveness, better for SMB
 
@@ -131,6 +132,7 @@ function mapChannelName(name: string): string {
   if (lower.includes('linkedin')) return 'linkedin';
   if (lower.includes('stackadapt')) return 'stackadapt';
   if (lower.includes('reddit')) return 'reddit';
+  if (lower.includes('reddit')) return 'reddit';
   if (lower.includes('meta') || lower.includes('facebook')) return 'meta';
   return 'google_search';
 }
@@ -188,6 +190,19 @@ function fallbackChannels(product: string, targetAudience: string, icpAnalysis: 
       estimatedCpm: 12,
       budgetCalculation: { formula: 'Audience × 30% reach × 5 frequency × $12 CPM / 1000', result: 3300 },
       recommendedBudget: 3300,
+    },
+    {
+      channel: 'reddit',
+      recommended: true,
+      rationale: 'Developer and technical audience reach via subreddit targeting — cost-effective for B2B tech',
+      targeting: {
+        subreddits: ['r/devops', 'r/programming', 'r/aws', 'r/sysadmin', 'r/voip'],
+        interests: ['Technology', 'Programming', 'Cloud Computing'],
+      },
+      audienceSize: 120000,
+      estimatedCpm: 15,
+      budgetCalculation: { formula: 'Audience × 25% reach × 3 frequency × $4.50 CPC avg', result: 1500 },
+      recommendedBudget: 1500,
     },
   ];
 }

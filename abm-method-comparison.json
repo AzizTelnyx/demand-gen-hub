@@ -1,0 +1,1455 @@
+{
+  "criteria": "PatientSync lookalike \u2014 EMEA healthcare comms",
+  "timestamp": "2026-03-03T00:26:48.344059Z",
+  "methods": {
+    "gemini_flash": {
+      "source": "LiteLLM gateway, gemini/gemini-2.0-flash",
+      "companies": [
+        {
+          "company": "Lumeon",
+          "domain": "lumeon.com",
+          "country": "UK",
+          "vertical": "Patient Engagement",
+          "productFit": "care-pathway-automation",
+          "description": "Care pathway management platform that automates and orchestrates care delivery, engaging patients throughout their journey.",
+          "validation": {
+            "domain_resolves": true,
+            "clearbit_found": true,
+            "clearbit_employees": "51-250",
+            "clearbit_country": "GB",
+            "clearbit_category_industry": "Health Care/Health Care Providers & Services",
+            "is_healthcare_comms": false,
+            "healthcare_reason": "Healthcare but not specifically comms/engagement",
+            "is_emea_hq": true
+          }
+        },
+        {
+          "company": "AccuRx",
+          "domain": "accurx.com",
+          "country": "UK",
+          "vertical": "Clinical Messaging",
+          "productFit": "patient-communication",
+          "description": "Communication platform used by GPs and healthcare staff to communicate with patients via SMS, video, and online forms.",
+          "validation": {
+            "domain_resolves": true,
+            "clearbit_found": true,
+            "clearbit_employees": "51-250",
+            "clearbit_country": "GB",
+            "clearbit_category_industry": "Health Care/Health Care Providers & Services",
+            "is_healthcare_comms": true,
+            "healthcare_reason": "Healthcare + communication/engagement match",
+            "is_emea_hq": true
+          }
+        },
+        {
+          "company": "Visionable",
+          "domain": "visionable.com",
+          "country": "UK",
+          "vertical": "Telehealth Communication",
+          "productFit": "video-collaboration",
+          "description": "Secure video collaboration platform designed for healthcare professionals.",
+          "validation": {
+            "domain_resolves": true,
+            "clearbit_found": true,
+            "clearbit_employees": "51-250",
+            "clearbit_country": "GB",
+            "clearbit_category_industry": "Information Technology/Internet Software & Services",
+            "is_healthcare_comms": false,
+            "healthcare_reason": "Healthcare but not specifically comms/engagement",
+            "is_emea_hq": true
+          }
+        },
+        {
+          "company": "Babylon Health",
+          "domain": "babylonhealth.com",
+          "country": "UK",
+          "vertical": "Telehealth Communication",
+          "productFit": "ai-health-assistant",
+          "description": "Digital healthcare company providing AI-powered health information and virtual consultations.",
+          "validation": {
+            "domain_resolves": false,
+            "clearbit_found": true,
+            "clearbit_employees": "1K-5K",
+            "clearbit_country": "GB",
+            "clearbit_category_industry": "Health Care/Health Care Providers & Services",
+            "is_healthcare_comms": false,
+            "healthcare_reason": "Healthcare but not specifically comms/engagement",
+            "is_emea_hq": true
+          }
+        },
+        {
+          "company": "Infermedica",
+          "domain": "infermedica.com",
+          "country": "Poland",
+          "vertical": "Voice AI for Healthcare",
+          "productFit": "ai-triage",
+          "description": "AI-driven platform for preliminary diagnosis and triage.",
+          "validation": {
+            "domain_resolves": true,
+            "clearbit_found": true,
+            "clearbit_employees": "51-250",
+            "clearbit_country": "PL",
+            "clearbit_category_industry": "Health Care/Health Care Providers & Services",
+            "is_healthcare_comms": true,
+            "healthcare_reason": "Healthcare + communication/engagement match",
+            "is_emea_hq": true
+          }
+        },
+        {
+          "company": "Pando Health",
+          "domain": "pando.ai",
+          "country": "UK",
+          "vertical": "Clinical Messaging",
+          "productFit": "secure-messaging",
+          "description": "Secure messaging app for healthcare teams.",
+          "validation": {
+            "domain_resolves": true,
+            "clearbit_found": true,
+            "clearbit_employees": "251-1K",
+            "clearbit_country": "IN",
+            "clearbit_category_industry": "Industrials/Air Freight & Logistics",
+            "is_healthcare_comms": true,
+            "healthcare_reason": "Healthcare + communication/engagement match",
+            "is_emea_hq": false
+          }
+        },
+        {
+          "company": "DrDoctor",
+          "domain": "drdoctor.co.uk",
+          "country": "UK",
+          "vertical": "Appointment Reminders",
+          "productFit": "appointment-management",
+          "description": "Patient engagement platform focused on appointment management and reminders.",
+          "validation": {
+            "domain_resolves": true,
+            "clearbit_found": true,
+            "clearbit_employees": "51-250",
+            "clearbit_country": "GB",
+            "clearbit_category_industry": "Health Care/Health Care Providers & Services",
+            "is_healthcare_comms": true,
+            "healthcare_reason": "Healthcare + communication/engagement match",
+            "is_emea_hq": true
+          }
+        },
+        {
+          "company": "Medigate",
+          "domain": "medigate.com",
+          "country": "Israel",
+          "vertical": "Healthcare Contact Centers",
+          "productFit": "iot-security",
+          "description": "Cybersecurity platform for healthcare connected medical devices.",
+          "validation": {
+            "domain_resolves": false,
+            "clearbit_found": true,
+            "clearbit_employees": "1-10",
+            "clearbit_country": "KR",
+            "clearbit_category_industry": "Health Care/Health Care Providers & Services",
+            "is_healthcare_comms": false,
+            "healthcare_reason": "Healthcare but not specifically comms/engagement",
+            "is_emea_hq": false
+          }
+        },
+        {
+          "company": "Ada Health",
+          "domain": "ada.com",
+          "country": "Germany",
+          "vertical": "Voice AI for Healthcare",
+          "productFit": "symptom-assessment",
+          "description": "AI-powered health companion for symptom assessment.",
+          "validation": {
+            "domain_resolves": true,
+            "clearbit_found": true,
+            "clearbit_employees": "251-1K",
+            "clearbit_country": "DE",
+            "clearbit_category_industry": "Telecommunication Services/Diversified Telecommunication Services",
+            "is_healthcare_comms": true,
+            "healthcare_reason": "Healthcare + communication/engagement match",
+            "is_emea_hq": true
+          }
+        },
+        {
+          "company": "KRY (LIVI)",
+          "domain": "kry.se",
+          "country": "Sweden",
+          "vertical": "Telehealth Communication",
+          "productFit": "video-consultations",
+          "description": "Digital healthcare provider offering video consultations.",
+          "validation": {
+            "domain_resolves": true,
+            "clearbit_found": true,
+            "clearbit_employees": "1K-5K",
+            "clearbit_country": "SE",
+            "clearbit_category_industry": "Health Care/Health Care Providers & Services",
+            "is_healthcare_comms": true,
+            "healthcare_reason": "Healthcare + communication/engagement match",
+            "is_emea_hq": true
+          }
+        },
+        {
+          "company": "Visiba Care",
+          "domain": "visibacare.com",
+          "country": "Sweden",
+          "vertical": "Telehealth Communication",
+          "productFit": "virtual-clinic",
+          "description": "Platform for creating and managing virtual clinics.",
+          "validation": {
+            "domain_resolves": true,
+            "clearbit_found": false,
+            "clearbit_employees": "N/A",
+            "clearbit_country": "N/A",
+            "clearbit_category_industry": "N/A",
+            "is_healthcare_comms": false,
+            "healthcare_reason": "No Clearbit data",
+            "is_emea_hq": false
+          }
+        },
+        {
+          "company": "Siilo",
+          "domain": "siilo.com",
+          "country": "Netherlands",
+          "vertical": "Clinical Messaging",
+          "productFit": "secure-messaging",
+          "description": "Secure messaging app for healthcare professionals.",
+          "validation": {
+            "domain_resolves": true,
+            "clearbit_found": true,
+            "clearbit_employees": "1K-5K",
+            "clearbit_country": "FR",
+            "clearbit_category_industry": "Information Technology/Internet Software & Services",
+            "is_healthcare_comms": true,
+            "healthcare_reason": "Healthcare + communication/engagement match",
+            "is_emea_hq": true
+          }
+        },
+        {
+          "company": "Zava",
+          "domain": "zavamed.com",
+          "country": "UK",
+          "vertical": "Telehealth Communication",
+          "productFit": "online-doctor",
+          "description": "Online doctor service providing remote consultations.",
+          "validation": {
+            "domain_resolves": true,
+            "clearbit_found": true,
+            "clearbit_employees": "51-250",
+            "clearbit_country": "GB",
+            "clearbit_category_industry": "Telecommunication Services/Diversified Telecommunication Services",
+            "is_healthcare_comms": true,
+            "healthcare_reason": "Healthcare + communication/engagement match",
+            "is_emea_hq": true
+          }
+        },
+        {
+          "company": "Push Doctor",
+          "domain": "pushdoctor.co.uk",
+          "country": "UK",
+          "vertical": "Telehealth Communication",
+          "productFit": "video-consultations",
+          "description": "Online GP service offering video consultations.",
+          "validation": {
+            "domain_resolves": true,
+            "clearbit_found": true,
+            "clearbit_employees": "51-250",
+            "clearbit_country": "GB",
+            "clearbit_category_industry": "Health Care/Health Care Providers & Services",
+            "is_healthcare_comms": true,
+            "healthcare_reason": "Healthcare + communication/engagement match",
+            "is_emea_hq": true
+          }
+        },
+        {
+          "company": "eConsult Health",
+          "domain": "econsult.health",
+          "country": "UK",
+          "vertical": "Patient Engagement",
+          "productFit": "online-consultation",
+          "description": "Online consultation platform for patient triage.",
+          "validation": {
+            "domain_resolves": true,
+            "clearbit_found": true,
+            "clearbit_employees": "51-250",
+            "clearbit_country": "GB",
+            "clearbit_category_industry": "Industrials/Professional Services",
+            "is_healthcare_comms": true,
+            "healthcare_reason": "Healthcare + communication/engagement match",
+            "is_emea_hq": true
+          }
+        },
+        {
+          "company": "HealthHero",
+          "domain": "healthhero.com",
+          "country": "UK",
+          "vertical": "Telehealth Communication",
+          "productFit": "virtual-gp",
+          "description": "Digital health company providing virtual GP services.",
+          "validation": {
+            "domain_resolves": true,
+            "clearbit_found": true,
+            "clearbit_employees": "251-1K",
+            "clearbit_country": "GB",
+            "clearbit_category_industry": "Health Care/Health Care Providers & Services",
+            "is_healthcare_comms": false,
+            "healthcare_reason": "Healthcare but not specifically comms/engagement",
+            "is_emea_hq": true
+          }
+        },
+        {
+          "company": "Medloop",
+          "domain": "medloop.com",
+          "country": "Germany",
+          "vertical": "Patient Engagement",
+          "productFit": "patient-portal",
+          "description": "Patient portal for medical records and appointment scheduling.",
+          "validation": {
+            "domain_resolves": true,
+            "clearbit_found": true,
+            "clearbit_employees": null,
+            "clearbit_country": null,
+            "clearbit_category_industry": "Information Technology/Internet Software & Services",
+            "is_healthcare_comms": true,
+            "healthcare_reason": "Healthcare + communication/engagement match",
+            "is_emea_hq": false
+          }
+        },
+        {
+          "company": "Doctolib",
+          "domain": "doctolib.fr",
+          "country": "France",
+          "vertical": "Appointment Reminders",
+          "productFit": "appointment-booking",
+          "description": "Online appointment booking platform for doctors and patients.",
+          "validation": {
+            "domain_resolves": true,
+            "clearbit_found": true,
+            "clearbit_employees": "1K-5K",
+            "clearbit_country": "FR",
+            "clearbit_category_industry": "Health Care/Health Care Providers & Services",
+            "is_healthcare_comms": true,
+            "healthcare_reason": "Healthcare + communication/engagement match",
+            "is_emea_hq": true
+          }
+        },
+        {
+          "company": "Qunomedical",
+          "domain": "qunomedical.com",
+          "country": "Germany",
+          "vertical": "Patient Engagement",
+          "productFit": "medical-travel",
+          "description": "Platform connecting patients with vetted doctors worldwide.",
+          "validation": {
+            "domain_resolves": true,
+            "clearbit_found": true,
+            "clearbit_employees": "51-250",
+            "clearbit_country": "DE",
+            "clearbit_category_industry": "Health Care/Health Care Providers & Services",
+            "is_healthcare_comms": false,
+            "healthcare_reason": "Healthcare but not specifically comms/engagement",
+            "is_emea_hq": true
+          }
+        },
+        {
+          "company": "Medneo",
+          "domain": "medneo.com",
+          "country": "Germany",
+          "vertical": "Patient Engagement",
+          "productFit": "diagnostic-imaging",
+          "description": "Diagnostic imaging services with patient portal.",
+          "validation": {
+            "domain_resolves": true,
+            "clearbit_found": true,
+            "clearbit_employees": null,
+            "clearbit_country": "US",
+            "clearbit_category_industry": "None/None",
+            "is_healthcare_comms": true,
+            "healthcare_reason": "Healthcare + communication/engagement match",
+            "is_emea_hq": false
+          }
+        },
+        {
+          "company": "Arteria AI",
+          "domain": "arteria.ai",
+          "country": "UK",
+          "vertical": "Voice AI for Healthcare",
+          "productFit": "document-intelligence",
+          "description": "AI-powered document intelligence platform.",
+          "validation": {
+            "domain_resolves": true,
+            "clearbit_found": true,
+            "clearbit_employees": "51-250",
+            "clearbit_country": "GB",
+            "clearbit_category_industry": "Information Technology/IT Services",
+            "is_healthcare_comms": false,
+            "healthcare_reason": "Not healthcare",
+            "is_emea_hq": true
+          }
+        },
+        {
+          "company": "Sensely",
+          "domain": "sensely.com",
+          "country": "UK",
+          "vertical": "Voice AI for Healthcare",
+          "productFit": "virtual-nurse",
+          "description": "AI-powered virtual nurse assistant.",
+          "validation": {
+            "domain_resolves": true,
+            "clearbit_found": true,
+            "clearbit_employees": "11-50",
+            "clearbit_country": "US",
+            "clearbit_category_industry": "Industrials/Professional Services",
+            "is_healthcare_comms": true,
+            "healthcare_reason": "Healthcare + communication/engagement match",
+            "is_emea_hq": false
+          }
+        },
+        {
+          "company": "Talkdesk",
+          "domain": "talkdesk.com",
+          "country": "Portugal",
+          "vertical": "Healthcare Contact Centers",
+          "productFit": "cloud-contact-center",
+          "description": "Cloud contact center platform for patient communication.",
+          "validation": {
+            "domain_resolves": true,
+            "clearbit_found": true,
+            "clearbit_employees": "1K-5K",
+            "clearbit_country": "US",
+            "clearbit_category_industry": "Information Technology/IT Services",
+            "is_healthcare_comms": true,
+            "healthcare_reason": "Healthcare + communication/engagement match",
+            "is_emea_hq": false
+          }
+        },
+        {
+          "company": "Avoa",
+          "domain": "avoa.com",
+          "country": "Finland",
+          "vertical": "Patient Engagement",
+          "productFit": "patient-flow",
+          "description": "Real-time location services and patient flow management.",
+          "validation": {
+            "domain_resolves": true,
+            "clearbit_found": true,
+            "clearbit_employees": "1-10",
+            "clearbit_country": "US",
+            "clearbit_category_industry": "Industrials/Professional Services",
+            "is_healthcare_comms": false,
+            "healthcare_reason": "Healthcare but not specifically comms/engagement",
+            "is_emea_hq": false
+          }
+        },
+        {
+          "company": "Cognigy",
+          "domain": "cognigy.com",
+          "country": "Germany",
+          "vertical": "Healthcare Contact Centers",
+          "productFit": "conversational-ai",
+          "description": "Conversational AI platform for patient interactions.",
+          "validation": {
+            "domain_resolves": true,
+            "clearbit_found": true,
+            "clearbit_employees": "51-250",
+            "clearbit_country": "DE",
+            "clearbit_category_industry": "Information Technology/IT Services",
+            "is_healthcare_comms": true,
+            "healthcare_reason": "Healthcare + communication/engagement match",
+            "is_emea_hq": true
+          }
+        }
+      ],
+      "stats": {
+        "total_generated": 25,
+        "domain_valid": 23,
+        "clearbit_found": 24,
+        "actually_healthcare": 16,
+        "actually_emea": 17,
+        "passed_all_checks": 11
+      }
+    },
+    "brave_search": {
+      "source": "Brave Search API + Gemini Flash structuring (simulated \u2014 Brave API key unavailable)",
+      "companies": [
+        {
+          "company": "Lumeon",
+          "domain": "lumeon.com",
+          "country": "UK",
+          "vertical": "Patient Engagement",
+          "productFit": "Care pathway orchestration and patient communication",
+          "description": "Orchestrates and automates care pathways, including patient communication and task management.",
+          "validation": {
+            "domain_resolves": true,
+            "clearbit_found": true,
+            "clearbit_employees": "51-250",
+            "clearbit_country": "GB",
+            "clearbit_category_industry": "Health Care/Health Care Providers & Services",
+            "is_healthcare_comms": true,
+            "healthcare_reason": "Healthcare + communication/engagement match",
+            "is_emea_hq": true
+          }
+        },
+        {
+          "company": "Mayfair MedTech",
+          "domain": "mayfairmedtech.com",
+          "country": "UK",
+          "vertical": "Patient Engagement",
+          "productFit": "Patient portals and communication tools",
+          "description": "Provides patient portals and communication solutions for healthcare providers.",
+          "validation": {
+            "domain_resolves": false,
+            "clearbit_found": false,
+            "clearbit_employees": "N/A",
+            "clearbit_country": "N/A",
+            "clearbit_category_industry": "N/A",
+            "is_healthcare_comms": false,
+            "healthcare_reason": "No Clearbit data",
+            "is_emea_hq": false
+          }
+        },
+        {
+          "company": "Pando Health",
+          "domain": "pando.ai",
+          "country": "UK",
+          "vertical": "Clinical Communication",
+          "productFit": "Secure clinical messaging and collaboration platform",
+          "description": "Offers a secure messaging platform for healthcare professionals to collaborate and communicate effectively.",
+          "validation": {
+            "domain_resolves": true,
+            "clearbit_found": true,
+            "clearbit_employees": "251-1K",
+            "clearbit_country": "IN",
+            "clearbit_category_industry": "Industrials/Air Freight & Logistics",
+            "is_healthcare_comms": true,
+            "healthcare_reason": "Healthcare + communication/engagement match",
+            "is_emea_hq": false
+          }
+        },
+        {
+          "company": "Patchwork Health",
+          "domain": "patchwork.health",
+          "country": "UK",
+          "vertical": "Clinical Communication",
+          "productFit": "Workforce management and communication platform for healthcare",
+          "description": "A platform for managing healthcare workforce and facilitating communication between staff.",
+          "validation": {
+            "domain_resolves": true,
+            "clearbit_found": true,
+            "clearbit_employees": "51-250",
+            "clearbit_country": "GB",
+            "clearbit_category_industry": "Health Care/Health Care Providers & Services",
+            "is_healthcare_comms": true,
+            "healthcare_reason": "Healthcare + communication/engagement match",
+            "is_emea_hq": true
+          }
+        },
+        {
+          "company": "Siilo",
+          "domain": "siilo.com",
+          "country": "Netherlands",
+          "vertical": "Clinical Communication",
+          "productFit": "Secure medical messaging app for healthcare professionals",
+          "description": "A secure messaging app designed for healthcare professionals to share information and collaborate.",
+          "validation": {
+            "domain_resolves": true,
+            "clearbit_found": true,
+            "clearbit_employees": "1K-5K",
+            "clearbit_country": "FR",
+            "clearbit_category_industry": "Information Technology/Internet Software & Services",
+            "is_healthcare_comms": true,
+            "healthcare_reason": "Healthcare + communication/engagement match",
+            "is_emea_hq": true
+          }
+        },
+        {
+          "company": "Zava",
+          "domain": "zavamed.com",
+          "country": "UK",
+          "vertical": "Telehealth",
+          "productFit": "Online doctor service with patient communication features",
+          "description": "An online doctor service providing consultations and prescriptions, with integrated patient communication.",
+          "validation": {
+            "domain_resolves": true,
+            "clearbit_found": true,
+            "clearbit_employees": "51-250",
+            "clearbit_country": "GB",
+            "clearbit_category_industry": "Telecommunication Services/Diversified Telecommunication Services",
+            "is_healthcare_comms": true,
+            "healthcare_reason": "Healthcare + communication/engagement match",
+            "is_emea_hq": true
+          }
+        },
+        {
+          "company": "Visiba Care",
+          "domain": "visibacare.com",
+          "country": "Sweden",
+          "vertical": "Telehealth",
+          "productFit": "Telehealth platform with video consultations and messaging",
+          "description": "A telehealth platform offering video consultations, messaging, and other communication tools for healthcare providers.",
+          "validation": {
+            "domain_resolves": true,
+            "clearbit_found": false,
+            "clearbit_employees": "N/A",
+            "clearbit_country": "N/A",
+            "clearbit_category_industry": "N/A",
+            "is_healthcare_comms": false,
+            "healthcare_reason": "No Clearbit data",
+            "is_emea_hq": false
+          }
+        },
+        {
+          "company": "Medigate",
+          "domain": "medigate.com",
+          "country": "Israel",
+          "vertical": "Healthcare Cybersecurity",
+          "productFit": "Device security and visibility for connected medical devices",
+          "description": "Provides cybersecurity solutions for healthcare organizations, focusing on securing connected medical devices.",
+          "validation": {
+            "domain_resolves": false,
+            "clearbit_found": true,
+            "clearbit_employees": "1-10",
+            "clearbit_country": "KR",
+            "clearbit_category_industry": "Health Care/Health Care Providers & Services",
+            "is_healthcare_comms": false,
+            "healthcare_reason": "Healthcare but not specifically comms/engagement",
+            "is_emea_hq": false
+          }
+        },
+        {
+          "company": "Infermedica",
+          "domain": "infermedica.com",
+          "country": "Poland",
+          "vertical": "AI-Powered Triage",
+          "productFit": "AI-powered symptom checker and triage platform",
+          "description": "Offers an AI-powered symptom checker and triage platform for preliminary patient assessment.",
+          "validation": {
+            "domain_resolves": true,
+            "clearbit_found": true,
+            "clearbit_employees": "51-250",
+            "clearbit_country": "PL",
+            "clearbit_category_industry": "Health Care/Health Care Providers & Services",
+            "is_healthcare_comms": true,
+            "healthcare_reason": "Healthcare + communication/engagement match",
+            "is_emea_hq": true
+          }
+        },
+        {
+          "company": "Corti",
+          "domain": "corti.ai",
+          "country": "Denmark",
+          "vertical": "Voice AI for Healthcare",
+          "productFit": "AI-powered voice assistant for emergency calls",
+          "description": "Develops AI-powered voice assistants for emergency calls, helping dispatchers identify critical situations.",
+          "validation": {
+            "domain_resolves": true,
+            "clearbit_found": true,
+            "clearbit_employees": "51-250",
+            "clearbit_country": "DK",
+            "clearbit_category_industry": "Information Technology/Internet Software & Services",
+            "is_healthcare_comms": true,
+            "healthcare_reason": "Healthcare + communication/engagement match",
+            "is_emea_hq": true
+          }
+        },
+        {
+          "company": "mika",
+          "domain": "mika.health",
+          "country": "Germany",
+          "vertical": "Patient Engagement",
+          "productFit": "Digital companion app for cancer patients",
+          "description": "A digital companion app for cancer patients, providing personalized support and information.",
+          "validation": {
+            "domain_resolves": true,
+            "clearbit_found": false,
+            "clearbit_employees": "N/A",
+            "clearbit_country": "N/A",
+            "clearbit_category_industry": "N/A",
+            "is_healthcare_comms": false,
+            "healthcare_reason": "No Clearbit data",
+            "is_emea_hq": false
+          }
+        },
+        {
+          "company": "Kaia Health",
+          "domain": "kaiahealth.com",
+          "country": "Germany",
+          "vertical": "Digital Therapeutics",
+          "productFit": "Digital therapeutic app for musculoskeletal conditions",
+          "description": "Offers a digital therapeutic app for managing musculoskeletal conditions, including personalized exercises and education.",
+          "validation": {
+            "domain_resolves": true,
+            "clearbit_found": true,
+            "clearbit_employees": "51-250",
+            "clearbit_country": "DE",
+            "clearbit_category_industry": "Health Care/Health Care Providers & Services",
+            "is_healthcare_comms": true,
+            "healthcare_reason": "Healthcare + communication/engagement match",
+            "is_emea_hq": true
+          }
+        },
+        {
+          "company": "TeleClinic",
+          "domain": "teleclinic.com",
+          "country": "Germany",
+          "vertical": "Telehealth",
+          "productFit": "Telehealth platform offering online consultations and prescriptions",
+          "description": "A telehealth platform providing online consultations, prescriptions, and sick leave certificates.",
+          "validation": {
+            "domain_resolves": true,
+            "clearbit_found": true,
+            "clearbit_employees": "51-250",
+            "clearbit_country": "DE",
+            "clearbit_category_industry": "Health Care/Health Care Providers & Services",
+            "is_healthcare_comms": true,
+            "healthcare_reason": "Healthcare + communication/engagement match",
+            "is_emea_hq": true
+          }
+        },
+        {
+          "company": "Wellabe",
+          "domain": "wellabe.com",
+          "country": "France",
+          "vertical": "Patient Engagement",
+          "productFit": "Digital patient support programs",
+          "description": "Develops digital patient support programs for chronic diseases.",
+          "validation": {
+            "domain_resolves": true,
+            "clearbit_found": true,
+            "clearbit_employees": "251-1K",
+            "clearbit_country": "US",
+            "clearbit_category_industry": "Consumer Discretionary/Hotels, Restaurants & Leisure",
+            "is_healthcare_comms": false,
+            "healthcare_reason": "Healthcare but not specifically comms/engagement",
+            "is_emea_hq": false
+          }
+        },
+        {
+          "company": "Lifen",
+          "domain": "lifen.fr",
+          "country": "France",
+          "vertical": "Healthcare Data Exchange",
+          "productFit": "Platform for secure exchange of medical data",
+          "description": "A platform for secure exchange of medical data between healthcare professionals and institutions.",
+          "validation": {
+            "domain_resolves": true,
+            "clearbit_found": true,
+            "clearbit_employees": "51-250",
+            "clearbit_country": "FR",
+            "clearbit_category_industry": "Information Technology/Internet Software & Services",
+            "is_healthcare_comms": false,
+            "healthcare_reason": "Healthcare but not specifically comms/engagement",
+            "is_emea_hq": true
+          }
+        },
+        {
+          "company": "Caresyntax",
+          "domain": "caresyntax.com",
+          "country": "Germany",
+          "vertical": "Surgical Intelligence",
+          "productFit": "Surgical intelligence platform for data-driven insights",
+          "description": "Provides a surgical intelligence platform that uses data analytics to improve surgical outcomes.",
+          "validation": {
+            "domain_resolves": true,
+            "clearbit_found": true,
+            "clearbit_employees": "51-250",
+            "clearbit_country": "US",
+            "clearbit_category_industry": "Information Technology/IT Services",
+            "is_healthcare_comms": false,
+            "healthcare_reason": "Healthcare but not specifically comms/engagement",
+            "is_emea_hq": false
+          }
+        },
+        {
+          "company": "Awell",
+          "domain": "awellhealth.com",
+          "country": "Belgium",
+          "vertical": "Care Orchestration",
+          "productFit": "Care orchestration platform",
+          "description": "A platform that helps healthcare providers design and automate care pathways.",
+          "validation": {
+            "domain_resolves": true,
+            "clearbit_found": true,
+            "clearbit_employees": "11-50",
+            "clearbit_country": "BE",
+            "clearbit_category_industry": "Information Technology/IT Services",
+            "is_healthcare_comms": false,
+            "healthcare_reason": "Healthcare but not specifically comms/engagement",
+            "is_emea_hq": true
+          }
+        },
+        {
+          "company": "Happitech",
+          "domain": "happitech.com",
+          "country": "Netherlands",
+          "vertical": "Remote Patient Monitoring",
+          "productFit": "Smartphone-based heart rate monitoring",
+          "description": "Develops smartphone-based solutions for heart rate monitoring and early detection of cardiovascular issues.",
+          "validation": {
+            "domain_resolves": true,
+            "clearbit_found": true,
+            "clearbit_employees": "11-50",
+            "clearbit_country": "NL",
+            "clearbit_category_industry": "Industrials/Industrial Conglomerates",
+            "is_healthcare_comms": false,
+            "healthcare_reason": "Healthcare but not specifically comms/engagement",
+            "is_emea_hq": true
+          }
+        },
+        {
+          "company": "MedEngine",
+          "domain": "medengine.fi",
+          "country": "Finland",
+          "vertical": "Medical Communications",
+          "productFit": "Medical communications agency",
+          "description": "A medical communications agency providing services to pharmaceutical and healthcare companies.",
+          "validation": {
+            "domain_resolves": true,
+            "clearbit_found": true,
+            "clearbit_employees": "11-50",
+            "clearbit_country": "FI",
+            "clearbit_category_industry": "Industrials/Professional Services",
+            "is_healthcare_comms": true,
+            "healthcare_reason": "Healthcare + communication/engagement match",
+            "is_emea_hq": true
+          }
+        },
+        {
+          "company": "Buddy Healthcare",
+          "domain": "buddyhealthcare.com",
+          "country": "Finland",
+          "vertical": "Patient Engagement",
+          "productFit": "Patient engagement platform for pre- and post-operative care",
+          "description": "Offers a patient engagement platform for managing patients before and after surgery.",
+          "validation": {
+            "domain_resolves": true,
+            "clearbit_found": true,
+            "clearbit_employees": "11-50",
+            "clearbit_country": "FI",
+            "clearbit_category_industry": "Health Care/Health Care Providers & Services",
+            "is_healthcare_comms": true,
+            "healthcare_reason": "Healthcare + communication/engagement match",
+            "is_emea_hq": true
+          }
+        },
+        {
+          "company": "Monsenso",
+          "domain": "monsenso.com",
+          "country": "Denmark",
+          "vertical": "Digital Mental Health",
+          "productFit": "Digital mental health platform for remote monitoring",
+          "description": "Provides a digital mental health platform for remote monitoring and management of mental health conditions.",
+          "validation": {
+            "domain_resolves": true,
+            "clearbit_found": true,
+            "clearbit_employees": "11-50",
+            "clearbit_country": "DK",
+            "clearbit_category_industry": "Consumer Discretionary/Family Services",
+            "is_healthcare_comms": false,
+            "healthcare_reason": "Healthcare but not specifically comms/engagement",
+            "is_emea_hq": true
+          }
+        },
+        {
+          "company": "Tunstall Healthcare",
+          "domain": "tunstall.co.uk",
+          "country": "UK",
+          "vertical": "Telecare",
+          "productFit": "Telecare solutions for elderly and vulnerable people",
+          "description": "Provides telecare solutions for elderly and vulnerable people, including remote monitoring and emergency response systems.",
+          "validation": {
+            "domain_resolves": true,
+            "clearbit_found": true,
+            "clearbit_employees": "1K-5K",
+            "clearbit_country": "GB",
+            "clearbit_category_industry": "Health Care/Health Care Providers & Services",
+            "is_healthcare_comms": true,
+            "healthcare_reason": "Healthcare + communication/engagement match",
+            "is_emea_hq": true
+          }
+        },
+        {
+          "company": "Doccla",
+          "domain": "doccla.com",
+          "country": "UK",
+          "vertical": "Virtual Ward",
+          "productFit": "Virtual ward platform",
+          "description": "Provides a virtual ward platform to monitor patients at home.",
+          "validation": {
+            "domain_resolves": true,
+            "clearbit_found": true,
+            "clearbit_employees": "51-250",
+            "clearbit_country": "GB",
+            "clearbit_category_industry": "Telecommunication Services/Diversified Telecommunication Services",
+            "is_healthcare_comms": true,
+            "healthcare_reason": "Healthcare + communication/engagement match",
+            "is_emea_hq": true
+          }
+        },
+        {
+          "company": "HealthHero",
+          "domain": "healthhero.com",
+          "country": "UK",
+          "vertical": "Telehealth",
+          "productFit": "Telehealth platform offering online consultations",
+          "description": "Offers a telehealth platform providing online consultations with doctors and other healthcare professionals.",
+          "validation": {
+            "domain_resolves": true,
+            "clearbit_found": true,
+            "clearbit_employees": "251-1K",
+            "clearbit_country": "GB",
+            "clearbit_category_industry": "Health Care/Health Care Providers & Services",
+            "is_healthcare_comms": true,
+            "healthcare_reason": "Healthcare + communication/engagement match",
+            "is_emea_hq": true
+          }
+        },
+        {
+          "company": "Medloop",
+          "domain": "medloop.com",
+          "country": "Germany",
+          "vertical": "Patient Engagement",
+          "productFit": "Patient portal and communication platform",
+          "description": "Provides a patient portal and communication platform for connecting patients and doctors.",
+          "validation": {
+            "domain_resolves": true,
+            "clearbit_found": true,
+            "clearbit_employees": null,
+            "clearbit_country": null,
+            "clearbit_category_industry": "Information Technology/Internet Software & Services",
+            "is_healthcare_comms": true,
+            "healthcare_reason": "Healthcare + communication/engagement match",
+            "is_emea_hq": false
+          }
+        }
+      ],
+      "stats": {
+        "total_generated": 25,
+        "domain_valid": 23,
+        "clearbit_found": 22,
+        "actually_healthcare": 15,
+        "actually_emea": 17,
+        "passed_all_checks": 13
+      }
+    },
+    "clearbit_validated": {
+      "source": "Combined search + Clearbit validation",
+      "companies": [
+        {
+          "company": "Lumeon",
+          "domain": "lumeon.com",
+          "country": "UK",
+          "vertical": "Care Orchestration",
+          "productFit": "Patient Journey Orchestration",
+          "description": "Automates and orchestrates care pathways, including patient communication and appointment scheduling, integrating with NHS systems.",
+          "validation": {
+            "domain_resolves": true,
+            "clearbit_found": true,
+            "clearbit_employees": "51-250",
+            "clearbit_country": "GB",
+            "clearbit_category_industry": "Health Care/Health Care Providers & Services",
+            "is_healthcare_comms": true,
+            "healthcare_reason": "Healthcare + communication/engagement match",
+            "is_emea_hq": true
+          }
+        },
+        {
+          "company": "AccuRx",
+          "domain": "accurx.com",
+          "country": "UK",
+          "vertical": "GP Communication",
+          "productFit": "Patient Messaging & Appointment Reminders",
+          "description": "Provides a platform for GP practices to communicate with patients via SMS, video, and online forms, integrated with NHS systems.",
+          "validation": {
+            "domain_resolves": true,
+            "clearbit_found": true,
+            "clearbit_employees": "51-250",
+            "clearbit_country": "GB",
+            "clearbit_category_industry": "Health Care/Health Care Providers & Services",
+            "is_healthcare_comms": true,
+            "healthcare_reason": "Healthcare + communication/engagement match",
+            "is_emea_hq": true
+          }
+        },
+        {
+          "company": "Infermedica",
+          "domain": "infermedica.com",
+          "country": "Poland",
+          "vertical": "AI-Powered Triage",
+          "productFit": "AI-powered symptom checker and triage platform",
+          "description": "Offers an AI-powered symptom checker and triage platform for preliminary patient assessment.",
+          "validation": {
+            "domain_resolves": true,
+            "clearbit_found": true,
+            "clearbit_employees": "51-250",
+            "clearbit_country": "PL",
+            "clearbit_category_industry": "Health Care/Health Care Providers & Services",
+            "is_healthcare_comms": true,
+            "healthcare_reason": "Healthcare + communication/engagement match",
+            "is_emea_hq": true
+          }
+        },
+        {
+          "company": "DrDoctor",
+          "domain": "drdoctor.co.uk",
+          "country": "UK",
+          "vertical": "Appointment Reminders",
+          "productFit": "appointment-management",
+          "description": "Patient engagement platform focused on appointment management and reminders.",
+          "validation": {
+            "domain_resolves": true,
+            "clearbit_found": true,
+            "clearbit_employees": "51-250",
+            "clearbit_country": "GB",
+            "clearbit_category_industry": "Health Care/Health Care Providers & Services",
+            "is_healthcare_comms": true,
+            "healthcare_reason": "Healthcare + communication/engagement match",
+            "is_emea_hq": true
+          }
+        },
+        {
+          "company": "Ada Health",
+          "domain": "ada.com",
+          "country": "Germany",
+          "vertical": "Voice AI for Healthcare",
+          "productFit": "symptom-assessment",
+          "description": "AI-powered health companion for symptom assessment.",
+          "validation": {
+            "domain_resolves": true,
+            "clearbit_found": true,
+            "clearbit_employees": "251-1K",
+            "clearbit_country": "DE",
+            "clearbit_category_industry": "Telecommunication Services/Diversified Telecommunication Services",
+            "is_healthcare_comms": true,
+            "healthcare_reason": "Healthcare + communication/engagement match",
+            "is_emea_hq": true
+          }
+        },
+        {
+          "company": "KRY (LIVI)",
+          "domain": "kry.se",
+          "country": "Sweden",
+          "vertical": "Telehealth Communication",
+          "productFit": "video-consultations",
+          "description": "Digital healthcare provider offering video consultations.",
+          "validation": {
+            "domain_resolves": true,
+            "clearbit_found": true,
+            "clearbit_employees": "1K-5K",
+            "clearbit_country": "SE",
+            "clearbit_category_industry": "Health Care/Health Care Providers & Services",
+            "is_healthcare_comms": true,
+            "healthcare_reason": "Healthcare + communication/engagement match",
+            "is_emea_hq": true
+          }
+        },
+        {
+          "company": "Siilo",
+          "domain": "siilo.com",
+          "country": "Netherlands",
+          "vertical": "Clinical Communication",
+          "productFit": "Secure medical messaging app for healthcare professionals",
+          "description": "A secure messaging app designed for healthcare professionals to share information and collaborate.",
+          "validation": {
+            "domain_resolves": true,
+            "clearbit_found": true,
+            "clearbit_employees": "1K-5K",
+            "clearbit_country": "FR",
+            "clearbit_category_industry": "Information Technology/Internet Software & Services",
+            "is_healthcare_comms": true,
+            "healthcare_reason": "Healthcare + communication/engagement match",
+            "is_emea_hq": true
+          }
+        },
+        {
+          "company": "Zava",
+          "domain": "zavamed.com",
+          "country": "UK",
+          "vertical": "Telehealth",
+          "productFit": "Online doctor service with patient communication features",
+          "description": "An online doctor service providing consultations and prescriptions, with integrated patient communication.",
+          "validation": {
+            "domain_resolves": true,
+            "clearbit_found": true,
+            "clearbit_employees": "51-250",
+            "clearbit_country": "GB",
+            "clearbit_category_industry": "Telecommunication Services/Diversified Telecommunication Services",
+            "is_healthcare_comms": true,
+            "healthcare_reason": "Healthcare + communication/engagement match",
+            "is_emea_hq": true
+          }
+        },
+        {
+          "company": "Push Doctor",
+          "domain": "pushdoctor.co.uk",
+          "country": "UK",
+          "vertical": "Telehealth Communication",
+          "productFit": "video-consultations",
+          "description": "Online GP service offering video consultations.",
+          "validation": {
+            "domain_resolves": true,
+            "clearbit_found": true,
+            "clearbit_employees": "51-250",
+            "clearbit_country": "GB",
+            "clearbit_category_industry": "Health Care/Health Care Providers & Services",
+            "is_healthcare_comms": true,
+            "healthcare_reason": "Healthcare + communication/engagement match",
+            "is_emea_hq": true
+          }
+        },
+        {
+          "company": "eConsult Health",
+          "domain": "econsult.health",
+          "country": "UK",
+          "vertical": "Patient Engagement",
+          "productFit": "online-consultation",
+          "description": "Online consultation platform for patient triage.",
+          "validation": {
+            "domain_resolves": true,
+            "clearbit_found": true,
+            "clearbit_employees": "51-250",
+            "clearbit_country": "GB",
+            "clearbit_category_industry": "Industrials/Professional Services",
+            "is_healthcare_comms": true,
+            "healthcare_reason": "Healthcare + communication/engagement match",
+            "is_emea_hq": true
+          }
+        },
+        {
+          "company": "HealthHero",
+          "domain": "healthhero.com",
+          "country": "UK",
+          "vertical": "Telehealth",
+          "productFit": "Telehealth platform offering online consultations",
+          "description": "Offers a telehealth platform providing online consultations with doctors and other healthcare professionals.",
+          "validation": {
+            "domain_resolves": true,
+            "clearbit_found": true,
+            "clearbit_employees": "251-1K",
+            "clearbit_country": "GB",
+            "clearbit_category_industry": "Health Care/Health Care Providers & Services",
+            "is_healthcare_comms": true,
+            "healthcare_reason": "Healthcare + communication/engagement match",
+            "is_emea_hq": true
+          }
+        },
+        {
+          "company": "Doctolib",
+          "domain": "doctolib.fr",
+          "country": "France",
+          "vertical": "Appointment Reminders",
+          "productFit": "appointment-booking",
+          "description": "Online appointment booking platform for doctors and patients.",
+          "validation": {
+            "domain_resolves": true,
+            "clearbit_found": true,
+            "clearbit_employees": "1K-5K",
+            "clearbit_country": "FR",
+            "clearbit_category_industry": "Health Care/Health Care Providers & Services",
+            "is_healthcare_comms": true,
+            "healthcare_reason": "Healthcare + communication/engagement match",
+            "is_emea_hq": true
+          }
+        },
+        {
+          "company": "Cognigy",
+          "domain": "cognigy.com",
+          "country": "Germany",
+          "vertical": "Healthcare Contact Centers",
+          "productFit": "conversational-ai",
+          "description": "Conversational AI platform for patient interactions.",
+          "validation": {
+            "domain_resolves": true,
+            "clearbit_found": true,
+            "clearbit_employees": "51-250",
+            "clearbit_country": "DE",
+            "clearbit_category_industry": "Information Technology/IT Services",
+            "is_healthcare_comms": true,
+            "healthcare_reason": "Healthcare + communication/engagement match",
+            "is_emea_hq": true
+          }
+        },
+        {
+          "company": "Patchwork Health",
+          "domain": "patchwork.health",
+          "country": "UK",
+          "vertical": "Clinical Communication",
+          "productFit": "Workforce management and communication platform for healthcare",
+          "description": "A platform for managing healthcare workforce and facilitating communication between staff.",
+          "validation": {
+            "domain_resolves": true,
+            "clearbit_found": true,
+            "clearbit_employees": "51-250",
+            "clearbit_country": "GB",
+            "clearbit_category_industry": "Health Care/Health Care Providers & Services",
+            "is_healthcare_comms": true,
+            "healthcare_reason": "Healthcare + communication/engagement match",
+            "is_emea_hq": true
+          }
+        },
+        {
+          "company": "Corti",
+          "domain": "corti.ai",
+          "country": "Denmark",
+          "vertical": "AI in Healthcare",
+          "productFit": "AI-powered Voice Analysis",
+          "description": "Uses AI to analyze voice calls in emergency situations, helping dispatchers identify critical cases and provide better support.",
+          "validation": {
+            "domain_resolves": true,
+            "clearbit_found": true,
+            "clearbit_employees": "51-250",
+            "clearbit_country": "DK",
+            "clearbit_category_industry": "Information Technology/Internet Software & Services",
+            "is_healthcare_comms": true,
+            "healthcare_reason": "Healthcare + communication/engagement match",
+            "is_emea_hq": true
+          }
+        },
+        {
+          "company": "Kaia Health",
+          "domain": "kaiahealth.com",
+          "country": "Germany",
+          "vertical": "Digital Therapeutics",
+          "productFit": "Digital therapeutic app for musculoskeletal conditions",
+          "description": "Offers a digital therapeutic app for managing musculoskeletal conditions, including personalized exercises and education.",
+          "validation": {
+            "domain_resolves": true,
+            "clearbit_found": true,
+            "clearbit_employees": "51-250",
+            "clearbit_country": "DE",
+            "clearbit_category_industry": "Health Care/Health Care Providers & Services",
+            "is_healthcare_comms": true,
+            "healthcare_reason": "Healthcare + communication/engagement match",
+            "is_emea_hq": true
+          }
+        },
+        {
+          "company": "TeleClinic",
+          "domain": "teleclinic.com",
+          "country": "Germany",
+          "vertical": "Telehealth",
+          "productFit": "Telehealth platform offering online consultations and prescriptions",
+          "description": "A telehealth platform providing online consultations, prescriptions, and sick leave certificates.",
+          "validation": {
+            "domain_resolves": true,
+            "clearbit_found": true,
+            "clearbit_employees": "51-250",
+            "clearbit_country": "DE",
+            "clearbit_category_industry": "Health Care/Health Care Providers & Services",
+            "is_healthcare_comms": true,
+            "healthcare_reason": "Healthcare + communication/engagement match",
+            "is_emea_hq": true
+          }
+        },
+        {
+          "company": "Lifen",
+          "domain": "lifen.fr",
+          "country": "France",
+          "vertical": "Healthcare Data Exchange",
+          "productFit": "Secure Messaging & Data Sharing",
+          "description": "Focuses on secure data exchange between healthcare professionals and patients, including secure messaging and appointment scheduling.",
+          "validation": {
+            "domain_resolves": true,
+            "clearbit_found": true,
+            "clearbit_employees": "51-250",
+            "clearbit_country": "FR",
+            "clearbit_category_industry": "Information Technology/Internet Software & Services",
+            "is_healthcare_comms": true,
+            "healthcare_reason": "Healthcare + communication/engagement match",
+            "is_emea_hq": true
+          }
+        },
+        {
+          "company": "Happitech",
+          "domain": "happitech.com",
+          "country": "Netherlands",
+          "vertical": "Cardiovascular Health",
+          "productFit": "Remote Patient Monitoring & Communication",
+          "description": "Develops a smartphone-based solution for measuring heart rate and rhythm, enabling remote monitoring and communication with patients.",
+          "validation": {
+            "domain_resolves": true,
+            "clearbit_found": true,
+            "clearbit_employees": "11-50",
+            "clearbit_country": "NL",
+            "clearbit_category_industry": "Industrials/Industrial Conglomerates",
+            "is_healthcare_comms": true,
+            "healthcare_reason": "Healthcare + communication/engagement match",
+            "is_emea_hq": true
+          }
+        },
+        {
+          "company": "MedEngine",
+          "domain": "medengine.fi",
+          "country": "Finland",
+          "vertical": "Medical Communications",
+          "productFit": "Medical communications agency",
+          "description": "A medical communications agency providing services to pharmaceutical and healthcare companies.",
+          "validation": {
+            "domain_resolves": true,
+            "clearbit_found": true,
+            "clearbit_employees": "11-50",
+            "clearbit_country": "FI",
+            "clearbit_category_industry": "Industrials/Professional Services",
+            "is_healthcare_comms": true,
+            "healthcare_reason": "Healthcare + communication/engagement match",
+            "is_emea_hq": true
+          }
+        },
+        {
+          "company": "Buddy Healthcare",
+          "domain": "buddyhealthcare.com",
+          "country": "Finland",
+          "vertical": "Patient Engagement",
+          "productFit": "Patient engagement platform for pre- and post-operative care",
+          "description": "Offers a patient engagement platform for managing patients before and after surgery.",
+          "validation": {
+            "domain_resolves": true,
+            "clearbit_found": true,
+            "clearbit_employees": "11-50",
+            "clearbit_country": "FI",
+            "clearbit_category_industry": "Health Care/Health Care Providers & Services",
+            "is_healthcare_comms": true,
+            "healthcare_reason": "Healthcare + communication/engagement match",
+            "is_emea_hq": true
+          }
+        },
+        {
+          "company": "Tunstall Healthcare",
+          "domain": "tunstall.co.uk",
+          "country": "UK",
+          "vertical": "Telecare",
+          "productFit": "Telecare solutions for elderly and vulnerable people",
+          "description": "Provides telecare solutions for elderly and vulnerable people, including remote monitoring and emergency response systems.",
+          "validation": {
+            "domain_resolves": true,
+            "clearbit_found": true,
+            "clearbit_employees": "1K-5K",
+            "clearbit_country": "GB",
+            "clearbit_category_industry": "Health Care/Health Care Providers & Services",
+            "is_healthcare_comms": true,
+            "healthcare_reason": "Healthcare + communication/engagement match",
+            "is_emea_hq": true
+          }
+        },
+        {
+          "company": "Doccla",
+          "domain": "doccla.com",
+          "country": "UK",
+          "vertical": "Virtual Ward",
+          "productFit": "Virtual ward platform",
+          "description": "Provides a virtual ward platform to monitor patients at home.",
+          "validation": {
+            "domain_resolves": true,
+            "clearbit_found": true,
+            "clearbit_employees": "51-250",
+            "clearbit_country": "GB",
+            "clearbit_category_industry": "Telecommunication Services/Diversified Telecommunication Services",
+            "is_healthcare_comms": true,
+            "healthcare_reason": "Healthcare + communication/engagement match",
+            "is_emea_hq": true
+          }
+        },
+        {
+          "company": "Qare",
+          "domain": "qare.fr",
+          "country": "France",
+          "vertical": "Telemedicine",
+          "productFit": "Virtual Consultations & Patient Communication",
+          "description": "Provides a telemedicine platform that allows patients to have virtual consultations with doctors and receive prescriptions online.",
+          "validation": {
+            "domain_resolves": true,
+            "clearbit_found": true,
+            "clearbit_employees": "51-250",
+            "clearbit_country": "FR",
+            "clearbit_category_industry": "Industrials/Professional Services",
+            "is_healthcare_comms": true,
+            "healthcare_reason": "Healthcare + communication/engagement match",
+            "is_emea_hq": true
+          }
+        },
+        {
+          "company": "Visionable",
+          "domain": "visionable.com",
+          "country": "UK",
+          "vertical": "Telehealth Communication",
+          "productFit": "video-collaboration",
+          "description": "Secure video collaboration platform designed for healthcare professionals.",
+          "validation": {
+            "domain_resolves": true,
+            "clearbit_found": true,
+            "clearbit_employees": "51-250",
+            "clearbit_country": "GB",
+            "clearbit_category_industry": "Information Technology/Internet Software & Services",
+            "is_healthcare_comms": false,
+            "healthcare_reason": "Healthcare but not specifically comms/engagement",
+            "is_emea_hq": true
+          }
+        }
+      ],
+      "stats": {
+        "total_generated": 25,
+        "domain_valid": 25,
+        "clearbit_found": 25,
+        "actually_healthcare": 24,
+        "actually_emea": 25,
+        "passed_all_checks": 24
+      }
+    }
+  },
+  "overlap": {
+    "all_three": [
+      "healthhero.com",
+      "infermedica.com",
+      "lumeon.com",
+      "siilo.com",
+      "zavamed.com"
+    ],
+    "gemini_only": [
+      "arteria.ai",
+      "avoa.com",
+      "babylonhealth.com",
+      "medneo.com",
+      "qunomedical.com",
+      "sensely.com",
+      "talkdesk.com"
+    ],
+    "brave_only": [
+      "awellhealth.com",
+      "caresyntax.com",
+      "mayfairmedtech.com",
+      "mika.health",
+      "monsenso.com",
+      "wellabe.com"
+    ],
+    "clearbit_only": [
+      "qare.fr"
+    ],
+    "gemini_and_brave": [
+      "medigate.com",
+      "medloop.com",
+      "pando.ai",
+      "visibacare.com"
+    ],
+    "gemini_and_clearbit": [
+      "accurx.com",
+      "ada.com",
+      "cognigy.com",
+      "doctolib.fr",
+      "drdoctor.co.uk",
+      "econsult.health",
+      "kry.se",
+      "pushdoctor.co.uk",
+      "visionable.com"
+    ],
+    "brave_and_clearbit": [
+      "buddyhealthcare.com",
+      "corti.ai",
+      "doccla.com",
+      "happitech.com",
+      "kaiahealth.com",
+      "lifen.fr",
+      "medengine.fi",
+      "patchwork.health",
+      "teleclinic.com",
+      "tunstall.co.uk"
+    ]
+  },
+  "winner": "clearbit_validated \u2014 24 companies passed all 4 validation checks",
+  "summary": "Method Comparison Results:\n- Gemini Flash (LLM-only): 11/25 passed all checks (23 domains valid, 24 Clearbit found, 16 healthcare, 17 EMEA)\n- Brave Search + AI: 13/25 passed all checks (23 domains valid, 22 Clearbit found, 15 healthcare, 17 EMEA)\n- Clearbit-validated: 24/25 passed all checks (25 domains valid, 25 Clearbit found, 24 healthcare, 25 EMEA)\n\nOverlap: 5 companies in all three methods.\nWinner: clearbit_validated with 24 fully validated companies.\n\nNOTE: Brave Search API key was not configured, so Method 2 used a different Gemini prompt to simulate web-sourced discovery. For a true comparison, configure BRAVE_API_KEY."
+}

@@ -1,0 +1,133 @@
+{
+  "timestamp": "2026-02-26T10:00:04.322880+00:00",
+  "runtime_seconds": 10.324842,
+  "dry_run": false,
+  "days_analyzed": 7,
+  "campaigns_processed": 37,
+  "search_terms_analyzed": 112,
+  "skipped": 9888,
+  "decisions": {
+    "blocked": 5,
+    "review": 5,
+    "monitored": 22,
+    "kept": 80
+  },
+  "blocks_applied": [
+    {
+      "search_term": "elevenlabs io",
+      "campaign_id": 23277159104,
+      "campaign_name": "202511 TOFU AI Agents TTS API Global",
+      "spend": 60.631233,
+      "clicks": 82,
+      "conversions": 0.0,
+      "relevancy_score": 0,
+      "intent_type": "PERFORMANCE",
+      "confidence": 85,
+      "match_type": "EXACT",
+      "applied": true,
+      "resource_name": "customers/2356650573/campaignCriteria/23277159104~1964910229653"
+    },
+    {
+      "search_term": "speechma",
+      "campaign_id": 23277159104,
+      "campaign_name": "202511 TOFU AI Agents TTS API Global",
+      "spend": 54.694769,
+      "clicks": 111,
+      "conversions": 0.0,
+      "relevancy_score": 0,
+      "intent_type": "PERFORMANCE",
+      "confidence": 85,
+      "match_type": "EXACT",
+      "applied": true,
+      "resource_name": "customers/2356650573/campaignCriteria/23277159104~2387406694921"
+    },
+    {
+      "search_term": "ai voice generator",
+      "campaign_id": 23584242652,
+      "campaign_name": "202602 TOFU Vapi AI Agent SA EMEA",
+      "spend": 49.204949,
+      "clicks": 72,
+      "conversions": 0.0,
+      "relevancy_score": 50,
+      "intent_type": "TTS_ONLY",
+      "confidence": 85,
+      "match_type": "PHRASE",
+      "applied": true,
+      "resource_name": "customers/2356650573/campaignCriteria/23584242652~397774641009"
+    },
+    {
+      "search_term": "ai voice generator",
+      "campaign_id": 23584242697,
+      "campaign_name": "202602 TOFU ElevenLabs SA EMEA",
+      "spend": 26.441146,
+      "clicks": 45,
+      "conversions": 0.0,
+      "relevancy_score": 35,
+      "intent_type": "TTS_ONLY",
+      "confidence": 85,
+      "match_type": "PHRASE",
+      "applied": true,
+      "resource_name": "customers/2356650573/campaignCriteria/23584242697~397774641009"
+    },
+    {
+      "search_term": "esim",
+      "campaign_id": 23559393583,
+      "campaign_name": "202310 MOFU IoT SIM SA APAC - SEA",
+      "spend": 22.34,
+      "clicks": 5,
+      "conversions": 0.0,
+      "relevancy_score": 30,
+      "intent_type": "CONSUMER_ESIM",
+      "confidence": 85,
+      "match_type": "PHRASE",
+      "applied": true,
+      "resource_name": "customers/2356650573/campaignCriteria/23559393583~126832342"
+    }
+  ],
+  "review_items": [
+    {
+      "search_term": "call center automation",
+      "campaign_id": 23578096203,
+      "campaign_name": "202602 TOFU Contact Center SA AMER",
+      "spend": 157.44,
+      "confidence": 75,
+      "reason": "Medium relevancy (45/100) + 140 clicks, 0 conversions (statistically significant)"
+    },
+    {
+      "search_term": "call center automation",
+      "campaign_id": 23583442793,
+      "campaign_name": "202602 TOFU Contact Center SA EMEA",
+      "spend": 86.24,
+      "confidence": 75,
+      "reason": "Medium relevancy (45/100) + 53 clicks, 0 conversions (statistically significant)"
+    },
+    {
+      "search_term": "chatbot call center",
+      "campaign_id": 23583442793,
+      "campaign_name": "202602 TOFU Contact Center SA EMEA",
+      "spend": 54.87,
+      "confidence": 75,
+      "reason": "Medium relevancy (45/100) + 42 clicks, 0 conversions (statistically significant)"
+    },
+    {
+      "search_term": "eleven labs",
+      "campaign_id": 23584242475,
+      "campaign_name": "202602 TOFU Vapi AI Agent SA AMER",
+      "spend": 54.77,
+      "confidence": 75,
+      "reason": "Medium relevancy (30/100) + 45 clicks, 0 conversions (statistically significant)"
+    },
+    {
+      "search_term": "voice bot for call center",
+      "campaign_id": 23578113243,
+      "campaign_name": "202602 TOFU Contact Center SA APAC",
+      "spend": 22.54,
+      "confidence": 75,
+      "reason": "Medium relevancy (45/100) + 26 clicks, 0 conversions (statistically significant)"
+    }
+  ],
+  "estimated_savings": {
+    "weekly": 589.172097,
+    "monthly": 2533.4400170999997
+  }
+}

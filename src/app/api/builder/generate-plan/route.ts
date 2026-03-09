@@ -14,7 +14,7 @@ BUDGET CALCULATION RULES:
 - StackAdapt: Monthly = (Audience × Reach% × Frequency × CPM) / 1000
 - Reddit: CPM $8-15, developer-focused
 
-MINIMUM BUDGETS: Google $1,500, LinkedIn $2,000, StackAdapt $1,500, Reddit $1,000
+MINIMUM BUDGETS: Google $1,500, LinkedIn $2,000, StackAdapt $1,500, Reddit $1,000 (already included)
 
 Create a campaign plan:
 

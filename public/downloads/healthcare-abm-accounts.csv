@@ -1,0 +1,364 @@
+company,domain,productFit,tier,companySize,country,region,status
+1Doc3,1doc3.com,voice-ai,,,Colombia,,identified
+3M Health Information Systems,3m.com,,Tier 1,Enterprise,US,AMER,identified
+98point6,98point6.com,,Tier 2,Mid-Market,US,AMER,identified
+Abridge,abridge.com,voice-ai,,,USA,AMER,identified
+Accolade,accolade.com,,Tier 1,Enterprise,US,AMER,identified
+Ada Health,ada.com,voice-ai,,,Germany,EMEA,identified
+Adonis,adonis.io,sms-api,,,USA,AMER,identified
+AdvancedMD,advancedmd.com,voice-ai,,,USA,AMER,identified
+Agilon Health,agilonhealth.com,,Tier 1,Enterprise,US,AMER,identified
+Aidoc,aidoc.com,sms-api,,,USA,AMER,identified
+AIRE Medical,airemedical.com,,Tier 3,SMB,AU,APAC,identified
+Aiva Health,aivahealth.com,voice-ai,,,USA,AMER,identified
+AIwithCare,aiwithcare.com,sms-api,,,USA,AMER,identified
+AKASA,akasa.com,sms-api,,,USA,AMER,identified
+Aktana,aktana.com,,Tier 2,Mid-Market,US,AMER,identified
+Aledade,aledade.com,,Tier 1,Enterprise,US,AMER,identified
+Alleviate Health,alleviatehealth.care,voice-ai,,,USA,AMER,identified
+Alma,helloalma.com,,Tier 2,Mid-Market,US,AMER,identified
+Altibbi,altibbi.com,voice-ai,,,Jordan,,identified
+Ambience Healthcare,ambiencehealthcare.com,voice-ai,,,USA,AMER,identified
+Amby Health,ambyhealth.com,sms-api,,,USA,AMER,identified
+Amwell,amwell.com,,Tier 1,Enterprise,US,AMER,identified
+Andromeda Robotics,dromeda.com.au,voice-ai,,,Australia,AMER,identified
+Apixio,apixio.com,sms-api,,,USA,AMER,identified
+Arini,arini.ai,voice-ai,,,USA,AMER,identified
+Artera,artera.io,multi-product,,,USA,AMER,identified
+Artisight,artisight.com,iot,,,USA,AMER,identified
+Asepha AI,asepha.ai,voice-ai,,,Canada,AMER,identified
+Assort Health,assorthealth.com,voice-ai,,,USA,AMER,identified
+Athelas,athelas.com,iot,,,USA,AMER,identified
+Athenahealth,athenahealth.com,,Tier 1,Enterprise,US,AMER,identified
+Augmedix,augmedix.com,voice-ai,,,USA,AMER,identified
+Augnito,augnito.ai,voice-ai,,,India,APAC,identified
+Authenticx,authenticx.com,,Tier 2,Mid-Market,US,AMER,identified
+Availity,availity.com,,Tier 1,Enterprise,US,AMER,identified
+Avelis Health,avelis.health,sms-api,,,USA,AMER,identified
+Babylon Health,babylonhealth.com,,Tier 2,Mid-Market,UK,EMEA,identified
+Babylon Health (Emed),emed.com,,Tier 2,Mid-Market,UK,EMEA,identified
+Bharosa AI,bharosaai.com,voice-ai,,,India,APAC,identified
+Bigly Sales,biglysales.com,,Tier 3,SMB,US,AMER,identified
+Biofourmis,biofourmis.com,iot,,,Singapore,APAC,identified
+Biovotion (Biofourmis),biofourmis.com,,Tier 2,Mid-Market,SG,APAC,identified
+Biovotion (Biometrid),biometrid.com,,Tier 3,SMB,CH,EMEA,identified
+Bright.md,bright.md,,Tier 3,SMB,US,AMER,identified
+Brightside Health,brightside.com,,Tier 2,Mid-Market,US,AMER,identified
+Buoy Health,buoyhealth.com,voice-ai,,,USA,AMER,identified
+Callin.io,callin.io,voice-ai,,,USA,AMER,identified
+Calm,calm.com,,Tier 1,Enterprise,US,AMER,identified
+Canary Speech,canaryspeech.com,voice-ai,,,USA,AMER,identified
+Candid Health,candidhealth.com,sms-api,,,USA,AMER,identified
+Capsule,capsule.com,,Tier 2,Mid-Market,US,AMER,identified
+Capsule Health,capsule.com,,Tier 2,Mid-Market,US,AMER,identified
+Carbon Health,carbonhealth.com,,Tier 2,Mid-Market,US,AMER,identified
+Cardiology AI (Us2.ai),us2.ai,,Tier 3,SMB,SG,APAC,identified
+CareBestie,carebestie.ai,voice-ai,,,USA,AMER,identified
+Carebox,carebox.com,sms-api,,,USA,AMER,identified
+CareCloud,carecloud.com,,Tier 2,Mid-Market,US,AMER,identified
+careCycle,carecycle.ai,voice-ai,,,USA,AMER,identified
+CareFirst AI,saykara.com,,Tier 3,SMB,US,AMER,identified
+Careforce,careforce.ai,multi-product,,,USA,AMER,identified
+CareHarmony,careharmony.com,voice-ai,,,USA,AMER,identified
+CareMessage,caremessage.org,,Tier 3,SMB,US,AMER,identified
+Carevoice,carevoice.com,,Tier 2,Mid-Market,CN,APAC,identified
+Caro Health,caro.health,voice-ai,,,Netherlands,EMEA,identified
+Catalia Health,cataliahealth.com,,Tier 3,SMB,US,AMER,identified
+Cedar,cedar.com,voice-ai,,,USA,AMER,identified
+Cem Health,cemhealth.com,,Tier 3,SMB,US,AMER,identified
+Cera,ceracare.co.uk,voice-ai,,,UK,EMEA,identified
+Cerebral,cerebral.com,,Tier 2,Mid-Market,US,AMER,identified
+Cerner (Oracle Health),oracle.com/health,,Tier 1,Enterprise,US,AMER,identified
+CipherHealth,cipherhealth.com,voice-ai,,,USA,AMER,identified
+CirrusMD,cirrusmd.com,,Tier 2,Mid-Market,US,AMER,identified
+Cityblock Health,cityblock.com,,Tier 2,Mid-Market,US,AMER,identified
+Clarion,clarionhealthcare.com,voice-ai,,,USA,AMER,identified
+Clearstep,clearstep.health,,Tier 3,SMB,US,AMER,identified
+Clevy.io,clevy.io,,Tier 3,SMB,FR,EMEA,identified
+Clinic to Cloud,clinictocloud.com,,Tier 2,Mid-Market,AU,APAC,identified
+Cohere Health,coherehealth.com,voice-ai,,,USA,AMER,identified
+Collective Health,collectivehealth.com,,Tier 2,Mid-Market,US,AMER,identified
+Collectly,collectly.co,sms-api,,,USA,AMER,identified
+Commure,commure.com,voice-ai,,,USA,AMER,identified
+Confido Health,confido.health,voice-ai,,,USA,AMER,identified
+Corti,corti.ai,voice-ai,,,Denmark,EMEA,identified
+Cotiviti,cotiviti.com,,Tier 1,Enterprise,US,AMER,identified
+Curai Health,curaihealth.com,,Tier 2,Mid-Market,US,AMER,identified
+CureBay,curebay.com,sms-api,,,India,APAC,identified
+Curious Thing,curiousthing.io,voice-ai,,,Australia,AMER,identified
+Daisee,daisee.com,voice-ai,,,Australia,AMER,identified
+Datos Health,datos-health.com,voice-ai,,,Israel,EMEA,identified
+DeepScribe,deepscribe.ai,voice-ai,,,USA,AMER,identified
+Delfa,delfa.ai,voice-ai,,,USA,AMER,identified
+Denota,denota.ai,voice-ai,,,USA,AMER,identified
+DentalBee,dentalbee.com,voice-ai,,,USA,AMER,identified
+Dentina.ai,dentina.ai,voice-ai,,,USA,AMER,identified
+Devoted Health,devoted.com,,Tier 1,Enterprise,US,AMER,identified
+Dialogue,dialogue.co,,Tier 2,Mid-Market,CA,AMER,identified
+Diya Health,diyahealth.com,,Tier 3,SMB,IN,APAC,identified
+Docplanner,docplanner.com,,Tier 1,Enterprise,PL,EMEA,identified
+Doctolib,doctolib.fr,,Tier 1,Enterprise,FR,EMEA,identified
+Doctolib (DE/FR),doctolib.de,,Tier 1,Enterprise,DE,EMEA,identified
+Doctor Anywhere,doctoranywhere.com,,Tier 2,Mid-Market,SG,APAC,identified
+Doctoralia,doctoralia.com,,Tier 1,Enterprise,ES,EMEA,identified
+Dodo,vetdodo.com,voice-ai,,,USA,AMER,identified
+Doxy.me,doxy.me,,Tier 2,Mid-Market,US,AMER,identified
+DrChrono,drchrono.com,,Tier 2,Mid-Market,US,AMER,identified
+DrChrono (EverHealth),drchrono.com,,Tier 2,Mid-Market,US,AMER,identified
+DrDoctor,drdoctor.co.uk,,Tier 2,Mid-Market,GB,EMEA,identified
+DrFirst,drfirst.com,,Tier 2,Mid-Market,US,AMER,identified
+Dyania Health,dyaniahealth.com,voice-ai,,,USA,AMER,identified
+Eko Health,ekohealth.com,,Tier 2,Mid-Market,US,AMER,identified
+Elation Health,elationhealth.com,,Tier 2,Mid-Market,US,AMER,identified
+Eleos Health,eleos.health,voice-ai,,,USA,AMER,identified
+EliseAI,eliseai.com,voice-ai,,,USA,AMER,identified
+Ellipsis Health,ellipsishealth.com,voice-ai,,,USA,AMER,identified
+ElliQ,elliq.com,voice-ai,,,USA,AMER,identified
+Emitrr,emitrr.com,,Tier 3,SMB,US,AMER,identified
+ENTER Health,enter.health,sms-api,,,USA,AMER,identified
+Evolent Health,evolenthealth.com,,Tier 1,Enterprise,US,AMER,identified
+Ezra,ezra.com,,Tier 2,Mid-Market,US,AMER,identified
+Fabric Health,fabrichealth.com,,Tier 2,Mid-Market,US,AMER,identified
+Freed,getfreed.ai,voice-ai,,,USA,AMER,identified
+Ginger (Headspace Health),headspace.com,,Tier 1,Enterprise,US,AMER,identified
+Gove AI,goveai.com,voice-ai,,,USA,AMER,identified
+Greenway Health,greenwayhealth.com,,Tier 1,Enterprise,US,AMER,identified
+Grow Therapy,growtherapy.com,voice-ai,,,USA,AMER,identified
+Guidehealth,guidehealth.com,voice-ai,,,USA,AMER,identified
+GYANT,gyant.com,voice-ai,,,USA,AMER,identified
+Halo Health,halohealth.com,,Tier 2,Mid-Market,US,AMER,identified
+Halodoc,halodoc.com,,Tier 2,Mid-Market,ID,APAC,identified
+Headway,headway.co,,Tier 2,Mid-Market,US,AMER,identified
+Heal,heal.com,,Tier 2,Mid-Market,US,AMER,identified
+Healee,healee.com,,Tier 3,SMB,BG,EMEA,identified
+Healtheon (Commure),commure.com,,Tier 2,Mid-Market,US,AMER,identified
+Healthie,gethealthie.com,,Tier 2,Mid-Market,US,AMER,identified
+Healthily,livehealthily.com,,Tier 3,SMB,GB,EMEA,identified
+HealthSnap,healthsnap.io,sms-api,,,USA,AMER,identified
+HealthTap,healthtap.com,,Tier 2,Mid-Market,US,AMER,identified
+Healthymize,healthymize.com,,Tier 3,SMB,IL,EMEA,identified
+Heidi Health,heidihealth.com,sms-api,,,Australia,AMER,identified
+Helixai (MedBridge Health),helixai.com,,Tier 3,SMB,US,AMER,identified
+Hello Patient,hellopatient.com,voice-ai,,,USA,AMER,identified
+Hey Revia,heyrevia.ai,voice-ai,,,USA,AMER,identified
+HeyGent,heygent.ai,voice-ai,,,USA,AMER,identified
+Hims & Hers Health,forhims.com,,Tier 1,Enterprise,US,AMER,identified
+Hinge Health,hingehealth.com,,Tier 1,Enterprise,US,AMER,identified
+Hippocratic AI,hippocraticai.com,voice-ai,,,USA,AMER,identified
+Huma,huma.com,,Tier 2,Mid-Market,UK,EMEA,identified
+Hyfe AI,hyfe.ai,,Tier 3,SMB,US,AMER,identified
+Hyro,hyro.ai,voice-ai,,,USA,AMER,identified
+Included Health,includedhealth.com,,Tier 1,Enterprise,US,AMER,identified
+Infermedica,infermedica.com,,Tier 2,Mid-Market,PL,EMEA,identified
+Infinitus,infinitus.ai,voice-ai,,,USA,AMER,identified
+Infinitus Systems,infinitus.ai,voice-ai,,,USA,AMER,identified
+Innovaccer,innovaccer.com,,Tier 1,Enterprise,US,AMER,identified
+Insight Health,insighthealth.ai,,Tier 3,SMB,US,AMER,identified
+Inspiren,inspiren.com,voice-ai,,,USA,AMER,identified
+K Health,khealth.com,,Tier 2,Mid-Market,US,AMER,identified
+Kaia Health,kaiahealth.com,,Tier 2,Mid-Market,DE,EMEA,identified
+Kaigo Health,kaigohealth.com,voice-ai,,,USA,AMER,identified
+Kareo (Tebra),kareo.com,,Tier 2,Mid-Market,US,AMER,identified
+Kenect,kenect.com,multi-product,,,USA,AMER,identified
+Kintsugi,kintsugihealth.com,voice-ai,,,USA,AMER,identified
+Kiroku,kiroku.com,,Tier 3,SMB,GB,EMEA,identified
+Klara,klara.com,multi-product,,,USA,AMER,identified
+Kouper Health,kouperhealth.com,voice-ai,,,USA,AMER,identified
+Kry,kry.se,,Tier 2,Mid-Market,SE,EMEA,identified
+Kry (Livi),kry.se,,Tier 2,Mid-Market,SE,EMEA,identified
+Lark Health,lark.com,voice-ai,,,USA,AMER,identified
+Laronix,laronix.com,voice-ai,,,Australia,AMER,identified
+Lifelink Systems,lifelinksystems.com,voice-ai,,,USA,AMER,identified
+LifePod Solutions,lifepod.com,,Tier 3,SMB,US,AMER,identified
+Limbic AI,limbic.ai,voice-ai,,,UK,EMEA,identified
+Livongo (Teladoc Health),teladochealth.com,,Tier 1,Enterprise,US,AMER,identified
+Locata,locata.ai,sms-api,,,USA,AMER,identified
+Locus Health,locushealth.com,multi-product,,,USA,AMER,identified
+Loyal,loyal.com,,Tier 2,Mid-Market,US,AMER,identified
+Luma AI Health (Klara),klara.com,,Tier 2,Mid-Market,US,AMER,identified
+Luma Health,lumahealth.com,multi-product,,,USA,AMER,identified
+Lumeris,lumeris.com,,Tier 1,Enterprise,US,AMER,identified
+LunaBill,lunabill.com,voice-ai,,,USA,AMER,identified
+Lyra Health,lyrahealth.com,,Tier 1,Enterprise,US,AMER,identified
+Lyrebird Health,lyrebirdhealth.com,voice-ai,,,Australia,AMER,identified
+Machinify,machinify.com,voice-ai,,,USA,AMER,identified
+Mandolin,mandolin.com,voice-ai,,,USA,AMER,identified
+Manta Technologies,manta.vet,voice-ai,,,USA,AMER,identified
+Maven Clinic,mavenclinic.com,,Tier 2,Mid-Market,US,AMER,identified
+Medallia,medallia.com,,Tier 1,Enterprise,US,AMER,identified
+Medallion,medallion.co,,Tier 2,Mid-Market,US,AMER,identified
+MedBridge,medbridge.com,,Tier 2,Mid-Market,US,AMER,identified
+MedChat,medchat.ai,,Tier 3,SMB,US,AMER,identified
+MediBuddy,medibuddy.in,,Tier 2,Mid-Market,IN,APAC,identified
+Mediktor,mediktor.com,,Tier 3,SMB,ES,EMEA,identified
+Medisafe,medisafe.com,voice-ai,,,USA,AMER,identified
+Memora Health,memorahealth.com,multi-product,,,USA,AMER,identified
+Mend,mend.com,multi-product,,,USA,AMER,identified
+mfine,mfine.co,,Tier 2,Mid-Market,IN,APAC,identified
+ModelTalker,modeltalker.com,,Tier 3,SMB,US,AMER,identified
+ModMed,modmed.com,,Tier 1,Enterprise,US,AMER,identified
+My AI Front Desk,myaifrontdesk.com,voice-ai,,,USA,AMER,identified
+Nabla,nabla.com,voice-ai,,,France,EMEA,identified
+Navina,navina.ai,voice-ai,,,Israel/USA,AMER,identified
+Newton AI,getnewton.ai,voice-ai,,,USA,AMER,identified
+Noah AI,heynoah.ai,voice-ai,,,USA,AMER,identified
+Noom,noom.com,,Tier 1,Enterprise,US,AMER,identified
+Notable Health,notablehealth.com,multi-product,,,USA,AMER,identified
+Noteless,noteless.no,voice-ai,,,Norway,EMEA,identified
+Nuance DAX,nuance.com,voice-ai,,,USA,AMER,identified
+Nuvance Health,nuvancehealth.com,,Tier 1,Enterprise,US,AMER,identified
+Nuvoair,nuvoair.com,,Tier 3,SMB,SE,EMEA,identified
+Nuvocare (CareAngel),careangel.com,,Tier 2,Mid-Market,US,AMER,identified
+Nuxera AI,nuxeraai.com,voice-ai,,,Saudi Arabia,EMEA,identified
+Odeza,odeza.com,voice-ai,,,USA,AMER,identified
+Olive AI,oliveai.com,,Tier 2,Mid-Market,US,AMER,identified
+Omada Health,omadahealth.com,,Tier 2,Mid-Market,US,AMER,identified
+Omnicell,omnicell.com,,Tier 1,Enterprise,US,AMER,identified
+OmniMD AI Front Desk,omnimd.com,voice-ai,,,USA,AMER,identified
+Oscar Health,hioscar.com,,Tier 1,Enterprise,US,AMER,identified
+Outbound AI,outbound.ai,,Tier 3,SMB,US,AMER,identified
+Overjet,overjet.com,voice-ai,,,USA,AMER,identified
+Ozlo,ozlo.com,,Tier 3,SMB,US,AMER,identified
+Pager (Conversa Health),pager.com,,Tier 2,Mid-Market,US,AMER,identified
+Pager (now Confluent Health),pager.com,,Tier 2,Mid-Market,US,AMER,identified
+Pager (now Conversa),pager.com,,Tier 2,Mid-Market,US,AMER,identified
+Parakeet Health,parakeethealth.com,multi-product,,,USA,AMER,identified
+Paratus Health,paratushealth.com,voice-ai,,,USA,AMER,identified
+Patientco (now Waystar),patientco.com,,Tier 2,Mid-Market,US,AMER,identified
+Patientdesk.ai,patientdesk.ai,voice-ai,,,USA,AMER,identified
+PatientPop (Tebra),tebra.com,,Tier 2,Mid-Market,US,AMER,identified
+Perspectives Health,perspectiveshealth.com,voice-ai,,,USA,AMER,identified
+Pharma Pilot,pharmapilot.ca,voice-ai,,,Canada,AMER,identified
+Pharmesol,pharmesol.com,multi-product,,,USA,AMER,identified
+Pharmie AI,pharmie.ai,voice-ai,,,USA,AMER,identified
+Phases,phases.health,voice-ai,,,USA,AMER,identified
+Phonak (Sonova),phonak.com,,Tier 1,Enterprise,CH,EMEA,identified
+Phreesia,phreesia.com,voice-ai,,,USA,AMER,identified
+Pieces Technologies,piecestech.com,,Tier 2,Mid-Market,US,AMER,identified
+Pillo Health,pillohealth.com,,Tier 3,SMB,US,AMER,identified
+Plenful,plenful.com,sms-api,,,USA,AMER,identified
+pMD,pmd.com,,Tier 2,Mid-Market,US,AMER,identified
+Popai Health,popaihealth.com,voice-ai,,,Israel/USA,AMER,identified
+Practo,practo.com,,Tier 2,Mid-Market,IN,APAC,identified
+Prize Health,prizehealth.com,,Tier 2,Mid-Market,US,AMER,identified
+Prosper AI,getprosper.ai,voice-ai,,,USA,AMER,identified
+Puppeteer AI,puppeteerai.com,multi-product,,,USA,AMER,identified
+Pype AI,pypeai.com,voice-ai,,,India,APAC,identified
+QliqSOFT,qliqsoft.com,,Tier 3,SMB,US,AMER,identified
+Quartet Health,quartethealth.com,,Tier 2,Mid-Market,US,AMER,identified
+Qventus,qventus.com,,Tier 2,Mid-Market,US,AMER,identified
+Recognize (Augmedix),augmedix.com,,Tier 2,Mid-Market,US,AMER,identified
+Recuro Health,recurohealth.com,,Tier 2,Mid-Market,US,AMER,identified
+Regard,withregard.com,,Tier 2,Mid-Market,US,AMER,identified
+Relatient,relatient.com,sms-api,,,USA,AMER,identified
+Relatient (now Arrive Health),relatient.com,,Tier 2,Mid-Market,US,AMER,identified
+Remedy,remedy.health,voice-ai,,,USA,AMER,identified
+RevMaxx,revmaxx.co,voice-ai,,,USA,AMER,identified
+Rhino Health,rhinohealth.com,,Tier 3,SMB,US,AMER,identified
+Rhinogram,rhinogram.com,,Tier 3,SMB,US,AMER,identified
+Ribbon Health,ribbonhealth.com,,Tier 2,Mid-Market,US,AMER,identified
+Ro,ro.co,,Tier 2,Mid-Market,US,AMER,identified
+Robin Healthcare,robinhealthcare.com,,Tier 3,SMB,US,AMER,identified
+Rovi Health,rovihealth.com,sms-api,,,USA,AMER,identified
+S10.AI,s10.ai,,Tier 3,SMB,US,AMER,identified
+Safedrugbot,safedrugbot.com,,Tier 3,SMB,IT,EMEA,identified
+Sage,sagecare.ai,voice-ai,,,USA,AMER,identified
+Saige,getsaige.com,,Tier 3,SMB,US,AMER,identified
+Saluton,saluton.com,,Tier 3,SMB,US,AMER,identified
+Savor Health,savorhealth.com,,Tier 3,SMB,US,AMER,identified
+Saykara,saykara.com,,Tier 3,SMB,US,AMER,identified
+ScribeAmerica,scribeamerica.com,,Tier 1,Enterprise,US,AMER,identified
+ScribeEMR,scribeemr.com,,Tier 3,SMB,US,AMER,identified
+ScribeMD,scribemd.ai,voice-ai,,,USA,AMER,identified
+Selvas AI,selvasai.com,voice-ai,,,South Korea,APAC,identified
+Sensely,sensely.com,,Tier 2,Mid-Market,US,AMER,identified
+Sensi.AI,sensi.ai,voice-ai,,,Israel,EMEA,identified
+Sermo,sermo.com,,Tier 2,Mid-Market,US,AMER,identified
+Sevaro,sevaro.com,programmable-voice,,,USA,AMER,identified
+Silna Health,silnahealth.com,voice-ai,,,USA,AMER,identified
+Simbo AI,simbo.ai,,Tier 3,SMB,US,AMER,identified
+Simbo.AI,simbo.ai,,Tier 3,SMB,IN,APAC,identified
+SimplePractice,simplepractice.com,,Tier 2,Mid-Market,US,AMER,identified
+Slingshot AI,slingshotai.com,voice-ai,,,USA,AMER,identified
+SmarterDX,smarterdx.com,sms-api,,,USA,AMER,identified
+Sohar Health,soharhealth.com,sms-api,,,USA,AMER,identified
+Solace Health,solacehealth.io,voice-ai,,,USA,AMER,identified
+Solv Health,solvhealth.com,,Tier 2,Mid-Market,US,AMER,identified
+Solventum (3M Health),solventum.com,,Tier 1,Enterprise,US,AMER,identified
+Sonde Health,sondehealth.com,voice-ai,,,USA,AMER,identified
+Sopris Health,soprishealth.com,,Tier 3,SMB,US,AMER,identified
+Soundlines,soundlines.com,,Tier 3,SMB,US,AMER,identified
+Spike Technologies,spikecare.com,voice-ai,,,USA,AMER,identified
+Spring Health,springhealth.com,sms-api,,,USA,AMER,identified
+Stericycle Communication Solutions,stericycle.com,voice-ai,,,USA,AMER,identified
+Suki,suki.ai,voice-ai,,,USA,AMER,identified
+Suki AI,suki.ai,,Tier 2,Mid-Market,US,AMER,identified
+Sully AI,sully.ai,,Tier 3,SMB,US,AMER,identified
+Sully.ai,sully.ai,voice-ai,,,USA,AMER,identified
+SuperDial,superdial.ai,voice-ai,,,USA,AMER,identified
+Sword Health,swordhealth.com,voice-ai,,,USA,AMER,identified
+Syllable,syllable.ai,multi-product,,,USA,AMER,identified
+Syntra,syntra.ai,sms-api,,,USA,AMER,identified
+Tali AI,tali.ai,voice-ai,,,Canada,AMER,identified
+Talkdesk (Healthcare),talkdesk.com,,Tier 1,Enterprise,US,AMER,identified
+Talkiatry,talkiatry.com,sms-api,,,USA,AMER,identified
+Talkie.ai,talkie.ai,voice-ai,,,USA,AMER,identified
+Tandem,withtandem.com,voice-ai,,,USA,AMER,identified
+Tandem Health,tandemhealth.ai,voice-ai,,,Sweden,EMEA,identified
+Tebra,tebra.com,,Tier 1,Enterprise,US,AMER,identified
+Teladoc Health,teladochealth.com,,Tier 1,Enterprise,US,AMER,identified
+TeleVox,televox.com,voice-ai,,,USA,AMER,identified
+Telli,telli.ai,voice-ai,,,USA,AMER,identified
+Tendo Systems,tendo.com,,Tier 2,Mid-Market,US,AMER,identified
+Tennr,tennr.com,,Tier 3,SMB,US,AMER,identified
+Thoughtful AI,thoughtful.ai,voice-ai,,,USA,AMER,identified
+TigerConnect,tigerconnect.com,,Tier 2,Mid-Market,US,AMER,identified
+Toothy AI,toothy.ai,voice-ai,,,USA,AMER,identified
+TORTUS AI,tortus.ai,voice-ai,,,UK,EMEA,identified
+Transcarent,transcarent.com,voice-ai,,,USA,AMER,identified
+Trapeze,trapezehealth.com,voice-ai,,,USA,AMER,identified
+Trially,trially.ai,voice-ai,,,USA,AMER,identified
+TrialWire,trialwire.com,voice-ai,,,USA,AMER,identified
+Tucuvi,tucuvi.com,voice-ai,,,Spain,EMEA,identified
+Twill (formerly Happify Health),twill.health,,Tier 2,Mid-Market,US,AMER,identified
+UnityAI,unityai.com,voice-ai,,,USA,AMER,identified
+Updox,updox.com,multi-product,,,USA,AMER,identified
+Upheal,upheal.io,voice-ai,,,Czech Republic,,identified
+Veracross,veracross.com,,Tier 2,Mid-Market,US,AMER,identified
+Veracross (Kalderos),kalderos.com,,Tier 2,Mid-Market,US,AMER,identified
+Veracross Health (Augmedix),augmedix.com,,Tier 2,Mid-Market,US,AMER,identified
+Veracross Health (Bright.md),bright.md,,Tier 2,Mid-Market,US,AMER,identified
+Veracross Health (Dialogue),dialogue.co,,Tier 2,Mid-Market,CA,AMER,identified
+Veracyte,veracyte.com,,Tier 2,Mid-Market,US,AMER,identified
+VetPawer,vetpawer.com,voice-ai,,,USA,AMER,identified
+Vezeeta,vezeeta.com,voice-ai,,,Egypt,EMEA,identified
+Vida Health,vida.com,,Tier 2,Mid-Market,US,AMER,identified
+Viz.ai,viz.ai,sms-api,,,USA,AMER,identified
+Vocalid,vocalid.ai,,Tier 3,SMB,US,AMER,identified
+Vocalis Health,vocalishealth.com,voice-ai,,,USA,AMER,identified
+Vocca,vocca.ai,voice-ai,,,Austria/USA,AMER,identified
+Vocera (Stryker),vocera.com,,Tier 1,Enterprise,US,AMER,identified
+VoiceCare AI,voicecareai.com,voice-ai,,,USA,AMER,identified
+VoiceGenie,voicegenie.ai,,Tier 3,SMB,IN,APAC,identified
+Voiceitt,voiceitt.com,voice-ai,,,Israel,EMEA,identified
+VoiceMed,voicemed.io,voice-ai,,,Italy,EMEA,identified
+Voiceoc,voiceoc.com,multi-product,,,India,APAC,identified
+voize,voize.de,voice-ai,,,Germany,EMEA,identified
+Vonage (Healthcare),vonage.com,,Tier 1,Enterprise,US,AMER,identified
+Waystar,waystar.com,,Tier 1,Enterprise,US,AMER,identified
+Weave,getweave.com,,Tier 1,Enterprise,US,AMER,identified
+Welkin Health,welkinhealth.com,,Tier 2,Mid-Market,US,AMER,identified
+WellAI,well.ai,,Tier 3,SMB,US,AMER,identified
+Welldoc,welldoc.com,,Tier 3,SMB,US,AMER,identified
+West Health Engage,westtechnologygroup.com,voice-ai,,,USA,AMER,identified
+Wheel,wheel.com,,Tier 2,Mid-Market,US,AMER,identified
+Winterlight Labs,winterlightlabs.com,,Tier 3,SMB,CA,AMER,identified
+WIZ.AI,wiz.ai,voice-ai,,,Singapore,APAC,identified
+Woebot Health,woebothealth.com,voice-ai,,,USA,AMER,identified
+Wolters Kluwer Health,wolterskluwer.com,,Tier 1,Enterprise,NL,EMEA,identified
+Wysa,wysa.com,voice-ai,,,UK,EMEA,identified
+Xsolla Health (CareAR),carear.com,,Tier 2,Mid-Market,US,AMER,identified
+Yosi Health,yosihealth.com,voice-ai,,,USA,AMER,identified
+Youper,youper.ai,voice-ai,,,USA,AMER,identified
+Zocdoc,zocdoc.com,voice-ai,,,USA,AMER,identified
+Zoom (healthcare),zoom.us,,Tier 1,Enterprise,US,AMER,identified

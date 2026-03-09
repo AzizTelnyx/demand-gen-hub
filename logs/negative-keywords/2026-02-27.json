@@ -1,0 +1,101 @@
+{
+  "timestamp": "2026-02-27T13:14:48.107726+00:00",
+  "runtime_seconds": 156.877426,
+  "dry_run": true,
+  "days_analyzed": 7,
+  "campaigns_processed": 38,
+  "search_terms_analyzed": 121,
+  "skipped": 9879,
+  "decisions": {
+    "blocked": 5,
+    "review": 1,
+    "monitored": 10,
+    "kept": 105
+  },
+  "blocks_applied": [
+    {
+      "search_term": "twilio number",
+      "campaign_id": 20258572711,
+      "campaign_name": "202306 MOFU Numbers SA AMER",
+      "spend": 159.25,
+      "clicks": 1,
+      "conversions": 0.0,
+      "relevancy_score": 82,
+      "intent_type": "SUPPORT",
+      "confidence": 82,
+      "match_type": "EXACT",
+      "applied": false,
+      "resource_name": null
+    },
+    {
+      "search_term": "speechma",
+      "campaign_id": 23277159104,
+      "campaign_name": "202511 TOFU AI Agents TTS API Global",
+      "spend": 46.868411,
+      "clicks": 92,
+      "conversions": 0.0,
+      "relevancy_score": 82,
+      "intent_type": "WRONG_CATEGORY",
+      "confidence": 82,
+      "match_type": "EXACT",
+      "applied": false,
+      "resource_name": null
+    },
+    {
+      "search_term": "ai voice generator",
+      "campaign_id": 23584242652,
+      "campaign_name": "202602 TOFU Vapi AI Agent SA EMEA",
+      "spend": 45.254949,
+      "clicks": 66,
+      "conversions": 0.0,
+      "relevancy_score": 85,
+      "intent_type": "WRONG_CATEGORY",
+      "confidence": 85,
+      "match_type": "PHRASE",
+      "applied": false,
+      "resource_name": null
+    },
+    {
+      "search_term": "twilio vs sendgrid",
+      "campaign_id": 21778360532,
+      "campaign_name": "202211 TOFU Twilio SA AMER",
+      "spend": 44.96,
+      "clicks": 2,
+      "conversions": 0.0,
+      "relevancy_score": 88,
+      "intent_type": "IRRELEVANT",
+      "confidence": 88,
+      "match_type": "EXACT",
+      "applied": false,
+      "resource_name": null
+    },
+    {
+      "search_term": "cloud talk",
+      "campaign_id": 23546680743,
+      "campaign_name": "202602 ClawdTalk Brand Search GLOBAL",
+      "spend": 28.46,
+      "clicks": 1,
+      "conversions": 0.0,
+      "relevancy_score": 82,
+      "intent_type": "IRRELEVANT",
+      "confidence": 82,
+      "match_type": "EXACT",
+      "applied": false,
+      "resource_name": null
+    }
+  ],
+  "review_items": [
+    {
+      "search_term": "audio transcriber",
+      "campaign_id": 23372928600,
+      "campaign_name": "202512 TOFU AI Agent STT API SA GLOBAL",
+      "spend": 20.684389,
+      "confidence": 75,
+      "reason": "Audio transcriber = STT tool-seeking, likely individual/consumer looking for transcription software, not enterprise voice API. 0 conversions, 36 clicks wasted"
+    }
+  ],
+  "estimated_savings": {
+    "weekly": 345.477749,
+    "monthly": 1485.5543207
+  }
+}

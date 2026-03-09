@@ -20,7 +20,7 @@ export async function GET(req: NextRequest) {
     // Get actual spend from campaigns for the period
     const campaigns = await prisma.campaign.findMany({
       where: {
-        status: { in: ["live", "active", "enabled"] },
+        status: { in: ["live", "active", "enabled", "ENABLED", "ACTIVE", "LIVE"] },
       },
       select: {
         platform: true,

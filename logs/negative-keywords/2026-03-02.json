@@ -1,0 +1,78 @@
+{
+  "timestamp": "2026-03-02T10:00:09.118406+00:00",
+  "runtime_seconds": 145.238105,
+  "dry_run": false,
+  "days_analyzed": 7,
+  "campaigns_processed": 38,
+  "search_terms_analyzed": 102,
+  "skipped": 9898,
+  "decisions": {
+    "blocked": 4,
+    "review": 0,
+    "monitored": 12,
+    "kept": 86
+  },
+  "blocks_applied": [
+    {
+      "search_term": "cloudtalk",
+      "campaign_id": 23546680743,
+      "campaign_name": "202602 ClawdTalk Brand Search GLOBAL",
+      "spend": 52.56,
+      "clicks": 2,
+      "conversions": 0.0,
+      "relevancy_score": 85,
+      "intent_type": "IRRELEVANT",
+      "confidence": 85,
+      "match_type": "EXACT",
+      "applied": true,
+      "resource_name": "customers/2356650573/campaignCriteria/23546680743~334134331603"
+    },
+    {
+      "search_term": "transcribe",
+      "campaign_id": 23372928600,
+      "campaign_name": "202512 TOFU AI Agent STT API SA GLOBAL",
+      "spend": 50.599742,
+      "clicks": 60,
+      "conversions": 0.0,
+      "relevancy_score": 80,
+      "intent_type": "WRONG_CATEGORY",
+      "confidence": 80,
+      "match_type": "EXACT",
+      "applied": true,
+      "resource_name": "customers/2356650573/campaignCriteria/23372928600~54852620"
+    },
+    {
+      "search_term": "global call forwarding",
+      "campaign_id": 20329204785,
+      "campaign_name": "202306 MOFU Numbers SA EMEA",
+      "spend": 39.24,
+      "clicks": 2,
+      "conversions": 0.0,
+      "relevancy_score": 82,
+      "intent_type": "IRRELEVANT",
+      "confidence": 82,
+      "match_type": "PHRASE",
+      "applied": true,
+      "resource_name": "customers/2356650573/campaignCriteria/20329204785~5884491068"
+    },
+    {
+      "search_term": "speechma",
+      "campaign_id": 23277159104,
+      "campaign_name": "202511 TOFU AI Agents TTS API Global",
+      "spend": 20.546286,
+      "clicks": 37,
+      "conversions": 0.0,
+      "relevancy_score": 82,
+      "intent_type": "WRONG_CATEGORY",
+      "confidence": 82,
+      "match_type": "EXACT",
+      "applied": true,
+      "resource_name": "customers/2356650573/campaignCriteria/23277159104~2387406694921"
+    }
+  ],
+  "review_items": [],
+  "estimated_savings": {
+    "weekly": 162.946028,
+    "monthly": 700.6679204000001
+  }
+}

@@ -1,3 +1,7 @@
+// ⚠️ LEGACY: This file contains hardcoded knowledge that should migrate to markdown files in knowledge/.
+// Product groups are now canonical in knowledge/product-groups.md — use knowledge-sync.ts for product group lookups.
+// TODO: Incrementally migrate products, competitors, regions to markdown and read from there.
+//
 // Telnyx Knowledge Base - Campaign Builder Context
 // Source: ~/clawd/knowledge/
 

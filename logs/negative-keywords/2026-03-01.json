@@ -1,0 +1,73 @@
+{
+  "timestamp": "2026-03-01T18:31:57.366811+00:00",
+  "runtime_seconds": 133.291436,
+  "dry_run": true,
+  "days_analyzed": 7,
+  "campaigns_processed": 38,
+  "search_terms_analyzed": 109,
+  "skipped": 9891,
+  "decisions": {
+    "blocked": 3,
+    "review": 1,
+    "monitored": 10,
+    "kept": 95
+  },
+  "blocks_applied": [
+    {
+      "search_term": "ai voice generator",
+      "campaign_id": 23584242652,
+      "campaign_name": "202602 TOFU Vapi AI Agent SA EMEA",
+      "spend": 29.806455,
+      "clicks": 43,
+      "conversions": 0.0,
+      "relevancy_score": 82,
+      "intent_type": "WRONG_CATEGORY",
+      "confidence": 82,
+      "match_type": "PHRASE",
+      "applied": false,
+      "resource_name": null
+    },
+    {
+      "search_term": "gamma sip trunk",
+      "campaign_id": 19598019744,
+      "campaign_name": "202301 TOFU SIP SA EMEA",
+      "spend": 27.54,
+      "clicks": 2,
+      "conversions": 0.0,
+      "relevancy_score": 85,
+      "intent_type": "IRRELEVANT",
+      "confidence": 85,
+      "match_type": "EXACT",
+      "applied": false,
+      "resource_name": null
+    },
+    {
+      "search_term": "twilio vs sendgrid",
+      "campaign_id": 21778360532,
+      "campaign_name": "202211 TOFU Twilio SA AMER",
+      "spend": 22.67,
+      "clicks": 1,
+      "conversions": 0.0,
+      "relevancy_score": 88,
+      "intent_type": "WRONG_CATEGORY",
+      "confidence": 88,
+      "match_type": "PHRASE",
+      "applied": false,
+      "resource_name": null
+    }
+  ],
+  "review_items": [
+    {
+      "search_term": "speechma",
+      "campaign_id": 23277159104,
+      "campaign_name": "202511 TOFU AI Agents TTS API Global",
+      "spend": 34.586249,
+      "confidence": 75,
+      "reason": "Speechma is a consumer TTS tool/app \u2014 users searching for that specific product, not enterprise TTS APIs. No conversions."
+    }
+  ],
+  "estimated_savings": {
+    "weekly": 114.602704,
+    "monthly": 492.7916272
+  }
+}

@@ -1,69 +1,89 @@
-import { NextResponse } from "next/server";
-import { exec } from "child_process";
+import { NextRequest, NextResponse } from "next/server";
+import OpenAI from "openai";
+import { prisma } from "@/lib/prisma";
 
-export async function POST(request: Request) {
+const openai = new OpenAI({
+  baseURL: process.env.OPENCLAW_BASE_URL || "http://127.0.0.1:18789/v1",
+  apiKey: process.env.OPENCLAW_GATEWAY_TOKEN || "",
+});
+
+export async function POST(request: NextRequest) {
   try {
-    const body = await request.json();
-    const { campaign, dryRun = true } = body;
-
-    if (!campaign || typeof campaign !== "string" || campaign.trim().length === 0) {
-      return NextResponse.json(
-        { error: "Campaign name is required" },
-        { status: 400 }
-      );
+    const { campaign } = await request.json();
+    if (!campaign) {
+      return NextResponse.json({ error: "Campaign name required" }, { status: 400 });
     }
 
-    const sanitizedCampaign = campaign.replace(/[";$`\\]/g, "");
-    const dryRunFlag = dryRun ? "--dry-run" : "";
-    const homeDir = process.env.HOME || "/home/telnyx-user";
+    // Find matching campaigns
+    const campaigns = await prisma.campaign.findMany({
+      where: { name: { contains: campaign, mode: "insensitive" } },
+    });
 
-    const command = `cd ${homeDir}/clawd/agents/campaign-deep-dive && source ${homeDir}/.venv/bin/activate && python3 -u deep_dive.py ${dryRunFlag} "${sanitizedCampaign}" >> /tmp/deep-dive-output.log 2>&1 &`;
+    if (campaigns.length === 0) {
+      return NextResponse.json({ error: "No matching campaigns found" }, { status: 404 });
+    }
 
-    exec(command, { shell: "/bin/bash" }, (error) => {
-      if (error) {
-        console.error("Failed to spawn deep dive:", error);
-      }
+    const c = campaigns[0];
+    const ctr = c.impressions && c.impressions > 0 ? ((c.clicks || 0) / c.impressions * 100).toFixed(2) : "0";
+    const cpc = c.clicks && c.clicks > 0 ? ((c.spend || 0) / c.clicks).toFixed(2) : "N/A";
+    const pacing = c.budget && c.budget > 0 ? ((c.spend || 0) / c.budget * 100).toFixed(0) : "N/A";
+
+    const completion = await openai.chat.completions.create({
+      model: "openclaw:main",
+      max_tokens: 1500,
+      messages: [{
+        role: "user",
+        content: `Analyze this campaign and provide actionable recommendations:
+
+Campaign: ${c.name}
+Platform: ${c.platform}
+Status: ${c.status}
+Budget: $${c.budget || 0}
+Spend: $${c.spend || 0} (${pacing}% pacing)
+Clicks: ${c.clicks || 0}
+Impressions: ${c.impressions || 0}
+CTR: ${ctr}%
+CPC: $${cpc}
+Conversions: ${c.conversions || 0}
+Region: ${c.region || 'Unknown'}
+Funnel Stage: ${c.funnelStage || 'Unknown'}
+
+Provide:
+1. Health assessment (healthy/watch/action needed)
+2. Key observations (2-3 bullet points)
+3. Specific recommendations (2-3 actionable items)
+4. Risk factors
+
+Be concise and specific. No filler.`,
+      }],
+    });
+
+    const analysis = completion.choices[0]?.message?.content || "Analysis failed";
+
+    // Log activity
+    await prisma.activity.create({
+      data: {
+        actor: "Ares",
+        action: "deep_dive",
+        entityType: "campaign",
+        entityId: c.id,
+        entityName: c.name,
+        details: `Deep dive analysis on ${c.name}`,
+      },
     });
 
     return NextResponse.json({
-      status: "started",
-      campaign: sanitizedCampaign,
-      dryRun,
+      status: "completed",
+      campaign: c.name,
+      metrics: { spend: c.spend, budget: c.budget, clicks: c.clicks, impressions: c.impressions, ctr, cpc, pacing, conversions: c.conversions },
+      analysis,
     });
   } catch (error) {
-    console.error("Error triggering deep dive:", error);
-    return NextResponse.json(
-      { error: "Failed to trigger deep dive" },
-      { status: 500 }
-    );
+    console.error("Deep dive error:", error);
+    return NextResponse.json({ error: "Failed to run deep dive" }, { status: 500 });
   }
 }
 
 export async function GET() {
-  try {
-    const { execSync } = require("child_process");
-    const result = execSync("pgrep -f 'python3.*deep_dive\\.py' 2>/dev/null || true", {
-      encoding: "utf-8",
-    }).trim();
-
-    const running = result.length > 0;
-
-    let lastOutput = "";
-    if (running) {
-      try {
-        lastOutput = execSync("tail -5 /tmp/deep-dive-output.log 2>/dev/null || true", {
-          encoding: "utf-8",
-        }).trim();
-      } catch { /* no log yet */ }
-    }
-
-    return NextResponse.json({
-      running,
-      pids: running ? result.split("\n").filter(Boolean) : [],
-      lastOutput,
-    });
-  } catch (error) {
-    console.error("Error checking deep dive status:", error);
-    return NextResponse.json({ running: false, pids: [], lastOutput: "" });
-  }
+  return NextResponse.json({ running: false, message: "Use POST to trigger a deep dive" });
 }

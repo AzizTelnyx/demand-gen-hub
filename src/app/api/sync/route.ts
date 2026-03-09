@@ -7,7 +7,7 @@ export async function POST(request: NextRequest) {
   // For now, return a message indicating the sync should be triggered externally
   return NextResponse.json({
     message: "Sync triggered. Run the sync script on the server.",
-    instruction: "Run: python ~/demand-gen-hub/scripts/sync_campaigns.py",
+    instruction: "Run: python ~/demand-gen-hub/scripts/sync_local.py",
   });
 }
 

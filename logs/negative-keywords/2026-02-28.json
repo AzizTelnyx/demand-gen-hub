@@ -1,0 +1,81 @@
+{
+  "timestamp": "2026-02-28T10:00:04.399288+00:00",
+  "runtime_seconds": 144.909544,
+  "dry_run": false,
+  "days_analyzed": 7,
+  "campaigns_processed": 38,
+  "search_terms_analyzed": 110,
+  "skipped": 9890,
+  "decisions": {
+    "blocked": 3,
+    "review": 2,
+    "monitored": 10,
+    "kept": 95
+  },
+  "blocks_applied": [
+    {
+      "search_term": "global call forwarding",
+      "campaign_id": 20258572711,
+      "campaign_name": "202306 MOFU Numbers SA AMER",
+      "spend": 62.3,
+      "clicks": 2,
+      "conversions": 0.0,
+      "relevancy_score": 82,
+      "intent_type": "IRRELEVANT",
+      "confidence": 82,
+      "match_type": "PHRASE",
+      "applied": true,
+      "resource_name": "customers/2356650573/campaignCriteria/20258572711~5884491068"
+    },
+    {
+      "search_term": "speechma",
+      "campaign_id": 23277159104,
+      "campaign_name": "202511 TOFU AI Agents TTS API Global",
+      "spend": 39.799778,
+      "clicks": 74,
+      "conversions": 0.0,
+      "relevancy_score": 80,
+      "intent_type": "WRONG_CATEGORY",
+      "confidence": 80,
+      "match_type": "EXACT",
+      "applied": true,
+      "resource_name": "customers/2356650573/campaignCriteria/23277159104~2387406694921"
+    },
+    {
+      "search_term": "ai voice generator",
+      "campaign_id": 23584242697,
+      "campaign_name": "202602 TOFU ElevenLabs SA EMEA",
+      "spend": 22.311146,
+      "clicks": 38,
+      "conversions": 0.0,
+      "relevancy_score": 85,
+      "intent_type": "WRONG_CATEGORY",
+      "confidence": 85,
+      "match_type": "PHRASE",
+      "applied": true,
+      "resource_name": "customers/2356650573/campaignCriteria/23584242697~397774641009"
+    }
+  ],
+  "review_items": [
+    {
+      "search_term": "ai voices",
+      "campaign_id": 23579649257,
+      "campaign_name": "202602 MOFU AI Agent SA AMER",
+      "spend": 40.829252,
+      "confidence": 75,
+      "reason": "Generic 'ai voices' skews heavily consumer \u2014 voiceover, content creation, not enterprise voice AI. Zero conversions, high clicks = wrong audience"
+    },
+    {
+      "search_term": "ai voice generator",
+      "campaign_id": 23584242652,
+      "campaign_name": "202602 TOFU Vapi AI Agent SA EMEA",
+      "spend": 39.194949,
+      "confidence": 72,
+      "reason": "'AI voice generator' in EMEA with 57 clicks and zero conversions \u2014 consumer content creation intent, not enterprise voice AI"
+    }
+  ],
+  "estimated_savings": {
+    "weekly": 204.43512500000003,
+    "monthly": 879.0710375000001
+  }
+}

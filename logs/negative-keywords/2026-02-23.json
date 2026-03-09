@@ -1,0 +1,97 @@
+{
+  "timestamp": "2026-02-23T23:31:50.900572+00:00",
+  "runtime_seconds": 5.53898,
+  "dry_run": true,
+  "days_analyzed": 7,
+  "campaigns_processed": 38,
+  "search_terms_analyzed": 96,
+  "skipped": 9904,
+  "decisions": {
+    "blocked": 3,
+    "review": 4,
+    "monitored": 17,
+    "kept": 72
+  },
+  "blocks_applied": [
+    {
+      "search_term": "esim",
+      "campaign_id": 23559393583,
+      "campaign_name": "202310 MOFU IoT SIM SA APAC - SEA",
+      "spend": 84.56,
+      "clicks": 20,
+      "conversions": 0.0,
+      "relevancy_score": 30,
+      "intent_type": "CONSUMER_ESIM",
+      "confidence": 85,
+      "match_type": "PHRASE",
+      "applied": false,
+      "resource_name": null
+    },
+    {
+      "search_term": "ai voice generator",
+      "campaign_id": 23584242652,
+      "campaign_name": "202602 TOFU Vapi AI Agent SA EMEA",
+      "spend": 41.220357,
+      "clicks": 54,
+      "conversions": 0.0,
+      "relevancy_score": 50,
+      "intent_type": "TTS_ONLY",
+      "confidence": 85,
+      "match_type": "PHRASE",
+      "applied": false,
+      "resource_name": null
+    },
+    {
+      "search_term": "ai voice generator",
+      "campaign_id": 23584242697,
+      "campaign_name": "202602 TOFU ElevenLabs SA EMEA",
+      "spend": 23.401146,
+      "clicks": 35,
+      "conversions": 0.0,
+      "relevancy_score": 35,
+      "intent_type": "TTS_ONLY",
+      "confidence": 85,
+      "match_type": "PHRASE",
+      "applied": false,
+      "resource_name": null
+    }
+  ],
+  "review_items": [
+    {
+      "search_term": "eleven labs",
+      "campaign_id": 23584242475,
+      "campaign_name": "202602 TOFU Vapi AI Agent SA AMER",
+      "spend": 75.17,
+      "confidence": 75,
+      "reason": "Medium relevancy (30/100) + 56 clicks, 0 conversions (statistically significant)"
+    },
+    {
+      "search_term": "call center automation",
+      "campaign_id": 23578096203,
+      "campaign_name": "202602 TOFU Contact Center SA AMER",
+      "spend": 61.41,
+      "confidence": 75,
+      "reason": "Medium relevancy (45/100) + 46 clicks, 0 conversions (statistically significant)"
+    },
+    {
+      "search_term": "call center automation",
+      "campaign_id": 23583442793,
+      "campaign_name": "202602 TOFU Contact Center SA EMEA",
+      "spend": 52.75,
+      "confidence": 75,
+      "reason": "Medium relevancy (45/100) + 33 clicks, 0 conversions (statistically significant)"
+    },
+    {
+      "search_term": "ai voice",
+      "campaign_id": 23574277866,
+      "campaign_name": "202602 TOFU ElevenLabs SA AMER",
+      "spend": 21.953839,
+      "confidence": 75,
+      "reason": "Medium relevancy (45/100) + 22 clicks, 0 conversions (statistically significant)"
+    }
+  ],
+  "estimated_savings": {
+    "weekly": 360.46534199999996,
+    "monthly": 1550.0009705999998
+  }
+}

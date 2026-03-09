@@ -1,0 +1,403 @@
+{
+  "summary": "MTD $23,181 / $140,000 cap (critical). 22 budget-limited, 2 underpacing, 2 anomalies.",
+  "cap": {
+    "cap": 140000,
+    "mtdSpend": 23180.74,
+    "dailyRate": 4636.15,
+    "projected": 143720.59,
+    "headroom": -3720.59,
+    "daysElapsed": 5,
+    "daysInMonth": 31,
+    "daysRemaining": 26,
+    "daysUntilCap": 25.2,
+    "utilization": 1.0266,
+    "level": "critical",
+    "platformSpend": {
+      "google_ads": 16711.05,
+      "linkedin": 4533.51,
+      "stackadapt": 658.68,
+      "reddit": 1277.5
+    }
+  },
+  "budgetLimited": [
+    {
+      "name": "202310 MOFU IoT SIM SA APAC - SEA",
+      "campaignId": "23559393583",
+      "dailyBudget": 20.0,
+      "dailySpend": 19.0,
+      "impressionShare": 10.0,
+      "lostToBudget": 90.0,
+      "spend7d": 132.57,
+      "clicks7d": 521,
+      "conversions7d": 0.0,
+      "additionalDailyNeeded": 171.0,
+      "severity": "critical"
+    },
+    {
+      "name": "202306 MOFU Numbers SA EMEA",
+      "campaignId": "20329204785",
+      "dailyBudget": 175.0,
+      "dailySpend": 171.0,
+      "impressionShare": 21.6,
+      "lostToBudget": 60.9,
+      "spend7d": 1200.07,
+      "clicks7d": 2035,
+      "conversions7d": 26.0,
+      "additionalDailyNeeded": 267.0,
+      "severity": "critical"
+    },
+    {
+      "name": "202602 TOFU ElevenLabs SA APAC",
+      "campaignId": "23583187406",
+      "dailyBudget": 50.0,
+      "dailySpend": 47.0,
+      "impressionShare": 23.4,
+      "lostToBudget": 49.2,
+      "spend7d": 331.23,
+      "clicks7d": 17877,
+      "conversions7d": 19.5,
+      "additionalDailyNeeded": 46.0,
+      "severity": "high"
+    },
+    {
+      "name": "202309 MOFU Voice API SA EMEA",
+      "campaignId": "20548679680",
+      "dailyBudget": 30.0,
+      "dailySpend": 29.0,
+      "impressionShare": 28.5,
+      "lostToBudget": 46.7,
+      "spend7d": 201.3,
+      "clicks7d": 576,
+      "conversions7d": 1.0,
+      "additionalDailyNeeded": 25.0,
+      "severity": "high"
+    },
+    {
+      "name": "202301 TOFU SIP SA AMER",
+      "campaignId": "19573151169",
+      "dailyBudget": 100.0,
+      "dailySpend": 100.0,
+      "impressionShare": 17.5,
+      "lostToBudget": 44.9,
+      "spend7d": 696.51,
+      "clicks7d": 1013,
+      "conversions7d": 0.0,
+      "additionalDailyNeeded": 81.0,
+      "severity": "high"
+    },
+    {
+      "name": "202602 TOFU Contact Center SA EMEA",
+      "campaignId": "23583442793",
+      "dailyBudget": 75.0,
+      "dailySpend": 72.0,
+      "impressionShare": 10.0,
+      "lostToBudget": 41.4,
+      "spend7d": 501.14,
+      "clicks7d": 2468,
+      "conversions7d": 1.9,
+      "additionalDailyNeeded": 50.0,
+      "severity": "high"
+    },
+    {
+      "name": "202602 MOFU AI Agent SA APAC",
+      "campaignId": "23583187853",
+      "dailyBudget": 75.0,
+      "dailySpend": 73.0,
+      "impressionShare": 34.6,
+      "lostToBudget": 38.9,
+      "spend7d": 511.86,
+      "clicks7d": 20207,
+      "conversions7d": 45.7,
+      "additionalDailyNeeded": 46.0,
+      "severity": "high"
+    },
+    {
+      "name": "202602 MOFU AI Agent SA MENA",
+      "campaignId": "23588051725",
+      "dailyBudget": 50.0,
+      "dailySpend": 50.0,
+      "impressionShare": 20.6,
+      "lostToBudget": 37.0,
+      "spend7d": 353.37,
+      "clicks7d": 6953,
+      "conversions7d": 18.0,
+      "additionalDailyNeeded": 30.0,
+      "severity": "high"
+    },
+    {
+      "name": "202301 MOFU SMS SA AMER",
+      "campaignId": "19600918299",
+      "dailyBudget": 100.0,
+      "dailySpend": 100.0,
+      "impressionShare": 10.0,
+      "lostToBudget": 35.7,
+      "spend7d": 701.74,
+      "clicks7d": 1712,
+      "conversions7d": 11.0,
+      "additionalDailyNeeded": 56.0,
+      "severity": "high"
+    },
+    {
+      "name": "202602 TOFU Vapi AI Agent SA APAC",
+      "campaignId": "23583186449",
+      "dailyBudget": 75.0,
+      "dailySpend": 68.0,
+      "impressionShare": 39.5,
+      "lostToBudget": 34.4,
+      "spend7d": 475.45,
+      "clicks7d": 9096,
+      "conversions7d": 7.3,
+      "additionalDailyNeeded": 36.0,
+      "severity": "high"
+    },
+    {
+      "name": "202509 BOFU SIP SA GLOBAL",
+      "campaignId": "19686969281",
+      "dailyBudget": 50.0,
+      "dailySpend": 50.0,
+      "impressionShare": 49.8,
+      "lostToBudget": 34.0,
+      "spend7d": 348.77,
+      "clicks7d": 406,
+      "conversions7d": 15.0,
+      "additionalDailyNeeded": 26.0,
+      "severity": "high"
+    },
+    {
+      "name": "202306 MOFU Numbers SA AMER",
+      "campaignId": "20258572711",
+      "dailyBudget": 150.0,
+      "dailySpend": 143.0,
+      "impressionShare": 18.9,
+      "lostToBudget": 31.4,
+      "spend7d": 998.51,
+      "clicks7d": 1480,
+      "conversions7d": 2.0,
+      "additionalDailyNeeded": 65.0,
+      "severity": "high"
+    },
+    {
+      "name": "202511 TOFU AI Agents TTS API Global",
+      "campaignId": "23277159104",
+      "dailyBudget": 250.0,
+      "dailySpend": 199.0,
+      "impressionShare": 10.0,
+      "lostToBudget": 29.8,
+      "spend7d": 1392.37,
+      "clicks7d": 12764,
+      "conversions7d": 38.0,
+      "additionalDailyNeeded": 84.0,
+      "severity": "high"
+    },
+    {
+      "name": "202304 MOFU Voice API SA AMER",
+      "campaignId": "19905048363",
+      "dailyBudget": 50.0,
+      "dailySpend": 50.0,
+      "impressionShare": 19.3,
+      "lostToBudget": 20.5,
+      "spend7d": 349.75,
+      "clicks7d": 1071,
+      "conversions7d": 2.0,
+      "additionalDailyNeeded": 13.0,
+      "severity": "moderate"
+    },
+    {
+      "name": "202512 TOFU AI Agent STT API SA GLOBAL",
+      "campaignId": "23372928600",
+      "dailyBudget": 100.0,
+      "dailySpend": 82.0,
+      "impressionShare": 10.0,
+      "lostToBudget": 18.8,
+      "spend7d": 572.49,
+      "clicks7d": 5027,
+      "conversions7d": 7.0,
+      "additionalDailyNeeded": 19.0,
+      "severity": "moderate"
+    },
+    {
+      "name": "202310 MOFU IoT SIM SA APAC - Australia",
+      "campaignId": "20642614284",
+      "dailyBudget": 30.0,
+      "dailySpend": 27.0,
+      "impressionShare": 28.7,
+      "lostToBudget": 18.8,
+      "spend7d": 187.46,
+      "clicks7d": 293,
+      "conversions7d": 1.0,
+      "additionalDailyNeeded": 6.0,
+      "severity": "moderate"
+    },
+    {
+      "name": "202602 TOFU Vapi AI Agent SA EMEA",
+      "campaignId": "23584242652",
+      "dailyBudget": 75.0,
+      "dailySpend": 63.0,
+      "impressionShare": 17.2,
+      "lostToBudget": 18.5,
+      "spend7d": 438.73,
+      "clicks7d": 3837,
+      "conversions7d": 8.0,
+      "additionalDailyNeeded": 14.0,
+      "severity": "moderate"
+    },
+    {
+      "name": "202602 MOFU AI Agent SA EMEA",
+      "campaignId": "23584242154",
+      "dailyBudget": 75.0,
+      "dailySpend": 73.0,
+      "impressionShare": 16.6,
+      "lostToBudget": 18.2,
+      "spend7d": 509.2,
+      "clicks7d": 8970,
+      "conversions7d": 26.0,
+      "additionalDailyNeeded": 16.0,
+      "severity": "moderate"
+    },
+    {
+      "name": "202301 TOFU SIP SA EMEA",
+      "campaignId": "19598019744",
+      "dailyBudget": 250.0,
+      "dailySpend": 259.0,
+      "impressionShare": 21.9,
+      "lostToBudget": 17.7,
+      "spend7d": 1809.79,
+      "clicks7d": 3814,
+      "conversions7d": 19.0,
+      "additionalDailyNeeded": 55.0,
+      "severity": "moderate"
+    },
+    {
+      "name": "202502 TOFU SIP SA APAC",
+      "campaignId": "22216728203",
+      "dailyBudget": 75.0,
+      "dailySpend": 75.0,
+      "impressionShare": 27.6,
+      "lostToBudget": 17.0,
+      "spend7d": 524.5,
+      "clicks7d": 623,
+      "conversions7d": 7.0,
+      "additionalDailyNeeded": 15.0,
+      "severity": "moderate"
+    },
+    {
+      "name": "202305 TOFU Twilio SA EMEA",
+      "campaignId": "20304732701",
+      "dailyBudget": 250.0,
+      "dailySpend": 236.0,
+      "impressionShare": 58.6,
+      "lostToBudget": 16.1,
+      "spend7d": 1650.35,
+      "clicks7d": 2754,
+      "conversions7d": 10.0,
+      "additionalDailyNeeded": 45.0,
+      "severity": "moderate"
+    },
+    {
+      "name": "202602 TOFU Contact Center SA APAC",
+      "campaignId": "23578113243",
+      "dailyBudget": 75.0,
+      "dailySpend": 70.0,
+      "impressionShare": 20.4,
+      "lostToBudget": 15.5,
+      "spend7d": 491.66,
+      "clicks7d": 4052,
+      "conversions7d": 1.0,
+      "additionalDailyNeeded": 13.0,
+      "severity": "moderate"
+    }
+  ],
+  "pacing": {
+    "underpacing": [
+      {
+        "name": "202308 BOFU Twilio RLSA GLOBAL",
+        "campaignId": "20469421648",
+        "dailySpend": 5.0,
+        "dailyBudget": 20.0,
+        "pacing": 24.3,
+        "wastedBudget": 15.0
+      },
+      {
+        "name": "202602 TOFU LiveKit SA AMER",
+        "campaignId": "23583479504",
+        "dailySpend": 42.0,
+        "dailyBudget": 75.0,
+        "pacing": 55.8,
+        "wastedBudget": 33.0
+      }
+    ],
+    "overpacing": [],
+    "anomalies": [
+      {
+        "name": "202602 TOFU LiveKit SA AMER",
+        "campaignId": "23583479504",
+        "currentSpend": 293.12,
+        "priorSpend": 196.74,
+        "changePercent": 49.0,
+        "direction": "up"
+      },
+      {
+        "name": "202602 TOFU LiveKit SA EMEA",
+        "campaignId": "23583479729",
+        "currentSpend": 473.65,
+        "priorSpend": 343.74,
+        "changePercent": 37.8,
+        "direction": "up"
+      }
+    ]
+  },
+  "recommendations": [
+    {
+      "type": "rebalance",
+      "summary": "Cut $48/day from 2 underpacing campaigns \u2192 fund budget-limited campaigns",
+      "sources": [
+        {
+          "name": "202308 BOFU Twilio RLSA GLOBAL",
+          "cut": 15.0,
+          "currentBudget": 20.0,
+          "pacing": 24.3
+        },
+        {
+          "name": "202602 TOFU LiveKit SA AMER",
+          "cut": 33.0,
+          "currentBudget": 75.0,
+          "pacing": 55.8
+        }
+      ],
+      "targets": [
+        {
+          "name": "202310 MOFU IoT SIM SA APAC - SEA",
+          "need": 171.0,
+          "lostIS": 90.0
+        },
+        {
+          "name": "202306 MOFU Numbers SA EMEA",
+          "need": 267.0,
+          "lostIS": 60.9
+        },
+        {
+          "name": "202602 TOFU ElevenLabs SA APAC",
+          "need": 46.0,
+          "lostIS": 49.2
+        },
+        {
+          "name": "202309 MOFU Voice API SA EMEA",
+          "need": 25.0,
+          "lostIS": 46.7
+        },
+        {
+          "name": "202301 TOFU SIP SA AMER",
+          "need": 81.0,
+          "lostIS": 44.9
+        }
+      ],
+      "dailyImpact": 48.0,
+      "monthlyImpact": 1248.0,
+      "withinCap": true
+    },
+    {
+      "type": "overspend_risk",
+      "summary": "Projected $143,721 exceeds $140,000 cap by $3,721. Reduce daily spend by $143/day."
+    }
+  ]
+}

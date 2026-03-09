@@ -1,0 +1,50 @@
+{
+  "timestamp": "2026-03-05T10:00:04.511075+00:00",
+  "runtime_seconds": 153.131745,
+  "dry_run": false,
+  "days_analyzed": 7,
+  "campaigns_processed": 36,
+  "search_terms_analyzed": 90,
+  "skipped": 9910,
+  "decisions": {
+    "blocked": 2,
+    "review": 0,
+    "monitored": 6,
+    "kept": 82
+  },
+  "blocks_applied": [
+    {
+      "search_term": "text to speech ai",
+      "campaign_id": 23574277866,
+      "campaign_name": "202602 TOFU ElevenLabs SA AMER",
+      "spend": 43.862233,
+      "clicks": 45,
+      "conversions": 0.0,
+      "relevancy_score": 82,
+      "intent_type": "WRONG_CATEGORY",
+      "confidence": 82,
+      "match_type": "PHRASE",
+      "applied": true,
+      "resource_name": "customers/2356650573/campaignCriteria/23574277866~854855096777"
+    },
+    {
+      "search_term": "speaktor",
+      "campaign_id": 23277159104,
+      "campaign_name": "202511 TOFU AI Agents TTS API Global",
+      "spend": 20.204705,
+      "clicks": 24,
+      "conversions": 0.0,
+      "relevancy_score": 82,
+      "intent_type": "WRONG_CATEGORY",
+      "confidence": 82,
+      "match_type": "EXACT",
+      "applied": true,
+      "resource_name": "customers/2356650573/campaignCriteria/23277159104~1720551256533"
+    }
+  ],
+  "review_items": [],
+  "estimated_savings": {
+    "weekly": 64.06693800000001,
+    "monthly": 275.4878334
+  }
+}

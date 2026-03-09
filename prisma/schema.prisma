@@ -3,8 +3,8 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("POSTGRES_PRISMA_URL")
+  provider  = "postgresql"
+  url       = env("POSTGRES_PRISMA_URL")
   directUrl = env("POSTGRES_URL_NON_POOLING")
 }
 
@@ -19,49 +19,110 @@ model User {
 }
 
 model Campaign {
-  id            String   @id @default(cuid())
-  name          String
-  platform      String
-  platformId    String?
-  status        String
-  funnelStage   String?
-  region        String?
-  channel       String?
-  budget        Float?
-  spend         Float?
-  impressions   Int?
-  clicks        Int?
-  conversions   Int?
-  startDate     DateTime?
-  endDate       DateTime?
-  lastSyncedAt  DateTime?
-  metadata      String?
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
+  id               String               @id @default(cuid())
+  name             String
+  platform         String
+  platformId       String?
+  status           String
+  funnelStage      String?
+  region           String?
+  channel          String?
+  budget           Float?
+  spend            Float?
+  impressions      Int?
+  clicks           Int?
+  conversions      Int?
+  startDate        DateTime?
+  endDate          DateTime?
+  lastSyncedAt     DateTime?
+  metadata         String?
+  createdAt        DateTime             @default(now())
+  updatedAt        DateTime             @updatedAt
+  servingStatus    String?
+  parsedDate       String?
+  parsedIntent     String?
+  parsedProduct    String?
+  parsedVariant    String?
+  parsedAdType     String?
+  parsedRegion     String?
+  parseConfidence  String?
+  CampaignAudience CampaignAudience[]
+  initiativeLinks  InitiativeCampaign[]
 }
 
 model AdCopy {
-  id          String   @id @default(cuid())
-  campaignId  String?
-  name        String?
-  headlines   String?
+  id           String   @id @default(cuid())
+  campaignId   String?
+  name         String?
+  headlines    String?
   descriptions String?
-  status      String   @default("draft")
-  feedback    String?
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  status       String   @default("draft")
+  feedback     String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model AdCreative {
+  id           String   @id @default(cuid())
+  platform     String
+  platformAdId String
+  campaignName String
+  campaignId   String?
+  adGroupName  String?
+  adType       String
+  status       String
+  headlines    String?
+  descriptions String?
+  finalUrls    String?
+  images       String?
+  videos       String?
+  dimensions   String?
+  brandName    String?
+  cta          String?
+  metadata     String?
+  lastSyncedAt DateTime @default(now())
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@unique([platform, platformAdId])
+  @@index([campaignName])
+  @@index([platform])
+  @@index([status])
 }
 
 model ABMList {
-  id           String   @id @default(cuid())
-  name         String
-  description  String?
-  criteria     String?
-  accountCount Int      @default(0)
-  status       String   @default("draft")
-  accounts     String?
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
+  id          String          @id @default(cuid())
+  name        String
+  createdAt   DateTime        @default(now())
+  count       Int             @default(0)
+  mode        String?
+  query       String?
+  source      String          @default("research-agent")
+  createdBy   String?
+  description String?
+  listType    String          @default("vertical")
+  status      String          @default("active")
+  updatedAt   DateTime        @default(now()) @updatedAt
+  jobs        ABMJob[]
+  members     ABMListMember[]
+}
+
+model ABMJob {
+  id         String    @id @default(cuid())
+  query      String
+  listId     String
+  status     String    @default("queued")
+  target     Int       @default(500)
+  found      Int       @default(0)
+  waves      Int       @default(0)
+  dryStreak  Int       @default(0)
+  error      String?
+  lastWaveAt DateTime?
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+  createdBy  String?
+  jobType    String    @default("generate")
+  list       ABMList   @relation(fields: [listId], references: [id], onDelete: Cascade)
 }
 
 model Activity {
@@ -77,24 +138,24 @@ model Activity {
 }
 
 model SyncState {
-  id           String   @id @default(cuid())
-  platform     String   @unique
+  id           String    @id @default(cuid())
+  platform     String    @unique
   lastSyncedAt DateTime?
-  status       String   @default("idle")
+  status       String    @default("idle")
   error        String?
   metadata     String?
-  updatedAt    DateTime @updatedAt
+  updatedAt    DateTime  @updatedAt
 }
 
 model BudgetPlan {
   id          String   @id @default(cuid())
   year        Int
   month       Int
-  channel     String   // google_ads, stackadapt, linkedin, reddit
-  region      String?  // AMER, EMEA, APAC, Global
-  funnelStage String?  // TOFU, MOFU, BOFU, ABM
-  planned     Float    // Planned budget
-  actual      Float    @default(0) // Actual spend (updated from campaigns)
+  channel     String
+  region      String?
+  funnelStage String?
+  planned     Float
+  actual      Float    @default(0)
   notes       String?
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
@@ -102,16 +163,422 @@ model BudgetPlan {
   @@unique([year, month, channel, region, funnelStage])
 }
 
+model ABMAccount {
+  id              String          @id @default(cuid())
+  company         String
+  domain          String?
+  vertical        String?
+  country         String?
+  region          String?
+  companySize     String?
+  tier            String?
+  status          String          @default("identified")
+  source          String?
+  notes           String?
+  contacts        String?
+  lastActivity    DateTime?
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+  productFit      String?
+  currentProvider String?
+  inPipeline      Boolean         @default(false)
+  sfAccountId     String?
+  switchSignal    String?
+  lists           ABMListMember[]
+
+  @@unique([company, domain])
+}
+
+model ABMListMember {
+  id        String     @id @default(cuid())
+  listId    String
+  accountId String
+  addedAt   DateTime   @default(now())
+  addedBy   String     @default("system")
+  reason    String?
+  status    String     @default("active")
+  account   ABMAccount @relation(fields: [accountId], references: [id], onDelete: Cascade)
+  list      ABMList    @relation(fields: [listId], references: [id], onDelete: Cascade)
+
+  @@unique([listId, accountId])
+}
+
+model Tracker {
+  id        String    @id @default(cuid())
+  category  String
+  title     String
+  status    String    @default("pending")
+  priority  String?
+  dueDate   DateTime?
+  assignee  String?
+  details   String?
+  metadata  String?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+model AutomationRun {
+  id          String    @id @default(cuid())
+  automation  String
+  status      String    @default("running")
+  summary     String?
+  details     String?
+  startedAt   DateTime  @default(now())
+  completedAt DateTime?
+  createdAt   DateTime  @default(now())
+}
+
+model CampaignChange {
+  id           String   @id @default(cuid())
+  campaignId   String?
+  campaignName String
+  platform     String
+  changeType   String
+  description  String
+  oldValue     String?
+  newValue     String?
+  source       String   @default("manual")
+  actor        String?
+  timestamp    DateTime @default(now())
+  createdAt    DateTime @default(now())
+
+  @@index([campaignName])
+  @@index([platform])
+  @@index([timestamp])
+}
+
+model SFCampaign {
+  id               String          @id @default(cuid())
+  sfId             String          @unique
+  name             String
+  type             String?
+  status           String?
+  numberOfOpps     Int             @default(0)
+  totalAmount      Float           @default(0)
+  numberOfLeads    Int             @default(0)
+  numberOfContacts Int             @default(0)
+  lastSyncedAt     DateTime?
+  createdAt        DateTime        @default(now())
+  updatedAt        DateTime        @updatedAt
+  opportunities    SFOpportunity[]
+}
+
+model SFOpportunity {
+  id              String      @id @default(cuid())
+  sfId            String      @unique
+  name            String
+  amount          Float       @default(0)
+  stageName       String
+  closeDate       DateTime?
+  isClosed        Boolean     @default(false)
+  isWon           Boolean     @default(false)
+  leadSource      String?
+  campaignId      String?
+  createdDate     DateTime?
+  lastSyncedAt    DateTime?
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+  accountDomain   String?
+  accountName     String?
+  accountSfId     String?
+  oppSource       String?
+  oppSourceDetail String?
+  oppType         String?
+  campaign        SFCampaign? @relation(fields: [campaignId], references: [id])
+
+  @@index([campaignId])
+  @@index([stageName])
+  @@index([createdDate])
+  @@index([accountDomain])
+  @@index([oppType])
+}
+
+model AdImpression {
+  id           String    @id @default(cuid())
+  domain       String
+  campaignId   String
+  campaignName String
+  impressions  Int       @default(0)
+  clicks       Int       @default(0)
+  cost         Float     @default(0)
+  dateFrom     DateTime?
+  dateTo       DateTime?
+  lastSyncedAt DateTime?
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+  platform     String?
+
+  @@unique([domain, campaignId])
+  @@index([domain])
+}
+
+model SFAccount {
+  id            String    @id @default(cuid())
+  sfId          String    @unique
+  name          String
+  domain        String?
+  cleanDomain   String?
+  website       String?
+  industry      String?
+  subIndustry   String?
+  employees     Int?
+  annualRevenue Float?
+  firmoTier     String?
+  salesSegment  String?
+  accountType   String?
+  abmSegment    String?
+  lastSyncedAt  DateTime?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  @@index([cleanDomain])
+  @@index([domain])
+}
+
+model Agent {
+  id          String     @id @default(cuid())
+  slug        String     @unique
+  name        String
+  description String?
+  model       String     @default("anthropic/claude-sonnet-4-20250514")
+  schedule    String?
+  level       Int        @default(0)
+  enabled     Boolean    @default(true)
+  config      String?
+  createdAt   DateTime   @default(now())
+  runs        AgentRun[]
+}
+
+model AgentRun {
+  id              String           @id @default(cuid())
+  agentId         String
+  workflowRunId   String?
+  status          String           @default("queued")
+  input           String?
+  output          String?
+  findingsCount   Int              @default(0)
+  recsCount       Int              @default(0)
+  error           String?
+  costUsd         Float?
+  startedAt       DateTime?
+  completedAt     DateTime?
+  createdAt       DateTime         @default(now())
+  agent           Agent            @relation(fields: [agentId], references: [id], onDelete: Cascade)
+  workflowRun     WorkflowRun?     @relation(fields: [workflowRunId], references: [id])
+  recommendations Recommendation[]
+}
+
+model Recommendation {
+  id         String    @id @default(cuid())
+  agentRunId String
+  type       String
+  severity   String    @default("medium")
+  target     String?
+  targetId   String?
+  action     String
+  rationale  String
+  impact     String?
+  status     String    @default("pending")
+  appliedAt  DateTime?
+  createdAt  DateTime  @default(now())
+  agentRun   AgentRun  @relation(fields: [agentRunId], references: [id], onDelete: Cascade)
+}
+
+model Workflow {
+  id          String        @id @default(cuid())
+  slug        String        @unique
+  name        String
+  description String?
+  steps       String
+  trigger     String        @default("manual")
+  enabled     Boolean       @default(true)
+  createdAt   DateTime      @default(now())
+  runs        WorkflowRun[]
+}
+
+model WorkflowRun {
+  id          String     @id @default(cuid())
+  workflowId  String
+  status      String     @default("running")
+  context     String?
+  currentStep Int        @default(0)
+  startedAt   DateTime   @default(now())
+  completedAt DateTime?
+  agentRuns   AgentRun[]
+  workflow    Workflow   @relation(fields: [workflowId], references: [id], onDelete: Cascade)
+}
+
 model BudgetChange {
-  id          String   @id @default(cuid())
-  description String   // Natural language description
+  id          String    @id @default(cuid())
+  description String
   fromChannel String?
   toChannel   String?
   fromRegion  String?
   toRegion    String?
   amount      Float
   reason      String?
-  status      String   @default("proposed") // proposed, approved, applied
+  status      String    @default("proposed")
   appliedAt   DateTime?
-  createdAt   DateTime @default(now())
+  createdAt   DateTime  @default(now())
+}
+
+model LinkedInOrgMapping {
+  linkedinOrgId String    @id
+  orgName       String?
+  cleanDomain   String?
+  vanityName    String?
+  resolvedAt    DateTime? @default(now())
+}
+
+model LinkedInVanityAttempt {
+  domain      String    @id
+  orgId       String?
+  attemptedAt DateTime? @default(now())
+}
+
+model WorkItem {
+  id          String           @id @default(cuid())
+  title       String
+  description String?
+  type        String
+  status      String           @default("backlog")
+  priority    String           @default("p1")
+  platform    String?
+  assignee    String?
+  source      String           @default("manual")
+  sourceRef   String?
+  dueDate     DateTime?
+  tags        String[]
+  parentId    String?
+  completedAt DateTime?
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
+  parent      WorkItem?        @relation("WorkItemChildren", fields: [parentId], references: [id])
+  children    WorkItem[]       @relation("WorkItemChildren")
+  updates     WorkItemUpdate[]
+
+  @@index([status])
+  @@index([type])
+  @@index([parentId])
+}
+
+model WorkItemUpdate {
+  id         String   @id @default(cuid())
+  workItemId String
+  author     String
+  type       String
+  content    String
+  metadata   String?
+  createdAt  DateTime @default(now())
+  workItem   WorkItem @relation(fields: [workItemId], references: [id], onDelete: Cascade)
+
+  @@index([workItemId])
+}
+
+model Strategy {
+  id          String       @id @default(uuid())
+  name        String
+  description String?
+  region      String?
+  status      String       @default("planning")
+  startDate   DateTime?
+  endDate     DateTime?
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+  initiatives Initiative[]
+}
+
+model Initiative {
+  id          String               @id @default(uuid())
+  strategyId  String
+  name        String
+  description String?
+  brief       String?
+  region      String?
+  vertical    String?
+  product     String?
+  funnel      String?
+  objective   String?
+  status      String               @default("planning")
+  budget      Float?
+  budgetSpent Float?               @default(0)
+  goalType    String?
+  goalTarget  Float?
+  goalCurrent Float?               @default(0)
+  platforms   String[]
+  tags        String[]
+  startDate   DateTime?
+  endDate     DateTime?
+  aiSummary   String?
+  aiLastCheck DateTime?
+  createdAt   DateTime             @default(now())
+  updatedAt   DateTime             @updatedAt
+  strategy    Strategy             @relation(fields: [strategyId], references: [id])
+  campaigns   InitiativeCampaign[]
+  notes       InitiativeNote[]
+}
+
+model InitiativeCampaign {
+  id           String     @id @default(uuid())
+  initiativeId String
+  campaignId   String
+  autoLinked   Boolean    @default(false)
+  createdAt    DateTime   @default(now())
+  campaign     Campaign   @relation(fields: [campaignId], references: [id])
+  initiative   Initiative @relation(fields: [initiativeId], references: [id])
+
+  @@unique([initiativeId, campaignId])
+}
+
+model InitiativeNote {
+  id           String     @id @default(uuid())
+  initiativeId String
+  content      String
+  type         String     @default("note")
+  author       String?
+  createdAt    DateTime   @default(now())
+  initiative   Initiative @relation(fields: [initiativeId], references: [id])
+}
+
+model AgentGuardrail {
+  id        String   @id @default(cuid())
+  key       String   @unique
+  value     String
+  label     String
+  category  String
+  updatedAt DateTime @updatedAt
+  updatedBy String?
+}
+
+model RegionalPriority {
+  id        String   @id @default(cuid())
+  quarter   String
+  region    String
+  product   String
+  priority  String
+  protected Boolean  @default(false)
+  notes     String?
+  updatedAt DateTime @updatedAt
+  updatedBy String?
+
+  @@unique([quarter, region, product])
+}
+
+model CampaignAudience {
+  id           String    @id
+  campaignId   String
+  platform     String
+  audienceType String
+  name         String
+  value        String?
+  matchType    String?
+  status       String?
+  metadata     Json?
+  lastSyncedAt DateTime? @db.Timestamp(6)
+  createdAt    DateTime? @default(now()) @db.Timestamp(6)
+  updatedAt    DateTime? @default(now()) @db.Timestamp(6)
+  Campaign     Campaign  @relation(fields: [campaignId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@index([campaignId], map: "idx_campaign_audience_campaign")
+  @@index([audienceType], map: "idx_campaign_audience_type")
 }

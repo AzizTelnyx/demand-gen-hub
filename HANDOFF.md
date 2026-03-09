@@ -135,19 +135,17 @@ curl http://localhost:3000
 If you want external access:
 
 ```bash
-# Download cloudflared
-curl -L https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64 -o /tmp/cloudflared
-chmod +x /tmp/cloudflared
+# Install ngrok and authenticate
+brew install ngrok
+ngrok config add-authtoken YOUR_TOKEN
 
-# Start tunnel
-pm2 start /tmp/cloudflared --name tunnel -- tunnel --url http://localhost:3000
-pm2 save
+# Start tunnel with custom domain (ngrok Hobbyist plan)
+ngrok http 3000 --domain=telnyx-dg-hub.ngrok.app
 ```
 
-It will print a public URL in the logs:
-```bash
-pm2 logs tunnel --lines 20
-```
+Public URL: **https://telnyx-dg-hub.ngrok.app**
+
+Health check script at `scripts/check-ngrok.sh` runs every 20 min via cron to auto-restart if tunnel dies.
 
 ---
 

@@ -1,0 +1,796 @@
+[
+  {
+    "id": "cmlshjkr5007vxeoou0tic7vp",
+    "company": "AI",
+    "domain": "Coustics",
+    "reason": "DNS resolution failed"
+  },
+  {
+    "id": "e7f96622-35d3-49f4-a209-d18fc21aaabb",
+    "company": "Abstrakt",
+    "domain": "meetabstrakt.com",
+    "reason": "DNS resolution failed"
+  },
+  {
+    "id": "cmlshi3to004ixeooyfo7we4b",
+    "company": "Aflorithmic (now Peech)",
+    "domain": "peech-ai.com",
+    "reason": "HTTP 404"
+  },
+  {
+    "id": "e0bdbf07-e22e-4186-a8c6-f0174e445f62",
+    "company": "Airhost One",
+    "domain": "airhostone.com",
+    "reason": "DNS resolution failed"
+  },
+  {
+    "id": "cmm822fz60055jl73obinsxem",
+    "company": "Atexto",
+    "domain": "atexto.com",
+    "reason": "DNS resolution failed"
+  },
+  {
+    "id": "cmm821tss0020jl73rlw6v4pc",
+    "company": "Audio Analytic",
+    "domain": "audioanalytic.com",
+    "reason": "DNS resolution failed"
+  },
+  {
+    "id": "cmlsht7mr016lxeoo09bbgeqw",
+    "company": "Audiosales",
+    "domain": "audiosales.ai",
+    "reason": "DNS resolution failed"
+  },
+  {
+    "id": "cmm9etg9g00j9r25xy5106gqn",
+    "company": "Aura Olap",
+    "domain": "auraolap.com",
+    "reason": "DNS resolution failed"
+  },
+  {
+    "id": "9ad13633-88b5-4c8b-a44d-a8bfbc8c756b",
+    "company": "Beside",
+    "domain": "beside.ai",
+    "reason": "DNS resolution failed"
+  },
+  {
+    "id": "b9fa6f3b-c23f-4c0d-8c7a-3540e5db36ee",
+    "company": "Bindable",
+    "domain": "gobindable.com",
+    "reason": "DNS resolution failed"
+  },
+  {
+    "id": "cmm822jur006ajl73qsb3q2o9",
+    "company": "Call Annie",
+    "domain": "callannie.com",
+    "reason": "DNS resolution failed"
+  },
+  {
+    "id": "b3662316-3757-47d1-8517-249ec532ecb2",
+    "company": "CareBestie",
+    "domain": "carebestie.ai",
+    "reason": "DNS resolution failed"
+  },
+  {
+    "id": "cmlwjzze6026bxeoomuywk1fd",
+    "company": "CareFirst AI",
+    "domain": "saykara.com",
+    "reason": "DNS resolution failed",
+    "also_used_by": [
+      {
+        "id": "cmlwk12yg02c4xeoo8msgdj3f",
+        "company": "Saykara"
+      }
+    ]
+  },
+  {
+    "id": "cmm98s0hn002hr25xdxx3gpmj",
+    "company": "Clara",
+    "domain": "clara-live.com",
+    "reason": "DNS resolution failed"
+  },
+  {
+    "id": "41f68f64-fff4-4e61-932f-d74716fcb11a",
+    "company": "Clinc",
+    "domain": "clinc.com",
+    "reason": "DNS resolution failed"
+  },
+  {
+    "id": "e06b023d-c748-4554-9278-5ee419abe8b9",
+    "company": "Conduit",
+    "domain": "conduitai.com",
+    "reason": "DNS resolution failed"
+  },
+  {
+    "id": "582bd4f5-ad9c-48f0-8a5f-6fff484d2d02",
+    "company": "Counterpart",
+    "domain": "counterpartinsurance.com",
+    "reason": "DNS resolution failed"
+  },
+  {
+    "id": "cmlsi6n1h01oexeooax52j2gg",
+    "company": "Covox AI",
+    "domain": "covox.ai",
+    "reason": "HTTP 404"
+  },
+  {
+    "id": "cmm820vdz000yjl73mxg9yoab",
+    "company": "Deep Render",
+    "domain": "deeprender.ai",
+    "reason": "DNS resolution failed"
+  },
+  {
+    "id": "cmlwk1x7m02g2xeoohktnunyv",
+    "company": "Diya Health",
+    "domain": "diyahealth.com",
+    "reason": "Parked domain (hugedomains)"
+  },
+  {
+    "id": "092dddf5-f31e-4837-9e89-a9db06d97533",
+    "company": "Dotrez",
+    "domain": "dotrez.com",
+    "reason": "DNS resolution failed"
+  },
+  {
+    "id": "cmlsht7n70174xeookim30wr1",
+    "company": "Dubdub AI",
+    "domain": "dubdub.ai",
+    "reason": "HTTP 404"
+  },
+  {
+    "id": "3e51091b-4d2b-4f56-ae66-2dd17078812c",
+    "company": "EasySend",
+    "domain": "easysend.com",
+    "reason": "DNS resolution failed"
+  },
+  {
+    "id": "cmlshxaxq01d1xeooz1adl3i7",
+    "company": "Eleven Microsystems",
+    "domain": "elevenmicrosystems.com",
+    "reason": "DNS resolution failed"
+  },
+  {
+    "id": "cmlshrf7i00yxxeoodcfvtif2",
+    "company": "Eleven Monkeys",
+    "domain": "elevenmonkeys.ai",
+    "reason": "DNS resolution failed"
+  },
+  {
+    "id": "cmm821ttj002fjl73qd4859vn",
+    "company": "Expert System",
+    "domain": "expertsystem.com",
+    "reason": "HTTP 404"
+  },
+  {
+    "id": "cmm98txqr00akr25x9u69q37p",
+    "company": "Feersum Engine",
+    "domain": "feersum.io",
+    "reason": "DNS resolution failed"
+  },
+  {
+    "id": "2515af8f-f308-4d0d-9fed-eab00246be40",
+    "company": "Fenris Digital",
+    "domain": "fenris.co",
+    "reason": "HTTP 500 server error"
+  },
+  {
+    "id": "103cc6a0-a4bb-4fd1-b79f-7ceeb5b3e60d",
+    "company": "Finosu",
+    "domain": "finosu.co",
+    "reason": "DNS resolution failed"
+  },
+  {
+    "id": "cmm9em05e00ggr25xhihtz454",
+    "company": "FlixMobility (FlixBus/FlixTrain)",
+    "domain": "flixmobility.com",
+    "reason": "DNS resolution failed"
+  },
+  {
+    "id": "0a14540e-8578-4331-8974-290089f1336c",
+    "company": "Freya",
+    "domain": "heyfreya.ai",
+    "reason": "DNS resolution failed"
+  },
+  {
+    "id": "61e6cc04-47bb-49dc-9fc5-56b59a031581",
+    "company": "Gove AI",
+    "domain": "goveai.com",
+    "reason": "DNS resolution failed"
+  },
+  {
+    "id": "b0365d2d-877f-4cb9-8cf9-7b8fa5785239",
+    "company": "Gus Chat",
+    "domain": "gus.chat",
+    "reason": "HTTP 503 server error"
+  },
+  {
+    "id": "c11b4cda-197f-4e48-b7ed-69a0896ec876",
+    "company": "Harper",
+    "domain": "harperbrokerage.com",
+    "reason": "DNS resolution failed"
+  },
+  {
+    "id": "e3454da5-6470-4e5a-8554-3e2c01408cb2",
+    "company": "Hyper",
+    "domain": "tryhy.pe",
+    "reason": "DNS resolution failed"
+  },
+  {
+    "id": "cmm822ju80061jl7380dme2g4",
+    "company": "IDyAudio",
+    "domain": "idyaudio.com",
+    "reason": "DNS resolution failed"
+  },
+  {
+    "id": "97084f32-1d4e-4c3a-afd5-d073c81ef9d5",
+    "company": "Impala",
+    "domain": "impala.travel",
+    "reason": "DNS resolution failed"
+  },
+  {
+    "id": "9aa9a835-f629-40d5-b3d5-5b4af3998b1c",
+    "company": "Intaker",
+    "domain": "getintaker.com",
+    "reason": "DNS resolution failed"
+  },
+  {
+    "id": "cmlshlt5300d5xeookcrk2wy7",
+    "company": "Invocalize",
+    "domain": "invocalize.com",
+    "reason": "DNS resolution failed"
+  },
+  {
+    "id": "cmm82ihjz000ar25x82critfb",
+    "company": "Katana ML",
+    "domain": "katana-ml.com",
+    "reason": "DNS resolution failed"
+  },
+  {
+    "id": "0bc5abb0-4479-4e8e-b9d9-1a63f3dbf4ce",
+    "company": "Kayna",
+    "domain": "kayna.co",
+    "reason": "DNS resolution failed"
+  },
+  {
+    "id": "e8dc42b4-9365-477e-9f1c-fe7d74bfa446",
+    "company": "Klearcom",
+    "domain": "klearcom.com",
+    "reason": "DNS resolution failed"
+  },
+  {
+    "id": "357a6779-0485-4001-bef2-593e3c34135a",
+    "company": "Knowcross",
+    "domain": "knowcross.com",
+    "reason": "HTTP 503 server error"
+  },
+  {
+    "id": "cmm9e5vyo00dbr25xtojtykhn",
+    "company": "Lapsi",
+    "domain": "lapsi.is",
+    "reason": "DNS resolution failed"
+  },
+  {
+    "id": "cmm822snz006mjl73whs79ng6",
+    "company": "Lingarama",
+    "domain": "lingarama.com",
+    "reason": "DNS resolution failed"
+  },
+  {
+    "id": "bf8486be-bfe2-4d4b-8985-a768b415b8f0",
+    "company": "Medicare Vox",
+    "domain": "medicarevox.com",
+    "reason": "HTTP 404"
+  },
+  {
+    "id": "4ffbb450-85c4-4560-a9eb-66e6cb02b6be",
+    "company": "Modern Life",
+    "domain": "modernlifeins.com",
+    "reason": "DNS resolution failed"
+  },
+  {
+    "id": "0a2bfb7a-5099-4e6c-94d0-9c7101ddcdc0",
+    "company": "Movai",
+    "domain": "movai.ai",
+    "reason": "DNS resolution failed"
+  },
+  {
+    "id": "cmlshzae601hnxeoohosdb1w1",
+    "company": "Murfi",
+    "domain": "murfi.io",
+    "reason": "DNS resolution failed"
+  },
+  {
+    "id": "cmlshxay601dhxeoo1r3y84b4",
+    "company": "Neurelo",
+    "domain": "neurelo.com",
+    "reason": "HTTP 404"
+  },
+  {
+    "id": "cmlshplvu00uaxeoog9uvlr7u",
+    "company": "Nuanxed (Voiceline)",
+    "domain": "voiceline.io",
+    "reason": "DNS resolution failed",
+    "also_used_by": [
+      {
+        "id": "cmlsi6ef001n6xeool50g1zyf",
+        "company": "Voiceline"
+      }
+    ]
+  },
+  {
+    "id": "cmlshxayh01dtxeookl1ra6u0",
+    "company": "Nuvoic",
+    "domain": "nuvoic.com",
+    "reason": "DNS resolution failed"
+  },
+  {
+    "id": "cmlwk3jhc02lrxeoofwn2sivb",
+    "company": "Ozlo",
+    "domain": "ozlo.com",
+    "reason": "DNS resolution failed"
+  },
+  {
+    "id": "cmlsi5ogy01juxeooqw2xl7g9",
+    "company": "Papaya Global Voice",
+    "domain": "bemyfriday.com",
+    "reason": "DNS resolution failed"
+  },
+  {
+    "id": "cmlshqdq200w7xeoohx33oc79",
+    "company": "Parrot AI",
+    "domain": "parrot.ai",
+    "reason": "DNS resolution failed"
+  },
+  {
+    "id": "9c5f30fd-cd25-4b15-bf00-a49562a7586d",
+    "company": "Pasito",
+    "domain": "pasito.com",
+    "reason": "HTTP 404"
+  },
+  {
+    "id": "5f4e327d-7a9b-44ac-8e34-c71e26fd3595",
+    "company": "Phases",
+    "domain": "phases.health",
+    "reason": "HTTP 404"
+  },
+  {
+    "id": "cmlsi59eg01iqxeoonl2z5vjy",
+    "company": "Phona",
+    "domain": "phona.ai",
+    "reason": "HTTP 503 server error",
+    "also_used_by": [
+      {
+        "id": "cmlshn73500j9xeool340s0cv",
+        "company": "Phona.ai"
+      }
+    ]
+  },
+  {
+    "id": "cmm822fy7004kjl737eslxamt",
+    "company": "Phonalex",
+    "domain": "phonalex.com",
+    "reason": "DNS resolution failed"
+  },
+  {
+    "id": "cmlwk1x6l02exxeoosdb8iq47",
+    "company": "Pillo Health",
+    "domain": "pillohealth.com",
+    "reason": "DNS resolution failed"
+  },
+  {
+    "id": "cmlsi5ogq01jlxeood8529avx",
+    "company": "PolyVoice",
+    "domain": "polyvoice.ai",
+    "reason": "DNS resolution failed"
+  },
+  {
+    "id": "cmm820vdl000jjl73obwtufhx",
+    "company": "Precire Technologies",
+    "domain": "precire.com",
+    "reason": "HTTP 503 server error"
+  },
+  {
+    "id": "cmlwjxnud01tuxeoooj3g9j3y",
+    "company": "Prize Health",
+    "domain": "prizehealth.com",
+    "reason": "Parked domain (hugedomains)"
+  },
+  {
+    "id": "cmlshowdu00orxeoofau6fy0f",
+    "company": "Protobyte",
+    "domain": "protobyte.ai",
+    "reason": "DNS resolution failed"
+  },
+  {
+    "id": "cmm98txs400bcr25xr2p5wmz9",
+    "company": "Pukkatech",
+    "domain": "pukkatech.com",
+    "reason": "DNS resolution failed"
+  },
+  {
+    "id": "b63fbaae-0f6d-4fd6-bae6-40dc83161713",
+    "company": "Quantee",
+    "domain": "quantee.co.uk",
+    "reason": "DNS resolution failed"
+  },
+  {
+    "id": "d867fbf6-d91e-4547-8ac5-5a1cf909018f",
+    "company": "Quora Travel AI",
+    "domain": "quoratravel.ai",
+    "reason": "DNS resolution failed"
+  },
+  {
+    "id": "cmlshp39c00p8xeoo9i6ivvnu",
+    "company": "Readloud",
+    "domain": "readloud.net",
+    "reason": "HTTP 505 server error"
+  },
+  {
+    "id": "cmm98txrp00b4r25xmfc6ssjk",
+    "company": "Recast.ai",
+    "domain": "recast.ai",
+    "reason": "DNS resolution failed"
+  },
+  {
+    "id": "57d19d66-334e-4e13-a0bd-498de188bc1c",
+    "company": "Remedy",
+    "domain": "remedy.health",
+    "reason": "DNS resolution failed"
+  },
+  {
+    "id": "cmlsi65qx01kkxeoo3sti2r8e",
+    "company": "Respeak AI",
+    "domain": "respeak.ai",
+    "reason": "DNS resolution failed"
+  },
+  {
+    "id": "cmlwk1x6c02emxeoo0x4ub3yz",
+    "company": "Robin Healthcare",
+    "domain": "robinhealthcare.com",
+    "reason": "DNS resolution failed"
+  },
+  {
+    "id": "cmlwk3jh002lexeooap1hnk8h",
+    "company": "Safedrugbot",
+    "domain": "safedrugbot.com",
+    "reason": "DNS resolution failed"
+  },
+  {
+    "id": "cmm820vdo000mjl73g1i6rmgt",
+    "company": "Semalytix",
+    "domain": "semalytix.ai",
+    "reason": "DNS resolution failed"
+  },
+  {
+    "id": "ad38261b-5e3f-4f62-93b9-086d60722176",
+    "company": "Senseforth",
+    "domain": "senseforth.ai",
+    "reason": "HTTP 503 server error",
+    "also_used_by": [
+      {
+        "id": "f62f2f91-a596-4155-93b2-905d17c26d7c",
+        "company": "Senseforth.ai"
+      }
+    ]
+  },
+  {
+    "id": "cmm820ve60017jl73rlculv16",
+    "company": "Skelton",
+    "domain": "skeltonhq.com",
+    "reason": "DNS resolution failed"
+  },
+  {
+    "id": "cmm9esu1q00hzr25xnu8z85jn",
+    "company": "Skitechat",
+    "domain": "skitechat.com",
+    "reason": "DNS resolution failed"
+  },
+  {
+    "id": "56fba614-829d-42e7-9e87-2f18aee3b798",
+    "company": "Skylark",
+    "domain": "skylark.ai",
+    "reason": "DNS resolution failed"
+  },
+  {
+    "id": "8614c8f6-a5fa-41af-b309-e0ab36546665",
+    "company": "Sola Solutions",
+    "domain": "solasolutions.ai",
+    "reason": "DNS resolution failed"
+  },
+  {
+    "id": "5ba0ab58-683c-4ec4-9eb0-56d22b9872cb",
+    "company": "Solace Health",
+    "domain": "solacehealth.io",
+    "reason": "DNS resolution failed"
+  },
+  {
+    "id": "cmlshhxvx002uxeoodsj48gqw",
+    "company": "Sonantic",
+    "domain": "sonantic.io",
+    "reason": "DNS resolution failed",
+    "also_used_by": [
+      {
+        "id": "cmlshh22e0015xeoonppyal1f",
+        "company": "Sonantic (acquired by Spotify)"
+      }
+    ]
+  },
+  {
+    "id": "cmlshsgb9014hxeoo8zk9vmw4",
+    "company": "Sonarus AI",
+    "domain": "sonarus.ai",
+    "reason": "DNS resolution failed"
+  },
+  {
+    "id": "cmlwk30qd02hvxeood0uc6nw7",
+    "company": "Sopris Health",
+    "domain": "soprishealth.com",
+    "reason": "DNS resolution failed"
+  },
+  {
+    "id": "cmlsi6efw01o6xeoo5ddvejrp",
+    "company": "SpeechT5 (Amphion)",
+    "domain": "amphion.space",
+    "reason": "DNS resolution failed",
+    "also_used_by": [
+      {
+        "id": "cmlshxrv401gbxeooplktxu6z",
+        "company": "VALL-E X (Amphion)"
+      }
+    ]
+  },
+  {
+    "id": "cmlshmp3b00hnxeoo5k1eud8h",
+    "company": "Speechace",
+    "domain": "speechace.com",
+    "reason": "DNS resolution failed"
+  },
+  {
+    "id": "cmlsht2jb015oxeoouq6l5fuf",
+    "company": "Speechmatics (VoiceHub)",
+    "domain": "voicehub.ai",
+    "reason": "DNS resolution failed"
+  },
+  {
+    "id": "cmlshu6of01b4xeoo4row9p8x",
+    "company": "Spik.ai",
+    "domain": "spik.ai",
+    "reason": "HTTP 404"
+  },
+  {
+    "id": "cmm822fyd004njl73f9lgs92c",
+    "company": "Spokentech",
+    "domain": "spokentech.com",
+    "reason": "Parked domain (hugedomains)"
+  },
+  {
+    "id": "cmm821tu6002ujl73rwo8n1e1",
+    "company": "Spokey",
+    "domain": "getspokey.com",
+    "reason": "DNS resolution failed"
+  },
+  {
+    "id": "cmm822jsw005djl73n827e2zw",
+    "company": "Spokle",
+    "domain": "spokle.ai",
+    "reason": "DNS resolution failed"
+  },
+  {
+    "id": "cmlshzado01hexeood7qp2bw2",
+    "company": "Stereolab AI",
+    "domain": "stereolab.ai",
+    "reason": "DNS resolution failed"
+  },
+  {
+    "id": "cmlsi65rw01lsxeoo853ol3pt",
+    "company": "Stytt",
+    "domain": "stytt.com",
+    "reason": "HTTP 502 server error"
+  },
+  {
+    "id": "609f1ea6-88d5-4531-a133-9f0b6b40f467",
+    "company": "Sunday Insurance",
+    "domain": "sundayth.com",
+    "reason": "DNS resolution failed"
+  },
+  {
+    "id": "1e20848a-7a31-4a9a-a949-c574cfc81836",
+    "company": "Super Teacher",
+    "domain": "superteacher.ai",
+    "reason": "DNS resolution failed"
+  },
+  {
+    "id": "cmlsi5ogi01jcxeooiia56cky",
+    "company": "Tala Voice",
+    "domain": "talavoice.com",
+    "reason": "DNS resolution failed"
+  },
+  {
+    "id": "cmm821tv1003cjl734t89klly",
+    "company": "TalkNow",
+    "domain": "talknow.ai",
+    "reason": "DNS resolution failed",
+    "also_used_by": [
+      {
+        "id": "cmm98tq1p0098r25xw720kwoi",
+        "company": "TalkNow AI"
+      }
+    ]
+  },
+  {
+    "id": "cmm9ett1000l3r25xugzjgrdp",
+    "company": "Talkwice",
+    "domain": "talkwice.com",
+    "reason": "DNS resolution failed"
+  },
+  {
+    "id": "cmm98tbmw0082r25xj345mg5o",
+    "company": "Talkwonders",
+    "domain": "talkwonders.com",
+    "reason": "DNS resolution failed"
+  },
+  {
+    "id": "65c5616a-a72f-4118-b559-ae30cc78669a",
+    "company": "Tenyx",
+    "domain": "tenyx.com",
+    "reason": "DNS resolution failed"
+  },
+  {
+    "id": "cmlshrf6y00y9xeoo8ks4irdb",
+    "company": "Tortoise TTS (152 Labs)",
+    "domain": "tortoise-tts.com",
+    "reason": "DNS resolution failed",
+    "also_used_by": [
+      {
+        "id": "cmlshqkd800wvxeoo2xj0qcfm",
+        "company": "Tortoise TTS (neets.ai spin)"
+      }
+    ]
+  },
+  {
+    "id": "ffdee407-e4b0-4374-8ec9-bd1403193725",
+    "company": "Travana",
+    "domain": "travana.com",
+    "reason": "DNS resolution failed"
+  },
+  {
+    "id": "726ba268-8e9c-4b9b-8f52-12b14b0398b0",
+    "company": "Travel Botz",
+    "domain": "travelbotz.com",
+    "reason": "DNS resolution failed"
+  },
+  {
+    "id": "cmlshok2x00nqxeoofcilvhx5",
+    "company": "Unmix",
+    "domain": "unmix.io",
+    "reason": "DNS resolution failed"
+  },
+  {
+    "id": "cmlshplvl00tyxeoosi4p5q52",
+    "company": "Versay",
+    "domain": "versay.ai",
+    "reason": "DNS resolution failed"
+  },
+  {
+    "id": "cmlshpe7z00qyxeoovqdnpgxm",
+    "company": "Vocodes",
+    "domain": "vocodes.com",
+    "reason": "HTTP 404"
+  },
+  {
+    "id": "cmlshxrur01fwxeoo7bxh1dg3",
+    "company": "Voice100",
+    "domain": "voice100.ai",
+    "reason": "DNS resolution failed"
+  },
+  {
+    "id": "cmlshowdw00ouxeoo0cle4suu",
+    "company": "VoiceAI Tech",
+    "domain": "voiceaitech.com",
+    "reason": "DNS resolution failed",
+    "also_used_by": [
+      {
+        "id": "35f6e32f-1813-4f7f-97e8-6c3131238125",
+        "company": "VoiceAI Technologies"
+      }
+    ]
+  },
+  {
+    "id": "cmlshqkdd00x1xeoolqpitbo6",
+    "company": "VoiceGarden",
+    "domain": "voicegarden.ai",
+    "reason": "DNS resolution failed"
+  },
+  {
+    "id": "cmlshowdq00omxeoov0f3d0pn",
+    "company": "Voiceful",
+    "domain": "voiceful.io",
+    "reason": "DNS resolution failed",
+    "also_used_by": [
+      {
+        "id": "cmlshxgge01eyxeoop4zg6nle",
+        "company": "Voiceful (Voctro Labs)"
+      },
+      {
+        "id": "cmlshsgb20149xeoobvat9z3x",
+        "company": "Voiceful by Vicomtech"
+      },
+      {
+        "id": "cmlshp39k00phxeoo0fzz1wse",
+        "company": "Voiceful by Voctro Labs"
+      }
+    ]
+  },
+  {
+    "id": "cmlshxggr01fcxeoo5q608d2m",
+    "company": "Voicera (Airgram)",
+    "domain": "airgram.io",
+    "reason": "DNS resolution failed",
+    "also_used_by": [
+      {
+        "id": "cmlshlt5600d8xeooh39rc89u",
+        "company": "Voicera (now Airgram)"
+      }
+    ]
+  },
+  {
+    "id": "cmlshnphe00joxeooe4oti97a",
+    "company": "Voicera (acquired by Cisco)",
+    "domain": "voicera.com",
+    "reason": "DNS resolution failed"
+  },
+  {
+    "id": "913db38f-8927-475a-87cb-edc291e81b42",
+    "company": "Vora AI",
+    "domain": "vora.ai",
+    "reason": "DNS resolution failed"
+  },
+  {
+    "id": "cmlsi5ogo01jixeoov6gjyl6h",
+    "company": "Vox.Space",
+    "domain": "vox.space",
+    "reason": "DNS resolution failed"
+  },
+  {
+    "id": "cmm9e5vyt00der25xueyhqith",
+    "company": "Vstrip",
+    "domain": "vstrip.ai",
+    "reason": "DNS resolution failed"
+  },
+  {
+    "id": "cmlsi666v01mmxeoo2jgr5uzi",
+    "company": "Wavforms",
+    "domain": "wavforms.com",
+    "reason": "DNS resolution failed"
+  },
+  {
+    "id": "cmm98txrk00b1r25x795afbsp",
+    "company": "Webtext.me",
+    "domain": "webtext.me",
+    "reason": "DNS resolution failed"
+  },
+  {
+    "id": "509e0efc-88a1-45da-bae3-9aba48a730cf",
+    "company": "Wiseberry",
+    "domain": "wiseberry.io",
+    "reason": "DNS resolution failed"
+  },
+  {
+    "id": "cmm9esu1e00hqr25xrua9meed",
+    "company": "Wooom.io",
+    "domain": "wooom.io",
+    "reason": "DNS resolution failed"
+  },
+  {
+    "id": "cmlshqkdv00xoxeooi75061x0",
+    "company": "Xtreme Speech",
+    "domain": "xtremespeech.com",
+    "reason": "DNS resolution failed"
+  },
+  {
+    "id": "cmm821tus0036jl73b92c6k8p",
+    "company": "n-join",
+    "domain": "n-join.com",
+    "reason": "HTTP 404"
+  }
+]

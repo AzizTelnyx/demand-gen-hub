@@ -1,0 +1,250 @@
+{
+  "timestamp": "2026-03-07T06:11:26.125984",
+  "sections": {
+    "agentRuns": {
+      "agents": {
+        "Negative Keyword Agent": {
+          "status": "done",
+          "findings": 4,
+          "recs": 4,
+          "lastRun": "2026-03-07 02:01:54.9",
+          "error": null,
+          "hoursAgo": 4.2,
+          "level": "healthy"
+        },
+        "Ad Copy Review Agent": {
+          "status": "done",
+          "findings": 47,
+          "recs": 0,
+          "lastRun": "2026-03-07 02:02:11.855",
+          "error": null,
+          "hoursAgo": 4.2,
+          "level": "healthy"
+        },
+        "Budget Pacing": {
+          "status": "done",
+          "findings": 25,
+          "recs": 2,
+          "lastRun": "2026-03-06 07:00:42.848",
+          "error": null,
+          "hoursAgo": 23.2,
+          "level": "healthy"
+        },
+        "Keyword Hygiene Agent": {
+          "status": "no_runs",
+          "level": "critical"
+        }
+      },
+      "issues": [
+        {
+          "level": "critical",
+          "msg": "Keyword Hygiene Agent: no runs found"
+        }
+      ]
+    },
+    "dataFreshness": {
+      "data": {
+        "campaignSync": {
+          "google_ads": {
+            "active": 39,
+            "newestSyncH": 0,
+            "oldestSyncH": 0
+          },
+          "linkedin": {
+            "active": 17,
+            "newestSyncH": null,
+            "oldestSyncH": null
+          },
+          "stackadapt": {
+            "active": 14,
+            "newestSyncH": 0,
+            "oldestSyncH": 0
+          }
+        },
+        "audienceSync": {
+          "google_ads": {
+            "campaignsWithAudience": 39,
+            "oldestSyncH": 0
+          },
+          "linkedin": {
+            "campaignsWithAudience": 17,
+            "oldestSyncH": 0
+          },
+          "stackadapt": {
+            "campaignsWithAudience": 12,
+            "oldestSyncH": 25
+          }
+        },
+        "missingAudience": {
+          "stackadapt": 2
+        },
+        "creativeSync": {},
+        "impressionSync": {
+          "oldestSyncH": 412,
+          "latestDataTo": "2026-03-07 00:00:00"
+        },
+        "unparsedCampaigns": {
+          "linkedin": 1
+        }
+      },
+      "issues": [
+        {
+          "level": "warning",
+          "msg": "stackadapt audiences: oldest sync 25h ago"
+        },
+        {
+          "level": "warning",
+          "msg": "stackadapt: 2 active campaigns missing audience data"
+        },
+        {
+          "level": "warning",
+          "msg": "linkedin: 1 active campaigns with NULL parsed fields"
+        }
+      ]
+    },
+    "knowledgeFreshness": {
+      "files": [
+        {
+          "file": "MANIFEST.md",
+          "daysOld": 15.0
+        },
+        {
+          "file": "README.md",
+          "daysOld": 15.0
+        },
+        {
+          "file": "brand/brand-messaging-q1-2026.md",
+          "daysOld": 15.0
+        },
+        {
+          "file": "campaigns/clawdtalk-influencer-brief.md",
+          "daysOld": 15.0
+        },
+        {
+          "file": "campaigns/contact-center-ccaas-campaign.md",
+          "daysOld": 15.0
+        },
+        {
+          "file": "campaigns/livekit-voice-ai-campaign.md",
+          "daysOld": 15.0
+        },
+        {
+          "file": "competitors/voice-ai-landscape.md",
+          "daysOld": 15.0
+        },
+        {
+          "file": "icps/TODO.md",
+          "daysOld": 15.0
+        },
+        {
+          "file": "icps/developer.md",
+          "daysOld": 15.0
+        },
+        {
+          "file": "icps/enterprise-contact-center.md",
+          "daysOld": 15.0
+        },
+        {
+          "file": "messaging-frameworks/contact-center-framework.md",
+          "daysOld": 15.0
+        },
+        {
+          "file": "messaging-frameworks/healthcare-framework.md",
+          "daysOld": 15.0
+        },
+        {
+          "file": "messaging-frameworks/voice-api-framework.md",
+          "daysOld": 15.0
+        },
+        {
+          "file": "playbooks/channel-benchmarks.md",
+          "daysOld": 15.0
+        },
+        {
+          "file": "products/esim-messaging.md",
+          "daysOld": 15.0
+        },
+        {
+          "file": "products/iot-messaging.md",
+          "daysOld": 15.0
+        },
+        {
+          "file": "products/mobile-voice-messaging.md",
+          "daysOld": 15.0
+        },
+        {
+          "file": "products/voice-ai-dev-messaging.md",
+          "daysOld": 15.0
+        },
+        {
+          "file": "products/voice-api-messaging.md",
+          "daysOld": 15.0
+        },
+        {
+          "file": "standards/ad-copy-rules.md",
+          "daysOld": 15.0
+        }
+      ],
+      "staleCount": 0,
+      "issues": []
+    },
+    "campaignIntegrity": {
+      "integrity": {
+        "zombieCampaigns": {},
+        "activeCounts": {
+          "google_ads": 39,
+          "linkedin": 17,
+          "stackadapt": 14
+        }
+      },
+      "issues": []
+    },
+    "syncState": {
+      "syncs": {
+        "google_ads": {
+          "status": "idle",
+          "lastSyncedAt": "2026-03-07 06:01:05.86",
+          "hoursAgo": 0.2
+        },
+        "linkedin": {
+          "status": "idle",
+          "lastSyncedAt": "2026-03-07 06:03:02.424",
+          "hoursAgo": 0.1
+        },
+        "reddit": {
+          "status": "idle",
+          "lastSyncedAt": "2026-03-07 06:01:30.66",
+          "hoursAgo": 0.2
+        },
+        "stackadapt": {
+          "status": "idle",
+          "lastSyncedAt": "2026-03-07 06:01:09.585",
+          "hoursAgo": 0.2
+        }
+      },
+      "issues": []
+    }
+  },
+  "allIssues": [
+    {
+      "level": "critical",
+      "msg": "Keyword Hygiene Agent: no runs found"
+    },
+    {
+      "level": "warning",
+      "msg": "stackadapt audiences: oldest sync 25h ago"
+    },
+    {
+      "level": "warning",
+      "msg": "stackadapt: 2 active campaigns missing audience data"
+    },
+    {
+      "level": "warning",
+      "msg": "linkedin: 1 active campaigns with NULL parsed fields"
+    }
+  ],
+  "overallLevel": "critical",
+  "fixes": [
+    "Triggered campaign name re-parse"
+  ]
+}

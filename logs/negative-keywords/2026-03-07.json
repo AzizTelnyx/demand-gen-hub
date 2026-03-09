@@ -1,0 +1,78 @@
+{
+  "timestamp": "2026-03-07T10:00:05.611064+00:00",
+  "runtime_seconds": 109.365473,
+  "dry_run": false,
+  "days_analyzed": 7,
+  "campaigns_processed": 36,
+  "search_terms_analyzed": 86,
+  "skipped": 9914,
+  "decisions": {
+    "blocked": 4,
+    "review": 0,
+    "monitored": 5,
+    "kept": 77
+  },
+  "blocks_applied": [
+    {
+      "search_term": "voice over ai",
+      "campaign_id": 23583187853,
+      "campaign_name": "202602 MOFU AI Agent SA APAC",
+      "spend": 40.149568,
+      "clicks": 175,
+      "conversions": 0.0,
+      "relevancy_score": 85,
+      "intent_type": "WRONG_CATEGORY",
+      "confidence": 85,
+      "match_type": "PHRASE",
+      "applied": true,
+      "resource_name": "customers/2356650573/campaignCriteria/23583187853~617666985723"
+    },
+    {
+      "search_term": "call center companies near me",
+      "campaign_id": 23578096203,
+      "campaign_name": "202602 TOFU AI Agent Contact Center SA AMER",
+      "spend": 36.78,
+      "clicks": 19,
+      "conversions": 0.0,
+      "relevancy_score": 80,
+      "intent_type": "IRRELEVANT",
+      "confidence": 80,
+      "match_type": "PHRASE",
+      "applied": true,
+      "resource_name": "customers/2356650573/campaignCriteria/23578096203~306643540250"
+    },
+    {
+      "search_term": "ai voice over",
+      "campaign_id": 23579649257,
+      "campaign_name": "202602 MOFU AI Agent SA AMER",
+      "spend": 36.450882,
+      "clicks": 32,
+      "conversions": 0.0,
+      "relevancy_score": 85,
+      "intent_type": "WRONG_CATEGORY",
+      "confidence": 85,
+      "match_type": "PHRASE",
+      "applied": true,
+      "resource_name": "customers/2356650573/campaignCriteria/23579649257~907468893997"
+    },
+    {
+      "search_term": "text to speech ai",
+      "campaign_id": 23574277866,
+      "campaign_name": "202602 TOFU AI Agent ElevenLabs SA AMER",
+      "spend": 25.447973,
+      "clicks": 26,
+      "conversions": 0.0,
+      "relevancy_score": 80,
+      "intent_type": "WRONG_CATEGORY",
+      "confidence": 80,
+      "match_type": "PHRASE",
+      "applied": true,
+      "resource_name": "customers/2356650573/campaignCriteria/23574277866~854855096777"
+    }
+  ],
+  "review_items": [],
+  "estimated_savings": {
+    "weekly": 138.828423,
+    "monthly": 596.9622188999999
+  }
+}

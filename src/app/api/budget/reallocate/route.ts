@@ -2,7 +2,10 @@ import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import OpenAI from "openai";
 
-const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+const openai = new OpenAI({
+  baseURL: process.env.OPENCLAW_BASE_URL || "http://127.0.0.1:18789/v1",
+  apiKey: process.env.OPENCLAW_GATEWAY_TOKEN || "",
+});
 
 export async function POST(req: NextRequest) {
   try {
@@ -12,7 +15,6 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "Missing instruction" }, { status: 400 });
     }
 
-    // Get current budget state
     const currentYear = new Date().getFullYear();
     const currentMonth = new Date().getMonth() + 1;
 
@@ -31,7 +33,6 @@ export async function POST(req: NextRequest) {
       },
     });
 
-    // Calculate current state
     const spendByChannel: Record<string, number> = {};
     const spendByRegion: Record<string, number> = {};
     const spendByFunnel: Record<string, number> = {};
@@ -65,36 +66,33 @@ ${Object.entries(spendByFunnel).map(([k, v]) => `- ${k}: $${v.toLocaleString()}`
 
 USER REQUEST: "${instruction}"
 
-Respond with a JSON object containing:
+Respond with ONLY a JSON object (no markdown, no code fences) containing:
 {
   "summary": "Brief summary of the proposed change",
   "changes": [
     {
-      "type": "decrease" | "increase",
-      "channel": "google_ads" | "stackadapt" | "linkedin" | "reddit",
-      "region": "AMER" | "EMEA" | "APAC" | null,
-      "funnelStage": "TOFU" | "MOFU" | "BOFU" | "ABM" | null,
+      "type": "decrease or increase",
+      "channel": "google_ads or stackadapt or linkedin or reddit",
+      "region": "AMER or EMEA or APAC or null",
+      "funnelStage": "TOFU or MOFU or BOFU or ABM or null",
       "amount": number,
       "reason": "Why this change"
     }
   ],
   "projectedImpact": "Expected outcome of these changes",
   "warnings": ["Any risks or considerations"],
-  "netChange": number (should be 0 for reallocations, or the net budget change)
-}
-
-Be specific about dollar amounts. If the user's request is unclear, make reasonable assumptions and explain them.`;
+  "netChange": 0
+}`;
 
     const completion = await openai.chat.completions.create({
-      model: "gpt-4o-mini",
+      model: "openclaw:main",
+      max_tokens: 1000,
       messages: [{ role: "user", content: prompt }],
-      response_format: { type: "json_object" },
-      temperature: 0.3,
     });
 
-    const response = JSON.parse(completion.choices[0].message.content || "{}");
+    const responseText = completion.choices[0]?.message?.content || "{}";
+    const response = JSON.parse(responseText);
 
-    // Store the proposed change
     const budgetChange = await prisma.budgetChange.create({
       data: {
         description: instruction,
@@ -124,7 +122,6 @@ Be specific about dollar amounts. If the user's request is unclear, make reasona
   }
 }
 
-// Apply a proposed change
 export async function PUT(req: NextRequest) {
   try {
     const { changeId, apply } = await req.json();
@@ -140,9 +137,6 @@ export async function PUT(req: NextRequest) {
         appliedAt: apply ? new Date() : null,
       },
     });
-
-    // If approved, we could automatically update budget plans here
-    // For now, just mark as approved and let user adjust manually
 
     return NextResponse.json({ ok: true, change });
   } catch (error) {

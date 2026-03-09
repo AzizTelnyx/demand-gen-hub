@@ -1,0 +1,78 @@
+{
+  "timestamp": "2026-03-08T10:00:04.118338+00:00",
+  "runtime_seconds": 121.469294,
+  "dry_run": false,
+  "days_analyzed": 7,
+  "campaigns_processed": 36,
+  "search_terms_analyzed": 83,
+  "skipped": 9917,
+  "decisions": {
+    "blocked": 4,
+    "review": 0,
+    "monitored": 2,
+    "kept": 77
+  },
+  "blocks_applied": [
+    {
+      "search_term": "voice over ai",
+      "campaign_id": 23583187853,
+      "campaign_name": "202602 MOFU AI Agent SA APAC",
+      "spend": 33.809895,
+      "clicks": 147,
+      "conversions": 0.0,
+      "relevancy_score": 90,
+      "intent_type": "WRONG_CATEGORY",
+      "confidence": 90,
+      "match_type": "PHRASE",
+      "applied": true,
+      "resource_name": "customers/2356650573/campaignCriteria/23583187853~617666985723"
+    },
+    {
+      "search_term": "ai voice over",
+      "campaign_id": 23579649257,
+      "campaign_name": "202602 MOFU AI Agent SA AMER",
+      "spend": 32.170882,
+      "clicks": 28,
+      "conversions": 0.0,
+      "relevancy_score": 90,
+      "intent_type": "WRONG_CATEGORY",
+      "confidence": 90,
+      "match_type": "PHRASE",
+      "applied": true,
+      "resource_name": "customers/2356650573/campaignCriteria/23579649257~907468893997"
+    },
+    {
+      "search_term": "speechace api",
+      "campaign_id": 19905048363,
+      "campaign_name": "202304 MOFU Voice API SA AMER",
+      "spend": 31.48,
+      "clicks": 2,
+      "conversions": 0.0,
+      "relevancy_score": 85,
+      "intent_type": "WRONG_CATEGORY",
+      "confidence": 85,
+      "match_type": "EXACT",
+      "applied": true,
+      "resource_name": "customers/2356650573/campaignCriteria/19905048363~1534318828734"
+    },
+    {
+      "search_term": "talk cloud",
+      "campaign_id": 23546680743,
+      "campaign_name": "202602 BRAND ClawdTalk SA GLOBAL",
+      "spend": 29.31,
+      "clicks": 1,
+      "conversions": 0.0,
+      "relevancy_score": 80,
+      "intent_type": "IRRELEVANT",
+      "confidence": 80,
+      "match_type": "EXACT",
+      "applied": true,
+      "resource_name": "customers/2356650573/campaignCriteria/23546680743~299150362774"
+    }
+  ],
+  "review_items": [],
+  "estimated_savings": {
+    "weekly": 126.770777,
+    "monthly": 545.1143410999999
+  }
+}

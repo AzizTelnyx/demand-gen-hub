@@ -15,7 +15,7 @@ const navItems = [
   { id: "dashboard", label: "Dashboard", icon: LayoutDashboard, href: "/dashboard" },
   { id: "campaigns", label: "Command Center", icon: Radar, href: "/" },
   { id: "pipeline", label: "Pipeline", icon: TrendingUp, href: "/pipeline" },
-  { id: "optimizations", label: "Optimizations", icon: History, href: "/optimizations" },
+  { id: "optimizations", label: "Optimizations", icon: History, href: "/agents" },
   { id: "ads", label: "Ads Library", icon: Image, href: "/ads" },
   { id: "budget", label: "Budget & Spend", icon: Wallet, href: "/budget" },
   { id: "abm", label: "ABM", icon: Crosshair, href: "/abm" },

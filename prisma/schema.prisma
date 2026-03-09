@@ -346,6 +346,7 @@ model Agent {
   level       Int        @default(0)
   enabled     Boolean    @default(true)
   config      String?
+  platform    String?
   createdAt   DateTime   @default(now())
   runs        AgentRun[]
 }

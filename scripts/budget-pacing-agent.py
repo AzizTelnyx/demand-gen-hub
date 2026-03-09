@@ -130,6 +130,26 @@ def check_cap(config: dict) -> dict:
     else:
         level = "healthy"
 
+    # Per-platform pacing against allocations
+    allocations = load_platform_allocations()
+    platform_pacing = {}
+    for slug, spend in platform_spend.items():
+        alloc = allocations.get(slug, {})
+        planned = alloc.get("planned", 0)
+        if planned > 0:
+            plat_daily_rate = spend / max(days_elapsed, 1)
+            plat_projected = plat_daily_rate * days_in_month
+            plat_util = plat_projected / planned
+            plat_level = "critical" if plat_util >= thresholds["capCritical"] else "warning" if plat_util >= thresholds["capWarning"] else "healthy"
+            platform_pacing[slug] = {
+                "planned": planned,
+                "mtdSpend": round(spend, 2),
+                "dailyRate": round(plat_daily_rate, 2),
+                "projected": round(plat_projected, 2),
+                "utilization": round(plat_util, 4),
+                "level": plat_level,
+            }
+
     return {
         "cap": cap,
         "mtdSpend": round(mtd_spend, 2),
@@ -143,6 +163,7 @@ def check_cap(config: dict) -> dict:
         "utilization": round(utilization, 4),
         "level": level,
         "platformSpend": platform_spend,
+        "platformPacing": platform_pacing,
     }
 
 

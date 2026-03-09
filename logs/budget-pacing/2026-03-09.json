@@ -1,22 +1,56 @@
 {
-  "summary": "MTD $41,660 / $140,000 cap (critical). 19 budget-limited, 1 underpacing, 5 anomalies.",
+  "summary": "MTD $41,755 / $140,000 cap (critical). 19 budget-limited, 1 underpacing, 5 anomalies.",
   "cap": {
     "cap": 140000,
-    "mtdSpend": 41659.64,
-    "dailyRate": 4628.85,
-    "projected": 143494.32,
-    "headroom": -3494.32,
+    "mtdSpend": 41754.64,
+    "dailyRate": 4639.4,
+    "projected": 143821.54,
+    "headroom": -3821.54,
     "daysElapsed": 9,
     "daysInMonth": 31,
     "daysRemaining": 22,
     "daysUntilCap": 21.2,
-    "utilization": 1.025,
+    "utilization": 1.0273,
     "level": "critical",
     "platformSpend": {
-      "google_ads": 30515.73,
-      "linkedin": 7730.89,
+      "google_ads": 30594.81,
+      "linkedin": 7740.86,
       "stackadapt": 1265.0,
-      "reddit": 2148.02
+      "reddit": 2153.97
+    },
+    "platformPacing": {
+      "google_ads": {
+        "planned": 85000.0,
+        "mtdSpend": 30594.81,
+        "dailyRate": 3399.42,
+        "projected": 105382.12,
+        "utilization": 1.2398,
+        "level": "critical"
+      },
+      "linkedin": {
+        "planned": 30000.0,
+        "mtdSpend": 7740.86,
+        "dailyRate": 860.1,
+        "projected": 26662.96,
+        "utilization": 0.8888,
+        "level": "healthy"
+      },
+      "stackadapt": {
+        "planned": 15000.0,
+        "mtdSpend": 1265.0,
+        "dailyRate": 140.56,
+        "projected": 4357.22,
+        "utilization": 0.2905,
+        "level": "healthy"
+      },
+      "reddit": {
+        "planned": 10000.0,
+        "mtdSpend": 2153.97,
+        "dailyRate": 239.33,
+        "projected": 7419.23,
+        "utilization": 0.7419,
+        "level": "healthy"
+      }
     }
   },
   "budgetLimited": [
@@ -368,7 +402,37 @@
     },
     {
       "type": "overspend_risk",
-      "summary": "Projected $143,494 exceeds $140,000 cap by $3,494. Reduce daily spend by $159/day."
+      "summary": "Projected $143,822 exceeds $140,000 cap by $3,822. Reduce daily spend by $174/day."
     }
-  ]
+  ],
+  "platformPacing": {
+    "google_ads": {
+      "planned": 85000.0,
+      "mtdSpend": 30594.81,
+      "expectedPace": 24677.42,
+      "pacePct": 124.0,
+      "status": "overpacing"
+    },
+    "linkedin": {
+      "planned": 30000.0,
+      "mtdSpend": 7740.86,
+      "expectedPace": 8709.68,
+      "pacePct": 88.9,
+      "status": "on_track"
+    },
+    "stackadapt": {
+      "planned": 15000.0,
+      "mtdSpend": 1265.0,
+      "expectedPace": 4354.84,
+      "pacePct": 29.0,
+      "status": "underpacing"
+    },
+    "reddit": {
+      "planned": 10000.0,
+      "mtdSpend": 2153.97,
+      "expectedPace": 2903.23,
+      "pacePct": 74.2,
+      "status": "underpacing"
+    }
+  }
 }

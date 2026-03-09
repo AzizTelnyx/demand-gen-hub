@@ -22,7 +22,7 @@ GATEWAY_TOKEN_FILE = Path("/Users/azizalsinafi/.openclaw/workspace/.gateway-toke
 GATEWAY_URL = "http://127.0.0.1:18789"
 TG_BOT_TOKEN = "8579443521:AAEtEBNZlUEq22joa_BnDf3bjD3paLAWSVo"
 TG_CHAT_ID = "-1003786506284"
-TG_THREAD_ID = 164
+TG_THREAD_ID = 951  # 🏥 Hub Health topic
 
 KEY_TABLES = ["Campaign", "AdImpression", "AgentRun", "Recommendation", "CampaignChange"]
 API_ENDPOINTS = ["/api/campaigns", "/api/budget", "/api/agents"]

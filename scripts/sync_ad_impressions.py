@@ -69,7 +69,7 @@ def upsert_impression(cur, record_id, domain, campaign_id, campaign_name,
             impressions, clicks, cost, conversions, "dateFrom", "dateTo",
             "lastSyncedAt", "createdAt", "updatedAt", platform)
         VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
-        ON CONFLICT (domain, "campaignId", COALESCE("dateFrom", '1970-01-01')) DO UPDATE SET
+        ON CONFLICT (id) DO UPDATE SET
             "campaignName" = EXCLUDED."campaignName",
             impressions = EXCLUDED.impressions, clicks = EXCLUDED.clicks, cost = EXCLUDED.cost,
             conversions = EXCLUDED.conversions,

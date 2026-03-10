@@ -176,7 +176,7 @@ def main():
     # Summary
     cur.execute('SELECT COUNT(*) FROM "AdImpression" WHERE platform = \'linkedin\' AND "dateTo" IS NOT NULL')
     monthly_count = cur.fetchone()[0]
-    cur.execute('SELECT COUNT(*) FROM "AdImpression" WHERE platform = \'linkedin\' AND date IS NULL')
+    cur.execute('SELECT COUNT(*) FROM "AdImpression" WHERE platform = \'linkedin\' AND "dateTo" IS NULL')
     legacy_count = cur.fetchone()[0]
 
     print(f"\n✅ LinkedIn Monthly Impression Sync Complete")

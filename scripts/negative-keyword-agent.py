@@ -358,7 +358,7 @@ Confidence 80+ means you're sure. 60-79 means likely. Below 60 means uncertain."
                 "Authorization": f"Bearer {OPENCLAW_TOKEN}",
             },
         )
-        with urllib.request.urlopen(req, timeout=60) as resp:
+        with urllib.request.urlopen(req, timeout=120) as resp:
             result = json.loads(resp.read())
 
         content = result["choices"][0]["message"]["content"].strip()
@@ -582,7 +582,14 @@ def main():
         total_batches = (len(candidates) + AI_BATCH_SIZE - 1) // AI_BATCH_SIZE
         print(f"  Batch {batch_num}/{total_batches} ({len(batch)} terms)...")
 
-        ai_results = ai_analyze_batch(batch, knowledge_context)
+        ai_results = None
+        for attempt in range(3):
+            ai_results = ai_analyze_batch(batch, knowledge_context)
+            if ai_results is not None:
+                break
+            wait = 10 * (attempt + 1)
+            print(f"    Retry {attempt + 1}/2 in {wait}s...")
+            import time; time.sleep(wait)
 
         for i, st in enumerate(batch):
             cid = st["campaign_id"]

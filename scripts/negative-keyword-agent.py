@@ -253,6 +253,7 @@ def ai_analyze_batch(terms_batch, knowledge_context):
 
     terms_text = "\n".join(
         f"{i+1}. \"{t['search_term']}\" | campaign: {t['campaign_name']} | "
+        f"campaign_product: {t.get('campaign_product', 'unknown')} | campaign_funnel: {t.get('campaign_funnel', 'unknown')} | "
         f"spend: ${t['cost']:.2f} | clicks: {t['clicks']} | conversions: {t['all_conversions']}"
         for i, t in enumerate(terms_batch)
     )
@@ -272,11 +273,20 @@ TELNYX PRODUCTS (what we actually sell — B2B enterprise only):
 - Phone Numbers (DIDs, toll-free)
 - eSIM (enterprise only, NOT consumer travel/phone eSIM)
 
+CAMPAIGN PRODUCT TYPES (each campaign targets ONE product category):
+- contact_center: CCaaS, IVR, ACD, call routing, call center software
+- ai_agent / voice_ai: Voice AI agents, conversational AI, AI calling, AI phone
+- sip_trunking: SIP trunks, SIP providers, enterprise telephony
+- sms_api: SMS/MMS API, 10DLC, A2P messaging
+- iot: IoT SIMs, M2M connectivity, eSIM for fleet/industrial
+- numbers: Phone numbers, DIDs, toll-free numbers
+- voice_api: Programmable voice, call control, WebRTC
+
 COMPETITORS: twilio, vonage, bandwidth, plivo, sinch, messagebird, nexmo, ringcentral, 8x8, five9, genesys
 
-YOUR TASK: Analyze each search term and decide if it should be BLOCKED as a negative keyword, KEPT, or MONITORED.
+YOUR TASK: Analyze each search term and decide: BLOCK, BLOCK_CAMPAIGN, KEEP, or MONITOR.
 
-BLOCK if the search term indicates:
+BLOCK (account-level negative) if the search term indicates:
 - Wrong industry entirely (consumer, gaming, entertainment, education tools)
 - Wrong product category (image/video/music AI generators, not voice AI)
 - Financial/investor research on competitors (stock price, earnings, IPO)
@@ -285,11 +295,18 @@ BLOCK if the search term indicates:
 - Job seekers (careers, jobs, hiring, salary)
 - Completely irrelevant to any Telnyx product
 
+BLOCK_CAMPAIGN (campaign-level negative — the term is relevant to Telnyx but WRONG for this campaign) if:
+- The search term is about a DIFFERENT Telnyx product than what the campaign targets
+  Example: "ai voice agent" appearing in a Contact Center campaign → BLOCK_CAMPAIGN (belongs in AI Agent campaign)
+  Example: "sip trunking provider" appearing in an AI Agent campaign → BLOCK_CAMPAIGN (belongs in SIP campaign)
+  Example: "bulk sms api" appearing in a Contact Center campaign → BLOCK_CAMPAIGN (belongs in SMS campaign)
+- The search term matches another product category but NOT the campaign's product category
+- This prevents budget bleed between campaigns via phrase/broad match
+
 KEEP if the search term indicates:
-- Someone looking for products Telnyx sells
-- Competitor comparison (even if competitor name present — these are high-intent)
-- Enterprise/B2B use cases matching our products
-- Technical queries about our product categories
+- Someone looking for the SPECIFIC product this campaign targets
+- Competitor comparison relevant to this campaign's product
+- Enterprise/B2B use cases matching this campaign's product category
 
 MONITOR if unclear or ambiguous.
 
@@ -298,11 +315,14 @@ HARD RULES (override everything):
 - NEVER block brand terms (telnyx, clawdtalk, clawd)
 - Competitor name alone is NOT a reason to block — competitor comparison searches are valuable
 - Educational queries ("what is", "how to") are fine for TOFU campaigns
+- BLOCK_CAMPAIGN requires the term to clearly belong to a DIFFERENT product — don't flag terms that could reasonably fit both categories
+- For contact_center campaigns: terms about "AI agents for contact centers" or "contact center AI" are KEEP (they combine both). Only BLOCK_CAMPAIGN pure AI agent terms with no contact center context.
 
 For each term, respond with ONLY valid JSON array. Each item:
-{{"index": N, "action": "BLOCK"|"KEEP"|"MONITOR", "confidence": 0-100, "reason": "brief explanation", "intent_type": "RELEVANT|FINANCIAL|SUPPORT|WRONG_CATEGORY|CONSUMER|EDUCATIONAL|JOB_SEEKER|IRRELEVANT", "match_type": "EXACT"|"PHRASE"}}
+{{"index": N, "action": "BLOCK"|"BLOCK_CAMPAIGN"|"KEEP"|"MONITOR", "confidence": 0-100, "reason": "brief explanation", "intent_type": "RELEVANT|FINANCIAL|SUPPORT|WRONG_CATEGORY|CONSUMER|EDUCATIONAL|JOB_SEEKER|IRRELEVANT|WRONG_CAMPAIGN", "match_type": "EXACT"|"PHRASE", "correct_campaign_product": "product type where this term belongs (only for BLOCK_CAMPAIGN)"}}
 
 Use PHRASE match when blocking a general concept (e.g. "image generator"). Use EXACT when blocking a specific query.
+For BLOCK_CAMPAIGN, prefer EXACT match to avoid over-blocking within the campaign.
 Confidence 80+ means you're sure. 60-79 means likely. Below 60 means uncertain."""
 
     user_msg = f"Analyze these {len(terms_batch)} search terms:\n\n{terms_text}"
@@ -360,7 +380,7 @@ def apply_safety_overrides(ai_result, term_data, keywords):
     """Apply hard safety rules that override AI decisions."""
     search_term = term_data["search_term"]
 
-    # Never block converting terms
+    # Never block converting terms (not even campaign-level)
     if term_data["all_conversions"] > 0:
         return {"action": "KEEP", "confidence": 100, "reason": "Has conversions — protected",
                 "intent_type": "RELEVANT", "match_type": "EXACT"}
@@ -523,12 +543,23 @@ def main():
 
     print(f"  {len(candidates)} candidates after filtering ({skipped} skipped)")
 
+    # 5b. Enrich candidates with parsed campaign context
+    print("Enriching candidates with campaign context...")
+    for st in candidates:
+        parsed = parse_campaign_name(st["campaign_name"])
+        st["campaign_product"] = parsed["product"] or "unknown"
+        st["campaign_funnel"] = parsed["funnel_stage"] or "unknown"
+        st["campaign_region"] = parsed["region"] or "unknown"
+        st["campaign_competitor"] = parsed["competitor_focus"]
+
     # 6. AI-powered batch analysis
     print(f"\nAnalyzing {len(candidates)} terms with AI (batches of 25)...")
     blocks = []
+    campaign_blocks = []
     monitors = []
     keeps = []
     total_waste = 0.0
+    total_campaign_bleed = 0.0
     AI_BATCH_SIZE = 25
 
     for batch_start in range(0, len(candidates), AI_BATCH_SIZE):
@@ -565,13 +596,14 @@ def main():
                 "search_term": st["search_term"],
                 "campaign_id": cid,
                 "campaign_name": st["campaign_name"],
+                "campaign_product": st.get("campaign_product", "unknown"),
                 "spend": st["cost"],
                 "clicks": st["clicks"],
                 "conversions": st["all_conversions"],
                 "relevancy_score": decision.get("confidence", 50),
                 "intent": {"type": decision.get("intent_type", "UNKNOWN"),
                            "reason": decision.get("reason", ""),
-                           "confidence": decision.get("confidence", 50)} if decision.get("action") == "BLOCK" else None,
+                           "confidence": decision.get("confidence", 50)} if decision.get("action") in ("BLOCK", "BLOCK_CAMPAIGN") else None,
                 "performance": perf,
                 "decision": decision,
             }
@@ -580,6 +612,11 @@ def main():
                 result["match_type"] = decision.get("match_type", "EXACT")
                 blocks.append(result)
                 total_waste += st["cost"]
+            elif decision["action"] == "BLOCK_CAMPAIGN":
+                result["match_type"] = decision.get("match_type", "EXACT")
+                result["correct_campaign_product"] = decision.get("correct_campaign_product", "unknown")
+                campaign_blocks.append(result)
+                total_campaign_bleed += st["cost"]
             elif decision["action"] == "MONITOR":
                 monitors.append(result)
             else:
@@ -592,41 +629,73 @@ def main():
     # 7. Apply blocks
     auto_blocks = [b for b in blocks if b["decision"]["confidence"] >= CONFIDENCE_THRESHOLD]
     review_blocks = [b for b in blocks if b["decision"]["confidence"] < CONFIDENCE_THRESHOLD]
+    auto_campaign_blocks = [b for b in campaign_blocks if b["decision"]["confidence"] >= CONFIDENCE_THRESHOLD]
+    review_campaign_blocks = [b for b in campaign_blocks if b["decision"]["confidence"] < CONFIDENCE_THRESHOLD]
+    
+    all_analyzed = len(blocks) + len(campaign_blocks) + len(monitors) + len(keeps)
     
     print(f"\n{'='*60}")
     print(f"RESULTS:")
-    print(f"  Analyzed: {len(blocks) + len(monitors) + len(keeps)} terms")
-    print(f"  Skipped:  {skipped} (below thresholds)")
-    print(f"  Blocked:  {len(auto_blocks)} auto-apply (≥{CONFIDENCE_THRESHOLD}% confidence)")
-    print(f"  Review:   {len(review_blocks)} logged for monitoring (<{CONFIDENCE_THRESHOLD}%)")
-    print(f"  Monitor:  {len(monitors)}")
-    print(f"  Kept:     {len(keeps)}")
-    print(f"  Est. waste: ${total_waste:.2f} ({total_waste*4.3:.0f}/month)")
+    print(f"  Analyzed:          {all_analyzed} terms")
+    print(f"  Skipped:           {skipped} (below thresholds)")
+    print(f"  Blocked (irrelevant): {len(auto_blocks)} auto-apply (≥{CONFIDENCE_THRESHOLD}% confidence)")
+    print(f"  Blocked (wrong campaign): {len(auto_campaign_blocks)} auto-apply (campaign-level)")
+    print(f"  Review (irrelevant):  {len(review_blocks)} (<{CONFIDENCE_THRESHOLD}%)")
+    print(f"  Review (wrong campaign): {len(review_campaign_blocks)} (<{CONFIDENCE_THRESHOLD}%)")
+    print(f"  Monitor:           {len(monitors)}")
+    print(f"  Kept:              {len(keeps)}")
+    print(f"  Est. waste (irrelevant): ${total_waste:.2f} (${total_waste*4.3:.0f}/month)")
+    print(f"  Est. bleed (wrong campaign): ${total_campaign_bleed:.2f} (${total_campaign_bleed*4.3:.0f}/month)")
     print(f"{'='*60}")
     
     applied = []
+    # Apply irrelevant blocks (same as before)
     if auto_blocks and not args.dry_run:
-        print(f"\nApplying {len(auto_blocks)} negative keywords...")
+        print(f"\nApplying {len(auto_blocks)} irrelevant negative keywords...")
         applied = apply_negatives(client, auto_blocks)
         print(f"  Applied: {len([a for a in applied if a.get('applied')])}")
         print(f"  Failed:  {len([a for a in applied if not a.get('applied')])}")
     elif auto_blocks:
-        print(f"\n⚠️  DRY RUN: Would apply {len(auto_blocks)} negative keywords")
+        print(f"\n⚠️  DRY RUN: Would apply {len(auto_blocks)} irrelevant negatives")
+    
+    # Apply campaign-level blocks (wrong campaign, not irrelevant)
+    applied_campaign = []
+    if auto_campaign_blocks and not args.dry_run:
+        print(f"\nApplying {len(auto_campaign_blocks)} campaign-level negative keywords (cross-campaign bleed)...")
+        applied_campaign = apply_negatives(client, auto_campaign_blocks)
+        print(f"  Applied: {len([a for a in applied_campaign if a.get('applied')])}")
+        print(f"  Failed:  {len([a for a in applied_campaign if not a.get('applied')])}")
+    elif auto_campaign_blocks:
+        print(f"\n⚠️  DRY RUN: Would apply {len(auto_campaign_blocks)} campaign-level negatives")
     
     # 6. Top blocks
-    if blocks:
+    all_blocks = blocks + campaign_blocks
+    if all_blocks:
         print(f"\nTop blocks by spend:")
-        for b in sorted(blocks, key=lambda x: x["spend"], reverse=True)[:10]:
+        for b in sorted(all_blocks, key=lambda x: x["spend"], reverse=True)[:10]:
             d = b["decision"]
-            print(f"  ${b['spend']:>7.2f} | [{d['confidence']}%] \"{b['search_term']}\"")
+            block_type = "CAMPAIGN" if d["action"] == "BLOCK_CAMPAIGN" else "ACCOUNT"
+            print(f"  ${b['spend']:>7.2f} | [{d['confidence']}%] [{block_type}] \"{b['search_term']}\"")
             print(f"           → {b['campaign_name']}")
             print(f"           → {d['reason']}")
+            if b.get("correct_campaign_product"):
+                print(f"           → belongs in: {b['correct_campaign_product']}")
+    
+    if campaign_blocks:
+        print(f"\nCampaign bleed details:")
+        for b in sorted(campaign_blocks, key=lambda x: x["spend"], reverse=True)[:15]:
+            d = b["decision"]
+            print(f"  ${b['spend']:>7.2f} | \"{b['search_term']}\"")
+            print(f"           campaign: {b['campaign_name']} (product: {b.get('campaign_product', '?')})")
+            print(f"           belongs in: {b.get('correct_campaign_product', '?')}")
     
     # 7. Intent breakdown
-    if blocks:
+    if all_blocks:
         intent_summary = defaultdict(lambda: {"count": 0, "spend": 0.0})
-        for b in blocks:
+        for b in all_blocks:
             itype = b["intent"]["type"] if b["intent"] else "PERFORMANCE"
+            if b["decision"]["action"] == "BLOCK_CAMPAIGN":
+                itype = "WRONG_CAMPAIGN"
             intent_summary[itype]["count"] += 1
             intent_summary[itype]["spend"] += b["spend"]
         
@@ -655,32 +724,39 @@ def main():
     
     # Create AgentRun
     run_summary = {
-        "summary": f"Analyzed {len(blocks) + len(monitors) + len(keeps)} search terms. "
-                   f"Auto-blocked {len(auto_blocks)}, {len(review_blocks)} pending review. "
-                   f"Est. waste: ${total_waste:.0f}/week (${total_waste*4.3:.0f}/month).",
+        "summary": f"Analyzed {all_analyzed} search terms. "
+                   f"Auto-blocked {len(auto_blocks)} irrelevant, {len(auto_campaign_blocks)} campaign-bleed. "
+                   f"{len(review_blocks) + len(review_campaign_blocks)} pending review. "
+                   f"Est. waste: ${total_waste:.0f}/week. Campaign bleed: ${total_campaign_bleed:.0f}/week.",
         "findings": [
             {"severity": "high" if b["spend"] > 50 else "medium",
-             "title": f'"{b["search_term"]}" — ${b["spend"]:.2f} wasted',
+             "title": f'"{b["search_term"]}" — ${b["spend"]:.2f} {"wasted" if b["decision"]["action"] == "BLOCK" else "campaign bleed"}',
              "detail": f'{b["campaign_name"]} | {b["decision"]["reason"]}'}
-            for b in sorted(blocks, key=lambda x: x["spend"], reverse=True)[:20]
+            for b in sorted(all_blocks, key=lambda x: x["spend"], reverse=True)[:20]
         ],
         "stats": {
-            "terms_analyzed": len(blocks) + len(monitors) + len(keeps),
+            "terms_analyzed": all_analyzed,
             "skipped": skipped,
             "auto_blocked": len(auto_blocks),
+            "auto_campaign_blocked": len(auto_campaign_blocks),
             "pending_review": len(review_blocks),
+            "pending_campaign_review": len(review_campaign_blocks),
             "monitored": len(monitors),
             "kept": len(keeps),
             "est_weekly_waste": round(total_waste, 2),
             "est_monthly_waste": round(total_waste * 4.3, 2),
+            "est_weekly_campaign_bleed": round(total_campaign_bleed, 2),
+            "est_monthly_campaign_bleed": round(total_campaign_bleed * 4.3, 2),
         },
         "intent_breakdown": {},
     }
     
     # Aggregate intent breakdown
     intent_agg = defaultdict(lambda: {"count": 0, "spend": 0.0})
-    for b in blocks:
+    for b in all_blocks:
         itype = b["intent"]["type"] if b["intent"] else "PERFORMANCE"
+        if b["decision"]["action"] == "BLOCK_CAMPAIGN":
+            itype = "WRONG_CAMPAIGN"
         intent_agg[itype]["count"] += 1
         intent_agg[itype]["spend"] += b["spend"]
     run_summary["intent_breakdown"] = {k: {"count": v["count"], "spend": round(v["spend"], 2)} for k, v in intent_agg.items()}
@@ -749,6 +825,62 @@ def main():
              b["decision"]["reason"],
              json.dumps(metadata)))
     
+    # Create Recommendations for campaign-level blocks (auto-applied)
+    for b in auto_campaign_blocks:
+        metadata = {
+            "search_term": b["search_term"],
+            "campaign_id": b["campaign_id"],
+            "match_type": b.get("match_type", "EXACT"),
+            "spend": b["spend"],
+            "clicks": b["clicks"],
+            "conversions": b["conversions"],
+            "relevancy_score": b["relevancy_score"],
+            "intent_type": "WRONG_CAMPAIGN",
+            "confidence": b["decision"]["confidence"],
+            "resource_name": b.get("resource_name"),
+            "correct_campaign_product": b.get("correct_campaign_product", ""),
+            "campaign_product": b.get("campaign_product", ""),
+        }
+        status = "applied" if b.get("applied") else "approved" if not args.dry_run else "pending"
+        db_cur.execute("""INSERT INTO "Recommendation" (id, "agentRunId", type, severity, target, "targetId",
+            action, rationale, impact, status, "appliedAt", "createdAt")
+            VALUES (gen_random_uuid()::text, %s, 'add-campaign-negative', %s, %s, %s, %s, %s, %s, %s, %s, NOW())""",
+            (run_id,
+             "high" if b["spend"] > 50 else "medium",
+             b["campaign_name"],
+             str(b["campaign_id"]),
+             f'Campaign-block "{b["search_term"]}" — belongs in {b.get("correct_campaign_product", "other")} campaign',
+             b["decision"]["reason"],
+             json.dumps(metadata),
+             status,
+             end_time if b.get("applied") else None))
+    
+    # Create Recommendations for campaign-level review items
+    for b in review_campaign_blocks:
+        metadata = {
+            "search_term": b["search_term"],
+            "campaign_id": b["campaign_id"],
+            "match_type": b.get("match_type", "EXACT"),
+            "spend": b["spend"],
+            "clicks": b["clicks"],
+            "conversions": b["conversions"],
+            "relevancy_score": b["relevancy_score"],
+            "intent_type": "WRONG_CAMPAIGN",
+            "confidence": b["decision"]["confidence"],
+            "correct_campaign_product": b.get("correct_campaign_product", ""),
+            "campaign_product": b.get("campaign_product", ""),
+        }
+        db_cur.execute("""INSERT INTO "Recommendation" (id, "agentRunId", type, severity, target, "targetId",
+            action, rationale, impact, status, "createdAt")
+            VALUES (gen_random_uuid()::text, %s, 'add-campaign-negative', %s, %s, %s, %s, %s, %s, 'pending', NOW())""",
+            (run_id,
+             "high" if b["spend"] > 50 else "medium",
+             b["campaign_name"],
+             str(b["campaign_id"]),
+             f'Campaign-block "{b["search_term"]}" — belongs in {b.get("correct_campaign_product", "other")} campaign',
+             b["decision"]["reason"],
+             json.dumps(metadata)))
+    
     db_conn.commit()
     db_cur.close()
     db_conn.close()
@@ -765,11 +897,13 @@ def main():
         "dry_run": args.dry_run,
         "days_analyzed": args.days,
         "campaigns_processed": len(campaign_ids),
-        "search_terms_analyzed": len(blocks) + len(monitors) + len(keeps),
+        "search_terms_analyzed": all_analyzed,
         "skipped": skipped,
         "decisions": {
             "blocked": len(auto_blocks),
+            "campaign_blocked": len(auto_campaign_blocks),
             "review": len(review_blocks),
+            "campaign_review": len(review_campaign_blocks),
             "monitored": len(monitors),
             "kept": len(keeps),
         },
@@ -787,8 +921,28 @@ def main():
                 "match_type": b.get("match_type", "EXACT"),
                 "applied": b.get("applied", False),
                 "resource_name": b.get("resource_name"),
+                "block_type": "account",
             }
             for b in auto_blocks
+        ] + [
+            {
+                "search_term": b["search_term"],
+                "campaign_id": b["campaign_id"],
+                "campaign_name": b["campaign_name"],
+                "campaign_product": b.get("campaign_product", "unknown"),
+                "correct_campaign_product": b.get("correct_campaign_product", "unknown"),
+                "spend": b["spend"],
+                "clicks": b["clicks"],
+                "conversions": b["conversions"],
+                "relevancy_score": b["relevancy_score"],
+                "intent_type": "WRONG_CAMPAIGN",
+                "confidence": b["decision"]["confidence"],
+                "match_type": b.get("match_type", "EXACT"),
+                "applied": b.get("applied", False),
+                "resource_name": b.get("resource_name"),
+                "block_type": "campaign",
+            }
+            for b in auto_campaign_blocks
         ],
         "review_items": [
             {
@@ -798,12 +952,28 @@ def main():
                 "spend": b["spend"],
                 "confidence": b["decision"]["confidence"],
                 "reason": b["decision"]["reason"],
+                "review_type": "irrelevant",
             }
             for b in review_blocks
+        ] + [
+            {
+                "search_term": b["search_term"],
+                "campaign_id": b["campaign_id"],
+                "campaign_name": b["campaign_name"],
+                "campaign_product": b.get("campaign_product", "unknown"),
+                "correct_campaign_product": b.get("correct_campaign_product", "unknown"),
+                "spend": b["spend"],
+                "confidence": b["decision"]["confidence"],
+                "reason": b["decision"]["reason"],
+                "review_type": "campaign_bleed",
+            }
+            for b in review_campaign_blocks
         ],
         "estimated_savings": {
-            "weekly": total_waste,
-            "monthly": total_waste * 4.3,
+            "weekly_waste": total_waste,
+            "monthly_waste": total_waste * 4.3,
+            "weekly_campaign_bleed": total_campaign_bleed,
+            "monthly_campaign_bleed": total_campaign_bleed * 4.3,
         },
     }
     
@@ -813,18 +983,24 @@ def main():
     print(f"Runtime: {(end_time - start_time).total_seconds():.0f}s")
 
     # 10. Send Telegram notification to Agent Reports topic
-    send_telegram_report(auto_blocks, review_blocks, blocks, monitors, keeps, skipped, total_waste, start_time, args.dry_run)
+    send_telegram_report(auto_blocks, review_blocks, blocks, monitors, keeps, skipped, total_waste,
+                         start_time, args.dry_run, auto_campaign_blocks, review_campaign_blocks, total_campaign_bleed)
 
 
-def send_telegram_report(auto_blocks, review_blocks, blocks, monitors, keeps, skipped, total_waste, start_time, dry_run):
+def send_telegram_report(auto_blocks, review_blocks, blocks, monitors, keeps, skipped, total_waste,
+                         start_time, dry_run, auto_campaign_blocks=None, review_campaign_blocks=None,
+                         total_campaign_bleed=0.0):
     """Send brief summary to Agent Activity topic. No inline buttons — review in hub."""
     BOT_TOKEN = "8579443521:AAEtEBNZlUEq22joa_BnDf3bjD3paLAWSVo"
     CHAT_ID = "-1003786506284"
     AGENT_ACTIVITY_THREAD = 164
 
-    total_analyzed = len(blocks) + len(monitors) + len(keeps)
+    auto_campaign_blocks = auto_campaign_blocks or []
+    review_campaign_blocks = review_campaign_blocks or []
+
+    total_analyzed = len(blocks) + len(monitors) + len(keeps) + len(auto_campaign_blocks) + len(review_campaign_blocks)
     
-    if not auto_blocks and not review_blocks:
+    if not auto_blocks and not review_blocks and not auto_campaign_blocks and not review_campaign_blocks:
         return
 
     import urllib.request
@@ -838,8 +1014,19 @@ def send_telegram_report(auto_blocks, review_blocks, blocks, monitors, keeps, sk
     if auto_blocks:
         applied_spend = sum(b["spend"] for b in auto_blocks)
         terms = ", ".join(f'"{b["search_term"]}"' for b in sorted(auto_blocks, key=lambda x: x["spend"], reverse=True)[:5])
-        lines.append(f"\n✅ <b>{len(auto_blocks)} auto-blocked</b> — ${applied_spend:,.0f} waste stopped")
+        lines.append(f"\n✅ <b>{len(auto_blocks)} irrelevant blocked</b> — ${applied_spend:,.0f} waste stopped")
         lines.append(f"  {terms}")
+
+    if auto_campaign_blocks:
+        bleed_spend = sum(b["spend"] for b in auto_campaign_blocks)
+        # Group by campaign for clarity
+        by_campaign = defaultdict(list)
+        for b in auto_campaign_blocks:
+            by_campaign[b["campaign_name"]].append(b)
+        lines.append(f"\n🔀 <b>{len(auto_campaign_blocks)} campaign-bleed blocked</b> — ${bleed_spend:,.0f} redirected")
+        for camp, items in sorted(by_campaign.items(), key=lambda x: sum(i["spend"] for i in x[1]), reverse=True)[:3]:
+            terms = ", ".join(f'"{b["search_term"]}"' for b in sorted(items, key=lambda x: x["spend"], reverse=True)[:3])
+            lines.append(f"  {camp}: {terms}")
 
     if review_blocks:
         review_spend = sum(b["spend"] for b in review_blocks)
@@ -847,11 +1034,21 @@ def send_telegram_report(auto_blocks, review_blocks, blocks, monitors, keeps, sk
         lines.append(f"\n⏳ <b>{len(review_blocks)} need review</b> — ${review_spend:,.0f} at risk")
         lines.append(f"  {terms}")
 
-    monthly = total_waste * 4.3
-    if monthly > 0:
-        lines.append(f"\nEst. savings: ${monthly:,.0f}/mo")
+    if review_campaign_blocks:
+        review_bleed = sum(b["spend"] for b in review_campaign_blocks)
+        lines.append(f"\n⏳ <b>{len(review_campaign_blocks)} campaign-bleed need review</b> — ${review_bleed:,.0f}")
 
-    if review_blocks:
+    monthly_waste = total_waste * 4.3
+    monthly_bleed = total_campaign_bleed * 4.3
+    savings_parts = []
+    if monthly_waste > 0:
+        savings_parts.append(f"${monthly_waste:,.0f} waste")
+    if monthly_bleed > 0:
+        savings_parts.append(f"${monthly_bleed:,.0f} bleed")
+    if savings_parts:
+        lines.append(f"\nEst. monthly savings: {' + '.join(savings_parts)}")
+
+    if review_blocks or review_campaign_blocks:
         lines.append(f"\nReview → Hub → Agents")
 
     msg = "\n".join(lines)

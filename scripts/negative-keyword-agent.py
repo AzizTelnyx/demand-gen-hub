@@ -21,7 +21,8 @@ LOGIN_CUSTOMER_ID = "2893524941"
 CRED_PATH = os.path.expanduser("~/.config/google-ads/credentials.json")
 LOG_DIR = os.path.expanduser("~/.openclaw/workspace/demand-gen-hub/logs/negative-keywords")
 CONFIDENCE_THRESHOLD = 80  # Auto-apply above this
-MIN_SPEND = 20.0           # Skip terms below this
+MIN_SPEND = float(os.environ.get("NEG_KW_MIN_SPEND", "20.0"))  # Skip terms below this (irrelevant blocking)
+MIN_SPEND_BLEED = float(os.environ.get("NEG_KW_MIN_SPEND_BLEED", "5.0"))  # Lower threshold for campaign-bleed detection
 MIN_IMPRESSIONS = 10       # Skip terms below this
 CAMPAIGN_MIN_AGE_DAYS = 7  # Skip campaigns younger than this
 
@@ -191,10 +192,21 @@ def parse_campaign_name(name):
     
     product = None
     product_map = {
-        "voice ai": "voice_ai", "ai agent": "ai_agent", "vapi": "voice_ai",
-        "contact center": "contact_center", "sip trunk": "sip_trunking",
-        "sip": "sip_trunking", "iot": "iot", "m2m": "iot",
-        "sms": "sms_api", "numbers": "numbers", "10dlc": "sms_api",
+        # AI Agent campaigns (including competitor-targeted)
+        "ai agent": "ai_agent", "ai agents": "ai_agent",
+        "contact center": "ai_agent",
+        "elevenlabs": "ai_agent", "livekit": "ai_agent",
+        "retell": "ai_agent", "bland ai": "ai_agent",
+        "sierra": "ai_agent", "synthflow": "ai_agent",
+        "slng": "ai_agent", "vapi": "ai_agent",
+        "tts api": "ai_agent", "stt api": "ai_agent",
+        # Voice API
+        "voice api": "voice_api",
+        # Core products
+        "sip trunk": "sip_trunking", "sip": "sip_trunking",
+        "iot": "iot", "m2m": "iot", "iot sim": "iot",
+        "sms": "sms_api", "10dlc": "sms_api",
+        "numbers": "numbers",
         "fax": "fax", "storage": "storage", "networking": "networking",
     }
     for key, val in product_map.items():
@@ -516,13 +528,15 @@ def main():
         term = st["search_term"]
         cid = st["campaign_id"]
 
-        # Skip filters
-        if st["cost"] < MIN_SPEND:
+        # Skip filters — use lower threshold for campaign-bleed candidates
+        if st["cost"] < MIN_SPEND_BLEED:
             skipped += 1
             continue
         if st["impressions"] < MIN_IMPRESSIONS:
             skipped += 1
             continue
+        # Tag terms between bleed and full threshold as bleed-only candidates
+        st["bleed_only"] = st["cost"] < MIN_SPEND
 
         # Check campaign age
         if st.get("campaign_start"):
@@ -607,6 +621,11 @@ def main():
                 "performance": perf,
                 "decision": decision,
             }
+
+            # Bleed-only terms (below MIN_SPEND) can only be BLOCK_CAMPAIGN, not account-level BLOCK
+            if st.get("bleed_only") and decision["action"] == "BLOCK":
+                decision["action"] = "KEEP"
+                decision["reason"] = f"Below ${MIN_SPEND} spend threshold for account-level block (was: {decision.get('reason', '')})"
 
             if decision["action"] == "BLOCK":
                 result["match_type"] = decision.get("match_type", "EXACT")

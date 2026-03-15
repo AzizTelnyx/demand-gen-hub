@@ -65,6 +65,52 @@ PRODUCT_KEYWORDS = {
     "voice_api": ["voice api", "programmable voice", "call control", "webrtc", "voice sdk"],
 }
 
+# ─── Intent-Relevance Negative Lists (B2B blocklist) ──
+
+JOB_SEEKER_TERMS = [
+    "jobs", "salary", "careers", "hiring", "work from home", "interview",
+    "resume", "glassdoor", "indeed", "linkedin jobs", "job posting",
+    "employment", "job search", "job opening", "remote job", "wfh",
+]
+
+CONSUMER_JUNK = [
+    "love", "comedy", "gaming", "led shirt", "funny", "movie", "song",
+    "recipe", "tiktok", "instagram", "youtube", "facebook", "snapchat",
+    "meme", "viral", "prank", "dance", "music video", "karaoke",
+]
+
+SPAM_TERMS = [
+    "crack", "hack", "illegal", "scam", "free download", "torrent",
+    "pirated", "warez", "keygen", "serial key", "activation code",
+    "nulled", "cracked version",
+]
+
+IRRELEVANT_BROAD = [
+    "anything", "change", "cloner", "vocals", "recording", "remix",
+    "ringtone", "soundboard", "voice changer app", "voice effect",
+    "funny voice", "anime voice", "celebrity voice",
+]
+
+# Combined blocklist for quick lookup
+BLOCKED_INTENT_TERMS = set(
+    JOB_SEEKER_TERMS + CONSUMER_JUNK + SPAM_TERMS + IRRELEVANT_BROAD
+)
+
+# ─── Campaign Hierarchy for Overlap Resolution ────────
+
+CAMPAIGN_PRIORITY = {
+    "brand": 1,       # Highest priority — brand terms owned by brand campaigns
+    "competitor": 2,  # Competitor campaigns own competitor terms
+    "product_sip": 3,
+    "product_sms": 3,
+    "product_numbers": 3,
+    "product_iot": 3,
+    "product_voice_api": 3,
+    "contact_center": 4,
+    "ai_agent": 5,    # Generic AI terms — lowest priority
+    "unknown": 99,
+}
+
 
 # ─── Google Ads Client ────────────────────────────────
 
@@ -237,6 +283,45 @@ def check_alignment_rules(keyword_text, campaign_type, campaign_name):
     return False, "", 0
 
 
+def check_intent_relevance(keyword_text, campaign_type):
+    """
+    Check if keyword matches blocked intent categories (B2B blocklist).
+    Returns (is_blocked, reason, confidence).
+    High confidence (90%+) for clear matches.
+    """
+    kw = keyword_text.lower()
+    words = set(kw.split())
+
+    # Check job-seeker terms
+    for term in JOB_SEEKER_TERMS:
+        if term in kw:
+            return True, f"Job-seeker term '{term}' — not B2B intent", 95
+
+    # Check consumer junk
+    for term in CONSUMER_JUNK:
+        if term in kw:
+            return True, f"Consumer term '{term}' — irrelevant for B2B", 92
+
+    # Check spam/piracy terms
+    for term in SPAM_TERMS:
+        if term in kw:
+            return True, f"Spam/blocked term '{term}'", 98
+
+    # Check irrelevant broad match terms
+    for term in IRRELEVANT_BROAD:
+        if term in kw:
+            return True, f"Irrelevant broad term '{term}' — no B2B intent", 90
+
+    # Word-level checks for single-word matches (stricter)
+    blocked_single_words = {"jobs", "salary", "careers", "hiring", "love", "comedy",
+                           "gaming", "crack", "hack", "illegal", "scam", "torrent"}
+    matched_blocked = words & blocked_single_words
+    if matched_blocked:
+        return True, f"Blocked word(s): {', '.join(matched_blocked)}", 95
+
+    return False, "", 0
+
+
 def ai_classify_borderline(keywords_batch, knowledge_context):
     """Use AI to classify borderline keywords (confidence 50-79 from rules)."""
     if not OPENCLAW_TOKEN or not keywords_batch:
@@ -304,7 +389,7 @@ Respond with JSON array:
 
 
 def check_keyword_alignment(keywords, knowledge_context):
-    """Check all keywords for campaign alignment issues."""
+    """Check all keywords for campaign alignment AND intent relevance issues."""
     issues = []
     borderline = []
 
@@ -319,6 +404,27 @@ def check_keyword_alignment(keywords, knowledge_context):
             continue
 
         for kw in kws:
+            # First check: intent relevance (blocked terms)
+            blocked, block_reason, block_confidence = check_intent_relevance(
+                kw["keyword"], campaign_type
+            )
+            if blocked:
+                issues.append({
+                    "type": "blocked_intent",
+                    "keyword": kw["keyword"],
+                    "campaign": campaign_name,
+                    "campaign_id": kw["campaign_id"],
+                    "adGroup": kw["adGroup"],
+                    "adGroup_id": kw["adGroup_id"],
+                    "criterion_id": kw["criterion_id"],
+                    "matchType": kw["matchType"],
+                    "campaign_type": campaign_type,
+                    "reason": block_reason,
+                    "confidence": block_confidence,
+                })
+                continue  # Skip alignment check for blocked keywords
+
+            # Second check: campaign alignment
             misaligned, reason, confidence = check_alignment_rules(
                 kw["keyword"], campaign_type, campaign_name
             )
@@ -367,6 +473,74 @@ def check_keyword_alignment(keywords, knowledge_context):
 
 # ─── Check 2: Cross-Campaign Overlap ─────────────────
 
+def resolve_overlap_ownership(instances, keyword_text):
+    """
+    Determine which campaign should own a keyword when it appears in multiple campaigns.
+    Returns (owner_instance, list_of_campaigns_to_pause).
+
+    Priority order:
+    1. Brand campaigns own brand terms
+    2. Competitor/Conquest campaigns own competitor terms
+    3. Product campaigns own product-specific terms
+    4. AI Agent campaigns own generic AI terms
+    """
+    kw = keyword_text.lower()
+
+    # Classify each instance's campaign
+    classified = []
+    for inst in instances:
+        campaign_type = classify_campaign(inst["campaign"])
+        priority = CAMPAIGN_PRIORITY.get(campaign_type, 99)
+        classified.append({
+            "instance": inst,
+            "campaign_type": campaign_type,
+            "priority": priority,
+        })
+
+    # Special case: keyword contains brand term → brand campaign wins
+    has_brand = any(b in kw for b in BRAND_TERMS)
+    if has_brand:
+        brand_instances = [c for c in classified if c["campaign_type"] == "brand"]
+        if brand_instances:
+            owner = min(brand_instances, key=lambda x: x["priority"])
+            to_pause = [
+                c["instance"] for c in classified
+                if c["instance"]["campaign"] != owner["instance"]["campaign"]
+            ]
+            return owner["instance"], to_pause
+
+    # Special case: keyword contains competitor name → competitor campaign wins
+    has_competitor = any(c in kw for c in COMPETITORS)
+    if has_competitor:
+        competitor_instances = [c for c in classified if c["campaign_type"] == "competitor"]
+        if competitor_instances:
+            # Prefer competitor campaign that targets THIS competitor
+            for ci in competitor_instances:
+                target_comp = extract_competitor_from_campaign(ci["instance"]["campaign"])
+                if target_comp and target_comp in kw:
+                    to_pause = [
+                        c["instance"] for c in classified
+                        if c["instance"]["campaign"] != ci["instance"]["campaign"]
+                    ]
+                    return ci["instance"], to_pause
+            # Fallback: any competitor campaign
+            owner = competitor_instances[0]
+            to_pause = [
+                c["instance"] for c in classified
+                if c["instance"]["campaign"] != owner["instance"]["campaign"]
+            ]
+            return owner["instance"], to_pause
+
+    # General case: lowest priority number wins (brand=1, competitor=2, product=3, etc.)
+    classified.sort(key=lambda x: x["priority"])
+    owner = classified[0]
+    to_pause = [
+        c["instance"] for c in classified[1:]
+    ]
+
+    return owner["instance"], to_pause
+
+
 def check_overlap(keywords):
     """Find keywords appearing in multiple campaigns within the same region."""
     issues = []
@@ -397,6 +571,9 @@ def check_overlap(keywords):
             for mt, mt_instances in match_types.items():
                 mt_campaigns = set(inst["campaign"] for inst in mt_instances)
                 if len(mt_campaigns) >= 2:
+                    # Determine which campaign should own this keyword
+                    owner, to_pause = resolve_overlap_ownership(mt_instances, kw_text)
+
                     issues.append({
                         "type": "self_competition",
                         "keyword": kw_text,
@@ -406,6 +583,8 @@ def check_overlap(keywords):
                         "count": len(mt_campaigns),
                         "confidence": 90,
                         "reason": f'"{kw_text}" ({mt}) in {len(mt_campaigns)} campaigns in {region}: {", ".join(list(mt_campaigns)[:3])}',
+                        "owner_campaign": owner["campaign"] if owner else None,
+                        "pause_in_campaigns": to_pause,
                     })
 
             # Broad match risk: broad in one campaign, exact/phrase in another
@@ -501,43 +680,132 @@ def is_junk_keyword(keyword_text):
     return False
 
 
-def auto_fix_pause_junk(client, keywords, dry_run=True):
-    """Pause keywords that are clearly junk."""
+def is_negative_criterion(criterion_resource_name):
+    """Check if a criterion is a negative keyword (from resource name pattern)."""
+    # Negative keywords use a different resource path pattern
+    # Regular: customers/{id}/adGroupCriteria/{ag_id}~{criterion_id}
+    # Negative at ad group level: same pattern but criterion type is NEGATIVE
+    # We need to check via status or fetch — for now, check if it came from negative query
+    return False  # We track this in the issue dict now
+
+
+def auto_fix_high_confidence(client, keywords, issues, dry_run=True):
+    """
+    Auto-fix high-confidence issues (>= CONFIDENCE_THRESHOLD):
+    - Junk keywords: pause (or remove if negative)
+    - Misalignment: pause (or remove if negative)
+    - Blocked intent: pause (or remove if negative)
+
+    For negative criteria (which can't be paused), use REMOVE operation.
+    """
+    from google.protobuf import field_mask_pb2
+
+    # Collect junk keywords
     junk = [kw for kw in keywords if is_junk_keyword(kw["keyword"])]
-    if not junk:
+
+    # Collect high-confidence issues
+    high_conf_issues = [
+        i for i in issues
+        if i.get("confidence", 0) >= CONFIDENCE_THRESHOLD
+        and i.get("type") in ("misalignment", "blocked_intent", "new_keyword_misaligned")
+    ]
+
+    # Build set of criterion IDs to fix (avoid duplicates)
+    to_fix = {}  # criterion_key -> issue_dict
+    for j in junk:
+        key = (j["adGroup_id"], j["criterion_id"])
+        if key not in to_fix:
+            to_fix[key] = {
+                "keyword": j["keyword"],
+                "campaign": j["campaign"],
+                "adGroup_id": j["adGroup_id"],
+                "criterion_id": j["criterion_id"],
+                "reason": "junk_keyword",
+                "is_negative": j.get("is_negative", False),
+            }
+
+    for issue in high_conf_issues:
+        key = (issue["adGroup_id"], issue["criterion_id"])
+        if key not in to_fix:
+            to_fix[key] = {
+                "keyword": issue["keyword"],
+                "campaign": issue["campaign"],
+                "adGroup_id": issue["adGroup_id"],
+                "criterion_id": issue["criterion_id"],
+                "reason": f"{issue['type']}: {issue['reason']}",
+                "is_negative": issue.get("is_negative", False),
+            }
+
+    if not to_fix:
         return []
 
-    print(f"  Found {len(junk)} junk keywords to pause")
+    fixed_list = list(to_fix.values())
+    print(f"  Found {len(fixed_list)} high-confidence issues to fix")
+    print(f"    - {len(junk)} junk keywords")
+    print(f"    - {len(high_conf_issues)} misalignment/blocked issues")
+
     if dry_run:
-        for j in junk:
-            print(f"    [DRY] Would pause: \"{j['keyword']}\" in {j['campaign']}")
-        return junk
+        for item in fixed_list[:20]:  # Cap verbose output
+            action = "remove" if item["is_negative"] else "pause"
+            print(f"    [DRY] Would {action}: \"{item['keyword']}\" in {item['campaign']}")
+        if len(fixed_list) > 20:
+            print(f"    ... and {len(fixed_list) - 20} more")
+        return fixed_list
 
     ga_service = client.get_service("AdGroupCriterionService")
-    operations = []
-    for j in junk:
-        op = client.get_type("AdGroupCriterionOperation")
-        criterion = op.update
-        criterion.resource_name = (
-            f"customers/{CUSTOMER_ID}/adGroupCriteria/{j['adGroup_id']}~{j['criterion_id']}"
-        )
-        criterion.status = client.enums.AdGroupCriterionStatusEnum.PAUSED
-        from google.protobuf import field_mask_pb2
-        field_mask = field_mask_pb2.FieldMask(paths=["status"])
-        op.update_mask.CopyFrom(field_mask)
-        operations.append(op)
+    pause_operations = []
+    remove_operations = []
 
-    if operations:
+    for item in fixed_list:
+        resource_name = (
+            f"customers/{CUSTOMER_ID}/adGroupCriteria/{item['adGroup_id']}~{item['criterion_id']}"
+        )
+
+        if item["is_negative"]:
+            # Negative keywords can't be paused — must be removed
+            op = client.get_type("AdGroupCriterionOperation")
+            op.remove = resource_name
+            remove_operations.append(op)
+        else:
+            # Regular keywords: pause them
+            op = client.get_type("AdGroupCriterionOperation")
+            criterion = op.update
+            criterion.resource_name = resource_name
+            criterion.status = client.enums.AdGroupCriterionStatusEnum.PAUSED
+            field_mask = field_mask_pb2.FieldMask(paths=["status"])
+            op.update_mask.CopyFrom(field_mask)
+            pause_operations.append(op)
+
+    # Execute pause operations
+    if pause_operations:
         try:
             ga_service.mutate_ad_group_criteria(
-                customer_id=CUSTOMER_ID, operations=operations
+                customer_id=CUSTOMER_ID, operations=pause_operations
             )
-            print(f"  Paused {len(operations)} junk keywords")
+            print(f"  Paused {len(pause_operations)} keywords")
         except Exception as e:
-            print(f"  Error pausing junk keywords: {e}")
-            return []
+            print(f"  Error pausing keywords: {e}")
 
-    return junk
+    # Execute remove operations (for negatives)
+    if remove_operations:
+        try:
+            ga_service.mutate_ad_group_criteria(
+                customer_id=CUSTOMER_ID, operations=remove_operations
+            )
+            print(f"  Removed {len(remove_operations)} negative keywords")
+        except Exception as e:
+            print(f"  Error removing negative keywords: {e}")
+
+    return fixed_list
+
+
+# Legacy function for backward compatibility
+def auto_fix_pause_junk(client, keywords, dry_run=True):
+    """
+    DEPRECATED: Use auto_fix_high_confidence instead.
+    Kept for backward compatibility.
+    """
+    return auto_fix_high_confidence(client, keywords, [], dry_run)
 
 
 # ─── Telegram Notifications ──────────────────────────
@@ -570,6 +838,7 @@ def telegram_send(text, reply_markup=None):
 def send_summary(issues, junk_fixed, overlap_issues, new_kw_issues, total_keywords, dry_run, first_run):
     """Send summary to Telegram."""
     alignment_issues = [i for i in issues if i["type"] == "misalignment"]
+    blocked_issues = [i for i in issues if i["type"] == "blocked_intent"]
     auto_fixable = [i for i in alignment_issues if i["confidence"] >= CONFIDENCE_THRESHOLD]
     needs_review = [i for i in alignment_issues if i["confidence"] < CONFIDENCE_THRESHOLD]
 
@@ -580,6 +849,9 @@ def send_summary(issues, junk_fixed, overlap_issues, new_kw_issues, total_keywor
         lines.append("<i>First run — no previous snapshot for comparison</i>")
 
     lines.append(f"\n📊 <b>{total_keywords:,}</b> keywords scanned")
+
+    if blocked_issues:
+        lines.append(f"\n🚫 <b>{len(blocked_issues)} blocked intent keywords</b> (auto-fixed)")
 
     if alignment_issues:
         lines.append(f"\n⚠️ <b>{len(alignment_issues)} misaligned keywords</b>")
@@ -707,6 +979,7 @@ def log_to_db(issues, overlap_issues, new_kw_issues, junk_fixed, total_keywords,
 
         action_text = {
             "misalignment": f'Move/pause "{issue.get("keyword", "")}" — wrong campaign',
+            "blocked_intent": f'Pause "{issue.get("keyword", "")}" — blocked intent ({issue.get("reason", "")})',
             "self_competition": f'Resolve overlap: "{issue.get("keyword", "")}" in {issue.get("count", 0)} campaigns',
             "broad_match_risk": f'Review broad match: "{issue.get("keyword", "")}"',
             "new_keyword_misaligned": f'New keyword misaligned: "{issue.get("keyword", "")}"',
@@ -748,6 +1021,93 @@ def load_knowledge_context():
         return ""
 
 
+def load_product_groups():
+    """
+    Load product-groups.md and parse intent signals for each product group.
+    Returns dict of {group_name: {"products": [...], "intent_signals": [...], "audience": [...]}}
+    Falls back to hardcoded lists if file not found.
+    """
+    global GENERIC_VOICE_AI_TERMS, CONTACT_CENTER_TERMS, PRODUCT_KEYWORDS
+
+    product_groups_path = os.path.join(
+        os.path.dirname(__file__), "..", "knowledge", "product-groups.md"
+    )
+
+    if not os.path.exists(product_groups_path):
+        print("  product-groups.md not found — using hardcoded lists")
+        return None
+
+    try:
+        with open(product_groups_path) as f:
+            content = f.read()
+
+        groups = {}
+        current_group = None
+        current_data = {}
+
+        for line in content.split("\n"):
+            line = line.strip()
+
+            # New group header (## Voice AI, ## Messaging, etc.)
+            if line.startswith("## ") and not line.startswith("## Cross-Cutting"):
+                if current_group and current_data:
+                    groups[current_group] = current_data
+                current_group = line[3:].strip().lower().replace(" ", "_")
+                # Skip non-operational groups
+                if "(not operational)" in line.lower():
+                    current_group = None
+                    current_data = {}
+                    continue
+                current_data = {"products": [], "intent_signals": [], "audience": []}
+
+            elif current_group:
+                # Parse Products line
+                if line.startswith("**Products:**"):
+                    prods = line.replace("**Products:**", "").strip()
+                    current_data["products"] = [p.strip().lower() for p in prods.split(",")]
+
+                # Parse Intent signals line
+                elif line.startswith("**Intent signals:**"):
+                    signals = line.replace("**Intent signals:**", "").strip()
+                    current_data["intent_signals"] = [s.strip().lower() for s in signals.split(",")]
+
+                # Parse Audience line
+                elif line.startswith("**Audience:**"):
+                    audience = line.replace("**Audience:**", "").strip()
+                    current_data["audience"] = [a.strip().lower() for a in audience.split(",")]
+
+        # Save last group
+        if current_group and current_data:
+            groups[current_group] = current_data
+
+        # Update global lists from parsed data
+        if "voice_ai" in groups and groups["voice_ai"].get("intent_signals"):
+            GENERIC_VOICE_AI_TERMS = groups["voice_ai"]["intent_signals"]
+
+        # Contact center terms from voice_infrastructure (includes contact center audience)
+        if "voice_infrastructure" in groups and groups["voice_infrastructure"].get("intent_signals"):
+            # Merge with contact center terms if they exist
+            voice_infra_signals = groups["voice_infrastructure"]["intent_signals"]
+            # Keep contact center terms separate, but update product keywords
+            PRODUCT_KEYWORDS["voice_api"] = voice_infra_signals
+            PRODUCT_KEYWORDS["sip"] = [s for s in voice_infra_signals if "sip" in s]
+
+        if "messaging" in groups and groups["messaging"].get("intent_signals"):
+            PRODUCT_KEYWORDS["sms"] = groups["messaging"]["intent_signals"]
+
+        if "connectivity" in groups and groups["connectivity"].get("intent_signals"):
+            conn_signals = groups["connectivity"]["intent_signals"]
+            PRODUCT_KEYWORDS["numbers"] = [s for s in conn_signals if any(x in s for x in ["number", "did", "toll free", "virtual"])]
+            PRODUCT_KEYWORDS["iot"] = [s for s in conn_signals if any(x in s for x in ["iot", "sim", "m2m", "esim"])]
+
+        print(f"  Loaded {len(groups)} product groups from product-groups.md")
+        return groups
+
+    except Exception as e:
+        print(f"  Error parsing product-groups.md: {e} — using hardcoded lists")
+        return None
+
+
 # ─── Main ─────────────────────────────────────────────
 
 def main():
@@ -769,9 +1129,12 @@ def main():
     keywords = fetch_all_keywords(client)
     print(f"  {len(keywords)} keywords across {len(set(kw['campaign'] for kw in keywords))} campaigns")
 
-    # 2. Load knowledge context
+    # 2. Load knowledge context and product groups
     print("\nLoading knowledge context...")
     knowledge_context = load_knowledge_context()
+
+    print("Loading product groups...")
+    load_product_groups()  # Updates global term lists
 
     # 3. Check alignment
     print("\n[1/3] Checking keyword-campaign alignment...")
@@ -788,9 +1151,11 @@ def main():
     new_kw_issues, first_run = check_new_keywords(keywords, knowledge_context)
     print(f"  {len(new_kw_issues)} new keyword issues found")
 
-    # 6. Auto-fix junk
-    print("\nChecking for junk keywords...")
-    junk_fixed = auto_fix_pause_junk(client, keywords, dry_run=args.dry_run)
+    # 6. Auto-fix high-confidence issues (junk + misalignment + blocked intent)
+    print("\nAuto-fixing high-confidence issues...")
+    all_issues = alignment_issues + overlap_issues + new_kw_issues
+    fixed_items = auto_fix_high_confidence(client, keywords, all_issues, dry_run=args.dry_run)
+    junk_fixed = fixed_items  # For backward compatibility with reporting
 
     # 7. Summary
     total_issues = len(alignment_issues) + len(overlap_issues) + len(new_kw_issues)

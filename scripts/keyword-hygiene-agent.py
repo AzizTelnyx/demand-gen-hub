@@ -38,7 +38,7 @@ COMPETITORS = [
     "twilio", "vonage", "bandwidth", "plivo", "sinch", "messagebird",
     "nexmo", "ringcentral", "ring central", "8x8", "five9", "genesys",
     "vapi", "retell", "bland", "synthflow", "voiceflow", "elevenlabs",
-    "eleven labs", "livekit", "live kit",
+    "eleven labs", "livekit", "live kit", "sierra", "pipecat",
 ]
 
 BRAND_TERMS = {"telnyx", "clawdtalk", "clawd", "clawd talk"}
@@ -242,16 +242,27 @@ def check_alignment_rules(keyword_text, campaign_type, campaign_name):
 
     if campaign_type == "competitor":
         competitor = extract_competitor_from_campaign(campaign_name)
-        # In competitor campaigns, keywords should mention the competitor
-        has_competitor = any(c in kw for c in COMPETITORS)
-        is_generic = any(g in kw for g in GENERIC_VOICE_AI_TERMS)
-        is_contact_center = any(cc in kw for cc in CONTACT_CENTER_TERMS)
+        if not competitor:
+            return False, "", 0
 
-        if not has_competitor and (is_generic or is_contact_center):
-            return True, f"Generic term '{kw}' in competitor campaign ({campaign_name})", 90
-        if not has_competitor and not is_generic:
-            # Could be a relevant modifier — lower confidence
-            return True, f"Non-competitor keyword '{kw}' in competitor campaign", 60
+        # Competitor campaigns: keyword must reference THE SPECIFIC competitor
+        # "elevenlabs alternative" in ElevenLabs campaign ✅
+        # "ai dialer" in ElevenLabs campaign ❌ (generic, not ElevenLabs-specific)
+        has_target_competitor = competitor in kw
+
+        # Also allow "alternative", "vs", "compare", "switch from", "migrate" variants
+        # that imply competitor context even without the name
+        competitor_intent_words = ["alternative", " vs ", "versus", "compare", "comparison",
+                                   "switch from", "migrate from", "replace", "better than"]
+        has_competitor_intent = any(w in kw for w in competitor_intent_words)
+
+        if has_target_competitor:
+            return False, "", 0
+        if has_competitor_intent:
+            # Has conquest intent but no specific competitor name — borderline
+            return True, f"Conquest-intent keyword '{kw}' in {competitor} campaign but doesn't mention {competitor}", 65
+        # Generic keyword with no competitor reference — clear misalignment
+        return True, f"Generic keyword '{kw}' in {competitor} conquest campaign — not {competitor}-specific", 88
 
     elif campaign_type == "ai_agent":
         # Flag competitor terms that should be in competitor campaigns
@@ -342,11 +353,13 @@ CONTEXT:
 {knowledge_context[:3000]}
 
 CAMPAIGN TYPE RULES:
-- competitor: ONLY keywords mentioning specific competitors (twilio, vapi, elevenlabs, livekit, etc). No generic terms.
+- competitor: Keywords MUST specifically relate to the target competitor (their name, product, alternative/vs, pricing, review). Generic industry terms like "ai agent", "ai dialer", "ai medical assistant", "voice api", "call center ai" do NOT belong — even if the competitor offers similar products. The test: would someone searching this keyword specifically be looking for information about that competitor? If no, it's misaligned.
 - ai_agent: Generic voice AI, AI agent, builder terms. No competitor-specific terms.
 - contact_center: Only contact center / call center terms. No voice AI or competitor terms.
 - product_*: Only product-specific terms (SIP, SMS, Numbers, IoT, Voice API). No generic or competitor terms.
 - brand: Only brand terms (telnyx, clawdtalk).
+
+CRITICAL for competitor campaigns: "ai dialer" in an ElevenLabs campaign is MISALIGNED (generic term, not ElevenLabs-specific). "elevenlabs alternative" is CORRECTLY PLACED (specifically about ElevenLabs). Be strict — if the keyword doesn't mention or clearly reference the competitor, it's misaligned.
 
 For each keyword, decide: does it BELONG in its campaign or is it MISALIGNED?
 

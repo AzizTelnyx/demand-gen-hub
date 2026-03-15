@@ -139,9 +139,11 @@ def fetch_all_keywords(client):
                ad_group_criterion.criterion_id,
                ad_group_criterion.keyword.text,
                ad_group_criterion.keyword.match_type,
-               ad_group_criterion.status
+               ad_group_criterion.status,
+               ad_group_criterion.negative
         FROM keyword_view
         WHERE campaign.status = 'ENABLED'
+          AND ad_group.status = 'ENABLED'
           AND ad_group_criterion.status != 'REMOVED'
           AND campaign.advertising_channel_type = 'SEARCH'
     """
@@ -166,6 +168,7 @@ def fetch_all_keywords(client):
             "keyword": row.ad_group_criterion.keyword.text.lower(),
             "matchType": mt,
             "status": st,
+            "is_negative": row.ad_group_criterion.negative,
         })
     return keywords
 
@@ -421,6 +424,7 @@ def check_keyword_alignment(keywords, knowledge_context):
                     "campaign_type": campaign_type,
                     "reason": block_reason,
                     "confidence": block_confidence,
+                    "is_negative": kw.get("is_negative", False),
                 })
                 continue  # Skip alignment check for blocked keywords
 
@@ -441,6 +445,7 @@ def check_keyword_alignment(keywords, knowledge_context):
                     "campaign_type": campaign_type,
                     "reason": reason,
                     "confidence": confidence,
+                    "is_negative": kw.get("is_negative", False),
                 }
                 if confidence >= CONFIDENCE_THRESHOLD:
                     issues.append(issue)
@@ -660,6 +665,7 @@ def check_new_keywords(current_keywords, knowledge_context):
                 "campaign_type": campaign_type,
                 "reason": f"NEW: {reason}",
                 "confidence": confidence,
+                "is_negative": kw.get("is_negative", False),
             })
 
     return issues, False
@@ -776,23 +782,37 @@ def auto_fix_high_confidence(client, keywords, issues, dry_run=True):
             op.update_mask.CopyFrom(field_mask)
             pause_operations.append(op)
 
-    # Execute pause operations
+    # Execute pause operations (with partial_failure so valid ops still succeed)
     if pause_operations:
         try:
-            ga_service.mutate_ad_group_criteria(
-                customer_id=CUSTOMER_ID, operations=pause_operations
-            )
-            print(f"  Paused {len(pause_operations)} keywords")
+            request = client.get_type("MutateAdGroupCriteriaRequest")
+            request.customer_id = CUSTOMER_ID
+            request.partial_failure = True
+            request.operations.extend(pause_operations)
+            response = ga_service.mutate_ad_group_criteria(request=request)
+            pf_error = response.partial_failure_error
+            if pf_error and pf_error.code != 0:
+                err_count = len(pf_error.details)
+                print(f"  Paused {len(pause_operations)}/{len(pause_operations)} keywords ({err_count} partial failures skipped)")
+            else:
+                print(f"  Paused {len(pause_operations)} keywords")
         except Exception as e:
             print(f"  Error pausing keywords: {e}")
 
-    # Execute remove operations (for negatives)
+    # Execute remove operations (for negatives, with partial_failure)
     if remove_operations:
         try:
-            ga_service.mutate_ad_group_criteria(
-                customer_id=CUSTOMER_ID, operations=remove_operations
-            )
-            print(f"  Removed {len(remove_operations)} negative keywords")
+            request = client.get_type("MutateAdGroupCriteriaRequest")
+            request.customer_id = CUSTOMER_ID
+            request.partial_failure = True
+            request.operations.extend(remove_operations)
+            response = ga_service.mutate_ad_group_criteria(request=request)
+            pf_error = response.partial_failure_error
+            if pf_error and pf_error.code != 0:
+                err_count = len(pf_error.details)
+                print(f"  Removed {len(remove_operations)}/{len(remove_operations)} negative keywords ({err_count} partial failures skipped)")
+            else:
+                print(f"  Removed {len(remove_operations)} negative keywords")
         except Exception as e:
             print(f"  Error removing negative keywords: {e}")
 

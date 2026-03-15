@@ -144,7 +144,7 @@ def fetch_all_keywords(client):
         FROM keyword_view
         WHERE campaign.status = 'ENABLED'
           AND ad_group.status = 'ENABLED'
-          AND ad_group_criterion.status != 'REMOVED'
+          AND ad_group_criterion.status = 'ENABLED'
           AND campaign.advertising_channel_type = 'SEARCH'
     """
     keywords = []

@@ -38,8 +38,16 @@ COMPETITORS = [
     "twilio", "vonage", "bandwidth", "plivo", "sinch", "messagebird",
     "nexmo", "ringcentral", "ring central", "8x8", "five9", "genesys",
     "vapi", "retell", "bland", "synthflow", "voiceflow", "elevenlabs",
-    "eleven labs", "livekit", "live kit", "sierra", "pipecat",
+    "eleven labs", "livekit", "live kit", "sierra",
 ]
+
+# Sub-themes that live as ad groups within a parent competitor campaign (NOT standalone competitors)
+COMPETITOR_SUB_THEMES = {
+    "pipecat": "livekit",  # Pipecat is an ad group within LiveKit campaigns
+}
+
+# All competitor names including sub-themes (for keyword matching)
+ALL_COMPETITOR_NAMES = COMPETITORS + list(COMPETITOR_SUB_THEMES.keys())
 
 BRAND_TERMS = {"telnyx", "clawdtalk", "clawd", "clawd talk"}
 
@@ -228,50 +236,78 @@ def extract_competitor_from_campaign(campaign_name):
     for c in COMPETITORS:
         if c in name_lower:
             return c
+    # Check sub-themes (e.g., pipecat → livekit)
+    for sub, parent in COMPETITOR_SUB_THEMES.items():
+        if sub in name_lower:
+            return parent
     return None
+
+
+def extract_competitors_from_ad_group(ad_group_name):
+    """Extract all competitor/sub-theme names targeted by an ad group."""
+    ag_lower = ad_group_name.lower()
+    found = []
+    for c in ALL_COMPETITOR_NAMES:
+        if c in ag_lower:
+            found.append(c)
+    return found
 
 
 # ─── Check 1: Keyword-Campaign Alignment ─────────────
 
-def check_alignment_rules(keyword_text, campaign_type, campaign_name):
+def check_alignment_rules(keyword_text, campaign_type, campaign_name, ad_group_name=""):
     """
     Rule-based alignment check. Returns (is_misaligned, reason, confidence).
     confidence 0-100. High confidence = clear misalignment.
+    Ad-group-aware: considers ad group themes within competitor campaigns.
     """
     kw = keyword_text.lower()
 
     if campaign_type == "competitor":
-        competitor = extract_competitor_from_campaign(campaign_name)
-        if not competitor:
+        campaign_competitor = extract_competitor_from_campaign(campaign_name)
+        if not campaign_competitor:
             return False, "", 0
 
-        # Competitor campaigns: keyword must reference THE SPECIFIC competitor
-        # "elevenlabs alternative" in ElevenLabs campaign ✅
-        # "ai dialer" in ElevenLabs campaign ❌ (generic, not ElevenLabs-specific)
-        has_target_competitor = competitor in kw
+        # Build the set of valid competitor names for this keyword's context:
+        # 1. The campaign's target competitor
+        # 2. Any competitors/sub-themes in the ad group name
+        # 3. Sub-themes that belong to the campaign's competitor
+        valid_names = {campaign_competitor}
 
-        # Also allow "alternative", "vs", "compare", "switch from", "migrate" variants
-        # that imply competitor context even without the name
+        # Add sub-themes of this competitor (e.g., pipecat for livekit campaigns)
+        for sub, parent in COMPETITOR_SUB_THEMES.items():
+            if parent == campaign_competitor:
+                valid_names.add(sub)
+
+        # Add any competitor names from the ad group (cross-targeting, e.g., "Vapi Alternative" in ElevenLabs campaign)
+        if ad_group_name:
+            ag_competitors = extract_competitors_from_ad_group(ad_group_name)
+            valid_names.update(ag_competitors)
+
+        # Check if keyword mentions ANY valid competitor for this context
+        has_valid_competitor = any(name in kw for name in valid_names)
+
+        # Also allow conquest-intent words (alternative, vs, compare, etc.)
         competitor_intent_words = ["alternative", " vs ", "versus", "compare", "comparison",
                                    "switch from", "migrate from", "replace", "better than"]
         has_competitor_intent = any(w in kw for w in competitor_intent_words)
 
-        if has_target_competitor:
+        if has_valid_competitor:
             return False, "", 0
         if has_competitor_intent:
             # Has conquest intent but no specific competitor name — borderline
-            return True, f"Conquest-intent keyword '{kw}' in {competitor} campaign but doesn't mention {competitor}", 65
+            return True, f"Conquest-intent keyword '{kw}' in {campaign_competitor} campaign but doesn't mention any target competitor", 65
         # Generic keyword with no competitor reference — clear misalignment
-        return True, f"Generic keyword '{kw}' in {competitor} conquest campaign — not {competitor}-specific", 88
+        return True, f"Generic keyword '{kw}' in {campaign_competitor} conquest campaign — not competitor-specific", 88
 
     elif campaign_type == "ai_agent":
         # Flag competitor terms that should be in competitor campaigns
-        for c in COMPETITORS:
+        for c in ALL_COMPETITOR_NAMES:
             if c in kw:
                 return True, f"Competitor term '{c}' found in AI Agent campaign — should be in competitor campaign", 85
 
     elif campaign_type == "contact_center":
-        for c in COMPETITORS:
+        for c in ALL_COMPETITOR_NAMES:
             if c in kw:
                 return True, f"Competitor term '{c}' in Contact Center campaign", 85
         # Generic voice AI terms don't belong here unless also contact-center
@@ -282,7 +318,7 @@ def check_alignment_rules(keyword_text, campaign_type, campaign_name):
 
     elif campaign_type.startswith("product_"):
         prod = campaign_type.replace("product_", "")
-        for c in COMPETITORS:
+        for c in ALL_COMPETITOR_NAMES:
             if c in kw:
                 return True, f"Competitor term '{c}' in product campaign", 85
         is_generic_ai = any(g in kw for g in GENERIC_VOICE_AI_TERMS)
@@ -441,9 +477,9 @@ def check_keyword_alignment(keywords, knowledge_context):
                 })
                 continue  # Skip alignment check for blocked keywords
 
-            # Second check: campaign alignment
+            # Second check: campaign alignment (ad-group-aware)
             misaligned, reason, confidence = check_alignment_rules(
-                kw["keyword"], campaign_type, campaign_name
+                kw["keyword"], campaign_type, campaign_name, kw.get("adGroup", "")
             )
             if misaligned:
                 issue = {
@@ -528,7 +564,7 @@ def resolve_overlap_ownership(instances, keyword_text):
             return owner["instance"], to_pause
 
     # Special case: keyword contains competitor name → competitor campaign wins
-    has_competitor = any(c in kw for c in COMPETITORS)
+    has_competitor = any(c in kw for c in ALL_COMPETITOR_NAMES)
     if has_competitor:
         competitor_instances = [c for c in classified if c["campaign_type"] == "competitor"]
         if competitor_instances:
@@ -663,7 +699,7 @@ def check_new_keywords(current_keywords, knowledge_context):
         if campaign_type == "unknown":
             continue
         misaligned, reason, confidence = check_alignment_rules(
-            kw["keyword"], campaign_type, kw["campaign"]
+            kw["keyword"], campaign_type, kw["campaign"], kw.get("adGroup", "")
         )
         if misaligned and confidence >= 60:
             issues.append({

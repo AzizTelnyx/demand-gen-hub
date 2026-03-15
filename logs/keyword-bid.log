@@ -1,0 +1,256 @@
+🔑 Keyword Hygiene Agent — 2026-03-12 10:00 UTC
+   ⚠️  DRY RUN — no changes will be applied
+
+Connecting to Google Ads...
+Fetching all active search keywords...
+  5408 keywords across 42 campaigns
+
+Loading knowledge context...
+
+[1/3] Checking keyword-campaign alignment...
+  Sending 182 borderline keywords to AI...
+  475 misalignment issues found
+
+[2/3] Checking cross-campaign overlap...
+  409 overlap issues found
+
+[3/3] Checking new keywords...
+  82 new keywords found since last snapshot
+  0 new keyword issues found
+
+Checking for junk keywords...
+  Found 23 junk keywords to pause
+    [DRY] Would pause: "فهةث فخ سثىي لاعمن سةس هى عسش" in SMS Landing Page Test #1
+    [DRY] Would pause: "教程" in 202304 MOFU Voice API SA AMER
+    [DRY] Would pause: "入门" in 202304 MOFU Voice API SA AMER
+    [DRY] Would pause: "تبدیل" in 202602 TOFU AI Agent ElevenLabs SA AMER
+    [DRY] Would pause: "تبدیل متن به صدا با هوش مصنوعی فارسی" in 202602 TOFU AI Agent ElevenLabs SA AMER
+    [DRY] Would pause: "تبدیل" in 202602 MOFU AI Agent SA AMER
+    [DRY] Would pause: "تبدیل متن به صدا با هوش مصنوعی فارسی" in 202602 MOFU AI Agent SA AMER
+    [DRY] Would pause: "تبدیل" in 202602 TOFU AI Agent Vapi SA APAC
+    [DRY] Would pause: "تبدیل متن به صدا با هوش مصنوعی فارسی" in 202602 TOFU AI Agent Vapi SA APAC
+    [DRY] Would pause: "تبدیل" in 202602 TOFU AI Agent ElevenLabs SA APAC
+    [DRY] Would pause: "تبدیل متن به صدا با هوش مصنوعی فارسی" in 202602 TOFU AI Agent ElevenLabs SA APAC
+    [DRY] Would pause: "تبدیل" in 202602 MOFU AI Agent SA APAC
+    [DRY] Would pause: "تبدیل متن به صدا با هوش مصنوعی فارسی" in 202602 MOFU AI Agent SA APAC
+    [DRY] Would pause: "تبدیل" in 202602 MOFU AI Agent SA EMEA
+    [DRY] Would pause: "تبدیل متن به صدا با هوش مصنوعی فارسی" in 202602 MOFU AI Agent SA EMEA
+    [DRY] Would pause: "تبدیل" in 202602 TOFU AI Agent Vapi SA AMER
+    [DRY] Would pause: "تبدیل متن به صدا با هوش مصنوعی فارسی" in 202602 TOFU AI Agent Vapi SA AMER
+    [DRY] Would pause: "تبدیل" in 202602 TOFU AI Agent Vapi SA EMEA
+    [DRY] Would pause: "تبدیل متن به صدا با هوش مصنوعی فارسی" in 202602 TOFU AI Agent Vapi SA EMEA
+    [DRY] Would pause: "تبدیل" in 202602 TOFU AI Agent ElevenLabs SA EMEA
+    [DRY] Would pause: "تبدیل متن به صدا با هوش مصنوعی فارسی" in 202602 TOFU AI Agent ElevenLabs SA EMEA
+    [DRY] Would pause: "تبدیل" in 202602 MOFU AI Agent SA MENA
+    [DRY] Would pause: "تبدیل متن به صدا با هوش مصنوعی فارسی" in 202602 MOFU AI Agent SA MENA
+
+============================================================
+RESULTS:
+  Keywords scanned:     5408
+  Misalignment issues:  475
+  Overlap issues:       409
+  New keyword issues:   0
+  Junk keywords:        23
+  Total issues:         884
+============================================================
+
+Snapshot saved: /Users/azizalsinafi/.openclaw/workspace/demand-gen-hub/logs/keyword-hygiene/2026-03-12.json
+
+Logging to database...
+  DB: AgentRun 5bb85fe6-94d7-4845-b97e-29e31490fc8d with 884 findings
+
+Sending Telegram notifications...
+
+Done in 3s
+🔑 Keyword Hygiene Agent — 2026-03-13 10:00 UTC
+   ⚠️  DRY RUN — no changes will be applied
+
+Connecting to Google Ads...
+Fetching all active search keywords...
+  5408 keywords across 42 campaigns
+
+Loading knowledge context...
+
+[1/3] Checking keyword-campaign alignment...
+  Sending 182 borderline keywords to AI...
+  475 misalignment issues found
+
+[2/3] Checking cross-campaign overlap...
+  409 overlap issues found
+
+[3/3] Checking new keywords...
+  No new keywords since last snapshot
+  0 new keyword issues found
+
+Checking for junk keywords...
+  Found 23 junk keywords to pause
+    [DRY] Would pause: "فهةث فخ سثىي لاعمن سةس هى عسش" in SMS Landing Page Test #1
+    [DRY] Would pause: "教程" in 202304 MOFU Voice API SA AMER
+    [DRY] Would pause: "入门" in 202304 MOFU Voice API SA AMER
+    [DRY] Would pause: "تبدیل" in 202602 TOFU AI Agent ElevenLabs SA AMER
+    [DRY] Would pause: "تبدیل متن به صدا با هوش مصنوعی فارسی" in 202602 TOFU AI Agent ElevenLabs SA AMER
+    [DRY] Would pause: "تبدیل" in 202602 MOFU AI Agent SA AMER
+    [DRY] Would pause: "تبدیل متن به صدا با هوش مصنوعی فارسی" in 202602 MOFU AI Agent SA AMER
+    [DRY] Would pause: "تبدیل" in 202602 TOFU AI Agent Vapi SA APAC
+    [DRY] Would pause: "تبدیل متن به صدا با هوش مصنوعی فارسی" in 202602 TOFU AI Agent Vapi SA APAC
+    [DRY] Would pause: "تبدیل" in 202602 TOFU AI Agent ElevenLabs SA APAC
+    [DRY] Would pause: "تبدیل متن به صدا با هوش مصنوعی فارسی" in 202602 TOFU AI Agent ElevenLabs SA APAC
+    [DRY] Would pause: "تبدیل" in 202602 MOFU AI Agent SA APAC
+    [DRY] Would pause: "تبدیل متن به صدا با هوش مصنوعی فارسی" in 202602 MOFU AI Agent SA APAC
+    [DRY] Would pause: "تبدیل" in 202602 MOFU AI Agent SA EMEA
+    [DRY] Would pause: "تبدیل متن به صدا با هوش مصنوعی فارسی" in 202602 MOFU AI Agent SA EMEA
+    [DRY] Would pause: "تبدیل" in 202602 TOFU AI Agent Vapi SA AMER
+    [DRY] Would pause: "تبدیل متن به صدا با هوش مصنوعی فارسی" in 202602 TOFU AI Agent Vapi SA AMER
+    [DRY] Would pause: "تبدیل" in 202602 TOFU AI Agent Vapi SA EMEA
+    [DRY] Would pause: "تبدیل متن به صدا با هوش مصنوعی فارسی" in 202602 TOFU AI Agent Vapi SA EMEA
+    [DRY] Would pause: "تبدیل" in 202602 TOFU AI Agent ElevenLabs SA EMEA
+    [DRY] Would pause: "تبدیل متن به صدا با هوش مصنوعی فارسی" in 202602 TOFU AI Agent ElevenLabs SA EMEA
+    [DRY] Would pause: "تبدیل" in 202602 MOFU AI Agent SA MENA
+    [DRY] Would pause: "تبدیل متن به صدا با هوش مصنوعی فارسی" in 202602 MOFU AI Agent SA MENA
+
+============================================================
+RESULTS:
+  Keywords scanned:     5408
+  Misalignment issues:  475
+  Overlap issues:       409
+  New keyword issues:   0
+  Junk keywords:        23
+  Total issues:         884
+============================================================
+
+Snapshot saved: /Users/azizalsinafi/.openclaw/workspace/demand-gen-hub/logs/keyword-hygiene/2026-03-13.json
+
+Logging to database...
+  DB: AgentRun ac3cb615-9530-4a18-8c87-e4646232bf22 with 884 findings
+
+Sending Telegram notifications...
+
+Done in 3s
+🔑 Keyword Hygiene Agent — 2026-03-14 10:00 UTC
+   ⚠️  DRY RUN — no changes will be applied
+
+Connecting to Google Ads...
+Fetching all active search keywords...
+  5471 keywords across 51 campaigns
+
+Loading knowledge context...
+
+[1/3] Checking keyword-campaign alignment...
+  Sending 182 borderline keywords to AI...
+  475 misalignment issues found
+
+[2/3] Checking cross-campaign overlap...
+  409 overlap issues found
+
+[3/3] Checking new keywords...
+  63 new keywords found since last snapshot
+  0 new keyword issues found
+
+Checking for junk keywords...
+  Found 23 junk keywords to pause
+    [DRY] Would pause: "فهةث فخ سثىي لاعمن سةس هى عسش" in SMS Landing Page Test #1
+    [DRY] Would pause: "教程" in 202304 MOFU Voice API SA AMER
+    [DRY] Would pause: "入门" in 202304 MOFU Voice API SA AMER
+    [DRY] Would pause: "تبدیل" in 202602 TOFU AI Agent Vapi SA AMER
+    [DRY] Would pause: "تبدیل متن به صدا با هوش مصنوعی فارسی" in 202602 TOFU AI Agent Vapi SA AMER
+    [DRY] Would pause: "تبدیل" in 202602 MOFU AI Agent SA AMER
+    [DRY] Would pause: "تبدیل متن به صدا با هوش مصنوعی فارسی" in 202602 MOFU AI Agent SA AMER
+    [DRY] Would pause: "تبدیل" in 202602 MOFU AI Agent SA EMEA
+    [DRY] Would pause: "تبدیل متن به صدا با هوش مصنوعی فارسی" in 202602 MOFU AI Agent SA EMEA
+    [DRY] Would pause: "تبدیل" in 202602 TOFU AI Agent ElevenLabs SA EMEA
+    [DRY] Would pause: "تبدیل متن به صدا با هوش مصنوعی فارسی" in 202602 TOFU AI Agent ElevenLabs SA EMEA
+    [DRY] Would pause: "تبدیل" in 202602 MOFU AI Agent SA APAC
+    [DRY] Would pause: "تبدیل متن به صدا با هوش مصنوعی فارسی" in 202602 MOFU AI Agent SA APAC
+    [DRY] Would pause: "تبدیل" in 202602 TOFU AI Agent Vapi SA APAC
+    [DRY] Would pause: "تبدیل متن به صدا با هوش مصنوعی فارسی" in 202602 TOFU AI Agent Vapi SA APAC
+    [DRY] Would pause: "تبدیل" in 202602 TOFU AI Agent Vapi SA EMEA
+    [DRY] Would pause: "تبدیل متن به صدا با هوش مصنوعی فارسی" in 202602 TOFU AI Agent Vapi SA EMEA
+    [DRY] Would pause: "تبدیل" in 202602 TOFU AI Agent ElevenLabs SA APAC
+    [DRY] Would pause: "تبدیل متن به صدا با هوش مصنوعی فارسی" in 202602 TOFU AI Agent ElevenLabs SA APAC
+    [DRY] Would pause: "تبدیل" in 202602 TOFU AI Agent ElevenLabs SA AMER
+    [DRY] Would pause: "تبدیل متن به صدا با هوش مصنوعی فارسی" in 202602 TOFU AI Agent ElevenLabs SA AMER
+    [DRY] Would pause: "تبدیل" in 202602 MOFU AI Agent SA MENA
+    [DRY] Would pause: "تبدیل متن به صدا با هوش مصنوعی فارسی" in 202602 MOFU AI Agent SA MENA
+
+============================================================
+RESULTS:
+  Keywords scanned:     5471
+  Misalignment issues:  475
+  Overlap issues:       409
+  New keyword issues:   0
+  Junk keywords:        23
+  Total issues:         884
+============================================================
+
+Snapshot saved: /Users/azizalsinafi/.openclaw/workspace/demand-gen-hub/logs/keyword-hygiene/2026-03-14.json
+
+Logging to database...
+  DB: AgentRun 6f88fcf7-5adb-4e80-81f1-a3db213b9a5c with 884 findings
+
+Sending Telegram notifications...
+
+Done in 3s
+🔑 Keyword Hygiene Agent — 2026-03-15 10:00 UTC
+   ⚠️  DRY RUN — no changes will be applied
+
+Connecting to Google Ads...
+Fetching all active search keywords...
+  5471 keywords across 51 campaigns
+
+Loading knowledge context...
+
+[1/3] Checking keyword-campaign alignment...
+  Sending 182 borderline keywords to AI...
+  475 misalignment issues found
+
+[2/3] Checking cross-campaign overlap...
+  409 overlap issues found
+
+[3/3] Checking new keywords...
+  No new keywords since last snapshot
+  0 new keyword issues found
+
+Checking for junk keywords...
+  Found 23 junk keywords to pause
+    [DRY] Would pause: "教程" in 202304 MOFU Voice API SA AMER
+    [DRY] Would pause: "入门" in 202304 MOFU Voice API SA AMER
+    [DRY] Would pause: "تبدیل" in 202602 TOFU AI Agent Vapi SA AMER
+    [DRY] Would pause: "تبدیل" in 202602 MOFU AI Agent SA AMER
+    [DRY] Would pause: "تبدیل" in 202602 MOFU AI Agent SA EMEA
+    [DRY] Would pause: "تبدیل" in 202602 TOFU AI Agent ElevenLabs SA EMEA
+    [DRY] Would pause: "تبدیل" in 202602 MOFU AI Agent SA APAC
+    [DRY] Would pause: "تبدیل" in 202602 TOFU AI Agent Vapi SA APAC
+    [DRY] Would pause: "تبدیل" in 202602 TOFU AI Agent Vapi SA EMEA
+    [DRY] Would pause: "تبدیل" in 202602 TOFU AI Agent ElevenLabs SA APAC
+    [DRY] Would pause: "تبدیل" in 202602 TOFU AI Agent ElevenLabs SA AMER
+    [DRY] Would pause: "تبدیل" in 202602 MOFU AI Agent SA MENA
+    [DRY] Would pause: "فهةث فخ سثىي لاعمن سةس هى عسش" in SMS Landing Page Test #1
+    [DRY] Would pause: "تبدیل متن به صدا با هوش مصنوعی فارسی" in 202602 TOFU AI Agent Vapi SA AMER
+    [DRY] Would pause: "تبدیل متن به صدا با هوش مصنوعی فارسی" in 202602 MOFU AI Agent SA AMER
+    [DRY] Would pause: "تبدیل متن به صدا با هوش مصنوعی فارسی" in 202602 MOFU AI Agent SA EMEA
+    [DRY] Would pause: "تبدیل متن به صدا با هوش مصنوعی فارسی" in 202602 TOFU AI Agent ElevenLabs SA EMEA
+    [DRY] Would pause: "تبدیل متن به صدا با هوش مصنوعی فارسی" in 202602 MOFU AI Agent SA APAC
+    [DRY] Would pause: "تبدیل متن به صدا با هوش مصنوعی فارسی" in 202602 TOFU AI Agent Vapi SA APAC
+    [DRY] Would pause: "تبدیل متن به صدا با هوش مصنوعی فارسی" in 202602 TOFU AI Agent Vapi SA EMEA
+    [DRY] Would pause: "تبدیل متن به صدا با هوش مصنوعی فارسی" in 202602 TOFU AI Agent ElevenLabs SA APAC
+    [DRY] Would pause: "تبدیل متن به صدا با هوش مصنوعی فارسی" in 202602 TOFU AI Agent ElevenLabs SA AMER
+    [DRY] Would pause: "تبدیل متن به صدا با هوش مصنوعی فارسی" in 202602 MOFU AI Agent SA MENA
+
+============================================================
+RESULTS:
+  Keywords scanned:     5471
+  Misalignment issues:  475
+  Overlap issues:       409
+  New keyword issues:   0
+  Junk keywords:        23
+  Total issues:         884
+============================================================
+
+Snapshot saved: /Users/azizalsinafi/.openclaw/workspace/demand-gen-hub/logs/keyword-hygiene/2026-03-15.json
+
+Logging to database...
+  DB: AgentRun a7856990-2190-473f-b677-71ac7e0f1136 with 884 findings
+
+Sending Telegram notifications...
+
+Done in 4s

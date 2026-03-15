@@ -287,7 +287,7 @@ class BaseAgent:
                 # Check learning period - campaign must exist in DB with createdAt > LEARNING_PERIOD_DAYS ago
                 cur.execute(
                     """SELECT "createdAt" FROM "Campaign"
-                    WHERE "externalId" = %s AND platform = %s""",
+                    WHERE "platformId" = %s AND platform = %s""",
                     (campaign_id, platform),
                 )
                 row = cur.fetchone()

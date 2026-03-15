@@ -21,6 +21,7 @@ Flags:
 """
 
 import argparse
+import gc
 import json
 import multiprocessing
 import os
@@ -63,7 +64,7 @@ def generate_monthly_windows(start_date, end_date):
 def upsert_impression(cur, record_id, domain, campaign_id, campaign_name,
                        impressions, clicks, cost, date_from, date_to, platform, now,
                        conversions=0):
-    """Upsert a single AdImpression record."""
+    """Upsert a single AdImpression record using primary key conflict resolution."""
     cur.execute("""
         INSERT INTO "AdImpression" (id, domain, "campaignId", "campaignName",
             impressions, clicks, cost, conversions, "dateFrom", "dateTo",
@@ -258,6 +259,7 @@ def sync_stackadapt(start_date, end_date, monthly_windows, include_paused, use_s
 
     campaigns = get_all_sa_campaigns(token)
     active_campaigns = [c for c in campaigns if c["campaignStatus"]["state"] in allowed_states]
+    del campaigns  # Free memory
     print(f"  {len(active_campaigns)} campaigns to process")
 
     windows_serialized = [(w[0].strftime("%Y-%m-%d"), w[1].strftime("%Y-%m-%d")) for w in monthly_windows]
@@ -281,6 +283,7 @@ def sync_stackadapt(start_date, end_date, monthly_windows, include_paused, use_s
             total_records += camp_records
             if camp_records:
                 print(f"    → {camp_records} domain-month records")
+            gc.collect()  # Free memory between campaigns
 
     print(f"  StackAdapt done: {total_records} records in {time.time() - t0:.0f}s")
     return total_records
@@ -690,8 +693,10 @@ def sync():
                         help="Use 365-day lookback instead of default 90 days")
     parser.add_argument("--include-paused", action="store_true",
                         help="Include PAUSED campaigns (default: active only)")
-    parser.add_argument("--subprocess", action="store_true",
-                        help="Fork each StackAdapt campaign into a subprocess for memory isolation")
+    parser.add_argument("--subprocess", action="store_true", default=True,
+                        help="Fork each StackAdapt campaign into a subprocess for memory isolation (default: True)")
+    parser.add_argument("--no-subprocess", action="store_true",
+                        help="Disable subprocess isolation (run in-process)")
     parser.add_argument("--dry-run", action="store_true",
                         help="Show what would be done without API calls or DB writes")
     parser.add_argument("--platform", type=str, default=None,
@@ -711,13 +716,14 @@ def sync():
     if args.platform:
         print(f"  Platform filter: {args.platform}")
 
+    use_subprocess = args.subprocess and not args.no_subprocess
     platforms = [args.platform] if args.platform else ["stackadapt", "google_ads", "linkedin", "reddit"]
     grand_total = 0
     t0 = time.time()
 
     if "stackadapt" in platforms:
         grand_total += sync_stackadapt(start_date, end_date, monthly_windows,
-                                        args.include_paused, args.subprocess, args.dry_run)
+                                        args.include_paused, use_subprocess, args.dry_run)
 
     if "google_ads" in platforms:
         grand_total += sync_google_ads(start_date, end_date, monthly_windows,

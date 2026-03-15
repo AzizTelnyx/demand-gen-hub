@@ -5,7 +5,6 @@ import Link from 'next/link';
 import { Settings, Activity, HeartPulse } from 'lucide-react';
 
 import AgentFleet from '@/components/agents/AgentFleet';
-import ApprovalQueue from '@/components/agents/ApprovalQueue';
 
 export default function AgentsPage() {
   const [agents, setAgents] = useState<any[]>([]);
@@ -16,7 +15,7 @@ export default function AgentsPage() {
       fetch('/api/agents/status').then(r => r.json()),
       fetch('/api/agents/schedule').then(r => r.json()),
     ]).then(([statusData, schedData]) => {
-      setAgents(statusData.agents || []);
+      setAgents((statusData.agents || []).filter((a: any) => a.enabled));
       setSchedules(schedData.agents || []);
     }).catch(() => {});
   }, []);
@@ -52,8 +51,7 @@ export default function AgentsPage() {
       {/* 1. Agent Fleet Grid */}
       {agents.length > 0 && <AgentFleet agents={agents} schedules={schedules} />}
 
-      {/* 2. Approvals & Recommendations */}
-      <ApprovalQueue />
+      {/* Approvals live in Activity Log — single source of truth */}
     </div>
   );
 }

@@ -106,7 +106,7 @@ function PacingSection({ pacing, data, dateRange, onRefresh }: { pacing: BudgetD
   useEffect(() => {
     const p: Record<string, string> = {};
     for (const bp of data.budgetPlans || []) {
-      p[bp.channel] = String(bp.planned);
+      p[bp.platform || bp.channel] = String(bp.planned);
     }
     setPlans(p);
   }, [data.budgetPlans]);
@@ -138,7 +138,7 @@ function PacingSection({ pacing, data, dateRange, onRefresh }: { pacing: BudgetD
 
   // Per-platform pacing from data
   const platformPacing = (data.byPlatform || []).map(p => {
-    const plan = (data.budgetPlans || []).find((bp: any) => bp.channel === (p as any).platform);
+    const plan = (data.budgetPlans || []).find((bp: any) => (bp.platform || bp.channel) === (p as any).platform);
     const planned = plan?.planned || 0;
     return {
       name: (p as any).platform || p.name,
@@ -281,8 +281,8 @@ export default function BudgetPage() {
   const [platformFilter, setPlatformFilter] = useState<string>('all');
   const [dateRange, setDateRange] = useState<DateRange>(() => {
     const now = new Date();
-    const from = new Date(now); from.setDate(from.getDate() - 30);
-    return { from: from.toISOString().split('T')[0], to: now.toISOString().split('T')[0], label: 'Last 30 days' };
+    const from = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-01`;
+    return { from, to: now.toISOString().split('T')[0], label: 'This month' };
   });
 
   const fetchData = useCallback(async () => {

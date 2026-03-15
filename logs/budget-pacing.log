@@ -1,0 +1,225 @@
+🔧 Budget & Pacing Manager — 2026-03-12 14:00 UTC
+   ⚠️  DRY RUN — no changes will be applied
+
+Loading context...
+  Knowledge loaded (9945 chars)
+
+Checking CPA spike...
+  No CPA spike detected
+
+Collecting platform spend...
+  google_ads: $40,061 (264 campaigns)
+  linkedin: $10,487 (20 campaigns)
+  stackadapt: $1,802 (14 campaigns)
+  reddit: $2,716 (9 campaigns)
+  Total MTD: $55,065
+
+Collecting campaign budgets...
+  61 campaigns with budgets
+  Allocations: {'google_ads': 85000.0, 'linkedin': 30000.0, 'stackadapt': 15000.0, 'reddit': 10000.0}
+
+Analyzing pacing...
+  google_ads: 122% — overpacing ⚠️
+  linkedin: 90% — on_track ✅
+  stackadapt: 31% — underpacing ⚠️
+  reddit: 70% — underpacing ⚠️
+
+Generating actions...
+  Auto-actions: 10
+  Approval requests: 0
+
+Executing auto-actions...
+  Applied: 0, Skipped: 0
+
+Sending Telegram report...
+Sending approval cards...
+
+Log: /Users/azizalsinafi/.openclaw/workspace/demand-gen-hub/logs/budget-pacing-manager/2026-03-12.json
+Runtime: 83s
+🔧 Budget & Pacing Manager — 2026-03-13 03:00 UTC
+   ⚠️  DRY RUN — no changes will be applied
+
+Loading context...
+  Knowledge loaded (9945 chars)
+
+Checking CPA spike...
+  No CPA spike detected
+
+Collecting platform spend...
+  google_ads: $41,733 (264 campaigns)
+  linkedin: $11,037 (20 campaigns)
+  stackadapt: $1,802 (14 campaigns)
+  reddit: $2,781 (9 campaigns)
+  Total MTD: $57,353
+
+Collecting campaign budgets...
+  60 campaigns with budgets
+  Allocations: {'google_ads': 85000.0, 'linkedin': 30000.0, 'stackadapt': 15000.0, 'reddit': 10000.0}
+
+Analyzing pacing...
+  google_ads: 127% — overpacing ⚠️
+  linkedin: 95% — on_track ✅
+  stackadapt: 31% — underpacing ⚠️
+  reddit: 72% — underpacing ⚠️
+
+Generating actions...
+  Auto-actions: 12
+  Approval requests: 0
+  ⚠️ Projected $148,163 exceeds cap. Filtering out budget increases.
+
+Executing auto-actions...
+  Applied: 0, Skipped: 0
+
+Sending Telegram report...
+Sending approval cards...
+
+Log: /Users/azizalsinafi/.openclaw/workspace/demand-gen-hub/logs/budget-pacing-manager/2026-03-13.json
+Runtime: 76s
+🔧 Budget & Pacing Manager — 2026-03-13 14:00 UTC
+   ⚠️  DRY RUN — no changes will be applied
+
+Loading context...
+  Knowledge loaded (9945 chars)
+
+Checking CPA spike...
+  No CPA spike detected
+
+Collecting platform spend...
+  google_ads: $43,124 (264 campaigns)
+  linkedin: $11,609 (21 campaigns)
+  stackadapt: $1,979 (14 campaigns)
+  reddit: $2,781 (9 campaigns)
+  Total MTD: $59,492
+
+Collecting campaign budgets...
+  61 campaigns with budgets
+  Allocations: {'google_ads': 85000.0, 'linkedin': 30000.0, 'stackadapt': 15000.0, 'reddit': 10000.0}
+
+Analyzing pacing...
+  google_ads: 121% — overpacing ⚠️
+  linkedin: 92% — on_track ✅
+  stackadapt: 32% — underpacing ⚠️
+  reddit: 66% — underpacing ⚠️
+
+Generating actions...
+  Auto-actions: 12
+  Approval requests: 0
+
+Executing auto-actions...
+  Applied: 0, Skipped: 0
+
+Sending Telegram report...
+Sending approval cards...
+
+Log: /Users/azizalsinafi/.openclaw/workspace/demand-gen-hub/logs/budget-pacing-manager/2026-03-13.json
+Runtime: 80s
+🔧 Budget & Pacing Manager — 2026-03-14 03:00 UTC
+   ⚠️  DRY RUN — no changes will be applied
+
+Loading context...
+  Knowledge loaded (9945 chars)
+
+Checking CPA spike...
+  No CPA spike detected
+
+Collecting platform spend...
+  google_ads: $44,626 (273 campaigns)
+  linkedin: $11,939 (21 campaigns)
+  stackadapt: $1,979 (14 campaigns)
+  reddit: $2,781 (9 campaigns)
+  Total MTD: $61,325
+
+Collecting campaign budgets...
+  70 campaigns with budgets
+  Allocations: {'google_ads': 85000.0, 'linkedin': 30000.0, 'stackadapt': 15000.0, 'reddit': 10000.0}
+
+Analyzing pacing...
+  google_ads: 125% — overpacing ⚠️
+  linkedin: 95% — on_track ✅
+  stackadapt: 32% — underpacing ⚠️
+  reddit: 66% — underpacing ⚠️
+
+Generating actions...
+  Auto-actions: 12
+  Approval requests: 0
+
+Executing auto-actions...
+  Applied: 0, Skipped: 0
+
+Sending Telegram report...
+Sending approval cards...
+
+Log: /Users/azizalsinafi/.openclaw/workspace/demand-gen-hub/logs/budget-pacing-manager/2026-03-14.json
+Runtime: 76s
+🔧 Budget & Pacing Manager — 2026-03-14 14:00 UTC
+   ⚠️  DRY RUN — no changes will be applied
+
+Loading context...
+  Knowledge loaded (9945 chars)
+
+Checking CPA spike...
+  🚨 CPA spike on google_ads: $51.02→$93.66. FROZEN.
+🔧 Budget & Pacing Manager — 2026-03-15 03:00 UTC
+   ⚠️  DRY RUN — no changes will be applied
+
+Loading context...
+  Knowledge loaded (9945 chars)
+
+Checking CPA spike...
+  🚨 CPA spike on google_ads: $50.20→$93.67. FROZEN.
+🔧 Budget & Pacing Manager — 2026-03-15 14:00 UTC
+   ⚠️  DRY RUN — no changes will be applied
+
+Loading context...
+  Knowledge loaded (9945 chars)
+
+Checking CPA spike...
+  No CPA spike detected
+
+Collecting platform spend...
+  google_ads: $48,979 (273 campaigns)
+  linkedin: $13,055 (21 campaigns)
+  stackadapt: $2,277 (14 campaigns)
+  reddit: $2,781 (9 campaigns)
+  Total MTD: $67,091
+
+Collecting campaign budgets...
+  69 campaigns with budgets
+  Allocations: {'google_ads': 85000.0, 'linkedin': 30000.0, 'stackadapt': 15000.0, 'reddit': 10000.0}
+
+Analyzing pacing...
+  google_ads: 119% — overpacing ⚠️
+  linkedin: 90% — on_track ✅
+  stackadapt: 31% — underpacing ⚠️
+  reddit: 58% — underpacing ⚠️
+
+Generating actions...
+  Auto-actions: 7
+  Approval requests: 18
+
+Executing auto-actions...
+  Applied: 0, Skipped: 0
+
+Sending Telegram report...
+Sending approval cards...
+  [DRY RUN] Would send approval card: SMS Landing Page Test #1 (pause_campaign)
+  [DRY RUN] Would send approval card: 202104 MOFU Voice API SA EMEA (pause_campaign)
+  [DRY RUN] Would send approval card: 202104 MOFU SMS SA EMEA (pause_campaign)
+  [DRY RUN] Would send approval card: 202306 BOFU Voice API Twilio DA GLOBAL (pause_campaign)
+  [DRY RUN] Would send approval card: 202603 TOFU Bland AI SA EMEA (pause_campaign)
+  [DRY RUN] Would send approval card: 202603 TOFU Bland AI SA APAC (pause_campaign)
+  [DRY RUN] Would send approval card: 202603 TOFU Sierra SA EMEA (pause_campaign)
+  [DRY RUN] Would send approval card: 202603 TOFU Bland AI SA AMER (pause_campaign)
+  [DRY RUN] Would send approval card: 202603 TOFU Synthflow SA APAC (pause_campaign)
+  [DRY RUN] Would send approval card: 202603 TOFU Sierra SA AMER (pause_campaign)
+  [DRY RUN] Would send approval card: 202603 TOFU Synthflow SA AMER (pause_campaign)
+  [DRY RUN] Would send approval card: 202603 TOFU Synthflow SA EMEA (pause_campaign)
+  [DRY RUN] Would send approval card: 202603 TOFU Sierra SA APAC (pause_campaign)
+  [DRY RUN] Would send approval card: 202507 BOFU BRAND SPA GLOBAL (pause_campaign)
+  [DRY RUN] Would send approval card: 202510 TOFU AI Agent Healthcare SI GLOBAL (pause_campaign)
+  [DRY RUN] Would send approval card: 202510 TOFU AI Agent Healthcare VA GLOBAL (pause_campaign)
+  [DRY RUN] Would send approval card: 202512 TOFU AI Agent Travel SI GLOBAL (pause_campaign)
+  [DRY RUN] Would send approval card: 202603 MOFU AI Agent Promo Webinar SI GLOBAL (pause_campaign)
+
+Log: /Users/azizalsinafi/.openclaw/workspace/demand-gen-hub/logs/budget-pacing-manager/2026-03-15.json
+Runtime: 73s

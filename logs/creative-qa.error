@@ -1,0 +1,16 @@
+Traceback (most recent call last):
+  File "/Users/azizalsinafi/.openclaw/workspace/demand-gen-hub/scripts/creative-manager.py", line 23, in <module>
+    from agent_base import BaseAgent, CampaignContext
+ImportError: cannot import name 'CampaignContext' from 'agent_base' (/Users/azizalsinafi/.openclaw/workspace/demand-gen-hub/scripts/lib/agent_base.py)
+Traceback (most recent call last):
+  File "/Users/azizalsinafi/.openclaw/workspace/demand-gen-hub/scripts/creative-manager.py", line 23, in <module>
+    from agent_base import BaseAgent, CampaignContext
+ImportError: cannot import name 'CampaignContext' from 'agent_base' (/Users/azizalsinafi/.openclaw/workspace/demand-gen-hub/scripts/lib/agent_base.py)
+Traceback (most recent call last):
+  File "/Users/azizalsinafi/.openclaw/workspace/demand-gen-hub/scripts/creative-manager.py", line 23, in <module>
+    from agent_base import BaseAgent, CampaignContext
+ImportError: cannot import name 'CampaignContext' from 'agent_base' (/Users/azizalsinafi/.openclaw/workspace/demand-gen-hub/scripts/lib/agent_base.py)
+Traceback (most recent call last):
+  File "/Users/azizalsinafi/.openclaw/workspace/demand-gen-hub/scripts/creative-manager.py", line 23, in <module>
+    from agent_base import BaseAgent, CampaignContext
+ImportError: cannot import name 'CampaignContext' from 'agent_base' (/Users/azizalsinafi/.openclaw/workspace/demand-gen-hub/scripts/lib/agent_base.py)

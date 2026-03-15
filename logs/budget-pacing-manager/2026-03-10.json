@@ -1,0 +1,172 @@
+{
+  "timestamp": "2026-03-10T14:00:09.855428+00:00",
+  "dry_run": false,
+  "total_mtd": 45922.52883804958,
+  "platform_pacing": {
+    "google_ads": {
+      "planned": 85000.0,
+      "mtd": 33480.57,
+      "daily_rate": 3348.06,
+      "projected": 103789.75,
+      "pace_pct": 122.1,
+      "status": "overpacing",
+      "days_remaining": 21
+    },
+    "linkedin": {
+      "planned": 30000.0,
+      "mtd": 8664.06,
+      "daily_rate": 866.41,
+      "projected": 26858.57,
+      "pace_pct": 89.5,
+      "status": "on_track",
+      "days_remaining": 21
+    },
+    "stackadapt": {
+      "planned": 15000.0,
+      "mtd": 1443.67,
+      "daily_rate": 144.37,
+      "projected": 4475.37,
+      "pace_pct": 29.8,
+      "status": "underpacing",
+      "days_remaining": 21
+    },
+    "reddit": {
+      "planned": 10000.0,
+      "mtd": 2334.24,
+      "daily_rate": 233.42,
+      "projected": 7236.14,
+      "pace_pct": 72.4,
+      "status": "underpacing",
+      "days_remaining": 21
+    }
+  },
+  "auto_actions": [
+    {
+      "type": "budget_decrease",
+      "platform": "linkedin",
+      "campaign_id": "393875314",
+      "campaign_name": "202507 BOFU BRAND SPA GLOBAL",
+      "old_value": "$70/day",
+      "new_value": "$60/day",
+      "old_budget": 70.0,
+      "new_budget": 59.5,
+      "reason": "Underpacing at 33%",
+      "confidence": 80,
+      "applied": false,
+      "error": "LinkedIn budget updates not available"
+    },
+    {
+      "type": "budget_decrease",
+      "platform": "linkedin",
+      "campaign_id": "416489974",
+      "campaign_name": "202509 TOFU AI Agent Vapi+ElevenLabs SI GLOBAL",
+      "old_value": "$80/day",
+      "new_value": "$68/day",
+      "old_budget": 80.0,
+      "new_budget": 68.0,
+      "reason": "Underpacing at 66%",
+      "confidence": 80,
+      "applied": false,
+      "error": "LinkedIn budget updates not available"
+    },
+    {
+      "type": "budget_decrease",
+      "platform": "linkedin",
+      "campaign_id": "431833324",
+      "campaign_name": "202510 TOFU AI Agent Healthcare SI GLOBAL",
+      "old_value": "$80/day",
+      "new_value": "$68/day",
+      "old_budget": 80.0,
+      "new_budget": 68.0,
+      "reason": "Underpacing at 6%",
+      "confidence": 80,
+      "applied": false,
+      "error": "LinkedIn budget updates not available"
+    },
+    {
+      "type": "budget_decrease",
+      "platform": "linkedin",
+      "campaign_id": "434305224",
+      "campaign_name": "202510 TOFU AI Agent Healthcare VA GLOBAL",
+      "old_value": "$80/day",
+      "new_value": "$68/day",
+      "old_budget": 80.0,
+      "new_budget": 68.0,
+      "reason": "Underpacing at 0%",
+      "confidence": 80,
+      "applied": false,
+      "error": "LinkedIn budget updates not available"
+    },
+    {
+      "type": "budget_decrease",
+      "platform": "linkedin",
+      "campaign_id": "447913534",
+      "campaign_name": "202511 MOFU Brand AI Agent VA GLOBAL",
+      "old_value": "$120/day",
+      "new_value": "$102/day",
+      "old_budget": 120.0,
+      "new_budget": 102.0,
+      "reason": "Underpacing at 42%",
+      "confidence": 80,
+      "applied": false,
+      "error": "LinkedIn budget updates not available"
+    },
+    {
+      "type": "budget_decrease",
+      "platform": "linkedin",
+      "campaign_id": "454941864",
+      "campaign_name": "202512 TOFU AI Agent Sabre SI GLOBAL",
+      "old_value": "$30/day",
+      "new_value": "$26/day",
+      "old_budget": 30.0,
+      "new_budget": 25.5,
+      "reason": "Underpacing at 64%",
+      "confidence": 80,
+      "applied": false,
+      "error": "LinkedIn budget updates not available"
+    },
+    {
+      "type": "budget_decrease",
+      "platform": "linkedin",
+      "campaign_id": "461051914",
+      "campaign_name": "202512 TOFU AI Agent Travel SI GLOBAL",
+      "old_value": "$90/day",
+      "new_value": "$76/day",
+      "old_budget": 90.0,
+      "new_budget": 76.5,
+      "reason": "Underpacing at 34%",
+      "confidence": 80,
+      "applied": false,
+      "error": "LinkedIn budget updates not available"
+    },
+    {
+      "type": "budget_decrease",
+      "platform": "linkedin",
+      "campaign_id": "465267984",
+      "campaign_name": "202601 MOFU Brand AI Agent GIF GLOBAL",
+      "old_value": "$120/day",
+      "new_value": "$102/day",
+      "old_budget": 120.0,
+      "new_budget": 102.0,
+      "reason": "Underpacing at 64%",
+      "confidence": 80,
+      "applied": false,
+      "error": "LinkedIn budget updates not available"
+    },
+    {
+      "type": "budget_decrease",
+      "platform": "linkedin",
+      "campaign_id": "475220394",
+      "campaign_name": "202601 EVENTS SF HUB SI GLOBAL",
+      "old_value": "$40/day",
+      "new_value": "$34/day",
+      "old_budget": 40.0,
+      "new_budget": 34.0,
+      "reason": "Underpacing at 14%",
+      "confidence": 80,
+      "applied": false,
+      "error": "LinkedIn budget updates not available"
+    }
+  ],
+  "approval_requests": []
+}

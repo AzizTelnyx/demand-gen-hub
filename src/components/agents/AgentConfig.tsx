@@ -8,7 +8,7 @@ import { Toast } from '@/components/agents/AgentFleet';
 
 /* ── Types ── */
 
-export type GuardrailTab = 'budget' | 'campaigns' | 'regional' | 'allocation';
+export type GuardrailTab = string;
 
 interface Guardrail { id: string; key: string; value: string; label: string; category: string; }
 interface RegPriority { id: string; quarter: string; region: string; product: string; priority: string; protected: boolean; }
@@ -27,12 +27,35 @@ const PLATFORM_LABELS: Record<string, string> = {
   google_ads: 'Google Ads', linkedin: 'LinkedIn', stackadapt: 'StackAdapt', reddit: 'Reddit',
 };
 
-export const GUARDRAIL_TABS: { key: GuardrailTab; label: string; icon: any }[] = [
+const BASE_TABS: { key: string; label: string; icon: any }[] = [
   { key: 'budget', label: 'Budget Rules', icon: DollarSign },
   { key: 'campaigns', label: 'Campaign Rules', icon: ShieldCheck },
   { key: 'regional', label: 'Regional Priorities', icon: Activity },
   { key: 'allocation', label: 'Platform Budgets', icon: Hash },
 ];
+
+const CATEGORY_ICONS: Record<string, any> = {
+  budget: DollarSign, campaigns: ShieldCheck, regional: Activity, allocation: Hash,
+  creative: Shield, confidence: Activity,
+};
+
+const CATEGORY_LABELS: Record<string, string> = {
+  budget: 'Budget Rules', campaigns: 'Campaign Rules', regional: 'Regional Priorities',
+  allocation: 'Platform Budgets', creative: 'Creative Rules', confidence: 'Confidence',
+};
+
+export function buildGuardrailTabs(guardrails: Guardrail[]): { key: string; label: string; icon: any }[] {
+  const baseKeys = new Set(BASE_TABS.map(t => t.key));
+  const extraCategories = [...new Set(guardrails.map(g => g.category))].filter(c => !baseKeys.has(c));
+  const extraTabs = extraCategories.map(c => ({
+    key: c,
+    label: CATEGORY_LABELS[c] || (c.charAt(0).toUpperCase() + c.slice(1)),
+    icon: CATEGORY_ICONS[c] || Shield,
+  }));
+  return [...BASE_TABS, ...extraTabs];
+}
+
+export const GUARDRAIL_TABS = BASE_TABS;
 
 /* ── Sub-components ── */
 
@@ -227,6 +250,17 @@ export function AllocationTab() {
 
 /* ── Full Guardrails Panel (used on /agents/config page) ── */
 
+function detectSuffix(label: string): string {
+  if (label.includes('(%)') || label.includes('percent')) return '%';
+  if (label.includes('($)') || label.includes('dollar')) return '$';
+  if (label.includes('(days)') || label.toLowerCase().includes('days')) return 'days';
+  return '';
+}
+
+function isBoolean(value: string): boolean {
+  return value === 'true' || value === 'false';
+}
+
 export function GuardrailsPanel({ initialTab }: { initialTab?: GuardrailTab }) {
   const [tab, setTab] = useState<GuardrailTab>(initialTab || 'budget');
   const [guardrails, setGuardrails] = useState<Guardrail[]>([]);
@@ -294,37 +328,20 @@ export function GuardrailsPanel({ initialTab }: { initialTab?: GuardrailTab }) {
     <div className="space-y-4">
       {toast && <Toast message={toast.message} type={toast.type} onDismiss={() => setToast(null)} />}
 
-      <div className="flex items-center gap-1 p-1 bg-[var(--bg-card)] border border-[var(--border-primary)] rounded-xl">
-        {GUARDRAIL_TABS.map(t => (
+      {(() => { const tabs = buildGuardrailTabs(guardrails); return (
+      <div className="flex items-center gap-1 p-1 bg-[var(--bg-card)] border border-[var(--border-primary)] rounded-xl overflow-x-auto">
+        {tabs.map(t => (
           <button key={t.key} onClick={() => setTab(t.key)}
-            className={`flex-1 flex items-center justify-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all ${
+            className={`flex-1 flex items-center justify-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all whitespace-nowrap ${
               tab === t.key ? 'bg-[var(--bg-primary)] text-[var(--text-primary)] shadow-sm' : 'text-[var(--text-muted)] hover:text-[var(--text-secondary)]'
             }`}>
             <t.icon size={14} /> {t.label}
           </button>
         ))}
-      </div>
+      </div>); })()}
 
       {loading ? (
         <div className="text-sm text-[var(--text-muted)] animate-pulse p-4">Loading guardrails...</div>
-      ) : tab === 'budget' ? (
-        <div className="space-y-3">
-          <p className="text-xs text-[var(--text-muted)] px-1">Controls how optimizer agents handle budget changes across campaigns.</p>
-          <div className="bg-[var(--bg-card)] border border-[var(--border-primary)] rounded-xl divide-y divide-[var(--border-primary)]/30">
-            <GuardrailNumberField label="Campaign Budget Floor" desc="Agents will never reduce any campaign's daily budget below this amount." suffix="$" gKey="budget_floor_min" value={getVal('budget_floor_min')} saving={saving} onSave={saveGuardrail} />
-            <GuardrailNumberField label="Max Budget Change Without Approval" desc="Single budget change exceeding this amount requires human approval." suffix="$" gKey="budget_change_max_no_approval" value={getVal('budget_change_max_no_approval')} saving={saving} onSave={saveGuardrail} />
-            <GuardrailToggleField label="Allow Cross-Product Budget Reallocation" desc="When OFF, agents can only move budget within the same product group." gKey="cross_product_realloc" value={getVal('cross_product_realloc') === 'true'} saving={saving} onSave={(k, v) => saveGuardrail(k, v ? 'true' : 'false')} />
-          </div>
-        </div>
-      ) : tab === 'campaigns' ? (
-        <div className="space-y-3">
-          <p className="text-xs text-[var(--text-muted)] px-1">Controls how agents treat campaigns based on age, type, and confidence.</p>
-          <div className="bg-[var(--bg-card)] border border-[var(--border-primary)] rounded-xl divide-y divide-[var(--border-primary)]/30">
-            <GuardrailNumberField label="Learning Period" desc="New campaigns within this window are immune to pause or budget cuts." suffix="days" gKey="learning_period_days" value={getVal('learning_period_days')} saving={saving} onSave={saveGuardrail} />
-            <GuardrailToggleField label="Auto-Protect Non-Conquest Campaigns" desc="When ON, non-conquest campaigns can't be paused or budget-reduced by agents." gKey="protect_non_conquest" value={getVal('protect_non_conquest') === 'true'} saving={saving} onSave={(k, v) => saveGuardrail(k, v ? 'true' : 'false')} />
-            <GuardrailNumberField label="Min Confidence to Execute" desc="Recommendations below this threshold require human approval." suffix="%" gKey="confidence_threshold" value={getVal('confidence_threshold')} saving={saving} onSave={saveGuardrail} />
-          </div>
-        </div>
       ) : tab === 'regional' ? (
         <div className="space-y-3">
           <p className="text-xs text-[var(--text-muted)] px-1">Set which products to prioritize per region each quarter.</p>
@@ -378,8 +395,28 @@ export function GuardrailsPanel({ initialTab }: { initialTab?: GuardrailTab }) {
             </table>
           </div>
         </div>
-      ) : (
+      ) : tab === 'allocation' ? (
         <AllocationTab />
+      ) : (
+        /* Dynamic guardrail category tab */
+        <div className="space-y-3">
+          <p className="text-xs text-[var(--text-muted)] px-1">
+            {tab === 'budget' ? 'Controls how optimizer agents handle budget changes across campaigns.' :
+             tab === 'campaigns' ? 'Controls how agents treat campaigns based on age, type, and confidence.' :
+             `${(CATEGORY_LABELS[tab] || tab)} settings for agent behavior.`}
+          </p>
+          <div className="bg-[var(--bg-card)] border border-[var(--border-primary)] rounded-xl divide-y divide-[var(--border-primary)]/30">
+            {guardrails.filter(g => g.category === tab).map(g => {
+              if (isBoolean(g.value)) {
+                return <GuardrailToggleField key={g.key} label={g.label} gKey={g.key} value={g.value === 'true'} saving={saving} onSave={(k, v) => saveGuardrail(k, v ? 'true' : 'false')} />;
+              }
+              return <GuardrailNumberField key={g.key} label={g.label} suffix={detectSuffix(g.label)} gKey={g.key} value={g.value} saving={saving} onSave={saveGuardrail} />;
+            })}
+            {guardrails.filter(g => g.category === tab).length === 0 && (
+              <div className="px-5 py-4 text-sm text-[var(--text-muted)]">No guardrails configured for this category.</div>
+            )}
+          </div>
+        </div>
       )}
     </div>
   );

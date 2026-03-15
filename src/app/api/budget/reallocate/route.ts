@@ -18,7 +18,7 @@ export async function POST(req: NextRequest) {
     const currentYear = new Date().getFullYear();
     const currentMonth = new Date().getMonth() + 1;
 
-    const budgetPlans = await prisma.budgetPlan.findMany({
+    const budgetPlans = await prisma.budgetAllocation.findMany({
       where: { year: currentYear, month: currentMonth },
     });
 
@@ -44,8 +44,8 @@ export async function POST(req: NextRequest) {
     });
 
     const plannedByChannel: Record<string, number> = {};
-    budgetPlans.forEach((p) => {
-      plannedByChannel[p.channel] = (plannedByChannel[p.channel] || 0) + p.planned;
+    budgetPlans.forEach((p: any) => {
+      plannedByChannel[p.platform] = (plannedByChannel[p.platform] || 0) + p.planned;
     });
 
     const prompt = `You are a demand generation budget analyst. The user wants to reallocate their marketing budget.

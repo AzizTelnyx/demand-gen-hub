@@ -99,6 +99,7 @@ export async function GET(request: NextRequest) {
         oldValue: metadata.old_value,
         newValue: metadata.new_value,
         impactRaw: metadata,
+        autoApplied: (rec as any).autoApplied || false,
       });
     }
   }

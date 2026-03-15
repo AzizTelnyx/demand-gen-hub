@@ -1,0 +1,100 @@
+{
+  "timestamp": "2026-03-14T12:49:13.982177+00:00",
+  "runtime_seconds": 515.617166,
+  "dry_run": true,
+  "days_analyzed": 7,
+  "campaigns_processed": 44,
+  "search_terms_analyzed": 256,
+  "skipped": 9744,
+  "decisions": {
+    "blocked": 2,
+    "campaign_blocked": 2,
+    "review": 1,
+    "campaign_review": 0,
+    "monitored": 18,
+    "kept": 233
+  },
+  "blocks_applied": [
+    {
+      "search_term": "responsivevoice",
+      "campaign_id": 19905048363,
+      "campaign_name": "202304 MOFU Voice API SA AMER",
+      "spend": 26.63,
+      "clicks": 2,
+      "conversions": 0.0,
+      "relevancy_score": 80,
+      "intent_type": "WRONG_CATEGORY",
+      "confidence": 80,
+      "match_type": "EXACT",
+      "applied": false,
+      "resource_name": null,
+      "block_type": "account"
+    },
+    {
+      "search_term": "voice over generator",
+      "campaign_id": 23277159104,
+      "campaign_name": "202511 TOFU AI Agents TTS API Global",
+      "spend": 20.337143,
+      "clicks": 41,
+      "conversions": 0.0,
+      "relevancy_score": 80,
+      "intent_type": "CONSUMER",
+      "confidence": 80,
+      "match_type": "PHRASE",
+      "applied": false,
+      "resource_name": null,
+      "block_type": "account"
+    },
+    {
+      "search_term": "cosyvoice2",
+      "campaign_id": 19905048363,
+      "campaign_name": "202304 MOFU Voice API SA AMER",
+      "campaign_product": "voice_api",
+      "correct_campaign_product": "ai_agent",
+      "spend": 24.63,
+      "clicks": 2,
+      "conversions": 0.0,
+      "relevancy_score": 85,
+      "intent_type": "WRONG_CAMPAIGN",
+      "confidence": 85,
+      "match_type": "EXACT",
+      "applied": false,
+      "resource_name": null,
+      "block_type": "campaign"
+    },
+    {
+      "search_term": "elven labs",
+      "campaign_id": 23584242475,
+      "campaign_name": "202602 TOFU AI Agent Vapi SA AMER",
+      "campaign_product": "ai_agent",
+      "correct_campaign_product": "ai_agent (ElevenLabs campaign)",
+      "spend": 9.55,
+      "clicks": 4,
+      "conversions": 0.0,
+      "relevancy_score": 80,
+      "intent_type": "WRONG_CAMPAIGN",
+      "confidence": 80,
+      "match_type": "EXACT",
+      "applied": false,
+      "resource_name": null,
+      "block_type": "campaign"
+    }
+  ],
+  "review_items": [
+    {
+      "search_term": "crazy tel",
+      "campaign_id": 22216728203,
+      "campaign_name": "202502 TOFU SIP SA APAC",
+      "spend": 56.22,
+      "confidence": 72,
+      "reason": "CrazyTel appears to be consumer prepaid telecom/calling app brand - not B2B SIP intent. $56 for 1 click, 0 conversions",
+      "review_type": "irrelevant"
+    }
+  ],
+  "estimated_savings": {
+    "weekly_waste": 103.18714299999999,
+    "monthly_waste": 443.70471489999994,
+    "weekly_campaign_bleed": 34.18,
+    "monthly_campaign_bleed": 146.974
+  }
+}

@@ -147,22 +147,6 @@ model SyncState {
   updatedAt    DateTime  @updatedAt
 }
 
-model BudgetPlan {
-  id          String   @id @default(cuid())
-  year        Int
-  month       Int
-  channel     String
-  region      String?
-  funnelStage String?
-  planned     Float
-  actual      Float    @default(0)
-  notes       String?
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-
-  @@unique([year, month, channel, region, funnelStage])
-}
-
 model ABMAccount {
   id              String          @id @default(cuid())
   company         String
@@ -241,10 +225,14 @@ model CampaignChange {
   actor        String?
   timestamp    DateTime @default(now())
   createdAt    DateTime @default(now())
+  rollbackData Json?
+  agentRunId   String?
+  autoExecuted Boolean? @default(false)
 
   @@index([campaignName])
   @@index([platform])
   @@index([timestamp])
+  @@index([campaignId, timestamp], map: "idx_campaign_change_daily")
 }
 
 model SFCampaign {
@@ -293,6 +281,7 @@ model SFOpportunity {
   @@index([oppType])
 }
 
+/// This model contains an expression index which requires additional setup for migrations. Visit https://pris.ly/d/expression-indexes for more info.
 model AdImpression {
   id           String    @id @default(cuid())
   domain       String
@@ -301,15 +290,14 @@ model AdImpression {
   impressions  Int       @default(0)
   clicks       Int       @default(0)
   cost         Float     @default(0)
-  conversions  Int       @default(0)
   dateFrom     DateTime?
   dateTo       DateTime?
   lastSyncedAt DateTime?
   createdAt    DateTime  @default(now())
   updatedAt    DateTime  @updatedAt
   platform     String?
+  conversions  Int?      @default(0)
 
-  @@unique([domain, campaignId])
   @@index([domain])
 }
 
@@ -346,8 +334,8 @@ model Agent {
   level       Int        @default(0)
   enabled     Boolean    @default(true)
   config      String?
-  platform    String?
   createdAt   DateTime   @default(now())
+  platform    String?
   runs        AgentRun[]
 }
 
@@ -371,19 +359,25 @@ model AgentRun {
 }
 
 model Recommendation {
-  id         String    @id @default(cuid())
-  agentRunId String
-  type       String
-  severity   String    @default("medium")
-  target     String?
-  targetId   String?
-  action     String
-  rationale  String
-  impact     String?
-  status     String    @default("pending")
-  appliedAt  DateTime?
-  createdAt  DateTime  @default(now())
-  agentRun   AgentRun  @relation(fields: [agentRunId], references: [id], onDelete: Cascade)
+  id           String    @id @default(cuid())
+  agentRunId   String
+  type         String
+  severity     String    @default("medium")
+  target       String?
+  targetId     String?
+  action       String
+  rationale    String
+  impact       String?
+  status       String    @default("pending")
+  appliedAt    DateTime?
+  createdAt    DateTime  @default(now())
+  confidence   Int?
+  platform     String?
+  campaignId   String?
+  campaignName String?
+  callbackData String?
+  autoApplied  Boolean?  @default(false)
+  agentRun     AgentRun  @relation(fields: [agentRunId], references: [id], onDelete: Cascade)
 }
 
 model Workflow {
@@ -586,12 +580,12 @@ model CampaignAudience {
 }
 
 model BudgetAllocation {
-  id        String   @id @default(uuid())
+  id        String    @id @default(dbgenerated("(gen_random_uuid())::text"))
   platform  String
   year      Int
   month     Int
-  planned   Float    @default(0)
-  actual    Float?   @default(0)
+  planned   Float     @default(0)
+  actual    Float?    @default(0)
   notes     String?
   updatedAt DateTime? @default(now())
   updatedBy String?

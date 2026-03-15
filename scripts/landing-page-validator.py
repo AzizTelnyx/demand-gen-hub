@@ -200,73 +200,61 @@ class LandingPageValidator(BaseAgent):
             print(f"    Error: {e}")
 
     def _check_stackadapt(self):
-        """Check StackAdapt creative URLs — max 1 per campaign."""
+        """Check StackAdapt creative URLs — use nativeAds with clickUri."""
         try:
             conn = get_connector("stackadapt")
             if not conn._token:
                 conn.load_credentials()
 
-            # Get active campaigns first
+            # Get active creatives with their URLs
             query = """
-            query {
-                campaigns(filter: { advertiserId: 93053, status: { eq: "active" } }, first: 50) {
-                    nodes { id name }
+            {
+                nativeAds(filterBy: { advertiserIds: [93053] }, first: 200) {
+                    nodes { id name clickUri campaignId }
                 }
             }
             """
-            data = conn._gql(query)
-            campaigns = data.get('campaigns', {}).get('nodes', [])
+            data = conn._gql(query, timeout=30)
+            creatives = data.get("data", {}).get("nativeAds", {}).get("nodes", [])
+
+            # Get active campaign IDs
+            active_camps = conn.fetch_campaigns(active_only=True)
+            active_ids = {c.external_id for c in active_camps}
+            active_names = {c.external_id: c.name for c in active_camps}
 
             checked = 0
-            for camp in campaigns:
-                camp_id = str(camp.get('id', ''))
-                camp_name = camp.get('name', 'Unknown')
-
-                if camp_id in self.seen_campaigns:
+            seen_urls = set()
+            for creative in creatives:
+                camp_id = str(creative.get("campaignId", ""))
+                if camp_id not in active_ids:
                     continue
-                self.seen_campaigns.add(f"sa_{camp_id}")
 
+                camp_name = active_names.get(camp_id, "Unknown")
                 if self.should_skip_campaign(camp_name):
                     continue
 
-                # Get one creative for this campaign
-                cquery = f"""
-                query {{
-                    nativeAds(filter: {{ advertiserId: 93053, campaignId: {camp_id} }}, first: 1) {{
-                        nodes {{ id name landingPageUrl }}
-                    }}
-                }}
-                """
-                try:
-                    cdata = conn._gql(cquery)
-                    creatives = cdata.get('nativeAds', {}).get('nodes', [])
-                    if not creatives:
-                        continue
+                url = creative.get("clickUri", "")
+                if not url or url in seen_urls:
+                    continue
+                seen_urls.add(url)
 
-                    creative = creatives[0]
-                    url = creative.get('landingPageUrl', '')
-                    if not url:
-                        continue
+                result = self._check_url(url)
+                has_http_error = any('HTTP 4' in i or 'HTTP 5' in i or 'Error:' in i for i in result['issues'])
 
-                    result = self._check_url(url)
-                    has_http_error = any('HTTP 4' in i or 'HTTP 5' in i or 'Error:' in i for i in result['issues'])
+                if has_http_error:
+                    self.url_results.append({
+                        'platform': 'stackadapt',
+                        'campaign_id': camp_id,
+                        'campaign_name': camp_name,
+                        'url': url,
+                        'issues': result['issues'],
+                        'status_code': result['status_code'],
+                        'rationale': f'StackAdapt creative returned HTTP {result["status_code"]}',
+                    })
 
-                    if has_http_error:
-                        self.url_results.append({
-                            'platform': 'stackadapt',
-                            'campaign_id': camp_id,
-                            'campaign_name': camp_name,
-                            'url': url,
-                            'issues': result['issues'],
-                            'status_code': result['status_code'],
-                            'rationale': f'StackAdapt creative returned HTTP {result["status_code"]}',
-                        })
+                checked += 1
 
-                    checked += 1
-                except Exception:
-                    pass
-
-            print(f"    {checked} campaigns checked, {len([r for r in self.url_results if r['platform']=='stackadapt'])} broken URLs")
+            print(f"    {checked} URLs checked, {len([r for r in self.url_results if r['platform']=='stackadapt'])} broken URLs")
 
         except Exception as e:
             print(f"    Error: {e}")

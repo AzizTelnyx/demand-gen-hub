@@ -70,30 +70,55 @@ def validate_plan(plan):
         return False, errors
     return True, []
 
+def find_existing_budget(client, customer_id, budget_name):
+    """Find existing budget by name."""
+    ga_service = client.get_service("GoogleAdsService")
+    query = f'''
+        SELECT campaign_budget.resource_name, campaign_budget.name
+        FROM campaign_budget
+        WHERE campaign_budget.name = "{budget_name}"
+    '''
+    try:
+        response = ga_service.search(customer_id=str(customer_id), query=query)
+        for row in response:
+            return row.campaign_budget.resource_name
+    except:
+        pass
+    return None
+
 def create_campaign(client, customer_id, plan):
     """Create campaign, ad groups, keywords, and RSAs."""
     results = {"campaignId": None, "adGroups": [], "errors": []}
     
     campaign_data = plan["campaign"]
+    budget_name = f"{campaign_data['name']} Budget"
     
-    # ── 1. Create Campaign Budget ──────────────────────────────
-    campaign_budget_service = client.get_service("CampaignBudgetService")
-    budget_op = client.get_type("CampaignBudgetOperation")
-    budget = budget_op.create
-    budget.name = f"{campaign_data['name']} Budget"
-    budget.amount_micros = int(campaign_data.get("dailyBudget", 50) * 1_000_000)
-    budget.delivery_method = client.enums.BudgetDeliveryMethodEnum.STANDARD
+    # ── 1. Find or Create Campaign Budget ──────────────────────
+    # First check if budget already exists
+    existing_budget = find_existing_budget(client, customer_id, budget_name)
     
-    try:
-        budget_response = campaign_budget_service.mutate_campaign_budgets(
-            customer_id=str(customer_id),
-            operations=[budget_op],
-        )
-        budget_resource = budget_response.results[0].resource_name
-    except Exception as e:
-        results["errors"].append(f"Budget creation failed: {e}")
-        print(json.dumps(results))
-        sys.exit(1)
+    if existing_budget:
+        budget_resource = existing_budget
+        results["budgetReused"] = True
+    else:
+        campaign_budget_service = client.get_service("CampaignBudgetService")
+        budget_op = client.get_type("CampaignBudgetOperation")
+        budget = budget_op.create
+        budget.name = budget_name
+        budget.amount_micros = int(campaign_data.get("dailyBudget", 50) * 1_000_000)
+        budget.delivery_method = client.enums.BudgetDeliveryMethodEnum.STANDARD
+        
+        try:
+            budget_response = campaign_budget_service.mutate_campaign_budgets(
+                customer_id=str(customer_id),
+                operations=[budget_op],
+            )
+            budget_resource = budget_response.results[0].resource_name
+            results["budgetReused"] = False
+        except Exception as e:
+            results["errors"].append(f"Budget creation failed: {e}")
+            print(json.dumps(results))
+            sys.exit(1)
     
     # ── 2. Create Campaign ─────────────────────────────────────
     campaign_service = client.get_service("CampaignService")
@@ -118,9 +143,11 @@ def create_campaign(client, customer_id, plan):
     campaign.geo_target_type_setting.positive_geo_target_type = (
         client.enums.PositiveGeoTargetTypeEnum.PRESENCE
     )
-    campaign.geo_target_type_setting.negative_geo_target_type = (
-        client.enums.NegativeGeoTargetTypeEnum.PRESENCE_OR_INTEREST
-    )
+    # Note: negative_geo_target_type removed - not compatible with Search campaigns
+    
+    # EU political advertising compliance (required field, enum value 2 = NOT_POLITICAL)
+    # Values: 0=UNSPECIFIED, 1=UNKNOWN, 2=NOT_POLITICAL, 3=POLITICAL
+    campaign.contains_eu_political_advertising = 2  # NOT_POLITICAL
     
     try:
         campaign_response = campaign_service.mutate_campaigns(

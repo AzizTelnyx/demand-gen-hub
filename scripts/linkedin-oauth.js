@@ -8,9 +8,9 @@ const os = require('os');
 const CREDS_PATH = path.join(os.homedir(), '.config/linkedin-ads/credentials.json');
 const creds = JSON.parse(fs.readFileSync(CREDS_PATH, 'utf-8'));
 
-const PORT = 9876;
+const PORT = 9877;
 const REDIRECT_URI = `http://localhost:${PORT}/callback`;
-const SCOPES = 'r_ads,r_ads_reporting,r_organization_social';
+const SCOPES = 'r_ads,r_ads_reporting,r_organization_social,r_organization';
 
 // Step 1: Print auth URL
 const authUrl = `https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=${creds.client_id}&redirect_uri=${encodeURIComponent(REDIRECT_URI)}&scope=${encodeURIComponent(SCOPES)}`;

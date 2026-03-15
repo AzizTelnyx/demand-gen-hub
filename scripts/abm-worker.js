@@ -43,7 +43,10 @@ const PERPLEXICA_EMBED_MODEL = process.env.PERPLEXICA_EMBED_MODEL || "Xenova/all
 const SCORE = { CLEARBIT: 40, DNS: 20, PERPLEXICA: 20, LINKEDIN: 10, AI_BASELINE: 10 };
 const THRESHOLD = { VALIDATED: 60, UNVERIFIED: 30 };
 
+const TG_ENABLED = process.env.TG_NOTIFICATIONS !== "false";
+
 async function notifyTelegram(text) {
+  if (!TG_ENABLED) return;
   try {
     await fetch(`https://api.telegram.org/bot${TG_BOT_TOKEN}/sendMessage`, {
       method: "POST",

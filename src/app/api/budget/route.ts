@@ -47,13 +47,11 @@ export async function GET(req: NextRequest) {
         LIMIT 20
       `, toDate, fromDate),
 
-      // Budget plans
-      prisma.budgetPlan.findMany({
+      // Budget allocations (replaces removed BudgetPlan table)
+      prisma.budgetAllocation.findMany({
         where: {
-          OR: [
-            { year: fromDate.getFullYear(), month: { gte: fromDate.getMonth() + 1 } },
-            { year: toDate.getFullYear(), month: { lte: toDate.getMonth() + 1 } },
-          ],
+          year: fromDate.getFullYear(),
+          month: { gte: fromDate.getMonth() + 1, lte: toDate.getMonth() + 1 },
         },
         orderBy: [{ year: "asc" }, { month: "asc" }],
       }),
@@ -108,7 +106,7 @@ export async function GET(req: NextRequest) {
     const totalConversions = impByPlatform.reduce((s, p) => s + (p.conversions || 0), 0);
     const daysInRange = Math.max(1, Math.ceil((toDate.getTime() - fromDate.getTime()) / 86400000));
     const dailyRate = totalSpend / daysInRange;
-    const totalPlanned = budgetPlans.reduce((s, p) => s + p.planned, 0);
+    const totalPlanned = budgetPlans.reduce((s: number, p: any) => s + p.planned, 0);
 
     return NextResponse.json({
       dateFrom: from,
@@ -170,47 +168,4 @@ export async function GET(req: NextRequest) {
   }
 }
 
-// POST: Create or update budget plan (keep existing)
-export async function POST(req: NextRequest) {
-  try {
-    const body = await req.json();
-    const { year, month, channel, region, funnelStage, planned, notes } = body;
-
-    const plan = await prisma.budgetPlan.upsert({
-      where: {
-        year_month_channel_region_funnelStage: {
-          year,
-          month,
-          channel,
-          region: region || null,
-          funnelStage: funnelStage || null,
-        },
-      },
-      update: { planned, notes },
-      create: { year, month, channel, region, funnelStage, planned, notes },
-    });
-
-    return NextResponse.json({ ok: true, plan });
-  } catch (error) {
-    console.error("Error saving budget plan:", error);
-    return NextResponse.json({ error: "Failed to save budget plan" }, { status: 500 });
-  }
-}
-
-// DELETE: Remove a budget plan (keep existing)
-export async function DELETE(req: NextRequest) {
-  const { searchParams } = new URL(req.url);
-  const id = searchParams.get("id");
-
-  if (!id) {
-    return NextResponse.json({ error: "Missing plan ID" }, { status: 400 });
-  }
-
-  try {
-    await prisma.budgetPlan.delete({ where: { id } });
-    return NextResponse.json({ ok: true });
-  } catch (error) {
-    console.error("Error deleting budget plan:", error);
-    return NextResponse.json({ error: "Failed to delete budget plan" }, { status: 500 });
-  }
-}
+// POST/DELETE for BudgetPlan removed 2026-03-11 — use /api/budget-allocations instead

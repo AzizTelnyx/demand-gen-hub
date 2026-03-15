@@ -1,0 +1,21 @@
+{
+  "timestamp": "2026-03-13T09:00:05.176008+00:00",
+  "runtime_seconds": 11.447301,
+  "dry_run": true,
+  "days_analyzed": 7,
+  "campaigns_processed": 38,
+  "search_terms_analyzed": 95,
+  "skipped": 9905,
+  "decisions": {
+    "blocked": 0,
+    "review": 0,
+    "monitored": 29,
+    "kept": 66
+  },
+  "blocks_applied": [],
+  "review_items": [],
+  "estimated_savings": {
+    "weekly": 0.0,
+    "monthly": 0.0
+  }
+}

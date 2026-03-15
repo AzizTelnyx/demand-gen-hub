@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
+import { getActionType } from "@/lib/recommendation-types";
 
 /**
  * GET /api/agents/recommendations?status=pending&type=add-negative
@@ -54,6 +55,7 @@ export async function GET(request: NextRequest) {
       appliedAt: r.appliedAt,
       createdAt: r.createdAt,
       metadata,
+      actionType: getActionType(r.type),
       agentName: r.agentRun?.agent?.name || "Unknown",
       agentSlug: r.agentRun?.agent?.slug || "",
       runId: r.agentRun?.id,

@@ -47,20 +47,17 @@ class StackAdaptConnector(PlatformConnector):
         with urllib.request.urlopen(req, timeout=timeout) as resp:
             return json.loads(resp.read())
 
-    # ─── Fixed Frequency Cap Management ─────────────────────────────
+    # ─── Frequency Cap Management ──────────────────────────────────
 
     def get_frequency_cap(self, campaign_group_id: str) -> dict:
-        """Get frequency cap from campaign delivery settings."""
+        """Get frequency cap from campaign group settings."""
         if not self._token:
             self.load_credentials()
-        # Query campaign via lookup to get freq cap settings
         query = """
         {
-          campaigns(filterBy: { campaignGroupIds: [%s] }) {
+          campaigns(filterBy: { campaignGroupIds: [%s] }, first: 1) {
             nodes {
-              id
-              name
-              campaignGroup { id frequencyCap { amount period } }
+              campaignGroup { id name freqCapLimit freqCapExpiry }
             }
           }
         }
@@ -70,10 +67,9 @@ class StackAdaptConnector(PlatformConnector):
             nodes = data.get("data", {}).get("campaigns", {}).get("nodes", [])
             if nodes:
                 cg = nodes[0].get("campaignGroup") or {}
-                fc = cg.get("frequencyCap") or {}
                 return {
-                    "cap": fc.get("amount"),
-                    "period": fc.get("period"),
+                    "cap": cg.get("freqCapLimit"),
+                    "expiry_hours": cg.get("freqCapExpiry"),
                     "campaign_group_id": cg.get("id")
                 }
             return {}
@@ -81,20 +77,58 @@ class StackAdaptConnector(PlatformConnector):
             print(f"  StackAdapt get_frequency_cap error: {e}")
             return {}
 
-    def update_frequency_cap(self, campaign_group_id: str, cap: int, period: str) -> WriteResult:
-        """Update frequency cap for a campaign group."""
+    def get_reach_frequency(self, campaign_group_id: str, start_time: str, end_time: str, period: int = 7) -> list[dict]:
+        """Get reach/frequency stats for a campaign group.
+        start_time/end_time: ISO 8601 timestamps. period: days per bucket."""
+        if not self._token:
+            self.load_credentials()
+        query = """
+        {
+          reachFrequency(
+            filterBy: {
+              campaignGroupIds: [%s]
+              startTime: "%s"
+              endTime: "%s"
+              period: %d
+            }
+            first: 50
+          ) {
+            nodes { frequency impressions uniqueImpressions channel }
+          }
+        }
+        """ % (campaign_group_id, start_time, end_time, period)
+        try:
+            data = self._gql(query, timeout=30)
+            nodes = data.get("data", {}).get("reachFrequency", {}).get("nodes", [])
+            return [
+                {
+                    "frequency": n.get("frequency"),
+                    "impressions": n.get("impressions"),
+                    "unique_impressions": n.get("uniqueImpressions"),
+                    "channel": n.get("channel"),
+                }
+                for n in nodes
+            ]
+        except Exception as e:
+            print(f"  StackAdapt reach_frequency error: {e}")
+            return []
+
+    def update_frequency_cap(self, campaign_group_id: str, cap: int, expiry_hours: int = 24) -> WriteResult:
+        """Update frequency cap for a campaign group.
+        cap: max impressions per user. expiry_hours: reset window in hours."""
         if not self._token:
             self.load_credentials()
         mutation = """
         mutation {
           updateCampaignGroup(input: {
             id: %s
-            frequencyCap: { amount: %d, period: %s }
+            freqCapLimit: %d
+            freqCapExpiry: %d
           }) {
-            campaignGroup { id frequencyCap { amount period } }
+            campaignGroup { id freqCapLimit freqCapExpiry }
           }
         }
-        """ % (campaign_group_id, cap, period)
+        """ % (campaign_group_id, cap, expiry_hours)
         try:
             data = self._gql(mutation, timeout=30)
             errors = data.get("errors", [])
@@ -104,70 +138,55 @@ class StackAdaptConnector(PlatformConnector):
         except Exception as e:
             return WriteResult(success=False, error=str(e))
 
-    # ─── Fixed Domain Report ───────────────────────────────────────
+    # ─── Domain Management ───────────────────────────────────────
 
-    def get_domain_report(self, campaign_group_id: str, date_from: str, date_to: str, limit: int = 500) -> list[dict]:
-        """Get domain-level delivery report using campaignGroup filter."""
+    def get_domain_lists(self, campaign_group_id: str) -> dict:
+        """Get domain inclusion and exclusion lists for a campaign group."""
         if not self._token:
             self.load_credentials()
         query = """
         {
-          campaignDelivery(
-            filterBy: { campaignGroupIds: [%s] }
-            date: { from: "%s", to: "%s" }
-            granularity: TOTAL
-            dataType: TABLE
-            adBreakdowns: [DOMAIN]
-          ) {
-            ... on CampaignDeliveryOutcome {
-              records(first: %d) { nodes {
-                breakdown { domain }
-                metrics { impressionsBigint clicksBigint cost ctr conversionsBigint viewability }
-              } }
+          campaigns(filterBy: { campaignGroupIds: [%s] }, first: 1) {
+            nodes {
+              campaignGroup { id name domains domainExclusions }
             }
           }
         }
-        """ % (campaign_group_id, date_from, date_to, limit)
+        """ % campaign_group_id
         try:
-            data = self._gql(query, timeout=60)
-            nodes = data.get("data", {}).get("campaignDelivery", {}).get("records", {}).get("nodes", [])
-            results = []
-            for n in nodes:
-                domain = (n.get("breakdown") or {}).get("domain", "")
-                m = n.get("metrics", {})
-                results.append({
-                    "domain": domain,
-                    "impressions": int(m.get("impressionsBigint", 0) or 0),
-                    "clicks": int(m.get("clicksBigint", 0) or 0),
-                    "spend": float(m.get("cost", 0) or 0),
-                    "ctr": float(m.get("ctr", 0) or 0),
-                    "conversions": int(m.get("conversionsBigint", 0) or 0),
-                    "viewability": float(m.get("viewability", 0) or 0),
-                })
-            return results
+            data = self._gql(query, timeout=30)
+            nodes = data.get("data", {}).get("campaigns", {}).get("nodes", [])
+            if nodes:
+                cg = nodes[0].get("campaignGroup") or {}
+                return {
+                    "campaign_group_id": cg.get("id"),
+                    "domains": cg.get("domains", []),
+                    "domain_exclusions": cg.get("domainExclusions", []),
+                }
+            return {"domains": [], "domain_exclusions": []}
         except Exception as e:
-            print(f"  StackAdapt domain report error: {e}")
-            return []
+            print(f"  StackAdapt get_domain_lists error: {e}")
+            return {"domains": [], "domain_exclusions": []}
 
-    # ─── Fixed Creative Metrics ────────────────────────────────────
+    # ─── Creative Metrics ────────────────────────────────────────
 
     def get_creative_metrics(self, campaign_group_id: str, date_from: str, date_to: str, limit: int = 500) -> list[dict]:
-        """Get per-creative metrics using nativeAd breakdown."""
+        """Get per-ad metrics using adDelivery query."""
         if not self._token:
             self.load_credentials()
         query = """
         {
-          campaignDelivery(
+          adDelivery(
             filterBy: { campaignGroupIds: [%s] }
             date: { from: "%s", to: "%s" }
             granularity: TOTAL
             dataType: TABLE
-            adBreakdowns: [NATIVE_AD]
           ) {
-            ... on CampaignDeliveryOutcome {
+            ... on AdDeliveryOutcome {
               records(first: %d) { nodes {
-                breakdown { nativeAd { id name headline } }
-                metrics { impressionsBigint clicksBigint cost ctr conversionsBigint }
+                ad { id name }
+                campaign { id name }
+                metrics { impressionsBigint clicksBigint cost ctr conversionsBigint viewedMeasuredImpressionsBigint }
               } }
             }
           }
@@ -175,20 +194,23 @@ class StackAdaptConnector(PlatformConnector):
         """ % (campaign_group_id, date_from, date_to, limit)
         try:
             data = self._gql(query, timeout=60)
-            nodes = data.get("data", {}).get("campaignDelivery", {}).get("records", {}).get("nodes", [])
+            nodes = data.get("data", {}).get("adDelivery", {}).get("records", {}).get("nodes", [])
             results = []
             for n in nodes:
-                ad = (n.get("breakdown") or {}).get("nativeAd") or {}
+                ad = n.get("ad") or {}
+                campaign = n.get("campaign") or {}
                 m = n.get("metrics", {})
                 results.append({
                     "creative_id": str(ad.get("id", "")),
                     "name": ad.get("name", ""),
-                    "headline": ad.get("headline", ""),
+                    "campaign_id": str(campaign.get("id", "")),
+                    "campaign_name": campaign.get("name", ""),
                     "impressions": int(m.get("impressionsBigint", 0) or 0),
                     "clicks": int(m.get("clicksBigint", 0) or 0),
                     "spend": float(m.get("cost", 0) or 0),
                     "ctr": float(m.get("ctr", 0) or 0),
                     "conversions": int(m.get("conversionsBigint", 0) or 0),
+                    "viewable_impressions": int(m.get("viewedMeasuredImpressionsBigint", 0) or 0),
                 })
             return results
         except Exception as e:
@@ -517,18 +539,22 @@ class StackAdaptConnector(PlatformConnector):
             return WriteResult(success=False, error=str(e))
 
     def exclude_domains(self, campaign_group_id: str, domains: list[str]) -> WriteResult:
-        """Add domains to campaign group exclusion list."""
+        """Add domains to campaign group exclusion list.
+        NOTE: This REPLACES the entire exclusion list. Caller must merge with existing."""
         if not self._token:
             self.load_credentials()
-        domain_list = ", ".join(f'"{d}"' for d in domains)
+        # First fetch current exclusions to append
+        current = self.get_domain_lists(campaign_group_id)
+        existing = set(current.get("domain_exclusions", []))
+        merged = sorted(existing | set(domains))
+        domain_list = ", ".join(f'"{d}"' for d in merged)
         mutation = """
         mutation {
           updateCampaignGroup(input: {
             id: %s
-            domainBlacklist: [%s]
-            domainBlacklistAppend: true
+            domainExclusions: [%s]
           }) {
-            campaignGroup { id name }
+            campaignGroup { id name domainExclusions }
           }
         }
         """ % (campaign_group_id, domain_list)

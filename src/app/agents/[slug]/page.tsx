@@ -7,7 +7,9 @@ import {
   ArrowLeft, Bot, Clock, CheckCircle2, XCircle, Loader2,
   ChevronDown, ChevronRight, ThumbsUp, ThumbsDown,
   Activity, Settings, FileText, Eye, Shield, Zap, AlertTriangle,
+  Play, Save, Code, Workflow, BookOpen, Check, X, ArrowRight,
 } from 'lucide-react';
+import { getActionType, getBeforeAfter } from '@/lib/recommendation-types';
 import { StatusBadge, SeverityBadge, Toast, timeAgo } from '@/components/agents/AgentFleet';
 
 const PLATFORM_BADGES: Record<string, { label: string; cls: string }> = {
@@ -305,7 +307,82 @@ function ConfigTab({ agent, slug, onUpdate, onToast }: {
     } catch { return DEFAULT_CONFIG; }
   });
   const [saving, setSaving] = useState(false);
-  const [section, setSection] = useState<'general' | 'thresholds' | 'notifications'>('general');
+  const [section, setSection] = useState<'general' | 'thresholds' | 'notifications' | 'soul' | 'skills' | 'runnow'>('general');
+
+  // SOUL.md state
+  const [soulContent, setSoulContent] = useState('');
+  const [soulLoading, setSoulLoading] = useState(false);
+  const [soulDirty, setSoulDirty] = useState(false);
+
+  // Skills state
+  const [skills, setSkills] = useState<any[]>([]);
+  const [workflows, setWorkflows] = useState<any[]>([]);
+  const [skillsLoaded, setSkillsLoaded] = useState(false);
+
+  // Run now state
+  const [runMessage, setRunMessage] = useState('');
+  const [runStatus, setRunStatus] = useState<string | null>(null);
+  const [running, setRunning] = useState(false);
+
+  // Load SOUL.md when soul tab selected
+  useEffect(() => {
+    if (section === 'soul' && !soulLoading && !soulContent) {
+      setSoulLoading(true);
+      fetch(`/api/agents/${slug}/soul`).then(r => r.json()).then(d => {
+        setSoulContent(d.content || '');
+        setSoulLoading(false);
+      }).catch(() => setSoulLoading(false));
+    }
+  }, [section, slug, soulLoading, soulContent]);
+
+  // Load skills/workflows when skills tab selected
+  useEffect(() => {
+    if (section === 'skills' && !skillsLoaded) {
+      setSkillsLoaded(true);
+      Promise.all([
+        fetch(`/api/agents/${slug}/skills`).then(r => r.json()),
+        fetch(`/api/agents/${slug}/workflows`).then(r => r.json()),
+      ]).then(([s, w]) => {
+        setSkills(s.skills || []);
+        setWorkflows(w.workflows || []);
+      }).catch(() => {});
+    }
+  }, [section, slug, skillsLoaded]);
+
+  const saveSoul = async () => {
+    setSaving(true);
+    try {
+      const res = await fetch(`/api/agents/${slug}/soul`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ content: soulContent }),
+      });
+      if (res.ok) {
+        setSoulDirty(false);
+        onToast({ message: 'SOUL.md saved', type: 'success' });
+      } else {
+        onToast({ message: 'Failed to save SOUL.md', type: 'error' });
+      }
+    } catch { onToast({ message: 'Failed to save SOUL.md', type: 'error' }); }
+    setSaving(false);
+  };
+
+  const triggerRun = async () => {
+    if (!runMessage.trim()) return;
+    setRunning(true);
+    setRunStatus(null);
+    try {
+      const res = await fetch(`/api/agents/${slug}/run`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message: runMessage }),
+      });
+      const data = await res.json();
+      setRunStatus(res.ok ? `✓ Triggered: ${JSON.stringify(data).slice(0, 200)}` : `✗ Error: ${data.error || res.status}`);
+      if (res.ok) setRunMessage('');
+    } catch (e: any) { setRunStatus(`✗ Error: ${e.message}`); }
+    setRunning(false);
+  };
 
   const updateConfig = (key: keyof AgentConfig, value: any) => {
     setConfig(prev => ({ ...prev, [key]: value }));
@@ -332,8 +409,11 @@ function ConfigTab({ agent, slug, onUpdate, onToast }: {
 
   const sections: { key: typeof section; label: string; icon: any }[] = [
     { key: 'general', label: 'General', icon: Settings },
-    { key: 'thresholds', label: 'Guardrails & Thresholds', icon: Shield },
+    { key: 'thresholds', label: 'Guardrails', icon: Shield },
     { key: 'notifications', label: 'Notifications', icon: Zap },
+    { key: 'soul', label: 'SOUL.md', icon: BookOpen },
+    { key: 'skills', label: 'Skills & Workflows', icon: Code },
+    { key: 'runnow', label: 'Run Now', icon: Play },
   ];
 
   return (
@@ -396,116 +476,7 @@ function ConfigTab({ agent, slug, onUpdate, onToast }: {
 
       {/* Thresholds Section */}
       {section === 'thresholds' && (
-        <div className="space-y-4">
-          <div className="bg-[var(--bg-card)] border border-[var(--border-primary)] rounded-xl divide-y divide-[var(--border-primary)]/30">
-            {/* Confidence threshold */}
-            <div className="px-5 py-4">
-              <div className="flex items-center justify-between gap-4">
-                <div className="flex-1">
-                  <p className="text-sm font-medium text-[var(--text-primary)]">Confidence Threshold</p>
-                  <p className="text-[11px] text-[var(--text-muted)] mt-0.5">
-                    Minimum confidence score to take action. Below this → recommend only.
-                  </p>
-                </div>
-                <div className="flex items-center gap-2 shrink-0">
-                  <input type="number" min={0} max={100} value={config.confidenceThreshold}
-                    onChange={e => updateConfig('confidenceThreshold', parseInt(e.target.value) || 80)}
-                    className="w-16 bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-1.5 text-sm text-[var(--text-primary)] text-right focus:outline-none focus:border-[var(--accent)]" />
-                  <span className="text-xs text-[var(--text-muted)]">%</span>
-                </div>
-              </div>
-              {/* Visual confidence bar */}
-              <div className="mt-3 flex items-center gap-2">
-                <div className="flex-1 h-2 rounded-full bg-[var(--bg-primary)] overflow-hidden">
-                  <div className="h-full rounded-full transition-all"
-                    style={{
-                      width: `${config.confidenceThreshold}%`,
-                      backgroundColor: config.confidenceThreshold >= 80 ? 'rgb(52,211,153)' : config.confidenceThreshold >= 60 ? 'rgb(251,191,36)' : 'rgb(248,113,113)',
-                    }} />
-                </div>
-                <span className={`text-[10px] font-medium ${
-                  config.confidenceThreshold >= 80 ? 'text-emerald-400' : config.confidenceThreshold >= 60 ? 'text-amber-400' : 'text-red-400'
-                }`}>
-                  {config.confidenceThreshold >= 80 ? 'Strict' : config.confidenceThreshold >= 60 ? 'Moderate' : 'Aggressive'}
-                </span>
-              </div>
-            </div>
-
-            {/* Max actions per run */}
-            <div className="px-5 py-4">
-              <div className="flex items-center justify-between gap-4">
-                <div className="flex-1">
-                  <p className="text-sm font-medium text-[var(--text-primary)]">Max Actions Per Run</p>
-                  <p className="text-[11px] text-[var(--text-muted)] mt-0.5">
-                    Maximum number of changes this agent can make in a single run
-                  </p>
-                </div>
-                <input type="number" min={1} max={500} value={config.maxActionsPerRun}
-                  onChange={e => updateConfig('maxActionsPerRun', parseInt(e.target.value) || 50)}
-                  className="w-20 bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-1.5 text-sm text-[var(--text-primary)] text-right focus:outline-none focus:border-[var(--accent)]" />
-              </div>
-            </div>
-
-            {/* Max budget change */}
-            <div className="px-5 py-4">
-              <div className="flex items-center justify-between gap-4">
-                <div className="flex-1">
-                  <p className="text-sm font-medium text-[var(--text-primary)]">Max Budget Change</p>
-                  <p className="text-[11px] text-[var(--text-muted)] mt-0.5">
-                    Maximum dollar amount this agent can adjust per campaign without approval
-                  </p>
-                </div>
-                <div className="flex items-center gap-2 shrink-0">
-                  <span className="text-xs text-[var(--text-muted)]">$</span>
-                  <input type="number" min={0} max={10000} value={config.maxBudgetChange}
-                    onChange={e => updateConfig('maxBudgetChange', parseInt(e.target.value) || 500)}
-                    className="w-24 bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-1.5 text-sm text-[var(--text-primary)] text-right focus:outline-none focus:border-[var(--accent)]" />
-                </div>
-              </div>
-            </div>
-
-            {/* Learning period */}
-            <div className="px-5 py-4">
-              <div className="flex items-center justify-between gap-4">
-                <div className="flex-1">
-                  <p className="text-sm font-medium text-[var(--text-primary)]">Learning Period</p>
-                  <p className="text-[11px] text-[var(--text-muted)] mt-0.5">
-                    New campaigns are protected from pause/budget cuts for this many days
-                  </p>
-                </div>
-                <div className="flex items-center gap-2 shrink-0">
-                  <input type="number" min={0} max={90} value={config.learningPeriodDays}
-                    onChange={e => updateConfig('learningPeriodDays', parseInt(e.target.value) || 14)}
-                    className="w-16 bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-1.5 text-sm text-[var(--text-primary)] text-right focus:outline-none focus:border-[var(--accent)]" />
-                  <span className="text-xs text-[var(--text-muted)]">days</span>
-                </div>
-              </div>
-            </div>
-
-            {/* Auto-approve toggle */}
-            <div className="px-5 py-4 flex items-center justify-between">
-              <div>
-                <p className="text-sm font-medium text-[var(--text-primary)]">Auto-Approve High Confidence</p>
-                <p className="text-[11px] text-[var(--text-muted)]">
-                  Automatically apply recommendations above the confidence threshold
-                </p>
-              </div>
-              <button onClick={() => updateConfig('autoApprove', !config.autoApprove)}
-                className={`relative w-10 h-5 rounded-full transition-colors shrink-0 ${config.autoApprove ? 'bg-[var(--accent)]' : 'bg-[var(--bg-tertiary)]'}`}>
-                <span className={`absolute top-0.5 w-4 h-4 rounded-full bg-white shadow transition-transform ${config.autoApprove ? 'left-5' : 'left-0.5'}`} />
-              </button>
-            </div>
-          </div>
-
-          {config.autoApprove && (
-            <div className="flex items-start gap-3 bg-amber-500/10 border border-amber-500/20 rounded-xl px-4 py-3">
-              <AlertTriangle size={16} className="text-amber-400 shrink-0 mt-0.5" />
-              <p className="text-xs text-amber-400/80">
-                Auto-approve is ON. Recommendations with ≥{config.confidenceThreshold}% confidence will be applied automatically without human review.
-              </p>
-            </div>
-          )}
-        </div>
+        <GlobalGuardrailsReadOnly />
       )}
 
       {/* Notifications Section */}
@@ -535,6 +506,133 @@ function ConfigTab({ agent, slug, onUpdate, onToast }: {
         </div>
       )}
 
+      {/* SOUL.md Editor */}
+      {section === 'soul' && (
+        <div className="space-y-3">
+          <div className="bg-[var(--bg-card)] border border-[var(--border-primary)] rounded-xl overflow-hidden">
+            <div className="px-5 py-3 border-b border-[var(--border-primary)]/30 flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <BookOpen size={14} className="text-[var(--accent)]" />
+                <span className="text-sm font-medium text-[var(--text-primary)]">SOUL.md</span>
+                {soulDirty && <span className="text-[10px] text-amber-400 bg-amber-400/10 px-1.5 py-0.5 rounded">Unsaved</span>}
+              </div>
+              <button onClick={saveSoul} disabled={saving || !soulDirty}
+                className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium btn-accent-violet disabled:opacity-40">
+                <Save size={12} /> {saving ? 'Saving...' : 'Save'}
+              </button>
+            </div>
+            {soulLoading ? (
+              <div className="p-8 text-center text-sm text-[var(--text-muted)] animate-pulse">Loading SOUL.md...</div>
+            ) : (
+              <textarea
+                value={soulContent}
+                onChange={e => { setSoulContent(e.target.value); setSoulDirty(true); }}
+                rows={24}
+                spellCheck={false}
+                className="w-full bg-[var(--bg-primary)] text-[var(--text-secondary)] text-sm font-mono p-4 focus:outline-none resize-none leading-relaxed"
+                placeholder="# Agent SOUL.md — define this agent's identity and behavior..."
+              />
+            )}
+          </div>
+          <p className="text-[11px] text-[var(--text-muted)]">
+            The SOUL.md defines the agent&apos;s identity, goals, and behavioral rules. Changes take effect on the next run.
+          </p>
+        </div>
+      )}
+
+      {/* Skills & Workflows */}
+      {section === 'skills' && (
+        <div className="space-y-4">
+          {/* Skills */}
+          <div className="bg-[var(--bg-card)] border border-[var(--border-primary)] rounded-xl overflow-hidden">
+            <div className="px-5 py-3 border-b border-[var(--border-primary)]/30 flex items-center gap-2">
+              <Code size={14} className="text-[var(--accent)]" />
+              <span className="text-sm font-medium text-[var(--text-primary)]">Skills</span>
+              <span className="text-[10px] text-[var(--text-muted)] bg-[var(--bg-primary)] px-1.5 py-0.5 rounded">{skills.length}</span>
+            </div>
+            {skills.length === 0 ? (
+              <div className="p-6 text-center text-sm text-[var(--text-muted)]">No skills found in workspace.</div>
+            ) : (
+              <div className="divide-y divide-[var(--border-primary)]/30">
+                {skills.map(skill => (
+                  <div key={skill.name} className="px-5 py-4">
+                    <div className="flex items-center gap-2">
+                      <span className="text-sm font-medium text-[var(--text-primary)]">{skill.name}</span>
+                      {skill.hasSkillMd && <span className="text-[10px] text-emerald-400 bg-emerald-400/10 px-1.5 py-0.5 rounded">SKILL.md</span>}
+                    </div>
+                    {skill.description && <p className="text-xs text-[var(--text-muted)] mt-1">{skill.description}</p>}
+                    {skill.scripts.length > 0 && (
+                      <div className="flex flex-wrap gap-1.5 mt-2">
+                        {skill.scripts.map((s: string) => (
+                          <span key={s} className="text-[10px] font-mono bg-[var(--bg-primary)] text-[var(--text-secondary)] px-2 py-0.5 rounded">{s}</span>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+
+          {/* Workflows */}
+          <div className="bg-[var(--bg-card)] border border-[var(--border-primary)] rounded-xl overflow-hidden">
+            <div className="px-5 py-3 border-b border-[var(--border-primary)]/30 flex items-center gap-2">
+              <Workflow size={14} className="text-[var(--accent)]" />
+              <span className="text-sm font-medium text-[var(--text-primary)]">Lobster Workflows</span>
+              <span className="text-[10px] text-[var(--text-muted)] bg-[var(--bg-primary)] px-1.5 py-0.5 rounded">{workflows.length}</span>
+            </div>
+            {workflows.length === 0 ? (
+              <div className="p-6 text-center text-sm text-[var(--text-muted)]">No workflows found.</div>
+            ) : (
+              <div className="divide-y divide-[var(--border-primary)]/30">
+                {workflows.map(wf => (
+                  <div key={wf.filename} className="px-5 py-4">
+                    <div className="flex items-center gap-2">
+                      <span className="text-sm font-medium text-[var(--text-primary)]">{wf.name}</span>
+                      <span className="text-[10px] font-mono text-[var(--text-muted)]">{wf.filename}</span>
+                    </div>
+                    {wf.description && <p className="text-xs text-[var(--text-muted)] mt-1">{wf.description}</p>}
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+
+      {/* Run Now */}
+      {section === 'runnow' && (
+        <div className="bg-[var(--bg-card)] border border-[var(--border-primary)] rounded-xl p-5 space-y-4">
+          <div className="flex items-center gap-2">
+            <Play size={14} className="text-[var(--accent)]" />
+            <span className="text-sm font-medium text-[var(--text-primary)]">Trigger On-Demand Run</span>
+          </div>
+          <p className="text-xs text-[var(--text-muted)]">Send a task message to this agent via OpenClaw hooks. The agent will execute immediately.</p>
+          <div className="flex gap-3">
+            <input
+              type="text"
+              value={runMessage}
+              onChange={e => setRunMessage(e.target.value)}
+              onKeyDown={e => e.key === 'Enter' && triggerRun()}
+              placeholder="e.g. Run full analysis for last 7 days"
+              className="flex-1 bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-lg px-3 py-2 text-sm text-[var(--text-primary)] focus:outline-none focus:border-[var(--accent)]"
+            />
+            <button onClick={triggerRun} disabled={running || !runMessage.trim()}
+              className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium btn-accent-violet disabled:opacity-40 shrink-0">
+              {running ? <Loader2 size={14} className="animate-spin" /> : <Play size={14} />}
+              {running ? 'Running...' : 'Run Now'}
+            </button>
+          </div>
+          {runStatus && (
+            <div className={`text-xs px-3 py-2 rounded-lg font-mono ${
+              runStatus.startsWith('✓') ? 'bg-emerald-500/10 text-emerald-400' : 'bg-red-500/10 text-red-400'
+            }`}>
+              {runStatus}
+            </div>
+          )}
+        </div>
+      )}
+
       {/* Save button */}
       <div className="flex items-center justify-between">
         <p className="text-[11px] text-[var(--text-muted)]">Changes are saved to the agent&apos;s configuration and take effect on the next run.</p>
@@ -554,6 +652,73 @@ function ConfigTab({ agent, slug, onUpdate, onToast }: {
           Global Config →
         </Link>
       </div>
+    </div>
+  );
+}
+
+/* ── Findings & Recommendations Tab (Enhanced) ── */
+
+/* ── Read-only global guardrails display for per-agent config ── */
+
+function GlobalGuardrailsReadOnly() {
+  const [guardrails, setGuardrails] = useState<{ key: string; value: string; label: string; category: string }[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const res = await fetch('/api/agents/guardrails');
+        const data = await res.json();
+        setGuardrails(data.guardrails || []);
+      } catch {}
+      setLoading(false);
+    })();
+  }, []);
+
+  if (loading) return <div className="text-sm text-[var(--text-muted)] animate-pulse p-4">Loading guardrails...</div>;
+
+  const categories = [...new Set(guardrails.map(g => g.category))];
+  const CATEGORY_LABELS: Record<string, string> = {
+    budget: 'Budget Rules', campaigns: 'Campaign Rules', creative: 'Creative Rules', confidence: 'Confidence',
+  };
+
+  return (
+    <div className="space-y-4">
+      <div className="flex items-start gap-3 bg-blue-500/10 border border-blue-500/20 rounded-xl px-4 py-3">
+        <Shield size={16} className="text-blue-400 shrink-0 mt-0.5" />
+        <div>
+          <p className="text-xs text-blue-400/80">
+            These guardrails are set globally and apply to all agents. Values shown are read-only.
+          </p>
+          <Link href="/agents/config" className="text-xs text-[var(--accent)] hover:underline mt-1 inline-block">
+            Edit in Global Configuration →
+          </Link>
+        </div>
+      </div>
+
+      {categories.map(cat => {
+        const items = guardrails.filter(g => g.category === cat);
+        if (items.length === 0) return null;
+        return (
+          <div key={cat} className="space-y-2">
+            <p className="text-xs font-medium text-[var(--text-muted)] uppercase tracking-wider px-1">
+              {CATEGORY_LABELS[cat] || cat.charAt(0).toUpperCase() + cat.slice(1)}
+            </p>
+            <div className="bg-[var(--bg-card)] border border-[var(--border-primary)] rounded-xl divide-y divide-[var(--border-primary)]/30">
+              {items.map(g => (
+                <div key={g.key} className="px-5 py-3 flex items-center justify-between gap-4">
+                  <div className="flex-1 min-w-0">
+                    <span className="text-sm text-[var(--text-primary)]">{g.label}</span>
+                  </div>
+                  <span className="text-sm font-medium text-[var(--text-secondary)] shrink-0">
+                    {g.value === 'true' ? '✓ Enabled' : g.value === 'false' ? '✗ Disabled' : g.value}
+                  </span>
+                </div>
+              ))}
+            </div>
+          </div>
+        );
+      })}
     </div>
   );
 }
@@ -657,6 +822,26 @@ function FindingsTab({ slug }: { slug: string }) {
             const isExpanded = expanded === rec.id;
             const isPending = rec.status === 'pending';
 
+            // WHAT — humanize action
+            const humanizeAction = (action: string, type?: string): string => {
+              const a = (action || '').toLowerCase();
+              if (a === 'add-negative' || a === 'add_negative') return 'Block search term';
+              if (a === 'fix_url') return 'Fix URL issue';
+              if (a === 'reduce_budget') return 'Reduce budget';
+              if (a === 'pause_keyword') return 'Pause keyword';
+              if (a.startsWith('monitor')) return 'Monitor search term';
+              if (a === 'budget_rebalance_needed' || type === 'budget_rebalance_needed') return 'Rebalance budget';
+              return action.replace(/[_-]/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+            };
+
+            const whatLabel = humanizeAction(rec.action, rec.type);
+            const searchTerm = m.search_term || '';
+            const whatFull = searchTerm ? `${whatLabel} "${searchTerm}"` : whatLabel;
+
+            // WHERE — campaign + platform
+            const platform = m.platform || m.source || '';
+            const platformLabel = platform ? (PLATFORM_BADGES[platform]?.label || platform) : '';
+
             return (
               <div key={rec.id}
                 className={`bg-[var(--bg-card)] border rounded-xl overflow-hidden transition-colors ${
@@ -670,9 +855,9 @@ function FindingsTab({ slug }: { slug: string }) {
                       {isExpanded ? <ChevronDown size={14} className="text-[var(--text-muted)]" /> : <ChevronRight size={14} className="text-[var(--text-muted)]" />}
                     </div>
                     <div className="flex-1 min-w-0 space-y-1.5">
+                      {/* Badges row */}
                       <div className="flex items-center gap-2 flex-wrap">
                         <SeverityBadge severity={rec.severity} />
-                        <span className="text-sm font-medium text-[var(--text-primary)]">{rec.action}</span>
                         <StatusBadge status={rec.status} />
                         {m.confidence && (
                           <span className={`text-[10px] px-1.5 py-0.5 rounded font-medium ${
@@ -682,25 +867,50 @@ function FindingsTab({ slug }: { slug: string }) {
                           </span>
                         )}
                       </div>
-                      {rec.target && (
+                      {/* WHAT */}
+                      <p className="text-sm font-medium text-[var(--text-primary)]">{whatFull}</p>
+                      {/* WHERE */}
+                      {(rec.target || platformLabel) && (
                         <p className="text-xs text-[var(--text-muted)]">
-                          <span className="text-[var(--text-secondary)]">Campaign:</span> {rec.target}
+                          {rec.target && <><span className="text-[var(--text-secondary)]">Campaign:</span> {rec.target}</>}
+                          {rec.target && platformLabel && <span className="mx-1.5 text-[var(--border-primary)]">|</span>}
+                          {platformLabel && <span className="text-[var(--text-secondary)]">{platformLabel}</span>}
                         </p>
                       )}
+                      {/* WHY */}
                       <p className="text-xs text-[var(--text-secondary)] line-clamp-2">{rec.rationale}</p>
                     </div>
-                    {isPending && (
-                      <div className="flex items-center gap-2 shrink-0" onClick={e => e.stopPropagation()}>
-                        <button onClick={() => handleAction(rec.id, 'approve')} disabled={acting === rec.id}
-                          className="flex items-center gap-1.5 px-3 py-2 btn-accent-emerald rounded-lg text-xs font-medium disabled:opacity-50">
-                          {acting === rec.id ? <Loader2 size={12} className="animate-spin" /> : <ThumbsUp size={12} />} Approve
-                        </button>
-                        <button onClick={() => handleAction(rec.id, 'reject')} disabled={acting === rec.id}
-                          className="flex items-center gap-1.5 px-2.5 py-2 btn-accent-red rounded-lg text-xs font-medium disabled:opacity-50">
-                          <ThumbsDown size={12} /> Reject
-                        </button>
-                      </div>
-                    )}
+                    {isPending && (() => {
+                      const at = rec.actionType || getActionType(rec.type || rec.action || '');
+                      if (at === 'executable') return (
+                        <div className="flex items-center gap-2 shrink-0" onClick={e => e.stopPropagation()}>
+                          <button onClick={() => handleAction(rec.id, 'approve')} disabled={acting === rec.id}
+                            className="flex items-center gap-1.5 px-3 py-2 btn-accent-emerald rounded-lg text-xs font-medium disabled:opacity-50">
+                            {acting === rec.id ? <Loader2 size={12} className="animate-spin" /> : <ThumbsUp size={12} />} Approve
+                          </button>
+                          <button onClick={() => handleAction(rec.id, 'reject')} disabled={acting === rec.id}
+                            className="flex items-center gap-1.5 px-2.5 py-2 btn-accent-red rounded-lg text-xs font-medium disabled:opacity-50">
+                            <ThumbsDown size={12} /> Reject
+                          </button>
+                        </div>
+                      );
+                      if (at === 'informational') return (
+                        <div className="flex items-center gap-2 shrink-0" onClick={e => e.stopPropagation()}>
+                          <button onClick={() => handleAction(rec.id, 'approve')} disabled={acting === rec.id}
+                            className="flex items-center gap-1.5 px-3 py-2 bg-[var(--bg-primary)] hover:bg-[var(--bg-tertiary)] text-[var(--text-secondary)] border border-[var(--border-primary)] rounded-lg text-xs font-medium disabled:opacity-50">
+                            {acting === rec.id ? <Loader2 size={12} className="animate-spin" /> : <Check size={12} />} Acknowledge
+                          </button>
+                        </div>
+                      );
+                      return (
+                        <div className="flex items-center gap-2 shrink-0" onClick={e => e.stopPropagation()}>
+                          <button onClick={() => handleAction(rec.id, 'approve')} disabled={acting === rec.id}
+                            className="flex items-center gap-1.5 px-3 py-2 bg-[var(--bg-primary)] hover:bg-[var(--bg-tertiary)] text-[var(--text-muted)] border border-[var(--border-primary)] rounded-lg text-xs font-medium disabled:opacity-50">
+                            {acting === rec.id ? <Loader2 size={12} className="animate-spin" /> : <X size={12} />} Dismiss
+                          </button>
+                        </div>
+                      );
+                    })()}
                   </div>
                 </div>
 
@@ -737,23 +947,59 @@ function FindingsTab({ slug }: { slug: string }) {
                       )}
                     </div>
 
+                    {/* Before/After preview for executable types */}
+                    {isPending && (() => {
+                      const at = rec.actionType || getActionType(rec.type || rec.action || '');
+                      if (at !== 'executable') return null;
+                      const ba = getBeforeAfter({ type: rec.type || rec.action, metadata: m });
+                      if (!ba) return null;
+                      return (
+                        <div className="bg-[var(--bg-card)] border border-[var(--border-primary)] rounded-lg px-4 py-3 flex items-center gap-3">
+                          <div className="flex-1">
+                            <p className="text-[10px] text-[var(--text-muted)] uppercase tracking-wider mb-1">Before</p>
+                            <p className="text-xs text-[var(--text-secondary)] font-medium">{ba.before}</p>
+                          </div>
+                          <ArrowRight size={14} className="text-[var(--text-muted)] shrink-0" />
+                          <div className="flex-1">
+                            <p className="text-[10px] text-[var(--text-muted)] uppercase tracking-wider mb-1">After</p>
+                            <p className="text-xs text-emerald-400 font-medium">{ba.after}</p>
+                          </div>
+                        </div>
+                      );
+                    })()}
+
                     {/* What will happen */}
                     {isPending && (
                       <div className="bg-[var(--bg-card)] rounded-lg p-4 space-y-2">
                         <p className="text-xs font-medium text-[var(--text-primary)] uppercase tracking-wider">What will happen if approved</p>
-                        {rec.type === 'add-negative' && m.search_term && (
+                        {(rec.type === 'add-negative' || rec.action === 'add-negative' || rec.action === 'add_negative') && m.search_term ? (
                           <div className="space-y-1">
                             <p className="text-sm text-[var(--text-secondary)]">
                               The search term <span className="font-mono bg-[var(--bg-primary)] px-1.5 py-0.5 rounded text-red-400">&quot;{m.search_term}&quot;</span> will be added as a{' '}
-                              <span className="font-medium">{m.match_type}</span> negative keyword to campaign{' '}
+                              <span className="font-medium">{m.match_type || 'exact'}</span> negative keyword to campaign{' '}
                               <span className="font-medium">{rec.target}</span>.
                             </p>
                             <p className="text-xs text-[var(--text-muted)]">
                               This will prevent your ads from showing for this search term, saving an estimated ${m.spend?.toFixed(2) || '0'}/month.
                             </p>
                           </div>
-                        )}
-                        {rec.type !== 'add-negative' && (
+                        ) : rec.action === 'pause_keyword' ? (
+                          <p className="text-sm text-[var(--text-secondary)]">
+                            The keyword will be paused in campaign <span className="font-medium">{rec.target}</span>. It can be re-enabled later.
+                          </p>
+                        ) : rec.action === 'reduce_budget' ? (
+                          <p className="text-sm text-[var(--text-secondary)]">
+                            The daily budget for <span className="font-medium">{rec.target}</span> will be reduced. {m.spend ? `Current wasted spend: $${m.spend.toFixed(2)}.` : ''}
+                          </p>
+                        ) : rec.action === 'fix_url' ? (
+                          <p className="text-sm text-[var(--text-secondary)]">
+                            The landing page URL issue in <span className="font-medium">{rec.target}</span> will be flagged for correction.
+                          </p>
+                        ) : rec.type === 'budget_rebalance_needed' ? (
+                          <p className="text-sm text-[var(--text-secondary)]">
+                            Budget will be rebalanced across platforms/campaigns based on performance data. {rec.rationale}
+                          </p>
+                        ) : (
                           <p className="text-sm text-[var(--text-secondary)]">{rec.rationale}</p>
                         )}
                       </div>

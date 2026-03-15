@@ -8,22 +8,20 @@ const path = require("path");
 
 const HOME = process.env.HOME || "/Users/azizalsinafi";
 
-// Types that can be auto-applied via API
-const EXECUTABLE_TYPES: Record<string, string> = {
+import { EXECUTABLE_TYPES, INFORMATIONAL_TYPES, ALERT_TYPES, getActionType } from "@/lib/recommendation-types";
+
+const EXECUTABLE_DESCRIPTIONS: Record<string, string> = {
   "add-negative": "Block this search term as a negative keyword",
+  "add_negative": "Block this search term as a negative keyword",
   "community_removal": "Remove this subreddit community from ad targeting",
   "frequency_cap": "Adjust the frequency cap on this campaign",
   "pause_keyword": "Pause this keyword",
   "budget_change": "Adjust campaign budget",
+  "budget-realloc": "Reallocate campaign budget",
   "device_bid": "Adjust device bid modifier",
   "geo_bid": "Adjust geographic bid modifier",
+  "domain_block": "Block underperforming domain/publisher",
 };
-
-// Types that are acknowledge-only (no API action, just mark as reviewed)
-const ACKNOWLEDGE_TYPES = [
-  "review", "audit", "creative_fatigue", "landing_page",
-  "utm_issue", "audience_overlap", "saturation",
-];
 
 /**
  * POST /api/agents/recommendations/apply
@@ -61,10 +59,10 @@ export async function POST(request: NextRequest) {
       let metadata: any = {};
       try { metadata = JSON.parse(rec.impact || "{}"); } catch {}
 
-      // Check if this is an acknowledge-only type
-      const isAcknowledge = ACKNOWLEDGE_TYPES.some(t => rec.type.includes(t));
-      
-      if (isAcknowledge) {
+      const actionType = getActionType(rec.type);
+
+      // Informational or alert types — acknowledge only, no automated action
+      if (actionType === 'informational' || actionType === 'alert') {
         await prisma.recommendation.update({
           where: { id },
           data: { status: "acknowledged", appliedAt: new Date() },
@@ -72,12 +70,14 @@ export async function POST(request: NextRequest) {
         return NextResponse.json({
           ok: true,
           status: "acknowledged",
-          message: "Acknowledged — marked as reviewed. No automated action taken.",
+          message: actionType === 'alert'
+            ? "Alert dismissed — marked as reviewed."
+            : "Acknowledged — marked as reviewed. No automated action taken.",
         });
       }
 
-      // Executable types
-      if (rec.type === "add-negative") {
+      // Executable types — run actual platform changes
+      if (rec.type === "add-negative" || rec.type === "add_negative") {
         return await handleNegativeKeyword(rec, metadata);
       }
 
@@ -86,7 +86,7 @@ export async function POST(request: NextRequest) {
       }
 
       // For other executable types, mark as approved (agent will pick up on next run)
-      if (EXECUTABLE_TYPES[rec.type]) {
+      if (EXECUTABLE_DESCRIPTIONS[rec.type]) {
         await prisma.recommendation.update({
           where: { id },
           data: { status: "approved", appliedAt: new Date() },
@@ -94,7 +94,7 @@ export async function POST(request: NextRequest) {
         return NextResponse.json({
           ok: true,
           status: "approved",
-          message: `Approved — will be applied on next agent run. Action: ${EXECUTABLE_TYPES[rec.type]}`,
+          message: `Approved — will be applied on next agent run. Action: ${EXECUTABLE_DESCRIPTIONS[rec.type]}`,
         });
       }
 

@@ -407,6 +407,27 @@ def apply_safety_overrides(ai_result, term_data, keywords):
         return {"action": "KEEP", "confidence": 100, "reason": "Brand term — protected",
                 "intent_type": "RELEVANT", "match_type": "EXACT"}
 
+    # Never add negatives for core product terms that overlap with competitor campaigns
+    # "voice ai", "voice api", "sip trunking", "sms api" etc are our own products — 
+    # adding these as negatives in competitor campaigns blocks "vapi voice ai" type queries
+    PROTECTED_PRODUCT_TERMS = {
+        "voice ai", "voice api", "sms api", "sip trunking", "sip trunk",
+        "text to speech", "speech to text", "tts", "stt", "ai agent",
+        "ai agents", "voice agent", "voice agents", "contact center",
+        "telephony", "voip", "phone number", "phone numbers",
+    }
+    campaign_name = term_data.get("campaign_name", "").lower()
+    is_competitor_campaign = any(c in campaign_name for c in [
+        "vapi", "elevenlabs", "livekit", "retell", "bland", "synthflow",
+        "sierra", "twilio", "vonage", "bandwidth", "pipecat"
+    ])
+    if is_competitor_campaign:
+        for pt in PROTECTED_PRODUCT_TERMS:
+            if pt in search_term:
+                return {"action": "KEEP", "confidence": 100,
+                        "reason": f"Product term '{pt}' protected in competitor campaign",
+                        "intent_type": "RELEVANT", "match_type": "EXACT"}
+
     return ai_result
 
 

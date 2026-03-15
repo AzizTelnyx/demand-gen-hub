@@ -1,0 +1,55 @@
+{
+  "timestamp": "2026-03-15T11:10:03.356108+00:00",
+  "dry_run": false,
+  "weekly": true,
+  "contamination_alerts": [],
+  "auto_actions": [],
+  "approval_requests": [
+    {
+      "type": "reddit_targeting_review",
+      "platform": "reddit",
+      "campaign_id": "1790054843043494725",
+      "campaign_name": "202410 TOFU Voice API Twilio SI GLOBAL",
+      "detail": "Communities: VOIP, twilio",
+      "reason": "Periodic targeting review",
+      "confidence": 60
+    },
+    {
+      "type": "reddit_targeting_review",
+      "platform": "reddit",
+      "campaign_id": "2261790002976778314",
+      "campaign_name": "202506 TOFU AI Agent ElevenLabs SI GLOBAL",
+      "detail": "Communities: ElevenLabs",
+      "reason": "Periodic targeting review",
+      "confidence": 60
+    },
+    {
+      "type": "reddit_targeting_review",
+      "platform": "reddit",
+      "campaign_id": "2395117394512200764",
+      "campaign_name": "202512 TOFU AI Agent STT SI GLOBAL",
+      "detail": "Communities: LocalLLaMA, speechtech",
+      "reason": "Periodic targeting review",
+      "confidence": 60
+    },
+    {
+      "type": "reddit_targeting_review",
+      "platform": "reddit",
+      "campaign_id": "2449802722443566614",
+      "campaign_name": "202511 TOFU AI Agent TTS SI GLOBAL",
+      "detail": "Communities: ElevenLabs, TextToSpeech",
+      "reason": "Periodic targeting review",
+      "confidence": 60
+    },
+    {
+      "type": "reddit_targeting_review",
+      "platform": "reddit",
+      "campaign_id": "2449802760087590045",
+      "campaign_name": "202508 TOFU AI Agent Vapi SI GLOBAL",
+      "detail": "Communities: vapiai",
+      "reason": "Periodic targeting review",
+      "confidence": 60
+    }
+  ],
+  "stackadapt_contaminated": []
+}

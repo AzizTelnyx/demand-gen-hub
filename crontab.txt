@@ -1,0 +1,16 @@
+# DG Hub Agent Cron Jobs (PST times)
+# Budget & Pacing Manager - Daily 7 AM & 8 PM PST
+0 7 * * * cd /Users/azizalsinafi/.openclaw/workspace/demand-gen-hub && /opt/homebrew/bin/python3 scripts/budget-pacing-manager.py --dry-run 2>&1 | logger -t budget-pacing
+0 20 * * * cd /Users/azizalsinafi/.openclaw/workspace/demand-gen-hub && /opt/homebrew/bin/python3 scripts/budget-pacing-manager.py --dry-run 2>&1 | logger -t budget-pacing
+
+# Negative Keyword Agent - Daily 2 AM PST
+0 2 * * * cd /Users/azizalsinafi/.openclaw/workspace/demand-gen-hub && /opt/homebrew/bin/python3 scripts/negative-keyword-agent.py --dry-run 2>&1 | logger -t neg-keyword
+
+# Keyword & Bid Optimizer - Daily 3 AM PST  
+0 3 * * * cd /Users/azizalsinafi/.openclaw/workspace/demand-gen-hub && /opt/homebrew/bin/python3 scripts/keyword-hygiene-agent.py --dry-run 2>&1 | logger -t keyword-bid
+
+# Creative QA - Daily 4 AM PST
+0 4 * * * cd /Users/azizalsinafi/.openclaw/workspace/demand-gen-hub && /opt/homebrew/bin/python3 scripts/creative-manager.py 2>&1 | logger -t creative-qa
+
+# Hub Doctor - Daily 6 AM PST
+0 6 * * * cd /Users/azizalsinafi/.openclaw/workspace/demand-gen-hub && /opt/homebrew/bin/python3 scripts/hub-doctor.py 2>&1 | logger -t hub-doctor

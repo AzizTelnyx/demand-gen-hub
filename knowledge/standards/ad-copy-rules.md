@@ -4,8 +4,13 @@
 - Sound like an engineer, not a marketer
 - Be specific — use numbers
 - Proof points over promises
-- Never use em dashes
+- Never use em dashes (— or –), use hyphens (-) only
 - No filler phrases ("leading", "best-in-class", "cutting-edge")
+- NEVER use "platform" — sounds like 2010. Use "stack", "infrastructure", or just the product
+- NEVER check the "political content" or "election ads" box when creating campaigns. Telnyx is a tech company, not a political advertiser
+- NEVER use "Talk to Sales" or "Speak to Sales" — use "Talk to an Engineer" or "Get Expert Help"
+- No specific latency numbers (sub-200ms, sub-300ms) — use "real-time", "co-located", "carrier-grade"
+- Sitelink text max 25 chars — test before creating to avoid truncation
 
 ## Ad Review Framework
 For every ad variant, map to:

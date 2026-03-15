@@ -19,10 +19,7 @@
 2. Main pain point (what problem we solve)
 3. Differentiation (why us vs competitors)
 
-**Position 2 options (if pinning 2):**
-1. Supporting benefit
-2. Credibility signal
-3. Call to action angle
+**Position 2: NEVER PIN.** Leave unpinned — each headline must work as a combo with ANY Pin 1 headline. Pinning both H1 and H2 kills rotation (only 2 headlines show).
 
 ### Total Headlines
 - **Minimum:** 3 headlines
@@ -77,7 +74,7 @@ Include mix of:
 - ✅ Specific benefits: "Build Faster, Ship Cheaper"
 - ✅ Pain points: "When [Competitor] Slows You Down"
 - ✅ Outcomes: "Deploy in Minutes, Not Months"
-- ✅ Differentiators: "Owned Network = Sub-200ms Latency"
+- ✅ Differentiators: "We Own the Network — Real-Time Performance"
 
 ### High-Performance PPC Copy Framework
 
@@ -88,7 +85,7 @@ Include mix of:
 
 **2. SPECIFICITY WINS**
 - ❌ Generic: "Fast voice AI"
-- ✅ Specific: "Sub-200ms voice response"
+- ✅ Specific: "Co-Located Voice + AI Infrastructure"
 - ❌ Generic: "Save money"
 - ✅ Specific: "60% cheaper than Twilio"
 
@@ -108,7 +105,7 @@ Include mix of:
 - Avoid passive: "Can be built" → "Build in minutes"
 
 **6. NUMBERS & PROOF POINTS**
-- "Sub-200ms latency" not "ultra-low latency"
+- "Co-located infrastructure" not "ultra-low latency" (NO specific ms numbers — they're arguable)
 - "60% cheaper" not "more affordable"
 - "140+ countries" not "global coverage"
 
@@ -150,9 +147,9 @@ Include mix of:
    - NOT: "Private network and co-located GPUs"
    - YES: "Ship production voice AI in 48 hours"
 
-2. **Use specific numbers and claims**
-   - NOT: "Fast voice response"
-   - YES: "Sub-200ms voice latency"
+2. **Use performance language, NOT specific latency numbers**
+   - NOT: "Sub-200ms voice latency" or "Sub-300ms latency" (arguable metrics)
+   - YES: "Co-Located Voice + AI", "Real-Time Performance Built In", "Production-Grade Reliability"
 
 3. **Address the real pain point**
    - For Vapi alternative: complexity, cost predictability
@@ -208,7 +205,7 @@ Include mix of:
 
 **Developer Product (Voice AI):**
 - Pin 1: "Build Production Voice AI Agents"
-- Rotate: Technical benefits, latency claims, developer features
+- Rotate: Technical benefits, performance language, developer features
 
 **Enterprise Product (Contact Center):**
 - Pin 1: "Build AI-Powered Contact Centers"

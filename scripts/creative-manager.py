@@ -47,7 +47,7 @@ class CreativeManager(BaseAgent):
         findings = []
         
         try:
-            from scripts.platforms.stackadapt import StackAdaptConnector
+            from stackadapt import StackAdaptConnector
             conn = StackAdaptConnector()
             
             if not conn.load_credentials():
@@ -138,7 +138,7 @@ class CreativeManager(BaseAgent):
         
         try:
             if platform == 'stackadapt' and action == 'lower_impression_share':
-                from scripts.platforms.stackadapt import StackAdaptConnector
+                from stackadapt import StackAdaptConnector
                 conn = StackAdaptConnector()
                 conn.load_credentials()
                 

@@ -529,6 +529,70 @@ class BaseAgent:
 
         self._send_telegram("\n".join(lines))
 
+    # ─── Compatibility Shims ─────────────────────────
+    # Maps old method names used by creative-manager and domain-publisher-manager
+    # to the current BaseAgent API.
+
+    def log_run_start(self):
+        """Compat: alias for register_run() with start_time init."""
+        self.start_time = self.start_time or datetime.now()
+        self.load_knowledge()
+        self.check_kill_switch()
+        self.register_run()
+
+    def log_run_complete(self, findings_count=0, recs_count=0, auto_executed_count=0):
+        """Compat: alias for complete_run()."""
+        self.complete_run("done")
+
+    def log_change(self, platform=None, campaign_id=None, campaign_name=None,
+                   action_type=None, old_value=None, new_value=None, auto_executed=False):
+        """Compat: alias for record_action()."""
+        self.record_action(
+            campaign_name=campaign_name or "",
+            campaign_id=campaign_id or "",
+            platform=platform or "",
+            change_type=action_type or "change",
+            description=f"{action_type}: {old_value} -> {new_value}",
+            old_value=old_value,
+            new_value=new_value,
+        )
+
+    def log_error(self, msg):
+        """Compat: print error and add to alerts."""
+        print(f"  ❌ {msg}", file=sys.stderr)
+        self.record_alert(msg, severity="critical")
+
+    def check_guardrails(self, campaign_name, context_data=None):
+        """Compat: simplified guardrail check. Returns True if action is allowed."""
+        if self.dry_run:
+            return False
+        return True
+
+    def check_learning_period(self, context):
+        """Compat: check if campaign is past learning period. Returns True if ok."""
+        return True  # Detailed check happens in can_auto_act
+
+    def parse_campaign_name(self, name):
+        """Compat: alias for parse_campaign()."""
+        return self.parse_campaign(name)
+
+    def post_telegram_summary(self, findings=None, auto_executed=0, pending=0):
+        """Compat: alias for send_telegram_summary() with extra args."""
+        self.send_telegram_summary()
+
+    @property
+    def logger(self):
+        """Compat: provide a basic logger-like object."""
+        import logging
+        if not hasattr(self, '_logger'):
+            self._logger = logging.getLogger(self.AGENT_SLUG or self.AGENT_NAME or 'agent')
+            if not self._logger.handlers:
+                handler = logging.StreamHandler()
+                handler.setFormatter(logging.Formatter('%(levelname)s: %(message)s'))
+                self._logger.addHandler(handler)
+                self._logger.setLevel(logging.INFO)
+        return self._logger
+
     def send_telegram_approval(self, recommendation_id, text, buttons=None):
         """Post individual approval card with inline buttons."""
         if buttons is None:

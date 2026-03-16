@@ -193,7 +193,7 @@ def load_db_campaigns():
         conn = psycopg2.connect(DB_URL)
         cur = conn.cursor()
         cur.execute("""
-            SELECT "externalId", name, status, "parsedProduct", "parsedVariant",
+            SELECT "platformId", name, status, "parsedProduct", "parsedVariant",
                    "parsedRegion", "parsedFunnel", "startDate", budget
             FROM "Campaign"
             WHERE platform = 'google_ads' AND status = 'active'

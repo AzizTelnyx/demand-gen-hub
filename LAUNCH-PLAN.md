@@ -117,9 +117,9 @@ _Make everything that exists actually work._
 
 | # | Task | Est. | Status |
 |---|------|------|--------|
-| 1.1 | Fix `agent_base.py` — restore `CampaignContext` + `ActionLevel` | 15m | |
-| 1.2 | Fix `externalId` column — add to Campaign table | 15m | |
-| 1.3 | Debug why `neg-keyword` (A2A version) hangs but `negative-keyword` (cron) works | 30m | |
+| 1.1 | Fix `agent_base.py` — restore `CampaignContext` + `ActionLevel` | 15m | ✅ Added compat shims + fixed imports |
+| 1.2 | Fix `externalId` column — add to Campaign table | 15m | ✅ Already resolved; fixed google-ads-optimizer ref |
+| 1.3 | Debug why `neg-keyword` (A2A version) hangs but `negative-keyword` (cron) works | 30m | ✅ Lobster YAML parse error + fetch_context auto-discovery |
 | 1.4 | Fix Reddit Telegram send (HTTP 400) | 15m | |
 | 1.5 | Fix 4 errored crons (neg-keyword, fleet weekly, stackadapt mon, kw-bid weekly) | 30m | |
 | 1.6 | Fix campaign sync staleness (Google & Reddit >18h) | 20m | |

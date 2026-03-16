@@ -24,7 +24,7 @@ import re
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), 'lib'))
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), 'platforms'))
 
-from agent_base import BaseAgent, CampaignContext, ActionLevel
+from agent_base import BaseAgent
 from blocklists import is_blocked_domain, get_all_blocked
 
 
@@ -33,6 +33,8 @@ class DomainPublisherManager(BaseAgent):
     
     SLUG = "domain-publisher-manager"
     NAME = "Domain & Publisher Manager"
+    AGENT_SLUG = "domain-publisher-manager"
+    AGENT_NAME = "Domain & Publisher Manager"
     DESCRIPTION = "Manages domain exclusions for programmatic display quality"
     PLATFORM = "stackadapt"
     SCHEDULE = "Daily 5:30 AM PST"
@@ -43,11 +45,7 @@ class DomainPublisherManager(BaseAgent):
     VIEWABILITY_IMPRESSION_THRESHOLD = 10000  # 10K impressions
     
     def __init__(self, dry_run: bool = False):
-        super().__init__(
-            slug=self.SLUG,
-            name=self.NAME,
-            dry_run=dry_run
-        )
+        super().__init__(dry_run=dry_run)
         self.dry_run = dry_run
         self.blocked_domains = get_all_blocked()
         

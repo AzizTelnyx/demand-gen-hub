@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
+import { getActionType } from '@/lib/recommendation-types';
 
 /**
  * GET /api/activity — Unified activity timeline
@@ -80,6 +81,8 @@ export async function GET(request: NextRequest) {
         timestamp: rec.createdAt,
         agentName: rec.agentRun?.agent?.name || 'Unknown',
         agentSlug: rec.agentRun?.agent?.slug || '',
+        type: rec.type,
+        actionType: getActionType(rec.type),
         action: rec.action,
         rationale: rec.rationale,
         severity: rec.severity,
@@ -98,7 +101,7 @@ export async function GET(request: NextRequest) {
         intentType: metadata.intent_type,
         oldValue: metadata.old_value,
         newValue: metadata.new_value,
-        impactRaw: metadata,
+        metadata,
         autoApplied: (rec as any).autoApplied || false,
       });
     }

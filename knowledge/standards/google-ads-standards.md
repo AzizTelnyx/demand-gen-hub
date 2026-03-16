@@ -66,6 +66,72 @@ countries = {
 }
 ```
 
+## Landing Page Strategy (Ian's Framework - MOST IMPORTANT)
+Match landing page to search intent:
+
+| Search Type | Landing Page |
+|-------------|--------------|
+| Competitor search (e.g., "vapi alternative") | Comparison page (/the-best-[competitor]-alternative) |
+| Category search (e.g., "voice ai platform") | Voice AI page (/voice-ai) |
+| High intent (e.g., "voice ai pricing") | Homepage (telnyx.com/) |
+
+## Sitelinks (MANDATORY)
+
+### Character Limits (Hard Limits)
+- **Link text:** 25 characters MAX (will truncate if exceeded — looks sloppy)
+- **Description 1:** 35 characters MAX
+- **Description 2:** 35 characters MAX
+- Aim for 20 chars on link text to avoid locale-specific truncation
+
+### Standard Sitelinks (All Campaigns)
+Standardize across ALL campaigns:
+
+| Sitelink | URL |
+|----------|-----|
+| Pricing | /pricing/voice-ai |
+| Compare Platforms | /the-best-[competitor]-alternative (or /voice-ai for non-competitor) |
+| One Platform (Voice + AI) | telnyx.com/ |
+| Global Network | /our-network |
+| Sign Up | /sign-up |
+
+### Pre-Launch Checklist
+- [ ] All sitelink URLs tested (no broken links)
+- [ ] Link text under 25 chars
+- [ ] No duplicate sitelinks pointing to same URL
+- [ ] 4-6 sitelinks per campaign (2 minimum to show)
+
+### Common Issues (Avoid)
+- Truncated text ("AI + Telephony, One Netwo..." = BAD)
+- Broken URLs routing to Google blank search
+- Repetitive/overlapping sitelinks
+- Product pages as sitelinks when home page is cleaner
+
+## RSA Headlines (Ian's Framework)
+
+### Pinning Strategy
+- **Pin position 1 ONLY** — rotate 3-4 Telnyx-led variants
+- **NEVER pin position 2** — let Google optimize
+- Supporting headlines rotate freely
+
+### Position 1 Variants (Pin These)
+- Telnyx Voice AI Platform
+- Telnyx Voice Infrastructure
+- Telnyx for Production Voice AI
+- Telnyx | Voice AI
+
+### Copy Hygiene
+- Headlines ≤ 30 chars
+- Sitelinks ≤ 25 chars
+- Avoid truncation at all costs
+
+## Competitor Capture Framework
+When a new competitor appears:
+1. Create campaign (by region: AMER/EMEA/APAC)
+2. Create comparison landing page (/the-best-[competitor]-alternative)
+3. Add to AEO tracking
+4. Use standard sitelinks
+5. Pin Telnyx-led headlines to position 1
+
 ## Review Schedule (Post-Launch)
 - **Day 3:** Impressions? Clicks? Disapproved ads? Search terms → add negatives
 - **Week 1:** CTR vs benchmark (>3% for branded/competitor), CPC vs assumptions, Quality Score, pause low performers

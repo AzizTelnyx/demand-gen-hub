@@ -77,7 +77,7 @@ export async function POST(request: NextRequest) {
       }
 
       // Executable types — run actual platform changes
-      if (rec.type === "add-negative" || rec.type === "add_negative") {
+      if (rec.type === "add-negative" || rec.type === "add_negative" || rec.type === "add-campaign-negative") {
         return await handleNegativeKeyword(rec, metadata);
       }
 

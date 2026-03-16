@@ -1,8 +1,10 @@
 // Types that execute real platform changes when approved
 export const EXECUTABLE_TYPES = [
   "add-negative", "add_negative",    // blocks search term via Google Ads API
+  "add-campaign-negative",           // blocks search term at campaign level
   "pause_keyword", "keyword_pause",  // pauses keyword via Google Ads API
   "budget_change", "budget-realloc", "budget_increase", "budget_decrease",  // adjusts campaign budget
+  "increase_budget", "reduce_budget", "decrease_budget",  // action-style budget changes
   "device_bid", "geo_bid",           // adjusts bid modifiers
   "community_removal",               // removes Reddit community targeting
   "frequency_cap",                   // adjusts frequency cap
@@ -13,22 +15,35 @@ export const EXECUTABLE_TYPES = [
 
 // Types that are informational — user can only acknowledge, not execute
 export const INFORMATIONAL_TYPES = [
-  "fix_url", "url_error", "utm_warning", "utm_issue",
+  "fix_url", "url_error", "utm_warning", "utm_issue", "utm_validation",
+  "broken_url",
   "creative_fatigue", "landing_page",
   "audience_overlap", "saturation",
-  "review", "audit",
+  "review", "audit", "recommendation",
+  "informational",                   // generic informational
+  "data_quality",                    // data quality issues
+  "auth_blocker",                    // auth/access blockers
+  "keyword-hygiene",                 // keyword hygiene alerts
+  "self_competition",                // self-competition warnings
 ];
 
-// Types that are summary alerts — shouldn't be in approval queue
+// Types that are summary alerts — dismiss to clear
 export const ALERT_TYPES = [
   "overspend_risk", "budget_rebalance_needed",
-  "underspend_alert",
+  "budget_rebalance",                // budget rebalance suggestion
+  "underspend_alert", "underspend", "underpacing",
+  "monitor",                         // monitor-only items
 ];
 
 export function getActionType(type: string): 'executable' | 'informational' | 'alert' {
   const t = (type || '').toLowerCase();
+  // Check executable first (highest priority — these trigger real platform changes)
   if (EXECUTABLE_TYPES.some(x => t.includes(x))) return 'executable';
+  // Check alerts (dismiss to clear)
   if (ALERT_TYPES.some(x => t.includes(x))) return 'alert';
+  // Check informational explicitly
+  if (INFORMATIONAL_TYPES.some(x => t.includes(x))) return 'informational';
+  // Default: informational (safe fallback — no automated action)
   return 'informational';
 }
 

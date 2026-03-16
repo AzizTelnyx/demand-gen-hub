@@ -20,7 +20,7 @@ from typing import Dict, List, Any, Optional
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), 'lib'))
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), 'platforms'))
 
-from agent_base import BaseAgent, CampaignContext
+from agent_base import BaseAgent
 
 
 class CreativeManager(BaseAgent):
@@ -28,6 +28,8 @@ class CreativeManager(BaseAgent):
     
     SLUG = "creative-manager"
     NAME = "Creative Manager"
+    AGENT_SLUG = "creative-manager"
+    AGENT_NAME = "Creative Manager"
     DESCRIPTION = "Detects creative fatigue and manages impression share rotation"
     PLATFORM = "all"
     SCHEDULE = "Daily 5 AM PST"
@@ -37,11 +39,7 @@ class CreativeManager(BaseAgent):
     FATIGUE_IMPRESSION_SHARE = 20
     
     def __init__(self, dry_run: bool = False):
-        super().__init__(
-            slug=self.SLUG,
-            name=self.NAME,
-            dry_run=dry_run
-        )
+        super().__init__(dry_run=dry_run)
         self.dry_run = dry_run
         
     def analyze_stackadapt_creatives(self) -> List[Dict]:

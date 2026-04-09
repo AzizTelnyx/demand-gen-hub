@@ -10,6 +10,7 @@
 
 const { PrismaClient } = require("@prisma/client");
 const dns = require("dns");
+const { ARCHETYPES, NEGATIVE_CLASSES } = require("./lib/abm_archetypes");
 const prisma = new PrismaClient();
 
 // Use Telnyx LiteLLM gateway via Tailscale — independent from OpenClaw, no serialization
@@ -231,6 +232,84 @@ function isAiAgentProfile(productFit, vertical) {
   return pf === "ai-agent" || pf === "voice-ai" || v.includes("voice") || v.includes("contact_center") || v.includes("contact center") || v.includes("healthcare") || v.includes("fintech") || v.includes("travel");
 }
 
+function textBlob(...parts) {
+  return parts.filter(Boolean).join(" ").toLowerCase();
+}
+
+function inferArchetype(candidate, clearbitData) {
+  const blob = textBlob(
+    candidate.company,
+    candidate.description,
+    candidate.vertical,
+    candidate.productFit,
+    clearbitData?.industry,
+    clearbitData?.sector,
+    clearbitData?.description,
+  );
+  for (const archetype of ARCHETYPES) {
+    if (archetype.evidenceKeywords.some(kw => blob.includes(kw))) return archetype;
+  }
+  return null;
+}
+
+function getEvidence(candidate, clearbitData) {
+  const blob = textBlob(
+    candidate.company,
+    candidate.description,
+    candidate.voiceSignal,
+    candidate.evidenceSnippet,
+    clearbitData?.industry,
+    clearbitData?.sector,
+    clearbitData?.description,
+  );
+
+  for (const archetype of ARCHETYPES) {
+    for (const kw of archetype.evidenceKeywords) {
+      if (blob.includes(kw)) {
+        return {
+          evidenceType: archetype.key,
+          evidenceSnippet: kw,
+          archetype: archetype.label,
+        };
+      }
+    }
+  }
+
+  if ((candidate.currentProvider || "").match(/twilio|vonage|bandwidth|plivo/i)) {
+    return {
+      evidenceType: "provider_signal",
+      evidenceSnippet: candidate.currentProvider,
+      archetype: inferArchetype(candidate, clearbitData)?.label || null,
+    };
+  }
+
+  return { evidenceType: null, evidenceSnippet: null, archetype: inferArchetype(candidate, clearbitData)?.label || null };
+}
+
+function negativeClassMatch(candidate, clearbitData) {
+  const blob = textBlob(
+    candidate.company,
+    candidate.domain,
+    candidate.description,
+    clearbitData?.industry,
+    clearbitData?.sector,
+    clearbitData?.description,
+  );
+  for (const cls of NEGATIVE_CLASSES) {
+    const hit = cls.keywords.find(kw => blob.includes(kw));
+    if (hit) return { reject: true, reason: `${cls.label}: ${hit}` };
+  }
+  return { reject: false };
+}
+
+function assignConfidenceTier(candidate) {
+  const score = candidate.confidenceScore || 0;
+  const hasEvidence = !!candidate.evidenceType;
+  if (score >= 80 && hasEvidence) return "tier1";
+  if (score >= 60 && hasEvidence) return "tier2";
+  return "tier3";
+}
+
 // ─── Validation Functions ────────────────────────────────────
 
 /**
@@ -437,6 +516,27 @@ async function validateCandidates(candidates) {
           console.log(`[AI Agent Filter] Rejected "${c.company}" — ${aiAgentCheck.reason}`);
           continue;
         }
+      }
+
+      // ─── Hard Negative Class Check ───
+      const negativeCheck = negativeClassMatch(c, cb);
+      if (negativeCheck.reject) {
+        c.confidenceScore = 0;
+        c.rejectReason = negativeCheck.reason;
+        console.log(`[Negative Class] Rejected "${c.company}" — ${negativeCheck.reason}`);
+        continue;
+      }
+
+      // ─── Evidence Extraction / Gate ───
+      const evidence = getEvidence(c, cb);
+      c.evidenceType = evidence.evidenceType;
+      c.evidenceSnippet = evidence.evidenceSnippet;
+      c.archetype = evidence.archetype;
+      if (!c.evidenceType && isAiAgentProfile(c.productFit, c.vertical)) {
+        c.confidenceScore = 0;
+        c.rejectReason = "Missing explicit voice/telephony/workflow evidence";
+        console.log(`[Evidence Gate] Rejected "${c.company}" — missing explicit evidence`);
+        continue;
       }
       
       // ─── ICP Matching (Enrichment, Not Filter) ───
@@ -659,9 +759,14 @@ Return: [{"country":"US","region":"AMER"},...] — use AMER/EMEA/APAC/MENA regio
       if (account && criteriaRegions && account.region && !criteriaRegions.includes(account.region)) continue;
 
       // Build notes JSON with validation data
+      c.confidenceTier = assignConfidenceTier(c);
       const notesData = {
         description: c.description || null,
         confidenceScore: c.confidenceScore,
+        confidenceTier: c.confidenceTier,
+        evidenceType: c.evidenceType || null,
+        evidenceSnippet: c.evidenceSnippet || null,
+        archetype: c.archetype || null,
         validationSignals: c.validationSignals,
         clearbitData: c.clearbitData || null,
         icpMatch: c.icpMatch || null,
@@ -792,6 +897,49 @@ async function callAI(messages, retries = 3) {
   throw new Error("All AI backends failed");
 }
 
+function buildArchetypePrompt(criteria, archetype, existingNames) {
+  const regionStr = criteria.regions?.length ? `Target regions: ${criteria.regions.join(", ")}` : "";
+  const productStr = criteria.productFit?.length ? `Product fit: ${criteria.productFit.join(", ")}` : "";
+  const alreadyFoundStr = existingNames.length > 0
+    ? `\n\nCOMPANIES ALREADY IN THIS LIST (do NOT repeat):\n${existingNames.slice(0, 200).join(", ")}${existingNames.length > 200 ? `\n... and ${existingNames.length - 200} more` : ""}`
+    : "";
+
+  return `You are an ABM research agent for Telnyx, a cloud communications company.
+
+RESEARCH BRIEF:
+${criteria.targetCompanyProfile}
+
+${regionStr}
+${productStr}
+Vertical: ${criteria.vertical || "any"}
+Archetype focus: ${archetype.label}
+Archetype description: ${archetype.description}
+Guidance: ${archetype.promptGuidance}${alreadyFoundStr}
+
+Find up to ${WAVE_SIZE} REAL companies matching this archetype. These must be actual companies that exist.
+
+Rules:
+- Only real, verifiable companies
+- Include the actual website domain and HQ country
+- ICP means likely BUYER, not adjacent market names
+- Return only companies with explicit evidence, not vibes
+- Require at least one strong signal: voice agents, AI agents, conversational AI, voicebot, call automation, dialer, phone assistant, contact-center automation, telephony, SIP, call routing, numbers, or obvious phone-heavy workflows
+- Exclude carriers, ISPs, CPaaS/UCaaS/CCaaS vendors, wholesale voice/SMS providers, network operators, generic SaaS, marketplaces, broad ecommerce, and broad banks without explicit voice evidence
+- NEVER include Telnyx competitors: Twilio, Vonage, Bandwidth, Plivo, Sinch, ElevenLabs, Vapi, Retell, LiveKit, Bland AI, Five9, Genesys, Nice, Talkdesk, Dialpad, RingCentral, 8x8, Nextiva, Aircall, MessageBird, Infobip, Deepgram, AssemblyAI, Poly AI, Cognigy, Kore.ai, Hologram, Agora, Resemble AI, Cartesia, Play.ht, Murf AI, WellSaid
+
+RESPOND WITH ONLY a raw JSON array. No markdown, no code fences:
+[{"company":"Name","domain":"example.com","country":"AU","region":"APAC","vertical":"healthcare","productFit":"ai-agent","description":"One line why relevant","voiceSignal":"Explicit signal that makes this a buyer","evidenceType":"voice_agent|telephony_signal|phone_workflow|provider_signal","evidenceSnippet":"short phrase showing the signal"}]
+
+CRITICAL — Region means HEADQUARTERS location, not "operates in" or "has offices in":
+- AMER = HQ in US, Canada, or Latin America
+- EMEA = HQ in Europe, UK, or Africa
+- APAC = HQ in Asia, Australia, New Zealand, India
+- MENA = HQ in Middle East or North Africa
+If criteria specify regions, EVERY company MUST be headquartered in one of those regions. Do not include companies HQ'd elsewhere.
+
+Product Fit values: ai-agent, voice-api, sip-trunking, sms-api, iot, numbers`;
+}
+
 function buildPrompt(job, existingNames, listInfo) {
   const listType = listInfo?.listType || "vertical";
   const isExpand = job.jobType === "expand";
@@ -910,7 +1058,11 @@ async function runWave(job, listInfo) {
   });
   const existingNames = existingMembers.map(m => m.account.company.toLowerCase());
 
-  const prompt = buildPrompt(job, existingNames, listInfo);
+  const waveIndex = job.waves || 0;
+  const archetype = criteria ? ARCHETYPES[waveIndex % ARCHETYPES.length] : null;
+  const prompt = criteria && archetype
+    ? buildArchetypePrompt(criteria, archetype, existingNames)
+    : buildPrompt(job, existingNames, listInfo);
   const responseText = await callAI([{ role: "user", content: prompt }]);
   console.log(`[AI Response] Length: ${responseText.length}, Preview: ${responseText.slice(0, 200)}`);
 
@@ -995,9 +1147,14 @@ async function runWave(job, listInfo) {
       }
 
       // Build notes JSON with validation data
+      c.confidenceTier = assignConfidenceTier(c);
       const notesData = {
         description: c.description || null,
         confidenceScore: c.confidenceScore,
+        confidenceTier: c.confidenceTier,
+        evidenceType: c.evidenceType || null,
+        evidenceSnippet: c.evidenceSnippet || null,
+        archetype: c.archetype || null,
         validationSignals: c.validationSignals,
         clearbitData: c.clearbitData || null,
         icpMatch: c.icpMatch || null,

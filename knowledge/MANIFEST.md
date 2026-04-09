@@ -39,6 +39,9 @@
 - `standards/google-ads-rsa-best-practices.md` - PPC ad copy rules
 - `standards/geo-targeting-rules.md` - Geographic targeting
 - `standards/conversion-framework.md` - Conversion tracking
+- `standards/ad-size-reference.md` - Ad size shorthand → dimensions (MANDATORY for creative briefs)
+- `standards/b2b-ad-copy-guide.md` - Per-platform copy specs & char limits
+- `standards/b2b-ad-creative-guide.md` - Visual specs & design rules per platform
 
 ### 8. Playbooks (Channel-Specific)
 - `playbooks/google-ads-playbook.md` - Google Ads strategy + benchmarks
@@ -62,12 +65,14 @@
 2. Read relevant ICP docs for your use case
 3. Reference product messaging when generating ad copy
 4. Follow standards/* files as mandatory rules
+5. **For creative briefs:** Use `standards/ad-size-reference.md` — when a platform is named, provide ALL sizes for that format
 
 **Key Principles:**
 - Brand messaging = single source of truth for positioning
 - Product messaging = how to talk about specific products
 - ICP docs = who we're talking to
-- Standards = non-negotiable rules (UTM, naming, geo)
+- Standards = non-negotiable rules (UTM, naming, geo, ad sizes)
+- **Ad sizes:** Named platform → ALL sizes automatically (never partial lists)
 
 ---
 
@@ -103,7 +108,10 @@ knowledge/
 │   ├── google-ads-rsa-best-practices.md
 │   ├── geo-targeting-rules.md
 │   ├── conversion-framework.md
-│   └── telnyx-icp.md
+│   ├── telnyx-icp.md
+│   ├── ad-size-reference.md
+│   ├── b2b-ad-copy-guide.md
+│   └── b2b-ad-creative-guide.md
 ├── playbooks/
 │   ├── google-ads-playbook.md
 │   ├── linkedin-playbook.md

@@ -197,6 +197,40 @@ function getICPMatch(clearbitData, company, vertical, productFit) {
   return { matched: false, icp: null };
 }
 
+const AI_AGENT_EXCLUDED_TERMS = [
+  "telecommunications", "telecom", "wireless", "carrier", "mobile network",
+  "internet service provider", "isp", "broadband", "fiber network", "network operator",
+  "cpaas", "communications platform", "ucaas", "ccaas", "contact center software",
+  "voip provider", "sip trunk provider", "sms gateway", "wholesale voice", "wholesale sms"
+];
+
+function isAiAgentNonBuyer(clearbitData, company, domain) {
+  const combined = [
+    company || "",
+    domain || "",
+    clearbitData?.industry || "",
+    clearbitData?.sector || "",
+    clearbitData?.category?.industry || "",
+    clearbitData?.category?.sector || "",
+    clearbitData?.description || "",
+    clearbitData?.type || "",
+  ].join(" ").toLowerCase();
+
+  for (const term of AI_AGENT_EXCLUDED_TERMS) {
+    if (combined.includes(term)) {
+      return { reject: true, reason: `Non-buyer for AI Agent list: ${term}` };
+    }
+  }
+
+  return { reject: false };
+}
+
+function isAiAgentProfile(productFit, vertical) {
+  const pf = (productFit || "").toLowerCase();
+  const v = (vertical || "").toLowerCase();
+  return pf === "ai-agent" || pf === "voice-ai" || v.includes("voice") || v.includes("contact_center") || v.includes("contact center") || v.includes("healthcare") || v.includes("fintech") || v.includes("travel");
+}
+
 // ─── Validation Functions ────────────────────────────────────
 
 /**
@@ -392,6 +426,17 @@ async function validateCandidates(candidates) {
         c.rejectReason = segmentCheck.reason;
         console.log(`[ICP Filter] Rejected "${c.company}" — ${segmentCheck.reason}`);
         continue; // Skip further validation for this candidate
+      }
+
+      // ─── AI Agent Non-Buyer Check (Hard Reject) ───
+      if (isAiAgentProfile(c.productFit, c.vertical)) {
+        const aiAgentCheck = isAiAgentNonBuyer(cb, c.company, c.domain);
+        if (aiAgentCheck.reject) {
+          c.confidenceScore = 0;
+          c.rejectReason = aiAgentCheck.reason;
+          console.log(`[AI Agent Filter] Rejected "${c.company}" — ${aiAgentCheck.reason}`);
+          continue;
+        }
       }
       
       // ─── ICP Matching (Enrichment, Not Filter) ───
@@ -785,9 +830,13 @@ Rules:
 - Diverse across the criteria (don't cluster on one sub-segment)
 - If you can't find ${WAVE_SIZE} genuinely matching companies, return fewer rather than making them up
 - NEVER include Telnyx competitors: Twilio, Vonage, Bandwidth, Plivo, Sinch, ElevenLabs, Vapi, Retell, LiveKit, Bland AI, Five9, Genesys, Nice, Talkdesk, Dialpad, RingCentral, 8x8, Nextiva, Aircall, MessageBird, Infobip, Deepgram, AssemblyAI, Poly AI, Cognigy, Kore.ai, Hologram, Agora, Resemble AI, Cartesia, Play.ht, Murf AI, WellSaid
+- ICP means likely BUYER, not just company in a related market
+- If product fit is ai-agent / voice AI, prioritize BUYERS like AI startups, SaaS platforms, contact-center operators, BPOs, healthcare/fintech/travel companies with clear voice use cases
+- If product fit is ai-agent / voice AI, EXCLUDE non-buyers like telecom carriers, mobile operators, ISPs, broadband providers, CPaaS vendors, UCaaS vendors, CCaaS vendors, wholesale voice/SMS providers, network operators, and infrastructure vendors
+- Do not include large telcos/carriers just because they operate in communications
 
 RESPOND WITH ONLY a raw JSON array. No markdown, no code fences:
-[{"company":"Name","domain":"example.com","country":"US","region":"AMER","vertical":"fintech","productFit":"voice-ai","description":"One line why relevant"${criteria.includeProviders?.length ? ',"currentProvider":"Twilio","switchSignal":"Reason they might switch"' : ""}}]
+[{"company":"Name","domain":"example.com","country":"US","region":"AMER","vertical":"fintech","productFit":"ai-agent","description":"One line why relevant"${criteria.includeProviders?.length ? ',"currentProvider":"Twilio","switchSignal":"Reason they might switch"' : ""}}]
 
 CRITICAL — Region means HEADQUARTERS location, not "operates in" or "has offices in":
 - AMER = HQ in US, Canada, or Latin America
@@ -830,9 +879,12 @@ Rules:
 - Diverse across the criteria (don't cluster on one sub-segment)
 - If you can't find ${WAVE_SIZE} genuinely matching companies, return fewer rather than making them up
 - NEVER include Telnyx competitors: Twilio, Vonage, Bandwidth, Plivo, Sinch, ElevenLabs, Vapi, Retell, LiveKit, Bland AI, Five9, Genesys, Nice, Talkdesk, Dialpad, RingCentral, 8x8, Nextiva, Aircall, MessageBird, Infobip, Deepgram, AssemblyAI, Poly AI, Cognigy, Kore.ai, Hologram, Agora, Resemble AI, Cartesia, Play.ht, Murf AI, WellSaid
+- ICP means likely BUYER, not just adjacent company names
+- For Voice AI / AI Agent requests, prioritize AI startups, SaaS platforms, contact-center operators, BPOs, and companies with clear voice automation use cases
+- For Voice AI / AI Agent requests, EXCLUDE telecom carriers, ISPs, mobile operators, CPaaS/UCaaS/CCaaS vendors, wholesale voice/SMS providers, and network operators
 
 RESPOND WITH ONLY a raw JSON array. No markdown, no code fences:
-[{"company":"Name","domain":"example.com","country":"US","region":"AMER","vertical":"fintech","productFit":"voice-ai","description":"One line why relevant"${listType === "conquest" ? ',"currentProvider":"Twilio","switchSignal":"Reason they might switch"' : ""}}]
+[{"company":"Name","domain":"example.com","country":"US","region":"AMER","vertical":"fintech","productFit":"ai-agent","description":"One line why relevant"${listType === "conquest" ? ',"currentProvider":"Twilio","switchSignal":"Reason they might switch"' : ""}}]
 
 CRITICAL — Region means HEADQUARTERS location, not "operates in" or "has offices in":
 - AMER = HQ in US, Canada, or Latin America

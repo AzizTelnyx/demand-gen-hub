@@ -606,7 +606,9 @@ async function perplexicaDiscoveryWave(job, listInfo) {
     const vertical = criteria.vertical || "";
     const products = (criteria.productFit || []).map(p => p.replace(/-/g, " ")).join(", ");
     const profile = criteria.targetCompanyProfile || "";
-    query = `List real companies in ${vertical} that ${profile.slice(0, 150)}. ${products ? `They should use or need: ${products}.` : ""} For each company provide the name and website domain.`;
+    const waveIndex = job.waves || 0;
+    const archetype = ARCHETYPES[waveIndex % ARCHETYPES.length];
+    query = `List real companies in ${vertical} that fit this ICP: ${profile.slice(0, 220)}. Focus specifically on this archetype: ${archetype.label}. ${archetype.promptGuidance} ${products ? `They should use or need: ${products}.` : ""} Return companies with explicit voice/telephony/call-workflow evidence, plus the name and website domain.`;
   } else {
     query = `List real companies matching: ${job.query}. For each company provide the name and website domain.`;
   }
@@ -1213,6 +1215,55 @@ async function runWave(job, listInfo) {
   return { generated: companies.length, newCount: newCompanies.length, added };
 }
 
+async function exportListByTier(listId, listName) {
+  try {
+    const members = await prisma.aBMListMember.findMany({
+      where: { listId },
+      include: { account: true },
+    });
+
+    const rows = members.map(m => {
+      let notes = {};
+      try { notes = JSON.parse(m.account.notes || "{}"); } catch {}
+      return {
+        company: m.account.company || "",
+        domain: m.account.domain || "",
+        country: m.account.country || "",
+        region: m.account.region || "",
+        vertical: m.account.vertical || "",
+        productFit: m.account.productFit || "",
+        status: m.account.status || "",
+        confidenceTier: notes.confidenceTier || "tier3",
+        confidenceScore: notes.confidenceScore || "",
+        archetype: notes.archetype || "",
+        evidenceType: notes.evidenceType || "",
+        evidenceSnippet: notes.evidenceSnippet || "",
+        description: notes.description || "",
+      };
+    });
+
+    const safeName = (listName || listId).replace(/[^a-z0-9-_]+/gi, "-").replace(/-+/g, "-").replace(/^-|-$/g, "").toLowerCase();
+    const baseDir = `/Users/azizalsinafi/.openclaw/workspace/demand-gen-hub/exports/abm/${safeName}`;
+    await require("fs").promises.mkdir(baseDir, { recursive: true });
+
+    const tiers = {
+      all: rows,
+      tier1: rows.filter(r => r.confidenceTier === "tier1"),
+      tier2: rows.filter(r => r.confidenceTier === "tier2"),
+      tier3: rows.filter(r => r.confidenceTier === "tier3"),
+    };
+
+    const headers = ["company","domain","country","region","vertical","productFit","status","confidenceTier","confidenceScore","archetype","evidenceType","evidenceSnippet","description"];
+    for (const [tier, data] of Object.entries(tiers)) {
+      const csv = [headers.join(",")].concat(data.map(r => headers.map(h => `"${String(r[h] ?? "").replaceAll('"','""')}"`).join(","))).join("\n");
+      await require("fs").promises.writeFile(`${baseDir}/${tier}.csv`, csv);
+      await require("fs").promises.writeFile(`${baseDir}/${tier}.json`, JSON.stringify(data, null, 2));
+    }
+  } catch (e) {
+    console.error(`[Export] Failed for list ${listId}:`, e.message);
+  }
+}
+
 async function processJob(job) {
   console.log(`[Job ${job.id}] Starting (${job.jobType}): "${job.query}" (target: ${job.target})`);
 
@@ -1281,6 +1332,7 @@ async function processJob(job) {
   console.log(`[Job ${job.id}] Complete: ${final.found} companies in ${final.waves} waves`);
 
   const listName = listInfo?.name || "Unknown list";
+  await exportListByTier(job.listId, listName);
   const jobVerb = job.jobType === "expand" ? "expanded" : "built";
   await notifyTelegram(`<b>ABM List ${jobVerb}</b>\n${listName}: +${final.found} companies (${totalMembers} total)\n${final.waves} waves`);
 }

@@ -35,9 +35,9 @@ const CLEARBIT_KEY = process.env.CLEARBIT_API_KEY || "sk_6a6f1e4c6f26338d6340d68
 // Perplexica config (self-hosted AI search) — set PERPLEXICA_ENABLED=false to disable
 const PERPLEXICA_ENABLED = process.env.PERPLEXICA_ENABLED !== "false";
 const PERPLEXICA_URL = process.env.PERPLEXICA_URL || "http://localhost:3001";
-const PERPLEXICA_CHAT_PROVIDER_ID = process.env.PERPLEXICA_CHAT_PROVIDER_ID || "3fd01726-84a3-48aa-a9b0-d63b53cb7356";
-const PERPLEXICA_CHAT_MODEL = process.env.PERPLEXICA_CHAT_MODEL || "gemini/gemini-2.0-flash";
-const PERPLEXICA_EMBED_PROVIDER_ID = process.env.PERPLEXICA_EMBED_PROVIDER_ID || "320d9526-5a69-4e79-a2ee-23497799d2f8";
+const PERPLEXICA_CHAT_PROVIDER_ID = process.env.PERPLEXICA_CHAT_PROVIDER_ID || "449be310-cb57-4601-86af-a3fd02362ad7";
+const PERPLEXICA_CHAT_MODEL = process.env.PERPLEXICA_CHAT_MODEL || "openai/gpt-4o-mini";
+const PERPLEXICA_EMBED_PROVIDER_ID = process.env.PERPLEXICA_EMBED_PROVIDER_ID || "a8688d79-9404-4e04-b046-cdd7bb979fef";
 const PERPLEXICA_EMBED_MODEL = process.env.PERPLEXICA_EMBED_MODEL || "Xenova/all-MiniLM-L6-v2";
 
 // Scoring weights

@@ -121,6 +121,81 @@ function isCompetitor(company, domain) {
   return false;
 }
 
+// ─── Non-Target Segment Exclusion ─────────────────────────────
+// Hard reject for segments we never target (Clearbit-based, enrichment signals)
+const NON_TARGET_INDUSTRIES = [
+  "government", "military", "defense", "public sector", "federal", "municipal",
+  "education", "higher education", "primary education", "secondary education", "school",
+  "pharmacy", "pharmaceutical retail", "retail pharmacy",
+  "religious", "non-profit", "charity",
+];
+const NON_TARGET_COUNTRIES = ["RU", "BY", "IR", "KP", "CN", "AF", "SY", "VE", "CU", "SD"];
+
+function isNonTargetSegment(clearbitData, company, country) {
+  // Hard reject: non-target countries (compliance/billing blocks)
+  if (country && NON_TARGET_COUNTRIES.includes(country.toUpperCase())) {
+    return { reject: true, reason: `Non-target country: ${country}` };
+  }
+
+  // If no Clearbit data, don't reject (permissive approach)
+  if (!clearbitData || !clearbitData.found) return { reject: false };
+
+  const industry = (clearbitData.industry || "").toLowerCase();
+  const sector = (clearbitData.sector || "").toLowerCase();
+  const description = (clearbitData.description || "").toLowerCase();
+  const combined = `${industry} ${sector} ${description}`;
+
+  // Check for non-target industry keywords
+  for (const term of NON_TARGET_INDUSTRIES) {
+    if (combined.includes(term)) {
+      // But keep EdTech, GovTech, HealthTech (technology companies serving these sectors)
+      const isTech = industry.includes("technology") || industry.includes("software") ||
+                     sector.includes("technology") || description.includes("software") ||
+                     description.includes("platform") || description.includes("saas");
+      if (!isTech) {
+        return { reject: true, reason: `Non-target segment: ${term}` };
+      }
+    }
+  }
+
+  return { reject: false };
+}
+
+// ─── ICP Matching (Soft Signal, Not Hard Filter) ─────────────────────────────
+// ICP profiles from knowledge base — used for enrichment, not rejection
+const ICP_VERTICALS = {
+  developer: ["software", "saas", "technology", "internet", "information technology", "computer software"],
+  enterprise_contact_center: ["insurance", "healthcare", "banking", "financial services", "travel", "hospitality", "telecommunications"],
+  voice_ai: ["artificial intelligence", "machine learning", "voice", "speech", "automation"],
+};
+
+const ICP_PRODUCT_FITS = ["ai-agent", "voice-api", "sip-trunking", "sms-api", "iot", "numbers"];
+
+function getICPMatch(clearbitData, company, vertical, productFit) {
+  // If we already have vertical/productFit from AI generation, trust it
+  if (vertical && productFit) {
+    return { matched: true, icp: `${vertical}-${productFit}` };
+  }
+
+  // Use Clearbit to infer ICP if available
+  if (clearbitData && clearbitData.found) {
+    const industry = (clearbitData.industry || "").toLowerCase();
+    const sector = (clearbitData.sector || "").toLowerCase();
+
+    // Check against ICP verticals
+    for (const [icp, keywords] of Object.entries(ICP_VERTICALS)) {
+      for (const kw of keywords) {
+        if (industry.includes(kw) || sector.includes(kw)) {
+          return { matched: true, icp, inferred: true };
+        }
+      }
+    }
+  }
+
+  // No match found — but don't reject, just mark as unclassified
+  return { matched: false, icp: null };
+}
+
 // ─── Validation Functions ────────────────────────────────────
 
 /**
@@ -307,6 +382,21 @@ async function validateCandidates(candidates) {
       c.confidenceScore += SCORE.CLEARBIT;
       c.validationSignals.clearbit = true;
       c.clearbitData = cb;
+      
+      // ─── Non-Target Segment Check (Hard Reject) ───
+      const segmentCheck = isNonTargetSegment(cb, c.company, c.country);
+      if (segmentCheck.reject) {
+        c.confidenceScore = 0; // Force reject
+        c.rejectReason = segmentCheck.reason;
+        console.log(`[ICP Filter] Rejected "${c.company}" — ${segmentCheck.reason}`);
+        continue; // Skip further validation for this candidate
+      }
+      
+      // ─── ICP Matching (Enrichment, Not Filter) ───
+      const icpMatch = getICPMatch(cb, c.company, c.vertical, c.productFit);
+      if (icpMatch.matched) {
+        c.icpMatch = icpMatch;
+      }
     }
 
     if (perplexica.found) {
@@ -488,16 +578,17 @@ Return: [{"country":"US","region":"AMER"},...] — use AMER/EMEA/APAC/MENA regio
   const validated = await validateCandidates(companies);
 
   // Log validation results
-  const counts = { validated: 0, unverified: 0, rejected: 0, clearbit: 0, perplexica: 0, dns: 0 };
+  const counts = { validated: 0, unverified: 0, rejected: 0, clearbit: 0, perplexica: 0, dns: 0, icpFiltered: 0 };
   for (const c of validated) {
     const s = scoreToStatus(c.confidenceScore);
     counts[s]++;
     if (c.validationSignals.clearbit) counts.clearbit++;
     if (c.validationSignals.perplexica) counts.perplexica++;
     if (c.validationSignals.dns) counts.dns++;
+    if (c.rejectReason) counts.icpFiltered++;
   }
   console.log(`[Job ${job.id}] Perplexica Discovery: ${validated.length} candidates → ${counts.validated} validated, ${counts.unverified} unverified, ${counts.rejected} rejected`);
-  console.log(`[Job ${job.id}] Clearbit: ${counts.clearbit}/${validated.length}, Perplexica: ${counts.perplexica}/${validated.length}, DNS: ${counts.dns}/${validated.length}`);
+  console.log(`[Job ${job.id}] Clearbit: ${counts.clearbit}/${validated.length}, Perplexica: ${counts.perplexica}/${validated.length}, DNS: ${counts.dns}/${validated.length}, ICP Filtered: ${counts.icpFiltered}`);
 
   // Save non-rejected to DB
   const memberStatus = job.jobType === "expand" ? "pending" : "active";
@@ -524,6 +615,8 @@ Return: [{"country":"US","region":"AMER"},...] — use AMER/EMEA/APAC/MENA regio
         confidenceScore: c.confidenceScore,
         validationSignals: c.validationSignals,
         clearbitData: c.clearbitData || null,
+        icpMatch: c.icpMatch || null,
+        rejectReason: c.rejectReason || null,
         validatedAt: new Date().toISOString(),
       };
 
@@ -810,16 +903,17 @@ async function runWave(job, listInfo) {
   const validated = await validateCandidates(newCompanies);
 
   // Log validation results
-  const counts = { validated: 0, unverified: 0, rejected: 0, clearbit: 0, perplexica: 0, dns: 0 };
+  const counts = { validated: 0, unverified: 0, rejected: 0, clearbit: 0, perplexica: 0, dns: 0, icpFiltered: 0 };
   for (const c of validated) {
     const s = scoreToStatus(c.confidenceScore);
     counts[s]++;
     if (c.validationSignals.clearbit) counts.clearbit++;
     if (c.validationSignals.perplexica) counts.perplexica++;
     if (c.validationSignals.dns) counts.dns++;
+    if (c.rejectReason) counts.icpFiltered++;
   }
   console.log(`[Job ${job.id}] Validation: ${validated.length} candidates → ${counts.validated} validated (≥${THRESHOLD.VALIDATED}), ${counts.unverified} unverified (${THRESHOLD.UNVERIFIED}-${THRESHOLD.VALIDATED - 1}), ${counts.rejected} rejected (<${THRESHOLD.UNVERIFIED})`);
-  console.log(`[Job ${job.id}] Clearbit: ${counts.clearbit}/${validated.length} found, Perplexica: ${counts.perplexica}/${validated.length} confirmed, DNS: ${counts.dns}/${validated.length} resolved`);
+  console.log(`[Job ${job.id}] Clearbit: ${counts.clearbit}/${validated.length} found, Perplexica: ${counts.perplexica}/${validated.length} confirmed, DNS: ${counts.dns}/${validated.length} resolved, ICP Filtered: ${counts.icpFiltered}`);
 
   // For expand jobs, new members start as "pending" for review
   const memberStatus = job.jobType === "expand" ? "pending" : "active";
@@ -850,6 +944,8 @@ async function runWave(job, listInfo) {
         confidenceScore: c.confidenceScore,
         validationSignals: c.validationSignals,
         clearbitData: c.clearbitData || null,
+        icpMatch: c.icpMatch || null,
+        rejectReason: c.rejectReason || null,
         validatedAt: new Date().toISOString(),
       };
 

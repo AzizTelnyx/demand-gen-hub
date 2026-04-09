@@ -32,7 +32,8 @@ const TG_THREAD_ID = 164; // Agent Activity topic
 // Validation API keys
 const CLEARBIT_KEY = process.env.CLEARBIT_API_KEY || "sk_6a6f1e4c6f26338d6340d688ad197d48";
 
-// Perplexica config (self-hosted AI search)
+// Perplexica config (self-hosted AI search) — set PERPLEXICA_ENABLED=false to disable
+const PERPLEXICA_ENABLED = process.env.PERPLEXICA_ENABLED !== "false";
 const PERPLEXICA_URL = process.env.PERPLEXICA_URL || "http://localhost:3001";
 const PERPLEXICA_CHAT_PROVIDER_ID = process.env.PERPLEXICA_CHAT_PROVIDER_ID || "3fd01726-84a3-48aa-a9b0-d63b53cb7356";
 const PERPLEXICA_CHAT_MODEL = process.env.PERPLEXICA_CHAT_MODEL || "gemini/gemini-2.0-flash";
@@ -280,6 +281,7 @@ async function checkClearbit(domain) {
  * Uses self-hosted Perplexica instance (SearxNG + AI summarization).
  */
 async function checkPerplexica(companyName, domain) {
+  if (!PERPLEXICA_ENABLED) return { found: false, linkedinFound: false };
   if (!companyName) return { found: false, linkedinFound: false };
   try {
     const cleanDomain = domain ? domain.replace(/^https?:\/\//, "").replace(/\/.*$/, "") : "";
@@ -327,7 +329,7 @@ async function checkPerplexica(companyName, domain) {
 
     return { found, linkedinFound };
   } catch (e) {
-    console.error(`[Perplexica] Verify error for "${companyName}": ${e.message}`);
+    if (PERPLEXICA_ENABLED) console.error(`[Perplexica] Verify error for "${companyName}": ${e.message}`);
     return { found: false, linkedinFound: false };
   }
 }
@@ -433,6 +435,8 @@ function scoreToStatus(score) {
  * Returns results in the same format as runWave().
  */
 async function perplexicaDiscoveryWave(job, listInfo) {
+  // Skip if Perplexica disabled
+  if (!PERPLEXICA_ENABLED) return { generated: 0, newCount: 0, added: 0 };
 
     // Blocklist of news/listing domains to exclude
     const BLOCKED_DOMAINS = new Set([
@@ -534,7 +538,7 @@ async function perplexicaDiscoveryWave(job, listInfo) {
       } catch {} // invalid URL
     }
   } catch (e) {
-    console.error(`[Perplexica Discovery] Search error: ${e.message}`);
+    if (PERPLEXICA_ENABLED) console.error(`[Perplexica Discovery] Search error: ${e.message}`);
     return { generated: 0, newCount: 0, added: 0 };
   }
 
@@ -1074,7 +1078,7 @@ async function processJob(job) {
 
 async function pollLoop() {
   console.log("ABM Worker started. Polling for jobs...");
-  console.log(`[Config] Clearbit: ${CLEARBIT_KEY ? "configured" : "MISSING"}, Perplexica: ${PERPLEXICA_URL}`);
+  console.log(`[Config] Clearbit: ${CLEARBIT_KEY ? "configured" : "MISSING"}, Perplexica: ${PERPLEXICA_ENABLED ? PERPLEXICA_URL : "disabled"}`);
 
   while (true) {
     try {

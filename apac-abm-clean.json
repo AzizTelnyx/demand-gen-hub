@@ -1,0 +1,876 @@
+{
+  "timestamp": "2026-04-09 14:08:06.190978+00:00",
+  "profile": "APAC-headquartered likely buyers of Telnyx Voice AI infrastructure: AI-native startups, SaaS platforms, healthcare tech, fintech, travel tech, BPOs, contact-center operators, and product companies building or deploying voice agents, conversational AI, calling automation, phone-based workflows, or real-time voice experiences. Exclude telecom carriers, ISPs, CPaaS/UCaaS/CCaaS vendors, wholesale voice/SMS providers, and network operators. Favor companies with clear voice use cases, engineering-led products, or customer operations automation.",
+  "stats": {
+    "candidates": 79,
+    "accepted": 58,
+    "rejected": 21
+  },
+  "results": [
+    {
+      "company": "Avaana Capital",
+      "domain": "avaanacapital.com",
+      "country": "IN",
+      "vertical": "Venture Capital (Investing in AI/SaaS)",
+      "useCase": "Investing in and supporting portfolio companies that build voice-enabled solutions.",
+      "whyFit": "VC firm focused on early-stage tech, likely to have portfolio companies needing Voice AI infrastructure.",
+      "clearbit_industry": "Capital Markets",
+      "clearbit_sector": "Financials",
+      "employees": 15
+    },
+    {
+      "company": "Practo",
+      "domain": "practo.com",
+      "country": "IN",
+      "vertical": "Healthcare Tech",
+      "useCase": "Appointment booking, telemedicine, patient communication via voice.",
+      "whyFit": "Leading healthcare platform requiring reliable voice communication for patient interactions.",
+      "clearbit_industry": "Health Care Providers & Services",
+      "clearbit_sector": "Health Care",
+      "employees": 1644
+    },
+    {
+      "company": "Policybazaar",
+      "domain": "policybazaar.com",
+      "country": "IN",
+      "vertical": "Fintech (Insurance)",
+      "useCase": "Customer support, sales calls, policy verification via voice.",
+      "whyFit": "Large insurance aggregator relying on voice for customer acquisition and service.",
+      "clearbit_industry": "Insurance",
+      "clearbit_sector": "Financials",
+      "employees": 7250
+    },
+    {
+      "company": "Go-jek (now GoTo)",
+      "domain": "gojek.com",
+      "country": "ID",
+      "vertical": "Transportation/Super App",
+      "useCase": "Driver communication, customer support, order confirmation via voice.",
+      "whyFit": "Massive user base requiring robust voice infrastructure for various services.",
+      "clearbit_industry": "Road & Rail",
+      "clearbit_sector": "Industrials",
+      "employees": 25525
+    },
+    {
+      "company": "Traveloka",
+      "domain": "traveloka.com",
+      "country": "ID",
+      "vertical": "Travel Tech",
+      "useCase": "Customer support, booking confirmations, travel updates via voice.",
+      "whyFit": "Leading travel platform needing reliable voice communication for customer service.",
+      "clearbit_industry": "Consumer Services",
+      "clearbit_sector": "Consumer Discretionary",
+      "employees": 2200
+    },
+    {
+      "company": "Carro",
+      "domain": "carro.sg",
+      "country": "SG",
+      "vertical": "Automotive Marketplace",
+      "useCase": "Customer support, car inspection scheduling, sales calls via voice.",
+      "whyFit": "Online car marketplace needing voice for customer interaction and operations.",
+      "clearbit_industry": "Automotive",
+      "clearbit_sector": "Consumer Discretionary",
+      "employees": 1000
+    },
+    {
+      "company": "Ninja Van",
+      "domain": "ninjavan.co",
+      "country": "SG",
+      "vertical": "Logistics",
+      "useCase": "Driver communication, delivery updates, customer support via voice.",
+      "whyFit": "Fast-growing logistics company needing reliable voice for operations and customer service.",
+      "clearbit_industry": "Air Freight & Logistics",
+      "clearbit_sector": "Industrials",
+      "employees": 4294
+    },
+    {
+      "company": "Klook",
+      "domain": "klook.com",
+      "country": "HK",
+      "vertical": "Travel Tech",
+      "useCase": "Customer support, booking confirmations, activity updates via voice.",
+      "whyFit": "Travel experiences platform requiring voice for customer interaction.",
+      "clearbit_industry": "Consumer Services",
+      "clearbit_sector": "Consumer Discretionary",
+      "employees": 1750
+    },
+    {
+      "company": "AfterShip",
+      "domain": "aftership.com",
+      "country": "HK",
+      "vertical": "eCommerce SaaS",
+      "useCase": "Customer support, delivery updates, proactive notifications via voice.",
+      "whyFit": "eCommerce tracking platform that can leverage voice for customer communication.",
+      "clearbit_industry": "Air Freight & Logistics",
+      "clearbit_sector": "Industrials",
+      "employees": 30
+    },
+    {
+      "company": "KakaoBank",
+      "domain": "kakaobank.com",
+      "country": "KR",
+      "vertical": "Fintech (Digital Banking)",
+      "useCase": "Customer support, fraud detection, account verification via voice.",
+      "whyFit": "Digital bank requiring secure and reliable voice communication for customer service.",
+      "clearbit_industry": "Banks",
+      "clearbit_sector": "Financials",
+      "employees": 952
+    },
+    {
+      "company": "Sansan",
+      "domain": "sansan.com",
+      "country": "JP",
+      "vertical": "SaaS (Business Card Management)",
+      "useCase": "Customer support, sales calls, lead generation via voice.",
+      "whyFit": "Business card management SaaS platform that can integrate voice for customer interaction.",
+      "clearbit_industry": "IT Services",
+      "clearbit_sector": "Information Technology",
+      "employees": 114
+    },
+    {
+      "company": "Money Forward",
+      "domain": "moneyforward.com",
+      "country": "JP",
+      "vertical": "Fintech (Personal Finance)",
+      "useCase": "Customer support, financial advice, account management via voice.",
+      "whyFit": "Personal finance management platform needing voice for customer interaction.",
+      "clearbit_industry": "Internet Software & Services",
+      "clearbit_sector": "Information Technology",
+      "employees": 2597
+    },
+    {
+      "company": "Xero",
+      "domain": "xero.com",
+      "country": "NZ",
+      "vertical": "SaaS (Accounting)",
+      "useCase": "Customer support, partner communication, sales calls via voice.",
+      "whyFit": "Accounting software platform requiring voice for customer and partner interactions.",
+      "clearbit_industry": "Internet Software & Services",
+      "clearbit_sector": "Information Technology",
+      "employees": 4784
+    },
+    {
+      "company": "Canva",
+      "domain": "canva.com",
+      "country": "AU",
+      "vertical": "SaaS (Design)",
+      "useCase": "Customer support, user feedback, community engagement via voice.",
+      "whyFit": "Design platform that can leverage voice for customer support and feedback collection.",
+      "clearbit_industry": "Software",
+      "clearbit_sector": "Information Technology",
+      "employees": 3500
+    },
+    {
+      "company": "Halodoc",
+      "domain": "halodoc.com",
+      "country": "ID",
+      "vertical": "Healthcare Tech",
+      "useCase": "Telemedicine consultations, appointment scheduling, patient support via voice.",
+      "whyFit": "Leading telemedicine platform needing high-quality voice communication for consultations.",
+      "clearbit_industry": "Health Care Providers & Services",
+      "clearbit_sector": "Health Care",
+      "employees": 1500
+    },
+    {
+      "company": "Lazada",
+      "domain": "lazada.com",
+      "country": "SG",
+      "vertical": "eCommerce",
+      "useCase": "Customer support, order inquiries, seller communication via voice.",
+      "whyFit": "Major eCommerce platform needing robust voice infrastructure for customer service and seller support.",
+      "clearbit_industry": "Air Freight & Logistics",
+      "clearbit_sector": "Industrials",
+      "employees": 19034
+    },
+    {
+      "company": "Grab",
+      "domain": "grab.com",
+      "country": "SG",
+      "vertical": "Transportation/Super App",
+      "useCase": "Driver communication, customer support, order confirmation via voice.",
+      "whyFit": "Large user base requiring robust voice infrastructure for various services.",
+      "clearbit_industry": "Road & Rail",
+      "clearbit_sector": "Industrials",
+      "employees": 8834
+    },
+    {
+      "company": "Carsome",
+      "domain": "carsome.my",
+      "country": "MY",
+      "vertical": "Automotive Marketplace",
+      "useCase": "Customer support, car inspection scheduling, sales calls via voice.",
+      "whyFit": "Online car marketplace needing voice for customer interaction and operations.",
+      "clearbit_industry": "Automotive",
+      "clearbit_sector": "Consumer Discretionary",
+      "employees": 2000
+    },
+    {
+      "company": "iPrice Group",
+      "domain": "iprice.my",
+      "country": "MY",
+      "vertical": "eCommerce (Price Comparison)",
+      "useCase": "Customer support, merchant communication, product inquiries via voice.",
+      "whyFit": "Price comparison platform that can leverage voice for customer and merchant interactions.",
+      "clearbit_industry": "Internet Software & Services",
+      "clearbit_sector": "Information Technology",
+      "employees": 270
+    },
+    {
+      "company": "PayMaya",
+      "domain": "paymaya.com",
+      "country": "PH",
+      "vertical": "Fintech (Mobile Payments)",
+      "useCase": "Customer support, transaction verification, fraud prevention via voice.",
+      "whyFit": "Mobile payment platform needing voice for security and customer service.",
+      "clearbit_industry": "Banks",
+      "clearbit_sector": "Financials",
+      "employees": 960
+    },
+    {
+      "company": "Mynt (GCash)",
+      "domain": "gcash.com",
+      "country": "PH",
+      "vertical": "Fintech (Mobile Payments)",
+      "useCase": "Customer support, transaction verification, fraud prevention via voice.",
+      "whyFit": "Mobile payment platform needing voice for security and customer service.",
+      "clearbit_industry": "Capital Markets",
+      "clearbit_sector": "Financials",
+      "employees": 45
+    },
+    {
+      "company": "Airtasker",
+      "domain": "airtasker.com",
+      "country": "AU",
+      "vertical": "Marketplace (Task Management)",
+      "useCase": "Tasker and client communication, support, verification via voice.",
+      "whyFit": "Marketplace platform requiring voice for tasker and client communication.",
+      "clearbit_industry": "Specialty Retail",
+      "clearbit_sector": "Consumer Discretionary",
+      "employees": 175
+    },
+    {
+      "company": "Atlassian",
+      "domain": "atlassian.com",
+      "country": "AU",
+      "vertical": "SaaS (Collaboration)",
+      "useCase": "Customer support, sales calls, partner communication via voice.",
+      "whyFit": "Collaboration software platform requiring voice for customer and partner interactions.",
+      "clearbit_industry": "Internet Software & Services",
+      "clearbit_sector": "Information Technology",
+      "employees": 19266
+    },
+    {
+      "company": "ShopBack",
+      "domain": "shopback.com",
+      "country": "SG",
+      "vertical": "eCommerce (Cashback)",
+      "useCase": "Customer support, merchant communication, promotion inquiries via voice.",
+      "whyFit": "Cashback platform that can leverage voice for customer and merchant interactions.",
+      "clearbit_industry": "IT Services",
+      "clearbit_sector": "Information Technology",
+      "employees": 1250
+    },
+    {
+      "company": "Lalamove",
+      "domain": "lalamove.com",
+      "country": "HK",
+      "vertical": "Logistics",
+      "useCase": "Driver communication, delivery updates, customer support via voice.",
+      "whyFit": "Fast-growing logistics company needing reliable voice for operations and customer service.",
+      "clearbit_industry": "Air Freight & Logistics",
+      "clearbit_sector": "Industrials",
+      "employees": 1400
+    },
+    {
+      "company": "99.co",
+      "domain": "99.co",
+      "country": "SG",
+      "vertical": "Real Estate",
+      "useCase": "Customer support, agent communication, property inquiries via voice.",
+      "whyFit": "Real estate platform that can leverage voice for customer and agent interactions.",
+      "clearbit_industry": "Media",
+      "clearbit_sector": "Consumer Discretionary",
+      "employees": 420
+    },
+    {
+      "company": "Airwallex",
+      "domain": "airwallex.com",
+      "country": "HK",
+      "vertical": "Fintech (Payments)",
+      "useCase": "Customer support, transaction verification, fraud prevention via voice.",
+      "whyFit": "Global payment platform needing voice for security and customer service.",
+      "clearbit_industry": "Capital Markets",
+      "clearbit_sector": "Financials",
+      "employees": 1400
+    },
+    {
+      "company": "MakeMyTrip",
+      "domain": "makemytrip.com",
+      "country": "IN",
+      "vertical": "Travel Tech",
+      "useCase": "Customer service, booking assistance, and travel updates via voice.",
+      "whyFit": "Major travel platform with extensive customer support needs.",
+      "clearbit_industry": "Consumer Services",
+      "clearbit_sector": "Consumer Discretionary",
+      "employees": 3338
+    },
+    {
+      "company": "Razorpay",
+      "domain": "razorpay.com",
+      "country": "IN",
+      "vertical": "Fintech (Payments)",
+      "useCase": "Fraud detection, customer support, and payment confirmations via voice.",
+      "whyFit": "Fast-growing payment gateway processing high volumes of transactions.",
+      "clearbit_industry": "Diversified Financial Services",
+      "clearbit_sector": "Financials",
+      "employees": 2528
+    },
+    {
+      "company": "Paytm",
+      "domain": "paytm.com",
+      "country": "IN",
+      "vertical": "Fintech (Payments)",
+      "useCase": "Customer support, fraud prevention, and payment notifications via voice.",
+      "whyFit": "Major digital payments platform with a large user base.",
+      "clearbit_industry": "Diversified Financial Services",
+      "clearbit_sector": "Financials",
+      "employees": 3750
+    },
+    {
+      "company": "Sea Limited (Shopee, Garena)",
+      "domain": "seagroup.com",
+      "country": "SG",
+      "vertical": "E-commerce/Gaming",
+      "useCase": "Customer support for Shopee, in-game voice chat for Garena, and fraud prevention.",
+      "whyFit": "Large internet company with diverse voice-related needs.",
+      "clearbit_industry": "Internet Software & Services",
+      "clearbit_sector": "Information Technology",
+      "employees": 3000
+    },
+    {
+      "company": "Ajaib",
+      "domain": "ajaib.co.id",
+      "country": "ID",
+      "vertical": "Fintech (Investment)",
+      "useCase": "Customer support, investment advice, and transaction confirmations via voice.",
+      "whyFit": "Popular investment platform targeting young investors.",
+      "clearbit_industry": "Capital Markets",
+      "clearbit_sector": "Financials",
+      "employees": 570
+    },
+    {
+      "company": "Gojek",
+      "domain": "gojek.com",
+      "country": "ID",
+      "vertical": "Transportation/Delivery",
+      "useCase": "Driver communication, customer support, and order updates via voice.",
+      "whyFit": "Superapp with significant voice-based interactions for drivers and customers.",
+      "clearbit_industry": "Road & Rail",
+      "clearbit_sector": "Industrials",
+      "employees": 25525
+    },
+    {
+      "company": "Kakao",
+      "domain": "kakao.com",
+      "country": "KR",
+      "vertical": "Internet Services",
+      "useCase": "Voice-based search, virtual assistants, and communication features within KakaoTalk.",
+      "whyFit": "Dominant internet company in South Korea with diverse voice applications.",
+      "clearbit_industry": "Internet Software & Services",
+      "clearbit_sector": "Information Technology",
+      "employees": 15678
+    },
+    {
+      "company": "Naver",
+      "domain": "naver.com",
+      "country": "KR",
+      "vertical": "Internet Services",
+      "useCase": "Voice search, virtual assistants, and translation services.",
+      "whyFit": "Leading search engine and internet portal in South Korea.",
+      "clearbit_industry": "Internet Software & Services",
+      "clearbit_sector": "Information Technology",
+      "employees": 2790
+    },
+    {
+      "company": "Coupang",
+      "domain": "coupang.com",
+      "country": "KR",
+      "vertical": "E-commerce",
+      "useCase": "Customer service, order tracking, and delivery updates via voice.",
+      "whyFit": "Major e-commerce platform with significant customer support needs.",
+      "clearbit_industry": "Air Freight & Logistics",
+      "clearbit_sector": "Industrials",
+      "employees": 63000
+    },
+    {
+      "company": "Line Corporation",
+      "domain": "linecorp.com",
+      "country": "KR",
+      "vertical": "Internet Services",
+      "useCase": "Voice calls, virtual assistants, and communication features within the Line app.",
+      "whyFit": "Popular messaging app with a wide range of voice-based features.",
+      "clearbit_industry": "Internet Software & Services",
+      "clearbit_sector": "Information Technology",
+      "employees": 2250
+    },
+    {
+      "company": "Rakuten",
+      "domain": "rakuten.com",
+      "country": "JP",
+      "vertical": "E-commerce/Fintech",
+      "useCase": "Customer service for Rakuten Ichiba, Rakuten Card, and other services.",
+      "whyFit": "Large e-commerce and fintech company with diverse voice-related needs.",
+      "clearbit_industry": "Internet Software & Services",
+      "clearbit_sector": "Information Technology",
+      "employees": 18364
+    },
+    {
+      "company": "Carsales.com.au",
+      "domain": "carsales.com.au",
+      "country": "AU",
+      "vertical": "Automotive Marketplace",
+      "useCase": "Customer service, lead generation, and sales calls via voice.",
+      "whyFit": "Leading online car marketplace in Australia.",
+      "clearbit_industry": "Automotive",
+      "clearbit_sector": "Consumer Discretionary",
+      "employees": 600
+    },
+    {
+      "company": "MYOB",
+      "domain": "myob.com",
+      "country": "AU",
+      "vertical": "SaaS (Accounting)",
+      "useCase": "Customer support, accounting automation, and voice-based data entry.",
+      "whyFit": "Leading accounting software provider in Australia and New Zealand.",
+      "clearbit_industry": "Diversified Financial Services",
+      "clearbit_sector": "Financials",
+      "employees": 2802
+    },
+    {
+      "company": "Bowtie Life Insurance",
+      "domain": "bowtie.com.hk",
+      "country": "HK",
+      "vertical": "Fintech (Insurance)",
+      "useCase": "Customer support, sales, and policy management through voice channels.",
+      "whyFit": "Digital insurance company with potential for voice automation.",
+      "clearbit_industry": "Insurance",
+      "clearbit_sector": "Financials",
+      "employees": 106
+    },
+    {
+      "company": "Inspiro",
+      "domain": "inspiro.com",
+      "country": "PH",
+      "vertical": "BPO",
+      "useCase": "Customer experience management services, including contact center operations and digital solutions.",
+      "whyFit": "Large BPO with significant voice-based customer service operations, requiring robust and scalable voice infrastructure.",
+      "clearbit_industry": "Professional Services",
+      "clearbit_sector": "Industrials",
+      "employees": 3000
+    },
+    {
+      "company": "Gnowbe",
+      "domain": "gnowbe.com",
+      "country": "SG",
+      "vertical": "SaaS",
+      "useCase": "Mobile learning platform for corporate training and development.",
+      "whyFit": "Could use voice for interactive learning modules, feedback collection, and personalized coaching.",
+      "clearbit_industry": "Diversified Consumer Services",
+      "clearbit_sector": "Consumer Discretionary",
+      "employees": 45
+    },
+    {
+      "company": "Go-jek (Gojek)",
+      "domain": "gojek.com",
+      "country": "ID",
+      "vertical": "Tech",
+      "useCase": "Ride-hailing, food delivery, and other on-demand services.",
+      "whyFit": "While primarily app-based, voice communication is crucial for driver-customer interactions and customer support.",
+      "clearbit_industry": "Road & Rail",
+      "clearbit_sector": "Industrials",
+      "employees": 25525
+    },
+    {
+      "company": "CXC Global",
+      "domain": "cxcglobal.com",
+      "country": "AU",
+      "vertical": "BPO",
+      "useCase": "Contingent workforce management solutions, including payroll and compliance.",
+      "whyFit": "Uses voice for communication with contractors and clients, requiring reliable and scalable voice infrastructure.",
+      "clearbit_industry": "Professional Services",
+      "clearbit_sector": "Industrials",
+      "employees": 420
+    },
+    {
+      "company": "Docquity",
+      "domain": "docquity.com",
+      "country": "SG",
+      "vertical": "Healthcare Tech",
+      "useCase": "Professional network for doctors, enabling collaboration and knowledge sharing.",
+      "whyFit": "Could use voice for secure doctor-to-doctor consultations and knowledge sharing.",
+      "clearbit_industry": "Professional Services",
+      "clearbit_sector": "Industrials",
+      "employees": 420
+    },
+    {
+      "company": "Pine Labs",
+      "domain": "pinelabs.com",
+      "country": "IN",
+      "vertical": "Fintech",
+      "useCase": "Merchant commerce platform providing payment solutions and point-of-sale systems.",
+      "whyFit": "Could use voice for payment verification, fraud detection, and customer support.",
+      "clearbit_industry": "Diversified Financial Services",
+      "clearbit_sector": "Financials",
+      "employees": 4000
+    },
+    {
+      "company": "RedDoorz",
+      "domain": "reddoorz.com",
+      "country": "SG",
+      "vertical": "Travel Tech",
+      "useCase": "Budget hotel booking platform.",
+      "whyFit": "Customer support and booking confirmations heavily rely on voice communication.",
+      "clearbit_industry": "Hotels, Restaurants & Leisure",
+      "clearbit_sector": "Consumer Discretionary",
+      "employees": 1400
+    },
+    {
+      "company": "Agoda",
+      "domain": "agoda.com",
+      "country": "SG",
+      "vertical": "Travel Tech",
+      "useCase": "Online travel agency specializing in hotel bookings.",
+      "whyFit": "High volume of customer inquiries and booking confirmations handled via voice.",
+      "clearbit_industry": "Consumer Services",
+      "clearbit_sector": "Consumer Discretionary",
+      "employees": 21600
+    },
+    {
+      "company": "Sprout Solutions",
+      "domain": "sprout.ph",
+      "country": "PH",
+      "vertical": "SaaS",
+      "useCase": "HR and payroll software for businesses.",
+      "whyFit": "Could use voice for employee communication, feedback collection, and HR-related inquiries.",
+      "clearbit_industry": "IT Services",
+      "clearbit_sector": "Information Technology",
+      "employees": 420
+    },
+    {
+      "company": "AirAsia",
+      "domain": "airasia.com",
+      "country": "MY",
+      "vertical": "Travel Tech",
+      "useCase": "Low-cost airline.",
+      "whyFit": "Customer support and booking confirmations heavily rely on voice communication.",
+      "clearbit_industry": "Airlines",
+      "clearbit_sector": "Industrials",
+      "employees": 23000
+    },
+    {
+      "company": "Infosys BPM",
+      "domain": "infosysbpm.com",
+      "country": "IN",
+      "vertical": "BPO",
+      "useCase": "Business process management services.",
+      "whyFit": "Large BPO with significant voice-based customer service operations.",
+      "clearbit_industry": "Internet Software & Services",
+      "clearbit_sector": "Information Technology",
+      "employees": 60344
+    },
+    {
+      "company": "Niramai",
+      "domain": "niramai.com",
+      "country": "IN",
+      "vertical": "Healthcare Tech (AI)",
+      "useCase": "Voice-based diagnostic support, patient communication, remote monitoring.",
+      "whyFit": "AI-powered breast cancer screening company likely exploring voice for patient interaction and diagnostic support.",
+      "clearbit_industry": "Health Care Providers & Services",
+      "clearbit_sector": "Health Care",
+      "employees": 90
+    },
+    {
+      "company": "Go-jek",
+      "domain": "gojek.com",
+      "country": "ID",
+      "vertical": "Super App (Transportation, Food Delivery)",
+      "useCase": "Driver communication, customer support, order confirmation via voice.",
+      "whyFit": "Large super app with extensive driver network and customer base, utilizing voice for communication and support.",
+      "clearbit_industry": "Road & Rail",
+      "clearbit_sector": "Industrials",
+      "employees": 25525
+    },
+    {
+      "company": "AnyMind Group",
+      "domain": "anymindgroup.com",
+      "country": "JP",
+      "vertical": "Marketing Tech",
+      "useCase": "Voice-based marketing campaigns, influencer outreach, customer engagement.",
+      "whyFit": "Marketing technology company potentially exploring voice for advertising and customer interaction.",
+      "clearbit_industry": "Media",
+      "clearbit_sector": "Consumer Discretionary",
+      "employees": 1941
+    },
+    {
+      "company": "ShopBack",
+      "domain": "shopback.sg",
+      "country": "SG",
+      "vertical": "Fintech (Rewards)",
+      "useCase": "Customer support, cashback inquiries, account management via voice.",
+      "whyFit": "Cashback rewards platform using voice for customer service and account support.",
+      "clearbit_industry": "Consumer Discretionary",
+      "clearbit_sector": "Consumer Discretionary",
+      "employees": 370
+    },
+    {
+      "company": "Freee K.K.",
+      "domain": "freee.co.jp",
+      "country": "JP",
+      "vertical": "Fintech (Accounting)",
+      "useCase": "Customer support, accounting assistance, tax advice via voice.",
+      "whyFit": "Cloud accounting software provider using voice for customer service and accounting support.",
+      "clearbit_industry": "Diversified Financial Services",
+      "clearbit_sector": "Financials",
+      "employees": 1722
+    },
+    {
+      "company": "Woowa Brothers (Baedal Minjok)",
+      "domain": "woowahan.com",
+      "country": "KR",
+      "vertical": "Food Delivery",
+      "useCase": "Order confirmation, delivery updates, customer support via voice.",
+      "whyFit": "Leading food delivery platform using voice for order management and customer communication.",
+      "clearbit_industry": "Internet Software & Services",
+      "clearbit_sector": "Information Technology",
+      "employees": 40
+    }
+  ],
+  "rejected": [
+    {
+      "company": "Toss (Viva Republica)",
+      "domain": "toss.im",
+      "country": "South Korea",
+      "vertical": "Fintech (Mobile Payments)",
+      "useCase": "Customer support, transaction verification, fraud prevention via voice.",
+      "whyFit": "Mobile payment platform needing voice for security and customer service.",
+      "reason": "non_apac_hq:IM"
+    },
+    {
+      "company": "Medriva",
+      "domain": "medriva.com",
+      "country": "Taiwan",
+      "vertical": "Healthcare Tech",
+      "useCase": "Telemedicine consultations, appointment scheduling, patient support via voice.",
+      "whyFit": "Telemedicine platform needing high-quality voice communication for consultations.",
+      "reason": "non_apac_hq:US"
+    },
+    {
+      "company": "Circles.Life",
+      "domain": "circles.life",
+      "country": "Singapore",
+      "vertical": "Digital Telco (excluding traditional telco services)",
+      "useCase": "Customer support, sales calls, account management via voice.",
+      "whyFit": "Digital telco provider requiring voice for customer interaction.",
+      "reason": "excluded:telecommunications",
+      "clearbit": {
+        "found": true,
+        "country": "SG",
+        "industry": "Wireless Telecommunication Services",
+        "sector": "Telecommunication Services",
+        "description": "Circles.Life: Empowering customers with customizable no-contract mobile plans and innovative digital services for ultimate control and freedom in telecommunications.",
+        "name": "Circles.Life",
+        "employees": 1000
+      }
+    },
+    {
+      "company": "Freshworks",
+      "domain": "freshworks.com",
+      "country": "India",
+      "vertical": "SaaS (CRM, Customer Service)",
+      "useCase": "Integrating voice AI into their customer service and CRM platforms.",
+      "whyFit": "Leading SaaS provider with a focus on customer engagement.",
+      "reason": "non_apac_hq:US"
+    },
+    {
+      "company": "SoftBank Robotics",
+      "domain": "softbankrobotics.com",
+      "country": "Japan",
+      "vertical": "Robotics",
+      "useCase": "Voice interaction with robots, customer service, and data collection.",
+      "whyFit": "Leading robotics company developing robots with voice capabilities.",
+      "reason": "non_apac_hq:FR"
+    },
+    {
+      "company": "Afterpay",
+      "domain": "afterpay.com",
+      "country": "Australia",
+      "vertical": "Fintech (Buy Now, Pay Later)",
+      "useCase": "Customer support, fraud prevention, and payment reminders via voice.",
+      "whyFit": "Popular buy now, pay later service with significant customer interaction.",
+      "reason": "non_apac_hq:US"
+    },
+    {
+      "company": "Active.Ai",
+      "domain": "active.ai",
+      "country": "Singapore",
+      "vertical": "Fintech",
+      "useCase": "Conversational AI for banking and financial services, automating customer interactions.",
+      "whyFit": "AI-native startup providing conversational AI solutions, heavily reliant on voice interactions for customer service and engagement in the financial sector.",
+      "reason": "non_apac_hq:US"
+    },
+    {
+      "company": "Knowlarity",
+      "domain": "knowlarity.com",
+      "country": "India",
+      "vertical": "SaaS",
+      "useCase": "Cloud-based communication solutions for businesses, including virtual numbers, call tracking, and IVR.",
+      "whyFit": "Provides communication solutions to various businesses, making them a potential user of Telnyx's Voice API for enhancing their product offerings (though not a direct competitor).",
+      "reason": "excluded:telecom",
+      "clearbit": {
+        "found": true,
+        "country": "IN",
+        "industry": "Diversified Telecommunication Services",
+        "sector": "Telecommunication Services",
+        "description": "Knowlarity is a top cloud communication provider specializing in virtual numbers, IVR, toll-free numbers, and AI solutions. It empowers businesses in Asia and the Middle East to boost revenue through innovative customer communication technology.",
+        "name": "Knowlarity",
+        "employees": 690
+      }
+    },
+    {
+      "company": "Medgate",
+      "domain": "medgate.ch",
+      "country": "Singapore",
+      "vertical": "Healthcare Tech",
+      "useCase": "Telemedicine provider offering remote consultations and healthcare services.",
+      "whyFit": "Relies heavily on voice for remote consultations and patient communication, making them a strong candidate for Telnyx's Voice API.",
+      "reason": "non_apac_hq:CH"
+    },
+    {
+      "company": "TaskUs",
+      "domain": "taskus.com",
+      "country": "Philippines",
+      "vertical": "BPO",
+      "useCase": "Outsourcing services for high-growth companies, including customer support and content moderation.",
+      "whyFit": "Provides customer support services, including voice-based interactions, for a variety of clients.",
+      "reason": "non_apac_hq:US"
+    },
+    {
+      "company": "CloudMile",
+      "domain": "cloudmile.com",
+      "country": "Taiwan",
+      "vertical": "AI",
+      "useCase": "AI and cloud solutions provider, helping businesses adopt AI technologies.",
+      "whyFit": "Likely building or deploying voice-enabled AI solutions for their clients, needing robust voice infrastructure.",
+      "reason": "clearbit_not_found"
+    },
+    {
+      "company": "MoEngage",
+      "domain": "moengage.com",
+      "country": "India",
+      "vertical": "SaaS",
+      "useCase": "Customer engagement platform for mobile-first businesses.",
+      "whyFit": "Could integrate voice into their platform for personalized customer communication and support.",
+      "reason": "non_apac_hq:US"
+    },
+    {
+      "company": "VXI Global Solutions",
+      "domain": "vxiglobal.com",
+      "country": "Philippines",
+      "vertical": "BPO",
+      "useCase": "Customer experience outsourcing services.",
+      "whyFit": "Large BPO with significant voice-based customer service operations.",
+      "reason": "clearbit_not_found"
+    },
+    {
+      "company": "Zenoti",
+      "domain": "zenoti.com",
+      "country": "India",
+      "vertical": "SaaS",
+      "useCase": "Cloud-based software for spas, salons, and medspas.",
+      "whyFit": "Appointment scheduling, customer reminders, and marketing campaigns can leverage voice.",
+      "reason": "non_apac_hq:US"
+    },
+    {
+      "company": "MyDoc",
+      "domain": "mydoc.sg",
+      "country": "Singapore",
+      "vertical": "Healthcare Tech",
+      "useCase": "Digital healthcare platform connecting patients with doctors.",
+      "whyFit": "Voice consultations and patient support are core to their service.",
+      "reason": "clearbit_not_found"
+    },
+    {
+      "company": "Telstra Purple",
+      "domain": "telstra.com",
+      "country": "Australia",
+      "vertical": "Technology Services",
+      "useCase": "Technology consulting and managed services provider.",
+      "whyFit": "While part of Telstra, Purple focuses on digital transformation and could be building voice solutions for clients.",
+      "reason": "excluded:telecommunications",
+      "clearbit": {
+        "found": true,
+        "country": "AU",
+        "industry": "Wireless Telecommunication Services",
+        "sector": "Telecommunication Services",
+        "description": "Telstra is a leading telecommunications and technology company that offers a wide range of products and services, including broadband internet, NBN, 5G, TV, mobile phone services, and on-demand streaming. With a focus on accessibility and inclusion, Te...",
+        "name": "Telstra",
+        "employees": 17000
+      }
+    },
+    {
+      "company": "Genesys Telecommunications Laboratories (Japan)",
+      "domain": "genesys.com/ja",
+      "country": "Japan",
+      "vertical": "Technology",
+      "useCase": "Customer experience platform provider.",
+      "whyFit": "While Genesys is a global company, their Japan branch could be building specific voice solutions for the Japanese market.",
+      "reason": "clearbit_not_found"
+    },
+    {
+      "company": "Xendit",
+      "domain": "xendit.co",
+      "country": "Indonesia",
+      "vertical": "Fintech (Payments)",
+      "useCase": "Payment authentication, fraud detection, customer support via voice.",
+      "whyFit": "Fast-growing payment gateway using voice for security and customer service.",
+      "reason": "non_apac_hq:US"
+    },
+    {
+      "company": "Mediquip Global",
+      "domain": "mediquipglobal.com",
+      "country": "Australia",
+      "vertical": "Healthcare Tech",
+      "useCase": "Customer support, medical equipment orders, technical support via voice.",
+      "whyFit": "Medical equipment supplier using voice for customer service and order management.",
+      "reason": "clearbit_not_found"
+    },
+    {
+      "company": "Toss",
+      "domain": "toss.im",
+      "country": "South Korea",
+      "vertical": "Fintech (Payments)",
+      "useCase": "Payment authentication, customer support, fraud detection via voice.",
+      "whyFit": "Mobile payments platform using voice for security and customer service.",
+      "reason": "non_apac_hq:IM"
+    },
+    {
+      "company": "Taiwan Taxi",
+      "domain": "taiwantaxi.com.tw",
+      "country": "Taiwan",
+      "vertical": "Transportation",
+      "useCase": "Dispatch, driver communication, customer booking via voice.",
+      "whyFit": "Taxi service using voice for dispatch and customer interaction.",
+      "reason": "excluded:isp",
+      "clearbit": {
+        "found": true,
+        "country": "TW",
+        "industry": "Road & Rail",
+        "sector": "Industrials",
+        "description": "Taiwan Taxi Co., Ltd. is Taiwan's leading taxi service with 24/7 satellite-dispatched rides, prioritizing safety and convenience for all passengers.",
+        "name": "Taiwan Taxi",
+        "employees": 15
+      }
+    }
+  ]
+}

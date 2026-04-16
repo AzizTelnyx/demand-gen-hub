@@ -223,15 +223,17 @@ def process_single_sa_campaign(camp, monthly_windows, token, dry_run=False):
     return camp_records
 
 
-def _subprocess_worker(camp, monthly_windows_serialized, token):
+def _subprocess_worker(camp, monthly_windows_serialized, token, count_queue):
     monthly_windows = [(datetime.strptime(s, "%Y-%m-%d").date(),
                         datetime.strptime(e, "%Y-%m-%d").date())
                        for s, e in monthly_windows_serialized]
     try:
         records = process_single_sa_campaign(camp, monthly_windows, token)
         print(f"    → {records} domain-month records (subprocess)")
+        count_queue.put(records)
     except Exception:
         traceback.print_exc()
+        count_queue.put(0)
 
 
 def sync_stackadapt(start_date, end_date, monthly_windows, include_paused, use_subprocess, dry_run):
@@ -265,19 +267,24 @@ def sync_stackadapt(start_date, end_date, monthly_windows, include_paused, use_s
     windows_serialized = [(w[0].strftime("%Y-%m-%d"), w[1].strftime("%Y-%m-%d")) for w in monthly_windows]
     total_records = 0
     t0 = time.time()
+    count_queue = multiprocessing.Queue() if use_subprocess else None
 
     for i, camp in enumerate(active_campaigns):
         elapsed = time.time() - t0
         print(f"  [{i+1}/{len(active_campaigns)}] {camp['name'][:60]}  (elapsed: {elapsed:.0f}s)", flush=True)
 
         if use_subprocess:
-            p = multiprocessing.Process(target=_subprocess_worker, args=(camp, windows_serialized, token))
+            p = multiprocessing.Process(target=_subprocess_worker, args=(camp, windows_serialized, token, count_queue))
             p.start()
             p.join(timeout=300)
             if p.is_alive():
                 print(f"    ⚠ Subprocess timed out, killing")
                 p.kill()
                 p.join()
+                count_queue.get() if not count_queue.empty() else None  # drain stale entry
+            # Collect the count from the finished subprocess
+            while not count_queue.empty():
+                total_records += count_queue.get()
         else:
             camp_records = process_single_sa_campaign(camp, monthly_windows, token)
             total_records += camp_records

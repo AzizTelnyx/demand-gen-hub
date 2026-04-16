@@ -1,35 +1,23 @@
 # ABM API Audit — Platform Capabilities & Gaps
 
-**Date:** 2026-04-16
+**Date:** 2026-04-16 (updated with verified API test results)
 **Purpose:** What each platform API can do for ABM audience lifecycle management
 
 ## Summary Matrix
 
-| Capability | Google Ads | StackAdapt | LinkedIn | Reddit |
+| Capability | StackAdapt | LinkedIn | Google Ads | Reddit |
 |---|---|---|---|---|
-| **List audiences** | ✅ 245 lists, sizes available | ✅ customSegments, audiences | ⚠️ Can see segment URNs in campaigns, but NOT list/query audiences directly | ⚠️ Need to verify |
-| **Create audience/list** | ✅ Customer Match API | ✅ createAbmAudience, createAbmAudienceWithDomainsList, createCrmSegment, createProfileList | ❌ Matched Audience API returns 404 — needs Audience Management API product | ❌ Unknown |
-| **Update audience** | ✅ Add/remove members | ✅ updateAbmAudience, updateAbmAudienceWithDomainsList, updateCrmSegment, updateProfileListProfiles | ❌ Same blocker | ❌ Unknown |
-| **Delete audience** | ✅ | ✅ deleteCustomSegment, deleteProfileList | ❌ | ❌ Unknown |
-| **Audience size/count** | ✅ size_for_search, size_for_display | ✅ size/duidSize on segments | ❌ audienceCounts API returns 404 | ❌ Unknown |
-| **Campaign-level targeting** | ✅ Full CRUD | ✅ upsertCampaign with targeting | ✅ Can read/write targetingCriteria | ✅ Can read campaigns |
-| **Domain-based targeting** | ✅ Customer Match (email) | ✅ ABM with domain lists (THE key feature) | ✅ audienceMatchingSegments | ❌ Email-based only |
-| **Negative audiences** | ✅ CampaignCriterion exclusions | ✅ Exclusion targeting in campaigns | ✅ exclude in targetingCriteria | ⚠️ Limited |
-| **Enrichment** | N/A | ✅ B2B domain insights, Bombora intent | ✅ Can see which segments are in use | N/A |
+| **List audiences** | ✅ customSegments (50+), sizes | ✅ 262 DMP segments with sizes | ✅ 245 lists, 95 active | ⚠️ Low priority |
+| **Create audience** | ✅ createAbmAudience, createAbmAudienceWithDomainsList | ✅ POST /dmpSegments (type=COMPANY) — verified 201 Created | ✅ Customer Match | ❌ N/A |
+| **Update audience members** | ✅ updateAbmAudienceWithDomainsList | ⚠️ Upload endpoint not found yet — likely needs UI or undocumented endpoint | ✅ Add/remove members | ❌ N/A |
+| **Archive/delete audience** | ✅ deleteCustomSegment | ✅ PATCH status=ARCHIVED — verified | ✅ | ❌ N/A |
+| **Audience size** | ✅ size/duidSize | ✅ audienceSize in destinations | ✅ size_for_search/display | ❌ N/A |
+| **Attach/detach from campaign** | ✅ upsertCampaign with targeting | ✅ PATCH targetingCriteria — verified add/remove segments | ✅ CampaignCriterion | ❌ N/A |
+| **Domain-based targeting** | ✅ Direct domain upload | ✅ COMPANY type DMP segments | ⚠️ Email-based only | ❌ N/A |
+| **Negative audiences** | ✅ Exclusion targeting | ✅ exclude in targetingCriteria | ✅ is_negative=true | ⚠️ |
+| **Engagement data** | ✅ B2B_DOMAIN insights | ⚠️ Campaign-level only | ✅ Campaign-level | ❌ N/A |
 
 ## Platform Details
-
-### Google Ads — Full Access ✅
-**Scopes:** Full read/write via Google Ads API v23
-**Current:** 245 user lists, 95 with non-zero sizes
-**ABM approach:** Customer Match (upload emails/hashes → matched audience)
-**Key APIs:**
-- `user_list` resource: list, create, update, get sizes
-- `CustomerMatchUserListMetadata`: upload email/contact lists
-- `CampaignCriterion`: attach/detach audiences to campaigns, set bid modifiers
-- Negative audiences via `campaign_criterion` with `is_negative = true`
-
-**Gap:** No domain-based targeting. Must convert domains → emails via Clearbit/SF before uploading.
 
 ### StackAdapt — Full Access ✅✅ (Best ABM Platform)
 **Scopes:** Full GraphQL read/write
@@ -49,74 +37,86 @@
 - `campaignInsight(attributes: [B2B_DOMAIN])`: Domain-level engagement data
 - `audienceInsights(jobId)`: Audience intelligence results
 
-**This is the best platform for ABM automation** — direct domain upload, domain-level engagement data, and full CRUD on audiences.
+**Best platform for ABM automation** — direct domain upload, domain-level engagement data, and full CRUD on audiences.
 
-### LinkedIn — Partial Access ⚠️
+### LinkedIn — Near-Full Access ✅ (CORRECTED — earlier audit was wrong)
 **Scopes:** `r_ads, r_ads_reporting, r_organization_social, r_organization, rw_ads`
-**Current:** 19 active campaigns referencing 54 adSegment URNs
-**What works:**
-- Read/write campaign targeting (targetingCriteria)
-- Read adSegment URNs used in campaigns
-- Campaign CRUD
-- Analytics (adAnalyticsV2)
+**Current:** 19 active campaigns, 262 DMP segments (2 COMPANY type, 48+ USER/intent type), 54 unique adSegment URNs in active campaigns
 
-**What's BLOCKED:**
-- Matched Audiences API → 404 (needs Audience Management API product, not just rw_ads)
-- Audience Counts API → 404
-- DMP Segments API → 404
-- Cannot create/update/delete audience lists via API
-- Cannot get audience sizes programmatically
+**✅ What WORKS (verified by API testing):**
+- **CREATE matched audiences**: `POST /v2/dmpSegments` with `type=COMPANY` returns 201 Created ✅
+- **READ all DMP segments**: `GET /v2/dmpSegments?q=account&account=urn:li:sponsoredAccount:{id}` — returns 262 segments with audience sizes ✅
+- **UPDATE campaign targeting**: `PATCH /v2/adCampaignsV2/{id}` with `{"patch":{"$set":{"targetingCriteria":...}}}` — verified by adding/removing real segments ✅
+- **ARCHIVE segments**: `PATCH /v2/dmpSegments/{id}` with `{"patch":{"$set":{"status":"ARCHIVED"}}}` ✅
+- **READ analytics**: adAnalyticsV2 ✅
+- **UPDATE campaigns** (status, budget, name): Partial update with patch format ✅
 
-**Workaround:** Manage audiences via LinkedIn Campaign Manager UI, and sync targeting criteria (which segments are applied to which campaigns) via API.
+**⚠️ Not yet verified (needs further testing):**
+- **POPULATE COMPANY segments** with domains — the upload endpoint pattern is undocumented
+  - `/dmpSegments/{id}/uploads` → 404
+  - `/dmpSegments/{id}/actions` → 404
+  - The sourcePlatform is `ABM_HUB_COMPANY_TIERING` which suggests LinkedIn Campaign Manager's ABM Hub
+  - **Likely needs**: The matched audience upload API which may require the `rw_audiences` scope or a specific product
+  - **Workaround**: Create the segment via API, populate it via Campaign Manager UI, then manage targeting via API
 
-**To unblock:** Apply for LinkedIn Marketing API → Audience Management API product. This is separate from Advertising API access.
+**⚠️ Still missing:**
+- Audience Counts API (for estimating reach before campaign launch)
+- Company lookup API (for finding URNs by company name) — the Community Management API would solve this
 
-### Reddit — Needs Verification ⚠️
-**Scopes:** Full API access via OAuth2
-**Current:** 26 campaigns synced, working campaign/metrics APIs
-**ABM approach:** Custom audiences (email-based)
+**Critical discovery:** The initial "ACCESS_DENIED" errors were due to **wrong request format** (flat JSON vs LinkedIn's patch document format `{"patch":{"$set":{...}}}`). The `rw_ads` scope IS sufficient for most operations.
+
+### Google Ads — Full Access ✅
+**Scopes:** Full read/write via Google Ads API v23
+**Current:** 245 user lists, 95 with non-zero sizes
+**ABM approach:** Customer Match (upload emails/hashes → matched audience)
 **Key APIs:**
-- `/ad_accounts/{id}/audiences`: List/create custom audiences (needs verification)
-- Campaign targeting: works
-- Reports: works
+- `user_list` resource: list, create, update, get sizes
+- `CustomerMatchUserListMetadata`: upload email/contact lists
+- `CampaignCriterion`: attach/detach audiences to campaigns, set bid modifiers
+- Negative audiences via `campaign_criterion` with `is_negative = true`
 
-**Gap:** Reddit is bottom-of-funnel, not primarily ABM. Audience sizes are small. Low priority for ABM automation.
+**Gap:** No domain-based targeting. Must convert domains → emails via Clearbit/SF before uploading.
+
+### Reddit — Low ABM Priority
+Not a primary ABM platform. Email-based audiences. Deprioritized.
 
 ## Architecture Implications
 
 ### What We Can Automate End-to-End
-1. **StackAdapt ABM** — Full lifecycle: create domain lists → attach to campaigns → monitor engagement → expand/prune → sync back
-2. **Google Ads Customer Match** — Near-full: convert domains → emails → upload → attach → monitor → update
-3. **LinkedIn targeting** — Partial: can read/write which segments are on campaigns, but can't create/manage the segments themselves
+1. **StackAdapt ABM** — Full lifecycle: create domain lists → attach to campaigns → monitor engagement → expand/prune → all via API
+2. **LinkedIn ABM** — Near-full: create segments → attach/detach to campaigns → monitor → archive. Only gap: populating segments with company domains (UI needed until we find the upload endpoint)
+3. **Google Ads** — Near-full: convert domains → emails → Customer Match upload → attach
 
-### What Needs Manual Steps
-1. **LinkedIn audience management** — Must use Campaign Manager UI to create/update matched audiences. API can only attach existing ones.
-2. **Reddit audience management** — Likely similar to LinkedIn, needs verification
+### What Needs the UI Workaround
+1. **LinkedIn company list population** — After creating a COMPANY segment via API, populate it via Campaign Manager UI. Then manage targeting via API.
+2. This is a one-time step per new segment — the ongoing management (attach/detach to campaigns, archive) is fully automated.
 
 ### Recommended Sync Architecture
 ```
 DB (source of truth)
     │
     ├── ABM Sync Agent (daily)
-    │   ├── StackAdapt: Full CRUD — create/update ABM audiences, attach to campaigns
+    │   ├── StackAdapt: Full CRUD — create/update ABM audiences, upload domains, attach to campaigns
+    │   ├── LinkedIn: Create segments, attach/detach to campaigns, read sizes, archive
+    │   │   └── UI fallback: Populate new COMPANY segments with domains via Campaign Manager
     │   ├── Google Ads: Customer Match upload — domain→email→list, attach to campaigns
-    │   ├── LinkedIn: Read targeting (which segments on which campaigns), WRITE targeting (attach/detach existing segments)
     │   └── Reddit: Read-only for now
     │
-    ├── ABM Auditor (weekly) — uses DB + platform data
-    ├── ABM Expander (weekly) — writes to DB only
-    └── ABM Pruner (biweekly) — writes to DB only
+    ├── ABM Auditor (weekly) — reads DB + platform sizes, flags stale/undersized lists
+    ├── ABM Expander (weekly) — researches new companies, enriches, writes to DB
+    └── ABM Pruner (biweekly) — finds zero-engagement accounts, suggests removals
 ```
 
 ### Priority Order for ABM Automation
-1. **StackAdapt** — Full automation possible, highest ROI (domain-based ABM is their core)
-2. **Google Ads** — Near-full, needs email conversion step
-3. **LinkedIn** — Partial until Audience Management API approved
+1. **StackAdapt** — Full automation, highest ROI (domain upload is native)
+2. **LinkedIn** — Near-full, just needs UI for initial population of new segments
+3. **Google Ads** — Near-full, needs email conversion step
 4. **Reddit** — Low priority for ABM
 
 ## Action Items
-- [ ] Apply for LinkedIn Audience Management API product access
-- [ ] Verify Reddit custom audience API endpoints
+- [x] ~~Apply for LinkedIn Audience Management API product access~~ — NOT NEEDED, rw_ads is sufficient
+- [ ] Investigate LinkedIn COMPANY segment upload endpoint (undocumented)
 - [ ] Build StackAdapt ABM connector (highest priority — full CRUD)
+- [ ] Build LinkedIn ABM connector (create segments, attach/detach, read sizes)
 - [ ] Build Google Ads Customer Match connector
 - [ ] Create ABMListRule table for rule-based list management

@@ -1,0 +1,37 @@
+{
+  "brief": {
+    "platform": null,
+    "format": null,
+    "audience": "healthcare providers",
+    "painPoints": [
+      "need for HIPAA-compliant communication solutions"
+    ],
+    "coreMessage": "HIPAA-compliant voice AI for patient communications",
+    "pillar": "trust",
+    "adCopyExample": null,
+    "ctaSuggestion": "Learn More"
+  },
+  "copy": {
+    "headlines": [
+      "HIPAA-Compliant Voice AI with Sub-200ms Latency",
+      "Secure Patient Communications Across 140+ Countries",
+      "Telnyx Voice AI: 99.999% Uptime for Healthcare Providers",
+      "One Platform for Voice AI with SOC 2 Type II Compliance",
+      "Own Network Infrastructure Ensures HIPAA-Ready Voice AI",
+      "Voice AI Engineered for Healthcare Security and Reliability",
+      "Reduce Latency in Patient Calls with Telnyx Voice AI",
+      "HIPAA and PCI Compliant Voice AI for Patient Communication",
+      "Telnyx Voice AI: Integrated Telephony and AI with Low Latency",
+      "Secure, Compliant Voice AI for Global Healthcare Networks"
+    ],
+    "descriptions": [
+      "Telnyx Voice AI operates on a proprietary network with sub-200ms latency and 99.999% uptime, ensuring HIPAA and SOC 2 Type II compliance for patient communications.",
+      "Manage patient interactions securely across 140+ countries using a single platform with HIPAA, SOC 2, and PCI certifications, eliminating vendor complexity.",
+      "Our platform integrates AI inference co-located with telephony infrastructure to maintain low latency and compliance standards required by healthcare providers.",
+      "Telnyx Voice AI provides a HIPAA-ready communication solution with SOC 2 Type II certification and proprietary network ownership, supporting secure patient engagement.",
+      "Simplify healthcare communications with a single compliant platform offering sub-200ms latency and 99.999% uptime, designed specifically for patient data security."
+    ],
+    "cta": "Learn More"
+  },
+  "generatedAt": "2026-04-14T13:00:30.370Z"
+}

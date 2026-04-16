@@ -24,6 +24,16 @@ All agents share a knowledge base (38 files), guardrails system, approval workfl
 | 8 | **Audience & Targeting** | `audience-targeting-optimizer.py` | Fleet daily 7 AM | ABM audience contamination, targeting hygiene | LinkedIn R, StackAdapt R |
 | 9 | **Device & Geo Optimizer** | `device-geo-optimizer.py` | Fleet daily 7 AM | Device bids, geographic performance analysis | Google Ads R/W |
 | 10 | **Landing Page Validator** | `landing-page-validator.py` | Fleet daily 7 AM | LP URLs, UTM parameters, broken link checks | Google Ads R, HTTP |
+| 15 | **Flight Auto-Extend** | `flight-auto-extend-agent.py` | Daily 6 AM | Extends StackAdapt flights nearing end date, prevents campaigns from going dark | StackAdapt R/W |
+
+**Flight Auto-Extend SLAs:**
+- Max dead time: 24 hours (daily check ensures this)
+- Extension success rate: ≥95% (failures → immediate Telegram escalation)
+- Coverage: All active StackAdapt campaigns
+- Lead time: 7 days before flight end (extends when ≤7 days remaining)
+- Extension length: 30 days per extension
+- Budget: Same as ending flight (no auto-increase without approval)
+- Alert: Any campaign that can't be auto-extended → immediate Telegram alert to Agent Activity thread
 
 ### Needs Fix ⚠️
 
@@ -129,6 +139,7 @@ Shared foundation every agent inherits:
 | 5:00 AM | LinkedIn Org Mapping Rebuild | Daily |
 | 5:00 AM | Audience Hygiene Scan | Monday |
 | 6:00 AM | Hub Doctor | Daily |
+| 6:00 AM | Flight Auto-Extend Agent | Daily |
 | 7:00 AM | Fleet Run (8 agents in sequence) | Daily |
 | Every 6h | Campaign Sync (all platforms + Salesforce) | 4x daily |
 

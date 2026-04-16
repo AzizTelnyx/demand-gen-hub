@@ -304,6 +304,100 @@ Summary:
 
 ---
 
+## ABM List Builder (v2)
+
+### Architecture: Two-Pass Pipeline
+
+The ABM list builder generates targeted B2B company lists using a two-pass architecture:
+
+```
+PASS 1: DISCOVERY                    PASS 2: VALIDATION
+┌─────────────────────┐             ┌─────────────────────────┐
+│ Country-specific AI  │             │ DNS check               │
+│ prompts (per-country)│──┐         │ Clearbit enrichment     │
+│                      │  │         │ Brave search verify     │
+│ Archetype-specific   │  ├─→ raw   │ Region gate (ISO codes) │
+│ prompts (5 verticals)│  │   pool  │ Evidence tier check      │
+│                      │  │         │ Negative class check     │
+│ Brave API search     │──┘         │ ABM Exclusion Registry   │
+│ (10 queries)         │             │ Competitor check         │
+└─────────────────────┘             │ Dedup by domain         │
+                                    └──────────┬──────────────┘
+                                               │
+                                    ┌──────────▼──────────────┐
+                                    │ Quality Gates            │
+                                    │ • Clearbit data required │
+                                    │ • Tier1/Tier2 only       │
+                                    │ • Score ≥ 70 validated  │
+                                    │ • Evidence must be real  │
+                                    └──────────┬──────────────┘
+                                               │
+                                    ┌──────────▼──────────────┐
+                                    │ SAVE to DB              │
+                                    │ ABMAccount + ABMListMember│
+                                    └─────────────────────────┘
+```
+
+### Models
+- **Primary:** Gemini 2.5 Flash (fast, no rate limits, good structured output)
+- **Fallback:** Gemini 2.5 Pro (more accurate but 503 under load)
+- **Not used:** Kimi K2.5 (reasoning model, uses all tokens on thinking, never produces JSON)
+
+### Evidence Tier System
+
+The validation pipeline uses a three-tier evidence system to separate real voice AI buyers from companies that just have phone numbers:
+
+| Tier | Keywords | Decision |
+|------|----------|----------|
+| **Primary** (building voice products) | voice AI, speech recognition, TTS, voice synthesis, voicebot, conversational AI platform, voice cloning, speech analytics | ✅ Always pass |
+| **Secondary** (using voice as core workflow) | automated phone calls, outbound dialer, IVR, call automation, call tracking, call analytics, telephony, SIP | ✅ Pass with Clearbit verification |
+| **Not evidence** | phone support, appointment booking, patient portal, scheduling, care management, clinical communication, patient engagement (generic) | ❌ Reject |
+
+**The test:** "Does this company make phone calls to people as part of their product?" If yes → buyer. If they just have a booking form → not a buyer.
+
+### ABM Exclusion Registry
+
+Persistent, categorized exclusion list stored in:
+- **DB:** `ABMExclusion` table (queryable by all agents)
+- **Markdown:** `knowledge/abm/exclusion-registry.md` (human-readable)
+
+Categories:
+| Category | Description |
+|----------|-------------|
+| `reseller` | IT resellers, SIs, consultancies that don't build voice products |
+| `agency` | Digital/creative/dev agencies |
+| `hospital` | Healthcare providers (hospitals, clinics, doctor booking) |
+| `insurance` | Insurance companies with phone support only |
+| `debt_collection` | Debt collection agencies (end users, not builders) |
+| `fintech` | Payment/fintech without voice product |
+| `bpo` | Call center/BPO operators (service providers, not buyers) |
+| `competitor` | Competitor-adjacent platforms (CCaaS, CPaaS) |
+| `identity` | Biometrics/identity verification (not voice) |
+| `dead_domain` | Non-existent or redirecting domains |
+| `too_large` | Massive public companies not ABM-appropriate |
+| `bad_fit` | Everything else that doesn't fit |
+
+**Campaign-objective exclusion rules:**
+
+| Campaign Objective | Exclude Categories | Include Categories |
+|---|---|---|
+| Voice API / Programmable Voice | Insurance, Hospitals, Fintech, BPO, Identity | AI Voice Builders, Speech Tech, Call Automation |
+| SIP Trunking | Identity, Dead domains | Contact Centers, BPOs (they USE SIP), AI Voice Builders |
+| AI Voice Agent | Insurance, Fintech, Hospitals, BPO | AI Voice Builders, Speech Tech, Conversational AI |
+| Contact Center AI | Hospitals, Fintech | Contact Centers, BPOs (they BUY CCaaS), AI Voice Builders |
+
+### Region System
+- ISO country codes mapped in `COUNTRY_REGION` constant (AU, GB, DE, FR, NL, etc.)
+- Gemini 2.5 Pro requires system message: "You are a market research assistant..." to avoid UK-specific refusals
+- Clearbit `hqCountry` is the source of truth for region; AI-generated countries are unverified and penalized
+
+### Worker File
+- **v2 worker:** `scripts/abm-worker-v2.js`
+- **Archetypes:** `scripts/lib/abm_archetypes.js` (ARCHETYPES + NEGATIVE_CLASSES)
+- **PM2 process:** `abm-worker-v2`
+
+---
+
 ## File Map
 
 ```
@@ -320,7 +414,9 @@ demand-gen-hub/
 │       ├── health/          ← Health UI
 │       └── ...
 ├── scripts/
+│   ├── abm-worker-v2.js     ← ABM list builder (two-pass architecture)
 │   ├── lib/
+│   │   ├── abm_archetypes.js ← Evidence archetypes + negative classes
 │   │   ├── agent_base.py    ← BaseAgent class (shared by all agents)
 │   │   └── approval_handler.py
 │   ├── platforms/
@@ -335,17 +431,19 @@ demand-gen-hub/
 │   ├── hub-doctor.py
 │   ├── reddit-ops-agent.py
 │   ├── google-creative-specialist.py
-│   ├── ...
+│   └── ...
 │   ├── sync_local.py        ← Campaign sync (all platforms)
 │   └── query_metrics.py     ← Live metrics (never stale DB)
-├── knowledge/               ← 38 files, served via /api/context
+├── knowledge/               ← 38+ files, served via /api/context
+│   ├── abm/
+│   │   └── exclusion-registry.md ← Categorized exclusion list + campaign rules
 │   ├── brand/
 │   ├── products/
 │   ├── competitors/
 │   ├── standards/
 │   └── ...
 ├── prisma/
-│   └── schema.prisma        ← DB schema
+│   └── schema.prisma        ← DB schema (incl. ABMExclusion table)
 └── logs/                    ← Agent run logs (per-agent dirs)
 ```
 

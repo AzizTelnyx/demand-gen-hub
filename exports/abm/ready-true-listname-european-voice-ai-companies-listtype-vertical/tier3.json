@@ -1,0 +1,47 @@
+[
+  {
+    "company": "Calabrio",
+    "domain": "calabrio.com",
+    "country": "Sweden",
+    "region": "EMEA",
+    "vertical": "Any",
+    "productFit": "ai-agent",
+    "status": "validated",
+    "confidenceTier": "tier3",
+    "confidenceScore": 70,
+    "archetype": "",
+    "evidenceType": "",
+    "evidenceSnippet": "",
+    "description": "Workforce performance and customer experience solutions."
+  },
+  {
+    "company": "Vocale.ai",
+    "domain": "vocale.ai",
+    "country": "UK",
+    "region": "EMEA",
+    "vertical": "ai-voice",
+    "productFit": "ai-agent",
+    "status": "unverified",
+    "confidenceTier": "tier3",
+    "confidenceScore": 30,
+    "archetype": "",
+    "evidenceType": "voice_agent",
+    "evidenceSnippet": "Real-time voice AI platform for sales teams",
+    "description": "Real-time voice AI for sales teams."
+  },
+  {
+    "company": "Plexus.ai",
+    "domain": "plexus.ai",
+    "country": "France",
+    "region": "EMEA",
+    "vertical": "healthcare",
+    "productFit": "ai-agent",
+    "status": "unverified",
+    "confidenceTier": "tier3",
+    "confidenceScore": 30,
+    "archetype": "",
+    "evidenceType": "voice_agent",
+    "evidenceSnippet": "AI-powered platform for automating tasks in healthcare",
+    "description": "Offers an AI-powered platform for automating tasks in healthcare, including voice-based communication."
+  }
+]

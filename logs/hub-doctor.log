@@ -289,3 +289,1368 @@
 
   22 issue(s) found — CRITICAL
 
+
+🔴 Hub Doctor — CRITICAL
+  2026-03-17T13:00:05.751375+00:00
+
+  🔴 pm2        pm2 jlist failed: /bin/sh: pm2: command not found
+  ⚠️ crons      No gateway token file
+     ↳ no token
+  ✅ database   size=84 MB | Campaign=668, AdImpression=40649, AgentRun=171, Recommendation=12213, CampaignChange=62 | backup: latest dghub_2026-03-17_0100.dump (5h ago)
+  🔴 sync       google_ads=12.9h ago, stackadapt=12.9h ago, reddit=12.9h ago, linkedin=12.8h ago
+     ↳ google_ads: last sync 13h ago
+     ↳ stackadapt: last sync 13h ago
+     ↳ reddit: last sync 13h ago
+     ↳ linkedin: last sync 13h ago
+  🔴 agents     domain-publisher-manager: 0/2 (0%), avg 57.4s; creative-manager: 0/4 (0%), avg 59.7s; frequency-reach-manager: 0/4 (0%), avg 104.4s; stackadapt-ops: 0/4 (0%), avg 0.0s; budget-pacing-manager: 0/4 (0%), avg 76.9s; keyword-bid-optimizer: 1/16 (6%), avg 0.0s; hub-doctor: 7/7 (100%), avg 0.0s; reddit-ops: 0/4 (0%), avg 1679.3s; negative-keyword: 0/16 (0%), avg 245.7s; landing-page-validator: 0/2 (0%), avg 69.6s; budget-pacing: 0/27 (0%), avg 0.0s; google-creative-specialist: 0/4 (0%), avg 6.6s; keyword-hygiene: 0/20 (0%), avg 3.2s; audience-targeting-optimizer: 0/2 (0%), avg 3.8s; google-search-manager: 0/4 (0%), avg 17.6s; device-geo-optimizer: 0/5 (0%), avg 80.0s; creative-qa: 0/7 (0%), avg 0.0s; neg-keyword: 3/15 (20%), avg -752.9s
+     ↳ domain-publisher-manager: success rate 0% < 90%
+     ↳ creative-manager: success rate 0% < 90%
+     ↳ frequency-reach-manager: success rate 0% < 90%
+     ↳ stackadapt-ops: success rate 0% < 90%
+     ↳ budget-pacing-manager: success rate 0% < 90%
+     ↳ keyword-bid-optimizer: success rate 6% < 90%
+     ↳ reddit-ops: success rate 0% < 90%
+     ↳ negative-keyword: success rate 0% < 90%
+     ↳ landing-page-validator: success rate 0% < 90%
+     ↳ budget-pacing: success rate 0% < 90%
+     ↳ google-creative-specialist: success rate 0% < 90%
+     ↳ keyword-hygiene: success rate 0% < 90%
+     ↳ audience-targeting-optimizer: success rate 0% < 90%
+     ↳ google-search-manager: success rate 0% < 90%
+     ↳ device-geo-optimizer: success rate 0% < 90%
+     ↳ creative-qa: success rate 0% < 90%
+     ↳ neg-keyword: success rate 20% < 90%
+  ✅ api        /api/campaigns: 200 (0.3s), /api/budget: 200 (0.0s), /api/agents: 200 (0.0s)
+
+  Alerts (22):
+    🟡 [crons] no token
+    🔴 [sync] google_ads: last sync 13h ago
+    🔴 [sync] stackadapt: last sync 13h ago
+    🔴 [sync] reddit: last sync 13h ago
+    🔴 [sync] linkedin: last sync 13h ago
+    🔴 [agents] domain-publisher-manager: success rate 0% < 90%
+    🔴 [agents] creative-manager: success rate 0% < 90%
+    🔴 [agents] frequency-reach-manager: success rate 0% < 90%
+    🔴 [agents] stackadapt-ops: success rate 0% < 90%
+    🔴 [agents] budget-pacing-manager: success rate 0% < 90%
+    🔴 [agents] keyword-bid-optimizer: success rate 6% < 90%
+    🔴 [agents] reddit-ops: success rate 0% < 90%
+    🔴 [agents] negative-keyword: success rate 0% < 90%
+    🔴 [agents] landing-page-validator: success rate 0% < 90%
+    🔴 [agents] budget-pacing: success rate 0% < 90%
+    🔴 [agents] google-creative-specialist: success rate 0% < 90%
+    🔴 [agents] keyword-hygiene: success rate 0% < 90%
+    🔴 [agents] audience-targeting-optimizer: success rate 0% < 90%
+    🔴 [agents] google-search-manager: success rate 0% < 90%
+    🔴 [agents] device-geo-optimizer: success rate 0% < 90%
+    🔴 [agents] creative-qa: success rate 0% < 90%
+    🔴 [agents] neg-keyword: success rate 20% < 90%
+
+  22 issue(s) found — CRITICAL
+
+
+🔴 Hub Doctor — CRITICAL
+  2026-03-18T13:00:03.503590+00:00
+
+  🔴 pm2        pm2 jlist failed: /bin/sh: pm2: command not found
+  ⚠️ crons      No gateway token file
+     ↳ no token
+  ✅ database   size=85 MB | Campaign=669, AdImpression=40860, AgentRun=181, Recommendation=12329, CampaignChange=72 | backup: latest dghub_2026-03-18_0100.dump (5h ago)
+  🔴 sync       google_ads=12.9h ago, stackadapt=12.9h ago, reddit=12.9h ago, linkedin=12.8h ago
+     ↳ google_ads: last sync 13h ago
+     ↳ stackadapt: last sync 13h ago
+     ↳ reddit: last sync 13h ago
+     ↳ linkedin: last sync 13h ago
+  🔴 agents     domain-publisher-manager: 0/2 (0%), avg 57.4s; creative-manager: 0/4 (0%), avg 59.7s; frequency-reach-manager: 0/4 (0%), avg 104.4s; stackadapt-ops: 0/3 (0%), avg 0.0s; budget-pacing-manager: 0/3 (0%), avg 76.2s; keyword-bid-optimizer: 1/16 (6%), avg 0.0s; hub-doctor: 8/8 (100%), avg 0.0s; reddit-ops: 0/4 (0%), avg 1679.3s; negative-keyword: 0/17 (0%), avg 267.2s; landing-page-validator: 0/1 (0%), avg 69.0s; budget-pacing: 0/27 (0%), avg 0.0s; audience-targeting-optimizer: 0/1 (0%), avg 7.0s; google-creative-specialist: 0/4 (0%), avg 6.6s; keyword-hygiene: 0/21 (0%), avg 3.1s; google-search-manager: 0/3 (0%), avg 17.1s; device-geo-optimizer: 0/5 (0%), avg 80.0s; creative-qa: 0/8 (0%), avg 0.0s; neg-keyword: 1/12 (8%), avg -941.1s
+     ↳ domain-publisher-manager: success rate 0% < 90%
+     ↳ creative-manager: success rate 0% < 90%
+     ↳ frequency-reach-manager: success rate 0% < 90%
+     ↳ stackadapt-ops: success rate 0% < 90%
+     ↳ budget-pacing-manager: success rate 0% < 90%
+     ↳ keyword-bid-optimizer: success rate 6% < 90%
+     ↳ reddit-ops: success rate 0% < 90%
+     ↳ negative-keyword: success rate 0% < 90%
+     ↳ landing-page-validator: success rate 0% < 90%
+     ↳ budget-pacing: success rate 0% < 90%
+     ↳ audience-targeting-optimizer: success rate 0% < 90%
+     ↳ google-creative-specialist: success rate 0% < 90%
+     ↳ keyword-hygiene: success rate 0% < 90%
+     ↳ google-search-manager: success rate 0% < 90%
+     ↳ device-geo-optimizer: success rate 0% < 90%
+     ↳ creative-qa: success rate 0% < 90%
+     ↳ neg-keyword: success rate 8% < 90%
+  ✅ api        /api/campaigns: 200 (0.3s), /api/budget: 200 (0.0s), /api/agents: 200 (0.0s)
+
+  Alerts (22):
+    🟡 [crons] no token
+    🔴 [sync] google_ads: last sync 13h ago
+    🔴 [sync] stackadapt: last sync 13h ago
+    🔴 [sync] reddit: last sync 13h ago
+    🔴 [sync] linkedin: last sync 13h ago
+    🔴 [agents] domain-publisher-manager: success rate 0% < 90%
+    🔴 [agents] creative-manager: success rate 0% < 90%
+    🔴 [agents] frequency-reach-manager: success rate 0% < 90%
+    🔴 [agents] stackadapt-ops: success rate 0% < 90%
+    🔴 [agents] budget-pacing-manager: success rate 0% < 90%
+    🔴 [agents] keyword-bid-optimizer: success rate 6% < 90%
+    🔴 [agents] reddit-ops: success rate 0% < 90%
+    🔴 [agents] negative-keyword: success rate 0% < 90%
+    🔴 [agents] landing-page-validator: success rate 0% < 90%
+    🔴 [agents] budget-pacing: success rate 0% < 90%
+    🔴 [agents] audience-targeting-optimizer: success rate 0% < 90%
+    🔴 [agents] google-creative-specialist: success rate 0% < 90%
+    🔴 [agents] keyword-hygiene: success rate 0% < 90%
+    🔴 [agents] google-search-manager: success rate 0% < 90%
+    🔴 [agents] device-geo-optimizer: success rate 0% < 90%
+    🔴 [agents] creative-qa: success rate 0% < 90%
+    🔴 [agents] neg-keyword: success rate 8% < 90%
+
+  22 issue(s) found — CRITICAL
+
+
+🔴 Hub Doctor — CRITICAL
+  2026-03-19T13:00:02.891853+00:00
+
+  🔴 pm2        pm2 jlist failed: /bin/sh: pm2: command not found
+  ⚠️ crons      No gateway token file
+     ↳ no token
+  ✅ database   size=85 MB | Campaign=669, AdImpression=41053, AgentRun=192, Recommendation=12443, CampaignChange=75 | backup: latest dghub_2026-03-19_0100.dump (5h ago)
+  🔴 sync       google_ads=12.8h ago, stackadapt=12.8h ago, reddit=12.8h ago, linkedin=12.8h ago
+     ↳ google_ads: last sync 13h ago
+     ↳ stackadapt: last sync 13h ago
+     ↳ reddit: last sync 13h ago
+     ↳ linkedin: last sync 13h ago
+  🔴 agents     domain-publisher-manager: 0/2 (0%), avg 57.4s; creative-manager: 0/5 (0%), avg 64.3s; frequency-reach-manager: 0/4 (0%), avg 104.4s; stackadapt-ops: 0/3 (0%), avg 0.0s; budget-pacing-manager: 0/3 (0%), avg 76.2s; keyword-bid-optimizer: 0/11 (0%), avg 0.0s; hub-doctor: 9/9 (100%), avg 0.0s; reddit-ops: 0/4 (0%), avg 1679.3s; negative-keyword: 0/18 (0%), avg 286.4s; landing-page-validator: 0/1 (0%), avg 69.0s; budget-pacing: 0/28 (0%), avg 0.0s; audience-targeting-optimizer: 0/1 (0%), avg 7.0s; google-creative-specialist: 0/4 (0%), avg 6.6s; keyword-hygiene: 0/21 (0%), avg 3.2s; google-search-manager: 0/3 (0%), avg 17.1s; device-geo-optimizer: 0/5 (0%), avg 80.0s; creative-qa: 0/8 (0%), avg 0.0s; neg-keyword: 0/9 (0%), avg -1254.8s
+     ↳ domain-publisher-manager: success rate 0% < 90%
+     ↳ creative-manager: success rate 0% < 90%
+     ↳ frequency-reach-manager: success rate 0% < 90%
+     ↳ stackadapt-ops: success rate 0% < 90%
+     ↳ budget-pacing-manager: success rate 0% < 90%
+     ↳ keyword-bid-optimizer: success rate 0% < 90%
+     ↳ reddit-ops: success rate 0% < 90%
+     ↳ negative-keyword: success rate 0% < 90%
+     ↳ landing-page-validator: success rate 0% < 90%
+     ↳ budget-pacing: success rate 0% < 90%
+     ↳ audience-targeting-optimizer: success rate 0% < 90%
+     ↳ google-creative-specialist: success rate 0% < 90%
+     ↳ keyword-hygiene: success rate 0% < 90%
+     ↳ google-search-manager: success rate 0% < 90%
+     ↳ device-geo-optimizer: success rate 0% < 90%
+     ↳ creative-qa: success rate 0% < 90%
+     ↳ neg-keyword: success rate 0% < 90%
+  ✅ api        /api/campaigns: 200 (0.3s), /api/budget: 200 (0.0s), /api/agents: 200 (0.0s)
+
+  Alerts (22):
+    🟡 [crons] no token
+    🔴 [sync] google_ads: last sync 13h ago
+    🔴 [sync] stackadapt: last sync 13h ago
+    🔴 [sync] reddit: last sync 13h ago
+    🔴 [sync] linkedin: last sync 13h ago
+    🔴 [agents] domain-publisher-manager: success rate 0% < 90%
+    🔴 [agents] creative-manager: success rate 0% < 90%
+    🔴 [agents] frequency-reach-manager: success rate 0% < 90%
+    🔴 [agents] stackadapt-ops: success rate 0% < 90%
+    🔴 [agents] budget-pacing-manager: success rate 0% < 90%
+    🔴 [agents] keyword-bid-optimizer: success rate 0% < 90%
+    🔴 [agents] reddit-ops: success rate 0% < 90%
+    🔴 [agents] negative-keyword: success rate 0% < 90%
+    🔴 [agents] landing-page-validator: success rate 0% < 90%
+    🔴 [agents] budget-pacing: success rate 0% < 90%
+    🔴 [agents] audience-targeting-optimizer: success rate 0% < 90%
+    🔴 [agents] google-creative-specialist: success rate 0% < 90%
+    🔴 [agents] keyword-hygiene: success rate 0% < 90%
+    🔴 [agents] google-search-manager: success rate 0% < 90%
+    🔴 [agents] device-geo-optimizer: success rate 0% < 90%
+    🔴 [agents] creative-qa: success rate 0% < 90%
+    🔴 [agents] neg-keyword: success rate 0% < 90%
+
+  22 issue(s) found — CRITICAL
+
+
+🔴 Hub Doctor — CRITICAL
+  2026-03-20T13:00:05.416087+00:00
+
+  🔴 pm2        pm2 jlist failed: /bin/sh: pm2: command not found
+  ⚠️ crons      No gateway token file
+     ↳ no token
+  ✅ database   size=85 MB | Campaign=670, AdImpression=41293, AgentRun=203, Recommendation=12556, CampaignChange=77 | backup: latest dghub_2026-03-20_0100.dump (5h ago)
+  🔴 sync       google_ads=18.9h ago, stackadapt=12.9h ago, reddit=18.9h ago, linkedin=12.8h ago
+     ↳ google_ads: last sync 19h ago
+     ↳ stackadapt: last sync 13h ago
+     ↳ reddit: last sync 19h ago
+     ↳ linkedin: last sync 13h ago
+  🔴 agents     domain-publisher-manager: 0/2 (0%), avg 57.4s; creative-manager: 0/6 (0%), avg 67.1s; frequency-reach-manager: 0/4 (0%), avg 104.4s; stackadapt-ops: 0/4 (0%), avg 0.0s; budget-pacing-manager: 0/3 (0%), avg 76.2s; keyword-bid-optimizer: 0/11 (0%), avg 0.0s; hub-doctor: 9/9 (100%), avg 0.0s; reddit-ops: 0/2 (0%), avg 14.8s; negative-keyword: 0/18 (0%), avg 316.4s; landing-page-validator: 0/1 (0%), avg 69.0s; budget-pacing: 0/29 (0%), avg 0.0s; audience-targeting-optimizer: 0/1 (0%), avg 7.0s; google-creative-specialist: 0/1 (0%), avg 7.8s; keyword-hygiene: 0/21 (0%), avg 3.2s; google-search-manager: 0/3 (0%), avg 17.1s; device-geo-optimizer: 0/5 (0%), avg 80.0s; creative-qa: 0/8 (0%), avg 0.0s; neg-keyword: 0/8 (0%), avg -1411.6s
+     ↳ domain-publisher-manager: success rate 0% < 90%
+     ↳ creative-manager: success rate 0% < 90%
+     ↳ frequency-reach-manager: success rate 0% < 90%
+     ↳ stackadapt-ops: success rate 0% < 90%
+     ↳ budget-pacing-manager: success rate 0% < 90%
+     ↳ keyword-bid-optimizer: success rate 0% < 90%
+     ↳ reddit-ops: success rate 0% < 90%
+     ↳ negative-keyword: success rate 0% < 90%
+     ↳ landing-page-validator: success rate 0% < 90%
+     ↳ budget-pacing: success rate 0% < 90%
+     ↳ audience-targeting-optimizer: success rate 0% < 90%
+     ↳ google-creative-specialist: success rate 0% < 90%
+     ↳ keyword-hygiene: success rate 0% < 90%
+     ↳ google-search-manager: success rate 0% < 90%
+     ↳ device-geo-optimizer: success rate 0% < 90%
+     ↳ creative-qa: success rate 0% < 90%
+     ↳ neg-keyword: success rate 0% < 90%
+  ✅ api        /api/campaigns: 200 (0.3s), /api/budget: 200 (0.0s), /api/agents: 200 (0.0s)
+
+  Alerts (22):
+    🟡 [crons] no token
+    🔴 [sync] google_ads: last sync 19h ago
+    🔴 [sync] stackadapt: last sync 13h ago
+    🔴 [sync] reddit: last sync 19h ago
+    🔴 [sync] linkedin: last sync 13h ago
+    🔴 [agents] domain-publisher-manager: success rate 0% < 90%
+    🔴 [agents] creative-manager: success rate 0% < 90%
+    🔴 [agents] frequency-reach-manager: success rate 0% < 90%
+    🔴 [agents] stackadapt-ops: success rate 0% < 90%
+    🔴 [agents] budget-pacing-manager: success rate 0% < 90%
+    🔴 [agents] keyword-bid-optimizer: success rate 0% < 90%
+    🔴 [agents] reddit-ops: success rate 0% < 90%
+    🔴 [agents] negative-keyword: success rate 0% < 90%
+    🔴 [agents] landing-page-validator: success rate 0% < 90%
+    🔴 [agents] budget-pacing: success rate 0% < 90%
+    🔴 [agents] audience-targeting-optimizer: success rate 0% < 90%
+    🔴 [agents] google-creative-specialist: success rate 0% < 90%
+    🔴 [agents] keyword-hygiene: success rate 0% < 90%
+    🔴 [agents] google-search-manager: success rate 0% < 90%
+    🔴 [agents] device-geo-optimizer: success rate 0% < 90%
+    🔴 [agents] creative-qa: success rate 0% < 90%
+    🔴 [agents] neg-keyword: success rate 0% < 90%
+
+  22 issue(s) found — CRITICAL
+
+
+🔴 Hub Doctor — CRITICAL
+  2026-03-23T13:00:01.418995+00:00
+
+  🔴 pm2        pm2 jlist failed: /bin/sh: pm2: command not found
+  ⚠️ crons      No gateway token file
+     ↳ no token
+  ✅ database   size=85 MB | Campaign=670, AdImpression=41913, AgentRun=223, Recommendation=12732, CampaignChange=81 | backup: latest dghub_2026-03-23_0100.dump (5h ago)
+  🔴 sync       google_ads=12.9h ago, stackadapt=12.9h ago, reddit=12.9h ago, linkedin=12.8h ago
+     ↳ google_ads: last sync 13h ago
+     ↳ stackadapt: last sync 13h ago
+     ↳ reddit: last sync 13h ago
+     ↳ linkedin: last sync 13h ago
+  🔴 agents     domain-publisher-manager: 0/2 (0%), avg 57.4s; creative-manager: 0/7 (0%), avg 66.7s; frequency-reach-manager: 0/2 (0%), avg 108.3s; stackadapt-ops: 0/4 (0%), avg 0.0s; keyword-bid-optimizer: 0/8 (0%), avg 0.0s; hub-doctor: 6/6 (100%), avg 0.0s; negative-keyword: 0/5 (0%), avg 587.8s; budget-pacing: 0/23 (0%), avg 0.0s; audience-targeting-optimizer: 0/1 (0%), avg 5.2s; keyword-hygiene: 0/5 (0%), avg 2.8s; device-geo-optimizer: 0/3 (0%), avg 80.9s; creative-qa: 0/7 (0%), avg 0.0s; neg-keyword: 0/8 (0%), avg -1411.6s
+     ↳ domain-publisher-manager: success rate 0% < 90%
+     ↳ creative-manager: success rate 0% < 90%
+     ↳ frequency-reach-manager: success rate 0% < 90%
+     ↳ stackadapt-ops: success rate 0% < 90%
+     ↳ keyword-bid-optimizer: success rate 0% < 90%
+     ↳ negative-keyword: success rate 0% < 90%
+     ↳ budget-pacing: success rate 0% < 90%
+     ↳ audience-targeting-optimizer: success rate 0% < 90%
+     ↳ keyword-hygiene: success rate 0% < 90%
+     ↳ device-geo-optimizer: success rate 0% < 90%
+     ↳ creative-qa: success rate 0% < 90%
+     ↳ neg-keyword: success rate 0% < 90%
+  ✅ api        /api/campaigns: 200 (0.3s), /api/budget: 200 (0.0s), /api/agents: 200 (0.0s)
+
+  Alerts (17):
+    🟡 [crons] no token
+    🔴 [sync] google_ads: last sync 13h ago
+    🔴 [sync] stackadapt: last sync 13h ago
+    🔴 [sync] reddit: last sync 13h ago
+    🔴 [sync] linkedin: last sync 13h ago
+    🔴 [agents] domain-publisher-manager: success rate 0% < 90%
+    🔴 [agents] creative-manager: success rate 0% < 90%
+    🔴 [agents] frequency-reach-manager: success rate 0% < 90%
+    🔴 [agents] stackadapt-ops: success rate 0% < 90%
+    🔴 [agents] keyword-bid-optimizer: success rate 0% < 90%
+    🔴 [agents] negative-keyword: success rate 0% < 90%
+    🔴 [agents] budget-pacing: success rate 0% < 90%
+    🔴 [agents] audience-targeting-optimizer: success rate 0% < 90%
+    🔴 [agents] keyword-hygiene: success rate 0% < 90%
+    🔴 [agents] device-geo-optimizer: success rate 0% < 90%
+    🔴 [agents] creative-qa: success rate 0% < 90%
+    🔴 [agents] neg-keyword: success rate 0% < 90%
+
+  17 issue(s) found — CRITICAL
+
+
+🔴 Hub Doctor — CRITICAL
+  2026-03-24T13:00:02.829494+00:00
+
+  🔴 pm2        pm2 jlist failed: /bin/sh: pm2: command not found
+  ⚠️ crons      No gateway token file
+     ↳ no token
+  ✅ database   size=86 MB | Campaign=676, AdImpression=42146, AgentRun=234, Recommendation=12846, CampaignChange=98 | backup: latest dghub_2026-03-24_0100.dump (5h ago)
+  🔴 sync       google_ads=12.9h ago, stackadapt=12.9h ago, reddit=12.9h ago, linkedin=12.8h ago
+     ↳ google_ads: last sync 13h ago
+     ↳ stackadapt: last sync 13h ago
+     ↳ reddit: last sync 13h ago
+     ↳ linkedin: last sync 13h ago
+  🔴 agents     creative-manager: 0/3 (0%), avg 76.0s; stackadapt-ops: 0/4 (0%), avg 0.0s; keyword-bid-optimizer: 0/8 (0%), avg 0.0s; hub-doctor: 5/5 (100%), avg 0.0s; negative-keyword: 0/5 (0%), avg 575.8s; budget-pacing: 0/23 (0%), avg 0.0s; audience-targeting-optimizer: 0/1 (0%), avg 5.2s; keyword-hygiene: 0/5 (0%), avg 2.8s; creative-qa: 0/7 (0%), avg 0.0s; neg-keyword: 0/8 (0%), avg 0.0s
+     ↳ creative-manager: success rate 0% < 90%
+     ↳ stackadapt-ops: success rate 0% < 90%
+     ↳ keyword-bid-optimizer: success rate 0% < 90%
+     ↳ negative-keyword: success rate 0% < 90%
+     ↳ budget-pacing: success rate 0% < 90%
+     ↳ audience-targeting-optimizer: success rate 0% < 90%
+     ↳ keyword-hygiene: success rate 0% < 90%
+     ↳ creative-qa: success rate 0% < 90%
+     ↳ neg-keyword: success rate 0% < 90%
+  ✅ api        /api/campaigns: 200 (0.3s), /api/budget: 200 (0.0s), /api/agents: 200 (0.0s)
+
+  Alerts (14):
+    🟡 [crons] no token
+    🔴 [sync] google_ads: last sync 13h ago
+    🔴 [sync] stackadapt: last sync 13h ago
+    🔴 [sync] reddit: last sync 13h ago
+    🔴 [sync] linkedin: last sync 13h ago
+    🔴 [agents] creative-manager: success rate 0% < 90%
+    🔴 [agents] stackadapt-ops: success rate 0% < 90%
+    🔴 [agents] keyword-bid-optimizer: success rate 0% < 90%
+    🔴 [agents] negative-keyword: success rate 0% < 90%
+    🔴 [agents] budget-pacing: success rate 0% < 90%
+    🔴 [agents] audience-targeting-optimizer: success rate 0% < 90%
+    🔴 [agents] keyword-hygiene: success rate 0% < 90%
+    🔴 [agents] creative-qa: success rate 0% < 90%
+    🔴 [agents] neg-keyword: success rate 0% < 90%
+
+  14 issue(s) found — CRITICAL
+
+
+🔴 Hub Doctor — CRITICAL
+  2026-03-25T13:00:01.309129+00:00
+
+  🔴 pm2        pm2 jlist failed: /bin/sh: pm2: command not found
+  ⚠️ crons      No gateway token file
+     ↳ no token
+  ✅ database   size=87 MB | Campaign=676, AdImpression=42193, AgentRun=245, Recommendation=13077, CampaignChange=98 | backup: latest dghub_2026-03-25_0100.dump (5h ago)
+  🔴 sync       google_ads=18.9h ago, stackadapt=12.9h ago, reddit=24.9h ago, linkedin=12.8h ago
+     ↳ google_ads: last sync 19h ago
+     ↳ stackadapt: last sync 13h ago
+     ↳ reddit: last sync 25h ago
+     ↳ linkedin: last sync 13h ago
+  🔴 agents     audience-targeting-optimizer: 0/1 (0%), avg 5.2s; budget-pacing: 0/23 (0%), avg 0.0s; creative-manager: 0/4 (0%), avg 72.1s; creative-qa: 0/7 (0%), avg 0.0s; hub-doctor: 5/5 (100%), avg 0.0s; keyword-bid-optimizer: 0/8 (0%), avg 0.0s; keyword-hygiene: 0/5 (0%), avg 2.7s; neg-keyword: 0/7 (0%), avg 0.0s; negative-keyword: 0/5 (0%), avg 564.2s; stackadapt-ops: 0/3 (0%), avg 0.0s
+     ↳ audience-targeting-optimizer: success rate 0% < 90%
+     ↳ budget-pacing: success rate 0% < 90%
+     ↳ creative-manager: success rate 0% < 90%
+     ↳ creative-qa: success rate 0% < 90%
+     ↳ keyword-bid-optimizer: success rate 0% < 90%
+     ↳ keyword-hygiene: success rate 0% < 90%
+     ↳ neg-keyword: success rate 0% < 90%
+     ↳ negative-keyword: success rate 0% < 90%
+     ↳ stackadapt-ops: success rate 0% < 90%
+  ✅ api        /api/campaigns: 200 (0.3s), /api/budget: 200 (0.0s), /api/agents: 200 (0.0s)
+
+  Alerts (14):
+    🟡 [crons] no token
+    🔴 [sync] google_ads: last sync 19h ago
+    🔴 [sync] stackadapt: last sync 13h ago
+    🔴 [sync] reddit: last sync 25h ago
+    🔴 [sync] linkedin: last sync 13h ago
+    🔴 [agents] audience-targeting-optimizer: success rate 0% < 90%
+    🔴 [agents] budget-pacing: success rate 0% < 90%
+    🔴 [agents] creative-manager: success rate 0% < 90%
+    🔴 [agents] creative-qa: success rate 0% < 90%
+    🔴 [agents] keyword-bid-optimizer: success rate 0% < 90%
+    🔴 [agents] keyword-hygiene: success rate 0% < 90%
+    🔴 [agents] neg-keyword: success rate 0% < 90%
+    🔴 [agents] negative-keyword: success rate 0% < 90%
+    🔴 [agents] stackadapt-ops: success rate 0% < 90%
+
+  14 issue(s) found — CRITICAL
+
+
+🔴 Hub Doctor — CRITICAL
+  2026-03-26T13:00:01.738210+00:00
+
+  🔴 pm2        pm2 jlist failed: /bin/sh: pm2: command not found
+  ⚠️ crons      No gateway token file
+     ↳ no token
+  ✅ database   size=87 MB | Campaign=676, AdImpression=42382, AgentRun=256, Recommendation=13208, CampaignChange=98 | backup: latest dghub_2026-03-26_0100.dump (5h ago)
+  🔴 sync       google_ads=12.9h ago, stackadapt=12.9h ago, reddit=24.9h ago, linkedin=12.8h ago
+     ↳ google_ads: last sync 13h ago
+     ↳ stackadapt: last sync 13h ago
+     ↳ reddit: last sync 25h ago
+     ↳ linkedin: last sync 13h ago
+  🔴 agents     creative-manager: 0/4 (0%), avg 68.8s; stackadapt-ops: 0/3 (0%), avg 0.0s; keyword-bid-optimizer: 0/8 (0%), avg 0.0s; hub-doctor: 5/5 (100%), avg 0.0s; negative-keyword: 0/5 (0%), avg 552.2s; budget-pacing: 0/23 (0%), avg 0.0s; audience-targeting-optimizer: 0/1 (0%), avg 5.2s; keyword-hygiene: 0/5 (0%), avg 2.4s; creative-qa: 0/7 (0%), avg 0.0s; neg-keyword: 0/7 (0%), avg 0.0s
+     ↳ creative-manager: success rate 0% < 90%
+     ↳ stackadapt-ops: success rate 0% < 90%
+     ↳ keyword-bid-optimizer: success rate 0% < 90%
+     ↳ negative-keyword: success rate 0% < 90%
+     ↳ budget-pacing: success rate 0% < 90%
+     ↳ audience-targeting-optimizer: success rate 0% < 90%
+     ↳ keyword-hygiene: success rate 0% < 90%
+     ↳ creative-qa: success rate 0% < 90%
+     ↳ neg-keyword: success rate 0% < 90%
+  🔴 api        /api/campaigns: 404 (0.0s), /api/budget: 404 (0.0s), /api/agents: 404 (0.0s)
+     ↳ /api/campaigns: HTTP 404
+     ↳ /api/budget: HTTP 404
+     ↳ /api/agents: HTTP 404
+
+  Alerts (17):
+    🟡 [crons] no token
+    🔴 [sync] google_ads: last sync 13h ago
+    🔴 [sync] stackadapt: last sync 13h ago
+    🔴 [sync] reddit: last sync 25h ago
+    🔴 [sync] linkedin: last sync 13h ago
+    🔴 [agents] creative-manager: success rate 0% < 90%
+    🔴 [agents] stackadapt-ops: success rate 0% < 90%
+    🔴 [agents] keyword-bid-optimizer: success rate 0% < 90%
+    🔴 [agents] negative-keyword: success rate 0% < 90%
+    🔴 [agents] budget-pacing: success rate 0% < 90%
+    🔴 [agents] audience-targeting-optimizer: success rate 0% < 90%
+    🔴 [agents] keyword-hygiene: success rate 0% < 90%
+    🔴 [agents] creative-qa: success rate 0% < 90%
+    🔴 [agents] neg-keyword: success rate 0% < 90%
+    🔴 [api] /api/campaigns: HTTP 404
+    🔴 [api] /api/budget: HTTP 404
+    🔴 [api] /api/agents: HTTP 404
+
+  17 issue(s) found — CRITICAL
+
+
+🔴 Hub Doctor — CRITICAL
+  2026-03-27T13:00:03.210422+00:00
+
+  🔴 pm2        pm2 jlist failed: /bin/sh: pm2: command not found
+  ⚠️ crons      No gateway token file
+     ↳ no token
+  ✅ database   size=87 MB | Campaign=676, AdImpression=42431, AgentRun=266, Recommendation=13326, CampaignChange=98 | backup: latest dghub_2026-03-27_0116.dump (5h ago)
+  🔴 sync       google_ads=12.9h ago, stackadapt=12.9h ago, reddit=12.9h ago, linkedin=12.8h ago
+     ↳ google_ads: last sync 13h ago
+     ↳ stackadapt: last sync 13h ago
+     ↳ reddit: last sync 13h ago
+     ↳ linkedin: last sync 13h ago
+  🔴 agents     creative-manager: 0/3 (0%), avg 64.7s; stackadapt-ops: 0/4 (0%), avg 0.0s; keyword-bid-optimizer: 0/8 (0%), avg 0.0s; hub-doctor: 5/5 (100%), avg 0.0s; negative-keyword: 0/5 (0%), avg 552.0s; budget-pacing: 0/23 (0%), avg 0.0s; keyword-hygiene: 0/5 (0%), avg 2.5s; audience-targeting-optimizer: 0/1 (0%), avg 5.2s; neg-keyword: 0/6 (0%), avg 0.0s; creative-qa: 0/7 (0%), avg 0.0s
+     ↳ creative-manager: success rate 0% < 90%
+     ↳ stackadapt-ops: success rate 0% < 90%
+     ↳ keyword-bid-optimizer: success rate 0% < 90%
+     ↳ negative-keyword: success rate 0% < 90%
+     ↳ budget-pacing: success rate 0% < 90%
+     ↳ keyword-hygiene: success rate 0% < 90%
+     ↳ audience-targeting-optimizer: success rate 0% < 90%
+     ↳ neg-keyword: success rate 0% < 90%
+     ↳ creative-qa: success rate 0% < 90%
+  ✅ api        /api/campaigns: 200 (0.4s), /api/budget: 200 (0.0s), /api/agents: 200 (0.0s)
+
+  Alerts (14):
+    🟡 [crons] no token
+    🔴 [sync] google_ads: last sync 13h ago
+    🔴 [sync] stackadapt: last sync 13h ago
+    🔴 [sync] reddit: last sync 13h ago
+    🔴 [sync] linkedin: last sync 13h ago
+    🔴 [agents] creative-manager: success rate 0% < 90%
+    🔴 [agents] stackadapt-ops: success rate 0% < 90%
+    🔴 [agents] keyword-bid-optimizer: success rate 0% < 90%
+    🔴 [agents] negative-keyword: success rate 0% < 90%
+    🔴 [agents] budget-pacing: success rate 0% < 90%
+    🔴 [agents] keyword-hygiene: success rate 0% < 90%
+    🔴 [agents] audience-targeting-optimizer: success rate 0% < 90%
+    🔴 [agents] neg-keyword: success rate 0% < 90%
+    🔴 [agents] creative-qa: success rate 0% < 90%
+
+  14 issue(s) found — CRITICAL
+
+
+🔴 Hub Doctor — CRITICAL
+  2026-03-28T13:00:02.639194+00:00
+
+  🔴 pm2        pm2 jlist failed: /bin/sh: pm2: command not found
+  ⚠️ crons      No gateway token file
+     ↳ no token
+  ✅ database   size=87 MB | Campaign=676, AdImpression=42580, AgentRun=250, Recommendation=12844, CampaignChange=98 | backup: latest dghub_2026-03-28_0100.dump (5h ago)
+  🔴 sync       google_ads=12.9h ago, stackadapt=12.9h ago, reddit=12.9h ago, linkedin=12.8h ago
+     ↳ google_ads: last sync 13h ago
+     ↳ stackadapt: last sync 13h ago
+     ↳ reddit: last sync 13h ago
+     ↳ linkedin: last sync 13h ago
+  🔴 agents     creative-manager: 0/4 (0%), avg 63.6s; stackadapt-ops: 0/3 (0%), avg 0.0s; hub-doctor: 5/5 (100%), avg 0.0s; negative-keyword: 0/6 (0%), avg 551.7s; budget-pacing: 0/24 (0%), avg 0.0s; keyword-hygiene: 0/6 (0%), avg 2.6s; audience-targeting-optimizer: 0/1 (0%), avg 5.2s; creative-qa: 0/7 (0%), avg 0.0s; neg-keyword: 0/7 (0%), avg 0.0s
+     ↳ creative-manager: success rate 0% < 90%
+     ↳ stackadapt-ops: success rate 0% < 90%
+     ↳ negative-keyword: success rate 0% < 90%
+     ↳ budget-pacing: success rate 0% < 90%
+     ↳ keyword-hygiene: success rate 0% < 90%
+     ↳ audience-targeting-optimizer: success rate 0% < 90%
+     ↳ creative-qa: success rate 0% < 90%
+     ↳ neg-keyword: success rate 0% < 90%
+  ✅ api        /api/campaigns: 200 (0.4s), /api/budget: 200 (0.0s), /api/agents: 200 (0.0s)
+
+  Alerts (13):
+    🟡 [crons] no token
+    🔴 [sync] google_ads: last sync 13h ago
+    🔴 [sync] stackadapt: last sync 13h ago
+    🔴 [sync] reddit: last sync 13h ago
+    🔴 [sync] linkedin: last sync 13h ago
+    🔴 [agents] creative-manager: success rate 0% < 90%
+    🔴 [agents] stackadapt-ops: success rate 0% < 90%
+    🔴 [agents] negative-keyword: success rate 0% < 90%
+    🔴 [agents] budget-pacing: success rate 0% < 90%
+    🔴 [agents] keyword-hygiene: success rate 0% < 90%
+    🔴 [agents] audience-targeting-optimizer: success rate 0% < 90%
+    🔴 [agents] creative-qa: success rate 0% < 90%
+    🔴 [agents] neg-keyword: success rate 0% < 90%
+
+  13 issue(s) found — CRITICAL
+
+
+🔴 Hub Doctor — CRITICAL
+  2026-03-29T13:00:02.162771+00:00
+
+  🔴 pm2        pm2 jlist failed: /bin/sh: pm2: command not found
+  ⚠️ crons      No gateway token file
+     ↳ no token
+  ✅ database   size=87 MB | Campaign=676, AdImpression=42925, AgentRun=275, Recommendation=13108, CampaignChange=119 | backup: latest dghub_2026-03-29_0100.dump (5h ago)
+  🔴 sync       google_ads=12.9h ago, stackadapt=12.9h ago, reddit=12.9h ago, linkedin=12.8h ago
+     ↳ google_ads: last sync 13h ago
+     ↳ stackadapt: last sync 13h ago
+     ↳ reddit: last sync 13h ago
+     ↳ linkedin: last sync 13h ago
+  🔴 agents     creative-manager: 0/5 (0%), avg 64.2s; frequency-reach-manager: 0/2 (0%), avg 111.5s; stackadapt-ops: 0/3 (0%), avg 0.0s; budget-pacing-manager: 0/3 (0%), avg 83.6s; hub-doctor: 6/6 (100%), avg 0.0s; negative-keyword: 0/7 (0%), avg 560.5s; budget-pacing: 0/28 (0%), avg 0.0s; keyword-hygiene: 0/7 (0%), avg 2.6s; audience-targeting-optimizer: 0/4 (0%), avg 6.9s; google-search-manager: 0/3 (0%), avg 18.5s; device-geo-optimizer: 0/3 (0%), avg 133.4s; creative-qa: 0/8 (0%), avg 0.0s; neg-keyword: 0/9 (0%), avg 0.0s
+     ↳ creative-manager: success rate 0% < 90%
+     ↳ frequency-reach-manager: success rate 0% < 90%
+     ↳ stackadapt-ops: success rate 0% < 90%
+     ↳ budget-pacing-manager: success rate 0% < 90%
+     ↳ negative-keyword: success rate 0% < 90%
+     ↳ budget-pacing: success rate 0% < 90%
+     ↳ keyword-hygiene: success rate 0% < 90%
+     ↳ audience-targeting-optimizer: success rate 0% < 90%
+     ↳ google-search-manager: success rate 0% < 90%
+     ↳ device-geo-optimizer: success rate 0% < 90%
+     ↳ creative-qa: success rate 0% < 90%
+     ↳ neg-keyword: success rate 0% < 90%
+  ✅ api        /api/campaigns: 200 (0.3s), /api/budget: 200 (0.0s), /api/agents: 200 (0.0s)
+
+  Alerts (17):
+    🟡 [crons] no token
+    🔴 [sync] google_ads: last sync 13h ago
+    🔴 [sync] stackadapt: last sync 13h ago
+    🔴 [sync] reddit: last sync 13h ago
+    🔴 [sync] linkedin: last sync 13h ago
+    🔴 [agents] creative-manager: success rate 0% < 90%
+    🔴 [agents] frequency-reach-manager: success rate 0% < 90%
+    🔴 [agents] stackadapt-ops: success rate 0% < 90%
+    🔴 [agents] budget-pacing-manager: success rate 0% < 90%
+    🔴 [agents] negative-keyword: success rate 0% < 90%
+    🔴 [agents] budget-pacing: success rate 0% < 90%
+    🔴 [agents] keyword-hygiene: success rate 0% < 90%
+    🔴 [agents] audience-targeting-optimizer: success rate 0% < 90%
+    🔴 [agents] google-search-manager: success rate 0% < 90%
+    🔴 [agents] device-geo-optimizer: success rate 0% < 90%
+    🔴 [agents] creative-qa: success rate 0% < 90%
+    🔴 [agents] neg-keyword: success rate 0% < 90%
+
+  17 issue(s) found — CRITICAL
+
+
+🔴 Hub Doctor — CRITICAL
+  2026-03-30T13:00:02.573500+00:00
+
+  🔴 pm2        pm2 jlist failed: /bin/sh: pm2: command not found
+  ⚠️ crons      No gateway token file
+     ↳ no token
+  ✅ database   size=88 MB | Campaign=676, AdImpression=43001, AgentRun=286, Recommendation=13223, CampaignChange=119 | backup: latest dghub_2026-03-30_0100.dump (5h ago)
+  🔴 sync       google_ads=12.9h ago, stackadapt=12.9h ago, reddit=12.9h ago, linkedin=12.8h ago
+     ↳ google_ads: last sync 13h ago
+     ↳ stackadapt: last sync 13h ago
+     ↳ reddit: last sync 13h ago
+     ↳ linkedin: last sync 13h ago
+  🔴 agents     creative-manager: 0/5 (0%), avg 64.0s; frequency-reach-manager: 0/2 (0%), avg 111.5s; stackadapt-ops: 0/4 (0%), avg 0.0s; budget-pacing-manager: 0/3 (0%), avg 83.6s; hub-doctor: 6/6 (100%), avg 0.0s; negative-keyword: 0/7 (0%), avg 560.1s; budget-pacing: 0/29 (0%), avg 0.0s; audience-targeting-optimizer: 0/3 (0%), avg 7.4s; keyword-hygiene: 0/7 (0%), avg 2.6s; google-search-manager: 0/3 (0%), avg 18.5s; device-geo-optimizer: 0/3 (0%), avg 133.4s; creative-qa: 0/8 (0%), avg 0.0s; neg-keyword: 0/8 (0%), avg 1224.7s
+     ↳ creative-manager: success rate 0% < 90%
+     ↳ frequency-reach-manager: success rate 0% < 90%
+     ↳ stackadapt-ops: success rate 0% < 90%
+     ↳ budget-pacing-manager: success rate 0% < 90%
+     ↳ negative-keyword: success rate 0% < 90%
+     ↳ budget-pacing: success rate 0% < 90%
+     ↳ audience-targeting-optimizer: success rate 0% < 90%
+     ↳ keyword-hygiene: success rate 0% < 90%
+     ↳ google-search-manager: success rate 0% < 90%
+     ↳ device-geo-optimizer: success rate 0% < 90%
+     ↳ creative-qa: success rate 0% < 90%
+     ↳ neg-keyword: success rate 0% < 90%
+  ✅ api        /api/campaigns: 200 (0.3s), /api/budget: 200 (0.0s), /api/agents: 200 (0.0s)
+
+  Alerts (17):
+    🟡 [crons] no token
+    🔴 [sync] google_ads: last sync 13h ago
+    🔴 [sync] stackadapt: last sync 13h ago
+    🔴 [sync] reddit: last sync 13h ago
+    🔴 [sync] linkedin: last sync 13h ago
+    🔴 [agents] creative-manager: success rate 0% < 90%
+    🔴 [agents] frequency-reach-manager: success rate 0% < 90%
+    🔴 [agents] stackadapt-ops: success rate 0% < 90%
+    🔴 [agents] budget-pacing-manager: success rate 0% < 90%
+    🔴 [agents] negative-keyword: success rate 0% < 90%
+    🔴 [agents] budget-pacing: success rate 0% < 90%
+    🔴 [agents] audience-targeting-optimizer: success rate 0% < 90%
+    🔴 [agents] keyword-hygiene: success rate 0% < 90%
+    🔴 [agents] google-search-manager: success rate 0% < 90%
+    🔴 [agents] device-geo-optimizer: success rate 0% < 90%
+    🔴 [agents] creative-qa: success rate 0% < 90%
+    🔴 [agents] neg-keyword: success rate 0% < 90%
+
+  17 issue(s) found — CRITICAL
+
+
+🔴 Hub Doctor — CRITICAL
+  2026-03-31T13:00:02.127514+00:00
+
+  🔴 pm2        pm2 jlist failed: /bin/sh: pm2: command not found
+  ⚠️ crons      No gateway token file
+     ↳ no token
+  ✅ database   size=88 MB | Campaign=676, AdImpression=43016, AgentRun=297, Recommendation=13330, CampaignChange=139 | backup: latest dghub_2026-03-31_0100.dump (5h ago)
+  🔴 sync       google_ads=13.0h ago, stackadapt=18.9h ago, reddit=12.9h ago, linkedin=12.9h ago
+     ↳ google_ads: last sync 13h ago
+     ↳ stackadapt: last sync 19h ago
+     ↳ reddit: last sync 13h ago
+     ↳ linkedin: last sync 13h ago
+  🔴 agents     creative-manager: 0/6 (0%), avg 63.3s; frequency-reach-manager: 0/2 (0%), avg 111.5s; stackadapt-ops: 0/4 (0%), avg 0.0s; budget-pacing-manager: 0/3 (0%), avg 83.6s; hub-doctor: 7/7 (100%), avg 0.0s; negative-keyword: 0/7 (0%), avg 568.5s; budget-pacing: 0/28 (0%), avg 0.0s; audience-targeting-optimizer: 0/3 (0%), avg 7.4s; keyword-hygiene: 0/7 (0%), avg 2.6s; google-search-manager: 0/3 (0%), avg 18.5s; device-geo-optimizer: 0/3 (0%), avg 133.4s; creative-qa: 0/8 (0%), avg 0.0s; neg-keyword: 0/9 (0%), avg 1088.6s
+     ↳ creative-manager: success rate 0% < 90%
+     ↳ frequency-reach-manager: success rate 0% < 90%
+     ↳ stackadapt-ops: success rate 0% < 90%
+     ↳ budget-pacing-manager: success rate 0% < 90%
+     ↳ negative-keyword: success rate 0% < 90%
+     ↳ budget-pacing: success rate 0% < 90%
+     ↳ audience-targeting-optimizer: success rate 0% < 90%
+     ↳ keyword-hygiene: success rate 0% < 90%
+     ↳ google-search-manager: success rate 0% < 90%
+     ↳ device-geo-optimizer: success rate 0% < 90%
+     ↳ creative-qa: success rate 0% < 90%
+     ↳ neg-keyword: success rate 0% < 90%
+  ✅ api        /api/campaigns: 200 (0.3s), /api/budget: 200 (0.0s), /api/agents: 200 (0.0s)
+
+  Alerts (17):
+    🟡 [crons] no token
+    🔴 [sync] google_ads: last sync 13h ago
+    🔴 [sync] stackadapt: last sync 19h ago
+    🔴 [sync] reddit: last sync 13h ago
+    🔴 [sync] linkedin: last sync 13h ago
+    🔴 [agents] creative-manager: success rate 0% < 90%
+    🔴 [agents] frequency-reach-manager: success rate 0% < 90%
+    🔴 [agents] stackadapt-ops: success rate 0% < 90%
+    🔴 [agents] budget-pacing-manager: success rate 0% < 90%
+    🔴 [agents] negative-keyword: success rate 0% < 90%
+    🔴 [agents] budget-pacing: success rate 0% < 90%
+    🔴 [agents] audience-targeting-optimizer: success rate 0% < 90%
+    🔴 [agents] keyword-hygiene: success rate 0% < 90%
+    🔴 [agents] google-search-manager: success rate 0% < 90%
+    🔴 [agents] device-geo-optimizer: success rate 0% < 90%
+    🔴 [agents] creative-qa: success rate 0% < 90%
+    🔴 [agents] neg-keyword: success rate 0% < 90%
+
+  17 issue(s) found — CRITICAL
+
+
+🔴 Hub Doctor — CRITICAL
+  2026-04-01T13:00:02.604585+00:00
+
+  🔴 pm2        pm2 jlist failed: /bin/sh: pm2: command not found
+  ⚠️ crons      No gateway token file
+     ↳ no token
+  ✅ database   size=88 MB | Campaign=676, AdImpression=43153, AgentRun=308, Recommendation=13450, CampaignChange=142 | backup: latest dghub_2026-04-01_0100.dump (5h ago)
+  🔴 sync       google_ads=13.0h ago, stackadapt=42.9h ago, reddit=12.9h ago, linkedin=12.9h ago
+     ↳ google_ads: last sync 13h ago
+     ↳ stackadapt: last sync 43h ago
+     ↳ reddit: last sync 13h ago
+     ↳ linkedin: last sync 13h ago
+  🔴 agents     creative-manager: 0/6 (0%), avg 63.5s; frequency-reach-manager: 0/2 (0%), avg 111.5s; stackadapt-ops: 0/3 (0%), avg 0.0s; budget-pacing-manager: 0/3 (0%), avg 83.6s; hub-doctor: 6/6 (100%), avg 0.0s; negative-keyword: 0/7 (0%), avg 576.8s; budget-pacing: 0/28 (0%), avg 0.0s; audience-targeting-optimizer: 0/3 (0%), avg 7.4s; keyword-hygiene: 0/7 (0%), avg 2.7s; google-search-manager: 0/3 (0%), avg 18.5s; device-geo-optimizer: 0/3 (0%), avg 133.4s; creative-qa: 0/8 (0%), avg 0.0s; neg-keyword: 0/10 (0%), avg 979.7s
+     ↳ creative-manager: success rate 0% < 90%
+     ↳ frequency-reach-manager: success rate 0% < 90%
+     ↳ stackadapt-ops: success rate 0% < 90%
+     ↳ budget-pacing-manager: success rate 0% < 90%
+     ↳ negative-keyword: success rate 0% < 90%
+     ↳ budget-pacing: success rate 0% < 90%
+     ↳ audience-targeting-optimizer: success rate 0% < 90%
+     ↳ keyword-hygiene: success rate 0% < 90%
+     ↳ google-search-manager: success rate 0% < 90%
+     ↳ device-geo-optimizer: success rate 0% < 90%
+     ↳ creative-qa: success rate 0% < 90%
+     ↳ neg-keyword: success rate 0% < 90%
+  ✅ api        /api/campaigns: 200 (0.3s), /api/budget: 200 (0.0s), /api/agents: 200 (0.0s)
+
+  Alerts (17):
+    🟡 [crons] no token
+    🔴 [sync] google_ads: last sync 13h ago
+    🔴 [sync] stackadapt: last sync 43h ago
+    🔴 [sync] reddit: last sync 13h ago
+    🔴 [sync] linkedin: last sync 13h ago
+    🔴 [agents] creative-manager: success rate 0% < 90%
+    🔴 [agents] frequency-reach-manager: success rate 0% < 90%
+    🔴 [agents] stackadapt-ops: success rate 0% < 90%
+    🔴 [agents] budget-pacing-manager: success rate 0% < 90%
+    🔴 [agents] negative-keyword: success rate 0% < 90%
+    🔴 [agents] budget-pacing: success rate 0% < 90%
+    🔴 [agents] audience-targeting-optimizer: success rate 0% < 90%
+    🔴 [agents] keyword-hygiene: success rate 0% < 90%
+    🔴 [agents] google-search-manager: success rate 0% < 90%
+    🔴 [agents] device-geo-optimizer: success rate 0% < 90%
+    🔴 [agents] creative-qa: success rate 0% < 90%
+    🔴 [agents] neg-keyword: success rate 0% < 90%
+
+  17 issue(s) found — CRITICAL
+
+
+🔴 Hub Doctor — CRITICAL
+  2026-04-02T13:00:04.082255+00:00
+
+  🔴 pm2        pm2 jlist failed: /bin/sh: pm2: command not found
+  ⚠️ crons      No gateway token file
+     ↳ no token
+  ⚠️ database   size=88 MB | Campaign=676, AdImpression=43234, AgentRun=315, Recommendation=13547, CampaignChange=165 | backup: latest dghub_2026-04-01_0100.dump (29h ago)
+     ↳ backup stale: 29h old
+  🔴 sync       google_ads=12.9h ago, stackadapt=66.9h ago, reddit=12.8h ago, linkedin=12.8h ago
+     ↳ google_ads: last sync 13h ago
+     ↳ stackadapt: last sync 67h ago
+     ↳ reddit: last sync 13h ago
+     ↳ linkedin: last sync 13h ago
+  🔴 agents     creative-manager: 0/6 (0%), avg 65.4s; frequency-reach-manager: 0/2 (0%), avg 111.5s; stackadapt-ops: 0/3 (0%), avg 0.0s; budget-pacing-manager: 0/3 (0%), avg 83.6s; hub-doctor: 6/6 (100%), avg 0.0s; negative-keyword: 0/6 (0%), avg 580.9s; budget-pacing: 0/26 (0%), avg 0.0s; audience-targeting-optimizer: 0/3 (0%), avg 7.4s; keyword-hygiene: 0/8 (0%), avg 2.4s; google-search-manager: 0/3 (0%), avg 18.5s; device-geo-optimizer: 0/3 (0%), avg 133.4s; creative-qa: 0/7 (0%), avg 0.0s; neg-keyword: 0/10 (0%), avg 979.7s
+     ↳ creative-manager: success rate 0% < 90%
+     ↳ frequency-reach-manager: success rate 0% < 90%
+     ↳ stackadapt-ops: success rate 0% < 90%
+     ↳ budget-pacing-manager: success rate 0% < 90%
+     ↳ negative-keyword: success rate 0% < 90%
+     ↳ budget-pacing: success rate 0% < 90%
+     ↳ audience-targeting-optimizer: success rate 0% < 90%
+     ↳ keyword-hygiene: success rate 0% < 90%
+     ↳ google-search-manager: success rate 0% < 90%
+     ↳ device-geo-optimizer: success rate 0% < 90%
+     ↳ creative-qa: success rate 0% < 90%
+     ↳ neg-keyword: success rate 0% < 90%
+  ✅ api        /api/campaigns: 200 (0.3s), /api/budget: 200 (0.0s), /api/agents: 200 (0.0s)
+
+  Alerts (18):
+    🟡 [crons] no token
+    🟡 [database] backup stale: 29h old
+    🔴 [sync] google_ads: last sync 13h ago
+    🔴 [sync] stackadapt: last sync 67h ago
+    🔴 [sync] reddit: last sync 13h ago
+    🔴 [sync] linkedin: last sync 13h ago
+    🔴 [agents] creative-manager: success rate 0% < 90%
+    🔴 [agents] frequency-reach-manager: success rate 0% < 90%
+    🔴 [agents] stackadapt-ops: success rate 0% < 90%
+    🔴 [agents] budget-pacing-manager: success rate 0% < 90%
+    🔴 [agents] negative-keyword: success rate 0% < 90%
+    🔴 [agents] budget-pacing: success rate 0% < 90%
+    🔴 [agents] audience-targeting-optimizer: success rate 0% < 90%
+    🔴 [agents] keyword-hygiene: success rate 0% < 90%
+    🔴 [agents] google-search-manager: success rate 0% < 90%
+    🔴 [agents] device-geo-optimizer: success rate 0% < 90%
+    🔴 [agents] creative-qa: success rate 0% < 90%
+    🔴 [agents] neg-keyword: success rate 0% < 90%
+
+  18 issue(s) found — CRITICAL
+
+
+🔴 Hub Doctor — CRITICAL
+  2026-04-03T13:00:02.421519+00:00
+
+  🔴 pm2        pm2 jlist failed: /bin/sh: pm2: command not found
+  ⚠️ crons      No gateway token file
+     ↳ no token
+  ⚠️ database   size=88 MB | Campaign=679, AdImpression=43329, AgentRun=322, Recommendation=13711, CampaignChange=172 | backup: latest dghub_2026-04-01_0100.dump (53h ago)
+     ↳ backup stale: 53h old
+  🔴 sync       google_ads=12.9h ago, stackadapt=90.9h ago, reddit=12.9h ago, linkedin=12.9h ago
+     ↳ google_ads: last sync 13h ago
+     ↳ stackadapt: last sync 91h ago
+     ↳ reddit: last sync 13h ago
+     ↳ linkedin: last sync 13h ago
+  🔴 agents     creative-manager: 0/6 (0%), avg 65.4s; frequency-reach-manager: 0/2 (0%), avg 111.5s; stackadapt-ops: 0/4 (0%), avg 0.0s; budget-pacing-manager: 0/3 (0%), avg 83.6s; hub-doctor: 7/7 (100%), avg 0.0s; negative-keyword: 0/6 (0%), avg 591.2s; budget-pacing: 0/24 (0%), avg 0.0s; audience-targeting-optimizer: 0/3 (0%), avg 7.4s; keyword-hygiene: 0/8 (0%), avg 2.4s; google-search-manager: 0/3 (0%), avg 18.5s; device-geo-optimizer: 0/3 (0%), avg 133.4s; neg-keyword: 0/10 (0%), avg 979.7s; creative-qa: 0/6 (0%), avg 0.0s
+     ↳ creative-manager: success rate 0% < 90%
+     ↳ frequency-reach-manager: success rate 0% < 90%
+     ↳ stackadapt-ops: success rate 0% < 90%
+     ↳ budget-pacing-manager: success rate 0% < 90%
+     ↳ negative-keyword: success rate 0% < 90%
+     ↳ budget-pacing: success rate 0% < 90%
+     ↳ audience-targeting-optimizer: success rate 0% < 90%
+     ↳ keyword-hygiene: success rate 0% < 90%
+     ↳ google-search-manager: success rate 0% < 90%
+     ↳ device-geo-optimizer: success rate 0% < 90%
+     ↳ neg-keyword: success rate 0% < 90%
+     ↳ creative-qa: success rate 0% < 90%
+  ✅ api        /api/campaigns: 200 (0.3s), /api/budget: 200 (0.0s), /api/agents: 200 (0.0s)
+
+  Alerts (18):
+    🟡 [crons] no token
+    🟡 [database] backup stale: 53h old
+    🔴 [sync] google_ads: last sync 13h ago
+    🔴 [sync] stackadapt: last sync 91h ago
+    🔴 [sync] reddit: last sync 13h ago
+    🔴 [sync] linkedin: last sync 13h ago
+    🔴 [agents] creative-manager: success rate 0% < 90%
+    🔴 [agents] frequency-reach-manager: success rate 0% < 90%
+    🔴 [agents] stackadapt-ops: success rate 0% < 90%
+    🔴 [agents] budget-pacing-manager: success rate 0% < 90%
+    🔴 [agents] negative-keyword: success rate 0% < 90%
+    🔴 [agents] budget-pacing: success rate 0% < 90%
+    🔴 [agents] audience-targeting-optimizer: success rate 0% < 90%
+    🔴 [agents] keyword-hygiene: success rate 0% < 90%
+    🔴 [agents] google-search-manager: success rate 0% < 90%
+    🔴 [agents] device-geo-optimizer: success rate 0% < 90%
+    🔴 [agents] neg-keyword: success rate 0% < 90%
+    🔴 [agents] creative-qa: success rate 0% < 90%
+
+  18 issue(s) found — CRITICAL
+
+
+🔴 Hub Doctor — CRITICAL
+  2026-04-04T13:00:02.066211+00:00
+
+  🔴 pm2        pm2 jlist failed: /bin/sh: pm2: command not found
+  ⚠️ crons      No gateway token file
+     ↳ no token
+  ⚠️ database   size=88 MB | Campaign=680, AdImpression=43329, AgentRun=331, Recommendation=13869, CampaignChange=174 | backup: latest dghub_2026-04-01_0100.dump (77h ago)
+     ↳ backup stale: 77h old
+  🔴 sync       google_ads=12.9h ago, stackadapt=114.9h ago, reddit=12.9h ago, linkedin=12.9h ago
+     ↳ google_ads: last sync 13h ago
+     ↳ stackadapt: last sync 115h ago
+     ↳ reddit: last sync 13h ago
+     ↳ linkedin: last sync 13h ago
+  🔴 agents     creative-manager: 0/6 (0%), avg 65.0s; stackadapt-ops: 0/3 (0%), avg 0.0s; frequency-reach-manager: 0/2 (0%), avg 111.5s; budget-pacing-manager: 0/3 (0%), avg 83.6s; hub-doctor: 7/7 (100%), avg 0.0s; negative-keyword: 0/6 (0%), avg 591.3s; budget-pacing: 0/22 (0%), avg 0.0s; audience-targeting-optimizer: 0/3 (0%), avg 7.4s; keyword-hygiene: 0/8 (0%), avg 2.3s; google-search-manager: 0/3 (0%), avg 18.5s; device-geo-optimizer: 0/3 (0%), avg 133.4s; creative-qa: 0/6 (0%), avg 0.0s; neg-keyword: 0/12 (0%), avg 816.5s
+     ↳ creative-manager: success rate 0% < 90%
+     ↳ stackadapt-ops: success rate 0% < 90%
+     ↳ frequency-reach-manager: success rate 0% < 90%
+     ↳ budget-pacing-manager: success rate 0% < 90%
+     ↳ negative-keyword: success rate 0% < 90%
+     ↳ budget-pacing: success rate 0% < 90%
+     ↳ audience-targeting-optimizer: success rate 0% < 90%
+     ↳ keyword-hygiene: success rate 0% < 90%
+     ↳ google-search-manager: success rate 0% < 90%
+     ↳ device-geo-optimizer: success rate 0% < 90%
+     ↳ creative-qa: success rate 0% < 90%
+     ↳ neg-keyword: success rate 0% < 90%
+  ✅ api        /api/campaigns: 200 (0.3s), /api/budget: 200 (0.0s), /api/agents: 200 (0.0s)
+
+  Alerts (18):
+    🟡 [crons] no token
+    🟡 [database] backup stale: 77h old
+    🔴 [sync] google_ads: last sync 13h ago
+    🔴 [sync] stackadapt: last sync 115h ago
+    🔴 [sync] reddit: last sync 13h ago
+    🔴 [sync] linkedin: last sync 13h ago
+    🔴 [agents] creative-manager: success rate 0% < 90%
+    🔴 [agents] stackadapt-ops: success rate 0% < 90%
+    🔴 [agents] frequency-reach-manager: success rate 0% < 90%
+    🔴 [agents] budget-pacing-manager: success rate 0% < 90%
+    🔴 [agents] negative-keyword: success rate 0% < 90%
+    🔴 [agents] budget-pacing: success rate 0% < 90%
+    🔴 [agents] audience-targeting-optimizer: success rate 0% < 90%
+    🔴 [agents] keyword-hygiene: success rate 0% < 90%
+    🔴 [agents] google-search-manager: success rate 0% < 90%
+    🔴 [agents] device-geo-optimizer: success rate 0% < 90%
+    🔴 [agents] creative-qa: success rate 0% < 90%
+    🔴 [agents] neg-keyword: success rate 0% < 90%
+
+  18 issue(s) found — CRITICAL
+
+
+🔴 Hub Doctor — CRITICAL
+  2026-04-05T13:00:02.451394+00:00
+
+  🔴 pm2        pm2 jlist failed: /bin/sh: pm2: command not found
+  ⚠️ crons      No gateway token file
+     ↳ no token
+  ⚠️ database   size=88 MB | Campaign=680, AdImpression=43329, AgentRun=336, Recommendation=14030, CampaignChange=174 | backup: latest dghub_2026-04-01_0100.dump (101h ago)
+     ↳ backup stale: 101h old
+  🔴 sync       google_ads=24.9h ago, stackadapt=138.9h ago, reddit=24.9h ago, linkedin=24.8h ago
+     ↳ google_ads: last sync 25h ago
+     ↳ stackadapt: last sync 139h ago
+     ↳ reddit: last sync 25h ago
+     ↳ linkedin: last sync 25h ago
+  🔴 agents     budget-pacing: 0/19 (0%), avg 0.0s; creative-manager: 0/6 (0%), avg 64.0s; creative-qa: 0/5 (0%), avg 0.0s; hub-doctor: 7/7 (100%), avg 0.0s; keyword-hygiene: 0/8 (0%), avg 2.2s; neg-keyword: 0/11 (0%), avg 890.7s; negative-keyword: 0/6 (0%), avg 580.7s; stackadapt-ops: 0/3 (0%), avg 0.0s
+     ↳ budget-pacing: success rate 0% < 90%
+     ↳ creative-manager: success rate 0% < 90%
+     ↳ creative-qa: success rate 0% < 90%
+     ↳ keyword-hygiene: success rate 0% < 90%
+     ↳ neg-keyword: success rate 0% < 90%
+     ↳ negative-keyword: success rate 0% < 90%
+     ↳ stackadapt-ops: success rate 0% < 90%
+  ✅ api        /api/campaigns: 200 (0.3s), /api/budget: 200 (0.0s), /api/agents: 200 (0.0s)
+
+  Alerts (13):
+    🟡 [crons] no token
+    🟡 [database] backup stale: 101h old
+    🔴 [sync] google_ads: last sync 25h ago
+    🔴 [sync] stackadapt: last sync 139h ago
+    🔴 [sync] reddit: last sync 25h ago
+    🔴 [sync] linkedin: last sync 25h ago
+    🔴 [agents] budget-pacing: success rate 0% < 90%
+    🔴 [agents] creative-manager: success rate 0% < 90%
+    🔴 [agents] creative-qa: success rate 0% < 90%
+    🔴 [agents] keyword-hygiene: success rate 0% < 90%
+    🔴 [agents] neg-keyword: success rate 0% < 90%
+    🔴 [agents] negative-keyword: success rate 0% < 90%
+    🔴 [agents] stackadapt-ops: success rate 0% < 90%
+
+  13 issue(s) found — CRITICAL
+
+
+🔴 Hub Doctor — CRITICAL
+  2026-04-06T13:00:01.828152+00:00
+
+  🔴 pm2        pm2 jlist failed: /bin/sh: pm2: command not found
+  ⚠️ crons      No gateway token file
+     ↳ no token
+  ⚠️ database   size=88 MB | Campaign=680, AdImpression=43329, AgentRun=337, Recommendation=14030, CampaignChange=174 | backup: latest dghub_2026-04-01_0100.dump (125h ago)
+     ↳ backup stale: 125h old
+  🔴 sync       google_ads=48.9h ago, stackadapt=162.9h ago, reddit=48.9h ago, linkedin=48.8h ago
+     ↳ google_ads: last sync 49h ago
+     ↳ stackadapt: last sync 163h ago
+     ↳ reddit: last sync 49h ago
+     ↳ linkedin: last sync 49h ago
+  🔴 agents     creative-manager: 0/5 (0%), avg 64.2s; stackadapt-ops: 0/3 (0%), avg 0.0s; hub-doctor: 7/7 (100%), avg 0.0s; negative-keyword: 0/5 (0%), avg 586.9s; budget-pacing: 0/15 (0%), avg 0.0s; keyword-hygiene: 0/7 (0%), avg 2.2s; creative-qa: 0/4 (0%), avg 0.0s; neg-keyword: 0/9 (0%), avg 0.0s
+     ↳ creative-manager: success rate 0% < 90%
+     ↳ stackadapt-ops: success rate 0% < 90%
+     ↳ negative-keyword: success rate 0% < 90%
+     ↳ budget-pacing: success rate 0% < 90%
+     ↳ keyword-hygiene: success rate 0% < 90%
+     ↳ creative-qa: success rate 0% < 90%
+     ↳ neg-keyword: success rate 0% < 90%
+  🔴 api        /api/campaigns: 0 (0.0s), /api/budget: 0 (0.0s), /api/agents: 0 (0.0s)
+     ↳ /api/campaigns: HTTP 0
+     ↳ /api/budget: HTTP 0
+     ↳ /api/agents: HTTP 0
+
+  Alerts (16):
+    🟡 [crons] no token
+    🟡 [database] backup stale: 125h old
+    🔴 [sync] google_ads: last sync 49h ago
+    🔴 [sync] stackadapt: last sync 163h ago
+    🔴 [sync] reddit: last sync 49h ago
+    🔴 [sync] linkedin: last sync 49h ago
+    🔴 [agents] creative-manager: success rate 0% < 90%
+    🔴 [agents] stackadapt-ops: success rate 0% < 90%
+    🔴 [agents] negative-keyword: success rate 0% < 90%
+    🔴 [agents] budget-pacing: success rate 0% < 90%
+    🔴 [agents] keyword-hygiene: success rate 0% < 90%
+    🔴 [agents] creative-qa: success rate 0% < 90%
+    🔴 [agents] neg-keyword: success rate 0% < 90%
+    🔴 [api] /api/campaigns: HTTP 0
+    🔴 [api] /api/budget: HTTP 0
+    🔴 [api] /api/agents: HTTP 0
+
+  16 issue(s) found — CRITICAL
+
+
+🔴 Hub Doctor — CRITICAL
+  2026-04-07T13:00:04.027505+00:00
+
+  🔴 pm2        pm2 jlist failed: /bin/sh: pm2: command not found
+  ⚠️ crons      No gateway token file
+     ↳ no token
+  ⚠️ database   size=89 MB | Campaign=680, AdImpression=46209, AgentRun=344, Recommendation=14203, CampaignChange=175 | backup: latest dghub_2026-04-01_0100.dump (149h ago)
+     ↳ backup stale: 149h old
+  🔴 sync       google_ads=12.9h ago, stackadapt=186.9h ago, reddit=12.9h ago, linkedin=12.9h ago
+     ↳ google_ads: last sync 13h ago
+     ↳ stackadapt: last sync 187h ago
+     ↳ reddit: last sync 13h ago
+     ↳ linkedin: last sync 13h ago
+  🔴 agents     creative-manager: 0/4 (0%), avg 65.3s; stackadapt-ops: 0/2 (0%), avg 0.0s; hub-doctor: 6/6 (100%), avg 0.0s; negative-keyword: 0/5 (0%), avg 575.9s; budget-pacing: 0/15 (0%), avg 0.0s; keyword-hygiene: 0/7 (0%), avg 2.2s; creative-qa: 0/3 (0%), avg 0.0s; neg-keyword: 0/9 (0%), avg 0.0s
+     ↳ creative-manager: success rate 0% < 90%
+     ↳ stackadapt-ops: success rate 0% < 90%
+     ↳ negative-keyword: success rate 0% < 90%
+     ↳ budget-pacing: success rate 0% < 90%
+     ↳ keyword-hygiene: success rate 0% < 90%
+     ↳ creative-qa: success rate 0% < 90%
+     ↳ neg-keyword: success rate 0% < 90%
+  ✅ api        /api/campaigns: 200 (0.3s), /api/budget: 200 (0.0s), /api/agents: 200 (0.0s)
+
+  Alerts (13):
+    🟡 [crons] no token
+    🟡 [database] backup stale: 149h old
+    🔴 [sync] google_ads: last sync 13h ago
+    🔴 [sync] stackadapt: last sync 187h ago
+    🔴 [sync] reddit: last sync 13h ago
+    🔴 [sync] linkedin: last sync 13h ago
+    🔴 [agents] creative-manager: success rate 0% < 90%
+    🔴 [agents] stackadapt-ops: success rate 0% < 90%
+    🔴 [agents] negative-keyword: success rate 0% < 90%
+    🔴 [agents] budget-pacing: success rate 0% < 90%
+    🔴 [agents] keyword-hygiene: success rate 0% < 90%
+    🔴 [agents] creative-qa: success rate 0% < 90%
+    🔴 [agents] neg-keyword: success rate 0% < 90%
+
+  13 issue(s) found — CRITICAL
+
+
+🔴 Hub Doctor — CRITICAL
+  2026-04-08T13:00:05.095534+00:00
+
+  🔴 pm2        pm2 jlist failed: /bin/sh: pm2: command not found
+  ⚠️ crons      No gateway token file
+     ↳ no token
+  ✅ database   size=89 MB | Campaign=680, AdImpression=46575, AgentRun=354, Recommendation=14381, CampaignChange=176 | backup: latest dghub_2026-04-08_0100.dump (5h ago)
+  🔴 sync       google_ads=13.0h ago, stackadapt=210.9h ago, reddit=13.0h ago, linkedin=12.9h ago
+     ↳ google_ads: last sync 13h ago
+     ↳ stackadapt: last sync 211h ago
+     ↳ reddit: last sync 13h ago
+     ↳ linkedin: last sync 13h ago
+  🔴 agents     creative-manager: 0/4 (0%), avg 67.0s; stackadapt-ops: 0/1 (0%), avg 0.0s; hub-doctor: 6/6 (100%), avg 0.0s; negative-keyword: 0/5 (0%), avg 563.7s; budget-pacing: 0/14 (0%), avg 0.0s; keyword-hygiene: 0/7 (0%), avg 2.3s; neg-keyword: 0/8 (0%), avg 0.0s; creative-qa: 0/4 (0%), avg 0.0s
+     ↳ creative-manager: success rate 0% < 90%
+     ↳ stackadapt-ops: success rate 0% < 90%
+     ↳ negative-keyword: success rate 0% < 90%
+     ↳ budget-pacing: success rate 0% < 90%
+     ↳ keyword-hygiene: success rate 0% < 90%
+     ↳ neg-keyword: success rate 0% < 90%
+     ↳ creative-qa: success rate 0% < 90%
+  ✅ api        /api/campaigns: 200 (0.3s), /api/budget: 200 (0.0s), /api/agents: 200 (0.0s)
+
+  Alerts (12):
+    🟡 [crons] no token
+    🔴 [sync] google_ads: last sync 13h ago
+    🔴 [sync] stackadapt: last sync 211h ago
+    🔴 [sync] reddit: last sync 13h ago
+    🔴 [sync] linkedin: last sync 13h ago
+    🔴 [agents] creative-manager: success rate 0% < 90%
+    🔴 [agents] stackadapt-ops: success rate 0% < 90%
+    🔴 [agents] negative-keyword: success rate 0% < 90%
+    🔴 [agents] budget-pacing: success rate 0% < 90%
+    🔴 [agents] keyword-hygiene: success rate 0% < 90%
+    🔴 [agents] neg-keyword: success rate 0% < 90%
+    🔴 [agents] creative-qa: success rate 0% < 90%
+
+  12 issue(s) found — CRITICAL
+
+
+🔴 Hub Doctor — CRITICAL
+  2026-04-09T13:00:02.905947+00:00
+
+  🔴 pm2        pm2 jlist failed: /bin/sh: pm2: command not found
+  ⚠️ crons      No gateway token file
+     ↳ no token
+  ✅ database   size=89 MB | Campaign=681, AdImpression=47000, AgentRun=367, Recommendation=14512, CampaignChange=178 | backup: latest dghub_2026-04-09_0100.dump (5h ago)
+  🔴 sync       google_ads=13.0h ago, stackadapt=234.9h ago, reddit=12.9h ago, linkedin=12.9h ago
+     ↳ google_ads: last sync 13h ago
+     ↳ stackadapt: last sync 235h ago
+     ↳ reddit: last sync 13h ago
+     ↳ linkedin: last sync 13h ago
+  🔴 agents     creative-manager: 0/4 (0%), avg 62.5s; stackadapt-ops: 0/1 (0%), avg 0.0s; keyword-bid-optimizer: 0/1 (0%), avg 0.0s; hub-doctor: 7/7 (100%), avg 0.0s; negative-keyword: 0/6 (0%), avg 561.7s; budget-pacing: 0/16 (0%), avg 0.0s; keyword-hygiene: 0/7 (0%), avg 2.3s; device-geo-optimizer: 0/1 (0%), avg 77.6s; neg-keyword: 0/7 (0%), avg 0.0s; creative-qa: 0/5 (0%), avg 0.0s
+     ↳ creative-manager: success rate 0% < 90%
+     ↳ stackadapt-ops: success rate 0% < 90%
+     ↳ keyword-bid-optimizer: success rate 0% < 90%
+     ↳ negative-keyword: success rate 0% < 90%
+     ↳ budget-pacing: success rate 0% < 90%
+     ↳ keyword-hygiene: success rate 0% < 90%
+     ↳ device-geo-optimizer: success rate 0% < 90%
+     ↳ neg-keyword: success rate 0% < 90%
+     ↳ creative-qa: success rate 0% < 90%
+  ✅ api        /api/campaigns: 200 (0.4s), /api/budget: 200 (0.0s), /api/agents: 200 (0.0s)
+
+  Alerts (14):
+    🟡 [crons] no token
+    🔴 [sync] google_ads: last sync 13h ago
+    🔴 [sync] stackadapt: last sync 235h ago
+    🔴 [sync] reddit: last sync 13h ago
+    🔴 [sync] linkedin: last sync 13h ago
+    🔴 [agents] creative-manager: success rate 0% < 90%
+    🔴 [agents] stackadapt-ops: success rate 0% < 90%
+    🔴 [agents] keyword-bid-optimizer: success rate 0% < 90%
+    🔴 [agents] negative-keyword: success rate 0% < 90%
+    🔴 [agents] budget-pacing: success rate 0% < 90%
+    🔴 [agents] keyword-hygiene: success rate 0% < 90%
+    🔴 [agents] device-geo-optimizer: success rate 0% < 90%
+    🔴 [agents] neg-keyword: success rate 0% < 90%
+    🔴 [agents] creative-qa: success rate 0% < 90%
+
+  14 issue(s) found — CRITICAL
+
+
+🔴 Hub Doctor — CRITICAL
+  2026-04-10T13:00:05.999024+00:00
+
+  🔴 pm2        pm2 jlist failed: /bin/sh: pm2: command not found
+  ⚠️ crons      No gateway token file
+     ↳ no token
+  ✅ database   size=90 MB | Campaign=681, AdImpression=47001, AgentRun=379, Recommendation=14628, CampaignChange=179 | backup: latest dghub_2026-04-10_0100.dump (5h ago)
+  🔴 sync       google_ads=13.0h ago, stackadapt=258.9h ago, reddit=13.0h ago, linkedin=12.9h ago
+     ↳ google_ads: last sync 13h ago
+     ↳ stackadapt: last sync 259h ago
+     ↳ reddit: last sync 13h ago
+     ↳ linkedin: last sync 13h ago
+  🔴 agents     budget-pacing: 0/18 (0%), avg 0.0s; creative-manager: 0/5 (0%), avg 62.7s; creative-qa: 0/7 (0%), avg 0.0s; device-geo-optimizer: 0/1 (0%), avg 77.6s; hub-doctor: 6/6 (100%), avg 0.0s; keyword-bid-optimizer: 0/2 (0%), avg 0.0s; keyword-hygiene: 0/6 (0%), avg 2.9s; neg-keyword: 0/7 (0%), avg 0.0s; negative-keyword: 0/6 (0%), avg 551.7s; stackadapt-ops: 0/1 (0%), avg 0.0s
+     ↳ budget-pacing: success rate 0% < 90%
+     ↳ creative-manager: success rate 0% < 90%
+     ↳ creative-qa: success rate 0% < 90%
+     ↳ device-geo-optimizer: success rate 0% < 90%
+     ↳ keyword-bid-optimizer: success rate 0% < 90%
+     ↳ keyword-hygiene: success rate 0% < 90%
+     ↳ neg-keyword: success rate 0% < 90%
+     ↳ negative-keyword: success rate 0% < 90%
+     ↳ stackadapt-ops: success rate 0% < 90%
+  ✅ api        /api/campaigns: 200 (0.3s), /api/budget: 200 (0.0s), /api/agents: 200 (0.0s)
+
+  Alerts (14):
+    🟡 [crons] no token
+    🔴 [sync] google_ads: last sync 13h ago
+    🔴 [sync] stackadapt: last sync 259h ago
+    🔴 [sync] reddit: last sync 13h ago
+    🔴 [sync] linkedin: last sync 13h ago
+    🔴 [agents] budget-pacing: success rate 0% < 90%
+    🔴 [agents] creative-manager: success rate 0% < 90%
+    🔴 [agents] creative-qa: success rate 0% < 90%
+    🔴 [agents] device-geo-optimizer: success rate 0% < 90%
+    🔴 [agents] keyword-bid-optimizer: success rate 0% < 90%
+    🔴 [agents] keyword-hygiene: success rate 0% < 90%
+    🔴 [agents] neg-keyword: success rate 0% < 90%
+    🔴 [agents] negative-keyword: success rate 0% < 90%
+    🔴 [agents] stackadapt-ops: success rate 0% < 90%
+
+  14 issue(s) found — CRITICAL
+
+
+🔴 Hub Doctor — CRITICAL
+  2026-04-11T13:00:02.927096+00:00
+
+  🔴 pm2        pm2 jlist failed: /bin/sh: pm2: command not found
+  ⚠️ crons      No gateway token file
+     ↳ no token
+  ⚠️ database   size=90 MB | Campaign=681, AdImpression=47001, AgentRun=383, Recommendation=14715, CampaignChange=179 | backup: latest dghub_2026-04-10_0100.dump (29h ago)
+     ↳ backup stale: 29h old
+  🔴 sync       google_ads=37.0h ago, stackadapt=282.9h ago, reddit=36.9h ago, linkedin=36.9h ago
+     ↳ google_ads: last sync 37h ago
+     ↳ stackadapt: last sync 283h ago
+     ↳ reddit: last sync 37h ago
+     ↳ linkedin: last sync 37h ago
+  🔴 agents     budget-pacing: 0/16 (0%), avg 0.0s; creative-manager: 0/5 (0%), avg 63.4s; creative-qa: 0/7 (0%), avg 0.0s; device-geo-optimizer: 0/1 (0%), avg 77.6s; hub-doctor: 6/6 (100%), avg 0.0s; keyword-bid-optimizer: 0/2 (0%), avg 0.0s; keyword-hygiene: 0/6 (0%), avg 2.9s; neg-keyword: 0/6 (0%), avg 0.0s; negative-keyword: 0/6 (0%), avg 551.7s
+     ↳ budget-pacing: success rate 0% < 90%
+     ↳ creative-manager: success rate 0% < 90%
+     ↳ creative-qa: success rate 0% < 90%
+     ↳ device-geo-optimizer: success rate 0% < 90%
+     ↳ keyword-bid-optimizer: success rate 0% < 90%
+     ↳ keyword-hygiene: success rate 0% < 90%
+     ↳ neg-keyword: success rate 0% < 90%
+     ↳ negative-keyword: success rate 0% < 90%
+  ✅ api        /api/campaigns: 200 (0.4s), /api/budget: 200 (0.0s), /api/agents: 200 (0.0s)
+
+  Alerts (14):
+    🟡 [crons] no token
+    🟡 [database] backup stale: 29h old
+    🔴 [sync] google_ads: last sync 37h ago
+    🔴 [sync] stackadapt: last sync 283h ago
+    🔴 [sync] reddit: last sync 37h ago
+    🔴 [sync] linkedin: last sync 37h ago
+    🔴 [agents] budget-pacing: success rate 0% < 90%
+    🔴 [agents] creative-manager: success rate 0% < 90%
+    🔴 [agents] creative-qa: success rate 0% < 90%
+    🔴 [agents] device-geo-optimizer: success rate 0% < 90%
+    🔴 [agents] keyword-bid-optimizer: success rate 0% < 90%
+    🔴 [agents] keyword-hygiene: success rate 0% < 90%
+    🔴 [agents] neg-keyword: success rate 0% < 90%
+    🔴 [agents] negative-keyword: success rate 0% < 90%
+
+  14 issue(s) found — CRITICAL
+
+
+🔴 Hub Doctor — CRITICAL
+  2026-04-12T13:00:03.305890+00:00
+
+  🔴 pm2        pm2 jlist failed: /bin/sh: pm2: command not found
+  ⚠️ crons      No gateway token file
+     ↳ no token
+  ⚠️ database   size=90 MB | Campaign=681, AdImpression=47001, AgentRun=387, Recommendation=14802, CampaignChange=179 | backup: latest dghub_2026-04-10_0100.dump (53h ago)
+     ↳ backup stale: 53h old
+  🔴 sync       google_ads=61.0h ago, stackadapt=306.9h ago, reddit=60.9h ago, linkedin=60.9h ago
+     ↳ google_ads: last sync 61h ago
+     ↳ stackadapt: last sync 307h ago
+     ↳ reddit: last sync 61h ago
+     ↳ linkedin: last sync 61h ago
+  🔴 agents     budget-pacing: 0/14 (0%), avg 0.0s; creative-manager: 0/5 (0%), avg 63.1s; creative-qa: 0/6 (0%), avg 0.0s; device-geo-optimizer: 0/1 (0%), avg 77.6s; hub-doctor: 6/6 (100%), avg 0.0s; keyword-bid-optimizer: 0/2 (0%), avg 0.0s; keyword-hygiene: 0/6 (0%), avg 3.4s; neg-keyword: 0/4 (0%), avg 0.0s; negative-keyword: 0/6 (0%), avg 552.7s
+     ↳ budget-pacing: success rate 0% < 90%
+     ↳ creative-manager: success rate 0% < 90%
+     ↳ creative-qa: success rate 0% < 90%
+     ↳ device-geo-optimizer: success rate 0% < 90%
+     ↳ keyword-bid-optimizer: success rate 0% < 90%
+     ↳ keyword-hygiene: success rate 0% < 90%
+     ↳ neg-keyword: success rate 0% < 90%
+     ↳ negative-keyword: success rate 0% < 90%
+  ✅ api        /api/campaigns: 200 (0.3s), /api/budget: 200 (0.0s), /api/agents: 200 (0.0s)
+
+  Alerts (14):
+    🟡 [crons] no token
+    🟡 [database] backup stale: 53h old
+    🔴 [sync] google_ads: last sync 61h ago
+    🔴 [sync] stackadapt: last sync 307h ago
+    🔴 [sync] reddit: last sync 61h ago
+    🔴 [sync] linkedin: last sync 61h ago
+    🔴 [agents] budget-pacing: success rate 0% < 90%
+    🔴 [agents] creative-manager: success rate 0% < 90%
+    🔴 [agents] creative-qa: success rate 0% < 90%
+    🔴 [agents] device-geo-optimizer: success rate 0% < 90%
+    🔴 [agents] keyword-bid-optimizer: success rate 0% < 90%
+    🔴 [agents] keyword-hygiene: success rate 0% < 90%
+    🔴 [agents] neg-keyword: success rate 0% < 90%
+    🔴 [agents] negative-keyword: success rate 0% < 90%
+
+  14 issue(s) found — CRITICAL
+
+
+🔴 Hub Doctor — CRITICAL
+  2026-04-13T13:00:04.939720+00:00
+
+  🔴 pm2        pm2 jlist failed: /bin/sh: pm2: command not found
+  ⚠️ crons      No gateway token file
+     ↳ no token
+  ✅ database   size=90 MB | Campaign=681, AdImpression=47623, AgentRun=400, Recommendation=15005, CampaignChange=179 | backup: latest dghub_2026-04-13_0100.dump (5h ago)
+  🔴 sync       google_ads=13.0h ago, stackadapt=330.9h ago, reddit=12.9h ago, linkedin=12.8h ago
+     ↳ google_ads: last sync 13h ago
+     ↳ stackadapt: last sync 331h ago
+     ↳ reddit: last sync 13h ago
+     ↳ linkedin: last sync 13h ago
+  🔴 agents     budget-pacing: 0/15 (0%), avg 0.0s; creative-manager: 0/10 (0%), avg 62.3s; creative-qa: 0/7 (0%), avg 0.0s; device-geo-optimizer: 0/1 (0%), avg 77.6s; hub-doctor: 6/6 (100%), avg 0.0s; keyword-bid-optimizer: 0/3 (0%), avg 0.0s; keyword-hygiene: 0/7 (0%), avg 3.4s; neg-keyword: 0/5 (0%), avg 0.0s; negative-keyword: 0/7 (0%), avg 553.3s; stackadapt-ops: 0/1 (0%), avg 0.0s
+     ↳ budget-pacing: success rate 0% < 90%
+     ↳ creative-manager: success rate 0% < 90%
+     ↳ creative-qa: success rate 0% < 90%
+     ↳ device-geo-optimizer: success rate 0% < 90%
+     ↳ keyword-bid-optimizer: success rate 0% < 90%
+     ↳ keyword-hygiene: success rate 0% < 90%
+     ↳ neg-keyword: success rate 0% < 90%
+     ↳ negative-keyword: success rate 0% < 90%
+     ↳ stackadapt-ops: success rate 0% < 90%
+  ✅ api        /api/campaigns: 200 (0.3s), /api/budget: 200 (0.0s), /api/agents: 200 (0.0s)
+
+  Alerts (14):
+    🟡 [crons] no token
+    🔴 [sync] google_ads: last sync 13h ago
+    🔴 [sync] stackadapt: last sync 331h ago
+    🔴 [sync] reddit: last sync 13h ago
+    🔴 [sync] linkedin: last sync 13h ago
+    🔴 [agents] budget-pacing: success rate 0% < 90%
+    🔴 [agents] creative-manager: success rate 0% < 90%
+    🔴 [agents] creative-qa: success rate 0% < 90%
+    🔴 [agents] device-geo-optimizer: success rate 0% < 90%
+    🔴 [agents] keyword-bid-optimizer: success rate 0% < 90%
+    🔴 [agents] keyword-hygiene: success rate 0% < 90%
+    🔴 [agents] neg-keyword: success rate 0% < 90%
+    🔴 [agents] negative-keyword: success rate 0% < 90%
+    🔴 [agents] stackadapt-ops: success rate 0% < 90%
+
+  14 issue(s) found — CRITICAL
+
+
+🔴 Hub Doctor — CRITICAL
+  2026-04-14T13:00:04.742568+00:00
+
+  🔴 pm2        pm2 jlist failed: /bin/sh: pm2: command not found
+  ⚠️ crons      No gateway token file
+     ↳ no token
+  ⚠️ database   size=92 MB | Campaign=683, AdImpression=48446, AgentRun=406, Recommendation=15111, CampaignChange=214 | backup: latest dghub_2026-04-13_0100.dump (29h ago)
+     ↳ backup stale: 29h old
+  🔴 sync       google_ads=24.8h ago, stackadapt=24.8h ago, reddit=24.8h ago, linkedin=24.7h ago
+     ↳ google_ads: last sync 25h ago
+     ↳ stackadapt: last sync 25h ago
+     ↳ reddit: last sync 25h ago
+     ↳ linkedin: last sync 25h ago
+  🔴 agents     budget-pacing: 0/15 (0%), avg 0.0s; creative-manager: 0/11 (0%), avg 1639.6s; creative-qa: 0/7 (0%), avg 0.0s; device-geo-optimizer: 0/1 (0%), avg 77.6s; hub-doctor: 6/6 (100%), avg 0.0s; keyword-bid-optimizer: 0/3 (0%), avg 0.0s; keyword-hygiene: 0/7 (0%), avg 3.8s; neg-keyword: 0/5 (0%), avg 0.0s; negative-keyword: 0/7 (0%), avg 552.7s; stackadapt-ops: 0/1 (0%), avg 0.0s
+     ↳ budget-pacing: success rate 0% < 90%
+     ↳ creative-manager: success rate 0% < 90%
+     ↳ creative-qa: success rate 0% < 90%
+     ↳ device-geo-optimizer: success rate 0% < 90%
+     ↳ keyword-bid-optimizer: success rate 0% < 90%
+     ↳ keyword-hygiene: success rate 0% < 90%
+     ↳ neg-keyword: success rate 0% < 90%
+     ↳ negative-keyword: success rate 0% < 90%
+     ↳ stackadapt-ops: success rate 0% < 90%
+  ✅ api        /api/campaigns: 200 (0.3s), /api/budget: 200 (0.0s), /api/agents: 200 (0.0s)
+
+  Alerts (15):
+    🟡 [crons] no token
+    🟡 [database] backup stale: 29h old
+    🔴 [sync] google_ads: last sync 25h ago
+    🔴 [sync] stackadapt: last sync 25h ago
+    🔴 [sync] reddit: last sync 25h ago
+    🔴 [sync] linkedin: last sync 25h ago
+    🔴 [agents] budget-pacing: success rate 0% < 90%
+    🔴 [agents] creative-manager: success rate 0% < 90%
+    🔴 [agents] creative-qa: success rate 0% < 90%
+    🔴 [agents] device-geo-optimizer: success rate 0% < 90%
+    🔴 [agents] keyword-bid-optimizer: success rate 0% < 90%
+    🔴 [agents] keyword-hygiene: success rate 0% < 90%
+    🔴 [agents] neg-keyword: success rate 0% < 90%
+    🔴 [agents] negative-keyword: success rate 0% < 90%
+    🔴 [agents] stackadapt-ops: success rate 0% < 90%
+
+  15 issue(s) found — CRITICAL
+
+
+🔴 Hub Doctor — CRITICAL
+  2026-04-15T13:00:05.684055+00:00
+
+  🔴 pm2        pm2 jlist failed: /bin/sh: pm2: command not found
+  ⚠️ crons      No gateway token file
+     ↳ no token
+  ✅ database   size=93 MB | Campaign=683, AdImpression=48446, AgentRun=412, Recommendation=15307, CampaignChange=214 | backup: latest dghub_2026-04-15_0100.dump (5h ago)
+  🔴 sync       google_ads=48.8h ago, stackadapt=48.8h ago, reddit=48.8h ago, linkedin=48.7h ago
+     ↳ google_ads: last sync 49h ago
+     ↳ stackadapt: last sync 49h ago
+     ↳ reddit: last sync 49h ago
+     ↳ linkedin: last sync 49h ago
+  🔴 agents     budget-pacing: 0/13 (0%), avg 0.0s; creative-manager: 0/10 (0%), avg 1796.7s; creative-qa: 0/8 (0%), avg 0.0s; device-geo-optimizer: 0/1 (0%), avg 77.6s; hub-doctor: 6/6 (100%), avg 0.0s; keyword-bid-optimizer: 0/4 (0%), avg 0.0s; keyword-hygiene: 0/7 (0%), avg 3.8s; neg-keyword: 0/5 (0%), avg 0.0s; negative-keyword: 0/6 (0%), avg 553.0s; stackadapt-ops: 0/1 (0%), avg 0.0s
+     ↳ budget-pacing: success rate 0% < 90%
+     ↳ creative-manager: success rate 0% < 90%
+     ↳ creative-qa: success rate 0% < 90%
+     ↳ device-geo-optimizer: success rate 0% < 90%
+     ↳ keyword-bid-optimizer: success rate 0% < 90%
+     ↳ keyword-hygiene: success rate 0% < 90%
+     ↳ neg-keyword: success rate 0% < 90%
+     ↳ negative-keyword: success rate 0% < 90%
+     ↳ stackadapt-ops: success rate 0% < 90%
+  ✅ api        /api/campaigns: 200 (0.4s), /api/budget: 200 (0.0s), /api/agents: 200 (0.0s)
+
+  Alerts (14):
+    🟡 [crons] no token
+    🔴 [sync] google_ads: last sync 49h ago
+    🔴 [sync] stackadapt: last sync 49h ago
+    🔴 [sync] reddit: last sync 49h ago
+    🔴 [sync] linkedin: last sync 49h ago
+    🔴 [agents] budget-pacing: success rate 0% < 90%
+    🔴 [agents] creative-manager: success rate 0% < 90%
+    🔴 [agents] creative-qa: success rate 0% < 90%
+    🔴 [agents] device-geo-optimizer: success rate 0% < 90%
+    🔴 [agents] keyword-bid-optimizer: success rate 0% < 90%
+    🔴 [agents] keyword-hygiene: success rate 0% < 90%
+    🔴 [agents] neg-keyword: success rate 0% < 90%
+    🔴 [agents] negative-keyword: success rate 0% < 90%
+    🔴 [agents] stackadapt-ops: success rate 0% < 90%
+
+  14 issue(s) found — CRITICAL
+
+
+🔴 Hub Doctor — CRITICAL
+  2026-04-16T13:00:04.207967+00:00
+
+  🔴 pm2        pm2 jlist failed: /bin/sh: pm2: command not found
+  ⚠️ crons      No gateway token file
+     ↳ no token
+  ✅ database   size=94 MB | Campaign=683, AdImpression=50000, AgentRun=423, Recommendation=15472, CampaignChange=220 | backup: latest dghub_2026-04-16_0100.dump (5h ago)
+  🔴 sync       google_ads=12.9h ago, stackadapt=12.9h ago, reddit=12.8h ago, linkedin=12.8h ago
+     ↳ google_ads: last sync 13h ago
+     ↳ stackadapt: last sync 13h ago
+     ↳ reddit: last sync 13h ago
+     ↳ linkedin: last sync 13h ago
+  🔴 agents     budget-pacing: 0/13 (0%), avg 0.0s; creative-manager: 0/10 (0%), avg 1803.9s; creative-qa: 0/7 (0%), avg 0.0s; hub-doctor: 6/6 (100%), avg 0.0s; keyword-bid-optimizer: 0/5 (0%), avg 0.0s; keyword-hygiene: 0/7 (0%), avg 3.6s; neg-keyword: 0/5 (0%), avg 0.0s; negative-keyword: 0/6 (0%), avg 553.0s; stackadapt-ops: 0/1 (0%), avg 0.0s
+     ↳ budget-pacing: success rate 0% < 90%
+     ↳ creative-manager: success rate 0% < 90%
+     ↳ creative-qa: success rate 0% < 90%
+     ↳ keyword-bid-optimizer: success rate 0% < 90%
+     ↳ keyword-hygiene: success rate 0% < 90%
+     ↳ neg-keyword: success rate 0% < 90%
+     ↳ negative-keyword: success rate 0% < 90%
+     ↳ stackadapt-ops: success rate 0% < 90%
+  ✅ api        /api/campaigns: 200 (0.4s), /api/budget: 200 (0.0s), /api/agents: 200 (0.0s)
+
+  Alerts (13):
+    🟡 [crons] no token
+    🔴 [sync] google_ads: last sync 13h ago
+    🔴 [sync] stackadapt: last sync 13h ago
+    🔴 [sync] reddit: last sync 13h ago
+    🔴 [sync] linkedin: last sync 13h ago
+    🔴 [agents] budget-pacing: success rate 0% < 90%
+    🔴 [agents] creative-manager: success rate 0% < 90%
+    🔴 [agents] creative-qa: success rate 0% < 90%
+    🔴 [agents] keyword-bid-optimizer: success rate 0% < 90%
+    🔴 [agents] keyword-hygiene: success rate 0% < 90%
+    🔴 [agents] neg-keyword: success rate 0% < 90%
+    🔴 [agents] negative-keyword: success rate 0% < 90%
+    🔴 [agents] stackadapt-ops: success rate 0% < 90%
+
+  13 issue(s) found — CRITICAL
+

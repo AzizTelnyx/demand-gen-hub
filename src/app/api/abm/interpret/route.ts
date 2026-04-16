@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 
+const LITELLM_BASE = process.env.LITELLM_BASE_URL || "http://litellm-aiswe.query.prod.telnyx.io:4000/v1";
+const LITELLM_KEY = process.env.LITELLM_API_KEY || "sk-JcJEnHgGiRKTnIdkGfv3Rw";
 const OPENCLAW_BASE = process.env.OPENCLAW_BASE_URL || "http://127.0.0.1:18789/v1";
 const OPENCLAW_TOKEN = process.env.OPENCLAW_GATEWAY_TOKEN || "";
 
@@ -105,14 +107,20 @@ export async function POST(request: NextRequest) {
       ...messages,
     ];
 
-    const res = await fetch(`${OPENCLAW_BASE}/chat/completions`, {
+    // Use LiteLLM (isolated from OpenClaw/Ares) — fall back to OpenClaw gateway
+    const useLiteLLM = LITELLM_KEY;
+    const aiBaseUrl = useLiteLLM ? LITELLM_BASE : OPENCLAW_BASE;
+    const aiToken = useLiteLLM ? LITELLM_KEY : OPENCLAW_TOKEN;
+    const aiModel = useLiteLLM ? "gemini/gemini-2.0-flash" : "claude-3-5-haiku-latest";
+
+    const res = await fetch(`${aiBaseUrl}/chat/completions`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${OPENCLAW_TOKEN}`,
+        Authorization: `Bearer ${aiToken}`,
       },
       body: JSON.stringify({
-        model: "anthropic/claude-opus-4-6-20250306",
+        model: aiModel,
         messages: aiMessages,
         max_tokens: 2000,
       }),

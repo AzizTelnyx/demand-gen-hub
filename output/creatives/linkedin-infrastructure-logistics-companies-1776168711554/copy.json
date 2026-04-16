@@ -1,0 +1,38 @@
+{
+  "brief": {
+    "platform": "linkedin",
+    "format": "single-image",
+    "audience": "logistics companies",
+    "painPoints": [
+      "inefficient delivery notifications",
+      "poor customer communication"
+    ],
+    "coreMessage": "Improving delivery notifications and customer communication",
+    "pillar": "infrastructure",
+    "adCopyExample": null,
+    "ctaSuggestion": "Learn More"
+  },
+  "copy": {
+    "headlines": [
+      "Reduce delivery notification delays with Telnyx Voice AI’s sub-200ms latency",
+      "Improve customer communication in 140+ countries using one platform",
+      "Telnyx Voice AI: Direct network access for efficient logistics communication",
+      "Eliminate extra network hops to speed up delivery notifications",
+      "Secure logistics messaging with HIPAA, SOC2, and PCI compliance",
+      "Streamline delivery alerts with Telnyx’s own telephony network",
+      "One platform for global logistics communication and delivery updates",
+      "Lower latency delivery notifications with co-located AI inference",
+      "Telnyx Voice AI cuts notification lag with zero extra hops",
+      "Manage logistics calls worldwide with a single compliant platform"
+    ],
+    "descriptions": [
+      "Telnyx Voice AI leverages its own global network across 140+ countries to deliver delivery notifications with under 200ms latency. Eliminating extra network hops improves communication reliability and speed, reducing delays in customer updates.",
+      "Our platform integrates telephony and AI inference in one location, minimizing latency and streamlining delivery notifications. Logistics companies can rely on a single infrastructure that meets HIPAA, SOC2, and PCI compliance standards for secure communications.",
+      "Telnyx Voice AI provides logistics companies with a unified platform that handles voice communication in 140+ countries. Owning the network and infrastructure enables sub-200ms response times, improving customer satisfaction by delivering timely delivery notifications.",
+      "With Telnyx Voice AI, logistics operators avoid the inefficiencies of multi-vendor setups. Our direct network ownership and co-located AI inference reduce latency and eliminate extra hops, ensuring that delivery notifications and customer communications are fast and reliable.",
+      "The Telnyx Voice AI platform supports logistics communication needs with a single, compliant infrastructure. Covering 140+ countries with low latency and zero extra network hops, it enables efficient delivery notifications and better customer engagement."
+    ],
+    "cta": "Learn More"
+  },
+  "generatedAt": "2026-04-14T12:11:58.076Z"
+}

@@ -1,0 +1,37 @@
+{
+  "brief": {
+    "platform": "linkedin",
+    "format": null,
+    "audience": "fintech companies",
+    "painPoints": [
+      "insecure payment processing"
+    ],
+    "coreMessage": "Secure payment processing with Voice AI",
+    "pillar": "trust",
+    "adCopyExample": null,
+    "ctaSuggestion": "Learn More"
+  },
+  "copy": {
+    "headlines": [
+      "Secure payment processing with Telnyx Voice AI and sub-200ms latency",
+      "Telnyx Voice AI: PCI, HIPAA, SOC2 compliant payment security",
+      "Reduce payment fraud with Voice AI on Telnyx’s own network",
+      "99.999% uptime and PCI compliance for fintech payment security",
+      "One platform for secure payment processing in 140+ countries",
+      "Telnyx Voice AI delivers secure payments with co-located inference",
+      "Protect fintech payments with Telnyx HIPAA-ready Voice AI",
+      "Telnyx Voice AI ensures secure, low-latency payment processing",
+      "Voice AI payment security on a network owned by Telnyx",
+      "Sub-200ms latency and SOC 2 Type II compliance for payment AI"
+    ],
+    "descriptions": [
+      "Telnyx Voice AI processes payments securely on a network we own, reducing attack surfaces. Our platform meets PCI, HIPAA, and SOC 2 Type II standards, supports 140+ countries, and maintains 99.999% uptime with sub-200ms latency for real-time payment authentication.",
+      "Fintech companies require trusted payment processing. Telnyx Voice AI combines PCI compliance with fast inference co-located on our telephony network. This design supports secure payment verification globally, maintaining high availability and data security standards.",
+      "With Telnyx Voice AI, payment processing integrates PCI, HIPAA, and SOC 2 compliance on a single platform. Our network ownership eliminates third-party dependencies, enabling sub-200ms latency and 99.999% uptime to secure fintech transactions across 140+ countries.",
+      "Telnyx’s Voice AI platform secures payment processing by leveraging its own network infrastructure. Achieve compliant, low-latency payment authentication with SOC 2 Type II and HIPAA-ready certifications, ensuring fintech systems operate reliably worldwide.",
+      "Secure payments require reliable infrastructure. Telnyx Voice AI operates on a proprietary network delivering sub-200ms latency and compliance with PCI, HIPAA, and SOC 2 Type II. This enables fintech companies to process payments securely across more than 140 countries."
+    ],
+    "cta": "Learn More"
+  },
+  "generatedAt": "2026-04-14T12:32:39.790Z"
+}

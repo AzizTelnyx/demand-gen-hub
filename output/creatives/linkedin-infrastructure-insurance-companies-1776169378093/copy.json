@@ -1,0 +1,37 @@
+{
+  "brief": {
+    "platform": "linkedin",
+    "format": null,
+    "audience": "insurance companies",
+    "painPoints": [
+      "inefficient claims processing"
+    ],
+    "coreMessage": "Improving claims processing with AI voice agents",
+    "pillar": "infrastructure",
+    "adCopyExample": null,
+    "ctaSuggestion": "Learn More"
+  },
+  "copy": {
+    "headlines": [
+      "Reduce claims processing time with AI voice agents on a single Telnyx platform",
+      "Telnyx Voice AI enables sub-200ms latency claims handling across 140+ countries",
+      "Improve insurance claims efficiency using Telnyx’s own network infrastructure",
+      "One platform, zero extra hops, HIPAA/SOC2/PCI compliant voice AI for insurance",
+      "Telnyx Voice AI cuts latency by colocating inference with telephony for claims",
+      "Streamline insurance claims with AI voice agents on Telnyx’s global network",
+      "Telnyx Voice AI: 140+ countries, own network, and secure claims processing",
+      "Claims processing optimized with Telnyx’s single platform and sub-200ms latency",
+      "Telnyx Voice AI reduces claims delays using infrastructure built for insurance",
+      "Use Telnyx’s compliant, low-latency Voice AI to improve claims workflows"
+    ],
+    "descriptions": [
+      "Telnyx Voice AI leverages a single platform with an owned global network spanning 140+ countries. By colocating AI inference with telephony, claims processing latency stays under 200ms, enabling efficient insurance workflows without extra network hops. Compliance includes HIPAA, SOC2, and PCI standards.",
+      "Insurance companies can improve claims processing speed and accuracy using Telnyx Voice AI. Our infrastructure integrates AI voice agents on a platform that controls its own network, reduces latency below 200ms, and supports operations in over 140 countries, all while maintaining HIPAA, SOC2, and PCI compliance.",
+      "Telnyx provides a unified platform for AI-driven voice claims processing, eliminating delays caused by multiple vendors. With sub-200ms latency achieved by co-locating AI inference and telephony, and coverage across 140+ countries, insurance firms gain a compliant, efficient infrastructure for claims handling.",
+      "Telnyx Voice AI addresses inefficient claims processing by combining AI voice agents with a proprietary network infrastructure. Operating in 140+ countries and maintaining HIPAA, SOC2, and PCI compliance, our platform offers sub-200ms latency and zero extra network hops, improving insurance claims workflows.",
+      "Our platform consolidates AI voice agents and telephony infrastructure on one network owned by Telnyx, not resold. This setup reduces claims processing latency to under 200ms across 140+ countries and complies with HIPAA, SOC2, and PCI requirements, helping insurance companies streamline claims operations."
+    ],
+    "cta": "Learn More"
+  },
+  "generatedAt": "2026-04-14T12:23:04.563Z"
+}

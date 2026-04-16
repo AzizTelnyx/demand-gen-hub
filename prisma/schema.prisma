@@ -592,3 +592,18 @@ model BudgetAllocation {
 
   @@unique([platform, year, month])
 }
+
+model ABMExclusion {
+  id          String   @id @default(cuid())
+  domain     String
+  company    String?
+  country    String?
+  category   String   // reseller, agency, hospital, insurance, debt_collection, fintech, bpo, competitor, identity, dead_domain, too_large, bad_fit
+  reason     String
+  addedBy    String   @default("manual")
+  addedAt    DateTime @default(now())
+  notes      String?
+
+  @@index([domain])
+  @@index([category])
+}

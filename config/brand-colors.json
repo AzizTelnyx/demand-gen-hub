@@ -1,0 +1,207 @@
+{
+  "description": "Telnyx Brand Color System - Official color specifications for all creative generation",
+  "version": "2.0.0",
+  "lastUpdated": "2026-04-14",
+
+  "coreRules": [
+    "Use neutral base + product accent composition",
+    "Prefer high contrast (black/cream backgrounds)",
+    "Each product has a primary color + soft background tint",
+    "Avoid mixing multiple product colors unless explicitly requested",
+    "Always pair: neutral background + product primary OR product tint + product primary"
+  ],
+
+  "neutrals": {
+    "cream": {
+      "hex": "#FEFDF5",
+      "rgb": "254, 253, 245",
+      "usage": "Primary light background, default canvas",
+      "logoColor": "black"
+    },
+    "black": {
+      "hex": "#000000",
+      "rgb": "0, 0, 0",
+      "usage": "Primary text, high-contrast sections, dark mode backgrounds",
+      "logoColor": "white"
+    },
+    "tan": {
+      "hex": "#E6E3D3",
+      "rgb": "230, 227, 211",
+      "usage": "Secondary neutral backgrounds, subtle sections",
+      "logoColor": "black"
+    },
+    "bright_30": {
+      "hex": "#F0EEE5",
+      "rgb": "240, 238, 229",
+      "usage": "Soft background blocks, cards",
+      "logoColor": "black"
+    }
+  },
+
+  "brand": {
+    "primary": {
+      "name": "Telnyx Green",
+      "hex": "#00E3AA",
+      "rgb": "0, 227, 170",
+      "usage": "Primary brand identity, highlights, CTAs",
+      "logoColor": "white"
+    },
+    "backgroundTint": {
+      "name": "Green Tint",
+      "hex": "#CCF9EE",
+      "rgb": "204, 249, 238",
+      "usage": "Soft backgrounds behind green elements",
+      "logoColor": "black"
+    }
+  },
+
+  "products": {
+    "ai": {
+      "primary": {
+        "name": "AI Orange",
+        "hex": "#FF7442",
+        "rgb": "255, 116, 66",
+        "usage": "AI product emphasis, gradients, accents"
+      },
+      "background": {
+        "name": "AI Tint",
+        "hex": "#FFE3D9",
+        "rgb": "255, 227, 217",
+        "usage": "AI product surfaces, cards, sections",
+        "logoColor": "black"
+      },
+      "gradient": {
+        "from": "#FF7442",
+        "to": "#FF9A6B"
+      }
+    },
+    "voice_ai_agent": {
+      "primary": {
+        "name": "Voice AI Agent Pink",
+        "hex": "#E57EFF",
+        "rgb": "229, 126, 255",
+        "usage": "Voice AI agent emphasis"
+      },
+      "background": {
+        "name": "Pink Tint",
+        "hex": "#FAE5FF",
+        "rgb": "250, 229, 255",
+        "usage": "Voice AI agent surfaces",
+        "logoColor": "black"
+      },
+      "gradient": {
+        "from": "#E57EFF",
+        "to": "#F3A6FF"
+      }
+    },
+    "voice_api": {
+      "primary": {
+        "name": "Voice API Purple",
+        "hex": "#8850F9",
+        "rgb": "136, 80, 249",
+        "usage": "Voice API emphasis"
+      },
+      "background": {
+        "name": "Purple Tint",
+        "hex": "#E7DCFE",
+        "rgb": "231, 220, 254",
+        "usage": "Voice API surfaces",
+        "logoColor": "black"
+      },
+      "gradient": {
+        "from": "#8850F9",
+        "to": "#A178FF"
+      }
+    },
+    "esim": {
+      "primary": {
+        "name": "eSIM Citron",
+        "hex": "#D3FFA6",
+        "rgb": "211, 255, 166",
+        "usage": "eSIM emphasis"
+      },
+      "background": {
+        "name": "Citron Tint",
+        "hex": "#EDFFDB",
+        "rgb": "237, 255, 219",
+        "usage": "eSIM surfaces",
+        "logoColor": "black"
+      },
+      "gradient": {
+        "from": "#D3FFA6",
+        "to": "#E5FFBF"
+      }
+    },
+    "rcs": {
+      "primary": {
+        "name": "RCS Blue",
+        "hex": "#3434EF",
+        "rgb": "52, 52, 239",
+        "usage": "RCS emphasis"
+      },
+      "background": {
+        "name": "Blue Tint",
+        "hex": "#D6EFFC",
+        "rgb": "214, 239, 252",
+        "usage": "RCS surfaces",
+        "logoColor": "black"
+      },
+      "gradient": {
+        "from": "#3434EF",
+        "to": "#5A5AF5"
+      }
+    }
+  },
+
+  "text": {
+    "onLight": {
+      "primary": "#000000",
+      "secondary": "#666666"
+    },
+    "onDark": {
+      "primary": "#FFFFFF",
+      "secondary": "#CCCCCC"
+    }
+  },
+
+  "compositionPatterns": {
+    "cleanSaaS": {
+      "description": "Clean SaaS Banner",
+      "background": "cream",
+      "accent": "single product primary",
+      "cta": "Telnyx green",
+      "logoColor": "black"
+    },
+    "productHighlight": {
+      "description": "Product Highlight",
+      "background": "product tint",
+      "foreground": "product primary",
+      "logoColor": "black"
+    },
+    "darkMode": {
+      "description": "Dark Mode",
+      "background": "black",
+      "text": "white",
+      "accent": "product primary (glow or gradient)",
+      "logoColor": "white"
+    }
+  },
+
+  "pillarColors": {
+    "trust": {
+      "accent": "#00E3AA",
+      "background": "#CCF9EE",
+      "description": "Use Telnyx green for trust/security messaging"
+    },
+    "infrastructure": {
+      "accent": "#8850F9",
+      "background": "#E7DCFE",
+      "description": "Use purple for infrastructure/platform messaging"
+    },
+    "physics": {
+      "accent": "#FF7442",
+      "background": "#FFE3D9",
+      "description": "Use orange for performance/latency messaging"
+    }
+  }
+}

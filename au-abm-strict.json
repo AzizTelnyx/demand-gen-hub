@@ -1,0 +1,1614 @@
+{
+  "timestamp": "2026-04-09 19:40:20.407152+00:00",
+  "target": 100,
+  "country": "AU",
+  "stats": {
+    "accepted": 100,
+    "rejected": 44,
+    "seen": 209
+  },
+  "results": [
+    {
+      "company": "Coviu",
+      "domain": "coviu.com",
+      "country": "AU",
+      "icpBucket": "Vertical software companies with a phone-native workflow",
+      "voiceSignal": "Coviu provides telehealth solutions. Telehealth inherently involves voice communication, making them a strong candidate for Telnyx's voice AI infrastructure.",
+      "whyFit": "Telehealth platform with phone-heavy workflows for consultations and patient communication.",
+      "clearbit_industry": "Health Care Providers & Services",
+      "clearbit_sector": "Health Care",
+      "employees": 75
+    },
+    {
+      "company": "MedAdvisor",
+      "domain": "medadvisor.com.au",
+      "country": "AU",
+      "icpBucket": "Vertical software companies with a phone-native workflow",
+      "voiceSignal": "MedAdvisor is a medication management platform. They likely use phone calls for patient reminders, consultations, and support.",
+      "whyFit": "Medication management platform with phone-based patient communication workflows.",
+      "clearbit_industry": "Health Care Providers & Services",
+      "clearbit_sector": "Health Care",
+      "employees": 150
+    },
+    {
+      "company": "Assembly Payments",
+      "domain": "assemblypayments.com",
+      "country": "AU",
+      "icpBucket": "Vertical software companies with a phone-native workflow",
+      "voiceSignal": "Payment platform that likely uses voice for verification, fraud prevention, and customer support.",
+      "whyFit": "Payment platform with phone-based verification and customer support workflows.",
+      "clearbit_industry": "Diversified Financial Services",
+      "clearbit_sector": "Financials",
+      "employees": 240
+    },
+    {
+      "company": "CX Central",
+      "domain": "cxcentral.com.au",
+      "country": "AU",
+      "icpBucket": "AI agent / voice agent builders",
+      "voiceSignal": "CX Central is a contact center resource and consultancy. They are likely involved in implementing and recommending contact center technologies, including AI-powered solutions.",
+      "whyFit": "Consultancy focused on contact center technologies, including AI and automation.",
+      "clearbit_industry": "Professional Services",
+      "clearbit_sector": "Industrials",
+      "employees": 5
+    },
+    {
+      "company": "Prospa",
+      "domain": "prospa.com",
+      "country": "AU",
+      "icpBucket": "Vertical software companies with a phone-native workflow",
+      "voiceSignal": "Prospa provides small business loans. Loan applications and servicing often involve phone communication for verification and support.",
+      "whyFit": "Fintech company providing small business loans with phone-based application and servicing workflows.",
+      "clearbit_industry": "Banks",
+      "clearbit_sector": "Financials",
+      "employees": 420
+    },
+    {
+      "company": "Employment Hero",
+      "domain": "employmenthero.com",
+      "country": "AU",
+      "icpBucket": "Vertical software companies with a phone-native workflow",
+      "voiceSignal": "HR platform that likely uses voice for employee onboarding, support, and internal communication.",
+      "whyFit": "HR platform with phone-based employee onboarding and support workflows.",
+      "clearbit_industry": "Professional Services",
+      "clearbit_sector": "Industrials",
+      "employees": 110
+    },
+    {
+      "company": "Deputy",
+      "domain": "deputy.com",
+      "country": "AU",
+      "icpBucket": "Vertical software companies with a phone-native workflow",
+      "voiceSignal": "Deputy is a workforce management platform. They likely use phone calls for scheduling, shift reminders, and employee communication.",
+      "whyFit": "Workforce management platform with phone-based scheduling and communication workflows.",
+      "clearbit_industry": "Professional Services",
+      "clearbit_sector": "Industrials",
+      "employees": 450
+    },
+    {
+      "company": "Rezdy",
+      "domain": "rezdy.com",
+      "country": "AU",
+      "icpBucket": "Vertical software companies with a phone-native workflow",
+      "voiceSignal": "Rezdy provides booking software for tours and activities. They likely use phone calls for booking confirmations, customer support, and managing reservations.",
+      "whyFit": "Booking software for tours and activities with phone-based booking and customer support workflows.",
+      "clearbit_industry": "Consumer Services",
+      "clearbit_sector": "Consumer Discretionary",
+      "employees": 150
+    },
+    {
+      "company": "Clinic to Cloud",
+      "domain": "clinictocloud.com",
+      "country": "AU",
+      "icpBucket": "Vertical software companies with a phone-native workflow",
+      "voiceSignal": "Clinic to Cloud is a cloud-based practice management system. Practice management systems often involve phone calls for appointment scheduling, patient communication, and billing.",
+      "whyFit": "Practice management system with phone-based appointment scheduling and patient communication workflows.",
+      "clearbit_industry": "Professional Services",
+      "clearbit_sector": "Industrials",
+      "employees": 60
+    },
+    {
+      "company": "Openpay",
+      "domain": "openpay.com.au",
+      "country": "AU",
+      "icpBucket": "Vertical software companies with a phone-native workflow",
+      "voiceSignal": "Buy now, pay later service that likely uses voice for verification, customer support, and collections.",
+      "whyFit": "Buy now, pay later service with phone-based verification, customer support, and collections workflows.",
+      "clearbit_industry": "Diversified Financial Services",
+      "clearbit_sector": "Financials",
+      "employees": 45
+    },
+    {
+      "company": "SimPRO",
+      "domain": "simprogroup.com",
+      "country": "AU",
+      "icpBucket": "Vertical software companies with a phone-native workflow",
+      "voiceSignal": "SimPRO provides job management software for trade services. Trade services often rely on phone calls for scheduling, dispatch, and communication with customers.",
+      "whyFit": "Job management software for trade services with phone-based scheduling, dispatch, and customer communication workflows.",
+      "clearbit_industry": "Internet Software & Services",
+      "clearbit_sector": "Information Technology",
+      "employees": 450
+    },
+    {
+      "company": "SiteMinder",
+      "domain": "siteminder.com",
+      "country": "AU",
+      "icpBucket": "Vertical software companies with a phone-native workflow",
+      "voiceSignal": "SiteMinder provides hotel commerce platform. Hotels rely heavily on phone calls for reservations, customer service, and managing guest requests.",
+      "whyFit": "Hotel commerce platform with phone-based reservation and customer service workflows.",
+      "clearbit_industry": "Hotels, Restaurants & Leisure",
+      "clearbit_sector": "Consumer Discretionary",
+      "employees": 510
+    },
+    {
+      "company": "LookUp.com.au",
+      "domain": "lookup.com.au",
+      "country": "AU",
+      "icpBucket": "AI agent / voice agent builders",
+      "voiceSignal": "Lookup.com.au is a business directory and search platform. They could potentially use voice AI to enhance their search capabilities or provide voice-based customer support.",
+      "whyFit": "Business directory and search platform that could use voice AI to enhance search or customer support.",
+      "clearbit_industry": "Internet Software & Services",
+      "clearbit_sector": "Information Technology",
+      "employees": 15
+    },
+    {
+      "company": "Morse Micro",
+      "domain": "morsemicro.com",
+      "country": "AU",
+      "icpBucket": "Platform builders embedding voice automation",
+      "voiceSignal": "While not directly voice-focused, Morse Micro's Wi-Fi HaLow technology enables IoT devices, some of which may incorporate voice assistants or communication features, creating a need for voice infrastructure.",
+      "whyFit": "Morse Micro provides the underlying technology for IoT devices. Some of these devices may require voice capabilities, making them a potential customer for Telnyx's voice AI.",
+      "clearbit_industry": "Semiconductors & Semiconductor Equipment",
+      "clearbit_sector": "Information Technology",
+      "employees": 180
+    },
+    {
+      "company": "Clipchamp (Microsoft)",
+      "domain": "clipchamp.com",
+      "country": "AU",
+      "icpBucket": "Platform builders embedding voice automation",
+      "voiceSignal": "Clipchamp, now part of Microsoft, offers video editing tools. While primarily visual, some users might require voiceover recording or audio transcription, creating a need for voice infrastructure.",
+      "whyFit": "Clipchamp's video editing platform could benefit from Telnyx's voice AI for features like voiceover recording, transcription, and audio enhancement.",
+      "clearbit_industry": "Internet Software & Services",
+      "clearbit_sector": "Information Technology",
+      "employees": 60
+    },
+    {
+      "company": "Nuix",
+      "domain": "nuix.com",
+      "country": "AU",
+      "icpBucket": "Vertical software companies with a phone-native workflow",
+      "voiceSignal": "Nuix provides investigative analytics and intelligence software. Legal and forensic investigations often involve analyzing audio recordings and transcripts. They likely have phone-heavy workflows.",
+      "whyFit": "Nuix's platform could use Telnyx's voice AI to automate audio transcription, improve audio analysis, and enhance investigative workflows.",
+      "clearbit_industry": "Internet Software & Services",
+      "clearbit_sector": "Information Technology",
+      "employees": 420
+    },
+    {
+      "company": "DroneShield",
+      "domain": "droneshield.com",
+      "country": "AU",
+      "icpBucket": "Vertical software companies with a phone-native workflow",
+      "voiceSignal": "DroneShield provides drone detection and mitigation solutions. Security and emergency response situations often involve phone calls for immediate communication and coordination. They likely have phone-heavy workflows.",
+      "whyFit": "DroneShield's platform could use Telnyx's voice AI to automate emergency response communication, improve coordination during security incidents, and enhance overall situational awareness.",
+      "clearbit_industry": "Aerospace & Defense",
+      "clearbit_sector": "Industrials",
+      "employees": 90
+    },
+    {
+      "company": "Halaxy",
+      "domain": "halaxy.com",
+      "country": "AU",
+      "icpBucket": "Vertical software companies with a phone-native workflow",
+      "voiceSignal": "Halaxy is a practice management software for healthcare professionals. Appointment scheduling, patient communication, and billing often involve phone calls. They likely have phone-heavy workflows.",
+      "whyFit": "Halaxy's platform could use Telnyx's voice AI to automate appointment scheduling, improve patient communication, and streamline billing processes.",
+      "clearbit_industry": "Internet Software & Services",
+      "clearbit_sector": "Information Technology",
+      "employees": 30
+    },
+    {
+      "company": "Clipchamp",
+      "domain": "clipchamp.com",
+      "country": "AU",
+      "icpBucket": "Vertical Software",
+      "voiceSignal": "Phone-heavy workflow central to the product",
+      "whyFit": "Clipchamp, a video editing platform, likely uses phone calls for customer support, especially for enterprise clients or complex technical issues.",
+      "clearbit_industry": "Internet Software & Services",
+      "clearbit_sector": "Information Technology",
+      "employees": 60
+    },
+    {
+      "company": "Zip Co",
+      "domain": "zip.co",
+      "country": "AU",
+      "icpBucket": "Fintech",
+      "voiceSignal": "Phone-heavy workflow central to the product",
+      "whyFit": "Zip Co, another buy now, pay later service, similarly relies on phone calls for customer support, fraud prevention, and collections.",
+      "clearbit_industry": "Banks",
+      "clearbit_sector": "Financials",
+      "employees": 1498
+    },
+    {
+      "company": "Linkly",
+      "domain": "linkly.com.au",
+      "country": "AU",
+      "icpBucket": "Fintech",
+      "voiceSignal": "Phone-heavy workflow central to the product",
+      "whyFit": "Linkly provides payment solutions and likely uses phone calls for technical support, merchant onboarding, and resolving payment processing issues.",
+      "clearbit_industry": "Diversified Financial Services",
+      "clearbit_sector": "Financials",
+      "employees": 100
+    },
+    {
+      "company": "Harrison.ai",
+      "domain": "harrison.ai",
+      "country": "AU",
+      "icpBucket": "Vertical Software",
+      "voiceSignal": "Phone-heavy workflow central to the product",
+      "whyFit": "Harrison.ai develops AI solutions for healthcare, which may involve voice-based communication for patient monitoring, remote consultations, or automated appointment reminders.",
+      "clearbit_industry": "IT Services",
+      "clearbit_sector": "Information Technology",
+      "employees": 240
+    },
+    {
+      "company": "OpenLearning",
+      "domain": "openlearning.com",
+      "country": "AU",
+      "icpBucket": "Platform builders embedding voice automation",
+      "voiceSignal": "Online learning platform; could integrate voice for language learning or interactive lessons.",
+      "whyFit": "Online learning platforms can benefit from voice AI for language learning features, interactive lessons, or even AI-powered tutoring.",
+      "clearbit_industry": "Diversified Consumer Services",
+      "clearbit_sector": "Consumer Discretionary",
+      "employees": 90
+    },
+    {
+      "company": "Expert360",
+      "domain": "expert360.com",
+      "country": "AU",
+      "icpBucket": "Vertical software companies with a phone-native workflow",
+      "voiceSignal": "Freelance marketplace; communication between clients and freelancers often involves phone calls.",
+      "whyFit": "Connecting clients with freelancers often requires phone communication for project discussions, interviews, and ongoing collaboration.",
+      "clearbit_industry": "Professional Services",
+      "clearbit_sector": "Industrials",
+      "employees": 150
+    },
+    {
+      "company": "Flare HR",
+      "domain": "flarehr.com",
+      "country": "AU",
+      "icpBucket": "Vertical software companies with a phone-native workflow",
+      "voiceSignal": "HR software; employee communication and support often involve phone calls.",
+      "whyFit": "HR processes often involve phone communication for onboarding, employee support, and conflict resolution, making voice a key part of their workflow.",
+      "clearbit_industry": "Professional Services",
+      "clearbit_sector": "Industrials",
+      "employees": 101
+    },
+    {
+      "company": "Paytron",
+      "domain": "paytron.com.au",
+      "country": "AU",
+      "icpBucket": "Vertical software companies with a phone-native workflow",
+      "voiceSignal": "Payroll software; customer support and employee inquiries often involve phone calls.",
+      "whyFit": "Payroll processing often requires phone communication for customer support, employee inquiries, and resolving payment issues.",
+      "clearbit_industry": "Capital Markets",
+      "clearbit_sector": "Financials",
+      "employees": 500
+    },
+    {
+      "company": "MyPass Global",
+      "domain": "mypassglobal.com",
+      "country": "AU",
+      "icpBucket": "Vertical software companies with a phone-native workflow",
+      "voiceSignal": "Workforce compliance and credential management; verification and communication with workers often involves phone calls.",
+      "whyFit": "Verifying worker credentials and ensuring compliance often requires phone communication for confirming information and addressing any issues.",
+      "clearbit_industry": "Professional Services",
+      "clearbit_sector": "Industrials",
+      "employees": 90
+    },
+    {
+      "company": "Brighte",
+      "domain": "brighte.com.au",
+      "country": "AU",
+      "icpBucket": "Vertical software companies with a phone-native workflow",
+      "voiceSignal": "Fintech company providing financing for home improvements. Customer support and loan application processes likely involve phone calls.",
+      "whyFit": "Brighte's financing platform could benefit from voice AI for automated loan application processing, customer support, and verification.",
+      "clearbit_industry": "Renewable Electricity",
+      "clearbit_sector": "Utilities",
+      "employees": 240
+    },
+    {
+      "company": "Athena Home Loans",
+      "domain": "athena.com.au",
+      "country": "AU",
+      "icpBucket": "Vertical software companies with a phone-native workflow",
+      "voiceSignal": "Mortgage lender. Loan application and customer support workflows likely involve phone calls.",
+      "whyFit": "Athena Home Loans' mortgage lending process likely involves significant phone-based interactions for customer support, loan application assistance, and verification.",
+      "clearbit_industry": "Banks",
+      "clearbit_sector": "Financials",
+      "employees": 180
+    },
+    {
+      "company": "HotDoc",
+      "domain": "hotdoc.com.au",
+      "country": "AU",
+      "icpBucket": "Vertical software companies with a phone-native workflow",
+      "voiceSignal": "Online booking platform for healthcare appointments. Appointment reminders and patient communication likely involve phone calls.",
+      "whyFit": "HotDoc's booking platform could leverage voice AI for automated appointment reminders, patient communication, and follow-up calls.",
+      "clearbit_industry": "Professional Services",
+      "clearbit_sector": "Industrials",
+      "employees": 150
+    },
+    {
+      "company": "Beforepay",
+      "domain": "beforepay.com.au",
+      "country": "AU",
+      "icpBucket": "Vertical software companies with a phone-native workflow",
+      "voiceSignal": "Provides short-term loans. Customer support and collections likely involve phone calls.",
+      "whyFit": "Beforepay's business model likely requires phone communication for customer support, loan application assistance, and collections.",
+      "clearbit_industry": "Banks",
+      "clearbit_sector": "Financials",
+      "employees": 45
+    },
+    {
+      "company": "Finder",
+      "domain": "finder.com.au",
+      "country": "AU",
+      "icpBucket": "Vertical software companies with a phone-native workflow",
+      "voiceSignal": "Comparison website for financial products. Customer support and product inquiries likely involve phone calls.",
+      "whyFit": "Finder's comparison platform could benefit from voice AI for automated customer support, product recommendations, and lead generation.",
+      "clearbit_industry": "Internet Software & Services",
+      "clearbit_sector": "Information Technology",
+      "employees": 150
+    },
+    {
+      "company": "Propella.ai",
+      "domain": "propella.ai",
+      "country": "AU",
+      "icpBucket": "AI agent / voice agent builders",
+      "voiceSignal": "Propella.ai focuses on AI-powered automation. They likely build or integrate voice-based automation solutions for various industries.",
+      "whyFit": "Propella.ai specializes in AI-powered automation. They could leverage Telnyx for building voice-based automation solutions for customer service, sales, or other business processes.",
+      "clearbit_industry": "Internet Software & Services",
+      "clearbit_sector": "Information Technology",
+      "employees": 30
+    },
+    {
+      "company": "Carsales.com.au",
+      "domain": "carsales.com.au",
+      "country": "AU",
+      "icpBucket": "Vertical software companies with a phone-native workflow",
+      "voiceSignal": "Online marketplace for cars. Communication between sellers and potential buyers often involves phone calls.",
+      "whyFit": "Carsales.com.au's online marketplace relies on phone communication between sellers and potential buyers. They need reliable voice infrastructure.",
+      "clearbit_industry": "Automotive",
+      "clearbit_sector": "Consumer Discretionary",
+      "employees": 600
+    },
+    {
+      "company": "Indebted",
+      "domain": "indebted.co",
+      "country": "AU",
+      "icpBucket": "Vertical software companies with a phone-native workflow",
+      "voiceSignal": "Collections workflow where phone calls are central to the product/workflow",
+      "whyFit": "Indebted provides a digital debt collection platform. Collections often involve phone calls, making them a potential user of voice AI infrastructure for automation and efficiency.",
+      "clearbit_industry": "Diversified Financial Services",
+      "clearbit_sector": "Financials",
+      "employees": 280
+    },
+    {
+      "company": "Xref",
+      "domain": "xref.com",
+      "country": "AU",
+      "icpBucket": "Vertical software companies with a phone-native workflow",
+      "voiceSignal": "Verification workflow where phone calls are central to the product/workflow",
+      "whyFit": "Xref provides automated reference checking software. While primarily digital, some verification processes may involve phone calls, making them a potential user of voice AI infrastructure.",
+      "clearbit_industry": "Professional Services",
+      "clearbit_sector": "Industrials",
+      "employees": 90
+    },
+    {
+      "company": "ShiftCare",
+      "domain": "shiftcare.com",
+      "country": "AU",
+      "icpBucket": "Vertical software companies with a phone-native workflow",
+      "voiceSignal": "Product/site mentions scheduling, service operations",
+      "whyFit": "ShiftCare provides scheduling and management software for home care providers. Phone calls are likely central to scheduling and coordinating care, making them a potential user of voice AI.",
+      "clearbit_industry": "Internet Software & Services",
+      "clearbit_sector": "Information Technology",
+      "employees": 30
+    },
+    {
+      "company": "Plenti",
+      "domain": "plenti.com.au",
+      "country": "AU",
+      "icpBucket": "Vertical software companies with a phone-native workflow",
+      "voiceSignal": "Product/site mentions fintech, collections",
+      "whyFit": "Plenti is a lending platform, potentially requiring collections or customer support via phone. Voice AI could streamline these processes.",
+      "clearbit_industry": "Diversified Financial Services",
+      "clearbit_sector": "Financials",
+      "employees": 210
+    },
+    {
+      "company": "Wisr",
+      "domain": "wisr.com.au",
+      "country": "AU",
+      "icpBucket": "Vertical software companies with a phone-native workflow",
+      "voiceSignal": "Product/site mentions fintech, collections",
+      "whyFit": "Wisr is a lending platform, potentially requiring collections or customer support via phone. Voice AI could streamline these processes.",
+      "clearbit_industry": "Banks",
+      "clearbit_sector": "Financials",
+      "employees": 120
+    },
+    {
+      "company": "Credit Clear",
+      "domain": "creditclear.com.au",
+      "country": "AU",
+      "icpBucket": "Vertical software companies with a phone-native workflow",
+      "voiceSignal": "Product/site mentions collections",
+      "whyFit": "Credit Clear provides debt collection solutions, making phone calls a central part of their workflow. Voice AI could automate and improve their collection efforts.",
+      "clearbit_industry": "Diversified Financial Services",
+      "clearbit_sector": "Financials",
+      "employees": 120
+    },
+    {
+      "company": "ServiceM8",
+      "domain": "servicem8.com",
+      "country": "AU",
+      "icpBucket": "Vertical software companies with a phone-native workflow",
+      "voiceSignal": "Product/site mentions service operations",
+      "whyFit": "ServiceM8 provides job management software for service businesses. Phone calls are likely central to scheduling and coordinating services, making them a potential user of voice AI.",
+      "clearbit_industry": "Internet Software & Services",
+      "clearbit_sector": "Information Technology",
+      "employees": 30
+    },
+    {
+      "company": "Ento",
+      "domain": "ento.com",
+      "country": "AU",
+      "icpBucket": "Vertical software companies with a phone-native workflow",
+      "voiceSignal": "Product/site mentions scheduling, service operations",
+      "whyFit": "Ento provides scheduling and workforce management software. Phone calls are likely central to scheduling and coordinating staff, making them a potential user of voice AI.",
+      "clearbit_industry": "Professional Services",
+      "clearbit_sector": "Industrials",
+      "employees": 240
+    },
+    {
+      "company": "Zip",
+      "domain": "zip.co",
+      "country": "AU",
+      "icpBucket": "Vertical software companies with a phone-native workflow",
+      "voiceSignal": "Fintech, customer support",
+      "whyFit": "Zip provides buy now pay later solutions. Customer support for payment issues can involve phone calls, making them a potential user of Telnyx Voice AI for improved support experiences.",
+      "clearbit_industry": "Banks",
+      "clearbit_sector": "Financials",
+      "employees": 1498
+    },
+    {
+      "company": "JCurve Solutions",
+      "domain": "jcurvesolutions.com",
+      "country": "AU",
+      "icpBucket": "Vertical software companies with a phone-native workflow",
+      "voiceSignal": "Customer support",
+      "whyFit": "JCurve Solutions provides ERP solutions. Customer support for ERP issues can involve phone calls, making them a potential user of Telnyx Voice AI for improved support experiences.",
+      "clearbit_industry": "Professional Services",
+      "clearbit_sector": "Industrials",
+      "employees": 150
+    },
+    {
+      "company": "NetEngine",
+      "domain": "netengine.com.au",
+      "country": "AU",
+      "icpBucket": "Platform builders embedding voice automation",
+      "voiceSignal": "Mentions telephony, SIP, call routing",
+      "whyFit": "NetEngine offers communication solutions that likely involve telephony and call routing, indicating a need for robust voice infrastructure like Telnyx Voice AI.",
+      "clearbit_industry": "Internet Software & Services",
+      "clearbit_sector": "Information Technology",
+      "employees": null
+    },
+    {
+      "company": "Ezidebit",
+      "domain": "ezidebit.com",
+      "country": "AU",
+      "icpBucket": "Vertical software companies with a phone-native workflow",
+      "voiceSignal": "Job postings mention telephony and call center operations.",
+      "whyFit": "Ezidebit, a payment solutions provider, likely uses telephony for customer support and collections, making them a potential user of voice AI for automation.",
+      "clearbit_industry": "Diversified Financial Services",
+      "clearbit_sector": "Financials",
+      "employees": 90
+    },
+    {
+      "company": "Connect Hearing",
+      "domain": "connecthearing.com.au",
+      "country": "AU",
+      "icpBucket": "Healthcare Scheduling/Patient Comms",
+      "voiceSignal": "Hearing healthcare provider with appointment scheduling and patient communication likely involving phone calls.",
+      "whyFit": "Needs voice infrastructure for appointment booking, reminders, and patient support.",
+      "clearbit_industry": "Health Care Providers & Services",
+      "clearbit_sector": "Health Care",
+      "employees": 300
+    },
+    {
+      "company": "My Muscle Chef",
+      "domain": "mymusclechef.com",
+      "country": "AU",
+      "icpBucket": "Vertical Software with Phone-Native Workflows",
+      "voiceSignal": "Meal delivery service with customer support and order management likely involving phone calls.",
+      "whyFit": "Requires voice infrastructure for customer service, order inquiries, and delivery coordination.",
+      "clearbit_industry": "Food Products",
+      "clearbit_sector": "Consumer Staples",
+      "employees": 210
+    },
+    {
+      "company": "Pet Circle",
+      "domain": "petcircle.com.au",
+      "country": "AU",
+      "icpBucket": "Vertical Software with Phone-Native Workflows",
+      "voiceSignal": "Online pet supply retailer with customer service and order management likely involving phone calls.",
+      "whyFit": "Needs voice infrastructure for customer support, order inquiries, and delivery coordination.",
+      "clearbit_industry": "Specialty Retail",
+      "clearbit_sector": "Consumer Discretionary",
+      "employees": 420
+    },
+    {
+      "company": "Bookipi",
+      "domain": "bookipi.com",
+      "country": "AU",
+      "icpBucket": "Vertical Software with Phone-Native Workflows",
+      "voiceSignal": "Appointment scheduling and invoicing software for small businesses, potentially including phone-based appointment reminders and confirmations.",
+      "whyFit": "Could use voice infrastructure for appointment reminders and customer communication.",
+      "clearbit_industry": "Diversified Financial Services",
+      "clearbit_sector": "Financials",
+      "employees": 30
+    },
+    {
+      "company": "ServiceSeeking",
+      "domain": "serviceseeking.com.au",
+      "country": "AU",
+      "icpBucket": "Vertical Software with Phone-Native Workflows",
+      "voiceSignal": "Similar to Hipages, connecting customers with service providers, likely involving phone calls for job requests and communication.",
+      "whyFit": "Needs voice infrastructure for connecting customers and service providers, facilitating job requests and communication.",
+      "clearbit_industry": "Internet Software & Services",
+      "clearbit_sector": "Information Technology",
+      "employees": 60
+    },
+    {
+      "company": "Campaign Monitor",
+      "domain": "campaignmonitor.com",
+      "country": "AU",
+      "icpBucket": "Vertical Software with Phone-Native Workflows",
+      "voiceSignal": "Email marketing platform; may offer phone support or integrate with telephony systems for customer communication.",
+      "whyFit": "Could use voice infrastructure for customer support and sales outreach.",
+      "clearbit_industry": "Media",
+      "clearbit_sector": "Consumer Discretionary",
+      "employees": 420
+    },
+    {
+      "company": "Car Next Door",
+      "domain": "carnextdoor.com.au",
+      "country": "AU",
+      "icpBucket": "Vertical Software with Phone-Native Workflows",
+      "voiceSignal": "Car sharing platform with customer support and booking management likely involving phone calls.",
+      "whyFit": "Needs voice infrastructure for customer service, booking inquiries, and car owner/borrower communication.",
+      "clearbit_industry": "Consumer Services",
+      "clearbit_sector": "Consumer Discretionary",
+      "employees": 90
+    },
+    {
+      "company": "Splend",
+      "domain": "splend.com.au",
+      "country": "AU",
+      "icpBucket": "Vertical Software with Phone-Native Workflows",
+      "voiceSignal": "Car subscription service for ride-sharing drivers, likely involving phone calls for customer support and driver communication.",
+      "whyFit": "Requires voice infrastructure for customer service, driver communication, and vehicle management.",
+      "clearbit_industry": "Consumer Services",
+      "clearbit_sector": "Consumer Discretionary",
+      "employees": 180
+    },
+    {
+      "company": "Lendi",
+      "domain": "lendi.com.au",
+      "country": "AU",
+      "icpBucket": "Vertical Software with Phone-Native Workflows",
+      "voiceSignal": "Online home loan platform with mortgage brokers, likely involving phone calls for consultations and application support.",
+      "whyFit": "Needs voice infrastructure for connecting customers with brokers, facilitating consultations and application support.",
+      "clearbit_industry": "Banks",
+      "clearbit_sector": "Financials",
+      "employees": 570
+    },
+    {
+      "company": "Coviu Global",
+      "domain": "coviu.com",
+      "country": "AU",
+      "icpBucket": "Healthcare Scheduling/Patient Comms",
+      "voiceSignal": "Telehealth platform with integrated voice and video calling features for remote consultations.",
+      "whyFit": "Requires reliable voice infrastructure for telehealth appointments and patient communication workflows.",
+      "clearbit_industry": "Health Care Providers & Services",
+      "clearbit_sector": "Health Care",
+      "employees": 75
+    },
+    {
+      "company": "Updoc",
+      "domain": "updoc.com.au",
+      "country": "AU",
+      "icpBucket": "Healthcare Scheduling/Patient Comms",
+      "voiceSignal": "Online telehealth platform facilitating virtual consultations, likely using voice for appointment reminders and follow-up calls.",
+      "whyFit": "Requires voice infrastructure for telehealth consultations and patient communication.",
+      "clearbit_industry": "Health Care Providers & Services",
+      "clearbit_sector": "Health Care",
+      "employees": 10
+    },
+    {
+      "company": "Medipass",
+      "domain": "medipass.com.au",
+      "country": "AU",
+      "icpBucket": "Healthcare Scheduling/Patient Comms",
+      "voiceSignal": "Platform for healthcare payments and claims, potentially using voice for payment reminders or customer service.",
+      "whyFit": "May need voice for payment-related communications and customer support.",
+      "clearbit_industry": "Diversified Financial Services",
+      "clearbit_sector": "Financials",
+      "employees": 30
+    },
+    {
+      "company": "NextMinute",
+      "domain": "nextminute.com",
+      "country": "AU",
+      "icpBucket": "Field Service/Service Ops",
+      "voiceSignal": "Job management software for trades and service businesses, likely using voice for scheduling and communication with technicians.",
+      "whyFit": "Needs voice capabilities for job dispatch, scheduling, and technician communication.",
+      "clearbit_industry": "Construction & Engineering",
+      "clearbit_sector": "Industrials",
+      "employees": 15
+    },
+    {
+      "company": "Redback Connect",
+      "domain": "redbackconnect.com.au",
+      "country": "AU",
+      "icpBucket": "Contact Center",
+      "voiceSignal": "Cloud contact center solution provider, offering features like call routing and IVR.",
+      "whyFit": "Requires robust voice infrastructure for its contact center platform.",
+      "clearbit_industry": "Internet Software & Services",
+      "clearbit_sector": "Information Technology",
+      "employees": 30
+    },
+    {
+      "company": "Call Design",
+      "domain": "calldesign.com.au",
+      "country": "AU",
+      "icpBucket": "Contact Center",
+      "voiceSignal": "Workforce management software for contact centers, likely integrated with telephony systems.",
+      "whyFit": "Needs voice infrastructure for optimizing contact center operations.",
+      "clearbit_industry": "Internet Software & Services",
+      "clearbit_sector": "Information Technology",
+      "employees": 75
+    },
+    {
+      "company": "Call Journey",
+      "domain": "calljourney.com",
+      "country": "AU",
+      "icpBucket": "AI Voice Startups",
+      "voiceSignal": "Conversation analytics platform that analyzes voice interactions to improve customer experience.",
+      "whyFit": "Requires access to voice data and infrastructure for its analytics platform.",
+      "clearbit_industry": "Internet Software & Services",
+      "clearbit_sector": "Information Technology",
+      "employees": 180
+    },
+    {
+      "company": "LocalAgentFinder",
+      "domain": "localagentfinder.com.au",
+      "country": "AU",
+      "icpBucket": "Vertical Software with Phone-Native Workflows",
+      "voiceSignal": "Platform connecting real estate agents with potential clients, likely involving phone calls for initial consultations and follow-ups.",
+      "whyFit": "The real estate industry relies heavily on phone communication, making LocalAgentFinder a potential user of voice automation for lead qualification and agent matching.",
+      "clearbit_industry": "Real Estate",
+      "clearbit_sector": "Financials",
+      "employees": 45
+    },
+    {
+      "company": "MedEbridge",
+      "domain": "medebridge.com.au",
+      "country": "AU",
+      "icpBucket": "Healthcare Scheduling/Patient Comms",
+      "voiceSignal": "Healthcare software solutions, including patient engagement and communication tools, likely involving phone calls for appointment reminders and follow-ups.",
+      "whyFit": "MedEbridge's focus on patient engagement makes voice automation a valuable tool for improving communication and adherence.",
+      "clearbit_industry": "Health Care Providers & Services",
+      "clearbit_sector": "Health Care",
+      "employees": null
+    },
+    {
+      "company": "Payble",
+      "domain": "payble.com.au",
+      "country": "AU",
+      "icpBucket": "Collections",
+      "voiceSignal": "Debt collection software that likely uses phone calls for contacting debtors and negotiating payment plans.",
+      "whyFit": "Debt collection relies heavily on phone communication, making Payble a prime candidate for voice automation to improve efficiency and compliance.",
+      "clearbit_industry": "Diversified Financial Services",
+      "clearbit_sector": "Financials",
+      "employees": 15
+    },
+    {
+      "company": "Slyp",
+      "domain": "slyp.com.au",
+      "country": "AU",
+      "icpBucket": "Vertical Software with Phone-Native Workflows",
+      "voiceSignal": "Platform for digital receipts and expense management, potentially using phone calls for customer support and fraud prevention.",
+      "whyFit": "Slyp's focus on financial transactions may require phone-based verification and customer support.",
+      "clearbit_industry": "Diversified Financial Services",
+      "clearbit_sector": "Financials",
+      "employees": 30
+    },
+    {
+      "company": "Tanda",
+      "domain": "tanda.co",
+      "country": "AU",
+      "icpBucket": "Vertical Software with Phone-Native Workflows",
+      "voiceSignal": "Workforce management software with rostering, time tracking, and payroll features, potentially involving phone calls for shift confirmations and employee communication.",
+      "whyFit": "Tanda's focus on workforce management may require phone-based communication for scheduling and employee support.",
+      "clearbit_industry": "",
+      "clearbit_sector": "",
+      "employees": null
+    },
+    {
+      "company": "Xplor",
+      "domain": "myxplor.com",
+      "country": "AU",
+      "icpBucket": "Vertical Software with Phone-Native Workflows",
+      "voiceSignal": "Childcare management software with communication features, likely involving phone calls for parent communication and emergency alerts.",
+      "whyFit": "Childcare requires reliable phone communication for parent updates and emergency situations.",
+      "clearbit_industry": "Diversified Consumer Services",
+      "clearbit_sector": "Consumer Discretionary",
+      "employees": 150
+    },
+    {
+      "company": "YouLi",
+      "domain": "youli.io",
+      "country": "AU",
+      "icpBucket": "Vertical Software with Phone-Native Workflows",
+      "voiceSignal": "Group travel platform, likely using phone calls for customer service and emergency support during trips.",
+      "whyFit": "Group travel often requires phone-based customer service and emergency support.",
+      "clearbit_industry": "Consumer Services",
+      "clearbit_sector": "Consumer Discretionary",
+      "employees": 10
+    },
+    {
+      "company": "Everproof",
+      "domain": "everproof.com",
+      "country": "AU",
+      "icpBucket": "Vertical Software with Phone-Native Workflows",
+      "voiceSignal": "Compliance management platform, potentially using phone calls for verification and audit trails.",
+      "whyFit": "Compliance processes often require phone-based verification and documentation.",
+      "clearbit_industry": "Internet Software & Services",
+      "clearbit_sector": "Information Technology",
+      "employees": 5
+    },
+    {
+      "company": "Go1",
+      "domain": "go1.com",
+      "country": "AU",
+      "icpBucket": "Vertical Software with Phone-Native Workflows",
+      "voiceSignal": "Online learning platform, potentially using voice AI for interactive learning experiences and personalized feedback.",
+      "whyFit": "Go1's focus on online learning could benefit from voice AI for engaging students and providing personalized support.",
+      "clearbit_industry": "Diversified Consumer Services",
+      "clearbit_sector": "Consumer Discretionary",
+      "employees": 600
+    },
+    {
+      "company": "RedEye",
+      "domain": "redeye.co",
+      "country": "AU",
+      "icpBucket": "Vertical Software with Phone-Native Workflows",
+      "voiceSignal": "Asset management software for infrastructure projects, potentially using phone calls for field communication and incident reporting.",
+      "whyFit": "Infrastructure projects often require phone-based communication for field operations and emergency response.",
+      "clearbit_industry": "Professional Services",
+      "clearbit_sector": "Industrials",
+      "employees": 1750
+    },
+    {
+      "company": "Covidence",
+      "domain": "covidence.org",
+      "country": "AU",
+      "icpBucket": "Vertical Software",
+      "voiceSignal": "Systematic review management software; may use voice for collaboration and communication within research teams.",
+      "whyFit": "Collaboration platform for research teams, potentially using voice for communication and discussion of findings.",
+      "clearbit_industry": "Internet Software & Services",
+      "clearbit_sector": "Information Technology",
+      "employees": 45
+    },
+    {
+      "company": "MediRecords",
+      "domain": "medirecords.com",
+      "country": "AU",
+      "icpBucket": "Healthcare Scheduling/Patient Comms",
+      "voiceSignal": "Cloud-based medical software; likely uses voice for appointment reminders and patient communication.",
+      "whyFit": "Cloud-based medical software with a need for patient communication, including appointment reminders and follow-ups, potentially using voice.",
+      "clearbit_industry": "Professional Services",
+      "clearbit_sector": "Industrials",
+      "employees": 150
+    },
+    {
+      "company": "Coreplus",
+      "domain": "coreplus.com.au",
+      "country": "AU",
+      "icpBucket": "Healthcare Scheduling/Patient Comms",
+      "voiceSignal": "Allied health practice management software; likely uses voice for appointment reminders and patient communication.",
+      "whyFit": "Allied health practice management software requiring patient communication, including appointment reminders and follow-ups, potentially using voice.",
+      "clearbit_industry": "Internet Software & Services",
+      "clearbit_sector": "Information Technology",
+      "employees": 30
+    },
+    {
+      "company": "Cliniko",
+      "domain": "cliniko.com",
+      "country": "AU",
+      "icpBucket": "Healthcare Scheduling/Patient Comms",
+      "voiceSignal": "Practice management software for healthcare clinics; likely uses voice for appointment reminders and patient communication.",
+      "whyFit": "Practice management software requiring patient communication, including appointment reminders and follow-ups, potentially using voice.",
+      "clearbit_industry": "Health Care Providers & Services",
+      "clearbit_sector": "Health Care",
+      "employees": 15
+    },
+    {
+      "company": "Smartsoft",
+      "domain": "smartsoft.com.au",
+      "country": "AU",
+      "icpBucket": "Vertical Software",
+      "voiceSignal": "Software for debt collection agencies; likely uses voice for outbound calls and communication with debtors.",
+      "whyFit": "Debt collection software requiring outbound calling and communication with debtors, making voice a critical component.",
+      "clearbit_industry": "Internet Software & Services",
+      "clearbit_sector": "Information Technology",
+      "employees": 40
+    },
+    {
+      "company": "Collection House",
+      "domain": "collectionhouse.com.au",
+      "country": "AU",
+      "icpBucket": "Collections",
+      "voiceSignal": "Debt collection agency; heavily relies on voice for contacting debtors and negotiating payment plans.",
+      "whyFit": "Debt collection agency with a high volume of outbound calls, making voice a core part of their operations.",
+      "clearbit_industry": "Diversified Financial Services",
+      "clearbit_sector": "Financials",
+      "employees": 450
+    },
+    {
+      "company": "Credit Corp",
+      "domain": "creditcorp.com.au",
+      "country": "AU",
+      "icpBucket": "Collections",
+      "voiceSignal": "Debt collection agency; heavily relies on voice for contacting debtors and negotiating payment plans.",
+      "whyFit": "Debt collection agency with a high volume of outbound calls, making voice a core part of their operations.",
+      "clearbit_industry": "Diversified Financial Services",
+      "clearbit_sector": "Financials",
+      "employees": 2500
+    },
+    {
+      "company": "Recoveries Corp",
+      "domain": "recoveriescorp.com.au",
+      "country": "AU",
+      "icpBucket": "Collections",
+      "voiceSignal": "Debt collection agency; heavily relies on voice for contacting debtors and negotiating payment plans.",
+      "whyFit": "Debt collection agency with a high volume of outbound calls, making voice a core part of their operations.",
+      "clearbit_industry": "Diversified Financial Services",
+      "clearbit_sector": "Financials",
+      "employees": 420
+    },
+    {
+      "company": "ACR",
+      "domain": "acr.com.au",
+      "country": "AU",
+      "icpBucket": "Collections",
+      "voiceSignal": "Debt collection agency; heavily relies on voice for contacting debtors and negotiating payment plans.",
+      "whyFit": "Debt collection agency with a high volume of outbound calls, making voice a core part of their operations.",
+      "clearbit_industry": "Communications Equipment",
+      "clearbit_sector": "Information Technology",
+      "employees": 10
+    },
+    {
+      "company": "Probe CX",
+      "domain": "probegroup.com.au",
+      "country": "AU",
+      "icpBucket": "Contact Center",
+      "voiceSignal": "Contact center solutions provider; heavily relies on voice for customer service and support.",
+      "whyFit": "Contact center solutions provider with a high volume of inbound and outbound calls, making voice a core part of their operations.",
+      "clearbit_industry": "Professional Services",
+      "clearbit_sector": "Industrials",
+      "employees": 3250
+    },
+    {
+      "company": "Downer Group",
+      "domain": "downergroup.com",
+      "country": "AU",
+      "icpBucket": "Field Service/Service Ops",
+      "voiceSignal": "Infrastructure and services company; likely uses voice for dispatching field technicians and coordinating service requests.",
+      "whyFit": "Infrastructure and services company needing communication between dispatchers and field technicians, potentially using voice for real-time coordination.",
+      "clearbit_industry": "Construction & Engineering",
+      "clearbit_sector": "Industrials",
+      "employees": 31000
+    },
+    {
+      "company": "Programmed",
+      "domain": "programmed.com.au",
+      "country": "AU",
+      "icpBucket": "Field Service/Service Ops",
+      "voiceSignal": "Staffing and maintenance services company; likely uses voice for dispatching field technicians and coordinating service requests.",
+      "whyFit": "Staffing and maintenance services company needing communication between dispatchers and field technicians, potentially using voice for real-time coordination.",
+      "clearbit_industry": "Professional Services",
+      "clearbit_sector": "Industrials",
+      "employees": 20000
+    },
+    {
+      "company": "Spotless Group",
+      "domain": "spotless.com.au",
+      "country": "AU",
+      "icpBucket": "Field Service/Service Ops",
+      "voiceSignal": "Integrated services company; likely uses voice for dispatching field technicians and coordinating service requests.",
+      "whyFit": "Integrated services company needing communication between dispatchers and field technicians, potentially using voice for real-time coordination.",
+      "clearbit_industry": "Professional Services",
+      "clearbit_sector": "Industrials",
+      "employees": 36000
+    },
+    {
+      "company": "Active Tree Services",
+      "domain": "activetreeservices.com.au",
+      "country": "AU",
+      "icpBucket": "Field Service/Service Ops",
+      "voiceSignal": "Tree services company; likely uses voice for scheduling appointments and coordinating field crews.",
+      "whyFit": "Tree services company needing communication between dispatchers and field crews, potentially using voice for scheduling and coordination.",
+      "clearbit_industry": "Food Products",
+      "clearbit_sector": "Consumer Staples",
+      "employees": 330
+    },
+    {
+      "company": "Telstra Health",
+      "domain": "telstrahealth.com",
+      "country": "AU",
+      "icpBucket": "Healthcare Scheduling/Patient Comms",
+      "voiceSignal": "Provides a range of digital health solutions, including telehealth and remote monitoring.",
+      "whyFit": "Telstra Health provides a range of digital health solutions, including telehealth and remote monitoring. They are a strong fit for Telnyx Voice AI infrastructure.",
+      "clearbit_industry": "Internet Software & Services",
+      "clearbit_sector": "Information Technology",
+      "employees": 1250
+    },
+    {
+      "company": "Instacare",
+      "domain": "instacare.com.au",
+      "country": "AU",
+      "icpBucket": "Healthcare Scheduling/Patient Comms",
+      "voiceSignal": "Appointment reminders, patient follow-up calls, automated check-in via phone.",
+      "whyFit": "Healthcare scheduling and patient communication platform heavily reliant on automated voice interactions for reminders and follow-ups.",
+      "clearbit_industry": "Health Care Providers & Services",
+      "clearbit_sector": "Health Care",
+      "employees": 60
+    },
+    {
+      "company": "ezyCollect",
+      "domain": "ezycollect.com.au",
+      "country": "AU",
+      "icpBucket": "Collections",
+      "voiceSignal": "Automated payment reminders via phone, integration with accounting software for collections workflows.",
+      "whyFit": "Accounts receivable automation platform using voice for payment reminders and collections.",
+      "clearbit_industry": "Diversified Financial Services",
+      "clearbit_sector": "Financials",
+      "employees": 90
+    },
+    {
+      "company": "Debt Busters",
+      "domain": "debtbusters.com.au",
+      "country": "AU",
+      "icpBucket": "Collections",
+      "voiceSignal": "Debt management and negotiation services, requiring frequent phone communication with clients and creditors.",
+      "whyFit": "Debt management company that relies on phone calls for client communication and negotiation.",
+      "clearbit_industry": "Diversified Financial Services",
+      "clearbit_sector": "Financials",
+      "employees": 30
+    },
+    {
+      "company": "Medilink",
+      "domain": "medilink.com.au",
+      "country": "AU",
+      "icpBucket": "Healthcare Scheduling/Patient Comms",
+      "voiceSignal": "Appointment scheduling, patient reminders, and communication tools for medical practices.",
+      "whyFit": "Practice management software with features for appointment reminders and patient communication.",
+      "clearbit_industry": "Internet Software & Services",
+      "clearbit_sector": "Information Technology",
+      "employees": 5
+    },
+    {
+      "company": "Clintel Systems",
+      "domain": "clintel.com.au",
+      "country": "AU",
+      "icpBucket": "Healthcare Scheduling/Patient Comms",
+      "voiceSignal": "Appointment reminders, patient communication, and automated reminders for healthcare practices.",
+      "whyFit": "Practice management software with features for appointment reminders and patient communication.",
+      "clearbit_industry": "Internet Software & Services",
+      "clearbit_sector": "Information Technology",
+      "employees": 30
+    },
+    {
+      "company": "Credit Simple",
+      "domain": "creditsimple.com.au",
+      "country": "AU",
+      "icpBucket": "Collections",
+      "voiceSignal": "Credit reporting and debt management services, requiring frequent phone communication with clients.",
+      "whyFit": "Credit reporting and debt management company that relies on phone calls for client communication.",
+      "clearbit_industry": "Diversified Financial Services",
+      "clearbit_sector": "Financials",
+      "employees": 10
+    },
+    {
+      "company": "iAuditor (SafetyCulture)",
+      "domain": "safetyculture.com",
+      "country": "AU",
+      "icpBucket": "Vertical Software with Phone-Native Workflows",
+      "voiceSignal": "Safety inspection and audit platform; may use voice for incident reporting and communication.",
+      "whyFit": "Safety inspection platform that could benefit from voice for incident reporting and communication.",
+      "clearbit_industry": "Internet Software & Services",
+      "clearbit_sector": "Information Technology",
+      "employees": 690
+    },
+    {
+      "company": "Octopus Deploy",
+      "domain": "octopus.com",
+      "country": "AU",
+      "icpBucket": "Platform Builder Embedding Voice Automation",
+      "voiceSignal": "Deployment automation platform; may use voice for alerting and incident management.",
+      "whyFit": "Deployment automation platform that could use voice for critical alerting and incident management.",
+      "clearbit_industry": "Internet Software & Services",
+      "clearbit_sector": "Information Technology",
+      "employees": 211
+    },
+    {
+      "company": "Mable",
+      "domain": "mable.com.au",
+      "country": "AU",
+      "icpBucket": "Vertical Software with Phone-Native Workflows",
+      "voiceSignal": "Platform connecting people with disabilities with support workers; uses voice for scheduling and communication.",
+      "whyFit": "Platform connecting people with disabilities with support workers, requiring voice for scheduling and support communication.",
+      "clearbit_industry": "Family Services",
+      "clearbit_sector": "Consumer Discretionary",
+      "employees": 150
+    },
+    {
+      "company": "GoCatch",
+      "domain": "gocatch.com",
+      "country": "AU",
+      "icpBucket": "Vertical Software with Phone-Native Workflows",
+      "voiceSignal": "Taxi booking platform; uses voice for driver-passenger communication and dispatch.",
+      "whyFit": "Taxi booking platform that relies on voice for driver-passenger communication and dispatch.",
+      "clearbit_industry": "Road & Rail",
+      "clearbit_sector": "Industrials",
+      "employees": 30
+    },
+    {
+      "company": "Ingogo",
+      "domain": "ingogo.com.au",
+      "country": "AU",
+      "icpBucket": "Vertical Software with Phone-Native Workflows",
+      "voiceSignal": "Taxi booking and payment platform; uses voice for driver-passenger communication and support.",
+      "whyFit": "Taxi booking and payment platform that relies on voice for driver-passenger communication and support.",
+      "clearbit_industry": "Road & Rail",
+      "clearbit_sector": "Industrials",
+      "employees": 60
+    },
+    {
+      "company": "PageUp",
+      "domain": "pageuppeople.com",
+      "country": "AU",
+      "icpBucket": "Vertical Software with Phone-Native Workflows",
+      "voiceSignal": "Talent management software; may use voice for candidate screening and interview scheduling.",
+      "whyFit": "Talent management software that could integrate voice for candidate screening and interview scheduling.",
+      "clearbit_industry": "Professional Services",
+      "clearbit_sector": "Industrials",
+      "employees": 420
+    },
+    {
+      "company": "Elmo Software",
+      "domain": "elmosoftware.com.au",
+      "country": "AU",
+      "icpBucket": "Vertical Software with Phone-Native Workflows",
+      "voiceSignal": "HR and payroll software; may use voice for employee inquiries and support.",
+      "whyFit": "HR and payroll software that could use voice for employee inquiries and support.",
+      "clearbit_industry": "Professional Services",
+      "clearbit_sector": "Industrials",
+      "employees": 720
+    }
+  ],
+  "rejected": [
+    {
+      "company": "Arteria AI",
+      "domain": "arteria.ai",
+      "country": "Australia",
+      "icpBucket": "Platform builders embedding voice automation",
+      "voiceSignal": "Job postings mention telephony and integration with platforms like Salesforce, suggesting a need for robust voice infrastructure.",
+      "whyFit": "Arteria AI provides document automation solutions for financial institutions. Integrating voice capabilities for authentication, data retrieval, or customer service within their platform makes them a potential Telnyx customer.",
+      "reason": "not_au:GB"
+    },
+    {
+      "company": "Whispir",
+      "domain": "whispir.com",
+      "country": "Australia",
+      "icpBucket": "Platform builders embedding voice automation",
+      "voiceSignal": "Whispir offers a communications workflow platform. While primarily focused on messaging, their platform likely uses telephony for certain workflows, making them a potential Telnyx customer.",
+      "whyFit": "Their communication workflow platform could benefit from Telnyx's voice AI infrastructure for enhanced automation and integration capabilities.",
+      "reason": "excluded:isp",
+      "clearbit": {
+        "found": true,
+        "country": "AU",
+        "industry": "Internet Software & Services",
+        "sector": "Information Technology",
+        "description": "Whispir is a communication platform that enables businesses to engage with customers, employees, and organizations across multiple channels. With automated workflows and time-saving features, Whispir fosters meaningful connections and helps organizatio...",
+        "employees": 237
+      }
+    },
+    {
+      "company": "Instaclustr",
+      "domain": "instaclustr.com",
+      "country": "Australia",
+      "icpBucket": "Platform builders embedding voice automation",
+      "voiceSignal": "While primarily a managed services provider for open source technologies, their platform likely integrates with systems that require voice capabilities for monitoring, alerting, and support.",
+      "whyFit": "Managed services provider that may integrate voice capabilities for monitoring, alerting, and support within their platform.",
+      "reason": "not_au:US"
+    },
+    {
+      "company": "Xero",
+      "domain": "xero.com",
+      "country": "Australia",
+      "icpBucket": "Vertical software companies with a phone-native workflow",
+      "voiceSignal": "While primarily accounting software, Xero integrates with various apps, some of which may use voice for customer support or communication.",
+      "whyFit": "Accounting software with integrations that may require voice capabilities for customer support or communication.",
+      "reason": "not_au:NZ"
+    },
+    {
+      "company": "NetSuite",
+      "domain": "netsuite.com",
+      "country": "Australia",
+      "icpBucket": "Vertical software companies with a phone-native workflow",
+      "voiceSignal": "While a broad ERP, NetSuite implementations often involve customer service and sales processes that rely on phone communication.",
+      "whyFit": "ERP system with customer service and sales processes that may require phone communication.",
+      "reason": "not_au:US"
+    },
+    {
+      "company": "Canva",
+      "domain": "canva.com",
+      "country": "Australia",
+      "icpBucket": "Vertical software companies with a phone-native workflow",
+      "voiceSignal": "Canva's customer support and enterprise sales teams likely use phone communication.",
+      "whyFit": "Customer support and enterprise sales teams likely use phone communication.",
+      "reason": "excluded:excluded_name",
+      "clearbit": {
+        "found": true,
+        "country": "AU",
+        "industry": "Software",
+        "sector": "Information Technology",
+        "description": "Canva is a graphic design platform that simplifies the design process for users of all skill levels. With a drag-and-drop tool and a vast library of stock photographs, graphic elements, and fonts, Canva empowers users to create professional designs eff...",
+        "employees": 3500
+      }
+    },
+    {
+      "company": "Atlassian",
+      "domain": "atlassian.com",
+      "country": "Australia",
+      "icpBucket": "Vertical software companies with a phone-native workflow",
+      "voiceSignal": "Atlassian's customer support and enterprise sales teams likely use phone communication.",
+      "whyFit": "Customer support and enterprise sales teams likely use phone communication.",
+      "reason": "excluded:excluded_name",
+      "clearbit": {
+        "found": true,
+        "country": "AU",
+        "industry": "Internet Software & Services",
+        "sector": "Information Technology",
+        "description": "Atlassian is a leading provider of collaboration software for teams, offering a suite of products like JIRA, Confluence, Bitbucket, and Trello. They help teams of all sizes build better products and services by managing every aspect of a product's life...",
+        "employees": 19266
+      }
+    },
+    {
+      "company": "Airtasker",
+      "domain": "airtasker.com",
+      "country": "Australia",
+      "icpBucket": "Vertical software companies with a phone-native workflow",
+      "voiceSignal": "Airtasker's customer support and enterprise sales teams likely use phone communication.",
+      "whyFit": "Customer support and enterprise sales teams likely use phone communication.",
+      "reason": "excluded:marketplace",
+      "clearbit": {
+        "found": true,
+        "country": "AU",
+        "industry": "Specialty Retail",
+        "sector": "Consumer Discretionary",
+        "description": "Airtasker: Trusted marketplace connecting people with skilled Taskers for various tasks. Post tasks for free and choose from rated individuals ready to work.",
+        "employees": 175
+      }
+    },
+    {
+      "company": "Linktree",
+      "domain": "linktr.ee",
+      "country": "Australia",
+      "icpBucket": "Vertical software companies with a phone-native workflow",
+      "voiceSignal": "Linktree's customer support and enterprise sales teams likely use phone communication.",
+      "whyFit": "Customer support and enterprise sales teams likely use phone communication.",
+      "reason": "not_au:EE"
+    },
+    {
+      "company": "Athena AI",
+      "domain": "athena-ai.com",
+      "country": "Australia",
+      "icpBucket": "AI agent / voice agent builders",
+      "voiceSignal": "The company name itself suggests a focus on AI. They likely develop AI-powered solutions that could include voice agents or conversational AI.",
+      "whyFit": "Athena AI's focus on AI makes them a prime candidate for Telnyx's voice AI infrastructure. They could use it to build voice-enabled AI agents.",
+      "reason": "clearbit_not_found"
+    },
+    {
+      "company": "Procore Technologies (Australia)",
+      "domain": "procore.com/en-au",
+      "country": "Australia",
+      "icpBucket": "Vertical software companies with a phone-native workflow",
+      "voiceSignal": "Procore is construction management software. Construction projects rely heavily on phone communication for coordination, updates, and issue resolution. They likely have phone-heavy workflows.",
+      "whyFit": "Procore's construction management platform could use Telnyx's voice AI to automate communication workflows, improve coordination, and resolve issues more efficiently.",
+      "reason": "clearbit_not_found"
+    },
+    {
+      "company": "Redbubble",
+      "domain": "redbubble.com",
+      "country": "Australia",
+      "icpBucket": "Vertical software companies with a phone-native workflow",
+      "voiceSignal": "Redbubble is an online marketplace for print-on-demand products. While primarily an e-commerce platform, customer support and artist communication often involve phone calls. They may use telephony for verification or customer outreach.",
+      "whyFit": "Redbubble's platform could use Telnyx's voice AI to automate customer support, improve communication with artists, and provide a better overall experience.",
+      "reason": "excluded:marketplace",
+      "clearbit": {
+        "found": true,
+        "country": "AU",
+        "industry": "Textiles, Apparel & Luxury Goods",
+        "sector": "Consumer Discretionary",
+        "description": "Redbubble is a global marketplace connecting independent artists with art lovers through unique designs on products like t-shirts and wall art. With over 750,000 artists, Redbubble fosters creativity and community worldwide.",
+        "employees": 349
+      }
+    },
+    {
+      "company": "Nearmap",
+      "domain": "nearmap.com",
+      "country": "Australia",
+      "icpBucket": "Vertical software companies with a phone-native workflow",
+      "voiceSignal": "Nearmap provides aerial imagery. Sales and customer support often involve phone calls for demonstrations and technical assistance. They may use telephony for verification or customer outreach.",
+      "whyFit": "Nearmap's platform could use Telnyx's voice AI to automate sales processes, provide customer support, and improve communication with potential and existing clients.",
+      "reason": "not_au:US"
+    },
+    {
+      "company": "OpenSpace",
+      "domain": "openspace.ai",
+      "country": "Australia",
+      "icpBucket": "AI Agent Builder",
+      "voiceSignal": "Product/site mentions AI agents, conversational AI, voicebot, call automation, dialer, phone assistant, or contact center automation",
+      "whyFit": "OpenSpace builds AI agents for real estate, specifically for property management and customer service, indicating a need for voice AI infrastructure.",
+      "reason": "not_au:US"
+    },
+    {
+      "company": "Afterpay",
+      "domain": "afterpay.com",
+      "country": "Australia",
+      "icpBucket": "Fintech",
+      "voiceSignal": "Phone-heavy workflow central to the product",
+      "whyFit": "Afterpay, a buy now, pay later service, likely uses phone calls for customer support, fraud prevention, and collections activities.",
+      "reason": "not_au:US"
+    },
+    {
+      "company": "Airwallex",
+      "domain": "airwallex.com",
+      "country": "Australia",
+      "icpBucket": "Fintech",
+      "voiceSignal": "Phone-heavy workflow central to the product",
+      "whyFit": "Airwallex provides global payment solutions and likely uses phone calls for customer support, fraud prevention, and assisting with international transactions.",
+      "reason": "not_au:HK"
+    },
+    {
+      "company": "Nuche",
+      "domain": "nuche.ai",
+      "country": "Australia",
+      "icpBucket": "AI Agent Builder",
+      "voiceSignal": "Product/site mentions AI agents, conversational AI, voicebot, call automation, dialer, phone assistant, or contact center automation",
+      "whyFit": "Nuche offers AI-powered solutions for customer service, including chatbots and potentially voicebots, indicating a need for voice AI infrastructure.",
+      "reason": "clearbit_not_found"
+    },
+    {
+      "company": "Arteria AI",
+      "domain": "arteriai.com",
+      "country": "Australia",
+      "icpBucket": "Platform builders embedding voice automation",
+      "voiceSignal": "Arteria AI's platform likely involves communication workflows, and embedding voice automation could enhance its functionality.",
+      "whyFit": "Their focus on document intelligence and workflow automation suggests potential integration of voice for tasks like document verification or automated follow-ups.",
+      "reason": "clearbit_not_found"
+    },
+    {
+      "company": "Whispli",
+      "domain": "whispli.com",
+      "country": "Australia",
+      "icpBucket": "Vertical software companies with a phone-native workflow",
+      "voiceSignal": "Job postings mentioning telephony and communication systems.",
+      "whyFit": "Their focus on secure communication and incident reporting suggests a need for secure and reliable voice communication channels.",
+      "reason": "excluded:isp",
+      "clearbit": {
+        "found": true,
+        "country": "AU",
+        "industry": "Professional Services",
+        "sector": "Industrials",
+        "description": "Whispli provides a secure and anonymous communication platform that facilitates trusted conversations for various purposes, including compliance, HR, and cultural engagement, while also offering specialized solutions for reporting fraud, bullying, dome...",
+        "employees": 30
+      }
+    },
+    {
+      "company": "Workyard",
+      "domain": "workyard.com",
+      "country": "Australia",
+      "icpBucket": "Vertical software companies with a phone-native workflow",
+      "voiceSignal": "Construction time tracking and job costing software; communication with field workers often involves phone calls.",
+      "whyFit": "Construction projects require constant communication with field workers, making voice a critical component for time tracking, job costing, and project updates.",
+      "reason": "not_au:US"
+    },
+    {
+      "company": "Buildxact",
+      "domain": "buildxact.com",
+      "country": "Australia",
+      "icpBucket": "Vertical software companies with a phone-native workflow",
+      "voiceSignal": "Construction management software; communication with subcontractors and clients often involves phone calls.",
+      "whyFit": "Construction projects rely heavily on phone communication for coordinating subcontractors, communicating with clients, and resolving on-site issues.",
+      "reason": "excluded:project management",
+      "clearbit": {
+        "found": true,
+        "country": "AU",
+        "industry": "Construction & Engineering",
+        "sector": "Industrials",
+        "description": "Buildxact provides construction management software for small builders and contractors, simplifying estimating, scheduling, and project management to enhance efficiency and profitability.",
+        "employees": 150
+      }
+    },
+    {
+      "company": "RedEye",
+      "domain": "redeye.engineering",
+      "country": "Australia",
+      "icpBucket": "Vertical software companies with a phone-native workflow",
+      "voiceSignal": "Engineering data management software; communication and collaboration on engineering projects often involve phone calls.",
+      "whyFit": "Engineering projects often require phone communication for coordinating teams, discussing technical issues, and sharing project updates.",
+      "reason": "clearbit_not_found"
+    },
+    {
+      "company": "Uprise",
+      "domain": "uprise.space",
+      "country": "Australia",
+      "icpBucket": "Vertical software companies with a phone-native workflow",
+      "voiceSignal": "Mental health and wellbeing platform; support and communication with users may involve phone calls.",
+      "whyFit": "Mental health support often requires phone communication for providing immediate assistance, crisis intervention, and ongoing support.",
+      "reason": "clearbit_not_found"
+    },
+    {
+      "company": "Seek Limited",
+      "domain": "seek.com.au",
+      "country": "Australia",
+      "icpBucket": "Platform builders embedding voice automation",
+      "voiceSignal": "Job postings mention telephony",
+      "whyFit": "Seek Limited is an online employment marketplace. Job postings mentioning telephony suggest they might be embedding voice automation into their platform for customer support or other communication features.",
+      "reason": "excluded:marketplace",
+      "clearbit": {
+        "found": true,
+        "country": "AU",
+        "industry": "Internet Software & Services",
+        "sector": "Information Technology",
+        "description": "SEEK is Australia's number one online employment marketplace, connecting job seekers with opportunities and employers with top talent. Founded in 1997, SEEK has expanded globally, offering a range of services including job search, career advice, educat...",
+        "employees": 3500
+      }
+    },
+    {
+      "company": "Telstra",
+      "domain": "telstra.com",
+      "country": "Australia",
+      "icpBucket": "Platform builders embedding voice automation",
+      "voiceSignal": "Job postings mention telephony",
+      "whyFit": "Telstra is a telecommunications company. Job postings mentioning telephony suggest they might be embedding voice automation into their platform for customer support or other communication features.",
+      "reason": "excluded:excluded_name",
+      "clearbit": {
+        "found": true,
+        "country": "AU",
+        "industry": "Wireless Telecommunication Services",
+        "sector": "Telecommunication Services",
+        "description": "Telstra is a leading telecommunications and technology company that offers a wide range of products and services, including broadband internet, NBN, 5G, TV, mobile phone services, and on-demand streaming. With a focus on accessibility and inclusion, Te...",
+        "employees": 17000
+      }
+    },
+    {
+      "company": "Optus",
+      "domain": "optus.com.au",
+      "country": "Australia",
+      "icpBucket": "Platform builders embedding voice automation",
+      "voiceSignal": "Job postings mention telephony",
+      "whyFit": "Optus is a telecommunications company. Job postings mentioning telephony suggest they might be embedding voice automation into their platform for customer support or other communication features.",
+      "reason": "excluded:excluded_name",
+      "clearbit": {
+        "found": true,
+        "country": "AU",
+        "industry": "Wireless Telecommunication Services",
+        "sector": "Telecommunication Services",
+        "description": "Optus provides comprehensive telecommunications services, including 24/7 technical support and customer engagement through various online platforms, ensuring users stay connected and informed about the latest technology and services.",
+        "employees": 10782
+      }
+    },
+    {
+      "company": "TPG Telecom",
+      "domain": "tpgtelecom.com.au",
+      "country": "Australia",
+      "icpBucket": "Platform builders embedding voice automation",
+      "voiceSignal": "Job postings mention telephony",
+      "whyFit": "TPG Telecom is a telecommunications company. Job postings mentioning telephony suggest they might be embedding voice automation into their platform for customer support or other communication features.",
+      "reason": "excluded:telecommunications",
+      "clearbit": {
+        "found": true,
+        "country": "AU",
+        "industry": "Wireless Telecommunication Services",
+        "sector": "Telecommunication Services",
+        "description": "TPG Telecom is a leading Australian telecommunications company offering high-speed internet, mobile plans, and innovative communication solutions for consumers, businesses, and wholesale customers. Operating under various well-known brands, TPG Telecom...",
+        "employees": 2961
+      }
+    },
+    {
+      "company": "NBN Co",
+      "domain": "nbnco.com.au",
+      "country": "Australia",
+      "icpBucket": "Platform builders embedding voice automation",
+      "voiceSignal": "Job postings mention telephony",
+      "whyFit": "NBN Co is a wholesale broadband provider. Job postings mentioning telephony suggest they might be embedding voice automation into their platform for customer support or other communication features.",
+      "reason": "excluded:telecom",
+      "clearbit": {
+        "found": true,
+        "country": "AU",
+        "industry": "Diversified Telecommunication Services",
+        "sector": "Telecommunication Services",
+        "description": "NBN Co Limited, known as nbn, is a publicly owned corporation of the Australian Government established in 2009. It designs, builds, and operates Australia's National Broadband Network, providing fast, reliable, and secure broadband services to the nati...",
+        "employees": 6400
+      }
+    },
+    {
+      "company": "Practo",
+      "domain": "practo.com",
+      "country": "Australia",
+      "icpBucket": "Vertical software companies with a phone-native workflow",
+      "voiceSignal": "Healthcare platform for booking appointments and managing health records. Appointment reminders and patient communication likely involve phone calls.",
+      "whyFit": "Practo's healthcare platform could leverage voice AI for automated appointment reminders, patient communication, and virtual consultations.",
+      "reason": "not_au:IN"
+    },
+    {
+      "company": "MyDeal",
+      "domain": "mydeal.com.au",
+      "country": "Australia",
+      "icpBucket": "Vertical software companies with a phone-native workflow",
+      "voiceSignal": "While primarily an online marketplace, MyDeal likely uses phone for customer support and order inquiries. Job postings mention customer support.",
+      "whyFit": "MyDeal, as a large online marketplace, could benefit from voice AI for automated customer support, order tracking, and seller communication.",
+      "reason": "excluded:marketplace",
+      "clearbit": {
+        "found": true,
+        "country": "AU",
+        "industry": "Specialty Retail",
+        "sector": "Consumer Discretionary",
+        "description": "MyDeal.com.au is Australia's largest online marketplace with a vast selection of products for the home, including furniture, homewares, appliances, and more. Shop with peace of mind and enjoy free delivery on eligible orders.",
+        "employees": 150
+      }
+    },
+    {
+      "company": "Athena AI",
+      "domain": "athena.ai",
+      "country": "Australia",
+      "icpBucket": "AI agent / voice agent builders",
+      "voiceSignal": "Athena AI develops AI-powered solutions for defense and security. Voice-based communication and command systems are likely a key component of their offerings.",
+      "whyFit": "Athena AI focuses on AI for defense and security. Voice-based communication and command systems are critical in these sectors, making them a strong potential Telnyx customer.",
+      "reason": "clearbit_not_found"
+    },
+    {
+      "company": "Cover Genius",
+      "domain": "covergenius.com",
+      "country": "Australia",
+      "icpBucket": "Vertical software companies with a phone-native workflow",
+      "voiceSignal": "Customer support workflows where phone calls are central to the product/workflow",
+      "whyFit": "Cover Genius provides embedded insurance solutions. Claims processing and customer support may involve phone calls, making them a potential user of voice AI infrastructure.",
+      "reason": "not_au:US"
+    },
+    {
+      "company": "MyPass Global",
+      "domain": "mypass.global",
+      "country": "Australia",
+      "icpBucket": "Vertical software companies with a phone-native workflow",
+      "voiceSignal": "Customer support workflows where phone calls are central to the product/workflow",
+      "whyFit": "MyPass Global provides workforce management and compliance solutions. Customer support and verification processes may involve phone calls, making them a potential user of voice AI infrastructure.",
+      "reason": "clearbit_not_found"
+    },
+    {
+      "company": "Proactive Contact",
+      "domain": "proactivecontact.com.au",
+      "country": "Australia",
+      "icpBucket": "AI agent / voice agent builders",
+      "voiceSignal": "Product/site mentions call automation, dialer",
+      "whyFit": "Proactive Contact offers dialer and call automation solutions, making them a direct fit for Telnyx Voice AI infrastructure.",
+      "reason": "clearbit_not_found"
+    },
+    {
+      "company": "Call Sumo",
+      "domain": "callsumo.com",
+      "country": "Australia",
+      "icpBucket": "AI agent / voice agent builders",
+      "voiceSignal": "Product/site mentions call automation, dialer",
+      "whyFit": "Call Sumo provides call center automation and dialer solutions, aligning with Telnyx's Voice AI offerings.",
+      "reason": "not_au:US"
+    },
+    {
+      "company": "irisAgent",
+      "domain": "irisagent.com",
+      "country": "Australia",
+      "icpBucket": "AI agent / voice agent builders",
+      "voiceSignal": "Product/site mentions AI agents, conversational AI",
+      "whyFit": "irisAgent is an AI-powered virtual assistant platform, directly aligning with Telnyx's Voice AI infrastructure.",
+      "reason": "not_au:US"
+    },
+    {
+      "company": "Checkfront",
+      "domain": "checkfront.com",
+      "country": "Australia",
+      "icpBucket": "Vertical software companies with a phone-native workflow",
+      "voiceSignal": "Product/site mentions travel support, scheduling",
+      "whyFit": "Checkfront provides booking and scheduling software for tourism businesses. Phone calls are often used for booking confirmations, changes, and support, making them a potential user of voice AI.",
+      "reason": "not_au:CA"
+    },
+    {
+      "company": "AirService",
+      "domain": "airservice.com.au",
+      "country": "Australia",
+      "icpBucket": "Vertical software companies with a phone-native workflow",
+      "voiceSignal": "Company provides maintenance services with phone-based scheduling and dispatching.",
+      "whyFit": "AirService relies heavily on phone communication for scheduling and dispatching maintenance services, making them a potential user of voice automation for improved efficiency.",
+      "reason": "clearbit_not_found"
+    },
+    {
+      "company": "Procore",
+      "domain": "procore.com",
+      "country": "Australia",
+      "icpBucket": "Vertical software companies with a phone-native workflow",
+      "voiceSignal": "Construction management software; likely uses phone for communication between project teams and stakeholders.",
+      "whyFit": "Procore, a construction management software provider, likely uses phone for communication between project teams and stakeholders, making them a potential user of voice AI for project updates and coordination.",
+      "reason": "not_au:US"
+    },
+    {
+      "company": "Salesforce",
+      "domain": "salesforce.com",
+      "country": "Australia",
+      "icpBucket": "Vertical software companies with a phone-native workflow",
+      "voiceSignal": "CRM software; likely uses phone for sales and customer support.",
+      "whyFit": "Salesforce, a CRM software provider, likely uses phone for sales and customer support, making them a potential user of voice AI for automated lead qualification and customer service.",
+      "reason": "not_au:US"
+    },
+    {
+      "company": "Microsoft Dynamics 365",
+      "domain": "dynamics.microsoft.com",
+      "country": "Australia",
+      "icpBucket": "Vertical software companies with a phone-native workflow",
+      "voiceSignal": "Business applications platform; likely uses phone for sales, customer service, and support.",
+      "whyFit": "Microsoft Dynamics 365, a business applications platform, likely uses phone for sales, customer service, and support, making them a potential user of voice AI for automated lead qualification, customer service, and support.",
+      "reason": "not_au:US"
+    },
+    {
+      "company": "Ninox",
+      "domain": "ninox.com",
+      "country": "Australia",
+      "icpBucket": "Platform builders embedding voice automation",
+      "voiceSignal": "Low-code platform that allows building custom applications; could be used to build phone-centric workflows.",
+      "whyFit": "Ninox, a low-code platform, allows building custom applications, which could include phone-centric workflows, making them a potential platform builder embedding voice automation.",
+      "reason": "not_au:DE"
+    },
+    {
+      "company": "Kounta",
+      "domain": "kounta.com",
+      "country": "Australia",
+      "icpBucket": "Vertical software companies with a phone-native workflow",
+      "voiceSignal": "Point of sale (POS) software; likely uses phone for customer support and order taking.",
+      "whyFit": "Kounta, a POS software provider, likely uses phone for customer support and order taking, making them a potential user of voice AI for automated order taking and customer service.",
+      "reason": "not_au:CA"
+    },
+    {
+      "company": "Workday",
+      "domain": "workday.com",
+      "country": "Australia",
+      "icpBucket": "Vertical software companies with a phone-native workflow",
+      "voiceSignal": "Cloud-based human capital management (HCM) software; likely uses phone for employee communication and support.",
+      "whyFit": "Workday, an HCM software provider, likely uses phone for employee communication and support, making them a potential user of voice AI for automated HR inquiries and employee onboarding.",
+      "reason": "not_au:US"
+    }
+  ]
+}

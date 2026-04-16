@@ -1,0 +1,38 @@
+{
+  "brief": {
+    "platform": null,
+    "format": null,
+    "audience": "healthcare providers and administrators",
+    "painPoints": [
+      "inefficient appointment scheduling",
+      "lack of HIPAA-compliant patient communication"
+    ],
+    "coreMessage": "AI voice agents enable HIPAA-compliant appointment scheduling and patient communication",
+    "pillar": "trust",
+    "adCopyExample": null,
+    "ctaSuggestion": "Get Started"
+  },
+  "copy": {
+    "headlines": [
+      "Enable HIPAA-Compliant Patient Calls with AI Voice Agents",
+      "Reduce Appointment Scheduling Time with Sub-200ms Latency",
+      "Secure Patient Communication on a Single Network Platform",
+      "Telnyx Voice AI: HIPAA and SOC 2 Type II Compliant",
+      "Manage Patient Appointments Across 140+ Countries Securely",
+      "99.999% Uptime for Reliable Healthcare Communication",
+      "AI Voice Agents Co-Located with Telephony for Minimal Delay",
+      "One Platform Handling Appointment Scheduling and Patient Calls",
+      "HIPAA-Ready Voice AI for Healthcare Providers and Administrators",
+      "Optimize Patient Communication Without Third-Party Resellers"
+    ],
+    "descriptions": [
+      "Telnyx Voice AI uses a proprietary network to deliver HIPAA-compliant appointment scheduling with sub-200ms latency.",
+      "Secure patient communication with SOC 2 Type II and PCI compliance across 140+ countries on one platform.",
+      "Eliminate inefficiencies by automating appointment scheduling using AI voice agents with 99.999% uptime.",
+      "Telnyx controls the entire telephony stack, ensuring secure, low-latency voice AI solutions for healthcare.",
+      "Combine HIPAA compliance with fast, reliable voice communication to improve patient engagement and administration workflows."
+    ],
+    "cta": "Learn More"
+  },
+  "generatedAt": "2026-04-14T14:53:10.532Z"
+}

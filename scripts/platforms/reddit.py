@@ -381,7 +381,7 @@ class RedditConnector(PlatformConnector):
         if not self._access_token:
             self.load_credentials()
         try:
-            self._api("PATCH", f"/campaigns/{campaign_id}", {"data": {"status": "PAUSED"}})
+            self._api("PATCH", f"/campaigns/{campaign_id}", {"data": {"configured_status": "PAUSED"}})
             return WriteResult(success=True, resource_name=f"campaigns/{campaign_id}")
         except Exception as e:
             return WriteResult(success=False, error=str(e))
@@ -390,7 +390,7 @@ class RedditConnector(PlatformConnector):
         if not self._access_token:
             self.load_credentials()
         try:
-            self._api("PATCH", f"/campaigns/{campaign_id}", {"data": {"status": "ACTIVE"}})
+            self._api("PATCH", f"/campaigns/{campaign_id}", {"data": {"configured_status": "ACTIVE"}})
             return WriteResult(success=True, resource_name=f"campaigns/{campaign_id}")
         except Exception as e:
             return WriteResult(success=False, error=str(e))
@@ -413,5 +413,15 @@ class RedditConnector(PlatformConnector):
         try:
             self._api("PATCH", f"/ad_groups/{ad_group_id}", {"data": {"targeting": targeting_changes}})
             return WriteResult(success=True, resource_name=f"ad_groups/{ad_group_id}")
+        except Exception as e:
+            return WriteResult(success=False, error=str(e))
+
+    def update_creative_url(self, creative_id: str, click_url: str) -> WriteResult:
+        """Update the click URL (destination URL) for a Reddit creative/ad."""
+        if not self._access_token:
+            self.load_credentials()
+        try:
+            self._api("PATCH", f"/ads/{creative_id}", {"data": {"click_url": click_url}})
+            return WriteResult(success=True, resource_name=f"ads/{creative_id}")
         except Exception as e:
             return WriteResult(success=False, error=str(e))

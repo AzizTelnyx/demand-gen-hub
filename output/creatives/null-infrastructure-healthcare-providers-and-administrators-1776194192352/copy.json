@@ -1,0 +1,39 @@
+{
+  "brief": {
+    "platform": null,
+    "format": null,
+    "audience": "healthcare providers and administrators",
+    "painPoints": [
+      "inefficient appointment scheduling",
+      "high call volumes",
+      "staff workload"
+    ],
+    "coreMessage": "AI voice agents streamline appointment scheduling in healthcare",
+    "pillar": "infrastructure",
+    "adCopyExample": null,
+    "ctaSuggestion": "Schedule a Demo"
+  },
+  "copy": {
+    "headlines": [
+      "Streamline Healthcare Scheduling with AI Voice Agents",
+      "Reduce Staff Workload Using Telnyx Voice AI Infrastructure",
+      "Handle High Call Volumes with Sub-200ms Latency Voice AI",
+      "Telnyx Own Network Powers AI Voice for 140+ Countries",
+      "HIPAA-Compliant AI Voice Agents for Appointment Scheduling",
+      "One Platform for Voice AI Across 140+ Countries",
+      "Zero Extra Hops Voice AI Infrastructure for Healthcare",
+      "Cut Appointment Scheduling Time with Telnyx Voice AI",
+      "AI Voice Agents Integrated on a Single Telnyx Platform",
+      "Telnyx Voice AI: Efficient Scheduling with Low Latency"
+    ],
+    "descriptions": [
+      "Implement AI voice agents on a single platform with sub-200ms latency, reducing appointment scheduling delays and staff workload in healthcare environments.",
+      "Telnyx Voice AI operates on an owned global network covering 140+ countries, ensuring HIPAA, SOC2, and PCI compliance for secure healthcare communications.",
+      "Eliminate inefficiencies in appointment scheduling by leveraging Telnyx’s infrastructure with zero extra network hops and co-located AI inference.",
+      "Manage high call volumes with AI voice agents running on Telnyx’s proprietary network, designed to meet healthcare compliance and performance standards.",
+      "Consolidate voice AI services into one platform, avoiding multiple vendors, and improve scheduling efficiency with low-latency processing in healthcare settings."
+    ],
+    "cta": "Learn More"
+  },
+  "generatedAt": "2026-04-14T19:16:38.618Z"
+}

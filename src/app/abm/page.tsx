@@ -133,6 +133,11 @@ function ListCard({ list, isSelected, onClick, onExpand, onRename, onArchive, on
           </div>
           <h3 className="text-sm font-medium text-[var(--text-primary)] truncate">{list.name}</h3>
           {list.description && <p className="text-[10px] text-[var(--text-muted)] truncate mt-0.5">{list.description}</p>}
+          {!list.description && list.query && (() => {
+            let q = list.query;
+            try { const p = JSON.parse(list.query); q = p.description || p.listName || list.query; } catch {}
+            return <p className="text-[10px] text-[var(--text-muted)] truncate mt-0.5 italic">{q}</p>;
+          })()}
           <div className="flex items-center gap-3 mt-1 text-xs text-[var(--text-muted)]">
             <span>{list.count} accounts</span>
             {!activeJob && list.recentCount > 0 && list.recentCount < list.count && (
@@ -144,7 +149,9 @@ function ListCard({ list, isSelected, onClick, onExpand, onRename, onArchive, on
               <div className="flex items-center gap-1.5 mb-1">
                 <Loader2 size={10} className="animate-spin text-blue-400" />
                 <span className="text-[10px] text-blue-400 font-medium">
-                  {activeJob.status === 'queued' ? 'Queued...' : `Building — ${activeJob.found}/${activeJob.target}`}
+                  {activeJob.status === 'queued' ? 'Queued...' : activeJob.found > 0
+                    ? `Building — ${activeJob.found}/${activeJob.target} found`
+                    : `Building — discovering & validating...`}
                 </span>
               </div>
               <div className="h-1 bg-[var(--bg-tertiary)] rounded-full overflow-hidden">
@@ -180,22 +187,37 @@ function ListCard({ list, isSelected, onClick, onExpand, onRename, onArchive, on
 }
 
 // --- Job Progress ---
-function JobProgress({ job, onCancel }: { job: ABMJob; onCancel: (id: string) => void }) {
+function JobProgress({ job, onCancel, onRetry }: { job: ABMJob; onCancel: (id: string) => void; onRetry: (id: string) => void }) {
   const pct = job.target > 0 ? Math.min((job.found / job.target) * 100, 100) : 0;
   const isActive = job.status === 'queued' || job.status === 'running';
+  const isError = job.status === 'error';
   return (
     <div className="p-2 rounded-lg border border-[var(--border)] bg-[var(--bg-elevated)]">
       <div className="flex items-center justify-between mb-1">
-        <span className="text-xs text-blue-400 flex items-center gap-1">
+        <span className={`text-xs flex items-center gap-1 ${
+          isActive ? 'text-blue-400' : isError ? 'text-red-400' : 'text-emerald-400'
+        }`}>
           {isActive && <Loader2 size={10} className="animate-spin" />}
-          {job.jobType === 'expand' ? 'Expanding' : 'Generating'} — {job.found}/{job.target}
+          {isError && <ShieldAlert size={10} />}
+          {!isActive && !isError && job.status === 'done' && '✓'}
+          {isError ? `Error — ${job.found}/${job.target}` : isActive
+            ? `${job.jobType === 'expand' ? 'Expanding' : 'Generating'} — ${job.found}/${job.target}`
+            : `Done — ${job.found}/${job.target}`}
         </span>
-        {isActive && (
-          <button onClick={() => onCancel(job.id)} className="text-[10px] text-red-400 hover:text-red-300">Cancel</button>
-        )}
+        <div className="flex gap-2">
+          {isError && (
+            <button onClick={() => onRetry(job.id)} className="text-[10px] text-indigo-400 hover:text-indigo-300">Retry</button>
+          )}
+          {isActive && (
+            <button onClick={() => onCancel(job.id)} className="text-[10px] text-red-400 hover:text-red-300">Cancel</button>
+          )}
+        </div>
       </div>
+      {isError && job.error && (
+        <p className="text-[10px] text-red-400/70 truncate mb-1" title={job.error}>{job.error}</p>
+      )}
       <div className="h-1 bg-[var(--bg-tertiary)] rounded-full overflow-hidden">
-        <div className="h-full bg-indigo-500 rounded-full transition-all" style={{ width: `${pct}%` }} />
+        <div className={`h-full rounded-full transition-all ${isError ? 'bg-red-500' : 'bg-indigo-500'}`} style={{ width: `${pct}%` }} />
       </div>
     </div>
   );
@@ -601,6 +623,22 @@ export default function ABMPage() {
     fetchData();
   };
 
+  const handleRetryJob = async (jobId: string) => {
+    // Reset job to queued and trigger processing
+    await fetch('/api/abm/jobs', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ action: 'retry', jobId }),
+    });
+    // Trigger processing
+    fetch('/api/abm/process', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ jobId }),
+    }).catch(() => {});
+    fetchData();
+  };
+
   const handleDeleteAccount = async (accountId: string) => {
     if (!selectedListId) return;
     await fetch('/api/abm', {
@@ -612,6 +650,8 @@ export default function ABMPage() {
   };
 
   const activeJobs = jobs.filter(j => j.status === 'queued' || j.status === 'running');
+  const erroredJobs = jobs.filter(j => j.status === 'error');
+  const recentJobs = jobs.filter(j => j.status !== 'cancelled').slice(0, 5);
 
   if (loading) {
     return <div className="flex items-center justify-center h-full"><Loader2 className="animate-spin text-[var(--text-muted)]" size={24} /></div>;
@@ -703,10 +743,43 @@ export default function ABMPage() {
                   {selectedList ? selectedList.name : 'All Accounts'}
                 </h1>
                 {selectedList && (
-                  <p className="text-xs text-[var(--text-muted)]">
-                    {listTypeConfig[selectedList.listType]?.label} list • {accounts.length} accounts
-                    {selectedList.description && ` • ${selectedList.description}`}
-                  </p>
+                  <>
+                    <p className="text-xs text-[var(--text-muted)]">
+                      {listTypeConfig[selectedList.listType]?.label} list • {accounts.length} accounts
+                      {selectedList.description && ` • ${selectedList.description}`}
+                    </p>
+                    {/* Query History */}
+                    {(() => {
+                      const listJobs = jobs
+                        .filter(j => j.listId === selectedList.id)
+                        .sort((a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime());
+                      if (listJobs.length === 0) return null;
+                      return (
+                        <div className="mt-2 space-y-1">
+                          {listJobs.map((j, idx) => {
+                            let displayQuery = j.query;
+                            try { const parsed = JSON.parse(j.query); displayQuery = parsed.description || parsed.listName || j.query; } catch {}
+                            return (
+                              <div key={j.id} className="flex items-center gap-1.5 text-[10px]">
+                                <span className={`shrink-0 px-1 py-0.5 rounded font-medium ${
+                                  j.jobType === 'generate' ? 'bg-blue-900/30 text-blue-400' : 'bg-purple-900/30 text-purple-400'
+                                }`}>
+                                  {j.jobType === 'generate' ? 'Query' : 'Expand'}
+                                </span>
+                                <span className="text-[var(--text-secondary)] truncate" title={j.query}>{displayQuery}</span>
+                                <span className={`shrink-0 ${j.status === 'error' ? 'text-red-400' : j.status === 'running' ? 'text-blue-400' : 'text-[var(--text-muted)]'}`}>
+                                  {j.status === 'done' ? `${j.found}/${j.target}` : j.status === 'running' ? `${j.found}/${j.target} building...` : j.status}
+                                </span>
+                                {j.status === 'error' && (
+                                  <button onClick={() => handleRetryJob(j.id)} className="shrink-0 text-indigo-400 hover:text-indigo-300">Retry</button>
+                                )}
+                              </div>
+                            );
+                          })}
+                        </div>
+                      );
+                    })()}
+                  </>
                 )}
                 {!selectedList && (
                   <div className="text-xs text-[var(--text-muted)]">

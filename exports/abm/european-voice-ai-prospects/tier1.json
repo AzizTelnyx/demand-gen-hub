@@ -1,0 +1,32 @@
+[
+  {
+    "company": "Wluper",
+    "domain": "wluper.com",
+    "country": "UK",
+    "region": "EMEA",
+    "vertical": "any",
+    "productFit": "ai-agent",
+    "status": "validated",
+    "confidenceTier": "tier1",
+    "confidenceScore": 100,
+    "archetype": "AI agent / voice agent builders",
+    "evidenceType": "ai_agent_builders",
+    "evidenceSnippet": "conversational ai platform",
+    "description": "Provides conversational AI platform for building voice and chat assistants."
+  },
+  {
+    "company": "Lemonade",
+    "domain": "lemonade.com",
+    "country": "Netherlands",
+    "region": "EMEA",
+    "vertical": "insurtech",
+    "productFit": "voice-ai",
+    "status": "validated",
+    "confidenceTier": "tier1",
+    "confidenceScore": 90,
+    "archetype": "AI agent / voice agent builders",
+    "evidenceType": "ai_agent_builders",
+    "evidenceSnippet": "voice automation",
+    "description": "AI-powered insurance company using chatbots for claims and customer support."
+  }
+]

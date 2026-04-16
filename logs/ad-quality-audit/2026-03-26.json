@@ -1,0 +1,2998 @@
+{
+  "timestamp": "2026-03-26 06:00",
+  "total_ads": 69,
+  "total_issues": 379,
+  "issues": {
+    "trademark": [
+      {
+        "campaign": "202211 TOFU Voice API Twilio SA AMER",
+        "ad_id": 800428796778,
+        "topic": "TRADEMARK_IN_AD_TEXT_SPECIFICS"
+      },
+      {
+        "campaign": "202305 TOFU Voice API Twilio SA EMEA",
+        "ad_id": 800428796775,
+        "topic": "TRADEMARK_IN_AD_TEXT_SPECIFICS"
+      }
+    ],
+    "missing_h1": [
+      {
+        "campaign": "202603 TOFU AI Agent Decagon SA AMER",
+        "ad_group": "Decagon Alternative",
+        "ad_id": 801882749429
+      }
+    ],
+    "neg_blocking": [
+      {
+        "campaign": "202305 TOFU Voice API Twilio SA EMEA",
+        "keyword": "-twilio text to speech",
+        "match_type": "EXACT",
+        "criterion_id": 307960689502,
+        "campaign_id": 20304732701,
+        "blocked_term": "text to speech"
+      },
+      {
+        "campaign": "202305 TOFU Voice API Twilio SA EMEA",
+        "keyword": "-nexmo voice api",
+        "match_type": "EXACT",
+        "criterion_id": 343488876669,
+        "campaign_id": 20304732701,
+        "blocked_term": "voice api"
+      },
+      {
+        "campaign": "202305 TOFU Voice API Twilio SA EMEA",
+        "keyword": "-plivo voice api",
+        "match_type": "EXACT",
+        "criterion_id": 414024190728,
+        "campaign_id": 20304732701,
+        "blocked_term": "voice api"
+      },
+      {
+        "campaign": "202305 TOFU Voice API Twilio SA EMEA",
+        "keyword": "-twilio how to verify phone number",
+        "match_type": "EXACT",
+        "criterion_id": 462013954494,
+        "campaign_id": 20304732701,
+        "blocked_term": "phone number"
+      },
+      {
+        "campaign": "202305 TOFU Voice API Twilio SA EMEA",
+        "keyword": "-vonage voice api",
+        "match_type": "EXACT",
+        "criterion_id": 647602347582,
+        "campaign_id": 20304732701,
+        "blocked_term": "voice api"
+      },
+      {
+        "campaign": "202305 TOFU Voice API Twilio SA EMEA",
+        "keyword": "-vonage voice api",
+        "match_type": "PHRASE",
+        "criterion_id": 910801046799,
+        "campaign_id": 20304732701,
+        "blocked_term": "voice api"
+      },
+      {
+        "campaign": "202305 TOFU Voice API Twilio SA EMEA",
+        "keyword": "-voip number serviced by twilio sms mms svr",
+        "match_type": "EXACT",
+        "criterion_id": 1463462596039,
+        "campaign_id": 20304732701,
+        "blocked_term": "voip"
+      },
+      {
+        "campaign": "202305 TOFU Voice API Twilio SA EMEA",
+        "keyword": "-vonage voice api documentation",
+        "match_type": "PHRASE",
+        "criterion_id": 2471393780153,
+        "campaign_id": 20304732701,
+        "blocked_term": "voice api"
+      },
+      {
+        "campaign": "202211 TOFU Voice API Twilio SA AMER",
+        "keyword": "-phone number",
+        "match_type": "PHRASE",
+        "criterion_id": 12958870,
+        "campaign_id": 21778360532,
+        "blocked_term": "phone number"
+      },
+      {
+        "campaign": "202211 TOFU Voice API Twilio SA AMER",
+        "keyword": "-twilio text to speech",
+        "match_type": "EXACT",
+        "criterion_id": 307960689502,
+        "campaign_id": 21778360532,
+        "blocked_term": "text to speech"
+      },
+      {
+        "campaign": "202211 TOFU Voice API Twilio SA AMER",
+        "keyword": "-nexmo voice api",
+        "match_type": "EXACT",
+        "criterion_id": 343488876669,
+        "campaign_id": 21778360532,
+        "blocked_term": "voice api"
+      },
+      {
+        "campaign": "202211 TOFU Voice API Twilio SA AMER",
+        "keyword": "-plivo voice api",
+        "match_type": "EXACT",
+        "criterion_id": 414024190728,
+        "campaign_id": 21778360532,
+        "blocked_term": "voice api"
+      },
+      {
+        "campaign": "202211 TOFU Voice API Twilio SA AMER",
+        "keyword": "-vonage voice api",
+        "match_type": "EXACT",
+        "criterion_id": 647602347582,
+        "campaign_id": 21778360532,
+        "blocked_term": "voice api"
+      },
+      {
+        "campaign": "202211 TOFU Voice API Twilio SA AMER",
+        "keyword": "-1 voip vs vonage",
+        "match_type": "PHRASE",
+        "criterion_id": 952366379016,
+        "campaign_id": 21778360532,
+        "blocked_term": "voip"
+      },
+      {
+        "campaign": "202211 TOFU Voice API Twilio SA AMER",
+        "keyword": "-voip number serviced by twilio sms mms svr",
+        "match_type": "EXACT",
+        "criterion_id": 1463462596039,
+        "campaign_id": 21778360532,
+        "blocked_term": "voip"
+      },
+      {
+        "campaign": "202211 TOFU Voice API Twilio SA AMER",
+        "keyword": "-voiply vs vonage",
+        "match_type": "PHRASE",
+        "criterion_id": 1666805134279,
+        "campaign_id": 21778360532,
+        "blocked_term": "voip"
+      },
+      {
+        "campaign": "202211 TOFU Voice API Twilio SA AMER",
+        "keyword": "-vonage vs voiply",
+        "match_type": "PHRASE",
+        "criterion_id": 2499113624324,
+        "campaign_id": 21778360532,
+        "blocked_term": "voip"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent ElevenLabs SA AMER",
+        "keyword": "-text to speech api",
+        "match_type": "EXACT",
+        "criterion_id": 197541596,
+        "campaign_id": 23574277866,
+        "blocked_term": "text to speech"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent ElevenLabs SA AMER",
+        "keyword": "-tts healthcare",
+        "match_type": "EXACT",
+        "criterion_id": 321443492371,
+        "campaign_id": 23574277866,
+        "blocked_term": "tts"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent ElevenLabs SA AMER",
+        "keyword": "-ai agents",
+        "match_type": "EXACT",
+        "criterion_id": 346467241635,
+        "campaign_id": 23574277866,
+        "blocked_term": "ai agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent ElevenLabs SA AMER",
+        "keyword": "-ai agents",
+        "match_type": "EXACT",
+        "criterion_id": 346467241635,
+        "campaign_id": 23574277866,
+        "blocked_term": "ai agents"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent ElevenLabs SA AMER",
+        "keyword": "-speech to text medical",
+        "match_type": "EXACT",
+        "criterion_id": 477325429098,
+        "campaign_id": 23574277866,
+        "blocked_term": "speech to text"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent ElevenLabs SA AMER",
+        "keyword": "-ai agent",
+        "match_type": "EXACT",
+        "criterion_id": 485494843589,
+        "campaign_id": 23574277866,
+        "blocked_term": "ai agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent ElevenLabs SA AMER",
+        "keyword": "-call center ai agent",
+        "match_type": "EXACT",
+        "criterion_id": 708851966552,
+        "campaign_id": 23574277866,
+        "blocked_term": "ai agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent ElevenLabs SA AMER",
+        "keyword": "-conversational ai agent",
+        "match_type": "EXACT",
+        "criterion_id": 836789208388,
+        "campaign_id": 23574277866,
+        "blocked_term": "ai agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent ElevenLabs SA AMER",
+        "keyword": "-text to speech ai",
+        "match_type": "PHRASE",
+        "criterion_id": 854855096777,
+        "campaign_id": 23574277866,
+        "blocked_term": "text to speech"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent ElevenLabs SA AMER",
+        "keyword": "-conversational ai agents",
+        "match_type": "EXACT",
+        "criterion_id": 1189475657248,
+        "campaign_id": 23574277866,
+        "blocked_term": "ai agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent ElevenLabs SA AMER",
+        "keyword": "-conversational ai agents",
+        "match_type": "EXACT",
+        "criterion_id": 1189475657248,
+        "campaign_id": 23574277866,
+        "blocked_term": "ai agents"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent ElevenLabs SA AMER",
+        "keyword": "-ai voice agent",
+        "match_type": "EXACT",
+        "criterion_id": 1887824693889,
+        "campaign_id": 23574277866,
+        "blocked_term": "voice agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent ElevenLabs SA AMER",
+        "keyword": "-AI Agent Development",
+        "match_type": "EXACT",
+        "criterion_id": 2152538440709,
+        "campaign_id": 23574277866,
+        "blocked_term": "ai agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent ElevenLabs SA AMER",
+        "keyword": "-ai voice agents",
+        "match_type": "EXACT",
+        "criterion_id": 2255502501252,
+        "campaign_id": 23574277866,
+        "blocked_term": "voice agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent ElevenLabs SA AMER",
+        "keyword": "-ai voice agents",
+        "match_type": "EXACT",
+        "criterion_id": 2255502501252,
+        "campaign_id": 23574277866,
+        "blocked_term": "voice agents"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent ElevenLabs SA AMER",
+        "keyword": "-sms ai agent",
+        "match_type": "EXACT",
+        "criterion_id": 2347363726963,
+        "campaign_id": 23574277866,
+        "blocked_term": "ai agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent ElevenLabs SA AMER",
+        "keyword": "-Multimodal AI Agents",
+        "match_type": "EXACT",
+        "criterion_id": 2380008733336,
+        "campaign_id": 23574277866,
+        "blocked_term": "ai agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent ElevenLabs SA AMER",
+        "keyword": "-Multimodal AI Agents",
+        "match_type": "EXACT",
+        "criterion_id": 2380008733336,
+        "campaign_id": 23574277866,
+        "blocked_term": "ai agents"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent ElevenLabs SA AMER",
+        "keyword": "-AI Agent Memory",
+        "match_type": "EXACT",
+        "criterion_id": 2380008733376,
+        "campaign_id": 23574277866,
+        "blocked_term": "ai agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent ElevenLabs SA AMER",
+        "keyword": "-Build AI Agent",
+        "match_type": "EXACT",
+        "criterion_id": 2415263946933,
+        "campaign_id": 23574277866,
+        "blocked_term": "ai agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent ElevenLabs SA AMER",
+        "keyword": "-Build AI Agents",
+        "match_type": "EXACT",
+        "criterion_id": 2432899414248,
+        "campaign_id": 23574277866,
+        "blocked_term": "ai agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent ElevenLabs SA AMER",
+        "keyword": "-Build AI Agents",
+        "match_type": "EXACT",
+        "criterion_id": 2432899414248,
+        "campaign_id": 23574277866,
+        "blocked_term": "ai agents"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent ElevenLabs SA AMER",
+        "keyword": "-No Code AI Agents",
+        "match_type": "EXACT",
+        "criterion_id": 2432899414288,
+        "campaign_id": 23574277866,
+        "blocked_term": "ai agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent ElevenLabs SA AMER",
+        "keyword": "-No Code AI Agents",
+        "match_type": "EXACT",
+        "criterion_id": 2432899414288,
+        "campaign_id": 23574277866,
+        "blocked_term": "ai agents"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent ElevenLabs SA AMER",
+        "keyword": "-No Code AI Agent",
+        "match_type": "EXACT",
+        "criterion_id": 2432899414448,
+        "campaign_id": 23574277866,
+        "blocked_term": "ai agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent ElevenLabs SA AMER",
+        "keyword": "-Personalized AI Agents",
+        "match_type": "EXACT",
+        "criterion_id": 2432899414528,
+        "campaign_id": 23574277866,
+        "blocked_term": "ai agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent ElevenLabs SA AMER",
+        "keyword": "-Personalized AI Agents",
+        "match_type": "EXACT",
+        "criterion_id": 2432899414528,
+        "campaign_id": 23574277866,
+        "blocked_term": "ai agents"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent ElevenLabs SA AMER",
+        "keyword": "-Best AI Agent",
+        "match_type": "EXACT",
+        "criterion_id": 2432899414688,
+        "campaign_id": 23574277866,
+        "blocked_term": "ai agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent ElevenLabs SA AMER",
+        "keyword": "-Best AI Agents",
+        "match_type": "EXACT",
+        "criterion_id": 2432899414728,
+        "campaign_id": 23574277866,
+        "blocked_term": "ai agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent ElevenLabs SA AMER",
+        "keyword": "-Best AI Agents",
+        "match_type": "EXACT",
+        "criterion_id": 2432899414728,
+        "campaign_id": 23574277866,
+        "blocked_term": "ai agents"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent ElevenLabs SA AMER",
+        "keyword": "-Top AI Agents",
+        "match_type": "EXACT",
+        "criterion_id": 2432899414768,
+        "campaign_id": 23574277866,
+        "blocked_term": "ai agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent ElevenLabs SA AMER",
+        "keyword": "-Top AI Agents",
+        "match_type": "EXACT",
+        "criterion_id": 2432899414768,
+        "campaign_id": 23574277866,
+        "blocked_term": "ai agents"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent ElevenLabs SA AMER",
+        "keyword": "-MCP AI Agents",
+        "match_type": "EXACT",
+        "criterion_id": 2432899414968,
+        "campaign_id": 23574277866,
+        "blocked_term": "ai agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent ElevenLabs SA AMER",
+        "keyword": "-MCP AI Agents",
+        "match_type": "EXACT",
+        "criterion_id": 2432899414968,
+        "campaign_id": 23574277866,
+        "blocked_term": "ai agents"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent ElevenLabs SA AMER",
+        "keyword": "-healthcare voice api",
+        "match_type": "EXACT",
+        "criterion_id": 2474345971132,
+        "campaign_id": 23574277866,
+        "blocked_term": "voice api"
+      },
+      {
+        "campaign": "202602 TOFU Voice API Twilio SA APAC",
+        "keyword": "-nexmo voice api",
+        "match_type": "EXACT",
+        "criterion_id": 343488876669,
+        "campaign_id": 23577831258,
+        "blocked_term": "voice api"
+      },
+      {
+        "campaign": "202602 TOFU Voice API Twilio SA APAC",
+        "keyword": "-plivo voice api",
+        "match_type": "EXACT",
+        "criterion_id": 414024190728,
+        "campaign_id": 23577831258,
+        "blocked_term": "voice api"
+      },
+      {
+        "campaign": "202602 TOFU Voice API Twilio SA APAC",
+        "keyword": "-vonage voice api",
+        "match_type": "EXACT",
+        "criterion_id": 647602347582,
+        "campaign_id": 23577831258,
+        "blocked_term": "voice api"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA APAC",
+        "keyword": "-text to speech api",
+        "match_type": "EXACT",
+        "criterion_id": 197541596,
+        "campaign_id": 23583186449,
+        "blocked_term": "text to speech"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA APAC",
+        "keyword": "-voice agents",
+        "match_type": "PHRASE",
+        "criterion_id": 354831794,
+        "campaign_id": 23583186449,
+        "blocked_term": "voice agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA APAC",
+        "keyword": "-voice agents",
+        "match_type": "PHRASE",
+        "criterion_id": 354831794,
+        "campaign_id": 23583186449,
+        "blocked_term": "voice agents"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA APAC",
+        "keyword": "-voice agent",
+        "match_type": "PHRASE",
+        "criterion_id": 312185992310,
+        "campaign_id": 23583186449,
+        "blocked_term": "voice agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA APAC",
+        "keyword": "-tts healthcare",
+        "match_type": "EXACT",
+        "criterion_id": 321443492371,
+        "campaign_id": 23583186449,
+        "blocked_term": "tts"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA APAC",
+        "keyword": "-ai agent",
+        "match_type": "PHRASE",
+        "criterion_id": 335621800451,
+        "campaign_id": 23583186449,
+        "blocked_term": "ai agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA APAC",
+        "keyword": "-ai agents",
+        "match_type": "PHRASE",
+        "criterion_id": 346024196543,
+        "campaign_id": 23583186449,
+        "blocked_term": "ai agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA APAC",
+        "keyword": "-ai agents",
+        "match_type": "PHRASE",
+        "criterion_id": 346024196543,
+        "campaign_id": 23583186449,
+        "blocked_term": "ai agents"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA APAC",
+        "keyword": "-ai agents",
+        "match_type": "EXACT",
+        "criterion_id": 346467241635,
+        "campaign_id": 23583186449,
+        "blocked_term": "ai agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA APAC",
+        "keyword": "-ai agents",
+        "match_type": "EXACT",
+        "criterion_id": 346467241635,
+        "campaign_id": 23583186449,
+        "blocked_term": "ai agents"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA APAC",
+        "keyword": "-speech to text medical",
+        "match_type": "EXACT",
+        "criterion_id": 477325429098,
+        "campaign_id": 23583186449,
+        "blocked_term": "speech to text"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA APAC",
+        "keyword": "-ai agent",
+        "match_type": "EXACT",
+        "criterion_id": 485494843589,
+        "campaign_id": 23583186449,
+        "blocked_term": "ai agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA APAC",
+        "keyword": "-call center ai agent",
+        "match_type": "EXACT",
+        "criterion_id": 708851966552,
+        "campaign_id": 23583186449,
+        "blocked_term": "ai agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA APAC",
+        "keyword": "-conversational ai agent",
+        "match_type": "EXACT",
+        "criterion_id": 836789208388,
+        "campaign_id": 23583186449,
+        "blocked_term": "ai agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA APAC",
+        "keyword": "-text to speech ai",
+        "match_type": "PHRASE",
+        "criterion_id": 854855096777,
+        "campaign_id": 23583186449,
+        "blocked_term": "text to speech"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA APAC",
+        "keyword": "-conversational ai agents",
+        "match_type": "EXACT",
+        "criterion_id": 1189475657248,
+        "campaign_id": 23583186449,
+        "blocked_term": "ai agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA APAC",
+        "keyword": "-conversational ai agents",
+        "match_type": "EXACT",
+        "criterion_id": 1189475657248,
+        "campaign_id": 23583186449,
+        "blocked_term": "ai agents"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA APAC",
+        "keyword": "-voip dialer for call center",
+        "match_type": "PHRASE",
+        "criterion_id": 1297020851514,
+        "campaign_id": 23583186449,
+        "blocked_term": "voip"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA APAC",
+        "keyword": "-ai voice agent",
+        "match_type": "EXACT",
+        "criterion_id": 1887824693889,
+        "campaign_id": 23583186449,
+        "blocked_term": "voice agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA APAC",
+        "keyword": "-AI Agent Development",
+        "match_type": "EXACT",
+        "criterion_id": 2152538440709,
+        "campaign_id": 23583186449,
+        "blocked_term": "ai agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA APAC",
+        "keyword": "-build ai agent",
+        "match_type": "PHRASE",
+        "criterion_id": 2191718768541,
+        "campaign_id": 23583186449,
+        "blocked_term": "ai agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA APAC",
+        "keyword": "-ai voice agents",
+        "match_type": "EXACT",
+        "criterion_id": 2255502501252,
+        "campaign_id": 23583186449,
+        "blocked_term": "voice agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA APAC",
+        "keyword": "-ai voice agents",
+        "match_type": "EXACT",
+        "criterion_id": 2255502501252,
+        "campaign_id": 23583186449,
+        "blocked_term": "voice agents"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA APAC",
+        "keyword": "-how to build an ai agent",
+        "match_type": "PHRASE",
+        "criterion_id": 2304723157182,
+        "campaign_id": 23583186449,
+        "blocked_term": "ai agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA APAC",
+        "keyword": "-11 labs text to speech",
+        "match_type": "PHRASE",
+        "criterion_id": 2320538970607,
+        "campaign_id": 23583186449,
+        "blocked_term": "text to speech"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA APAC",
+        "keyword": "-how to build ai agents",
+        "match_type": "PHRASE",
+        "criterion_id": 2335881371191,
+        "campaign_id": 23583186449,
+        "blocked_term": "ai agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA APAC",
+        "keyword": "-how to build ai agents",
+        "match_type": "PHRASE",
+        "criterion_id": 2335881371191,
+        "campaign_id": 23583186449,
+        "blocked_term": "ai agents"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA APAC",
+        "keyword": "-11labs io text to speech",
+        "match_type": "PHRASE",
+        "criterion_id": 2342311318695,
+        "campaign_id": 23583186449,
+        "blocked_term": "text to speech"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA APAC",
+        "keyword": "-sms ai agent",
+        "match_type": "EXACT",
+        "criterion_id": 2347363726963,
+        "campaign_id": 23583186449,
+        "blocked_term": "ai agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA APAC",
+        "keyword": "-11 labs text to speech free",
+        "match_type": "PHRASE",
+        "criterion_id": 2366294804080,
+        "campaign_id": 23583186449,
+        "blocked_term": "text to speech"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA APAC",
+        "keyword": "-ai agent orchestration",
+        "match_type": "PHRASE",
+        "criterion_id": 2369803903826,
+        "campaign_id": 23583186449,
+        "blocked_term": "ai agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA APAC",
+        "keyword": "-Multimodal AI Agents",
+        "match_type": "EXACT",
+        "criterion_id": 2380008733336,
+        "campaign_id": 23583186449,
+        "blocked_term": "ai agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA APAC",
+        "keyword": "-Multimodal AI Agents",
+        "match_type": "EXACT",
+        "criterion_id": 2380008733336,
+        "campaign_id": 23583186449,
+        "blocked_term": "ai agents"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA APAC",
+        "keyword": "-AI Agent Memory",
+        "match_type": "EXACT",
+        "criterion_id": 2380008733376,
+        "campaign_id": 23583186449,
+        "blocked_term": "ai agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA APAC",
+        "keyword": "-cold calling ai agent",
+        "match_type": "PHRASE",
+        "criterion_id": 2382295200135,
+        "campaign_id": 23583186449,
+        "blocked_term": "ai agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA APAC",
+        "keyword": "-how to make your own ai agent",
+        "match_type": "PHRASE",
+        "criterion_id": 2395473919142,
+        "campaign_id": 23583186449,
+        "blocked_term": "ai agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA APAC",
+        "keyword": "-11 labs free text to speech",
+        "match_type": "PHRASE",
+        "criterion_id": 2400023229579,
+        "campaign_id": 23583186449,
+        "blocked_term": "text to speech"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA APAC",
+        "keyword": "-Build AI Agent",
+        "match_type": "EXACT",
+        "criterion_id": 2415263946933,
+        "campaign_id": 23583186449,
+        "blocked_term": "ai agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA APAC",
+        "keyword": "-real estate ai voice agent",
+        "match_type": "PHRASE",
+        "criterion_id": 2417251467483,
+        "campaign_id": 23583186449,
+        "blocked_term": "voice agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA APAC",
+        "keyword": "-multi ai agent systems",
+        "match_type": "PHRASE",
+        "criterion_id": 2420277721435,
+        "campaign_id": 23583186449,
+        "blocked_term": "ai agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA APAC",
+        "keyword": "-ai voice agent demo",
+        "match_type": "PHRASE",
+        "criterion_id": 2420847817880,
+        "campaign_id": 23583186449,
+        "blocked_term": "voice agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA APAC",
+        "keyword": "-ai voice agent for real estate",
+        "match_type": "PHRASE",
+        "criterion_id": 2421196003087,
+        "campaign_id": 23583186449,
+        "blocked_term": "voice agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA APAC",
+        "keyword": "-gohighlevel ai voice agent",
+        "match_type": "PHRASE",
+        "criterion_id": 2423843746065,
+        "campaign_id": 23583186449,
+        "blocked_term": "voice agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA APAC",
+        "keyword": "-n8n voice agent",
+        "match_type": "PHRASE",
+        "criterion_id": 2425968535873,
+        "campaign_id": 23583186449,
+        "blocked_term": "voice agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA APAC",
+        "keyword": "-ai voice agent n8n",
+        "match_type": "PHRASE",
+        "criterion_id": 2426538951028,
+        "campaign_id": 23583186449,
+        "blocked_term": "voice agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA APAC",
+        "keyword": "-voice agent n8n",
+        "match_type": "PHRASE",
+        "criterion_id": 2426747141469,
+        "campaign_id": 23583186449,
+        "blocked_term": "voice agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA APAC",
+        "keyword": "-calling ai agent",
+        "match_type": "PHRASE",
+        "criterion_id": 2428713448715,
+        "campaign_id": 23583186449,
+        "blocked_term": "ai agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA APAC",
+        "keyword": "-ai voice agent free",
+        "match_type": "PHRASE",
+        "criterion_id": 2429200011088,
+        "campaign_id": 23583186449,
+        "blocked_term": "voice agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA APAC",
+        "keyword": "-Build AI Agents",
+        "match_type": "EXACT",
+        "criterion_id": 2432899414248,
+        "campaign_id": 23583186449,
+        "blocked_term": "ai agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA APAC",
+        "keyword": "-Build AI Agents",
+        "match_type": "EXACT",
+        "criterion_id": 2432899414248,
+        "campaign_id": 23583186449,
+        "blocked_term": "ai agents"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA APAC",
+        "keyword": "-No Code AI Agents",
+        "match_type": "EXACT",
+        "criterion_id": 2432899414288,
+        "campaign_id": 23583186449,
+        "blocked_term": "ai agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA APAC",
+        "keyword": "-No Code AI Agents",
+        "match_type": "EXACT",
+        "criterion_id": 2432899414288,
+        "campaign_id": 23583186449,
+        "blocked_term": "ai agents"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA APAC",
+        "keyword": "-No Code AI Agent",
+        "match_type": "EXACT",
+        "criterion_id": 2432899414448,
+        "campaign_id": 23583186449,
+        "blocked_term": "ai agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA APAC",
+        "keyword": "-Personalized AI Agents",
+        "match_type": "EXACT",
+        "criterion_id": 2432899414528,
+        "campaign_id": 23583186449,
+        "blocked_term": "ai agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA APAC",
+        "keyword": "-Personalized AI Agents",
+        "match_type": "EXACT",
+        "criterion_id": 2432899414528,
+        "campaign_id": 23583186449,
+        "blocked_term": "ai agents"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA APAC",
+        "keyword": "-Best AI Agent",
+        "match_type": "EXACT",
+        "criterion_id": 2432899414688,
+        "campaign_id": 23583186449,
+        "blocked_term": "ai agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA APAC",
+        "keyword": "-Best AI Agents",
+        "match_type": "EXACT",
+        "criterion_id": 2432899414728,
+        "campaign_id": 23583186449,
+        "blocked_term": "ai agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA APAC",
+        "keyword": "-Best AI Agents",
+        "match_type": "EXACT",
+        "criterion_id": 2432899414728,
+        "campaign_id": 23583186449,
+        "blocked_term": "ai agents"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA APAC",
+        "keyword": "-Top AI Agents",
+        "match_type": "EXACT",
+        "criterion_id": 2432899414768,
+        "campaign_id": 23583186449,
+        "blocked_term": "ai agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA APAC",
+        "keyword": "-Top AI Agents",
+        "match_type": "EXACT",
+        "criterion_id": 2432899414768,
+        "campaign_id": 23583186449,
+        "blocked_term": "ai agents"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA APAC",
+        "keyword": "-MCP AI Agents",
+        "match_type": "EXACT",
+        "criterion_id": 2432899414968,
+        "campaign_id": 23583186449,
+        "blocked_term": "ai agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA APAC",
+        "keyword": "-MCP AI Agents",
+        "match_type": "EXACT",
+        "criterion_id": 2432899414968,
+        "campaign_id": 23583186449,
+        "blocked_term": "ai agents"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA APAC",
+        "keyword": "-retail ai voice agent",
+        "match_type": "PHRASE",
+        "criterion_id": 2443311207751,
+        "campaign_id": 23583186449,
+        "blocked_term": "voice agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA APAC",
+        "keyword": "-ghl ai voice agent",
+        "match_type": "PHRASE",
+        "criterion_id": 2443939456003,
+        "campaign_id": 23583186449,
+        "blocked_term": "voice agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA APAC",
+        "keyword": "-n8n ai voice agent",
+        "match_type": "PHRASE",
+        "criterion_id": 2445584954862,
+        "campaign_id": 23583186449,
+        "blocked_term": "voice agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA APAC",
+        "keyword": "-retell ai voice agent",
+        "match_type": "PHRASE",
+        "criterion_id": 2447163943817,
+        "campaign_id": 23583186449,
+        "blocked_term": "voice agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA APAC",
+        "keyword": "-voice call ai agent",
+        "match_type": "PHRASE",
+        "criterion_id": 2448568460594,
+        "campaign_id": 23583186449,
+        "blocked_term": "ai agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA APAC",
+        "keyword": "-voice agent ai",
+        "match_type": "PHRASE",
+        "criterion_id": 2449038789357,
+        "campaign_id": 23583186449,
+        "blocked_term": "voice agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA APAC",
+        "keyword": "-voice agent platforms",
+        "match_type": "PHRASE",
+        "criterion_id": 2449872976943,
+        "campaign_id": 23583186449,
+        "blocked_term": "voice agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA APAC",
+        "keyword": "-retell voice agent",
+        "match_type": "PHRASE",
+        "criterion_id": 2455697836950,
+        "campaign_id": 23583186449,
+        "blocked_term": "voice agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA APAC",
+        "keyword": "-how can i create ai agent",
+        "match_type": "PHRASE",
+        "criterion_id": 2458380599644,
+        "campaign_id": 23583186449,
+        "blocked_term": "ai agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA APAC",
+        "keyword": "-free ai voice agent",
+        "match_type": "PHRASE",
+        "criterion_id": 2459605237635,
+        "campaign_id": 23583186449,
+        "blocked_term": "voice agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA APAC",
+        "keyword": "-ai agent cold call",
+        "match_type": "PHRASE",
+        "criterion_id": 2462206648206,
+        "campaign_id": 23583186449,
+        "blocked_term": "ai agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA APAC",
+        "keyword": "-atlas ai voice agent",
+        "match_type": "PHRASE",
+        "criterion_id": 2462545566145,
+        "campaign_id": 23583186449,
+        "blocked_term": "voice agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA APAC",
+        "keyword": "-grok voice agent",
+        "match_type": "PHRASE",
+        "criterion_id": 2462628049658,
+        "campaign_id": 23583186449,
+        "blocked_term": "voice agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA APAC",
+        "keyword": "-ai agent tool calling",
+        "match_type": "PHRASE",
+        "criterion_id": 2462659161969,
+        "campaign_id": 23583186449,
+        "blocked_term": "ai agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA APAC",
+        "keyword": "-how to build ai voice agent",
+        "match_type": "PHRASE",
+        "criterion_id": 2463495528708,
+        "campaign_id": 23583186449,
+        "blocked_term": "voice agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA APAC",
+        "keyword": "-asterisk ai voice agent",
+        "match_type": "PHRASE",
+        "criterion_id": 2464303403665,
+        "campaign_id": 23583186449,
+        "blocked_term": "voice agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA APAC",
+        "keyword": "-ghl voice agent",
+        "match_type": "PHRASE",
+        "criterion_id": 2464929948132,
+        "campaign_id": 23583186449,
+        "blocked_term": "voice agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA APAC",
+        "keyword": "-n8n voice agent free",
+        "match_type": "PHRASE",
+        "criterion_id": 2465308114275,
+        "campaign_id": 23583186449,
+        "blocked_term": "voice agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA APAC",
+        "keyword": "-vicidial ai agent",
+        "match_type": "PHRASE",
+        "criterion_id": 2465536209598,
+        "campaign_id": 23583186449,
+        "blocked_term": "ai agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA APAC",
+        "keyword": "-voice based ai agents",
+        "match_type": "PHRASE",
+        "criterion_id": 2465536214158,
+        "campaign_id": 23583186449,
+        "blocked_term": "ai agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA APAC",
+        "keyword": "-voice based ai agents",
+        "match_type": "PHRASE",
+        "criterion_id": 2465536214158,
+        "campaign_id": 23583186449,
+        "blocked_term": "ai agents"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA APAC",
+        "keyword": "-ai voice agent retell n8n",
+        "match_type": "PHRASE",
+        "criterion_id": 2469235273576,
+        "campaign_id": 23583186449,
+        "blocked_term": "voice agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA APAC",
+        "keyword": "-how to make voice agent using n8n",
+        "match_type": "PHRASE",
+        "criterion_id": 2469317685242,
+        "campaign_id": 23583186449,
+        "blocked_term": "voice agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA APAC",
+        "keyword": "-ai agent mobile",
+        "match_type": "PHRASE",
+        "criterion_id": 2469641159030,
+        "campaign_id": 23583186449,
+        "blocked_term": "ai agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA APAC",
+        "keyword": "-ai voice agent challenge",
+        "match_type": "PHRASE",
+        "criterion_id": 2470656975811,
+        "campaign_id": 23583186449,
+        "blocked_term": "voice agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA APAC",
+        "keyword": "-best llm for voice agent",
+        "match_type": "PHRASE",
+        "criterion_id": 2471759514365,
+        "campaign_id": 23583186449,
+        "blocked_term": "voice agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA APAC",
+        "keyword": "-selling ai voice agents",
+        "match_type": "PHRASE",
+        "criterion_id": 2471811780659,
+        "campaign_id": 23583186449,
+        "blocked_term": "voice agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA APAC",
+        "keyword": "-selling ai voice agents",
+        "match_type": "PHRASE",
+        "criterion_id": 2471811780659,
+        "campaign_id": 23583186449,
+        "blocked_term": "voice agents"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA APAC",
+        "keyword": "-most powerful ai agent",
+        "match_type": "PHRASE",
+        "criterion_id": 2471836911356,
+        "campaign_id": 23583186449,
+        "blocked_term": "ai agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA APAC",
+        "keyword": "-free voice agent ai",
+        "match_type": "PHRASE",
+        "criterion_id": 2472576236864,
+        "campaign_id": 23583186449,
+        "blocked_term": "voice agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA APAC",
+        "keyword": "-groq voice agent",
+        "match_type": "PHRASE",
+        "criterion_id": 2472576237104,
+        "campaign_id": 23583186449,
+        "blocked_term": "voice agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA APAC",
+        "keyword": "-maya voice agent",
+        "match_type": "PHRASE",
+        "criterion_id": 2472576323424,
+        "campaign_id": 23583186449,
+        "blocked_term": "voice agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA APAC",
+        "keyword": "-healthcare voice api",
+        "match_type": "EXACT",
+        "criterion_id": 2474345971132,
+        "campaign_id": 23583186449,
+        "blocked_term": "voice api"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA APAC",
+        "keyword": "-low latency voice agent",
+        "match_type": "PHRASE",
+        "criterion_id": 2475399923692,
+        "campaign_id": 23583186449,
+        "blocked_term": "voice agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA APAC",
+        "keyword": "-outbound call ai agent",
+        "match_type": "PHRASE",
+        "criterion_id": 2477781923717,
+        "campaign_id": 23583186449,
+        "blocked_term": "ai agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA APAC",
+        "keyword": "-ai voice agent services for businesses",
+        "match_type": "PHRASE",
+        "criterion_id": 2483311229237,
+        "campaign_id": 23583186449,
+        "blocked_term": "voice agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA APAC",
+        "keyword": "-ai voice agent agency",
+        "match_type": "PHRASE",
+        "criterion_id": 2484060647237,
+        "campaign_id": 23583186449,
+        "blocked_term": "voice agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA APAC",
+        "keyword": "-11labs free text to speech",
+        "match_type": "PHRASE",
+        "criterion_id": 2488785579357,
+        "campaign_id": 23583186449,
+        "blocked_term": "text to speech"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent ElevenLabs SA APAC",
+        "keyword": "-text to speech api",
+        "match_type": "EXACT",
+        "criterion_id": 197541596,
+        "campaign_id": 23583187406,
+        "blocked_term": "text to speech"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent ElevenLabs SA APAC",
+        "keyword": "-tts healthcare",
+        "match_type": "EXACT",
+        "criterion_id": 321443492371,
+        "campaign_id": 23583187406,
+        "blocked_term": "tts"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent ElevenLabs SA APAC",
+        "keyword": "-ai agent",
+        "match_type": "PHRASE",
+        "criterion_id": 335621800451,
+        "campaign_id": 23583187406,
+        "blocked_term": "ai agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent ElevenLabs SA APAC",
+        "keyword": "-ai agents",
+        "match_type": "EXACT",
+        "criterion_id": 346467241635,
+        "campaign_id": 23583187406,
+        "blocked_term": "ai agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent ElevenLabs SA APAC",
+        "keyword": "-ai agents",
+        "match_type": "EXACT",
+        "criterion_id": 346467241635,
+        "campaign_id": 23583187406,
+        "blocked_term": "ai agents"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent ElevenLabs SA APAC",
+        "keyword": "-speech to text medical",
+        "match_type": "EXACT",
+        "criterion_id": 477325429098,
+        "campaign_id": 23583187406,
+        "blocked_term": "speech to text"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent ElevenLabs SA APAC",
+        "keyword": "-ai agent",
+        "match_type": "EXACT",
+        "criterion_id": 485494843589,
+        "campaign_id": 23583187406,
+        "blocked_term": "ai agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent ElevenLabs SA APAC",
+        "keyword": "-call center ai agent",
+        "match_type": "EXACT",
+        "criterion_id": 708851966552,
+        "campaign_id": 23583187406,
+        "blocked_term": "ai agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent ElevenLabs SA APAC",
+        "keyword": "-conversational ai agent",
+        "match_type": "EXACT",
+        "criterion_id": 836789208388,
+        "campaign_id": 23583187406,
+        "blocked_term": "ai agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent ElevenLabs SA APAC",
+        "keyword": "-text to speech ai",
+        "match_type": "PHRASE",
+        "criterion_id": 854855096777,
+        "campaign_id": 23583187406,
+        "blocked_term": "text to speech"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent ElevenLabs SA APAC",
+        "keyword": "-conversational ai agents",
+        "match_type": "EXACT",
+        "criterion_id": 1189475657248,
+        "campaign_id": 23583187406,
+        "blocked_term": "ai agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent ElevenLabs SA APAC",
+        "keyword": "-conversational ai agents",
+        "match_type": "EXACT",
+        "criterion_id": 1189475657248,
+        "campaign_id": 23583187406,
+        "blocked_term": "ai agents"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent ElevenLabs SA APAC",
+        "keyword": "-ai voice agent",
+        "match_type": "EXACT",
+        "criterion_id": 1887824693889,
+        "campaign_id": 23583187406,
+        "blocked_term": "voice agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent ElevenLabs SA APAC",
+        "keyword": "-AI Agent Development",
+        "match_type": "EXACT",
+        "criterion_id": 2152538440709,
+        "campaign_id": 23583187406,
+        "blocked_term": "ai agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent ElevenLabs SA APAC",
+        "keyword": "-ai voice agents",
+        "match_type": "EXACT",
+        "criterion_id": 2255502501252,
+        "campaign_id": 23583187406,
+        "blocked_term": "voice agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent ElevenLabs SA APAC",
+        "keyword": "-ai voice agents",
+        "match_type": "EXACT",
+        "criterion_id": 2255502501252,
+        "campaign_id": 23583187406,
+        "blocked_term": "voice agents"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent ElevenLabs SA APAC",
+        "keyword": "-sms ai agent",
+        "match_type": "EXACT",
+        "criterion_id": 2347363726963,
+        "campaign_id": 23583187406,
+        "blocked_term": "ai agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent ElevenLabs SA APAC",
+        "keyword": "-Multimodal AI Agents",
+        "match_type": "EXACT",
+        "criterion_id": 2380008733336,
+        "campaign_id": 23583187406,
+        "blocked_term": "ai agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent ElevenLabs SA APAC",
+        "keyword": "-Multimodal AI Agents",
+        "match_type": "EXACT",
+        "criterion_id": 2380008733336,
+        "campaign_id": 23583187406,
+        "blocked_term": "ai agents"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent ElevenLabs SA APAC",
+        "keyword": "-AI Agent Memory",
+        "match_type": "EXACT",
+        "criterion_id": 2380008733376,
+        "campaign_id": 23583187406,
+        "blocked_term": "ai agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent ElevenLabs SA APAC",
+        "keyword": "-call ai agent",
+        "match_type": "PHRASE",
+        "criterion_id": 2380175846788,
+        "campaign_id": 23583187406,
+        "blocked_term": "ai agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent ElevenLabs SA APAC",
+        "keyword": "-ai voice agent for cold calling",
+        "match_type": "PHRASE",
+        "criterion_id": 2405041730300,
+        "campaign_id": 23583187406,
+        "blocked_term": "voice agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent ElevenLabs SA APAC",
+        "keyword": "-ai agent voice call",
+        "match_type": "PHRASE",
+        "criterion_id": 2412987604273,
+        "campaign_id": 23583187406,
+        "blocked_term": "ai agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent ElevenLabs SA APAC",
+        "keyword": "-Build AI Agent",
+        "match_type": "EXACT",
+        "criterion_id": 2415263946933,
+        "campaign_id": 23583187406,
+        "blocked_term": "ai agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent ElevenLabs SA APAC",
+        "keyword": "-ai voice agent free",
+        "match_type": "PHRASE",
+        "criterion_id": 2429200011088,
+        "campaign_id": 23583187406,
+        "blocked_term": "voice agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent ElevenLabs SA APAC",
+        "keyword": "-Build AI Agents",
+        "match_type": "EXACT",
+        "criterion_id": 2432899414248,
+        "campaign_id": 23583187406,
+        "blocked_term": "ai agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent ElevenLabs SA APAC",
+        "keyword": "-Build AI Agents",
+        "match_type": "EXACT",
+        "criterion_id": 2432899414248,
+        "campaign_id": 23583187406,
+        "blocked_term": "ai agents"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent ElevenLabs SA APAC",
+        "keyword": "-No Code AI Agents",
+        "match_type": "EXACT",
+        "criterion_id": 2432899414288,
+        "campaign_id": 23583187406,
+        "blocked_term": "ai agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent ElevenLabs SA APAC",
+        "keyword": "-No Code AI Agents",
+        "match_type": "EXACT",
+        "criterion_id": 2432899414288,
+        "campaign_id": 23583187406,
+        "blocked_term": "ai agents"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent ElevenLabs SA APAC",
+        "keyword": "-No Code AI Agent",
+        "match_type": "EXACT",
+        "criterion_id": 2432899414448,
+        "campaign_id": 23583187406,
+        "blocked_term": "ai agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent ElevenLabs SA APAC",
+        "keyword": "-Personalized AI Agents",
+        "match_type": "EXACT",
+        "criterion_id": 2432899414528,
+        "campaign_id": 23583187406,
+        "blocked_term": "ai agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent ElevenLabs SA APAC",
+        "keyword": "-Personalized AI Agents",
+        "match_type": "EXACT",
+        "criterion_id": 2432899414528,
+        "campaign_id": 23583187406,
+        "blocked_term": "ai agents"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent ElevenLabs SA APAC",
+        "keyword": "-Best AI Agent",
+        "match_type": "EXACT",
+        "criterion_id": 2432899414688,
+        "campaign_id": 23583187406,
+        "blocked_term": "ai agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent ElevenLabs SA APAC",
+        "keyword": "-Best AI Agents",
+        "match_type": "EXACT",
+        "criterion_id": 2432899414728,
+        "campaign_id": 23583187406,
+        "blocked_term": "ai agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent ElevenLabs SA APAC",
+        "keyword": "-Best AI Agents",
+        "match_type": "EXACT",
+        "criterion_id": 2432899414728,
+        "campaign_id": 23583187406,
+        "blocked_term": "ai agents"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent ElevenLabs SA APAC",
+        "keyword": "-Top AI Agents",
+        "match_type": "EXACT",
+        "criterion_id": 2432899414768,
+        "campaign_id": 23583187406,
+        "blocked_term": "ai agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent ElevenLabs SA APAC",
+        "keyword": "-Top AI Agents",
+        "match_type": "EXACT",
+        "criterion_id": 2432899414768,
+        "campaign_id": 23583187406,
+        "blocked_term": "ai agents"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent ElevenLabs SA APAC",
+        "keyword": "-MCP AI Agents",
+        "match_type": "EXACT",
+        "criterion_id": 2432899414968,
+        "campaign_id": 23583187406,
+        "blocked_term": "ai agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent ElevenLabs SA APAC",
+        "keyword": "-MCP AI Agents",
+        "match_type": "EXACT",
+        "criterion_id": 2432899414968,
+        "campaign_id": 23583187406,
+        "blocked_term": "ai agents"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent ElevenLabs SA APAC",
+        "keyword": "-retail ai voice agent",
+        "match_type": "PHRASE",
+        "criterion_id": 2443311207751,
+        "campaign_id": 23583187406,
+        "blocked_term": "voice agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent ElevenLabs SA APAC",
+        "keyword": "-ai agents for cold calling",
+        "match_type": "PHRASE",
+        "criterion_id": 2462659161529,
+        "campaign_id": 23583187406,
+        "blocked_term": "ai agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent ElevenLabs SA APAC",
+        "keyword": "-ai agents for cold calling",
+        "match_type": "PHRASE",
+        "criterion_id": 2462659161529,
+        "campaign_id": 23583187406,
+        "blocked_term": "ai agents"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent ElevenLabs SA APAC",
+        "keyword": "-healthcare voice api",
+        "match_type": "EXACT",
+        "criterion_id": 2474345971132,
+        "campaign_id": 23583187406,
+        "blocked_term": "voice api"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent LiveKit SA AMER",
+        "keyword": "-pipecat voice agent",
+        "match_type": "PHRASE",
+        "criterion_id": 2441384014200,
+        "campaign_id": 23583479504,
+        "blocked_term": "voice agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent LiveKit SA EMEA",
+        "keyword": "-pipecat voice agent",
+        "match_type": "PHRASE",
+        "criterion_id": 2441384014200,
+        "campaign_id": 23583479729,
+        "blocked_term": "voice agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA AMER",
+        "keyword": "-text to speech api",
+        "match_type": "EXACT",
+        "criterion_id": 197541596,
+        "campaign_id": 23584242475,
+        "blocked_term": "text to speech"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA AMER",
+        "keyword": "-tts healthcare",
+        "match_type": "EXACT",
+        "criterion_id": 321443492371,
+        "campaign_id": 23584242475,
+        "blocked_term": "tts"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA AMER",
+        "keyword": "-text to speech ai",
+        "match_type": "EXACT",
+        "criterion_id": 335587494694,
+        "campaign_id": 23584242475,
+        "blocked_term": "text to speech"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA AMER",
+        "keyword": "-ai agent",
+        "match_type": "PHRASE",
+        "criterion_id": 335621800451,
+        "campaign_id": 23584242475,
+        "blocked_term": "ai agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA AMER",
+        "keyword": "-ai agents",
+        "match_type": "EXACT",
+        "criterion_id": 346467241635,
+        "campaign_id": 23584242475,
+        "blocked_term": "ai agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA AMER",
+        "keyword": "-ai agents",
+        "match_type": "EXACT",
+        "criterion_id": 346467241635,
+        "campaign_id": 23584242475,
+        "blocked_term": "ai agents"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA AMER",
+        "keyword": "-speech to text medical",
+        "match_type": "EXACT",
+        "criterion_id": 477325429098,
+        "campaign_id": 23584242475,
+        "blocked_term": "speech to text"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA AMER",
+        "keyword": "-ai agent",
+        "match_type": "EXACT",
+        "criterion_id": 485494843589,
+        "campaign_id": 23584242475,
+        "blocked_term": "ai agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA AMER",
+        "keyword": "-ai text to speech",
+        "match_type": "PHRASE",
+        "criterion_id": 679305281654,
+        "campaign_id": 23584242475,
+        "blocked_term": "text to speech"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA AMER",
+        "keyword": "-call center ai agent",
+        "match_type": "EXACT",
+        "criterion_id": 708851966552,
+        "campaign_id": 23584242475,
+        "blocked_term": "ai agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA AMER",
+        "keyword": "-conversational ai agent",
+        "match_type": "EXACT",
+        "criterion_id": 836789208388,
+        "campaign_id": 23584242475,
+        "blocked_term": "ai agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA AMER",
+        "keyword": "-conversational ai agents",
+        "match_type": "EXACT",
+        "criterion_id": 1189475657248,
+        "campaign_id": 23584242475,
+        "blocked_term": "ai agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA AMER",
+        "keyword": "-conversational ai agents",
+        "match_type": "EXACT",
+        "criterion_id": 1189475657248,
+        "campaign_id": 23584242475,
+        "blocked_term": "ai agents"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA AMER",
+        "keyword": "-ai voice agent",
+        "match_type": "EXACT",
+        "criterion_id": 1887824693889,
+        "campaign_id": 23584242475,
+        "blocked_term": "voice agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA AMER",
+        "keyword": "-AI Agent Development",
+        "match_type": "EXACT",
+        "criterion_id": 2152538440709,
+        "campaign_id": 23584242475,
+        "blocked_term": "ai agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA AMER",
+        "keyword": "-ai voice agents",
+        "match_type": "EXACT",
+        "criterion_id": 2255502501252,
+        "campaign_id": 23584242475,
+        "blocked_term": "voice agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA AMER",
+        "keyword": "-ai voice agents",
+        "match_type": "EXACT",
+        "criterion_id": 2255502501252,
+        "campaign_id": 23584242475,
+        "blocked_term": "voice agents"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA AMER",
+        "keyword": "-best ai agents",
+        "match_type": "PHRASE",
+        "criterion_id": 2279258097279,
+        "campaign_id": 23584242475,
+        "blocked_term": "ai agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA AMER",
+        "keyword": "-best ai agents",
+        "match_type": "PHRASE",
+        "criterion_id": 2279258097279,
+        "campaign_id": 23584242475,
+        "blocked_term": "ai agents"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA AMER",
+        "keyword": "-11 labs text to speech",
+        "match_type": "PHRASE",
+        "criterion_id": 2320538970607,
+        "campaign_id": 23584242475,
+        "blocked_term": "text to speech"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA AMER",
+        "keyword": "-eleven labs ai voice agent",
+        "match_type": "PHRASE",
+        "criterion_id": 2321466255780,
+        "campaign_id": 23584242475,
+        "blocked_term": "voice agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA AMER",
+        "keyword": "-sms ai agent",
+        "match_type": "EXACT",
+        "criterion_id": 2347363726963,
+        "campaign_id": 23584242475,
+        "blocked_term": "ai agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA AMER",
+        "keyword": "-Multimodal AI Agents",
+        "match_type": "EXACT",
+        "criterion_id": 2380008733336,
+        "campaign_id": 23584242475,
+        "blocked_term": "ai agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA AMER",
+        "keyword": "-Multimodal AI Agents",
+        "match_type": "EXACT",
+        "criterion_id": 2380008733336,
+        "campaign_id": 23584242475,
+        "blocked_term": "ai agents"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA AMER",
+        "keyword": "-AI Agent Memory",
+        "match_type": "EXACT",
+        "criterion_id": 2380008733376,
+        "campaign_id": 23584242475,
+        "blocked_term": "ai agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA AMER",
+        "keyword": "-mcp ai agent",
+        "match_type": "PHRASE",
+        "criterion_id": 2408682935217,
+        "campaign_id": 23584242475,
+        "blocked_term": "ai agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA AMER",
+        "keyword": "-Build AI Agent",
+        "match_type": "EXACT",
+        "criterion_id": 2415263946933,
+        "campaign_id": 23584242475,
+        "blocked_term": "ai agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA AMER",
+        "keyword": "-ai voice agent ghl",
+        "match_type": "PHRASE",
+        "criterion_id": 2416592781046,
+        "campaign_id": 23584242475,
+        "blocked_term": "voice agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA AMER",
+        "keyword": "-ai voice agent demo",
+        "match_type": "PHRASE",
+        "criterion_id": 2420847817880,
+        "campaign_id": 23584242475,
+        "blocked_term": "voice agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA AMER",
+        "keyword": "-voice agent demo",
+        "match_type": "PHRASE",
+        "criterion_id": 2421577449774,
+        "campaign_id": 23584242475,
+        "blocked_term": "voice agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA AMER",
+        "keyword": "-gohighlevel ai voice agent",
+        "match_type": "PHRASE",
+        "criterion_id": 2423843746065,
+        "campaign_id": 23584242475,
+        "blocked_term": "voice agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA AMER",
+        "keyword": "-n8n voice agent",
+        "match_type": "PHRASE",
+        "criterion_id": 2425968535873,
+        "campaign_id": 23584242475,
+        "blocked_term": "voice agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA AMER",
+        "keyword": "-voice agent n8n",
+        "match_type": "PHRASE",
+        "criterion_id": 2426747141469,
+        "campaign_id": 23584242475,
+        "blocked_term": "voice agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA AMER",
+        "keyword": "-Build AI Agents",
+        "match_type": "EXACT",
+        "criterion_id": 2432899414248,
+        "campaign_id": 23584242475,
+        "blocked_term": "ai agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA AMER",
+        "keyword": "-Build AI Agents",
+        "match_type": "EXACT",
+        "criterion_id": 2432899414248,
+        "campaign_id": 23584242475,
+        "blocked_term": "ai agents"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA AMER",
+        "keyword": "-No Code AI Agents",
+        "match_type": "EXACT",
+        "criterion_id": 2432899414288,
+        "campaign_id": 23584242475,
+        "blocked_term": "ai agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA AMER",
+        "keyword": "-No Code AI Agents",
+        "match_type": "EXACT",
+        "criterion_id": 2432899414288,
+        "campaign_id": 23584242475,
+        "blocked_term": "ai agents"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA AMER",
+        "keyword": "-No Code AI Agent",
+        "match_type": "EXACT",
+        "criterion_id": 2432899414448,
+        "campaign_id": 23584242475,
+        "blocked_term": "ai agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA AMER",
+        "keyword": "-Personalized AI Agents",
+        "match_type": "EXACT",
+        "criterion_id": 2432899414528,
+        "campaign_id": 23584242475,
+        "blocked_term": "ai agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA AMER",
+        "keyword": "-Personalized AI Agents",
+        "match_type": "EXACT",
+        "criterion_id": 2432899414528,
+        "campaign_id": 23584242475,
+        "blocked_term": "ai agents"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA AMER",
+        "keyword": "-Best AI Agent",
+        "match_type": "EXACT",
+        "criterion_id": 2432899414688,
+        "campaign_id": 23584242475,
+        "blocked_term": "ai agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA AMER",
+        "keyword": "-Best AI Agents",
+        "match_type": "EXACT",
+        "criterion_id": 2432899414728,
+        "campaign_id": 23584242475,
+        "blocked_term": "ai agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA AMER",
+        "keyword": "-Best AI Agents",
+        "match_type": "EXACT",
+        "criterion_id": 2432899414728,
+        "campaign_id": 23584242475,
+        "blocked_term": "ai agents"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA AMER",
+        "keyword": "-Top AI Agents",
+        "match_type": "EXACT",
+        "criterion_id": 2432899414768,
+        "campaign_id": 23584242475,
+        "blocked_term": "ai agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA AMER",
+        "keyword": "-Top AI Agents",
+        "match_type": "EXACT",
+        "criterion_id": 2432899414768,
+        "campaign_id": 23584242475,
+        "blocked_term": "ai agents"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA AMER",
+        "keyword": "-MCP AI Agents",
+        "match_type": "EXACT",
+        "criterion_id": 2432899414968,
+        "campaign_id": 23584242475,
+        "blocked_term": "ai agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA AMER",
+        "keyword": "-MCP AI Agents",
+        "match_type": "EXACT",
+        "criterion_id": 2432899414968,
+        "campaign_id": 23584242475,
+        "blocked_term": "ai agents"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA AMER",
+        "keyword": "-retell ai agent",
+        "match_type": "PHRASE",
+        "criterion_id": 2436407039469,
+        "campaign_id": 23584242475,
+        "blocked_term": "ai agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA AMER",
+        "keyword": "-open source voice agent",
+        "match_type": "PHRASE",
+        "criterion_id": 2436982408212,
+        "campaign_id": 23584242475,
+        "blocked_term": "voice agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA AMER",
+        "keyword": "-deepgram voice agent",
+        "match_type": "PHRASE",
+        "criterion_id": 2442726154932,
+        "campaign_id": 23584242475,
+        "blocked_term": "voice agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA AMER",
+        "keyword": "-retell ai voice agent",
+        "match_type": "PHRASE",
+        "criterion_id": 2447163943817,
+        "campaign_id": 23584242475,
+        "blocked_term": "voice agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA AMER",
+        "keyword": "-cheapest voice agent",
+        "match_type": "PHRASE",
+        "criterion_id": 2447497247960,
+        "campaign_id": 23584242475,
+        "blocked_term": "voice agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA AMER",
+        "keyword": "-voice agent ai",
+        "match_type": "PHRASE",
+        "criterion_id": 2449038789357,
+        "campaign_id": 23584242475,
+        "blocked_term": "voice agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA AMER",
+        "keyword": "-voice agents ai",
+        "match_type": "PHRASE",
+        "criterion_id": 2449038789517,
+        "campaign_id": 23584242475,
+        "blocked_term": "voice agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA AMER",
+        "keyword": "-voice agents ai",
+        "match_type": "PHRASE",
+        "criterion_id": 2449038789517,
+        "campaign_id": 23584242475,
+        "blocked_term": "voice agents"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA AMER",
+        "keyword": "-best ai voice agent",
+        "match_type": "PHRASE",
+        "criterion_id": 2449038789557,
+        "campaign_id": 23584242475,
+        "blocked_term": "voice agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA AMER",
+        "keyword": "-best ai voice agents",
+        "match_type": "PHRASE",
+        "criterion_id": 2449038791237,
+        "campaign_id": 23584242475,
+        "blocked_term": "voice agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA AMER",
+        "keyword": "-best ai voice agents",
+        "match_type": "PHRASE",
+        "criterion_id": 2449038791237,
+        "campaign_id": 23584242475,
+        "blocked_term": "voice agents"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA AMER",
+        "keyword": "-building voice agents",
+        "match_type": "PHRASE",
+        "criterion_id": 2449907568926,
+        "campaign_id": 23584242475,
+        "blocked_term": "voice agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA AMER",
+        "keyword": "-building voice agents",
+        "match_type": "PHRASE",
+        "criterion_id": 2449907568926,
+        "campaign_id": 23584242475,
+        "blocked_term": "voice agents"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA AMER",
+        "keyword": "-gemini voice agent",
+        "match_type": "PHRASE",
+        "criterion_id": 2455697829510,
+        "campaign_id": 23584242475,
+        "blocked_term": "voice agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA AMER",
+        "keyword": "-how to build ai voice agent",
+        "match_type": "PHRASE",
+        "criterion_id": 2463495528708,
+        "campaign_id": 23584242475,
+        "blocked_term": "voice agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA AMER",
+        "keyword": "-ghl voice agent",
+        "match_type": "PHRASE",
+        "criterion_id": 2464929948132,
+        "campaign_id": 23584242475,
+        "blocked_term": "voice agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA AMER",
+        "keyword": "-eleven labs ai agents",
+        "match_type": "PHRASE",
+        "criterion_id": 2468278600975,
+        "campaign_id": 23584242475,
+        "blocked_term": "ai agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA AMER",
+        "keyword": "-eleven labs ai agents",
+        "match_type": "PHRASE",
+        "criterion_id": 2468278600975,
+        "campaign_id": 23584242475,
+        "blocked_term": "ai agents"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA AMER",
+        "keyword": "-voice agent ai free",
+        "match_type": "PHRASE",
+        "criterion_id": 2469461519747,
+        "campaign_id": 23584242475,
+        "blocked_term": "voice agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA AMER",
+        "keyword": "-openclaw voice agent",
+        "match_type": "PHRASE",
+        "criterion_id": 2469514665772,
+        "campaign_id": 23584242475,
+        "blocked_term": "voice agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA AMER",
+        "keyword": "-free voice agents",
+        "match_type": "PHRASE",
+        "criterion_id": 2469641923150,
+        "campaign_id": 23584242475,
+        "blocked_term": "voice agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA AMER",
+        "keyword": "-free voice agents",
+        "match_type": "PHRASE",
+        "criterion_id": 2469641923150,
+        "campaign_id": 23584242475,
+        "blocked_term": "voice agents"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA AMER",
+        "keyword": "-ultravox voice agent",
+        "match_type": "PHRASE",
+        "criterion_id": 2472409465115,
+        "campaign_id": 23584242475,
+        "blocked_term": "voice agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA AMER",
+        "keyword": "-ai voice agent twilio",
+        "match_type": "PHRASE",
+        "criterion_id": 2472409629595,
+        "campaign_id": 23584242475,
+        "blocked_term": "voice agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA AMER",
+        "keyword": "-claude voice agent",
+        "match_type": "PHRASE",
+        "criterion_id": 2472528502558,
+        "campaign_id": 23584242475,
+        "blocked_term": "voice agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA AMER",
+        "keyword": "-free voice agent ai",
+        "match_type": "PHRASE",
+        "criterion_id": 2472576236864,
+        "campaign_id": 23584242475,
+        "blocked_term": "voice agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA AMER",
+        "keyword": "-\"voice agents",
+        "match_type": "BROAD",
+        "criterion_id": 2472698843000,
+        "campaign_id": 23584242475,
+        "blocked_term": "voice agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA AMER",
+        "keyword": "-\"voice agents",
+        "match_type": "BROAD",
+        "criterion_id": 2472698843000,
+        "campaign_id": 23584242475,
+        "blocked_term": "voice agents"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA AMER",
+        "keyword": "-healthcare voice api",
+        "match_type": "EXACT",
+        "criterion_id": 2474345971132,
+        "campaign_id": 23584242475,
+        "blocked_term": "voice api"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA AMER",
+        "keyword": "-low latency voice agent",
+        "match_type": "PHRASE",
+        "criterion_id": 2475399923692,
+        "campaign_id": 23584242475,
+        "blocked_term": "voice agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA AMER",
+        "keyword": "-twilio voice agent",
+        "match_type": "PHRASE",
+        "criterion_id": 2477781923957,
+        "campaign_id": 23584242475,
+        "blocked_term": "voice agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA AMER",
+        "keyword": "-build voice agents",
+        "match_type": "PHRASE",
+        "criterion_id": 2489775777527,
+        "campaign_id": 23584242475,
+        "blocked_term": "voice agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA AMER",
+        "keyword": "-build voice agents",
+        "match_type": "PHRASE",
+        "criterion_id": 2489775777527,
+        "campaign_id": 23584242475,
+        "blocked_term": "voice agents"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA AMER",
+        "keyword": "-ai voice agent retell",
+        "match_type": "PHRASE",
+        "criterion_id": 2499117660164,
+        "campaign_id": 23584242475,
+        "blocked_term": "voice agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA AMER",
+        "keyword": "-lindy ai voice agent",
+        "match_type": "PHRASE",
+        "criterion_id": 2522391141087,
+        "campaign_id": 23584242475,
+        "blocked_term": "voice agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA AMER",
+        "keyword": "-claude code voice agent",
+        "match_type": "PHRASE",
+        "criterion_id": 2663482264792,
+        "campaign_id": 23584242475,
+        "blocked_term": "voice agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA EMEA",
+        "keyword": "-text to speech api",
+        "match_type": "EXACT",
+        "criterion_id": 197541596,
+        "campaign_id": 23584242652,
+        "blocked_term": "text to speech"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA EMEA",
+        "keyword": "-voice agents",
+        "match_type": "PHRASE",
+        "criterion_id": 354831794,
+        "campaign_id": 23584242652,
+        "blocked_term": "voice agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA EMEA",
+        "keyword": "-voice agents",
+        "match_type": "PHRASE",
+        "criterion_id": 354831794,
+        "campaign_id": 23584242652,
+        "blocked_term": "voice agents"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA EMEA",
+        "keyword": "-tts healthcare",
+        "match_type": "EXACT",
+        "criterion_id": 321443492371,
+        "campaign_id": 23584242652,
+        "blocked_term": "tts"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA EMEA",
+        "keyword": "-text to speech ai",
+        "match_type": "EXACT",
+        "criterion_id": 335587494694,
+        "campaign_id": 23584242652,
+        "blocked_term": "text to speech"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA EMEA",
+        "keyword": "-ai agent",
+        "match_type": "PHRASE",
+        "criterion_id": 335621800451,
+        "campaign_id": 23584242652,
+        "blocked_term": "ai agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA EMEA",
+        "keyword": "-ai agents",
+        "match_type": "EXACT",
+        "criterion_id": 346467241635,
+        "campaign_id": 23584242652,
+        "blocked_term": "ai agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA EMEA",
+        "keyword": "-ai agents",
+        "match_type": "EXACT",
+        "criterion_id": 346467241635,
+        "campaign_id": 23584242652,
+        "blocked_term": "ai agents"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA EMEA",
+        "keyword": "-speech to text medical",
+        "match_type": "EXACT",
+        "criterion_id": 477325429098,
+        "campaign_id": 23584242652,
+        "blocked_term": "speech to text"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA EMEA",
+        "keyword": "-ai agent",
+        "match_type": "EXACT",
+        "criterion_id": 485494843589,
+        "campaign_id": 23584242652,
+        "blocked_term": "ai agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA EMEA",
+        "keyword": "-call center ai agent",
+        "match_type": "EXACT",
+        "criterion_id": 708851966552,
+        "campaign_id": 23584242652,
+        "blocked_term": "ai agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA EMEA",
+        "keyword": "-conversational ai agent",
+        "match_type": "EXACT",
+        "criterion_id": 836789208388,
+        "campaign_id": 23584242652,
+        "blocked_term": "ai agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA EMEA",
+        "keyword": "-conversational ai agents",
+        "match_type": "EXACT",
+        "criterion_id": 1189475657248,
+        "campaign_id": 23584242652,
+        "blocked_term": "ai agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA EMEA",
+        "keyword": "-conversational ai agents",
+        "match_type": "EXACT",
+        "criterion_id": 1189475657248,
+        "campaign_id": 23584242652,
+        "blocked_term": "ai agents"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA EMEA",
+        "keyword": "-ai voice agent",
+        "match_type": "EXACT",
+        "criterion_id": 1887824693889,
+        "campaign_id": 23584242652,
+        "blocked_term": "voice agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA EMEA",
+        "keyword": "-AI Agent Development",
+        "match_type": "EXACT",
+        "criterion_id": 2152538440709,
+        "campaign_id": 23584242652,
+        "blocked_term": "ai agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA EMEA",
+        "keyword": "-eleven labs tts",
+        "match_type": "PHRASE",
+        "criterion_id": 2207178005900,
+        "campaign_id": 23584242652,
+        "blocked_term": "tts"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA EMEA",
+        "keyword": "-ai voice agents",
+        "match_type": "EXACT",
+        "criterion_id": 2255502501252,
+        "campaign_id": 23584242652,
+        "blocked_term": "voice agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA EMEA",
+        "keyword": "-ai voice agents",
+        "match_type": "EXACT",
+        "criterion_id": 2255502501252,
+        "campaign_id": 23584242652,
+        "blocked_term": "voice agents"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA EMEA",
+        "keyword": "-tts eleven labs",
+        "match_type": "PHRASE",
+        "criterion_id": 2264066888780,
+        "campaign_id": 23584242652,
+        "blocked_term": "tts"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA EMEA",
+        "keyword": "-11labs io text to speech",
+        "match_type": "PHRASE",
+        "criterion_id": 2342311318695,
+        "campaign_id": 23584242652,
+        "blocked_term": "text to speech"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA EMEA",
+        "keyword": "-sms ai agent",
+        "match_type": "EXACT",
+        "criterion_id": 2347363726963,
+        "campaign_id": 23584242652,
+        "blocked_term": "ai agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA EMEA",
+        "keyword": "-Multimodal AI Agents",
+        "match_type": "EXACT",
+        "criterion_id": 2380008733336,
+        "campaign_id": 23584242652,
+        "blocked_term": "ai agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA EMEA",
+        "keyword": "-Multimodal AI Agents",
+        "match_type": "EXACT",
+        "criterion_id": 2380008733336,
+        "campaign_id": 23584242652,
+        "blocked_term": "ai agents"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA EMEA",
+        "keyword": "-AI Agent Memory",
+        "match_type": "EXACT",
+        "criterion_id": 2380008733376,
+        "campaign_id": 23584242652,
+        "blocked_term": "ai agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA EMEA",
+        "keyword": "-Build AI Agent",
+        "match_type": "EXACT",
+        "criterion_id": 2415263946933,
+        "campaign_id": 23584242652,
+        "blocked_term": "ai agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA EMEA",
+        "keyword": "-ai agent phone call",
+        "match_type": "PHRASE",
+        "criterion_id": 2415402477017,
+        "campaign_id": 23584242652,
+        "blocked_term": "ai agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA EMEA",
+        "keyword": "-11 labs io text to speech",
+        "match_type": "PHRASE",
+        "criterion_id": 2422178209080,
+        "campaign_id": 23584242652,
+        "blocked_term": "text to speech"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA EMEA",
+        "keyword": "-ai voice agent n8n",
+        "match_type": "PHRASE",
+        "criterion_id": 2426538951028,
+        "campaign_id": 23584242652,
+        "blocked_term": "voice agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA EMEA",
+        "keyword": "-Build AI Agents",
+        "match_type": "EXACT",
+        "criterion_id": 2432899414248,
+        "campaign_id": 23584242652,
+        "blocked_term": "ai agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA EMEA",
+        "keyword": "-Build AI Agents",
+        "match_type": "EXACT",
+        "criterion_id": 2432899414248,
+        "campaign_id": 23584242652,
+        "blocked_term": "ai agents"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA EMEA",
+        "keyword": "-No Code AI Agents",
+        "match_type": "EXACT",
+        "criterion_id": 2432899414288,
+        "campaign_id": 23584242652,
+        "blocked_term": "ai agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA EMEA",
+        "keyword": "-No Code AI Agents",
+        "match_type": "EXACT",
+        "criterion_id": 2432899414288,
+        "campaign_id": 23584242652,
+        "blocked_term": "ai agents"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA EMEA",
+        "keyword": "-No Code AI Agent",
+        "match_type": "EXACT",
+        "criterion_id": 2432899414448,
+        "campaign_id": 23584242652,
+        "blocked_term": "ai agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA EMEA",
+        "keyword": "-Personalized AI Agents",
+        "match_type": "EXACT",
+        "criterion_id": 2432899414528,
+        "campaign_id": 23584242652,
+        "blocked_term": "ai agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA EMEA",
+        "keyword": "-Personalized AI Agents",
+        "match_type": "EXACT",
+        "criterion_id": 2432899414528,
+        "campaign_id": 23584242652,
+        "blocked_term": "ai agents"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA EMEA",
+        "keyword": "-Best AI Agent",
+        "match_type": "EXACT",
+        "criterion_id": 2432899414688,
+        "campaign_id": 23584242652,
+        "blocked_term": "ai agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA EMEA",
+        "keyword": "-Best AI Agents",
+        "match_type": "EXACT",
+        "criterion_id": 2432899414728,
+        "campaign_id": 23584242652,
+        "blocked_term": "ai agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA EMEA",
+        "keyword": "-Best AI Agents",
+        "match_type": "EXACT",
+        "criterion_id": 2432899414728,
+        "campaign_id": 23584242652,
+        "blocked_term": "ai agents"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA EMEA",
+        "keyword": "-Top AI Agents",
+        "match_type": "EXACT",
+        "criterion_id": 2432899414768,
+        "campaign_id": 23584242652,
+        "blocked_term": "ai agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA EMEA",
+        "keyword": "-Top AI Agents",
+        "match_type": "EXACT",
+        "criterion_id": 2432899414768,
+        "campaign_id": 23584242652,
+        "blocked_term": "ai agents"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA EMEA",
+        "keyword": "-MCP AI Agents",
+        "match_type": "EXACT",
+        "criterion_id": 2432899414968,
+        "campaign_id": 23584242652,
+        "blocked_term": "ai agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA EMEA",
+        "keyword": "-MCP AI Agents",
+        "match_type": "EXACT",
+        "criterion_id": 2432899414968,
+        "campaign_id": 23584242652,
+        "blocked_term": "ai agents"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA EMEA",
+        "keyword": "-claude voice agent",
+        "match_type": "PHRASE",
+        "criterion_id": 2472528502558,
+        "campaign_id": 23584242652,
+        "blocked_term": "voice agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA EMEA",
+        "keyword": "-ki voice agent erstellen",
+        "match_type": "PHRASE",
+        "criterion_id": 2472529325278,
+        "campaign_id": 23584242652,
+        "blocked_term": "voice agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA EMEA",
+        "keyword": "-healthcare voice api",
+        "match_type": "EXACT",
+        "criterion_id": 2474345971132,
+        "campaign_id": 23584242652,
+        "blocked_term": "voice api"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent Vapi SA EMEA",
+        "keyword": "-voice agent with n8n",
+        "match_type": "PHRASE",
+        "criterion_id": 2663481894152,
+        "campaign_id": 23584242652,
+        "blocked_term": "voice agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent ElevenLabs SA EMEA",
+        "keyword": "-text to speech api",
+        "match_type": "PHRASE",
+        "criterion_id": 197539536,
+        "campaign_id": 23584242697,
+        "blocked_term": "text to speech"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent ElevenLabs SA EMEA",
+        "keyword": "-text to speech api",
+        "match_type": "EXACT",
+        "criterion_id": 197541596,
+        "campaign_id": 23584242697,
+        "blocked_term": "text to speech"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent ElevenLabs SA EMEA",
+        "keyword": "-tts healthcare",
+        "match_type": "EXACT",
+        "criterion_id": 321443492371,
+        "campaign_id": 23584242697,
+        "blocked_term": "tts"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent ElevenLabs SA EMEA",
+        "keyword": "-ai agents",
+        "match_type": "EXACT",
+        "criterion_id": 346467241635,
+        "campaign_id": 23584242697,
+        "blocked_term": "ai agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent ElevenLabs SA EMEA",
+        "keyword": "-ai agents",
+        "match_type": "EXACT",
+        "criterion_id": 346467241635,
+        "campaign_id": 23584242697,
+        "blocked_term": "ai agents"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent ElevenLabs SA EMEA",
+        "keyword": "-speech to text medical",
+        "match_type": "EXACT",
+        "criterion_id": 477325429098,
+        "campaign_id": 23584242697,
+        "blocked_term": "speech to text"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent ElevenLabs SA EMEA",
+        "keyword": "-ai agent",
+        "match_type": "EXACT",
+        "criterion_id": 485494843589,
+        "campaign_id": 23584242697,
+        "blocked_term": "ai agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent ElevenLabs SA EMEA",
+        "keyword": "-call center ai agent",
+        "match_type": "EXACT",
+        "criterion_id": 708851966552,
+        "campaign_id": 23584242697,
+        "blocked_term": "ai agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent ElevenLabs SA EMEA",
+        "keyword": "-conversational ai agent",
+        "match_type": "EXACT",
+        "criterion_id": 836789208388,
+        "campaign_id": 23584242697,
+        "blocked_term": "ai agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent ElevenLabs SA EMEA",
+        "keyword": "-text to speech ai",
+        "match_type": "PHRASE",
+        "criterion_id": 854855096777,
+        "campaign_id": 23584242697,
+        "blocked_term": "text to speech"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent ElevenLabs SA EMEA",
+        "keyword": "-conversational ai agents",
+        "match_type": "EXACT",
+        "criterion_id": 1189475657248,
+        "campaign_id": 23584242697,
+        "blocked_term": "ai agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent ElevenLabs SA EMEA",
+        "keyword": "-conversational ai agents",
+        "match_type": "EXACT",
+        "criterion_id": 1189475657248,
+        "campaign_id": 23584242697,
+        "blocked_term": "ai agents"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent ElevenLabs SA EMEA",
+        "keyword": "-ai voice agent",
+        "match_type": "EXACT",
+        "criterion_id": 1887824693889,
+        "campaign_id": 23584242697,
+        "blocked_term": "voice agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent ElevenLabs SA EMEA",
+        "keyword": "-AI Agent Development",
+        "match_type": "EXACT",
+        "criterion_id": 2152538440709,
+        "campaign_id": 23584242697,
+        "blocked_term": "ai agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent ElevenLabs SA EMEA",
+        "keyword": "-ai voice agents",
+        "match_type": "EXACT",
+        "criterion_id": 2255502501252,
+        "campaign_id": 23584242697,
+        "blocked_term": "voice agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent ElevenLabs SA EMEA",
+        "keyword": "-ai voice agents",
+        "match_type": "EXACT",
+        "criterion_id": 2255502501252,
+        "campaign_id": 23584242697,
+        "blocked_term": "voice agents"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent ElevenLabs SA EMEA",
+        "keyword": "-sms ai agent",
+        "match_type": "EXACT",
+        "criterion_id": 2347363726963,
+        "campaign_id": 23584242697,
+        "blocked_term": "ai agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent ElevenLabs SA EMEA",
+        "keyword": "-Multimodal AI Agents",
+        "match_type": "EXACT",
+        "criterion_id": 2380008733336,
+        "campaign_id": 23584242697,
+        "blocked_term": "ai agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent ElevenLabs SA EMEA",
+        "keyword": "-Multimodal AI Agents",
+        "match_type": "EXACT",
+        "criterion_id": 2380008733336,
+        "campaign_id": 23584242697,
+        "blocked_term": "ai agents"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent ElevenLabs SA EMEA",
+        "keyword": "-AI Agent Memory",
+        "match_type": "EXACT",
+        "criterion_id": 2380008733376,
+        "campaign_id": 23584242697,
+        "blocked_term": "ai agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent ElevenLabs SA EMEA",
+        "keyword": "-Build AI Agent",
+        "match_type": "EXACT",
+        "criterion_id": 2415263946933,
+        "campaign_id": 23584242697,
+        "blocked_term": "ai agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent ElevenLabs SA EMEA",
+        "keyword": "-Build AI Agents",
+        "match_type": "EXACT",
+        "criterion_id": 2432899414248,
+        "campaign_id": 23584242697,
+        "blocked_term": "ai agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent ElevenLabs SA EMEA",
+        "keyword": "-Build AI Agents",
+        "match_type": "EXACT",
+        "criterion_id": 2432899414248,
+        "campaign_id": 23584242697,
+        "blocked_term": "ai agents"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent ElevenLabs SA EMEA",
+        "keyword": "-No Code AI Agents",
+        "match_type": "EXACT",
+        "criterion_id": 2432899414288,
+        "campaign_id": 23584242697,
+        "blocked_term": "ai agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent ElevenLabs SA EMEA",
+        "keyword": "-No Code AI Agents",
+        "match_type": "EXACT",
+        "criterion_id": 2432899414288,
+        "campaign_id": 23584242697,
+        "blocked_term": "ai agents"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent ElevenLabs SA EMEA",
+        "keyword": "-No Code AI Agent",
+        "match_type": "EXACT",
+        "criterion_id": 2432899414448,
+        "campaign_id": 23584242697,
+        "blocked_term": "ai agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent ElevenLabs SA EMEA",
+        "keyword": "-Personalized AI Agents",
+        "match_type": "EXACT",
+        "criterion_id": 2432899414528,
+        "campaign_id": 23584242697,
+        "blocked_term": "ai agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent ElevenLabs SA EMEA",
+        "keyword": "-Personalized AI Agents",
+        "match_type": "EXACT",
+        "criterion_id": 2432899414528,
+        "campaign_id": 23584242697,
+        "blocked_term": "ai agents"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent ElevenLabs SA EMEA",
+        "keyword": "-Best AI Agent",
+        "match_type": "EXACT",
+        "criterion_id": 2432899414688,
+        "campaign_id": 23584242697,
+        "blocked_term": "ai agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent ElevenLabs SA EMEA",
+        "keyword": "-Best AI Agents",
+        "match_type": "EXACT",
+        "criterion_id": 2432899414728,
+        "campaign_id": 23584242697,
+        "blocked_term": "ai agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent ElevenLabs SA EMEA",
+        "keyword": "-Best AI Agents",
+        "match_type": "EXACT",
+        "criterion_id": 2432899414728,
+        "campaign_id": 23584242697,
+        "blocked_term": "ai agents"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent ElevenLabs SA EMEA",
+        "keyword": "-Top AI Agents",
+        "match_type": "EXACT",
+        "criterion_id": 2432899414768,
+        "campaign_id": 23584242697,
+        "blocked_term": "ai agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent ElevenLabs SA EMEA",
+        "keyword": "-Top AI Agents",
+        "match_type": "EXACT",
+        "criterion_id": 2432899414768,
+        "campaign_id": 23584242697,
+        "blocked_term": "ai agents"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent ElevenLabs SA EMEA",
+        "keyword": "-MCP AI Agents",
+        "match_type": "EXACT",
+        "criterion_id": 2432899414968,
+        "campaign_id": 23584242697,
+        "blocked_term": "ai agent"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent ElevenLabs SA EMEA",
+        "keyword": "-MCP AI Agents",
+        "match_type": "EXACT",
+        "criterion_id": 2432899414968,
+        "campaign_id": 23584242697,
+        "blocked_term": "ai agents"
+      },
+      {
+        "campaign": "202602 TOFU AI Agent ElevenLabs SA EMEA",
+        "keyword": "-healthcare voice api",
+        "match_type": "EXACT",
+        "criterion_id": 2474345971132,
+        "campaign_id": 23584242697,
+        "blocked_term": "voice api"
+      }
+    ],
+    "sitelink_platform": [
+      {
+        "asset_id": 23486245952,
+        "text": "About Telnyx"
+      },
+      {
+        "asset_id": 23486246225,
+        "text": "About Us"
+      },
+      {
+        "asset_id": 339463877900,
+        "text": "Compare Platforms"
+      },
+      {
+        "asset_id": 339464073365,
+        "text": "Compare Platforms"
+      },
+      {
+        "asset_id": 339464076770,
+        "text": "Compare Platforms"
+      },
+      {
+        "asset_id": 339464110091,
+        "text": "Compare Platforms"
+      },
+      {
+        "asset_id": 339596628441,
+        "text": "Compare Platforms"
+      },
+      {
+        "asset_id": 339596645469,
+        "text": "Compare Platforms"
+      },
+      {
+        "asset_id": 339596654385,
+        "text": "Compare Platforms"
+      },
+      {
+        "asset_id": 339596843886,
+        "text": "Compare Platforms"
+      }
+    ]
+  }
+}

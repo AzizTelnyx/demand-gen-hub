@@ -1,0 +1,502 @@
+#!/usr/bin/env ts-node
+/**
+ * Creative Generator CLI
+ *
+ * Takes natural language briefs and generates production-ready creatives
+ *
+ * Usage:
+ *   npm run generate-creative -- --prompt="A LinkedIn ad for healthcare targeting HIPAA compliance"
+ *   npm run generate-creative -- --file=briefs/prompt-2.txt
+ *   npm run generate-creative -- --batch=briefs/all-prompts.json
+ *
+ * Output:
+ *   - Generated copy (headlines, descriptions, CTA)
+ *   - Images in all required platform sizes
+ *   - Organized in output/creatives/[campaign-name]/
+ */
+
+import dotenv from "dotenv";
+dotenv.config();
+
+import { createCompletion } from "../src/lib/ai-client";
+import { promises as fs } from "fs";
+import path from "path";
+import puppeteer from "puppeteer";
+import { TEMPLATES, CreativeData, TemplateAssets } from "./professional-creative-templates";
+
+// Helper to convert image to base64
+async function imageToBase64(imagePath: string): Promise<string> {
+  try {
+    const fullPath = path.join(process.cwd(), imagePath);
+    const imageBuffer = await fs.readFile(fullPath);
+    const base64 = imageBuffer.toString('base64');
+    const ext = path.extname(imagePath).slice(1);
+    return `data:image/${ext};base64,${base64}`;
+  } catch (error) {
+    console.warn(`⚠️  Could not load image: ${imagePath}`);
+    return '';
+  }
+}
+
+/* ─── Platform Size Specifications ───────────────────── */
+
+interface PlatformSize {
+  width: number;
+  height: number;
+  label: string;
+}
+
+const PLATFORM_SIZES: Record<string, PlatformSize[]> = {
+  "linkedin": [
+    { width: 1200, height: 627, label: "1200x627" },
+    { width: 1200, height: 1200, label: "1200x1200" },
+    { width: 628, height: 1200, label: "628x1200" },
+  ],
+  "stackadapt-native": [
+    { width: 1200, height: 628, label: "1200x628" },
+    { width: 600, height: 600, label: "600x600" },
+    { width: 800, height: 600, label: "800x600" },
+  ],
+  "stackadapt-display": [
+    { width: 300, height: 250, label: "300x250" },
+    { width: 728, height: 90, label: "728x90" },
+    { width: 160, height: 600, label: "160x600" },
+    { width: 300, height: 600, label: "300x600" },
+    { width: 320, height: 50, label: "320x50" },
+  ],
+  "reddit": [
+    { width: 1080, height: 1350, label: "1080x1350" },
+    { width: 1080, height: 1080, label: "1080x1080" },
+    { width: 1920, height: 1080, label: "1920x1080" },
+  ],
+  "google-display": [
+    { width: 300, height: 250, label: "300x250" },
+    { width: 728, height: 90, label: "728x90" },
+    { width: 160, height: 600, label: "160x600" },
+    { width: 300, height: 600, label: "300x600" },
+    { width: 320, height: 50, label: "320x50" },
+  ],
+};
+
+/* ─── Telnyx Brand Guidelines ────────────────────────── */
+
+const BRAND_GUIDE = {
+  colors: {
+    darkBg: "#0A0A0A",
+    brandGreen: "#00CE9C",
+    white: "#FFFFFF",
+  },
+  fonts: {
+    headline: "PP Formula Extrabold",
+    body: "Inter",
+  },
+  pillars: {
+    trust: {
+      keywords: ["HIPAA", "compliance", "secure", "SOC2", "PCI", "trust", "reliable"],
+      visuals: ["compliance shield", "security badges", "lock icon", "donut chart 43%"],
+      dataPoints: ["HIPAA-ready", "SOC 2 Type II", "99.999% uptime"],
+    },
+    infrastructure: {
+      keywords: ["network", "vendor", "platform", "integration", "stack", "own", "build"],
+      visuals: ["architecture diagram", "1 vs 5 vendors", "network topology"],
+      dataPoints: ["1 platform", "Own network", "140+ countries", "Zero extra hops"],
+    },
+    physics: {
+      keywords: ["latency", "ms", "faster", "speed", "performance", "real-time", "sub-"],
+      visuals: ["latency chart", "speed comparison", "network hops"],
+      dataPoints: ["<200ms", "Sub-500ms", "Co-located inference"],
+    },
+  },
+  differentiators: [
+    "Owns its own network (not a reseller like Twilio)",
+    "Sub-200ms latency (inference co-located with telephony)",
+    "HIPAA/SOC2/PCI compliant",
+    "140+ countries",
+    "One platform (not 5 vendors)",
+  ],
+};
+
+/* ─── Brief Parser (AI-powered) ──────────────────────── */
+
+async function parseBrief(promptText: string): Promise<any> {
+  const parsePrompt = `Parse this creative brief and extract structured information:
+
+"${promptText}"
+
+Extract:
+1. Platform (linkedin, stackadapt-native, stackadapt-display, reddit, google-display)
+2. Format (single-image, carousel, video)
+3. Target audience (who are we targeting?)
+4. Pain points (what problem are we solving?)
+5. Core message (what's the main point?)
+6. Pillar (trust, infrastructure, physics - based on keywords)
+7. Ad copy example (if provided in quotes)
+8. CTA suggestion
+
+Telnyx messaging pillars:
+- **Trust**: HIPAA, compliance, security, SOC2
+- **Infrastructure**: Own network, 1 platform vs 5 vendors, integration
+- **Physics**: Latency, speed, <200ms, performance
+
+Return JSON:
+{
+  "platform": "linkedin",
+  "format": "single-image",
+  "audience": "healthcare IT decision makers",
+  "painPoints": ["after-hours coverage", "overwhelmed staff"],
+  "coreMessage": "HIPAA-ready Voice AI for 24/7 patient access",
+  "pillar": "trust",
+  "adCopyExample": "Voice AI that handles patient calls 24/7. HIPAA-ready.",
+  "ctaSuggestion": "Learn More"
+}`;
+
+  const response = await createCompletion({
+    messages: [
+      { role: "system", content: "Return ONLY valid JSON, no markdown." },
+      { role: "user", content: parsePrompt },
+    ],
+    maxTokens: 1024,
+    temperature: 0.3,
+  });
+
+  const cleaned = response.replace(/```json\n?/g, "").replace(/```\n?/g, "").trim();
+  return JSON.parse(cleaned);
+}
+
+/* ─── Copy Generator (AI-powered) ────────────────────── */
+
+async function generateCopy(brief: any): Promise<any> {
+  const pillarInfo = BRAND_GUIDE.pillars[brief.pillar as keyof typeof BRAND_GUIDE.pillars] || BRAND_GUIDE.pillars.infrastructure;
+
+  const copyPrompt = `Generate ad copy for Telnyx Voice AI.
+
+**Brief:**
+- Platform: ${brief.platform}
+- Audience: ${brief.audience}
+- Pain points: ${brief.painPoints.join(", ")}
+- Core message: ${brief.coreMessage}
+- Pillar: ${brief.pillar}
+
+**Telnyx differentiators:**
+${BRAND_GUIDE.differentiators.map(d => `- ${d}`).join("\n")}
+
+**Key data points for ${brief.pillar}:**
+${pillarInfo.dataPoints.map(d => `- ${d}`).join("\n")}
+
+**Platform requirements:**
+${brief.platform === "linkedin" ? "- Headlines: Max 200 chars\n- Descriptions: Max 600 chars\n- Tone: Professional but human" : ""}
+${brief.platform === "stackadapt-native" ? "- Headlines: Max 55 chars\n- Descriptions: Max 120 chars\n- Tone: Editorial, informative" : ""}
+${brief.platform === "reddit" ? "- Headlines: Max 150 chars\n- Tone: Casual, authentic, peer-to-peer" : ""}
+${brief.platform === "google-display" ? "- Headlines: Max 30 chars (multiple)\n- Descriptions: Max 90 chars\n- Tone: Direct, transactional" : ""}
+
+**Rules:**
+- No filler words (leading, best-in-class, innovative, etc.)
+- Be specific with numbers
+- Sound like an engineer, not a marketer
+- No emojis
+
+Generate:
+- 5-10 headline variations
+- 3-5 description variations
+- 1 CTA
+
+Return JSON:
+{
+  "headlines": ["headline 1", "headline 2", ...],
+  "descriptions": ["desc 1", "desc 2", ...],
+  "cta": "Learn More"
+}`;
+
+  const response = await createCompletion({
+    messages: [
+      { role: "system", content: "Return ONLY valid JSON, no markdown." },
+      { role: "user", content: copyPrompt },
+    ],
+    maxTokens: 2048,
+    temperature: 0.6,
+  });
+
+  const cleaned = response.replace(/```json\n?/g, "").replace(/```\n?/g, "").trim();
+  return JSON.parse(cleaned);
+}
+
+/* ─── Visual Generator (HTML → PNG) ──────────────────── */
+
+async function generateHTML(
+  brief: any,
+  copy: any,
+  width: number,
+  height: number
+): Promise<string> {
+  // Load assets
+  const assets: TemplateAssets = {
+    logoBase64: await imageToBase64("brand-assets/assets/logo/green/telnyx-logo-wordmark-green.png"),
+  };
+
+  // Prepare creative data
+  const creativeData: CreativeData = {
+    headline: copy.headlines[0],
+    description: copy.descriptions[0],
+    dataPoint: '',
+    cta: copy.cta,
+    pillar: brief.pillar,
+    audience: brief.audience,
+    platform: brief.platform,
+  };
+
+  // Use professional template
+  const template = TEMPLATES['metric-comparison'];
+  return template(creativeData, assets, width, height);
+}
+
+/* OLD CODE REMOVED - NOW USING PROFESSIONAL TEMPLATES */
+<html>
+<head>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap');
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      width: ${width}px;
+      height: ${height}px;
+      background: ${BRAND_GUIDE.colors.darkBg};
+      color: ${BRAND_GUIDE.colors.white};
+      font-family: 'Inter', sans-serif;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: ${Math.min(width, height) * 0.1}px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .background-pattern {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0.05;
+      background: linear-gradient(135deg, ${BRAND_GUIDE.colors.brandGreen} 0%, transparent 100%);
+    }
+
+    .content {
+      z-index: 10;
+      text-align: center;
+      max-width: 85%;
+    }
+
+    .data-highlight {
+      font-size: ${Math.min(width / 6, 120)}px;
+      font-weight: 900;
+      color: ${BRAND_GUIDE.colors.brandGreen};
+      margin-bottom: ${height * 0.05}px;
+      line-height: 1;
+    }
+
+    .headline {
+      font-size: ${Math.min(width / 18, 48)}px;
+      font-weight: 800;
+      color: ${BRAND_GUIDE.colors.white};
+      margin-bottom: ${height * 0.04}px;
+      line-height: 1.2;
+      ${noTextOverlay ? 'display: none;' : ''}
+    }
+
+    .description {
+      font-size: ${Math.min(width / 28, 20)}px;
+      color: ${BRAND_GUIDE.colors.white};
+      opacity: 0.85;
+      margin-bottom: ${height * 0.05}px;
+      line-height: 1.4;
+      ${noTextOverlay ? 'display: none;' : ''}
+    }
+
+    .cta-button {
+      background: ${BRAND_GUIDE.colors.brandGreen};
+      color: ${BRAND_GUIDE.colors.darkBg};
+      padding: ${height * 0.04}px ${width * 0.08}px;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: ${Math.min(width / 32, 18)}px;
+      display: inline-block;
+      ${noTextOverlay || !cta ? 'display: none;' : ''}
+    }
+
+    .logo {
+      position: absolute;
+      bottom: ${height * 0.06}px;
+      right: ${width * 0.06}px;
+      height: ${Math.min(width / 22, 28)}px;
+      opacity: 0.9;
+    }
+
+    .pillar-indicator {
+      position: absolute;
+      top: ${height * 0.05}px;
+      left: ${width * 0.05}px;
+      font-size: ${Math.min(width / 40, 12)}px;
+      color: ${BRAND_GUIDE.colors.brandGreen};
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      opacity: 0.6;
+    }
+  </style>
+</head>
+<body>
+  <div class="background-pattern"></div>
+
+  <div class="pillar-indicator">${brief.pillar.toUpperCase()}</div>
+
+  <div class="content">
+    ${!noTextOverlay && dataPoint ? `<div class="data-highlight">${dataPoint}</div>` : ''}
+    ${!noTextOverlay && headline ? `<div class="headline">${headline}</div>` : ''}
+    ${!noTextOverlay && description ? `<div class="description">${description}</div>` : ''}
+    ${!noTextOverlay && cta ? `<div class="cta-button">${cta}</div>` : ''}
+
+    ${noTextOverlay ? `<div class="data-highlight">${dataPoint}</div>` : ''}
+  </div>
+
+  ${logoBase64 ? `<img src="${logoBase64}" alt="Telnyx" class="logo" />` : '<div class="logo">TELNYX</div>'}
+</body>
+</html>`;
+}
+
+async function convertHTMLtoPNG(
+  html: string,
+  outputPath: string,
+  width: number,
+  height: number
+): Promise<void> {
+  const browser = await puppeteer.launch({
+    headless: true,
+    args: ['--no-sandbox', '--disable-setuid-sandbox'],
+  });
+
+  try {
+    const page = await browser.newPage();
+    await page.setViewport({ width, height });
+    await page.setContent(html, { waitUntil: 'networkidle0' });
+
+    // Save HTML for reference
+    await fs.writeFile(outputPath.replace('.png', '.html'), html);
+
+    // Generate PNG
+    await page.screenshot({
+      path: outputPath,
+      type: 'png',
+      fullPage: false,
+    });
+  } finally {
+    await browser.close();
+  }
+}
+
+/* ─── Main Generator ──────────────────────────────────── */
+
+async function generateCreative(promptText: string) {
+  console.log("\n🎨 Telnyx Creative Generator\n");
+  console.log("━".repeat(60));
+
+  // Step 1: Parse brief
+  console.log("\n📋 Parsing brief...");
+  const brief = await parseBrief(promptText);
+  console.log(`   Platform: ${brief.platform}`);
+  console.log(`   Audience: ${brief.audience}`);
+  console.log(`   Pillar: ${brief.pillar}`);
+
+  // Step 2: Generate copy
+  console.log("\n✍️  Generating copy...");
+  const copy = await generateCopy(brief);
+  console.log(`   ✓ ${copy.headlines.length} headlines`);
+  console.log(`   ✓ ${copy.descriptions.length} descriptions`);
+  console.log(`   ✓ CTA: ${copy.cta}`);
+
+  // Step 3: Generate visuals for all sizes
+  console.log(`\n🖼️  Generating visuals for ${brief.platform}...`);
+  const sizes = PLATFORM_SIZES[brief.platform] || PLATFORM_SIZES["linkedin"];
+
+  const outputDir = path.join(
+    process.cwd(),
+    "output",
+    "creatives",
+    `${brief.platform}-${brief.pillar}-${brief.audience.replace(/\s+/g, "-").toLowerCase()}-${Date.now()}`
+  );
+  await fs.mkdir(outputDir, { recursive: true });
+
+  for (const size of sizes) {
+    const html = await generateHTML(brief, copy, size.width, size.height);
+    const outputPath = path.join(outputDir, `${size.label}.png`);
+    await convertHTMLtoPNG(html, outputPath, size.width, size.height);
+  }
+
+  // Step 4: Save copy as JSON
+  const copyPath = path.join(outputDir, "copy.json");
+  await fs.writeFile(copyPath, JSON.stringify({
+    brief,
+    copy,
+    generatedAt: new Date().toISOString(),
+  }, null, 2));
+
+  console.log(`\n✅ Creative generated successfully!`);
+  console.log(`📁 Output: ${outputDir}`);
+  console.log(`\n📋 Generated Files:`);
+  console.log(`   - ${sizes.length} HTML files (for preview)`);
+  console.log(`   - ${sizes.length} PNG files (production-ready)`);
+  console.log(`   - copy.json (metadata)`);
+  console.log(`\n💡 Next steps:`);
+  console.log(`   1. Open PNG files to preview final creatives`);
+  console.log(`   2. Review copy in copy.json`);
+  console.log(`   3. Upload PNGs to ${brief.platform}`);
+  console.log("\n" + "━".repeat(60) + "\n");
+}
+
+/* ─── CLI ─────────────────────────────────────────────── */
+
+async function main() {
+  const args = process.argv.slice(2);
+
+  if (args.includes("--help") || args.length === 0) {
+    console.log(`
+Telnyx Creative Generator
+
+Usage:
+  npm run generate-creative -- --prompt="Your brief here"
+  npm run generate-creative -- --file=path/to/brief.txt
+
+Examples:
+  npm run generate-creative -- --prompt="A LinkedIn ad for healthcare targeting HIPAA compliance"
+  npm run generate-creative -- --prompt="A StackAdapt native ad for developers"
+
+Output:
+  - Copy (headlines, descriptions, CTA)
+  - Images in all platform-required sizes
+  - Organized in output/creatives/[campaign]/
+    `);
+    process.exit(0);
+  }
+
+  const promptIndex = args.indexOf("--prompt");
+  const fileIndex = args.indexOf("--file");
+
+  let promptText = "";
+
+  if (promptIndex !== -1 && args[promptIndex + 1]) {
+    promptText = args[promptIndex + 1];
+  } else if (fileIndex !== -1 && args[fileIndex + 1]) {
+    promptText = await fs.readFile(args[fileIndex + 1], "utf-8");
+  } else {
+    console.error("❌ Error: Provide --prompt or --file");
+    process.exit(1);
+  }
+
+  await generateCreative(promptText);
+}
+
+main().catch(console.error);

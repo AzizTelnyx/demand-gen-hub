@@ -1,0 +1,32 @@
+[
+  {
+    "company": "Smartcaller",
+    "domain": "smartcaller.io",
+    "country": "Germany",
+    "region": "EMEA",
+    "vertical": "ai-voice",
+    "productFit": "ai-agent",
+    "status": "unverified",
+    "confidenceTier": "tier3",
+    "confidenceScore": 30,
+    "archetype": "",
+    "evidenceType": "telephony_signal",
+    "evidenceSnippet": "call center software",
+    "description": "Call center software focused on automation"
+  },
+  {
+    "company": "Cirrus",
+    "domain": "cirrus.es",
+    "country": "ES",
+    "region": "EMEA",
+    "vertical": "contact-center",
+    "productFit": "contact-center",
+    "status": "unverified",
+    "confidenceTier": "tier3",
+    "confidenceScore": 50,
+    "archetype": "",
+    "evidenceType": "phone_workflow",
+    "evidenceSnippet": "Cloud Contact Center Solution",
+    "description": "Cloud contact center solutions."
+  }
+]

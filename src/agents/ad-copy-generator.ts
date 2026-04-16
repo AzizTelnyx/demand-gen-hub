@@ -48,6 +48,7 @@ const FILLER_WORDS = [
 
 function getProductKBPaths(product?: string): string[] {
   const paths = [
+    "brand/narrative-positioning-constitution.md",
     "brand/brand-messaging-q1-2026.md",
     "standards/ad-copy-rules.md",
     "standards/b2b-ad-copy-guide.md",

@@ -1,0 +1,62 @@
+[
+  {
+    "company": "Vocale.ai",
+    "domain": "vocale.ai",
+    "country": "UK",
+    "region": "EMEA",
+    "vertical": "ai-voice",
+    "productFit": "ai-agent",
+    "status": "unverified",
+    "confidenceTier": "tier3",
+    "confidenceScore": 30,
+    "archetype": "",
+    "evidenceType": "voice_agent",
+    "evidenceSnippet": "conversational AI for voice customer experience",
+    "description": "Conversational AI solutions for enhancing voice customer experiences."
+  },
+  {
+    "company": "Yumit",
+    "domain": "yumit.ai",
+    "country": "FR",
+    "region": "EMEA",
+    "vertical": "customer_service",
+    "productFit": "ai-agent",
+    "status": "unverified",
+    "confidenceTier": "tier3",
+    "confidenceScore": 30,
+    "archetype": "",
+    "evidenceType": "ai_agent",
+    "evidenceSnippet": "AI-based Customer Service Agent",
+    "description": "AI-based Customer Service Agent"
+  },
+  {
+    "company": "Encharge",
+    "domain": "encharge.io",
+    "country": "BG",
+    "region": "EMEA",
+    "vertical": "marketing",
+    "productFit": "ai-agent",
+    "status": "unverified",
+    "confidenceTier": "tier3",
+    "confidenceScore": 30,
+    "archetype": "",
+    "evidenceType": "phone_workflow",
+    "evidenceSnippet": "Marketing automation platform that helps B2B SaaS companies automate their customer journeys. integrates with telephony platforms",
+    "description": "Encharge is a marketing automation platform that helps B2B SaaS companies automate their customer journeys."
+  },
+  {
+    "company": "Zobot",
+    "domain": "zobot.de",
+    "country": "DE",
+    "region": "EMEA",
+    "vertical": "customer service",
+    "productFit": "ai-agent",
+    "status": "unverified",
+    "confidenceTier": "tier3",
+    "confidenceScore": 50,
+    "archetype": "",
+    "evidenceType": "voice_agent",
+    "evidenceSnippet": "KI Voice Assistants - Automate your phone calls with AI",
+    "description": "Offers AI voice assistants for customer service."
+  }
+]

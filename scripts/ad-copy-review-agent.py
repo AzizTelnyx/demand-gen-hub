@@ -307,6 +307,7 @@ def load_knowledge():
     # Fallback: direct disk read
     files = [
         "standards/ad-copy-rules.md",
+        "brand/narrative-positioning-constitution.md",
         "brand/brand-messaging-q1-2026.md",
     ]
     content = []

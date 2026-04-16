@@ -498,12 +498,12 @@ class StackAdaptConnector(PlatformConnector):
             return WriteResult(success=False, error=str(e))
 
     def update_budget(self, campaign_id: str, new_budget: float, budget_type: str = "total") -> WriteResult:
-        """Update a StackAdapt campaign's budget via GraphQL mutation."""
+        """Update a StackAdapt campaign's budget via GraphQL upsertCampaign mutation."""
         if not self._token:
             self.load_credentials()
         mutation = """
         mutation {
-          updateCampaign(input: { id: %s, budget: %s }) {
+          upsertCampaign(input: { id: %s, budget: %s }) {
             campaign { id budget campaignStatus { state } }
           }
         }

@@ -1,0 +1,36 @@
+{
+  "category": "HEALTHCARE COMPLIANCE",
+  "headline": "HIPAA-ready<br>Voice AI.<br><em>Zero shortcuts.</em>",
+  "subheadline": "Secure patient communication that puts<br>compliance first. SOC 2 Type II certified<br>infrastructure built for healthcare.",
+  "tag": "VOICE AI INFRASTRUCTURE",
+  "cta": "See the platform",
+  "metrics": [
+    {
+      "label": "Compliance",
+      "sublabel": "HIPAA + SOC 2 Type II",
+      "value": "✓ Certified",
+      "highlight": true,
+      "valueColor": "#00C08B"
+    },
+    {
+      "label": "Voice AI latency",
+      "sublabel": "Telnyx full stack",
+      "value": "<500ms",
+      "valueColor": "#00C08B"
+    },
+    {
+      "label": "Data residency",
+      "sublabel": "Configurable by region",
+      "value": "US-only"
+    },
+    {
+      "label": "Uptime SLA",
+      "sublabel": "Carrier-grade reliability",
+      "value": "99.999%"
+    }
+  ],
+  "platform": "linkedin",
+  "pillar": "trust",
+  "audience": "healthcare",
+  "generatedAt": "2026-04-13T15:02:04.060Z"
+}

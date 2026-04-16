@@ -504,6 +504,15 @@ def sync_linkedin_batch(conn, token, account_id, campaigns_json):
                     except:
                         pass
 
+            # For Direct Sponsored Content, LinkedIn API doesn't expose actual content
+            # Add fallback metadata and Campaign Manager link
+            if not headlines and not descriptions:
+                headlines.append(f"{ad_type} (Creative ID: {cr_id})")
+                descriptions.append("Direct Sponsored Content - view in LinkedIn Campaign Manager")
+                # Add Campaign Manager link as finalUrl fallback
+                if not click_uri:
+                    click_uri = f"https://www.linkedin.com/campaignmanager/accounts/{account_id}/campaigns/{camp_id}/creatives/{cr_id}"
+
             upsert_one(cur, {
                 "platform": "linkedin", "platformAdId": cr_id,
                 "campaignName": camp_name, "adGroupName": "",

@@ -1,0 +1,38 @@
+{
+  "brief": {
+    "platform": "linkedin",
+    "format": "single-image",
+    "audience": "business professionals interested in Voice AI technology",
+    "painPoints": [
+      "high latency in voice AI agents",
+      "lack of network ownership affecting performance"
+    ],
+    "coreMessage": "Voice AI agents with sub-200ms latency and owned network for superior performance",
+    "pillar": "physics",
+    "adCopyExample": null,
+    "ctaSuggestion": "Learn More"
+  },
+  "copy": {
+    "headlines": [
+      "Reduce Voice AI latency to under 200ms with Telnyx’s owned network",
+      "Voice AI inference co-located with telephony for sub-200ms response times",
+      "Telnyx delivers Voice AI agents with latency below 200 milliseconds",
+      "Control latency and performance with Telnyx’s proprietary network",
+      "Voice AI under 200ms latency across 140+ countries on one platform",
+      "Sub-200ms Voice AI latency powered by Telnyx’s co-located inference",
+      "Eliminate high latency in Voice AI with Telnyx’s owned infrastructure",
+      "Telnyx Voice AI: sub-200ms latency, HIPAA/SOC2/PCI compliant",
+      "One platform for Voice AI with sub-200ms latency and global reach",
+      "Optimize Voice AI performance with Telnyx’s network and low latency"
+    ],
+    "descriptions": [
+      "Telnyx Voice AI runs inference co-located with telephony, achieving latency under 200 milliseconds. Owning the entire network ensures consistent performance across 140+ countries without relying on resellers.",
+      "High latency in Voice AI agents disrupts user experience. Telnyx addresses this with a proprietary network and inference co-located with telephony, delivering sub-200ms response times while maintaining HIPAA, SOC2, and PCI compliance.",
+      "Latency above 500 milliseconds degrades Voice AI interactions. Telnyx reduces this to under 200ms by controlling network infrastructure and inference placement, enabling real-time voice processing across a single, compliant platform.",
+      "Telnyx combines network ownership with inference co-location to achieve sub-200ms latency in Voice AI agents. This approach eliminates delays caused by third-party networks, improving responsiveness in over 140 countries.",
+      "Managing multiple vendors increases latency and complexity in Voice AI. Telnyx offers a unified platform with owned infrastructure, co-located inference, and compliance certifications, delivering consistent sub-200ms latency worldwide."
+    ],
+    "cta": "Learn More"
+  },
+  "generatedAt": "2026-04-14T12:11:31.595Z"
+}

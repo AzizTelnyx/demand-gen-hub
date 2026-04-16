@@ -296,3 +296,1194 @@ Logging to database...
 Sending Telegram notifications...
 
 Done in 3s
+🔑 Keyword Hygiene Agent — 2026-03-17 10:00 UTC
+   ⚠️  DRY RUN — no changes will be applied
+
+Connecting to Google Ads...
+Fetching all active search keywords...
+  1743 keywords across 47 campaigns
+
+Loading knowledge context...
+Loading product groups...
+  Loaded 4 product groups from product-groups.md
+
+[1/3] Checking keyword-campaign alignment...
+  Sending 30 borderline keywords to AI...
+  0 misalignment issues found
+
+[2/3] Checking cross-campaign overlap...
+  89 overlap issues found
+
+[3/3] Checking new keywords...
+  No new keywords since last snapshot
+  0 new keyword issues found
+
+Auto-fixing high-confidence issues...
+
+============================================================
+RESULTS:
+  Keywords scanned:     1743
+  Misalignment issues:  0
+  Overlap issues:       89
+  New keyword issues:   0
+  Junk keywords:        0
+  Total issues:         89
+============================================================
+
+Snapshot saved: /Users/azizalsinafi/.openclaw/workspace/demand-gen-hub/logs/keyword-hygiene/2026-03-17.json
+
+Logging to database...
+  DB: AgentRun 9115685c-f578-45a1-b529-54f3465c219e with 89 findings
+
+Sending Telegram notifications...
+
+Done in 2s
+🔑 Keyword Hygiene Agent — 2026-03-18 10:00 UTC
+   ⚠️  DRY RUN — no changes will be applied
+
+Connecting to Google Ads...
+Fetching all active search keywords...
+  1747 keywords across 48 campaigns
+
+Loading knowledge context...
+Loading product groups...
+  Loaded 4 product groups from product-groups.md
+
+[1/3] Checking keyword-campaign alignment...
+  Sending 30 borderline keywords to AI...
+  0 misalignment issues found
+
+[2/3] Checking cross-campaign overlap...
+  89 overlap issues found
+
+[3/3] Checking new keywords...
+  4 new keywords found since last snapshot
+  0 new keyword issues found
+
+Auto-fixing high-confidence issues...
+
+============================================================
+RESULTS:
+  Keywords scanned:     1747
+  Misalignment issues:  0
+  Overlap issues:       89
+  New keyword issues:   0
+  Junk keywords:        0
+  Total issues:         89
+============================================================
+
+Snapshot saved: /Users/azizalsinafi/.openclaw/workspace/demand-gen-hub/logs/keyword-hygiene/2026-03-18.json
+
+Logging to database...
+  DB: AgentRun e74bdc6f-10d1-481d-9cb8-10a38eb37251 with 89 findings
+
+Sending Telegram notifications...
+
+Done in 3s
+🔑 Keyword Hygiene Agent — 2026-03-19 10:00 UTC
+   ⚠️  DRY RUN — no changes will be applied
+
+Connecting to Google Ads...
+Fetching all active search keywords...
+  1747 keywords across 48 campaigns
+
+Loading knowledge context...
+Loading product groups...
+  Loaded 4 product groups from product-groups.md
+
+[1/3] Checking keyword-campaign alignment...
+  Sending 30 borderline keywords to AI...
+  0 misalignment issues found
+
+[2/3] Checking cross-campaign overlap...
+  89 overlap issues found
+
+[3/3] Checking new keywords...
+  No new keywords since last snapshot
+  0 new keyword issues found
+
+Auto-fixing high-confidence issues...
+
+============================================================
+RESULTS:
+  Keywords scanned:     1747
+  Misalignment issues:  0
+  Overlap issues:       89
+  New keyword issues:   0
+  Junk keywords:        0
+  Total issues:         89
+============================================================
+
+Snapshot saved: /Users/azizalsinafi/.openclaw/workspace/demand-gen-hub/logs/keyword-hygiene/2026-03-19.json
+
+Logging to database...
+  DB: AgentRun 80e06c9e-1fbe-41f5-bb94-2af436598fba with 89 findings
+
+Sending Telegram notifications...
+
+Done in 4s
+🔑 Keyword Hygiene Agent — 2026-03-20 10:00 UTC
+   ⚠️  DRY RUN — no changes will be applied
+
+Connecting to Google Ads...
+Fetching all active search keywords...
+  1747 keywords across 48 campaigns
+
+Loading knowledge context...
+Loading product groups...
+  Loaded 4 product groups from product-groups.md
+
+[1/3] Checking keyword-campaign alignment...
+  Sending 30 borderline keywords to AI...
+  0 misalignment issues found
+
+[2/3] Checking cross-campaign overlap...
+  89 overlap issues found
+
+[3/3] Checking new keywords...
+  No new keywords since last snapshot
+  0 new keyword issues found
+
+Auto-fixing high-confidence issues...
+
+============================================================
+RESULTS:
+  Keywords scanned:     1747
+  Misalignment issues:  0
+  Overlap issues:       89
+  New keyword issues:   0
+  Junk keywords:        0
+  Total issues:         89
+============================================================
+
+Snapshot saved: /Users/azizalsinafi/.openclaw/workspace/demand-gen-hub/logs/keyword-hygiene/2026-03-20.json
+
+Logging to database...
+  DB: AgentRun 7cb18d50-b752-43f1-9db5-f2d3ff118726 with 89 findings
+
+Sending Telegram notifications...
+
+Done in 3s
+🔑 Keyword Hygiene Agent — 2026-03-23 10:00 UTC
+   ⚠️  DRY RUN — no changes will be applied
+
+Connecting to Google Ads...
+Fetching all active search keywords...
+  1747 keywords across 48 campaigns
+
+Loading knowledge context...
+Loading product groups...
+  Loaded 4 product groups from product-groups.md
+
+[1/3] Checking keyword-campaign alignment...
+  Sending 30 borderline keywords to AI...
+  0 misalignment issues found
+
+[2/3] Checking cross-campaign overlap...
+  89 overlap issues found
+
+[3/3] Checking new keywords...
+  No new keywords since last snapshot
+  0 new keyword issues found
+
+Auto-fixing high-confidence issues...
+
+============================================================
+RESULTS:
+  Keywords scanned:     1747
+  Misalignment issues:  0
+  Overlap issues:       89
+  New keyword issues:   0
+  Junk keywords:        0
+  Total issues:         89
+============================================================
+
+Snapshot saved: /Users/azizalsinafi/.openclaw/workspace/demand-gen-hub/logs/keyword-hygiene/2026-03-23.json
+
+Logging to database...
+  DB: AgentRun 555d5340-0889-474c-9752-18a4edd7dd38 with 89 findings
+
+Sending Telegram notifications...
+
+Done in 3s
+🔑 Keyword Hygiene Agent — 2026-03-24 10:00 UTC
+   ⚠️  DRY RUN — no changes will be applied
+
+Connecting to Google Ads...
+Fetching all active search keywords...
+  1744 keywords across 48 campaigns
+
+Loading knowledge context...
+Loading product groups...
+  Loaded 4 product groups from product-groups.md
+
+[1/3] Checking keyword-campaign alignment...
+  Sending 30 borderline keywords to AI...
+  0 misalignment issues found
+
+[2/3] Checking cross-campaign overlap...
+  89 overlap issues found
+
+[3/3] Checking new keywords...
+  No new keywords since last snapshot
+  0 new keyword issues found
+
+Auto-fixing high-confidence issues...
+
+============================================================
+RESULTS:
+  Keywords scanned:     1744
+  Misalignment issues:  0
+  Overlap issues:       89
+  New keyword issues:   0
+  Junk keywords:        0
+  Total issues:         89
+============================================================
+
+Snapshot saved: /Users/azizalsinafi/.openclaw/workspace/demand-gen-hub/logs/keyword-hygiene/2026-03-24.json
+
+Logging to database...
+  DB: AgentRun 25cf6d3f-39a3-4da4-bb10-97102db36169 with 89 findings
+
+Sending Telegram notifications...
+
+Done in 2s
+🔑 Keyword Hygiene Agent — 2026-03-25 10:00 UTC
+   ⚠️  DRY RUN — no changes will be applied
+
+Connecting to Google Ads...
+Fetching all active search keywords...
+  1752 keywords across 48 campaigns
+
+Loading knowledge context...
+Loading product groups...
+  Loaded 4 product groups from product-groups.md
+
+[1/3] Checking keyword-campaign alignment...
+  Sending 30 borderline keywords to AI...
+  0 misalignment issues found
+
+[2/3] Checking cross-campaign overlap...
+  89 overlap issues found
+
+[3/3] Checking new keywords...
+  8 new keywords found since last snapshot
+  0 new keyword issues found
+
+Auto-fixing high-confidence issues...
+
+============================================================
+RESULTS:
+  Keywords scanned:     1752
+  Misalignment issues:  0
+  Overlap issues:       89
+  New keyword issues:   0
+  Junk keywords:        0
+  Total issues:         89
+============================================================
+
+Snapshot saved: /Users/azizalsinafi/.openclaw/workspace/demand-gen-hub/logs/keyword-hygiene/2026-03-25.json
+
+Logging to database...
+  DB: AgentRun 6c60dd8f-b280-48eb-ba88-8391a7eb6fbf with 89 findings
+
+Sending Telegram notifications...
+
+Done in 2s
+🔑 Keyword Hygiene Agent — 2026-03-26 10:00 UTC
+   ⚠️  DRY RUN — no changes will be applied
+
+Connecting to Google Ads...
+Fetching all active search keywords...
+  1752 keywords across 48 campaigns
+
+Loading knowledge context...
+Loading product groups...
+  Loaded 4 product groups from product-groups.md
+
+[1/3] Checking keyword-campaign alignment...
+  Sending 30 borderline keywords to AI...
+  0 misalignment issues found
+
+[2/3] Checking cross-campaign overlap...
+  89 overlap issues found
+
+[3/3] Checking new keywords...
+  No new keywords since last snapshot
+  0 new keyword issues found
+
+Auto-fixing high-confidence issues...
+
+============================================================
+RESULTS:
+  Keywords scanned:     1752
+  Misalignment issues:  0
+  Overlap issues:       89
+  New keyword issues:   0
+  Junk keywords:        0
+  Total issues:         89
+============================================================
+
+Snapshot saved: /Users/azizalsinafi/.openclaw/workspace/demand-gen-hub/logs/keyword-hygiene/2026-03-26.json
+
+Logging to database...
+  DB: AgentRun af8a52d5-4e42-4e5c-be6e-8847b7f62b55 with 89 findings
+
+Sending Telegram notifications...
+
+Done in 2s
+🔑 Keyword Hygiene Agent — 2026-03-27 10:00 UTC
+   ⚠️  DRY RUN — no changes will be applied
+
+Connecting to Google Ads...
+Fetching all active search keywords...
+  1752 keywords across 48 campaigns
+
+Loading knowledge context...
+Loading product groups...
+  Loaded 4 product groups from product-groups.md
+
+[1/3] Checking keyword-campaign alignment...
+  Sending 30 borderline keywords to AI...
+  0 misalignment issues found
+
+[2/3] Checking cross-campaign overlap...
+  89 overlap issues found
+
+[3/3] Checking new keywords...
+  No new keywords since last snapshot
+  0 new keyword issues found
+
+Auto-fixing high-confidence issues...
+
+============================================================
+RESULTS:
+  Keywords scanned:     1752
+  Misalignment issues:  0
+  Overlap issues:       89
+  New keyword issues:   0
+  Junk keywords:        0
+  Total issues:         89
+============================================================
+
+Snapshot saved: /Users/azizalsinafi/.openclaw/workspace/demand-gen-hub/logs/keyword-hygiene/2026-03-27.json
+
+Logging to database...
+  DB: AgentRun bba5b529-0d44-4b6c-baf8-84369e044dfa with 89 findings
+
+Sending Telegram notifications...
+
+Done in 3s
+🔑 Keyword Hygiene Agent — 2026-03-28 10:00 UTC
+   ⚠️  DRY RUN — no changes will be applied
+
+Connecting to Google Ads...
+Fetching all active search keywords...
+  1752 keywords across 48 campaigns
+
+Loading knowledge context...
+Loading product groups...
+  Loaded 4 product groups from product-groups.md
+
+[1/3] Checking keyword-campaign alignment...
+  Sending 30 borderline keywords to AI...
+  0 misalignment issues found
+
+[2/3] Checking cross-campaign overlap...
+  89 overlap issues found
+
+[3/3] Checking new keywords...
+  No new keywords since last snapshot
+  0 new keyword issues found
+
+Auto-fixing high-confidence issues...
+
+============================================================
+RESULTS:
+  Keywords scanned:     1752
+  Misalignment issues:  0
+  Overlap issues:       89
+  New keyword issues:   0
+  Junk keywords:        0
+  Total issues:         89
+============================================================
+
+Snapshot saved: /Users/azizalsinafi/.openclaw/workspace/demand-gen-hub/logs/keyword-hygiene/2026-03-28.json
+
+Logging to database...
+  DB: AgentRun 96b591dc-8560-4a27-a5fc-0280f6d6f39d with 89 findings
+
+Sending Telegram notifications...
+
+Done in 3s
+🔑 Keyword Hygiene Agent — 2026-03-29 10:00 UTC
+   ⚠️  DRY RUN — no changes will be applied
+
+Connecting to Google Ads...
+Fetching all active search keywords...
+  1752 keywords across 48 campaigns
+
+Loading knowledge context...
+Loading product groups...
+  Loaded 4 product groups from product-groups.md
+
+[1/3] Checking keyword-campaign alignment...
+  Sending 30 borderline keywords to AI...
+  0 misalignment issues found
+
+[2/3] Checking cross-campaign overlap...
+  89 overlap issues found
+
+[3/3] Checking new keywords...
+  No new keywords since last snapshot
+  0 new keyword issues found
+
+Auto-fixing high-confidence issues...
+
+============================================================
+RESULTS:
+  Keywords scanned:     1752
+  Misalignment issues:  0
+  Overlap issues:       89
+  New keyword issues:   0
+  Junk keywords:        0
+  Total issues:         89
+============================================================
+
+Snapshot saved: /Users/azizalsinafi/.openclaw/workspace/demand-gen-hub/logs/keyword-hygiene/2026-03-29.json
+
+Logging to database...
+  DB: AgentRun 30fd4de7-6dce-43ef-8447-8f4c8242cfd8 with 89 findings
+
+Sending Telegram notifications...
+
+Done in 3s
+🔑 Keyword Hygiene Agent — 2026-03-30 10:00 UTC
+   ⚠️  DRY RUN — no changes will be applied
+
+Connecting to Google Ads...
+Fetching all active search keywords...
+  1744 keywords across 48 campaigns
+
+Loading knowledge context...
+Loading product groups...
+  Loaded 4 product groups from product-groups.md
+
+[1/3] Checking keyword-campaign alignment...
+  Sending 30 borderline keywords to AI...
+  0 misalignment issues found
+
+[2/3] Checking cross-campaign overlap...
+  89 overlap issues found
+
+[3/3] Checking new keywords...
+  No new keywords since last snapshot
+  0 new keyword issues found
+
+Auto-fixing high-confidence issues...
+
+============================================================
+RESULTS:
+  Keywords scanned:     1744
+  Misalignment issues:  0
+  Overlap issues:       89
+  New keyword issues:   0
+  Junk keywords:        0
+  Total issues:         89
+============================================================
+
+Snapshot saved: /Users/azizalsinafi/.openclaw/workspace/demand-gen-hub/logs/keyword-hygiene/2026-03-30.json
+
+Logging to database...
+  DB: AgentRun 09a59b1d-6834-4e09-ad03-45f59c7f1db7 with 89 findings
+
+Sending Telegram notifications...
+
+Done in 2s
+🔑 Keyword Hygiene Agent — 2026-03-31 10:00 UTC
+   ⚠️  DRY RUN — no changes will be applied
+
+Connecting to Google Ads...
+Fetching all active search keywords...
+  1744 keywords across 48 campaigns
+
+Loading knowledge context...
+Loading product groups...
+  Loaded 4 product groups from product-groups.md
+
+[1/3] Checking keyword-campaign alignment...
+  Sending 30 borderline keywords to AI...
+  0 misalignment issues found
+
+[2/3] Checking cross-campaign overlap...
+  89 overlap issues found
+
+[3/3] Checking new keywords...
+  No new keywords since last snapshot
+  0 new keyword issues found
+
+Auto-fixing high-confidence issues...
+
+============================================================
+RESULTS:
+  Keywords scanned:     1744
+  Misalignment issues:  0
+  Overlap issues:       89
+  New keyword issues:   0
+  Junk keywords:        0
+  Total issues:         89
+============================================================
+
+Snapshot saved: /Users/azizalsinafi/.openclaw/workspace/demand-gen-hub/logs/keyword-hygiene/2026-03-31.json
+
+Logging to database...
+  DB: AgentRun d191ffa3-4cf9-42ea-9f94-8bc4912decba with 89 findings
+
+Sending Telegram notifications...
+
+Done in 2s
+🔑 Keyword Hygiene Agent — 2026-04-01 10:00 UTC
+   ⚠️  DRY RUN — no changes will be applied
+
+Connecting to Google Ads...
+Fetching all active search keywords...
+  1744 keywords across 48 campaigns
+
+Loading knowledge context...
+Loading product groups...
+  Loaded 4 product groups from product-groups.md
+
+[1/3] Checking keyword-campaign alignment...
+  Sending 30 borderline keywords to AI...
+  0 misalignment issues found
+
+[2/3] Checking cross-campaign overlap...
+  89 overlap issues found
+
+[3/3] Checking new keywords...
+  No new keywords since last snapshot
+  0 new keyword issues found
+
+Auto-fixing high-confidence issues...
+
+============================================================
+RESULTS:
+  Keywords scanned:     1744
+  Misalignment issues:  0
+  Overlap issues:       89
+  New keyword issues:   0
+  Junk keywords:        0
+  Total issues:         89
+============================================================
+
+Snapshot saved: /Users/azizalsinafi/.openclaw/workspace/demand-gen-hub/logs/keyword-hygiene/2026-04-01.json
+
+Logging to database...
+  DB: AgentRun 566d2f59-ab2b-42b4-8efd-9a74deb5a859 with 89 findings
+
+Sending Telegram notifications...
+
+Done in 2s
+🔑 Keyword Hygiene Agent — 2026-04-02 10:00 UTC
+   ⚠️  DRY RUN — no changes will be applied
+
+Connecting to Google Ads...
+Fetching all active search keywords...
+  1744 keywords across 48 campaigns
+
+Loading knowledge context...
+Loading product groups...
+  Loaded 4 product groups from product-groups.md
+
+[1/3] Checking keyword-campaign alignment...
+  Sending 30 borderline keywords to AI...
+  0 misalignment issues found
+
+[2/3] Checking cross-campaign overlap...
+  89 overlap issues found
+
+[3/3] Checking new keywords...
+  No new keywords since last snapshot
+  0 new keyword issues found
+
+Auto-fixing high-confidence issues...
+
+============================================================
+RESULTS:
+  Keywords scanned:     1744
+  Misalignment issues:  0
+  Overlap issues:       89
+  New keyword issues:   0
+  Junk keywords:        0
+  Total issues:         89
+============================================================
+
+Snapshot saved: /Users/azizalsinafi/.openclaw/workspace/demand-gen-hub/logs/keyword-hygiene/2026-04-02.json
+
+Logging to database...
+  DB: AgentRun 66cdce21-890b-4b18-b4e0-1c4de71a101f with 89 findings
+
+Sending Telegram notifications...
+
+Done in 3s
+🔑 Keyword Hygiene Agent — 2026-04-03 10:00 UTC
+   ⚠️  DRY RUN — no changes will be applied
+
+Connecting to Google Ads...
+Fetching all active search keywords...
+  1858 keywords across 50 campaigns
+
+Loading knowledge context...
+Loading product groups...
+  Loaded 4 product groups from product-groups.md
+
+[1/3] Checking keyword-campaign alignment...
+  Sending 30 borderline keywords to AI...
+  0 misalignment issues found
+
+[2/3] Checking cross-campaign overlap...
+  145 overlap issues found
+
+[3/3] Checking new keywords...
+  114 new keywords found since last snapshot
+  0 new keyword issues found
+
+Auto-fixing high-confidence issues...
+
+============================================================
+RESULTS:
+  Keywords scanned:     1858
+  Misalignment issues:  0
+  Overlap issues:       145
+  New keyword issues:   0
+  Junk keywords:        0
+  Total issues:         145
+============================================================
+
+Snapshot saved: /Users/azizalsinafi/.openclaw/workspace/demand-gen-hub/logs/keyword-hygiene/2026-04-03.json
+
+Logging to database...
+  DB: AgentRun 52ff622b-f2cc-47be-972e-d942643e80ad with 145 findings
+
+Sending Telegram notifications...
+
+Done in 3s
+🔑 Keyword Hygiene Agent — 2026-04-04 10:00 UTC
+   ⚠️  DRY RUN — no changes will be applied
+
+Connecting to Google Ads...
+Fetching all active search keywords...
+  1858 keywords across 50 campaigns
+
+Loading knowledge context...
+Loading product groups...
+  Loaded 4 product groups from product-groups.md
+
+[1/3] Checking keyword-campaign alignment...
+  Sending 30 borderline keywords to AI...
+  0 misalignment issues found
+
+[2/3] Checking cross-campaign overlap...
+  145 overlap issues found
+
+[3/3] Checking new keywords...
+  No new keywords since last snapshot
+  0 new keyword issues found
+
+Auto-fixing high-confidence issues...
+
+============================================================
+RESULTS:
+  Keywords scanned:     1858
+  Misalignment issues:  0
+  Overlap issues:       145
+  New keyword issues:   0
+  Junk keywords:        0
+  Total issues:         145
+============================================================
+
+Snapshot saved: /Users/azizalsinafi/.openclaw/workspace/demand-gen-hub/logs/keyword-hygiene/2026-04-04.json
+
+Logging to database...
+  DB: AgentRun ef8f6eb6-1cb9-4f89-bbfe-080008ccd627 with 145 findings
+
+Sending Telegram notifications...
+
+Done in 2s
+🔑 Keyword Hygiene Agent — 2026-04-05 10:00 UTC
+   ⚠️  DRY RUN — no changes will be applied
+
+Connecting to Google Ads...
+Fetching all active search keywords...
+  1858 keywords across 50 campaigns
+
+Loading knowledge context...
+Loading product groups...
+  Loaded 4 product groups from product-groups.md
+
+[1/3] Checking keyword-campaign alignment...
+  Sending 30 borderline keywords to AI...
+  0 misalignment issues found
+
+[2/3] Checking cross-campaign overlap...
+  145 overlap issues found
+
+[3/3] Checking new keywords...
+  No new keywords since last snapshot
+  0 new keyword issues found
+
+Auto-fixing high-confidence issues...
+
+============================================================
+RESULTS:
+  Keywords scanned:     1858
+  Misalignment issues:  0
+  Overlap issues:       145
+  New keyword issues:   0
+  Junk keywords:        0
+  Total issues:         145
+============================================================
+
+Snapshot saved: /Users/azizalsinafi/.openclaw/workspace/demand-gen-hub/logs/keyword-hygiene/2026-04-05.json
+
+Logging to database...
+  DB: AgentRun d0439902-ecfb-4c2e-b060-88e3fcea78b2 with 145 findings
+
+Sending Telegram notifications...
+
+Done in 2s
+🔑 Keyword Hygiene Agent — 2026-04-07 10:00 UTC
+   ⚠️  DRY RUN — no changes will be applied
+
+Connecting to Google Ads...
+Fetching all active search keywords...
+  1858 keywords across 50 campaigns
+
+Loading knowledge context...
+Loading product groups...
+  Loaded 4 product groups from product-groups.md
+
+[1/3] Checking keyword-campaign alignment...
+  Sending 30 borderline keywords to AI...
+  0 misalignment issues found
+
+[2/3] Checking cross-campaign overlap...
+  145 overlap issues found
+
+[3/3] Checking new keywords...
+  No new keywords since last snapshot
+  0 new keyword issues found
+
+Auto-fixing high-confidence issues...
+
+============================================================
+RESULTS:
+  Keywords scanned:     1858
+  Misalignment issues:  0
+  Overlap issues:       145
+  New keyword issues:   0
+  Junk keywords:        0
+  Total issues:         145
+============================================================
+
+Snapshot saved: /Users/azizalsinafi/.openclaw/workspace/demand-gen-hub/logs/keyword-hygiene/2026-04-07.json
+
+Logging to database...
+  DB: AgentRun 827f54ed-2545-49c3-9364-cab22ec01597 with 145 findings
+
+Sending Telegram notifications...
+
+Done in 3s
+🔑 Keyword Hygiene Agent — 2026-04-08 10:00 UTC
+   ⚠️  DRY RUN — no changes will be applied
+
+Connecting to Google Ads...
+Fetching all active search keywords...
+  1858 keywords across 50 campaigns
+
+Loading knowledge context...
+Loading product groups...
+  Loaded 4 product groups from product-groups.md
+
+[1/3] Checking keyword-campaign alignment...
+  Sending 30 borderline keywords to AI...
+  0 misalignment issues found
+
+[2/3] Checking cross-campaign overlap...
+  145 overlap issues found
+
+[3/3] Checking new keywords...
+  21 new keywords found since last snapshot
+  0 new keyword issues found
+
+Auto-fixing high-confidence issues...
+
+============================================================
+RESULTS:
+  Keywords scanned:     1858
+  Misalignment issues:  0
+  Overlap issues:       145
+  New keyword issues:   0
+  Junk keywords:        0
+  Total issues:         145
+============================================================
+
+Snapshot saved: /Users/azizalsinafi/.openclaw/workspace/demand-gen-hub/logs/keyword-hygiene/2026-04-08.json
+
+Logging to database...
+  DB: AgentRun 3fa1f1ea-23db-4198-848d-f037fb9d5533 with 145 findings
+
+Sending Telegram notifications...
+
+Done in 3s
+🔑 Keyword Hygiene Agent — 2026-04-09 10:00 UTC
+   ⚠️  DRY RUN — no changes will be applied
+
+Connecting to Google Ads...
+Fetching all active search keywords...
+  1801 keywords across 49 campaigns
+
+Loading knowledge context...
+Loading product groups...
+  Loaded 4 product groups from product-groups.md
+
+[1/3] Checking keyword-campaign alignment...
+  Sending 30 borderline keywords to AI...
+  0 misalignment issues found
+
+[2/3] Checking cross-campaign overlap...
+  89 overlap issues found
+
+[3/3] Checking new keywords...
+  No new keywords since last snapshot
+  0 new keyword issues found
+
+Auto-fixing high-confidence issues...
+
+============================================================
+RESULTS:
+  Keywords scanned:     1801
+  Misalignment issues:  0
+  Overlap issues:       89
+  New keyword issues:   0
+  Junk keywords:        0
+  Total issues:         89
+============================================================
+
+Snapshot saved: /Users/azizalsinafi/.openclaw/workspace/demand-gen-hub/logs/keyword-hygiene/2026-04-09.json
+
+Logging to database...
+  DB: AgentRun 810ad652-1595-420f-bc2a-edc6af5f5cf0 with 89 findings
+
+Sending Telegram notifications...
+
+Done in 4s
+🔑 Keyword Hygiene Agent — 2026-04-10 10:00 UTC
+   ⚠️  DRY RUN — no changes will be applied
+
+Connecting to Google Ads...
+Fetching all active search keywords...
+  1799 keywords across 49 campaigns
+
+Loading knowledge context...
+Loading product groups...
+  Loaded 4 product groups from product-groups.md
+
+[1/3] Checking keyword-campaign alignment...
+  Sending 28 borderline keywords to AI...
+  0 misalignment issues found
+
+[2/3] Checking cross-campaign overlap...
+  87 overlap issues found
+
+[3/3] Checking new keywords...
+  No new keywords since last snapshot
+  0 new keyword issues found
+
+Auto-fixing high-confidence issues...
+
+============================================================
+RESULTS:
+  Keywords scanned:     1799
+  Misalignment issues:  0
+  Overlap issues:       87
+  New keyword issues:   0
+  Junk keywords:        0
+  Total issues:         87
+============================================================
+
+Snapshot saved: /Users/azizalsinafi/.openclaw/workspace/demand-gen-hub/logs/keyword-hygiene/2026-04-10.json
+
+Logging to database...
+  DB: AgentRun 25bf2806-59e4-4295-aeb6-86cb8cde4cb5 with 87 findings
+
+Sending Telegram notifications...
+
+Done in 4s
+🔑 Keyword Hygiene Agent — 2026-04-11 10:00 UTC
+   ⚠️  DRY RUN — no changes will be applied
+
+Connecting to Google Ads...
+Fetching all active search keywords...
+  1798 keywords across 49 campaigns
+
+Loading knowledge context...
+Loading product groups...
+  Loaded 4 product groups from product-groups.md
+
+[1/3] Checking keyword-campaign alignment...
+  Sending 28 borderline keywords to AI...
+  0 misalignment issues found
+
+[2/3] Checking cross-campaign overlap...
+  87 overlap issues found
+
+[3/3] Checking new keywords...
+  No new keywords since last snapshot
+  0 new keyword issues found
+
+Auto-fixing high-confidence issues...
+
+============================================================
+RESULTS:
+  Keywords scanned:     1798
+  Misalignment issues:  0
+  Overlap issues:       87
+  New keyword issues:   0
+  Junk keywords:        0
+  Total issues:         87
+============================================================
+
+Snapshot saved: /Users/azizalsinafi/.openclaw/workspace/demand-gen-hub/logs/keyword-hygiene/2026-04-11.json
+
+Logging to database...
+  DB: AgentRun abc38513-04bc-47a5-874c-b62709bd6b16 with 87 findings
+
+Sending Telegram notifications...
+
+Done in 2s
+🔑 Keyword Hygiene Agent — 2026-04-12 10:00 UTC
+   ⚠️  DRY RUN — no changes will be applied
+
+Connecting to Google Ads...
+Fetching all active search keywords...
+  1798 keywords across 49 campaigns
+
+Loading knowledge context...
+Loading product groups...
+  Loaded 4 product groups from product-groups.md
+
+[1/3] Checking keyword-campaign alignment...
+  Sending 28 borderline keywords to AI...
+  0 misalignment issues found
+
+[2/3] Checking cross-campaign overlap...
+  87 overlap issues found
+
+[3/3] Checking new keywords...
+  No new keywords since last snapshot
+  0 new keyword issues found
+
+Auto-fixing high-confidence issues...
+
+============================================================
+RESULTS:
+  Keywords scanned:     1798
+  Misalignment issues:  0
+  Overlap issues:       87
+  New keyword issues:   0
+  Junk keywords:        0
+  Total issues:         87
+============================================================
+
+Snapshot saved: /Users/azizalsinafi/.openclaw/workspace/demand-gen-hub/logs/keyword-hygiene/2026-04-12.json
+
+Logging to database...
+  DB: AgentRun 07061e01-2d7d-4e37-b4c8-423cdbf70992 with 87 findings
+
+Sending Telegram notifications...
+
+Done in 5s
+🔑 Keyword Hygiene Agent — 2026-04-13 10:00 UTC
+   ⚠️  DRY RUN — no changes will be applied
+
+Connecting to Google Ads...
+Fetching all active search keywords...
+  1798 keywords across 49 campaigns
+
+Loading knowledge context...
+Loading product groups...
+  Loaded 4 product groups from product-groups.md
+
+[1/3] Checking keyword-campaign alignment...
+  Sending 28 borderline keywords to AI...
+  0 misalignment issues found
+
+[2/3] Checking cross-campaign overlap...
+  87 overlap issues found
+
+[3/3] Checking new keywords...
+  No new keywords since last snapshot
+  0 new keyword issues found
+
+Auto-fixing high-confidence issues...
+
+============================================================
+RESULTS:
+  Keywords scanned:     1798
+  Misalignment issues:  0
+  Overlap issues:       87
+  New keyword issues:   0
+  Junk keywords:        0
+  Total issues:         87
+============================================================
+
+Snapshot saved: /Users/azizalsinafi/.openclaw/workspace/demand-gen-hub/logs/keyword-hygiene/2026-04-13.json
+
+Logging to database...
+  DB: AgentRun e747b1e9-dcea-4dd3-9fec-651465d9ba51 with 87 findings
+
+Sending Telegram notifications...
+
+Done in 3s
+🔑 Keyword Hygiene Agent — 2026-04-14 10:00 UTC
+   ⚠️  DRY RUN — no changes will be applied
+
+Connecting to Google Ads...
+Fetching all active search keywords...
+  1803 keywords across 49 campaigns
+
+Loading knowledge context...
+Loading product groups...
+  Loaded 4 product groups from product-groups.md
+
+[1/3] Checking keyword-campaign alignment...
+  Sending 28 borderline keywords to AI...
+  2 misalignment issues found
+
+[2/3] Checking cross-campaign overlap...
+  89 overlap issues found
+
+[3/3] Checking new keywords...
+  9 new keywords found since last snapshot
+  2 new keyword issues found
+
+Auto-fixing high-confidence issues...
+  Found 2 high-confidence issues to fix
+    - 0 junk keywords
+    - 4 misalignment/blocked issues
+    [DRY] Would remove: "elevenlabs" in 202603 TOFU AI Agent Decagon SA AMER
+    [DRY] Would pause: "decagon vs twilio" in 202603 TOFU AI Agent Decagon SA AMER
+
+============================================================
+RESULTS:
+  Keywords scanned:     1803
+  Misalignment issues:  2
+  Overlap issues:       89
+  New keyword issues:   2
+  Junk keywords:        2
+  Total issues:         93
+============================================================
+
+Snapshot saved: /Users/azizalsinafi/.openclaw/workspace/demand-gen-hub/logs/keyword-hygiene/2026-04-14.json
+
+Logging to database...
+  DB: AgentRun ef63097a-a36f-46fb-8dc3-11769a7270ad with 93 findings
+
+Sending Telegram notifications...
+
+Done in 5s
+🔑 Keyword Hygiene Agent — 2026-04-15 10:00 UTC
+   ⚠️  DRY RUN — no changes will be applied
+
+Connecting to Google Ads...
+Fetching all active search keywords...
+  1803 keywords across 49 campaigns
+
+Loading knowledge context...
+Loading product groups...
+  Loaded 4 product groups from product-groups.md
+
+[1/3] Checking keyword-campaign alignment...
+  Sending 28 borderline keywords to AI...
+  2 misalignment issues found
+
+[2/3] Checking cross-campaign overlap...
+  89 overlap issues found
+
+[3/3] Checking new keywords...
+  No new keywords since last snapshot
+  0 new keyword issues found
+
+Auto-fixing high-confidence issues...
+  Found 2 high-confidence issues to fix
+    - 0 junk keywords
+    - 2 misalignment/blocked issues
+    [DRY] Would remove: "elevenlabs" in 202603 TOFU AI Agent Decagon SA AMER
+    [DRY] Would pause: "decagon vs twilio" in 202603 TOFU AI Agent Decagon SA AMER
+
+============================================================
+RESULTS:
+  Keywords scanned:     1803
+  Misalignment issues:  2
+  Overlap issues:       89
+  New keyword issues:   0
+  Junk keywords:        2
+  Total issues:         91
+============================================================
+
+Snapshot saved: /Users/azizalsinafi/.openclaw/workspace/demand-gen-hub/logs/keyword-hygiene/2026-04-15.json
+
+Logging to database...
+  DB: AgentRun 1e640574-7954-4363-ab30-ad1e003e71f9 with 91 findings
+
+Sending Telegram notifications...
+
+Done in 2s
+🔑 Keyword Hygiene Agent — 2026-04-16 10:00 UTC
+   ⚠️  DRY RUN — no changes will be applied
+
+Connecting to Google Ads...
+Fetching all active search keywords...
+  1796 keywords across 49 campaigns
+
+Loading knowledge context...
+Loading product groups...
+  Loaded 4 product groups from product-groups.md
+
+[1/3] Checking keyword-campaign alignment...
+  Sending 28 borderline keywords to AI...
+  2 misalignment issues found
+
+[2/3] Checking cross-campaign overlap...
+  88 overlap issues found
+
+[3/3] Checking new keywords...
+  No new keywords since last snapshot
+  0 new keyword issues found
+
+Auto-fixing high-confidence issues...
+  Found 2 high-confidence issues to fix
+    - 0 junk keywords
+    - 2 misalignment/blocked issues
+    [DRY] Would remove: "elevenlabs" in 202603 TOFU AI Agent Decagon SA AMER
+    [DRY] Would pause: "decagon vs twilio" in 202603 TOFU AI Agent Decagon SA AMER
+
+============================================================
+RESULTS:
+  Keywords scanned:     1796
+  Misalignment issues:  2
+  Overlap issues:       88
+  New keyword issues:   0
+  Junk keywords:        2
+  Total issues:         90
+============================================================
+
+Snapshot saved: /Users/azizalsinafi/.openclaw/workspace/demand-gen-hub/logs/keyword-hygiene/2026-04-16.json
+
+Logging to database...
+  DB: AgentRun d8f34725-2df9-4735-8145-0ca2202a7c60 with 90 findings
+
+Sending Telegram notifications...
+
+Done in 2s

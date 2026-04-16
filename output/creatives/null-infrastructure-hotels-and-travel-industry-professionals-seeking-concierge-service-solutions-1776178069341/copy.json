@@ -1,0 +1,38 @@
+{
+  "brief": {
+    "platform": null,
+    "format": null,
+    "audience": "hotels and travel industry professionals seeking concierge service solutions",
+    "painPoints": [
+      "lack of efficient concierge services",
+      "need for AI-driven voice assistance"
+    ],
+    "coreMessage": "AI voice agents providing concierge services for hotels and travel",
+    "pillar": "infrastructure",
+    "adCopyExample": null,
+    "ctaSuggestion": "Discover More"
+  },
+  "copy": {
+    "headlines": [
+      "AI Voice Agents for Concierge Services in 140+ Countries",
+      "Sub-200ms Latency AI Concierge Voice Solutions for Hotels",
+      "Telnyx Voice AI: One Platform, Own Network, Zero Extra Hops",
+      "HIPAA, SOC2, PCI Compliant AI Voice Agents for Travel Industry",
+      "Concierge AI Voice with Inference Co-located on Telnyx Network",
+      "Voice AI Concierge Infrastructure Serving 140+ Countries",
+      "Reduce Concierge Latency with Telnyx’s Own Network",
+      "Single Platform AI Voice Concierge for Hotels and Travel",
+      "Telnyx Voice AI: Infrastructure Built for Concierge Efficiency",
+      "AI Voice Concierge with Zero Extra Network Hops"
+    ],
+    "descriptions": [
+      "Deploy AI voice agents on a single platform with sub-200ms latency using Telnyx’s own global network spanning 140+ countries.",
+      "Improve concierge response times and compliance with HIPAA, SOC2, and PCI standards through Telnyx’s integrated voice AI infrastructure.",
+      "Telnyx provides AI-driven concierge voice services with inference co-located alongside telephony for minimal latency and maximum efficiency.",
+      "One platform, not multiple vendors, delivering AI voice concierge solutions across 140+ countries with zero extra network hops.",
+      "Telnyx Voice AI infrastructure supports hotels and travel companies with secure, low-latency concierge voice agents using proprietary network technology."
+    ],
+    "cta": "Learn More"
+  },
+  "generatedAt": "2026-04-14T14:47:55.375Z"
+}

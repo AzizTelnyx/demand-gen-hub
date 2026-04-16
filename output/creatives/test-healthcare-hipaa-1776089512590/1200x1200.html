@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;900&display=swap');
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      width: 1200px;
+      height: 1200px;
+      background: linear-gradient(135deg, #0A0A0A 0%, #1a1a1a 100%);
+      color: #FFFFFF;
+      font-family: 'Inter', sans-serif;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 96px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Gradient accent */
+    body::before {
+      content: "";
+      position: absolute;
+      top: -50%;
+      right: -20%;
+      width: 80%;
+      height: 150%;
+      background: radial-gradient(circle, #00CE9C15 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .content {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 57.599999999999994px;
+    }
+
+    .data-point {
+      display: inline-block;
+      font-size: 38px;
+      font-weight: 900;
+      color: #00CE9C;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 28.799999999999997px;
+    }
+
+    h1 {
+      font-size: 96px;
+      font-weight: 900;
+      line-height: 1.1;
+      color: #FFFFFF;
+      letter-spacing: -0.02em;
+      max-width: 85%;
+    }
+
+    .description {
+      font-size: 33px;
+      line-height: 1.5;
+      color: rgba(255, 255, 255, 0.8);
+      font-weight: 400;
+      max-width: 75%;
+      margin-top: 19.200000000000003px;
+    }
+
+    .footer {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+    }
+
+    .cta {
+      font-size: 38px;
+      font-weight: 700;
+      color: #00CE9C;
+      text-decoration: none;
+      padding: 33.599999999999994px 57.599999999999994px;
+      border: 2px solid #00CE9C;
+      border-radius: 4px;
+      display: inline-block;
+    }
+
+    .logo {
+      font-size: 45.6px;
+      font-weight: 900;
+      color: #FFFFFF;
+      letter-spacing: 0.05em;
+    }
+
+    .logo-accent {
+      color: #00CE9C;
+    }
+  </style>
+</head>
+<body>
+  <div class="content">
+    <div class="data-point">SOC 2 Type II Certified</div>
+    <h1>HIPAA-ready Voice AI for Healthcare</h1>
+    <p class="description">Secure patient communication that puts compliance first. Build with the only platform designed for healthcare's toughest requirements.</p>
+  </div>
+
+  <div class="footer">
+    <a href="#" class="cta">Get Started</a>
+    <div class="logo">TEL<span class="logo-accent">NYX</span></div>
+  </div>
+</body>
+</html>

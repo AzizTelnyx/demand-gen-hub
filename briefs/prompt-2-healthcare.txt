@@ -1,0 +1,9 @@
+A single image LinkedIn ad for Voice AI Agents targeting healthcare digital health platforms. We want to tell them we have HIPAA-ready Voice AI for patient scheduling and 24/7 multilingual access. The ad copy would say something like "Voice AI that handles patient calls 24/7. HIPAA-ready. EHR-integrated."
+
+Campaign Brief:
+Product: Voice AI Agents for healthcare
+Pain points: Limited after-hours coverage, overwhelmed staff, repetitive calls (scheduling, reminders, refills)
+Telnyx enables: 24/7 context-aware patient access, multilingual, EHR integrations
+Compliance: HIPAA-ready, SOC2, STIR/SHAKEN
+Target: Digital health platforms, healthtech, patient engagement platforms
+Titles: CTO, Head of Engineering, VP Digital Health, Head of Patient Access

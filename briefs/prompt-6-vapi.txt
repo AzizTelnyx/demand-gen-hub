@@ -1,0 +1,1 @@
+A single image StackAdapt native ad targeting Vapi users. We want to tell them we're production-grade with global telephony coverage, not just a dev tool. The ad copy would say something like "Vapi is a dev tool. Telnyx is production infrastructure."

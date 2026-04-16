@@ -1,0 +1,5960 @@
+{
+  "description": "Comprehensive asset library index - AUTO-GENERATED",
+  "version": "2.0.0",
+  "lastUpdated": "2026-04-14",
+  "totalAssets": 503,
+  "backgrounds": [
+    {
+      "path": "brand-assets/assets/backgrounds/rcs/gradient_rcs-1.png",
+      "category": "product-background",
+      "keywords": [
+        "gradient",
+        "rcs"
+      ],
+      "product": "rcs",
+      "bestFor": [
+        "rcs product"
+      ]
+    },
+    {
+      "path": "brand-assets/assets/backgrounds/voice-ai/background_voice-ai-agent-6.png",
+      "category": "product-background",
+      "keywords": [
+        "background",
+        "voice",
+        "agent"
+      ],
+      "product": "voice-ai",
+      "bestFor": [
+        "voice-ai product"
+      ]
+    }
+  ],
+  "productScreenshots": [
+    {
+      "path": "brand-assets/assets/features/voice-ai/voice-ai-features-multi-agent-handoffs.png",
+      "category": "feature-screenshot",
+      "keywords": [
+        "voice",
+        "features",
+        "multi",
+        "agent",
+        "handoffs"
+      ]
+    },
+    {
+      "path": "brand-assets/assets/features/voice-ai/voice-ai-features-voice-playground-language.png",
+      "category": "feature-screenshot",
+      "keywords": [
+        "voice",
+        "features",
+        "playground",
+        "language"
+      ]
+    },
+    {
+      "path": "brand-assets/assets/features/voice-api/voice-api-feature-call-recording.png",
+      "category": "feature-screenshot",
+      "keywords": [
+        "voice",
+        "api",
+        "feature",
+        "call",
+        "recording"
+      ],
+      "product": "voice-api",
+      "bestFor": [
+        "voice-api product"
+      ]
+    },
+    {
+      "path": "brand-assets/assets/features/voice-api/voice-api-feature-hd-voice.png",
+      "category": "feature-screenshot",
+      "keywords": [
+        "voice",
+        "api",
+        "feature"
+      ],
+      "product": "voice-api",
+      "bestFor": [
+        "voice-api product"
+      ]
+    },
+    {
+      "path": "brand-assets/assets/features/voice-api/voice-api-feature-real-time-media-streaming.png",
+      "category": "feature-screenshot",
+      "keywords": [
+        "voice",
+        "api",
+        "feature",
+        "real",
+        "time",
+        "media",
+        "streaming"
+      ],
+      "product": "voice-api",
+      "bestFor": [
+        "voice-api product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-features/01_Voice-AI-Agent/Voice-AI-Agent_Feature_Voice playground/Voice-AI-Agent_Feature_Voice playground_ idea_ UI panels personalization900x620.png",
+      "category": "product-feature",
+      "keywords": [
+        "voice",
+        "agent",
+        "feature",
+        "playground",
+        "idea",
+        "panels",
+        "personalization900x620",
+        "ai",
+        "artificial intelligence",
+        "telephony"
+      ],
+      "product": "voice-ai",
+      "bestFor": [
+        "voice-ai product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-features/01_Voice-AI-Agent/Voice-AI-Agent_Feature_Warm transfers/Voice-AI-Agent_Feature_Warm transfers16x9.png",
+      "category": "product-feature",
+      "keywords": [
+        "voice",
+        "agent",
+        "feature",
+        "warm",
+        "transfers16x9",
+        "ai",
+        "artificial intelligence",
+        "telephony"
+      ],
+      "product": "voice-ai",
+      "bestFor": [
+        "voice-ai product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-features/01_Voice-AI-Agent/Voice-AI-Agent_Feature_Warm transfers/Voice-AI-Agent_Feature_Warm transfers900x620.png",
+      "category": "product-feature",
+      "keywords": [
+        "voice",
+        "agent",
+        "feature",
+        "warm",
+        "transfers900x620",
+        "ai",
+        "artificial intelligence",
+        "telephony"
+      ],
+      "product": "voice-ai",
+      "bestFor": [
+        "voice-ai product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-features/02_Voice-API/Voice-API_Feature_Conversational-AI-command/Voice-API_Feature_Conversational AI command_3x2.png",
+      "category": "product-feature",
+      "keywords": [
+        "voice",
+        "api",
+        "feature",
+        "conversational",
+        "command",
+        "3x2",
+        "ai",
+        "artificial intelligence",
+        "telephony"
+      ],
+      "product": "voice-api",
+      "bestFor": [
+        "voice-api product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-features/02_Voice-API/Voice-API_Feature_Text-to-speech/Voice-API_Feature_Text-to-speech_16x9.png",
+      "category": "product-feature",
+      "keywords": [
+        "voice",
+        "api",
+        "feature",
+        "text",
+        "speech",
+        "16x9",
+        "telephony"
+      ],
+      "product": "voice-api",
+      "bestFor": [
+        "voice-api product"
+      ]
+    }
+  ],
+  "industryPhotography": [
+    {
+      "path": "brand-assets/photography/Stock_Unsplash (Free)/01_People+Device/ahmed-3d_Lh7uXUB8-unsplash.jpg",
+      "category": "stock-photography",
+      "keywords": [
+        "ahmed",
+        "lh7uxub8",
+        "unsplash"
+      ]
+    },
+    {
+      "path": "brand-assets/photography/Stock_Unsplash (Free)/01_People+Device/alevision-co-fYyYz38bUkQ-unsplash.jpg",
+      "category": "stock-photography",
+      "keywords": [
+        "alevision",
+        "fyyyz38bukq",
+        "unsplash"
+      ]
+    },
+    {
+      "path": "brand-assets/photography/Stock_Unsplash (Free)/01_People+Device/anete-lusina--4Wi_ii6StY-unsplash.jpg",
+      "category": "stock-photography",
+      "keywords": [
+        "anete",
+        "lusina",
+        "4wi",
+        "ii6sty",
+        "unsplash"
+      ]
+    },
+    {
+      "path": "brand-assets/photography/Stock_Unsplash (Free)/01_People+Device/brooke-cagle-bHiw87N6uHg-unsplash.jpg",
+      "category": "stock-photography",
+      "keywords": [
+        "brooke",
+        "cagle",
+        "bhiw87n6uhg",
+        "unsplash"
+      ]
+    },
+    {
+      "path": "brand-assets/photography/Stock_Unsplash (Free)/01_People+Device/filip-mroz-XCkRGOX2VgM-unsplash.jpg",
+      "category": "stock-photography",
+      "keywords": [
+        "filip",
+        "mroz",
+        "xckrgox2vgm",
+        "unsplash"
+      ]
+    },
+    {
+      "path": "brand-assets/photography/Stock_Unsplash (Free)/01_People+Device/getty-images-iTdzgrk3beA-unsplash.jpg",
+      "category": "stock-photography",
+      "keywords": [
+        "getty",
+        "images",
+        "itdzgrk3bea",
+        "unsplash"
+      ]
+    },
+    {
+      "path": "brand-assets/photography/Stock_Unsplash (Free)/01_People+Device/jae-park-9_SaFlgwFdA-unsplash.jpg",
+      "category": "stock-photography",
+      "keywords": [
+        "jae",
+        "park",
+        "saflgwfda",
+        "unsplash"
+      ]
+    },
+    {
+      "path": "brand-assets/photography/Stock_Unsplash (Free)/01_People+Device/jamie-street-Pj4bq4wwmm4-unsplash.jpg",
+      "category": "stock-photography",
+      "keywords": [
+        "jamie",
+        "street",
+        "pj4bq4wwmm4",
+        "unsplash"
+      ]
+    },
+    {
+      "path": "brand-assets/photography/Stock_Unsplash (Free)/01_People+Device/jed-villejo-pumko2FFxY0-unsplash.jpg",
+      "category": "stock-photography",
+      "keywords": [
+        "jed",
+        "villejo",
+        "pumko2ffxy0",
+        "unsplash"
+      ]
+    },
+    {
+      "path": "brand-assets/photography/Stock_Unsplash (Free)/01_People+Device/linh-nguyen-uEFombN3J5U-unsplash.jpg",
+      "category": "stock-photography",
+      "keywords": [
+        "linh",
+        "nguyen",
+        "uefombn3j5u",
+        "unsplash"
+      ]
+    },
+    {
+      "path": "brand-assets/photography/Stock_Unsplash (Free)/01_People+Device/linkedin-sales-solutions-EI50ZDA-l8Y-unsplash.jpg",
+      "category": "stock-photography",
+      "keywords": [
+        "linkedin",
+        "sales",
+        "solutions",
+        "ei50zda",
+        "l8y",
+        "unsplash"
+      ]
+    },
+    {
+      "path": "brand-assets/photography/Stock_Unsplash (Free)/01_People+Device/luca-bravo-y1yQQmozTBw-unsplash.jpg",
+      "category": "stock-photography",
+      "keywords": [
+        "luca",
+        "bravo",
+        "y1yqqmoztbw",
+        "unsplash"
+      ]
+    },
+    {
+      "path": "brand-assets/photography/Stock_Unsplash (Free)/01_People+Device/rat-andrei-cpWKO2H1sEk-unsplash.jpg",
+      "category": "stock-photography",
+      "keywords": [
+        "rat",
+        "andrei",
+        "cpwko2h1sek",
+        "unsplash"
+      ]
+    },
+    {
+      "path": "brand-assets/photography/Stock_Unsplash (Free)/01_People+Device/redd-PTRzqc_h1r4-unsplash.jpg",
+      "category": "stock-photography",
+      "keywords": [
+        "redd",
+        "ptrzqc",
+        "h1r4",
+        "unsplash"
+      ]
+    },
+    {
+      "path": "brand-assets/photography/Stock_Unsplash (Free)/01_People+Device/studio-republic-fotKKqWNMQ4-unsplash.jpg",
+      "category": "stock-photography",
+      "keywords": [
+        "studio",
+        "republic",
+        "fotkkqwnmq4",
+        "unsplash"
+      ]
+    },
+    {
+      "path": "brand-assets/photography/Stock_Unsplash (Free)/01_People+Device/tran-mau-tri-tam-tZnbakTUcTI-unsplash.jpg",
+      "category": "stock-photography",
+      "keywords": [
+        "tran",
+        "mau",
+        "tri",
+        "tam",
+        "tznbaktucti",
+        "unsplash"
+      ]
+    },
+    {
+      "path": "brand-assets/photography/Stock_Unsplash (Free)/03_Industry-Verticals/01_Healthcare/curated-lifestyle-bE74SvKOFvo-unsplash.jpg",
+      "category": "stock-photography",
+      "keywords": [
+        "curated",
+        "lifestyle",
+        "be74svkofvo",
+        "unsplash"
+      ],
+      "industry": "healthcare",
+      "bestFor": [
+        "healthcare industry"
+      ]
+    },
+    {
+      "path": "brand-assets/photography/Stock_Unsplash (Free)/03_Industry-Verticals/01_Healthcare/getty-images-Q32sEotB8E0-unsplash.jpg",
+      "category": "stock-photography",
+      "keywords": [
+        "getty",
+        "images",
+        "q32seotb8e0",
+        "unsplash"
+      ],
+      "industry": "healthcare",
+      "bestFor": [
+        "healthcare industry"
+      ]
+    },
+    {
+      "path": "brand-assets/photography/Stock_Unsplash (Free)/03_Industry-Verticals/01_Healthcare/stephen-andrews-GwgFPDXiSIs-unsplash.jpg",
+      "category": "stock-photography",
+      "keywords": [
+        "stephen",
+        "andrews",
+        "gwgfpdxisis",
+        "unsplash"
+      ],
+      "industry": "healthcare",
+      "bestFor": [
+        "healthcare industry"
+      ]
+    },
+    {
+      "path": "brand-assets/photography/Stock_Unsplash (Free)/03_Industry-Verticals/02_Insurance/md-rifat-X0bOUOFlnck-unsplash.jpg",
+      "category": "stock-photography",
+      "keywords": [
+        "rifat",
+        "x0bouoflnck",
+        "unsplash"
+      ],
+      "industry": "insurance",
+      "bestFor": [
+        "insurance industry"
+      ]
+    },
+    {
+      "path": "brand-assets/photography/Stock_Unsplash (Free)/03_Industry-Verticals/04_Finance/clay-banks-E2HgkL3LaFE-unsplash.jpg",
+      "category": "stock-photography",
+      "keywords": [
+        "clay",
+        "banks",
+        "e2hgkl3lafe",
+        "unsplash"
+      ],
+      "industry": "finance",
+      "bestFor": [
+        "finance industry"
+      ]
+    },
+    {
+      "path": "brand-assets/photography/Stock_Unsplash (Free)/03_Industry-Verticals/04_Finance/vagaro-DfwL4w5lHbA-unsplash.jpg",
+      "category": "stock-photography",
+      "keywords": [
+        "vagaro",
+        "dfwl4w5lhba",
+        "unsplash"
+      ],
+      "industry": "finance",
+      "bestFor": [
+        "finance industry"
+      ]
+    },
+    {
+      "path": "brand-assets/photography/Stock_Unsplash (Free)/03_Industry-Verticals/05_Logistics/kateryna-hliznitsova-Q_wR0oJ3yY8-unsplash.jpg",
+      "category": "stock-photography",
+      "keywords": [
+        "kateryna",
+        "hliznitsova",
+        "wr0oj3yy8",
+        "unsplash"
+      ],
+      "industry": "logistics",
+      "bestFor": [
+        "logistics industry"
+      ]
+    },
+    {
+      "path": "brand-assets/photography/Stock_Unsplash (Free)/03_Industry-Verticals/05_Logistics/viktor-bystrov-qd-zd2MoeE8-unsplash.jpg",
+      "category": "stock-photography",
+      "keywords": [
+        "viktor",
+        "bystrov",
+        "zd2moee8",
+        "unsplash"
+      ],
+      "industry": "logistics",
+      "bestFor": [
+        "logistics industry"
+      ]
+    },
+    {
+      "path": "brand-assets/photography/Stock_Unsplash (Free)/04_Use_Case/_IoT/hanson-lu-HIathOCFdFg-unsplash.jpg",
+      "category": "stock-photography",
+      "keywords": [
+        "hanson",
+        "hiathocfdfg",
+        "unsplash"
+      ]
+    },
+    {
+      "path": "brand-assets/photography/Stock_Unsplash (Free)/04_Use_Case/_IoT/james-yarema-zdjZ4kCaJaY-unsplash.jpg",
+      "category": "stock-photography",
+      "keywords": [
+        "james",
+        "yarema",
+        "zdjz4kcajay",
+        "unsplash"
+      ]
+    },
+    {
+      "path": "brand-assets/photography/Stock_Unsplash (Free)/04_Use_Case/_IoT/r-architecture-2gDwlIim3Uw-unsplash.jpg",
+      "category": "stock-photography",
+      "keywords": [
+        "architecture",
+        "2gdwliim3uw",
+        "unsplash"
+      ]
+    },
+    {
+      "path": "brand-assets/photography/Stock_Unsplash (Free)/04_Use_Case/_IoT/stephan-bechert-yFV39g6AZ5o-unsplash.jpg",
+      "category": "stock-photography",
+      "keywords": [
+        "stephan",
+        "bechert",
+        "yfv39g6az5o",
+        "unsplash"
+      ]
+    },
+    {
+      "path": "brand-assets/assets/photography/industry/insurance/industry-insurance-photography-car-driveway.jpg",
+      "category": "industry-photo",
+      "keywords": [
+        "industry",
+        "insurance",
+        "photography",
+        "car",
+        "driveway"
+      ],
+      "industry": "insurance",
+      "bestFor": [
+        "insurance industry"
+      ]
+    },
+    {
+      "path": "brand-assets/assets/photography/industry/insurance/industry-insurance-photography-car-tow-truck-accident.jpg",
+      "category": "industry-photo",
+      "keywords": [
+        "industry",
+        "insurance",
+        "photography",
+        "car",
+        "tow",
+        "truck",
+        "accident"
+      ],
+      "industry": "insurance",
+      "bestFor": [
+        "insurance industry"
+      ]
+    },
+    {
+      "path": "brand-assets/assets/photography/industry/insurance/industry-insurance-photography-family-child-home-couch.jpg",
+      "category": "industry-photo",
+      "keywords": [
+        "industry",
+        "insurance",
+        "photography",
+        "family",
+        "child",
+        "home",
+        "couch"
+      ],
+      "industry": "insurance",
+      "bestFor": [
+        "insurance industry"
+      ]
+    },
+    {
+      "path": "brand-assets/assets/photography/industry/insurance/industry-insurance-photography-male-phone-car-breakdown.jpg",
+      "category": "industry-photo",
+      "keywords": [
+        "industry",
+        "insurance",
+        "photography",
+        "male",
+        "phone",
+        "car",
+        "breakdown"
+      ],
+      "industry": "insurance",
+      "bestFor": [
+        "insurance industry"
+      ]
+    },
+    {
+      "path": "brand-assets/assets/photography/industry/insurance/industry-insurance-photography-man-car-breakdown-highway.jpg",
+      "category": "industry-photo",
+      "keywords": [
+        "industry",
+        "insurance",
+        "photography",
+        "man",
+        "car",
+        "breakdown",
+        "highway"
+      ],
+      "industry": "insurance",
+      "bestFor": [
+        "insurance industry"
+      ]
+    },
+    {
+      "path": "brand-assets/assets/photography/industry/logistics/industry-logistics-photography-airplane-airport-landscape.jpg",
+      "category": "industry-photo",
+      "keywords": [
+        "industry",
+        "logistics",
+        "photography",
+        "airplane",
+        "airport",
+        "landscape"
+      ],
+      "industry": "logistics",
+      "bestFor": [
+        "logistics industry"
+      ]
+    },
+    {
+      "path": "brand-assets/assets/photography/industry/logistics/industry-logistics-photography-man-delivery-boxes-street.jpg",
+      "category": "industry-photo",
+      "keywords": [
+        "industry",
+        "logistics",
+        "photography",
+        "man",
+        "delivery",
+        "boxes",
+        "street"
+      ],
+      "industry": "logistics",
+      "bestFor": [
+        "logistics industry"
+      ]
+    },
+    {
+      "path": "brand-assets/assets/photography/industry/logistics/industry-logistics-photography-taxi-street-meter.jpg",
+      "category": "industry-photo",
+      "keywords": [
+        "industry",
+        "logistics",
+        "photography",
+        "taxi",
+        "street",
+        "meter"
+      ],
+      "industry": "logistics",
+      "bestFor": [
+        "logistics industry"
+      ]
+    },
+    {
+      "path": "brand-assets/assets/photography/industry/restaurants/industry-restaurants-photography-bar-cafe-food-drinks-dine-outside-people.jpg",
+      "category": "industry-photo",
+      "keywords": [
+        "industry",
+        "restaurants",
+        "photography",
+        "bar",
+        "cafe",
+        "food",
+        "drinks",
+        "dine",
+        "outside",
+        "people"
+      ],
+      "industry": "restaurants",
+      "bestFor": [
+        "restaurants industry"
+      ]
+    },
+    {
+      "path": "brand-assets/assets/photography/industry/restaurants/industry-restaurants-photography-couple-coffee-cafe-outside.jpg",
+      "category": "industry-photo",
+      "keywords": [
+        "industry",
+        "restaurants",
+        "photography",
+        "couple",
+        "coffee",
+        "cafe",
+        "outside"
+      ],
+      "industry": "restaurants",
+      "bestFor": [
+        "restaurants industry"
+      ]
+    },
+    {
+      "path": "brand-assets/assets/photography/industry/restaurants/industry-restaurants-photography-dining-table-eat.jpg",
+      "category": "industry-photo",
+      "keywords": [
+        "industry",
+        "restaurants",
+        "photography",
+        "dining",
+        "table",
+        "eat"
+      ],
+      "industry": "restaurants",
+      "bestFor": [
+        "restaurants industry"
+      ]
+    },
+    {
+      "path": "brand-assets/assets/photography/industry/restaurants/industry-restaurants-photography-people-dining-waiter.jpg",
+      "category": "industry-photo",
+      "keywords": [
+        "industry",
+        "restaurants",
+        "photography",
+        "people",
+        "dining",
+        "waiter"
+      ],
+      "industry": "restaurants",
+      "bestFor": [
+        "restaurants industry"
+      ]
+    },
+    {
+      "path": "brand-assets/assets/photography/industry/restaurants/industry-restaurants-photography-people-food-takeout-home.jpg",
+      "category": "industry-photo",
+      "keywords": [
+        "industry",
+        "restaurants",
+        "photography",
+        "people",
+        "food",
+        "takeout",
+        "home"
+      ],
+      "industry": "restaurants",
+      "bestFor": [
+        "restaurants industry"
+      ]
+    },
+    {
+      "path": "brand-assets/assets/photography/industry/travel/industry-travel-photography-holiday-landscape.jpg",
+      "category": "industry-photo",
+      "keywords": [
+        "industry",
+        "travel",
+        "photography",
+        "holiday",
+        "landscape"
+      ],
+      "industry": "travel",
+      "bestFor": [
+        "travel industry"
+      ]
+    },
+    {
+      "path": "brand-assets/assets/photography/industry/travel/industry-travel-photography-people-train-passports-bags.jpg",
+      "category": "industry-photo",
+      "keywords": [
+        "industry",
+        "travel",
+        "photography",
+        "people",
+        "train",
+        "passports",
+        "bags"
+      ],
+      "industry": "travel",
+      "bestFor": [
+        "travel industry"
+      ]
+    }
+  ],
+  "industryHeroes": [
+    {
+      "path": "brand-assets/industry-visuals/Industry_Hero/V1/Industry_Finance-Hero.png",
+      "category": "industry-hero",
+      "keywords": [
+        "industry",
+        "finance",
+        "hero"
+      ],
+      "industry": "finance",
+      "bestFor": [
+        "finance industry"
+      ]
+    },
+    {
+      "path": "brand-assets/industry-visuals/Industry_Hero/V1/Industry_Restaurants_Hero.png",
+      "category": "industry-hero",
+      "keywords": [
+        "industry",
+        "restaurants",
+        "hero"
+      ],
+      "industry": "restaurants",
+      "bestFor": [
+        "restaurants industry"
+      ]
+    },
+    {
+      "path": "brand-assets/industry-visuals/Industry_Hero/V1/Industry_Travel-Hospitality_Hero.png",
+      "category": "industry-hero",
+      "keywords": [
+        "industry",
+        "travel",
+        "hospitality",
+        "hero"
+      ],
+      "industry": "travel",
+      "bestFor": [
+        "travel industry"
+      ]
+    },
+    {
+      "path": "brand-assets/industry-visuals/Industry_Hero/V1/Industry_eCommerce-Retail_Hero.png",
+      "category": "industry-hero",
+      "keywords": [
+        "industry",
+        "ecommerce",
+        "retail",
+        "hero"
+      ],
+      "industry": "retail",
+      "bestFor": [
+        "retail industry"
+      ]
+    }
+  ],
+  "useCaseScreenshots": [
+    {
+      "path": "brand-assets/industry-visuals/Social_Assets/Healthcare/Industry_Healthcare_Appointment-Schedule@2x.png",
+      "category": "use-case-screenshot",
+      "keywords": [
+        "industry",
+        "healthcare",
+        "appointment",
+        "schedule"
+      ],
+      "industry": "healthcare",
+      "bestFor": [
+        "appointment scheduling",
+        "healthcare industry"
+      ]
+    },
+    {
+      "path": "brand-assets/industry-visuals/Social_Assets/Healthcare/Industry_Healthcare_Lab-Results@2x.png",
+      "category": "use-case-screenshot",
+      "keywords": [
+        "industry",
+        "healthcare",
+        "lab",
+        "results"
+      ],
+      "industry": "healthcare",
+      "bestFor": [
+        "lab results",
+        "medical diagnostics",
+        "healthcare industry"
+      ]
+    },
+    {
+      "path": "brand-assets/industry-visuals/Social_Assets/Healthcare/Industry_Healthcare_Perscriptions@2x.png",
+      "category": "use-case-screenshot",
+      "keywords": [
+        "industry",
+        "healthcare",
+        "perscriptions"
+      ],
+      "industry": "healthcare",
+      "bestFor": [
+        "healthcare industry"
+      ]
+    },
+    {
+      "path": "brand-assets/industry-visuals/Social_Assets/Healthcare/Industry_Healthcare_Symptom-Triage@2x.png",
+      "category": "use-case-screenshot",
+      "keywords": [
+        "industry",
+        "healthcare",
+        "symptom",
+        "triage"
+      ],
+      "industry": "healthcare",
+      "bestFor": [
+        "symptom checking",
+        "patient triage",
+        "healthcare industry"
+      ]
+    },
+    {
+      "path": "brand-assets/industry-visuals/Social_Assets/Insurance/Industry_Insurance_Policy@2x.png",
+      "category": "use-case-screenshot",
+      "keywords": [
+        "industry",
+        "insurance",
+        "policy"
+      ],
+      "industry": "insurance",
+      "bestFor": [
+        "policy management",
+        "insurance",
+        "insurance industry"
+      ]
+    },
+    {
+      "path": "brand-assets/industry-visuals/Social_Assets/Restaurants/Industry_Restaurants_Order-Assistant@2x.png",
+      "category": "use-case-screenshot",
+      "keywords": [
+        "industry",
+        "restaurants",
+        "order",
+        "assistant"
+      ],
+      "industry": "restaurants",
+      "bestFor": [
+        "ordering",
+        "order management",
+        "restaurants industry"
+      ]
+    },
+    {
+      "path": "brand-assets/industry-visuals/Social_Assets/Restaurants/Industry_Restaurants_Reorder@2x.png",
+      "category": "use-case-screenshot",
+      "keywords": [
+        "industry",
+        "restaurants",
+        "reorder"
+      ],
+      "industry": "restaurants",
+      "bestFor": [
+        "ordering",
+        "order management",
+        "restaurants industry"
+      ]
+    },
+    {
+      "path": "brand-assets/industry-visuals/Social_Assets/Restaurants/Industry_Restaurants_Reservations@2x.png",
+      "category": "use-case-screenshot",
+      "keywords": [
+        "industry",
+        "restaurants",
+        "reservations"
+      ],
+      "industry": "restaurants",
+      "bestFor": [
+        "reservations",
+        "booking",
+        "restaurants industry"
+      ]
+    },
+    {
+      "path": "brand-assets/industry-visuals/Social_Assets/Restaurants/Industry_Restaurants_Waitlist@2x.png",
+      "category": "use-case-screenshot",
+      "keywords": [
+        "industry",
+        "restaurants",
+        "waitlist"
+      ],
+      "industry": "restaurants",
+      "bestFor": [
+        "waitlist management",
+        "restaurants industry"
+      ]
+    },
+    {
+      "path": "brand-assets/industry-visuals/Social_Assets/Retail/Industry_Retail_Returns.png",
+      "category": "use-case-screenshot",
+      "keywords": [
+        "industry",
+        "retail",
+        "returns"
+      ],
+      "industry": "retail",
+      "bestFor": [
+        "retail industry"
+      ]
+    },
+    {
+      "path": "brand-assets/industry-visuals/Social_Assets/Travel/Industry_Travel_Concierge.png",
+      "category": "use-case-screenshot",
+      "keywords": [
+        "industry",
+        "travel",
+        "concierge"
+      ],
+      "industry": "travel",
+      "bestFor": [
+        "concierge services",
+        "travel industry"
+      ]
+    },
+    {
+      "path": "brand-assets/industry-visuals/Social_Assets/Travel/Industry_Travel_Itinerary-Updates@2x.png",
+      "category": "use-case-screenshot",
+      "keywords": [
+        "industry",
+        "travel",
+        "itinerary",
+        "updates"
+      ],
+      "industry": "travel",
+      "bestFor": [
+        "travel industry"
+      ]
+    },
+    {
+      "path": "brand-assets/industry-visuals/Social_Assets/Travel/Industry_Travel_Loyalty-Program.png",
+      "category": "use-case-screenshot",
+      "keywords": [
+        "industry",
+        "travel",
+        "loyalty",
+        "program"
+      ],
+      "industry": "travel",
+      "bestFor": [
+        "loyalty programs",
+        "travel industry"
+      ]
+    },
+    {
+      "path": "brand-assets/industry-visuals/Social_Assets/Travel/Industry_Travel_Loyalty-Program@2x.png",
+      "category": "use-case-screenshot",
+      "keywords": [
+        "industry",
+        "travel",
+        "loyalty",
+        "program"
+      ],
+      "industry": "travel",
+      "bestFor": [
+        "loyalty programs",
+        "travel industry"
+      ]
+    }
+  ],
+  "productHeroes": [],
+  "productIcons": [
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Animations/Icon-Animations_Background-only/_Editable/Icon-Animations_Background-only folder/(Footage)/rcs_experiment.aep/AEUX/Marquee product branding expanded/Images/Vector_1985-197.png",
+      "category": "product-icon",
+      "keywords": [
+        "vector",
+        "1985",
+        "197"
+      ],
+      "product": "rcs",
+      "bestFor": [
+        "rcs product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Animations/Icon-Animations_Background-only/_Editable/Icon-Animations_Background-only folder/(Footage)/rcs_experiment.aep/png_00047.png",
+      "category": "product-icon",
+      "keywords": [
+        "png",
+        "00047"
+      ],
+      "product": "rcs",
+      "bestFor": [
+        "rcs product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Animations/Icon-Animations_Colorful/01_Voice-AI-Agent/Voice AI_Icon-Colorful_Animated_Static_Png/Voice ai_00012.png",
+      "category": "product-icon",
+      "keywords": [
+        "voice",
+        "00012",
+        "ai",
+        "artificial intelligence",
+        "telephony"
+      ],
+      "product": "voice-ai",
+      "bestFor": [
+        "voice-ai product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Animations/Icon-Animations_Colorful/01_Voice-AI-Agent/Voice AI_Icon-Colorful_Animated_Static_Png/Voice ai_00013.png",
+      "category": "product-icon",
+      "keywords": [
+        "voice",
+        "00013",
+        "ai",
+        "artificial intelligence",
+        "telephony"
+      ],
+      "product": "voice-ai",
+      "bestFor": [
+        "voice-ai product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Animations/Icon-Animations_Colorful/01_Voice-AI-Agent/Voice AI_Icon-Colorful_Animated_Static_Png/Voice ai_00014.png",
+      "category": "product-icon",
+      "keywords": [
+        "voice",
+        "00014",
+        "ai",
+        "artificial intelligence",
+        "telephony"
+      ],
+      "product": "voice-ai",
+      "bestFor": [
+        "voice-ai product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Animations/Icon-Animations_Colorful/01_Voice-AI-Agent/Voice AI_Icon-Colorful_Animated_Static_Png/Voice ai_00015.png",
+      "category": "product-icon",
+      "keywords": [
+        "voice",
+        "00015",
+        "ai",
+        "artificial intelligence",
+        "telephony"
+      ],
+      "product": "voice-ai",
+      "bestFor": [
+        "voice-ai product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Animations/Icon-Animations_Colorful/01_Voice-AI-Agent/Voice AI_Icon-Colorful_Animated_Static_Png/Voice ai_00016.png",
+      "category": "product-icon",
+      "keywords": [
+        "voice",
+        "00016",
+        "ai",
+        "artificial intelligence",
+        "telephony"
+      ],
+      "product": "voice-ai",
+      "bestFor": [
+        "voice-ai product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Animations/Icon-Animations_Colorful/01_Voice-AI-Agent/Voice AI_Icon-Colorful_Animated_Static_Png/Voice ai_00017.png",
+      "category": "product-icon",
+      "keywords": [
+        "voice",
+        "00017",
+        "ai",
+        "artificial intelligence",
+        "telephony"
+      ],
+      "product": "voice-ai",
+      "bestFor": [
+        "voice-ai product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Animations/Icon-Animations_Colorful/01_Voice-AI-Agent/Voice AI_Icon-Colorful_Animated_Static_Png/Voice ai_00018.png",
+      "category": "product-icon",
+      "keywords": [
+        "voice",
+        "00018",
+        "ai",
+        "artificial intelligence",
+        "telephony"
+      ],
+      "product": "voice-ai",
+      "bestFor": [
+        "voice-ai product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Animations/Icon-Animations_Colorful/01_Voice-AI-Agent/Voice AI_Icon-Colorful_Animated_Static_Png/Voice ai_00027.png",
+      "category": "product-icon",
+      "keywords": [
+        "voice",
+        "00027",
+        "ai",
+        "artificial intelligence",
+        "telephony"
+      ],
+      "product": "voice-ai",
+      "bestFor": [
+        "voice-ai product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Animations/Icon-Animations_Colorful/01_Voice-AI-Agent/Voice AI_Icon-Colorful_Animated_Static_Png/Voice ai_00028.png",
+      "category": "product-icon",
+      "keywords": [
+        "voice",
+        "00028",
+        "ai",
+        "artificial intelligence",
+        "telephony"
+      ],
+      "product": "voice-ai",
+      "bestFor": [
+        "voice-ai product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Animations/Icon-Animations_Colorful/01_Voice-AI-Agent/Voice AI_Icon-Colorful_Animated_Static_Png/Voice ai_00029.png",
+      "category": "product-icon",
+      "keywords": [
+        "voice",
+        "00029",
+        "ai",
+        "artificial intelligence",
+        "telephony"
+      ],
+      "product": "voice-ai",
+      "bestFor": [
+        "voice-ai product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Animations/Icon-Animations_Colorful/01_Voice-AI-Agent/Voice AI_Icon-Colorful_Animated_Static_Png/Voice ai_00030.png",
+      "category": "product-icon",
+      "keywords": [
+        "voice",
+        "00030",
+        "ai",
+        "artificial intelligence",
+        "telephony"
+      ],
+      "product": "voice-ai",
+      "bestFor": [
+        "voice-ai product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Animations/Icon-Animations_Colorful/01_Voice-AI-Agent/Voice AI_Icon-Colorful_Animated_Static_Png/Voice ai_00035.png",
+      "category": "product-icon",
+      "keywords": [
+        "voice",
+        "00035",
+        "ai",
+        "artificial intelligence",
+        "telephony"
+      ],
+      "product": "voice-ai",
+      "bestFor": [
+        "voice-ai product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Animations/Icon-Animations_Colorful/01_Voice-AI-Agent/Voice AI_Icon-Colorful_Animated_Static_Png/Voice ai_00036.png",
+      "category": "product-icon",
+      "keywords": [
+        "voice",
+        "00036",
+        "ai",
+        "artificial intelligence",
+        "telephony"
+      ],
+      "product": "voice-ai",
+      "bestFor": [
+        "voice-ai product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Animations/Icon-Animations_Colorful/01_Voice-AI-Agent/Voice AI_Icon-Colorful_Animated_Static_Png/Voice ai_00037.png",
+      "category": "product-icon",
+      "keywords": [
+        "voice",
+        "00037",
+        "ai",
+        "artificial intelligence",
+        "telephony"
+      ],
+      "product": "voice-ai",
+      "bestFor": [
+        "voice-ai product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Animations/Icon-Animations_Colorful/01_Voice-AI-Agent/Voice AI_Icon-Colorful_Animated_Static_Png/Voice ai_00038.png",
+      "category": "product-icon",
+      "keywords": [
+        "voice",
+        "00038",
+        "ai",
+        "artificial intelligence",
+        "telephony"
+      ],
+      "product": "voice-ai",
+      "bestFor": [
+        "voice-ai product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Animations/Icon-Animations_Colorful/01_Voice-AI-Agent/Voice AI_Icon-Colorful_Animated_Static_Png/Voice ai_00039.png",
+      "category": "product-icon",
+      "keywords": [
+        "voice",
+        "00039",
+        "ai",
+        "artificial intelligence",
+        "telephony"
+      ],
+      "product": "voice-ai",
+      "bestFor": [
+        "voice-ai product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Animations/Icon-Animations_Colorful/01_Voice-AI-Agent/Voice AI_Icon-Colorful_Animated_Static_Png/Voice ai_00040.png",
+      "category": "product-icon",
+      "keywords": [
+        "voice",
+        "00040",
+        "ai",
+        "artificial intelligence",
+        "telephony"
+      ],
+      "product": "voice-ai",
+      "bestFor": [
+        "voice-ai product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Animations/Icon-Animations_Colorful/01_Voice-AI-Agent/Voice AI_Icon-Colorful_Animated_Static_Png/Voice ai_00048.png",
+      "category": "product-icon",
+      "keywords": [
+        "voice",
+        "00048",
+        "ai",
+        "artificial intelligence",
+        "telephony"
+      ],
+      "product": "voice-ai",
+      "bestFor": [
+        "voice-ai product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Animations/Icon-Animations_Colorful/01_Voice-AI-Agent/Voice AI_Icon-Colorful_Animated_Static_Png/Voice ai_00049.png",
+      "category": "product-icon",
+      "keywords": [
+        "voice",
+        "00049",
+        "ai",
+        "artificial intelligence",
+        "telephony"
+      ],
+      "product": "voice-ai",
+      "bestFor": [
+        "voice-ai product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Animations/Icon-Animations_Colorful/01_Voice-AI-Agent/Voice AI_Icon-Colorful_Animated_Static_Png/Voice ai_00050.png",
+      "category": "product-icon",
+      "keywords": [
+        "voice",
+        "00050",
+        "ai",
+        "artificial intelligence",
+        "telephony"
+      ],
+      "product": "voice-ai",
+      "bestFor": [
+        "voice-ai product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Animations/Icon-Animations_Colorful/01_Voice-AI-Agent/Voice AI_Icon-Colorful_Animated_Static_Png/Voice ai_00051.png",
+      "category": "product-icon",
+      "keywords": [
+        "voice",
+        "00051",
+        "ai",
+        "artificial intelligence",
+        "telephony"
+      ],
+      "product": "voice-ai",
+      "bestFor": [
+        "voice-ai product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Animations/Icon-Animations_Colorful/01_Voice-AI-Agent/Voice AI_Icon-Colorful_Animated_Static_Png/Voice ai_00052.png",
+      "category": "product-icon",
+      "keywords": [
+        "voice",
+        "00052",
+        "ai",
+        "artificial intelligence",
+        "telephony"
+      ],
+      "product": "voice-ai",
+      "bestFor": [
+        "voice-ai product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Animations/Icon-Animations_Colorful/01_Voice-AI-Agent/Voice AI_Icon-Colorful_Animated_Static_Png/Voice ai_00053.png",
+      "category": "product-icon",
+      "keywords": [
+        "voice",
+        "00053",
+        "ai",
+        "artificial intelligence",
+        "telephony"
+      ],
+      "product": "voice-ai",
+      "bestFor": [
+        "voice-ai product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Animations/Icon-Animations_Colorful/01_Voice-AI-Agent/Voice AI_Icon-Colorful_Animated_Static_Png/Voice ai_00054.png",
+      "category": "product-icon",
+      "keywords": [
+        "voice",
+        "00054",
+        "ai",
+        "artificial intelligence",
+        "telephony"
+      ],
+      "product": "voice-ai",
+      "bestFor": [
+        "voice-ai product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Animations/Icon-Animations_Colorful/01_Voice-AI-Agent/Voice AI_Icon-Colorful_Animated_Static_Png/Voice ai_00055.png",
+      "category": "product-icon",
+      "keywords": [
+        "voice",
+        "00055",
+        "ai",
+        "artificial intelligence",
+        "telephony"
+      ],
+      "product": "voice-ai",
+      "bestFor": [
+        "voice-ai product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Animations/Icon-Animations_Colorful/01_Voice-AI-Agent/Voice AI_Icon-Colorful_Animated_Static_Png/Voice ai_00056.png",
+      "category": "product-icon",
+      "keywords": [
+        "voice",
+        "00056",
+        "ai",
+        "artificial intelligence",
+        "telephony"
+      ],
+      "product": "voice-ai",
+      "bestFor": [
+        "voice-ai product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Animations/Icon-Animations_Colorful/01_Voice-AI-Agent/Voice AI_Icon-Colorful_Animated_Static_Png/Voice ai_00057.png",
+      "category": "product-icon",
+      "keywords": [
+        "voice",
+        "00057",
+        "ai",
+        "artificial intelligence",
+        "telephony"
+      ],
+      "product": "voice-ai",
+      "bestFor": [
+        "voice-ai product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Animations/Icon-Animations_Colorful/01_Voice-AI-Agent/Voice AI_Icon-Colorful_Animated_Static_Png/Voice ai_00058.png",
+      "category": "product-icon",
+      "keywords": [
+        "voice",
+        "00058",
+        "ai",
+        "artificial intelligence",
+        "telephony"
+      ],
+      "product": "voice-ai",
+      "bestFor": [
+        "voice-ai product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Animations/Icon-Animations_Colorful/01_Voice-AI-Agent/Voice AI_Icon-Colorful_Animated_Static_Png/Voice ai_00059.png",
+      "category": "product-icon",
+      "keywords": [
+        "voice",
+        "00059",
+        "ai",
+        "artificial intelligence",
+        "telephony"
+      ],
+      "product": "voice-ai",
+      "bestFor": [
+        "voice-ai product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Animations/Icon-Animations_Colorful/01_Voice-AI-Agent/Voice AI_Icon-Colorful_Animated_Static_Png/Voice ai_00060.png",
+      "category": "product-icon",
+      "keywords": [
+        "voice",
+        "00060",
+        "ai",
+        "artificial intelligence",
+        "telephony"
+      ],
+      "product": "voice-ai",
+      "bestFor": [
+        "voice-ai product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Animations/Icon-Animations_Colorful/01_Voice-AI-Agent/Voice AI_Icon-Colorful_Animated_Static_Png/Voice ai_00061.png",
+      "category": "product-icon",
+      "keywords": [
+        "voice",
+        "00061",
+        "ai",
+        "artificial intelligence",
+        "telephony"
+      ],
+      "product": "voice-ai",
+      "bestFor": [
+        "voice-ai product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Animations/Icon-Animations_Colorful/01_Voice-AI-Agent/Voice AI_Icon-Colorful_Animated_Static_Png/Voice ai_00062.png",
+      "category": "product-icon",
+      "keywords": [
+        "voice",
+        "00062",
+        "ai",
+        "artificial intelligence",
+        "telephony"
+      ],
+      "product": "voice-ai",
+      "bestFor": [
+        "voice-ai product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Animations/Icon-Animations_Colorful/01_Voice-AI-Agent/Voice AI_Icon-Colorful_Animated_Static_Png/Voice ai_00063.png",
+      "category": "product-icon",
+      "keywords": [
+        "voice",
+        "00063",
+        "ai",
+        "artificial intelligence",
+        "telephony"
+      ],
+      "product": "voice-ai",
+      "bestFor": [
+        "voice-ai product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Animations/Icon-Animations_Colorful/01_Voice-AI-Agent/Voice AI_Icon-Colorful_Animated_Static_Png/Voice ai_00064.png",
+      "category": "product-icon",
+      "keywords": [
+        "voice",
+        "00064",
+        "ai",
+        "artificial intelligence",
+        "telephony"
+      ],
+      "product": "voice-ai",
+      "bestFor": [
+        "voice-ai product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Animations/Icon-Animations_Colorful/01_Voice-AI-Agent/Voice AI_Icon-Colorful_Animated_Static_Png/Voice ai_00065.png",
+      "category": "product-icon",
+      "keywords": [
+        "voice",
+        "00065",
+        "ai",
+        "artificial intelligence",
+        "telephony"
+      ],
+      "product": "voice-ai",
+      "bestFor": [
+        "voice-ai product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Animations/Icon-Animations_Colorful/01_Voice-AI-Agent/Voice AI_Icon-Colorful_Animated_Static_Png/Voice ai_00073.png",
+      "category": "product-icon",
+      "keywords": [
+        "voice",
+        "00073",
+        "ai",
+        "artificial intelligence",
+        "telephony"
+      ],
+      "product": "voice-ai",
+      "bestFor": [
+        "voice-ai product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Animations/Icon-Animations_Colorful/01_Voice-AI-Agent/Voice AI_Icon-Colorful_Animated_Static_Png/Voice ai_00074.png",
+      "category": "product-icon",
+      "keywords": [
+        "voice",
+        "00074",
+        "ai",
+        "artificial intelligence",
+        "telephony"
+      ],
+      "product": "voice-ai",
+      "bestFor": [
+        "voice-ai product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Animations/Icon-Animations_Colorful/01_Voice-AI-Agent/Voice AI_Icon-Colorful_Animated_Static_Png/Voice ai_00075.png",
+      "category": "product-icon",
+      "keywords": [
+        "voice",
+        "00075",
+        "ai",
+        "artificial intelligence",
+        "telephony"
+      ],
+      "product": "voice-ai",
+      "bestFor": [
+        "voice-ai product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Animations/Icon-Animations_Colorful/01_Voice-AI-Agent/Voice AI_Icon-Colorful_Animated_Static_Png/Voice ai_00076.png",
+      "category": "product-icon",
+      "keywords": [
+        "voice",
+        "00076",
+        "ai",
+        "artificial intelligence",
+        "telephony"
+      ],
+      "product": "voice-ai",
+      "bestFor": [
+        "voice-ai product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Animations/Icon-Animations_Colorful/01_Voice-AI-Agent/Voice AI_Icon-Colorful_Animated_Static_Png/Voice ai_00077.png",
+      "category": "product-icon",
+      "keywords": [
+        "voice",
+        "00077",
+        "ai",
+        "artificial intelligence",
+        "telephony"
+      ],
+      "product": "voice-ai",
+      "bestFor": [
+        "voice-ai product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Animations/Icon-Animations_Colorful/01_Voice-AI-Agent/Voice AI_Icon-Colorful_Animated_Static_Png/Voice ai_00078.png",
+      "category": "product-icon",
+      "keywords": [
+        "voice",
+        "00078",
+        "ai",
+        "artificial intelligence",
+        "telephony"
+      ],
+      "product": "voice-ai",
+      "bestFor": [
+        "voice-ai product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Animations/Icon-Animations_Colorful/01_Voice-AI-Agent/Voice AI_Icon-Colorful_Animated_Static_Png/Voice ai_00079.png",
+      "category": "product-icon",
+      "keywords": [
+        "voice",
+        "00079",
+        "ai",
+        "artificial intelligence",
+        "telephony"
+      ],
+      "product": "voice-ai",
+      "bestFor": [
+        "voice-ai product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Animations/Icon-Animations_Colorful/01_Voice-AI-Agent/Voice AI_Icon-Colorful_Animated_Static_Png/Voice ai_00080.png",
+      "category": "product-icon",
+      "keywords": [
+        "voice",
+        "00080",
+        "ai",
+        "artificial intelligence",
+        "telephony"
+      ],
+      "product": "voice-ai",
+      "bestFor": [
+        "voice-ai product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Animations/Icon-Animations_Colorful/01_Voice-AI-Agent/Voice AI_Icon-Colorful_Animated_Static_Png/Voice ai_00081.png",
+      "category": "product-icon",
+      "keywords": [
+        "voice",
+        "00081",
+        "ai",
+        "artificial intelligence",
+        "telephony"
+      ],
+      "product": "voice-ai",
+      "bestFor": [
+        "voice-ai product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Animations/Icon-Animations_Colorful/01_Voice-AI-Agent/Voice AI_Icon-Colorful_Animated_Static_Png/Voice ai_00082.png",
+      "category": "product-icon",
+      "keywords": [
+        "voice",
+        "00082",
+        "ai",
+        "artificial intelligence",
+        "telephony"
+      ],
+      "product": "voice-ai",
+      "bestFor": [
+        "voice-ai product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Animations/Icon-Animations_Colorful/01_Voice-AI-Agent/Voice AI_Icon-Colorful_Animated_Static_Png/Voice ai_00083.png",
+      "category": "product-icon",
+      "keywords": [
+        "voice",
+        "00083",
+        "ai",
+        "artificial intelligence",
+        "telephony"
+      ],
+      "product": "voice-ai",
+      "bestFor": [
+        "voice-ai product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Animations/Icon-Animations_Colorful/01_Voice-AI-Agent/Voice AI_Icon-Colorful_Animated_Static_Png/Voice ai_00084.png",
+      "category": "product-icon",
+      "keywords": [
+        "voice",
+        "00084",
+        "ai",
+        "artificial intelligence",
+        "telephony"
+      ],
+      "product": "voice-ai",
+      "bestFor": [
+        "voice-ai product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Animations/Icon-Animations_Colorful/01_Voice-AI-Agent/Voice AI_Icon-Colorful_Animated_Static_Png/Voice ai_00085.png",
+      "category": "product-icon",
+      "keywords": [
+        "voice",
+        "00085",
+        "ai",
+        "artificial intelligence",
+        "telephony"
+      ],
+      "product": "voice-ai",
+      "bestFor": [
+        "voice-ai product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Animations/Icon-Animations_Colorful/01_Voice-AI-Agent/Voice AI_Icon-Colorful_Animated_Static_Png/Voice ai_00086.png",
+      "category": "product-icon",
+      "keywords": [
+        "voice",
+        "00086",
+        "ai",
+        "artificial intelligence",
+        "telephony"
+      ],
+      "product": "voice-ai",
+      "bestFor": [
+        "voice-ai product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Animations/Icon-Animations_Colorful/01_Voice-AI-Agent/Voice AI_Icon-Colorful_Animated_Static_Png/Voice ai_00087.png",
+      "category": "product-icon",
+      "keywords": [
+        "voice",
+        "00087",
+        "ai",
+        "artificial intelligence",
+        "telephony"
+      ],
+      "product": "voice-ai",
+      "bestFor": [
+        "voice-ai product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Animations/Icon-Animations_Colorful/01_Voice-AI-Agent/Voice AI_Icon-Colorful_Animated_Static_Png/Voice ai_00088.png",
+      "category": "product-icon",
+      "keywords": [
+        "voice",
+        "00088",
+        "ai",
+        "artificial intelligence",
+        "telephony"
+      ],
+      "product": "voice-ai",
+      "bestFor": [
+        "voice-ai product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Animations/Icon-Animations_Colorful/01_Voice-AI-Agent/Voice AI_Icon-Colorful_Animated_Static_Png/Voice ai_00089.png",
+      "category": "product-icon",
+      "keywords": [
+        "voice",
+        "00089",
+        "ai",
+        "artificial intelligence",
+        "telephony"
+      ],
+      "product": "voice-ai",
+      "bestFor": [
+        "voice-ai product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Animations/Icon-Animations_Colorful/01_Voice-AI-Agent/Voice AI_Icon-Colorful_Animated_Static_Png/Voice ai_00090.png",
+      "category": "product-icon",
+      "keywords": [
+        "voice",
+        "00090",
+        "ai",
+        "artificial intelligence",
+        "telephony"
+      ],
+      "product": "voice-ai",
+      "bestFor": [
+        "voice-ai product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Animations/Icon-Animations_Colorful/01_Voice-AI-Agent/Voice AI_Icon-Colorful_Animated_Static_Png/Voice ai_00099.png",
+      "category": "product-icon",
+      "keywords": [
+        "voice",
+        "00099",
+        "ai",
+        "artificial intelligence",
+        "telephony"
+      ],
+      "product": "voice-ai",
+      "bestFor": [
+        "voice-ai product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Animations/Icon-Animations_Colorful/01_Voice-AI-Agent/Voice AI_Icon-Colorful_Animated_Static_Png/Voice ai_00100.png",
+      "category": "product-icon",
+      "keywords": [
+        "voice",
+        "00100",
+        "ai",
+        "artificial intelligence",
+        "telephony"
+      ],
+      "product": "voice-ai",
+      "bestFor": [
+        "voice-ai product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Animations/Icon-Animations_Colorful/01_Voice-AI-Agent/Voice AI_Icon-Colorful_Animated_Static_Png/Voice ai_00101.png",
+      "category": "product-icon",
+      "keywords": [
+        "voice",
+        "00101",
+        "ai",
+        "artificial intelligence",
+        "telephony"
+      ],
+      "product": "voice-ai",
+      "bestFor": [
+        "voice-ai product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Animations/Icon-Animations_Colorful/01_Voice-AI-Agent/Voice AI_Icon-Colorful_Animated_Static_Png/Voice ai_00102.png",
+      "category": "product-icon",
+      "keywords": [
+        "voice",
+        "00102",
+        "ai",
+        "artificial intelligence",
+        "telephony"
+      ],
+      "product": "voice-ai",
+      "bestFor": [
+        "voice-ai product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Animations/Icon-Animations_Colorful/01_Voice-AI-Agent/Voice AI_Icon-Colorful_Animated_Static_Png/Voice ai_00103.png",
+      "category": "product-icon",
+      "keywords": [
+        "voice",
+        "00103",
+        "ai",
+        "artificial intelligence",
+        "telephony"
+      ],
+      "product": "voice-ai",
+      "bestFor": [
+        "voice-ai product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Animations/Icon-Animations_Colorful/01_Voice-AI-Agent/Voice AI_Icon-Colorful_Animated_Static_Png/Voice ai_00104.png",
+      "category": "product-icon",
+      "keywords": [
+        "voice",
+        "00104",
+        "ai",
+        "artificial intelligence",
+        "telephony"
+      ],
+      "product": "voice-ai",
+      "bestFor": [
+        "voice-ai product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Animations/Icon-Animations_Colorful/01_Voice-AI-Agent/Voice AI_Icon-Colorful_Animated_Static_Png/Voice ai_00105.png",
+      "category": "product-icon",
+      "keywords": [
+        "voice",
+        "00105",
+        "ai",
+        "artificial intelligence",
+        "telephony"
+      ],
+      "product": "voice-ai",
+      "bestFor": [
+        "voice-ai product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Animations/Icon-Animations_Colorful/01_Voice-AI-Agent/Voice AI_Icon-Colorful_Animated_Static_Png/Voice ai_00106.png",
+      "category": "product-icon",
+      "keywords": [
+        "voice",
+        "00106",
+        "ai",
+        "artificial intelligence",
+        "telephony"
+      ],
+      "product": "voice-ai",
+      "bestFor": [
+        "voice-ai product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Animations/Icon-Animations_Colorful/01_Voice-AI-Agent/Voice AI_Icon-Colorful_Animated_Static_Png/Voice ai_00107.png",
+      "category": "product-icon",
+      "keywords": [
+        "voice",
+        "00107",
+        "ai",
+        "artificial intelligence",
+        "telephony"
+      ],
+      "product": "voice-ai",
+      "bestFor": [
+        "voice-ai product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Animations/Icon-Animations_Colorful/01_Voice-AI-Agent/Voice AI_Icon-Colorful_Animated_Static_Png/Voice ai_00108.png",
+      "category": "product-icon",
+      "keywords": [
+        "voice",
+        "00108",
+        "ai",
+        "artificial intelligence",
+        "telephony"
+      ],
+      "product": "voice-ai",
+      "bestFor": [
+        "voice-ai product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Animations/Icon-Animations_Colorful/01_Voice-AI-Agent/Voice AI_Icon-Colorful_Animated_Static_Png/Voice ai_00109.png",
+      "category": "product-icon",
+      "keywords": [
+        "voice",
+        "00109",
+        "ai",
+        "artificial intelligence",
+        "telephony"
+      ],
+      "product": "voice-ai",
+      "bestFor": [
+        "voice-ai product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Animations/Icon-Animations_Colorful/01_Voice-AI-Agent/Voice AI_Icon-Colorful_Animated_Static_Png/Voice ai_00110.png",
+      "category": "product-icon",
+      "keywords": [
+        "voice",
+        "00110",
+        "ai",
+        "artificial intelligence",
+        "telephony"
+      ],
+      "product": "voice-ai",
+      "bestFor": [
+        "voice-ai product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Animations/Icon-Animations_Colorful/01_Voice-AI-Agent/Voice AI_Icon-Colorful_Animated_Static_Png/Voice ai_00111.png",
+      "category": "product-icon",
+      "keywords": [
+        "voice",
+        "00111",
+        "ai",
+        "artificial intelligence",
+        "telephony"
+      ],
+      "product": "voice-ai",
+      "bestFor": [
+        "voice-ai product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Animations/Icon-Animations_Colorful/01_Voice-AI-Agent/Voice AI_Icon-Colorful_Animated_Static_Png/Voice ai_00112.png",
+      "category": "product-icon",
+      "keywords": [
+        "voice",
+        "00112",
+        "ai",
+        "artificial intelligence",
+        "telephony"
+      ],
+      "product": "voice-ai",
+      "bestFor": [
+        "voice-ai product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Animations/Icon-Animations_Colorful/01_Voice-AI-Agent/Voice AI_Icon-Colorful_Animated_Static_Png/Voice ai_00113.png",
+      "category": "product-icon",
+      "keywords": [
+        "voice",
+        "00113",
+        "ai",
+        "artificial intelligence",
+        "telephony"
+      ],
+      "product": "voice-ai",
+      "bestFor": [
+        "voice-ai product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Animations/Icon-Animations_Colorful/01_Voice-AI-Agent/Voice AI_Icon-Colorful_Animated_Static_Png/Voice ai_00114.png",
+      "category": "product-icon",
+      "keywords": [
+        "voice",
+        "00114",
+        "ai",
+        "artificial intelligence",
+        "telephony"
+      ],
+      "product": "voice-ai",
+      "bestFor": [
+        "voice-ai product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Animations/Icon-Animations_Colorful/01_Voice-AI-Agent/Voice AI_Icon-Colorful_Animated_Static_Png/Voice ai_00115.png",
+      "category": "product-icon",
+      "keywords": [
+        "voice",
+        "00115",
+        "ai",
+        "artificial intelligence",
+        "telephony"
+      ],
+      "product": "voice-ai",
+      "bestFor": [
+        "voice-ai product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Animations/Icon-Animations_Colorful/01_Voice-AI-Agent/Voice AI_Icon-Colorful_Animated_Static_Png/Voice ai_00116.png",
+      "category": "product-icon",
+      "keywords": [
+        "voice",
+        "00116",
+        "ai",
+        "artificial intelligence",
+        "telephony"
+      ],
+      "product": "voice-ai",
+      "bestFor": [
+        "voice-ai product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Animations/Icon-Animations_Colorful/01_Voice-AI-Agent/Voice AI_Icon-Colorful_Animated_Static_Png/Voice ai_00117.png",
+      "category": "product-icon",
+      "keywords": [
+        "voice",
+        "00117",
+        "ai",
+        "artificial intelligence",
+        "telephony"
+      ],
+      "product": "voice-ai",
+      "bestFor": [
+        "voice-ai product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Animations/Icon-Animations_Colorful/01_Voice-AI-Agent/Voice AI_Icon-Colorful_Animated_Static_Png/Voice ai_00118.png",
+      "category": "product-icon",
+      "keywords": [
+        "voice",
+        "00118",
+        "ai",
+        "artificial intelligence",
+        "telephony"
+      ],
+      "product": "voice-ai",
+      "bestFor": [
+        "voice-ai product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Animations/Icon-Animations_Colorful/01_Voice-AI-Agent/Voice AI_Icon-Colorful_Animated_Static_Png/Voice ai_00119.png",
+      "category": "product-icon",
+      "keywords": [
+        "voice",
+        "00119",
+        "ai",
+        "artificial intelligence",
+        "telephony"
+      ],
+      "product": "voice-ai",
+      "bestFor": [
+        "voice-ai product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Animations/Icon-Animations_Colorful/04_RCS/RCS_Icon-Colorful_Animated_Static_Png/png_00013.png",
+      "category": "product-icon",
+      "keywords": [
+        "png",
+        "00013"
+      ],
+      "product": "rcs",
+      "bestFor": [
+        "rcs product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Animations/Icon-Animations_Colorful/04_RCS/RCS_Icon-Colorful_Animated_Static_Png/png_00014.png",
+      "category": "product-icon",
+      "keywords": [
+        "png",
+        "00014"
+      ],
+      "product": "rcs",
+      "bestFor": [
+        "rcs product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Animations/Icon-Animations_Colorful/04_RCS/RCS_Icon-Colorful_Animated_Static_Png/png_00015.png",
+      "category": "product-icon",
+      "keywords": [
+        "png",
+        "00015"
+      ],
+      "product": "rcs",
+      "bestFor": [
+        "rcs product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Animations/Icon-Animations_Colorful/04_RCS/RCS_Icon-Colorful_Animated_Static_Png/png_00016.png",
+      "category": "product-icon",
+      "keywords": [
+        "png",
+        "00016"
+      ],
+      "product": "rcs",
+      "bestFor": [
+        "rcs product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Animations/Icon-Animations_Colorful/04_RCS/RCS_Icon-Colorful_Animated_Static_Png/png_00017.png",
+      "category": "product-icon",
+      "keywords": [
+        "png",
+        "00017"
+      ],
+      "product": "rcs",
+      "bestFor": [
+        "rcs product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Animations/Icon-Animations_Colorful/04_RCS/RCS_Icon-Colorful_Animated_Static_Png/png_00018.png",
+      "category": "product-icon",
+      "keywords": [
+        "png",
+        "00018"
+      ],
+      "product": "rcs",
+      "bestFor": [
+        "rcs product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Animations/Icon-Animations_Colorful/04_RCS/RCS_Icon-Colorful_Animated_Static_Png/png_00019.png",
+      "category": "product-icon",
+      "keywords": [
+        "png",
+        "00019"
+      ],
+      "product": "rcs",
+      "bestFor": [
+        "rcs product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Animations/Icon-Animations_Colorful/04_RCS/RCS_Icon-Colorful_Animated_Static_Png/png_00020.png",
+      "category": "product-icon",
+      "keywords": [
+        "png",
+        "00020"
+      ],
+      "product": "rcs",
+      "bestFor": [
+        "rcs product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Animations/Icon-Animations_Colorful/04_RCS/RCS_Icon-Colorful_Animated_Static_Png/png_00021.png",
+      "category": "product-icon",
+      "keywords": [
+        "png",
+        "00021"
+      ],
+      "product": "rcs",
+      "bestFor": [
+        "rcs product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Animations/Icon-Animations_Colorful/04_RCS/RCS_Icon-Colorful_Animated_Static_Png/png_00023.png",
+      "category": "product-icon",
+      "keywords": [
+        "png",
+        "00023"
+      ],
+      "product": "rcs",
+      "bestFor": [
+        "rcs product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Animations/Icon-Animations_Colorful/04_RCS/RCS_Icon-Colorful_Animated_Static_Png/png_00024.png",
+      "category": "product-icon",
+      "keywords": [
+        "png",
+        "00024"
+      ],
+      "product": "rcs",
+      "bestFor": [
+        "rcs product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Animations/Icon-Animations_Colorful/04_RCS/RCS_Icon-Colorful_Animated_Static_Png/png_00025.png",
+      "category": "product-icon",
+      "keywords": [
+        "png",
+        "00025"
+      ],
+      "product": "rcs",
+      "bestFor": [
+        "rcs product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Animations/Icon-Animations_Colorful/04_RCS/RCS_Icon-Colorful_Animated_Static_Png/png_00028.png",
+      "category": "product-icon",
+      "keywords": [
+        "png",
+        "00028"
+      ],
+      "product": "rcs",
+      "bestFor": [
+        "rcs product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Animations/Icon-Animations_Colorful/04_RCS/RCS_Icon-Colorful_Animated_Static_Png/png_00030.png",
+      "category": "product-icon",
+      "keywords": [
+        "png",
+        "00030"
+      ],
+      "product": "rcs",
+      "bestFor": [
+        "rcs product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Animations/Icon-Animations_Colorful/04_RCS/RCS_Icon-Colorful_Animated_Static_Png/png_00031.png",
+      "category": "product-icon",
+      "keywords": [
+        "png",
+        "00031"
+      ],
+      "product": "rcs",
+      "bestFor": [
+        "rcs product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Animations/Icon-Animations_Colorful/04_RCS/RCS_Icon-Colorful_Animated_Static_Png/png_00034.png",
+      "category": "product-icon",
+      "keywords": [
+        "png",
+        "00034"
+      ],
+      "product": "rcs",
+      "bestFor": [
+        "rcs product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Animations/Icon-Animations_Colorful/04_RCS/RCS_Icon-Colorful_Animated_Static_Png/png_00036.png",
+      "category": "product-icon",
+      "keywords": [
+        "png",
+        "00036"
+      ],
+      "product": "rcs",
+      "bestFor": [
+        "rcs product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Animations/Icon-Animations_Colorful/04_RCS/RCS_Icon-Colorful_Animated_Static_Png/png_00037.png",
+      "category": "product-icon",
+      "keywords": [
+        "png",
+        "00037"
+      ],
+      "product": "rcs",
+      "bestFor": [
+        "rcs product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Animations/Icon-Animations_Colorful/04_RCS/RCS_Icon-Colorful_Animated_Static_Png/png_00038.png",
+      "category": "product-icon",
+      "keywords": [
+        "png",
+        "00038"
+      ],
+      "product": "rcs",
+      "bestFor": [
+        "rcs product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Animations/Icon-Animations_Colorful/04_RCS/RCS_Icon-Colorful_Animated_Static_Png/png_00039.png",
+      "category": "product-icon",
+      "keywords": [
+        "png",
+        "00039"
+      ],
+      "product": "rcs",
+      "bestFor": [
+        "rcs product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Animations/Icon-Animations_Colorful/04_RCS/RCS_Icon-Colorful_Animated_Static_Png/png_00040.png",
+      "category": "product-icon",
+      "keywords": [
+        "png",
+        "00040"
+      ],
+      "product": "rcs",
+      "bestFor": [
+        "rcs product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Animations/Icon-Animations_Colorful/04_RCS/RCS_Icon-Colorful_Animated_Static_Png/png_00041.png",
+      "category": "product-icon",
+      "keywords": [
+        "png",
+        "00041"
+      ],
+      "product": "rcs",
+      "bestFor": [
+        "rcs product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Animations/Icon-Animations_Colorful/04_RCS/RCS_Icon-Colorful_Animated_Static_Png/png_00042.png",
+      "category": "product-icon",
+      "keywords": [
+        "png",
+        "00042"
+      ],
+      "product": "rcs",
+      "bestFor": [
+        "rcs product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Animations/Icon-Animations_Colorful/04_RCS/RCS_Icon-Colorful_Animated_Static_Png/png_00043.png",
+      "category": "product-icon",
+      "keywords": [
+        "png",
+        "00043"
+      ],
+      "product": "rcs",
+      "bestFor": [
+        "rcs product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Animations/Icon-Animations_Colorful/04_RCS/RCS_Icon-Colorful_Animated_Static_Png/png_00044.png",
+      "category": "product-icon",
+      "keywords": [
+        "png",
+        "00044"
+      ],
+      "product": "rcs",
+      "bestFor": [
+        "rcs product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Animations/Icon-Animations_Colorful/04_RCS/RCS_Icon-Colorful_Animated_Static_Png/png_00047.png",
+      "category": "product-icon",
+      "keywords": [
+        "png",
+        "00047"
+      ],
+      "product": "rcs",
+      "bestFor": [
+        "rcs product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Animations/Icon-Animations_Colorful/04_RCS/RCS_Icon-Colorful_Animated_Static_Png/png_00048.png",
+      "category": "product-icon",
+      "keywords": [
+        "png",
+        "00048"
+      ],
+      "product": "rcs",
+      "bestFor": [
+        "rcs product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Animations/Icon-Animations_Colorful/04_RCS/RCS_Icon-Colorful_Animated_Static_Png/png_00050.png",
+      "category": "product-icon",
+      "keywords": [
+        "png",
+        "00050"
+      ],
+      "product": "rcs",
+      "bestFor": [
+        "rcs product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Animations/Icon-Animations_Colorful/04_RCS/RCS_Icon-Colorful_Animated_Static_Png/png_00051.png",
+      "category": "product-icon",
+      "keywords": [
+        "png",
+        "00051"
+      ],
+      "product": "rcs",
+      "bestFor": [
+        "rcs product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Animations/Icon-Animations_Colorful/04_RCS/RCS_Icon-Colorful_Animated_Static_Png/png_00053.png",
+      "category": "product-icon",
+      "keywords": [
+        "png",
+        "00053"
+      ],
+      "product": "rcs",
+      "bestFor": [
+        "rcs product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Animations/Icon-Animations_Colorful/04_RCS/RCS_Icon-Colorful_Animated_Static_Png/png_00054.png",
+      "category": "product-icon",
+      "keywords": [
+        "png",
+        "00054"
+      ],
+      "product": "rcs",
+      "bestFor": [
+        "rcs product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Animations/Icon-Animations_Colorful/04_RCS/RCS_Icon-Colorful_Animated_Static_Png/png_00055.png",
+      "category": "product-icon",
+      "keywords": [
+        "png",
+        "00055"
+      ],
+      "product": "rcs",
+      "bestFor": [
+        "rcs product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Animations/Icon-Animations_Colorful/04_RCS/RCS_Icon-Colorful_Animated_Static_Png/png_00056.png",
+      "category": "product-icon",
+      "keywords": [
+        "png",
+        "00056"
+      ],
+      "product": "rcs",
+      "bestFor": [
+        "rcs product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Animations/Icon-Animations_Colorful/04_RCS/RCS_Icon-Colorful_Animated_Static_Png/png_00057.png",
+      "category": "product-icon",
+      "keywords": [
+        "png",
+        "00057"
+      ],
+      "product": "rcs",
+      "bestFor": [
+        "rcs product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Animations/Icon-Animations_Colorful/04_RCS/RCS_Icon-Colorful_Animated_Static_Png/png_00058.png",
+      "category": "product-icon",
+      "keywords": [
+        "png",
+        "00058"
+      ],
+      "product": "rcs",
+      "bestFor": [
+        "rcs product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Animations/Icon-Animations_Colorful/04_RCS/RCS_Icon-Colorful_Animated_Static_Png/png_00059.png",
+      "category": "product-icon",
+      "keywords": [
+        "png",
+        "00059"
+      ],
+      "product": "rcs",
+      "bestFor": [
+        "rcs product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Animations/Icon-Animations_Colorful/04_RCS/RCS_Icon-Colorful_Animated_Static_Png/png_00060.png",
+      "category": "product-icon",
+      "keywords": [
+        "png",
+        "00060"
+      ],
+      "product": "rcs",
+      "bestFor": [
+        "rcs product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Animations/Icon-Animations_Colorful/04_RCS/RCS_Icon-Colorful_Animated_Static_Png/png_00061.png",
+      "category": "product-icon",
+      "keywords": [
+        "png",
+        "00061"
+      ],
+      "product": "rcs",
+      "bestFor": [
+        "rcs product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Animations/Icon-Animations_Colorful/04_RCS/RCS_Icon-Colorful_Animated_Static_Png/png_00062.png",
+      "category": "product-icon",
+      "keywords": [
+        "png",
+        "00062"
+      ],
+      "product": "rcs",
+      "bestFor": [
+        "rcs product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Animations/Icon-Animations_Colorful/04_RCS/RCS_Icon-Colorful_Animated_Static_Png/png_00063.png",
+      "category": "product-icon",
+      "keywords": [
+        "png",
+        "00063"
+      ],
+      "product": "rcs",
+      "bestFor": [
+        "rcs product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Animations/Icon-Animations_Colorful/04_RCS/RCS_Icon-Colorful_Animated_Static_Png/png_00065.png",
+      "category": "product-icon",
+      "keywords": [
+        "png",
+        "00065"
+      ],
+      "product": "rcs",
+      "bestFor": [
+        "rcs product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Animations/Icon-Animations_Colorful/04_RCS/RCS_Icon-Colorful_Animated_Static_Png/png_00067.png",
+      "category": "product-icon",
+      "keywords": [
+        "png",
+        "00067"
+      ],
+      "product": "rcs",
+      "bestFor": [
+        "rcs product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Animations/Icon-Animations_Colorful/04_RCS/RCS_Icon-Colorful_Animated_Static_Png/png_00072.png",
+      "category": "product-icon",
+      "keywords": [
+        "png",
+        "00072"
+      ],
+      "product": "rcs",
+      "bestFor": [
+        "rcs product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Animations/Icon-Animations_Colorful/04_RCS/RCS_Icon-Colorful_Animated_Static_Png/png_00073.png",
+      "category": "product-icon",
+      "keywords": [
+        "png",
+        "00073"
+      ],
+      "product": "rcs",
+      "bestFor": [
+        "rcs product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Animations/Icon-Animations_Colorful/04_RCS/RCS_Icon-Colorful_Animated_Static_Png/png_00074.png",
+      "category": "product-icon",
+      "keywords": [
+        "png",
+        "00074"
+      ],
+      "product": "rcs",
+      "bestFor": [
+        "rcs product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Animations/Icon-Animations_Colorful/04_RCS/RCS_Icon-Colorful_Animated_Static_Png/png_00075.png",
+      "category": "product-icon",
+      "keywords": [
+        "png",
+        "00075"
+      ],
+      "product": "rcs",
+      "bestFor": [
+        "rcs product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Animations/Icon-Animations_Colorful/04_RCS/RCS_Icon-Colorful_Animated_Static_Png/png_00076.png",
+      "category": "product-icon",
+      "keywords": [
+        "png",
+        "00076"
+      ],
+      "product": "rcs",
+      "bestFor": [
+        "rcs product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Animations/Icon-Animations_Colorful/04_RCS/RCS_Icon-Colorful_Animated_Static_Png/png_00077.png",
+      "category": "product-icon",
+      "keywords": [
+        "png",
+        "00077"
+      ],
+      "product": "rcs",
+      "bestFor": [
+        "rcs product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Animations/Icon-Animations_Colorful/04_RCS/RCS_Icon-Colorful_Animated_Static_Png/png_00078.png",
+      "category": "product-icon",
+      "keywords": [
+        "png",
+        "00078"
+      ],
+      "product": "rcs",
+      "bestFor": [
+        "rcs product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Animations/Icon-Animations_Colorful/04_RCS/RCS_Icon-Colorful_Animated_Static_Png/png_00080.png",
+      "category": "product-icon",
+      "keywords": [
+        "png",
+        "00080"
+      ],
+      "product": "rcs",
+      "bestFor": [
+        "rcs product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Animations/Icon-Animations_Colorful/04_RCS/RCS_Icon-Colorful_Animated_Static_Png/png_00081.png",
+      "category": "product-icon",
+      "keywords": [
+        "png",
+        "00081"
+      ],
+      "product": "rcs",
+      "bestFor": [
+        "rcs product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Animations/Icon-Animations_Colorful/04_RCS/RCS_Icon-Colorful_Animated_Static_Png/png_00082.png",
+      "category": "product-icon",
+      "keywords": [
+        "png",
+        "00082"
+      ],
+      "product": "rcs",
+      "bestFor": [
+        "rcs product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Animations/Icon-Animations_Colorful/04_RCS/RCS_Icon-Colorful_Animated_Static_Png/png_00083.png",
+      "category": "product-icon",
+      "keywords": [
+        "png",
+        "00083"
+      ],
+      "product": "rcs",
+      "bestFor": [
+        "rcs product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Animations/Icon-Animations_Colorful/04_RCS/RCS_Icon-Colorful_Animated_Static_Png/png_00084.png",
+      "category": "product-icon",
+      "keywords": [
+        "png",
+        "00084"
+      ],
+      "product": "rcs",
+      "bestFor": [
+        "rcs product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Animations/Icon-Animations_Colorful/04_RCS/RCS_Icon-Colorful_Animated_Static_Png/png_00085.png",
+      "category": "product-icon",
+      "keywords": [
+        "png",
+        "00085"
+      ],
+      "product": "rcs",
+      "bestFor": [
+        "rcs product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Animations/Icon-Animations_Colorful/04_RCS/RCS_Icon-Colorful_Animated_Static_Png/png_00086.png",
+      "category": "product-icon",
+      "keywords": [
+        "png",
+        "00086"
+      ],
+      "product": "rcs",
+      "bestFor": [
+        "rcs product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Animations/Icon-Animations_Colorful/04_RCS/RCS_Icon-Colorful_Animated_Static_Png/png_00087.png",
+      "category": "product-icon",
+      "keywords": [
+        "png",
+        "00087"
+      ],
+      "product": "rcs",
+      "bestFor": [
+        "rcs product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Animations/Icon-Animations_Colorful/04_RCS/RCS_Icon-Colorful_Animated_Static_Png/png_00088.png",
+      "category": "product-icon",
+      "keywords": [
+        "png",
+        "00088"
+      ],
+      "product": "rcs",
+      "bestFor": [
+        "rcs product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Animations/Icon-Animations_Colorful/04_RCS/RCS_Icon-Colorful_Animated_Static_Png/png_00089.png",
+      "category": "product-icon",
+      "keywords": [
+        "png",
+        "00089"
+      ],
+      "product": "rcs",
+      "bestFor": [
+        "rcs product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Animations/Icon-Animations_Colorful/04_RCS/RCS_Icon-Colorful_Animated_Static_Png/png_00090.png",
+      "category": "product-icon",
+      "keywords": [
+        "png",
+        "00090"
+      ],
+      "product": "rcs",
+      "bestFor": [
+        "rcs product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Animations/Icon-Animations_Colorful/04_RCS/RCS_Icon-Colorful_Animated_Static_Png/png_00091.png",
+      "category": "product-icon",
+      "keywords": [
+        "png",
+        "00091"
+      ],
+      "product": "rcs",
+      "bestFor": [
+        "rcs product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Animations/Icon-Animations_Colorful/04_RCS/RCS_Icon-Colorful_Animated_Static_Png/png_00092.png",
+      "category": "product-icon",
+      "keywords": [
+        "png",
+        "00092"
+      ],
+      "product": "rcs",
+      "bestFor": [
+        "rcs product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Animations/Icon-Animations_Colorful/04_RCS/RCS_Icon-Colorful_Animated_Static_Png/png_00094.png",
+      "category": "product-icon",
+      "keywords": [
+        "png",
+        "00094"
+      ],
+      "product": "rcs",
+      "bestFor": [
+        "rcs product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Animations/Icon-Animations_Colorful/04_RCS/RCS_Icon-Colorful_Animated_Static_Png/png_00095.png",
+      "category": "product-icon",
+      "keywords": [
+        "png",
+        "00095"
+      ],
+      "product": "rcs",
+      "bestFor": [
+        "rcs product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Animations/Icon-Animations_Colorful/04_RCS/RCS_Icon-Colorful_Animated_Static_Png/png_00096.png",
+      "category": "product-icon",
+      "keywords": [
+        "png",
+        "00096"
+      ],
+      "product": "rcs",
+      "bestFor": [
+        "rcs product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Animations/Icon-Animations_Colorful/04_RCS/RCS_Icon-Colorful_Animated_Static_Png/png_00097.png",
+      "category": "product-icon",
+      "keywords": [
+        "png",
+        "00097"
+      ],
+      "product": "rcs",
+      "bestFor": [
+        "rcs product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Animations/Icon-Animations_Colorful/04_RCS/RCS_Icon-Colorful_Animated_Static_Png/png_00098.png",
+      "category": "product-icon",
+      "keywords": [
+        "png",
+        "00098"
+      ],
+      "product": "rcs",
+      "bestFor": [
+        "rcs product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Animations/Icon-Animations_Colorful/04_RCS/RCS_Icon-Colorful_Animated_Static_Png/png_00099.png",
+      "category": "product-icon",
+      "keywords": [
+        "png",
+        "00099"
+      ],
+      "product": "rcs",
+      "bestFor": [
+        "rcs product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Animations/Icon-Animations_Colorful/04_RCS/RCS_Icon-Colorful_Animated_Static_Png/png_00100.png",
+      "category": "product-icon",
+      "keywords": [
+        "png",
+        "00100"
+      ],
+      "product": "rcs",
+      "bestFor": [
+        "rcs product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Animations/Icon-Animations_Colorful/04_RCS/RCS_Icon-Colorful_Animated_Static_Png/png_00101.png",
+      "category": "product-icon",
+      "keywords": [
+        "png",
+        "00101"
+      ],
+      "product": "rcs",
+      "bestFor": [
+        "rcs product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Animations/Icon-Animations_Colorful/04_RCS/RCS_Icon-Colorful_Animated_Static_Png/png_00102.png",
+      "category": "product-icon",
+      "keywords": [
+        "png",
+        "00102"
+      ],
+      "product": "rcs",
+      "bestFor": [
+        "rcs product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Animations/Icon-Animations_Colorful/04_RCS/RCS_Icon-Colorful_Animated_Static_Png/png_00105.png",
+      "category": "product-icon",
+      "keywords": [
+        "png",
+        "00105"
+      ],
+      "product": "rcs",
+      "bestFor": [
+        "rcs product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Animations/Icon-Animations_Colorful/04_RCS/RCS_Icon-Colorful_Animated_Static_Png/png_00107.png",
+      "category": "product-icon",
+      "keywords": [
+        "png",
+        "00107"
+      ],
+      "product": "rcs",
+      "bestFor": [
+        "rcs product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Animations/Icon-Animations_Colorful/04_RCS/RCS_Icon-Colorful_Animated_Static_Png/png_00108.png",
+      "category": "product-icon",
+      "keywords": [
+        "png",
+        "00108"
+      ],
+      "product": "rcs",
+      "bestFor": [
+        "rcs product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Animations/Icon-Animations_Colorful/04_RCS/RCS_Icon-Colorful_Animated_Static_Png/png_00109.png",
+      "category": "product-icon",
+      "keywords": [
+        "png",
+        "00109"
+      ],
+      "product": "rcs",
+      "bestFor": [
+        "rcs product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Animations/Icon-Animations_Colorful/04_RCS/RCS_Icon-Colorful_Animated_Static_Png/png_00112.png",
+      "category": "product-icon",
+      "keywords": [
+        "png",
+        "00112"
+      ],
+      "product": "rcs",
+      "bestFor": [
+        "rcs product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Animations/Icon-Animations_Colorful/04_RCS/RCS_Icon-Colorful_Animated_Static_Png/png_00113.png",
+      "category": "product-icon",
+      "keywords": [
+        "png",
+        "00113"
+      ],
+      "product": "rcs",
+      "bestFor": [
+        "rcs product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Animations/Icon-Animations_Colorful/04_RCS/RCS_Icon-Colorful_Animated_Static_Png/png_00114.png",
+      "category": "product-icon",
+      "keywords": [
+        "png",
+        "00114"
+      ],
+      "product": "rcs",
+      "bestFor": [
+        "rcs product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Animations/Icon-Animations_Colorful/04_RCS/RCS_Icon-Colorful_Animated_Static_Png/png_00116.png",
+      "category": "product-icon",
+      "keywords": [
+        "png",
+        "00116"
+      ],
+      "product": "rcs",
+      "bestFor": [
+        "rcs product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Animations/Icon-Animations_Colorful/04_RCS/RCS_Icon-Colorful_Animated_Static_Png/png_00117.png",
+      "category": "product-icon",
+      "keywords": [
+        "png",
+        "00117"
+      ],
+      "product": "rcs",
+      "bestFor": [
+        "rcs product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Animations/Icon-Animations_Colorful/04_RCS/RCS_Icon-Colorful_Animated_Static_Png/png_00118.png",
+      "category": "product-icon",
+      "keywords": [
+        "png",
+        "00118"
+      ],
+      "product": "rcs",
+      "bestFor": [
+        "rcs product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Animations/Icon-Animations_Colorful/04_RCS/RCS_Icon-Colorful_Animated_Static_Png/png_00119.png",
+      "category": "product-icon",
+      "keywords": [
+        "png",
+        "00119"
+      ],
+      "product": "rcs",
+      "bestFor": [
+        "rcs product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Animations/Icon-Animations_Colorful/04_RCS/RCS_Icon-Colorful_Animated_Static_Png/png_00121.png",
+      "category": "product-icon",
+      "keywords": [
+        "png",
+        "00121"
+      ],
+      "product": "rcs",
+      "bestFor": [
+        "rcs product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Animations/Icon-Animations_Colorful/04_RCS/RCS_Icon-Colorful_Animated_Static_Png/png_00122.png",
+      "category": "product-icon",
+      "keywords": [
+        "png",
+        "00122"
+      ],
+      "product": "rcs",
+      "bestFor": [
+        "rcs product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Animations/Icon-Animations_Colorful/_Editable/Icon-Animations_Colorful folder/(Footage)/AEUX/Marquee product branding expanded/Images/Vector_1985-193.png",
+      "category": "product-icon",
+      "keywords": [
+        "vector",
+        "1985",
+        "193"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Animations/Icon-Animations_Colorful/_Editable/Icon-Animations_Colorful folder/(Footage)/AEUX/Marquee product branding expanded/Images/Vector_1985-197.png",
+      "category": "product-icon",
+      "keywords": [
+        "vector",
+        "1985",
+        "197"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Animations/Icon-Animations_Colorful/_Editable/Icon-Animations_Colorful folder/(Footage)/Vector.png",
+      "category": "product-icon",
+      "keywords": [
+        "vector"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Static/Icon_Black_Static/00_AI/AI_Icon-Black.png",
+      "category": "product-icon",
+      "keywords": [
+        "icon",
+        "black",
+        "ai",
+        "artificial intelligence"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Static/Icon_Colorful_Static/01_Voice-AI-Agent/Voice ai_00121.png",
+      "category": "product-icon",
+      "keywords": [
+        "voice",
+        "00121",
+        "ai",
+        "artificial intelligence",
+        "telephony"
+      ],
+      "product": "voice-ai",
+      "bestFor": [
+        "voice-ai product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Static/Icon_Colorful_Static/01_Voice-AI-Agent/Voice ai_00122.png",
+      "category": "product-icon",
+      "keywords": [
+        "voice",
+        "00122",
+        "ai",
+        "artificial intelligence",
+        "telephony"
+      ],
+      "product": "voice-ai",
+      "bestFor": [
+        "voice-ai product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Static/Icon_Colorful_Static/01_Voice-AI-Agent/Voice ai_00123.png",
+      "category": "product-icon",
+      "keywords": [
+        "voice",
+        "00123",
+        "ai",
+        "artificial intelligence",
+        "telephony"
+      ],
+      "product": "voice-ai",
+      "bestFor": [
+        "voice-ai product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Static/Icon_Colorful_Static/01_Voice-AI-Agent/Voice ai_00124.png",
+      "category": "product-icon",
+      "keywords": [
+        "voice",
+        "00124",
+        "ai",
+        "artificial intelligence",
+        "telephony"
+      ],
+      "product": "voice-ai",
+      "bestFor": [
+        "voice-ai product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Static/Icon_Colorful_Static/01_Voice-AI-Agent/Voice ai_00125.png",
+      "category": "product-icon",
+      "keywords": [
+        "voice",
+        "00125",
+        "ai",
+        "artificial intelligence",
+        "telephony"
+      ],
+      "product": "voice-ai",
+      "bestFor": [
+        "voice-ai product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Static/Icon_Colorful_Static/02_Voice-API/voiceAPI_00058.png",
+      "category": "product-icon",
+      "keywords": [
+        "voiceapi",
+        "00058",
+        "voice",
+        "telephony"
+      ],
+      "product": "voice-api",
+      "bestFor": [
+        "voice-api product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Static/Icon_Colorful_Static/02_Voice-API/voiceAPI_00059.png",
+      "category": "product-icon",
+      "keywords": [
+        "voiceapi",
+        "00059",
+        "voice",
+        "telephony"
+      ],
+      "product": "voice-api",
+      "bestFor": [
+        "voice-api product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Static/Icon_Colorful_Static/02_Voice-API/voiceAPI_00063.png",
+      "category": "product-icon",
+      "keywords": [
+        "voiceapi",
+        "00063",
+        "voice",
+        "telephony"
+      ],
+      "product": "voice-api",
+      "bestFor": [
+        "voice-api product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Static/Icon_Colorful_Static/02_Voice-API/voiceAPI_00081.png",
+      "category": "product-icon",
+      "keywords": [
+        "voiceapi",
+        "00081",
+        "voice",
+        "telephony"
+      ],
+      "product": "voice-api",
+      "bestFor": [
+        "voice-api product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Static/Icon_Colorful_Static/02_Voice-API/voiceAPI_00085.png",
+      "category": "product-icon",
+      "keywords": [
+        "voiceapi",
+        "00085",
+        "voice",
+        "telephony"
+      ],
+      "product": "voice-api",
+      "bestFor": [
+        "voice-api product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Static/Icon_Colorful_Static/02_Voice-API/voiceAPI_00087.png",
+      "category": "product-icon",
+      "keywords": [
+        "voiceapi",
+        "00087",
+        "voice",
+        "telephony"
+      ],
+      "product": "voice-api",
+      "bestFor": [
+        "voice-api product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Static/Icon_Colorful_Static/02_Voice-API/voiceAPI_00089.png",
+      "category": "product-icon",
+      "keywords": [
+        "voiceapi",
+        "00089",
+        "voice",
+        "telephony"
+      ],
+      "product": "voice-api",
+      "bestFor": [
+        "voice-api product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Static/Icon_Colorful_Static/02_Voice-API/voiceAPI_00091.png",
+      "category": "product-icon",
+      "keywords": [
+        "voiceapi",
+        "00091",
+        "voice",
+        "telephony"
+      ],
+      "product": "voice-api",
+      "bestFor": [
+        "voice-api product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Static/Icon_Colorful_Static/02_Voice-API/voiceAPI_00094.png",
+      "category": "product-icon",
+      "keywords": [
+        "voiceapi",
+        "00094",
+        "voice",
+        "telephony"
+      ],
+      "product": "voice-api",
+      "bestFor": [
+        "voice-api product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Static/Icon_Colorful_Static/02_Voice-API/voiceAPI_00095.png",
+      "category": "product-icon",
+      "keywords": [
+        "voiceapi",
+        "00095",
+        "voice",
+        "telephony"
+      ],
+      "product": "voice-api",
+      "bestFor": [
+        "voice-api product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Static/Icon_Colorful_Static/02_Voice-API/voiceAPI_00097.png",
+      "category": "product-icon",
+      "keywords": [
+        "voiceapi",
+        "00097",
+        "voice",
+        "telephony"
+      ],
+      "product": "voice-api",
+      "bestFor": [
+        "voice-api product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Static/Icon_Colorful_Static/02_Voice-API/voiceAPI_00102.png",
+      "category": "product-icon",
+      "keywords": [
+        "voiceapi",
+        "00102",
+        "voice",
+        "telephony"
+      ],
+      "product": "voice-api",
+      "bestFor": [
+        "voice-api product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Static/Icon_Colorful_Static/02_Voice-API/voiceAPI_00104.png",
+      "category": "product-icon",
+      "keywords": [
+        "voiceapi",
+        "00104",
+        "voice",
+        "telephony"
+      ],
+      "product": "voice-api",
+      "bestFor": [
+        "voice-api product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Static/Icon_Colorful_Static/02_Voice-API/voiceAPI_00106.png",
+      "category": "product-icon",
+      "keywords": [
+        "voiceapi",
+        "00106",
+        "voice",
+        "telephony"
+      ],
+      "product": "voice-api",
+      "bestFor": [
+        "voice-api product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Static/Icon_Colorful_Static/02_Voice-API/voiceAPI_00130.png",
+      "category": "product-icon",
+      "keywords": [
+        "voiceapi",
+        "00130",
+        "voice",
+        "telephony"
+      ],
+      "product": "voice-api",
+      "bestFor": [
+        "voice-api product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Static/Lockup_Black_Static/03_eSIM/Product-Lockup_eSIM.png",
+      "category": "product-icon",
+      "keywords": [
+        "product",
+        "lockup",
+        "esim"
+      ],
+      "product": "esim",
+      "bestFor": [
+        "esim product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Static/Pattern_Colorful_Static/01_Voice-AI-Agent/Voice-AI-Agent_Bkrd-2_16x9.png",
+      "category": "product-icon",
+      "keywords": [
+        "voice",
+        "agent",
+        "bkrd",
+        "16x9",
+        "ai",
+        "artificial intelligence",
+        "telephony"
+      ],
+      "product": "voice-ai",
+      "bestFor": [
+        "voice-ai product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Static/Pattern_Colorful_Static/01_Voice-AI-Agent/Voice-AI-Agent_Bkrd-3_16x9.png",
+      "category": "product-icon",
+      "keywords": [
+        "voice",
+        "agent",
+        "bkrd",
+        "16x9",
+        "ai",
+        "artificial intelligence",
+        "telephony"
+      ],
+      "product": "voice-ai",
+      "bestFor": [
+        "voice-ai product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Static/Pattern_Colorful_Static/01_Voice-AI-Agent/Voice-AI-Agent_Bkrd-4_16x9.png",
+      "category": "product-icon",
+      "keywords": [
+        "voice",
+        "agent",
+        "bkrd",
+        "16x9",
+        "ai",
+        "artificial intelligence",
+        "telephony"
+      ],
+      "product": "voice-ai",
+      "bestFor": [
+        "voice-ai product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Static/Pattern_Colorful_Static/02_Voice-API/Voice-API_Bkrd-1_16x9.png",
+      "category": "product-icon",
+      "keywords": [
+        "voice",
+        "api",
+        "bkrd",
+        "16x9",
+        "telephony"
+      ],
+      "product": "voice-api",
+      "bestFor": [
+        "voice-api product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Static/Pattern_Colorful_Static/02_Voice-API/Voice-API_Bkrd-2_16x9.png",
+      "category": "product-icon",
+      "keywords": [
+        "voice",
+        "api",
+        "bkrd",
+        "16x9",
+        "telephony"
+      ],
+      "product": "voice-api",
+      "bestFor": [
+        "voice-api product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Static/Pattern_Colorful_Static/02_Voice-API/Voice-API_Bkrd-3_16x9.png",
+      "category": "product-icon",
+      "keywords": [
+        "voice",
+        "api",
+        "bkrd",
+        "16x9",
+        "telephony"
+      ],
+      "product": "voice-api",
+      "bestFor": [
+        "voice-api product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Static/Pattern_Colorful_Static/02_Voice-API/Voice-API_Bkrd-4_16x9.png",
+      "category": "product-icon",
+      "keywords": [
+        "voice",
+        "api",
+        "bkrd",
+        "16x9",
+        "telephony"
+      ],
+      "product": "voice-api",
+      "bestFor": [
+        "voice-api product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Static/Pattern_Colorful_Static/03_eSIM/eSIM_Bkrd-1_16x9.png",
+      "category": "product-icon",
+      "keywords": [
+        "esim",
+        "bkrd",
+        "16x9"
+      ],
+      "product": "esim",
+      "bestFor": [
+        "esim product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Static/Pattern_Colorful_Static/03_eSIM/eSIM_Bkrd-2_16x9.png",
+      "category": "product-icon",
+      "keywords": [
+        "esim",
+        "bkrd",
+        "16x9"
+      ],
+      "product": "esim",
+      "bestFor": [
+        "esim product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Static/Pattern_Colorful_Static/03_eSIM/eSIM_Bkrd-3_16x9.png",
+      "category": "product-icon",
+      "keywords": [
+        "esim",
+        "bkrd",
+        "16x9"
+      ],
+      "product": "esim",
+      "bestFor": [
+        "esim product"
+      ]
+    },
+    {
+      "path": "brand-assets/_new_collection_product-icons/_NEW_Product-Icon-Static/Pattern_Colorful_Static/03_eSIM/eSIM_Bkrd-4_16x9.png",
+      "category": "product-icon",
+      "keywords": [
+        "esim",
+        "bkrd",
+        "16x9"
+      ],
+      "product": "esim",
+      "bestFor": [
+        "esim product"
+      ]
+    }
+  ],
+  "productVisuals": [
+    {
+      "path": "brand-assets/homepage-visuals-april-2025/Enterprise-Block/Compressed/Home_Enterprise_247-Support.jpg",
+      "category": "homepage-visual",
+      "keywords": [
+        "home",
+        "enterprise",
+        "247",
+        "support"
+      ]
+    },
+    {
+      "path": "brand-assets/homepage-visuals-april-2025/Use-Cases-Block/Archive/Home_Use-Case_Marketing-Sales@2x.jpg",
+      "category": "homepage-visual",
+      "keywords": [
+        "home",
+        "use",
+        "case",
+        "marketing",
+        "sales"
+      ]
+    },
+    {
+      "path": "brand-assets/homepage-visuals-april-2025/Use-Cases-Block/Compressed/Home_Use-Case_Finance-Insurance.jpg",
+      "category": "homepage-visual",
+      "keywords": [
+        "home",
+        "use",
+        "case",
+        "finance",
+        "insurance"
+      ],
+      "industry": "insurance",
+      "bestFor": [
+        "insurance industry"
+      ]
+    },
+    {
+      "path": "brand-assets/homepage-visuals-april-2025/Use-Cases-Block/Compressed/Home_Use-Case_Finance-Insurance@2x.jpg",
+      "category": "homepage-visual",
+      "keywords": [
+        "home",
+        "use",
+        "case",
+        "finance",
+        "insurance"
+      ],
+      "industry": "insurance",
+      "bestFor": [
+        "insurance industry"
+      ]
+    },
+    {
+      "path": "brand-assets/homepage-visuals-april-2025/Use-Cases-Block/Compressed/Home_Use-Case_Healthcare@2x.jpg",
+      "category": "homepage-visual",
+      "keywords": [
+        "home",
+        "use",
+        "case",
+        "healthcare"
+      ],
+      "industry": "healthcare",
+      "bestFor": [
+        "healthcare industry"
+      ]
+    },
+    {
+      "path": "brand-assets/homepage-visuals-april-2025/Use-Cases-Block/Home_Use-Case_Finance-Insurance.jpg",
+      "category": "homepage-visual",
+      "keywords": [
+        "home",
+        "use",
+        "case",
+        "finance",
+        "insurance"
+      ],
+      "industry": "insurance",
+      "bestFor": [
+        "insurance industry"
+      ]
+    },
+    {
+      "path": "brand-assets/homepage-visuals-april-2025/Use-Cases-Block/Home_Use-Case_Finance-Insurance@2x.jpg",
+      "category": "homepage-visual",
+      "keywords": [
+        "home",
+        "use",
+        "case",
+        "finance",
+        "insurance"
+      ],
+      "industry": "insurance",
+      "bestFor": [
+        "insurance industry"
+      ]
+    },
+    {
+      "path": "brand-assets/homepage-visuals-april-2025/Use-Cases-Block/Home_Use-Case_Travel-Hospitality.jpg",
+      "category": "homepage-visual",
+      "keywords": [
+        "home",
+        "use",
+        "case",
+        "travel",
+        "hospitality"
+      ],
+      "industry": "travel",
+      "bestFor": [
+        "travel industry"
+      ]
+    },
+    {
+      "path": "brand-assets/homepage-visuals-april-2025/Use-Cases-Block/Home_Use-Cases_Logistics@2x.jpg",
+      "category": "homepage-visual",
+      "keywords": [
+        "home",
+        "use",
+        "cases",
+        "logistics"
+      ],
+      "industry": "logistics",
+      "bestFor": [
+        "logistics industry"
+      ]
+    },
+    {
+      "path": "brand-assets/homepage-visuals-april-2025/Use-Cases-Block/Social/Compressed/Home_Use-Case_Healthcare_504px.png",
+      "category": "homepage-visual",
+      "keywords": [
+        "home",
+        "use",
+        "case",
+        "healthcare",
+        "504px"
+      ],
+      "industry": "healthcare",
+      "bestFor": [
+        "healthcare industry"
+      ]
+    },
+    {
+      "path": "brand-assets/homepage-visuals-april-2025/Use-Cases-Block/Social/Compressed/Home_Use-Case_Healthcare_504px@2x.png",
+      "category": "homepage-visual",
+      "keywords": [
+        "home",
+        "use",
+        "case",
+        "healthcare",
+        "504px"
+      ],
+      "industry": "healthcare",
+      "bestFor": [
+        "healthcare industry"
+      ]
+    },
+    {
+      "path": "brand-assets/homepage-visuals-april-2025/Use-Cases-Block/Social/Compressed/Home_Use-Case_Marketing-Sales_504px.png",
+      "category": "homepage-visual",
+      "keywords": [
+        "home",
+        "use",
+        "case",
+        "marketing",
+        "sales",
+        "504px"
+      ]
+    },
+    {
+      "path": "brand-assets/homepage-visuals-april-2025/Use-Cases-Block/Social/Compressed/Home_Use-Cases_Logistics_504px@2x.png",
+      "category": "homepage-visual",
+      "keywords": [
+        "home",
+        "use",
+        "cases",
+        "logistics",
+        "504px"
+      ],
+      "industry": "logistics",
+      "bestFor": [
+        "logistics industry"
+      ]
+    },
+    {
+      "path": "brand-assets/homepage-visuals-april-2025/Use-Cases-Block/Social/Home_Use-Case_Finance-Insurance_504px@2x.png",
+      "category": "homepage-visual",
+      "keywords": [
+        "home",
+        "use",
+        "case",
+        "finance",
+        "insurance",
+        "504px"
+      ],
+      "industry": "insurance",
+      "bestFor": [
+        "insurance industry"
+      ]
+    },
+    {
+      "path": "brand-assets/homepage-visuals-april-2025/Use-Cases-Block/Social/Home_Use-Case_Marketing-Sales_504px.png",
+      "category": "homepage-visual",
+      "keywords": [
+        "home",
+        "use",
+        "case",
+        "marketing",
+        "sales",
+        "504px"
+      ]
+    },
+    {
+      "path": "brand-assets/homepage-visuals-april-2025/Use-Cases-Block/Social/Home_Use-Case_Marketing-Sales_504px@2x.png",
+      "category": "homepage-visual",
+      "keywords": [
+        "home",
+        "use",
+        "case",
+        "marketing",
+        "sales",
+        "504px"
+      ]
+    },
+    {
+      "path": "brand-assets/homepage-visuals-april-2025/Use-Cases-Block/Social/Home_Use-Cases_Logistics_504px.png",
+      "category": "homepage-visual",
+      "keywords": [
+        "home",
+        "use",
+        "cases",
+        "logistics",
+        "504px"
+      ],
+      "industry": "logistics",
+      "bestFor": [
+        "logistics industry"
+      ]
+    },
+    {
+      "path": "brand-assets/homepage-visuals-july-2025/6_AI-Products/Background gradients/Home_Products_RCS-Background@1x.jpg",
+      "category": "homepage-visual",
+      "keywords": [
+        "home",
+        "products",
+        "rcs",
+        "background",
+        "ai",
+        "artificial intelligence"
+      ],
+      "product": "rcs",
+      "bestFor": [
+        "rcs product"
+      ]
+    },
+    {
+      "path": "brand-assets/homepage-visuals-july-2025/6_AI-Products/Background gradients/Home_Products_RCS-Background@2x.jpg",
+      "category": "homepage-visual",
+      "keywords": [
+        "home",
+        "products",
+        "rcs",
+        "background",
+        "ai",
+        "artificial intelligence"
+      ],
+      "product": "rcs",
+      "bestFor": [
+        "rcs product"
+      ]
+    },
+    {
+      "path": "brand-assets/homepage-visuals-july-2025/6_AI-Products/Background gradients/Home_Products_Voice-AI-Background@2x.jpg",
+      "category": "homepage-visual",
+      "keywords": [
+        "home",
+        "products",
+        "voice",
+        "background",
+        "ai",
+        "artificial intelligence",
+        "telephony"
+      ]
+    },
+    {
+      "path": "brand-assets/homepage-visuals-july-2025/6_AI-Products/Background gradients/Home_Products_Voice-API-Background@2x.jpg",
+      "category": "homepage-visual",
+      "keywords": [
+        "home",
+        "products",
+        "voice",
+        "api",
+        "background",
+        "ai",
+        "artificial intelligence",
+        "telephony"
+      ],
+      "product": "voice-api",
+      "bestFor": [
+        "voice-api product"
+      ]
+    },
+    {
+      "path": "brand-assets/product-visuals/Voice_AI/Static/Component/03.png",
+      "category": "product-visual",
+      "keywords": [
+        "ai",
+        "artificial intelligence",
+        "voice",
+        "telephony"
+      ],
+      "product": "voice-ai",
+      "bestFor": [
+        "voice-ai product"
+      ]
+    },
+    {
+      "path": "brand-assets/product-visuals/Voice_AI/Static/Component/04.png",
+      "category": "product-visual",
+      "keywords": [
+        "ai",
+        "artificial intelligence",
+        "voice",
+        "telephony"
+      ],
+      "product": "voice-ai",
+      "bestFor": [
+        "voice-ai product"
+      ]
+    },
+    {
+      "path": "brand-assets/product-visuals/Voice_AI/Static/Component/07.png",
+      "category": "product-visual",
+      "keywords": [
+        "ai",
+        "artificial intelligence",
+        "voice",
+        "telephony"
+      ],
+      "product": "voice-ai",
+      "bestFor": [
+        "voice-ai product"
+      ]
+    },
+    {
+      "path": "brand-assets/product-visuals/Voice_AI/Static/With background/GPU&Infrastructure.png",
+      "category": "product-visual",
+      "keywords": [
+        "gpu&infrastructure",
+        "ai",
+        "artificial intelligence",
+        "voice",
+        "telephony"
+      ],
+      "product": "voice-ai",
+      "bestFor": [
+        "voice-ai product"
+      ]
+    },
+    {
+      "path": "brand-assets/product-visuals/Voice_AI/Static/With background/MeetTelnyxAI.png",
+      "category": "product-visual",
+      "keywords": [
+        "meettelnyxai",
+        "ai",
+        "artificial intelligence",
+        "voice",
+        "telephony"
+      ],
+      "product": "voice-ai",
+      "bestFor": [
+        "voice-ai product"
+      ]
+    },
+    {
+      "path": "brand-assets/product-visuals/_NEW_AI-Assistant/AI-Assistant-Screen-Studio-Demos/Working file/Home_AI-Assistant_1-Prompts.screenstudio/recording/cursors/arrow.png",
+      "category": "product-visual",
+      "keywords": [
+        "arrow",
+        "ai",
+        "artificial intelligence"
+      ]
+    },
+    {
+      "path": "brand-assets/product-visuals/_NEW_AI-Assistant/AI-Assistant-Screen-Studio-Demos/Working file/Home_AI-Assistant_1-Prompts.screenstudio/recording/cursors/bottomLeftResize.png",
+      "category": "product-visual",
+      "keywords": [
+        "bottomleftresize",
+        "ai",
+        "artificial intelligence"
+      ]
+    },
+    {
+      "path": "brand-assets/product-visuals/_NEW_AI-Assistant/AI-Assistant-Screen-Studio-Demos/Working file/Home_AI-Assistant_1-Prompts.screenstudio/recording/cursors/bottomRightResize.png",
+      "category": "product-visual",
+      "keywords": [
+        "bottomrightresize",
+        "ai",
+        "artificial intelligence"
+      ]
+    },
+    {
+      "path": "brand-assets/product-visuals/_NEW_AI-Assistant/AI-Assistant-Screen-Studio-Demos/Working file/Home_AI-Assistant_1-Prompts.screenstudio/recording/cursors/closedHand.png",
+      "category": "product-visual",
+      "keywords": [
+        "closedhand",
+        "ai",
+        "artificial intelligence"
+      ]
+    },
+    {
+      "path": "brand-assets/product-visuals/_NEW_AI-Assistant/AI-Assistant-Screen-Studio-Demos/Working file/Home_AI-Assistant_1-Prompts.screenstudio/recording/cursors/contextualMenu.png",
+      "category": "product-visual",
+      "keywords": [
+        "contextualmenu",
+        "ai",
+        "artificial intelligence"
+      ]
+    },
+    {
+      "path": "brand-assets/product-visuals/_NEW_AI-Assistant/AI-Assistant-Screen-Studio-Demos/Working file/Home_AI-Assistant_1-Prompts.screenstudio/recording/cursors/crosshair.png",
+      "category": "product-visual",
+      "keywords": [
+        "crosshair",
+        "ai",
+        "artificial intelligence"
+      ]
+    },
+    {
+      "path": "brand-assets/product-visuals/_NEW_AI-Assistant/AI-Assistant-Screen-Studio-Demos/Working file/Home_AI-Assistant_1-Prompts.screenstudio/recording/cursors/disappearingItem.png",
+      "category": "product-visual",
+      "keywords": [
+        "disappearingitem",
+        "ai",
+        "artificial intelligence"
+      ]
+    },
+    {
+      "path": "brand-assets/product-visuals/_NEW_AI-Assistant/AI-Assistant-Screen-Studio-Demos/Working file/Home_AI-Assistant_1-Prompts.screenstudio/recording/cursors/dragCopy.png",
+      "category": "product-visual",
+      "keywords": [
+        "dragcopy",
+        "ai",
+        "artificial intelligence"
+      ]
+    },
+    {
+      "path": "brand-assets/product-visuals/_NEW_AI-Assistant/AI-Assistant-Screen-Studio-Demos/Working file/Home_AI-Assistant_1-Prompts.screenstudio/recording/cursors/dragLink.png",
+      "category": "product-visual",
+      "keywords": [
+        "draglink",
+        "ai",
+        "artificial intelligence"
+      ]
+    },
+    {
+      "path": "brand-assets/product-visuals/_NEW_AI-Assistant/AI-Assistant-Screen-Studio-Demos/Working file/Home_AI-Assistant_1-Prompts.screenstudio/recording/cursors/help.png",
+      "category": "product-visual",
+      "keywords": [
+        "help",
+        "ai",
+        "artificial intelligence"
+      ]
+    },
+    {
+      "path": "brand-assets/product-visuals/_NEW_AI-Assistant/AI-Assistant-Screen-Studio-Demos/Working file/Home_AI-Assistant_1-Prompts.screenstudio/recording/cursors/iBeam.png",
+      "category": "product-visual",
+      "keywords": [
+        "ibeam",
+        "ai",
+        "artificial intelligence"
+      ]
+    },
+    {
+      "path": "brand-assets/product-visuals/_NEW_AI-Assistant/AI-Assistant-Screen-Studio-Demos/Working file/Home_AI-Assistant_1-Prompts.screenstudio/recording/cursors/iBeamCursorForVerticalLayout.png",
+      "category": "product-visual",
+      "keywords": [
+        "ibeamcursorforverticallayout",
+        "ai",
+        "artificial intelligence"
+      ]
+    },
+    {
+      "path": "brand-assets/product-visuals/_NEW_AI-Assistant/AI-Assistant-Screen-Studio-Demos/Working file/Home_AI-Assistant_1-Prompts.screenstudio/recording/cursors/openHand.png",
+      "category": "product-visual",
+      "keywords": [
+        "openhand",
+        "ai",
+        "artificial intelligence"
+      ]
+    },
+    {
+      "path": "brand-assets/product-visuals/_NEW_AI-Assistant/AI-Assistant-Screen-Studio-Demos/Working file/Home_AI-Assistant_1-Prompts.screenstudio/recording/cursors/operationNotAllowed.png",
+      "category": "product-visual",
+      "keywords": [
+        "operationnotallowed",
+        "ai",
+        "artificial intelligence"
+      ]
+    },
+    {
+      "path": "brand-assets/product-visuals/_NEW_AI-Assistant/AI-Assistant-Screen-Studio-Demos/Working file/Home_AI-Assistant_1-Prompts.screenstudio/recording/cursors/pointingHand.png",
+      "category": "product-visual",
+      "keywords": [
+        "pointinghand",
+        "ai",
+        "artificial intelligence"
+      ]
+    },
+    {
+      "path": "brand-assets/product-visuals/_NEW_AI-Assistant/AI-Assistant-Screen-Studio-Demos/Working file/Home_AI-Assistant_1-Prompts.screenstudio/recording/cursors/resizeDown.png",
+      "category": "product-visual",
+      "keywords": [
+        "resizedown",
+        "ai",
+        "artificial intelligence"
+      ]
+    },
+    {
+      "path": "brand-assets/product-visuals/_NEW_AI-Assistant/AI-Assistant-Screen-Studio-Demos/Working file/Home_AI-Assistant_1-Prompts.screenstudio/recording/cursors/resizeLeft.png",
+      "category": "product-visual",
+      "keywords": [
+        "resizeleft",
+        "ai",
+        "artificial intelligence"
+      ]
+    },
+    {
+      "path": "brand-assets/product-visuals/_NEW_AI-Assistant/AI-Assistant-Screen-Studio-Demos/Working file/Home_AI-Assistant_1-Prompts.screenstudio/recording/cursors/resizeLeftRight.png",
+      "category": "product-visual",
+      "keywords": [
+        "resizeleftright",
+        "ai",
+        "artificial intelligence"
+      ]
+    },
+    {
+      "path": "brand-assets/product-visuals/_NEW_AI-Assistant/AI-Assistant-Screen-Studio-Demos/Working file/Home_AI-Assistant_1-Prompts.screenstudio/recording/cursors/resizeRight.png",
+      "category": "product-visual",
+      "keywords": [
+        "resizeright",
+        "ai",
+        "artificial intelligence"
+      ]
+    },
+    {
+      "path": "brand-assets/product-visuals/_NEW_AI-Assistant/AI-Assistant-Screen-Studio-Demos/Working file/Home_AI-Assistant_1-Prompts.screenstudio/recording/cursors/resizeUp.png",
+      "category": "product-visual",
+      "keywords": [
+        "resizeup",
+        "ai",
+        "artificial intelligence"
+      ]
+    },
+    {
+      "path": "brand-assets/product-visuals/_NEW_AI-Assistant/AI-Assistant-Screen-Studio-Demos/Working file/Home_AI-Assistant_1-Prompts.screenstudio/recording/cursors/resizeUpDown.png",
+      "category": "product-visual",
+      "keywords": [
+        "resizeupdown",
+        "ai",
+        "artificial intelligence"
+      ]
+    },
+    {
+      "path": "brand-assets/product-visuals/_NEW_AI-Assistant/AI-Assistant-Screen-Studio-Demos/Working file/Home_AI-Assistant_1-Prompts.screenstudio/recording/cursors/topLeftResize.png",
+      "category": "product-visual",
+      "keywords": [
+        "topleftresize",
+        "ai",
+        "artificial intelligence"
+      ]
+    },
+    {
+      "path": "brand-assets/product-visuals/_NEW_AI-Assistant/AI-Assistant-Screen-Studio-Demos/Working file/Home_AI-Assistant_1-Prompts.screenstudio/recording/cursors/topRightResize.png",
+      "category": "product-visual",
+      "keywords": [
+        "toprightresize",
+        "ai",
+        "artificial intelligence"
+      ]
+    },
+    {
+      "path": "brand-assets/product-visuals/_NEW_AI-Assistant/AI-Assistant-Screen-Studio-Demos/Working file/Home_AI-Assistant_1-Prompts.screenstudio/recording/cursors/windowResizeEast.png",
+      "category": "product-visual",
+      "keywords": [
+        "windowresizeeast",
+        "ai",
+        "artificial intelligence"
+      ]
+    },
+    {
+      "path": "brand-assets/product-visuals/_NEW_AI-Assistant/AI-Assistant-Screen-Studio-Demos/Working file/Home_AI-Assistant_1-Prompts.screenstudio/recording/cursors/windowResizeEastWest.png",
+      "category": "product-visual",
+      "keywords": [
+        "windowresizeeastwest",
+        "ai",
+        "artificial intelligence"
+      ]
+    },
+    {
+      "path": "brand-assets/product-visuals/_NEW_AI-Assistant/AI-Assistant-Screen-Studio-Demos/Working file/Home_AI-Assistant_1-Prompts.screenstudio/recording/cursors/windowResizeNorthEast.png",
+      "category": "product-visual",
+      "keywords": [
+        "windowresizenortheast",
+        "ai",
+        "artificial intelligence"
+      ]
+    },
+    {
+      "path": "brand-assets/product-visuals/_NEW_AI-Assistant/AI-Assistant-Screen-Studio-Demos/Working file/Home_AI-Assistant_1-Prompts.screenstudio/recording/cursors/windowResizeNorthEastSouthWest.png",
+      "category": "product-visual",
+      "keywords": [
+        "windowresizenortheastsouthwest",
+        "ai",
+        "artificial intelligence"
+      ]
+    },
+    {
+      "path": "brand-assets/product-visuals/_NEW_AI-Assistant/AI-Assistant-Screen-Studio-Demos/Working file/Home_AI-Assistant_1-Prompts.screenstudio/recording/cursors/windowResizeNorthWestSouthEast.png",
+      "category": "product-visual",
+      "keywords": [
+        "windowresizenorthwestsoutheast",
+        "ai",
+        "artificial intelligence"
+      ]
+    },
+    {
+      "path": "brand-assets/product-visuals/_NEW_AI-Assistant/AI-Assistant-Screen-Studio-Demos/Working file/Home_AI-Assistant_1-Prompts.screenstudio/recording/cursors/windowResizeSouthEast.png",
+      "category": "product-visual",
+      "keywords": [
+        "windowresizesoutheast",
+        "ai",
+        "artificial intelligence"
+      ]
+    },
+    {
+      "path": "brand-assets/product-visuals/_NEW_AI-Assistant/AI-Assistant-Screen-Studio-Demos/Working file/Home_AI-Assistant_1-Prompts.screenstudio/recording/cursors/windowResizeSouthWest.png",
+      "category": "product-visual",
+      "keywords": [
+        "windowresizesouthwest",
+        "ai",
+        "artificial intelligence"
+      ]
+    },
+    {
+      "path": "brand-assets/product-visuals/_NEW_AI-Assistant/AI-Assistant-Screen-Studio-Demos/Working file/Home_AI-Assistant_1-Prompts.screenstudio/recording/cursors/windowResizeWest.png",
+      "category": "product-visual",
+      "keywords": [
+        "windowresizewest",
+        "ai",
+        "artificial intelligence"
+      ]
+    },
+    {
+      "path": "brand-assets/product-visuals/_NEW_AI-Assistant/AI-Assistant-Screen-Studio-Demos/Working file/Home_AI-Assistant_2-Models.screenstudio/recording/cursors/arrow.png",
+      "category": "product-visual",
+      "keywords": [
+        "arrow",
+        "ai",
+        "artificial intelligence"
+      ]
+    },
+    {
+      "path": "brand-assets/product-visuals/_NEW_AI-Assistant/AI-Assistant-Screen-Studio-Demos/Working file/Home_AI-Assistant_2-Models.screenstudio/recording/cursors/bottomLeftResize.png",
+      "category": "product-visual",
+      "keywords": [
+        "bottomleftresize",
+        "ai",
+        "artificial intelligence"
+      ]
+    },
+    {
+      "path": "brand-assets/product-visuals/_NEW_AI-Assistant/AI-Assistant-Screen-Studio-Demos/Working file/Home_AI-Assistant_2-Models.screenstudio/recording/cursors/bottomRightResize.png",
+      "category": "product-visual",
+      "keywords": [
+        "bottomrightresize",
+        "ai",
+        "artificial intelligence"
+      ]
+    },
+    {
+      "path": "brand-assets/product-visuals/_NEW_AI-Assistant/AI-Assistant-Screen-Studio-Demos/Working file/Home_AI-Assistant_2-Models.screenstudio/recording/cursors/closedHand.png",
+      "category": "product-visual",
+      "keywords": [
+        "closedhand",
+        "ai",
+        "artificial intelligence"
+      ]
+    },
+    {
+      "path": "brand-assets/product-visuals/_NEW_AI-Assistant/AI-Assistant-Screen-Studio-Demos/Working file/Home_AI-Assistant_2-Models.screenstudio/recording/cursors/contextualMenu.png",
+      "category": "product-visual",
+      "keywords": [
+        "contextualmenu",
+        "ai",
+        "artificial intelligence"
+      ]
+    },
+    {
+      "path": "brand-assets/product-visuals/_NEW_AI-Assistant/AI-Assistant-Screen-Studio-Demos/Working file/Home_AI-Assistant_2-Models.screenstudio/recording/cursors/crosshair.png",
+      "category": "product-visual",
+      "keywords": [
+        "crosshair",
+        "ai",
+        "artificial intelligence"
+      ]
+    },
+    {
+      "path": "brand-assets/product-visuals/_NEW_AI-Assistant/AI-Assistant-Screen-Studio-Demos/Working file/Home_AI-Assistant_2-Models.screenstudio/recording/cursors/disappearingItem.png",
+      "category": "product-visual",
+      "keywords": [
+        "disappearingitem",
+        "ai",
+        "artificial intelligence"
+      ]
+    },
+    {
+      "path": "brand-assets/product-visuals/_NEW_AI-Assistant/AI-Assistant-Screen-Studio-Demos/Working file/Home_AI-Assistant_2-Models.screenstudio/recording/cursors/dragCopy.png",
+      "category": "product-visual",
+      "keywords": [
+        "dragcopy",
+        "ai",
+        "artificial intelligence"
+      ]
+    },
+    {
+      "path": "brand-assets/product-visuals/_NEW_AI-Assistant/AI-Assistant-Screen-Studio-Demos/Working file/Home_AI-Assistant_2-Models.screenstudio/recording/cursors/dragLink.png",
+      "category": "product-visual",
+      "keywords": [
+        "draglink",
+        "ai",
+        "artificial intelligence"
+      ]
+    },
+    {
+      "path": "brand-assets/product-visuals/_NEW_AI-Assistant/AI-Assistant-Screen-Studio-Demos/Working file/Home_AI-Assistant_2-Models.screenstudio/recording/cursors/help.png",
+      "category": "product-visual",
+      "keywords": [
+        "help",
+        "ai",
+        "artificial intelligence"
+      ]
+    },
+    {
+      "path": "brand-assets/product-visuals/_NEW_AI-Assistant/AI-Assistant-Screen-Studio-Demos/Working file/Home_AI-Assistant_2-Models.screenstudio/recording/cursors/iBeam.png",
+      "category": "product-visual",
+      "keywords": [
+        "ibeam",
+        "ai",
+        "artificial intelligence"
+      ]
+    },
+    {
+      "path": "brand-assets/product-visuals/_NEW_AI-Assistant/AI-Assistant-Screen-Studio-Demos/Working file/Home_AI-Assistant_2-Models.screenstudio/recording/cursors/iBeamCursorForVerticalLayout.png",
+      "category": "product-visual",
+      "keywords": [
+        "ibeamcursorforverticallayout",
+        "ai",
+        "artificial intelligence"
+      ]
+    },
+    {
+      "path": "brand-assets/product-visuals/_NEW_AI-Assistant/AI-Assistant-Screen-Studio-Demos/Working file/Home_AI-Assistant_2-Models.screenstudio/recording/cursors/openHand.png",
+      "category": "product-visual",
+      "keywords": [
+        "openhand",
+        "ai",
+        "artificial intelligence"
+      ]
+    },
+    {
+      "path": "brand-assets/product-visuals/_NEW_AI-Assistant/AI-Assistant-Screen-Studio-Demos/Working file/Home_AI-Assistant_2-Models.screenstudio/recording/cursors/operationNotAllowed.png",
+      "category": "product-visual",
+      "keywords": [
+        "operationnotallowed",
+        "ai",
+        "artificial intelligence"
+      ]
+    },
+    {
+      "path": "brand-assets/product-visuals/_NEW_AI-Assistant/AI-Assistant-Screen-Studio-Demos/Working file/Home_AI-Assistant_2-Models.screenstudio/recording/cursors/pointingHand.png",
+      "category": "product-visual",
+      "keywords": [
+        "pointinghand",
+        "ai",
+        "artificial intelligence"
+      ]
+    },
+    {
+      "path": "brand-assets/product-visuals/_NEW_AI-Assistant/AI-Assistant-Screen-Studio-Demos/Working file/Home_AI-Assistant_2-Models.screenstudio/recording/cursors/resizeDown.png",
+      "category": "product-visual",
+      "keywords": [
+        "resizedown",
+        "ai",
+        "artificial intelligence"
+      ]
+    },
+    {
+      "path": "brand-assets/product-visuals/_NEW_AI-Assistant/AI-Assistant-Screen-Studio-Demos/Working file/Home_AI-Assistant_2-Models.screenstudio/recording/cursors/resizeLeft.png",
+      "category": "product-visual",
+      "keywords": [
+        "resizeleft",
+        "ai",
+        "artificial intelligence"
+      ]
+    },
+    {
+      "path": "brand-assets/product-visuals/_NEW_AI-Assistant/AI-Assistant-Screen-Studio-Demos/Working file/Home_AI-Assistant_2-Models.screenstudio/recording/cursors/resizeLeftRight.png",
+      "category": "product-visual",
+      "keywords": [
+        "resizeleftright",
+        "ai",
+        "artificial intelligence"
+      ]
+    },
+    {
+      "path": "brand-assets/product-visuals/_NEW_AI-Assistant/AI-Assistant-Screen-Studio-Demos/Working file/Home_AI-Assistant_2-Models.screenstudio/recording/cursors/resizeRight.png",
+      "category": "product-visual",
+      "keywords": [
+        "resizeright",
+        "ai",
+        "artificial intelligence"
+      ]
+    },
+    {
+      "path": "brand-assets/product-visuals/_NEW_AI-Assistant/AI-Assistant-Screen-Studio-Demos/Working file/Home_AI-Assistant_2-Models.screenstudio/recording/cursors/resizeUp.png",
+      "category": "product-visual",
+      "keywords": [
+        "resizeup",
+        "ai",
+        "artificial intelligence"
+      ]
+    },
+    {
+      "path": "brand-assets/product-visuals/_NEW_AI-Assistant/AI-Assistant-Screen-Studio-Demos/Working file/Home_AI-Assistant_2-Models.screenstudio/recording/cursors/resizeUpDown.png",
+      "category": "product-visual",
+      "keywords": [
+        "resizeupdown",
+        "ai",
+        "artificial intelligence"
+      ]
+    },
+    {
+      "path": "brand-assets/product-visuals/_NEW_AI-Assistant/AI-Assistant-Screen-Studio-Demos/Working file/Home_AI-Assistant_2-Models.screenstudio/recording/cursors/topLeftResize.png",
+      "category": "product-visual",
+      "keywords": [
+        "topleftresize",
+        "ai",
+        "artificial intelligence"
+      ]
+    },
+    {
+      "path": "brand-assets/product-visuals/_NEW_AI-Assistant/AI-Assistant-Screen-Studio-Demos/Working file/Home_AI-Assistant_2-Models.screenstudio/recording/cursors/topRightResize.png",
+      "category": "product-visual",
+      "keywords": [
+        "toprightresize",
+        "ai",
+        "artificial intelligence"
+      ]
+    },
+    {
+      "path": "brand-assets/product-visuals/_NEW_AI-Assistant/AI-Assistant-Screen-Studio-Demos/Working file/Home_AI-Assistant_2-Models.screenstudio/recording/cursors/windowResizeEast.png",
+      "category": "product-visual",
+      "keywords": [
+        "windowresizeeast",
+        "ai",
+        "artificial intelligence"
+      ]
+    },
+    {
+      "path": "brand-assets/product-visuals/_NEW_AI-Assistant/AI-Assistant-Screen-Studio-Demos/Working file/Home_AI-Assistant_2-Models.screenstudio/recording/cursors/windowResizeEastWest.png",
+      "category": "product-visual",
+      "keywords": [
+        "windowresizeeastwest",
+        "ai",
+        "artificial intelligence"
+      ]
+    },
+    {
+      "path": "brand-assets/product-visuals/_NEW_AI-Assistant/AI-Assistant-Screen-Studio-Demos/Working file/Home_AI-Assistant_2-Models.screenstudio/recording/cursors/windowResizeNorth.png",
+      "category": "product-visual",
+      "keywords": [
+        "windowresizenorth",
+        "ai",
+        "artificial intelligence"
+      ]
+    },
+    {
+      "path": "brand-assets/product-visuals/_NEW_AI-Assistant/AI-Assistant-Screen-Studio-Demos/Working file/Home_AI-Assistant_2-Models.screenstudio/recording/cursors/windowResizeNorthEast.png",
+      "category": "product-visual",
+      "keywords": [
+        "windowresizenortheast",
+        "ai",
+        "artificial intelligence"
+      ]
+    },
+    {
+      "path": "brand-assets/product-visuals/_NEW_AI-Assistant/AI-Assistant-Screen-Studio-Demos/Working file/Home_AI-Assistant_2-Models.screenstudio/recording/cursors/windowResizeNorthEastSouthWest.png",
+      "category": "product-visual",
+      "keywords": [
+        "windowresizenortheastsouthwest",
+        "ai",
+        "artificial intelligence"
+      ]
+    },
+    {
+      "path": "brand-assets/product-visuals/_NEW_AI-Assistant/AI-Assistant-Screen-Studio-Demos/Working file/Home_AI-Assistant_2-Models.screenstudio/recording/cursors/windowResizeNorthSouth.png",
+      "category": "product-visual",
+      "keywords": [
+        "windowresizenorthsouth",
+        "ai",
+        "artificial intelligence"
+      ]
+    },
+    {
+      "path": "brand-assets/product-visuals/_NEW_AI-Assistant/AI-Assistant-Screen-Studio-Demos/Working file/Home_AI-Assistant_2-Models.screenstudio/recording/cursors/windowResizeSouth.png",
+      "category": "product-visual",
+      "keywords": [
+        "windowresizesouth",
+        "ai",
+        "artificial intelligence"
+      ]
+    },
+    {
+      "path": "brand-assets/product-visuals/_NEW_AI-Assistant/AI-Assistant-Screen-Studio-Demos/Working file/Home_AI-Assistant_2-Models.screenstudio/recording/cursors/windowResizeSouthWest.png",
+      "category": "product-visual",
+      "keywords": [
+        "windowresizesouthwest",
+        "ai",
+        "artificial intelligence"
+      ]
+    },
+    {
+      "path": "brand-assets/product-visuals/_NEW_AI-Assistant/AI-Assistant-Screen-Studio-Demos/Working file/Home_AI-Assistant_3-One-Click-Integration.screenstudio/recording/cursors/arrow.png",
+      "category": "product-visual",
+      "keywords": [
+        "arrow",
+        "ai",
+        "artificial intelligence"
+      ]
+    },
+    {
+      "path": "brand-assets/product-visuals/_NEW_AI-Assistant/AI-Assistant-Screen-Studio-Demos/Working file/Home_AI-Assistant_3-One-Click-Integration.screenstudio/recording/cursors/bottomLeftResize.png",
+      "category": "product-visual",
+      "keywords": [
+        "bottomleftresize",
+        "ai",
+        "artificial intelligence"
+      ]
+    },
+    {
+      "path": "brand-assets/product-visuals/_NEW_AI-Assistant/AI-Assistant-Screen-Studio-Demos/Working file/Home_AI-Assistant_3-One-Click-Integration.screenstudio/recording/cursors/bottomRightResize.png",
+      "category": "product-visual",
+      "keywords": [
+        "bottomrightresize",
+        "ai",
+        "artificial intelligence"
+      ]
+    },
+    {
+      "path": "brand-assets/product-visuals/_NEW_AI-Assistant/AI-Assistant-Screen-Studio-Demos/Working file/Home_AI-Assistant_3-One-Click-Integration.screenstudio/recording/cursors/closedHand.png",
+      "category": "product-visual",
+      "keywords": [
+        "closedhand",
+        "ai",
+        "artificial intelligence"
+      ]
+    },
+    {
+      "path": "brand-assets/product-visuals/_NEW_AI-Assistant/AI-Assistant-Screen-Studio-Demos/Working file/Home_AI-Assistant_3-One-Click-Integration.screenstudio/recording/cursors/contextualMenu.png",
+      "category": "product-visual",
+      "keywords": [
+        "contextualmenu",
+        "ai",
+        "artificial intelligence"
+      ]
+    },
+    {
+      "path": "brand-assets/product-visuals/_NEW_AI-Assistant/AI-Assistant-Screen-Studio-Demos/Working file/Home_AI-Assistant_3-One-Click-Integration.screenstudio/recording/cursors/crosshair.png",
+      "category": "product-visual",
+      "keywords": [
+        "crosshair",
+        "ai",
+        "artificial intelligence"
+      ]
+    },
+    {
+      "path": "brand-assets/product-visuals/_NEW_AI-Assistant/AI-Assistant-Screen-Studio-Demos/Working file/Home_AI-Assistant_3-One-Click-Integration.screenstudio/recording/cursors/disappearingItem.png",
+      "category": "product-visual",
+      "keywords": [
+        "disappearingitem",
+        "ai",
+        "artificial intelligence"
+      ]
+    },
+    {
+      "path": "brand-assets/product-visuals/_NEW_AI-Assistant/AI-Assistant-Screen-Studio-Demos/Working file/Home_AI-Assistant_3-One-Click-Integration.screenstudio/recording/cursors/dragCopy.png",
+      "category": "product-visual",
+      "keywords": [
+        "dragcopy",
+        "ai",
+        "artificial intelligence"
+      ]
+    },
+    {
+      "path": "brand-assets/product-visuals/_NEW_AI-Assistant/AI-Assistant-Screen-Studio-Demos/Working file/Home_AI-Assistant_3-One-Click-Integration.screenstudio/recording/cursors/dragLink.png",
+      "category": "product-visual",
+      "keywords": [
+        "draglink",
+        "ai",
+        "artificial intelligence"
+      ]
+    },
+    {
+      "path": "brand-assets/product-visuals/_NEW_AI-Assistant/AI-Assistant-Screen-Studio-Demos/Working file/Home_AI-Assistant_3-One-Click-Integration.screenstudio/recording/cursors/help.png",
+      "category": "product-visual",
+      "keywords": [
+        "help",
+        "ai",
+        "artificial intelligence"
+      ]
+    },
+    {
+      "path": "brand-assets/product-visuals/_NEW_AI-Assistant/AI-Assistant-Screen-Studio-Demos/Working file/Home_AI-Assistant_3-One-Click-Integration.screenstudio/recording/cursors/iBeam.png",
+      "category": "product-visual",
+      "keywords": [
+        "ibeam",
+        "ai",
+        "artificial intelligence"
+      ]
+    },
+    {
+      "path": "brand-assets/product-visuals/_NEW_AI-Assistant/AI-Assistant-Screen-Studio-Demos/Working file/Home_AI-Assistant_3-One-Click-Integration.screenstudio/recording/cursors/iBeamCursorForVerticalLayout.png",
+      "category": "product-visual",
+      "keywords": [
+        "ibeamcursorforverticallayout",
+        "ai",
+        "artificial intelligence"
+      ]
+    },
+    {
+      "path": "brand-assets/product-visuals/_NEW_AI-Assistant/AI-Assistant-Screen-Studio-Demos/Working file/Home_AI-Assistant_3-One-Click-Integration.screenstudio/recording/cursors/openHand.png",
+      "category": "product-visual",
+      "keywords": [
+        "openhand",
+        "ai",
+        "artificial intelligence"
+      ]
+    },
+    {
+      "path": "brand-assets/product-visuals/_NEW_AI-Assistant/AI-Assistant-Screen-Studio-Demos/Working file/Home_AI-Assistant_3-One-Click-Integration.screenstudio/recording/cursors/operationNotAllowed.png",
+      "category": "product-visual",
+      "keywords": [
+        "operationnotallowed",
+        "ai",
+        "artificial intelligence"
+      ]
+    },
+    {
+      "path": "brand-assets/product-visuals/_NEW_AI-Assistant/AI-Assistant-Screen-Studio-Demos/Working file/Home_AI-Assistant_3-One-Click-Integration.screenstudio/recording/cursors/pointingHand.png",
+      "category": "product-visual",
+      "keywords": [
+        "pointinghand",
+        "ai",
+        "artificial intelligence"
+      ]
+    },
+    {
+      "path": "brand-assets/product-visuals/_NEW_AI-Assistant/AI-Assistant-Screen-Studio-Demos/Working file/Home_AI-Assistant_3-One-Click-Integration.screenstudio/recording/cursors/resizeDown.png",
+      "category": "product-visual",
+      "keywords": [
+        "resizedown",
+        "ai",
+        "artificial intelligence"
+      ]
+    },
+    {
+      "path": "brand-assets/product-visuals/_NEW_AI-Assistant/AI-Assistant-Screen-Studio-Demos/Working file/Home_AI-Assistant_3-One-Click-Integration.screenstudio/recording/cursors/resizeLeft.png",
+      "category": "product-visual",
+      "keywords": [
+        "resizeleft",
+        "ai",
+        "artificial intelligence"
+      ]
+    },
+    {
+      "path": "brand-assets/product-visuals/_NEW_AI-Assistant/AI-Assistant-Screen-Studio-Demos/Working file/Home_AI-Assistant_3-One-Click-Integration.screenstudio/recording/cursors/resizeLeftRight.png",
+      "category": "product-visual",
+      "keywords": [
+        "resizeleftright",
+        "ai",
+        "artificial intelligence"
+      ]
+    },
+    {
+      "path": "brand-assets/product-visuals/_NEW_AI-Assistant/AI-Assistant-Screen-Studio-Demos/Working file/Home_AI-Assistant_3-One-Click-Integration.screenstudio/recording/cursors/resizeUp.png",
+      "category": "product-visual",
+      "keywords": [
+        "resizeup",
+        "ai",
+        "artificial intelligence"
+      ]
+    },
+    {
+      "path": "brand-assets/product-visuals/_NEW_AI-Assistant/AI-Assistant-Screen-Studio-Demos/Working file/Home_AI-Assistant_3-One-Click-Integration.screenstudio/recording/cursors/resizeUpDown.png",
+      "category": "product-visual",
+      "keywords": [
+        "resizeupdown",
+        "ai",
+        "artificial intelligence"
+      ]
+    },
+    {
+      "path": "brand-assets/product-visuals/_NEW_AI-Assistant/AI-Assistant-Screen-Studio-Demos/Working file/Home_AI-Assistant_3-One-Click-Integration.screenstudio/recording/cursors/topLeftResize.png",
+      "category": "product-visual",
+      "keywords": [
+        "topleftresize",
+        "ai",
+        "artificial intelligence"
+      ]
+    },
+    {
+      "path": "brand-assets/product-visuals/_NEW_AI-Assistant/AI-Assistant-Screen-Studio-Demos/Working file/Home_AI-Assistant_3-One-Click-Integration.screenstudio/recording/cursors/windowResizeEast.png",
+      "category": "product-visual",
+      "keywords": [
+        "windowresizeeast",
+        "ai",
+        "artificial intelligence"
+      ]
+    },
+    {
+      "path": "brand-assets/product-visuals/_NEW_AI-Assistant/AI-Assistant-Screen-Studio-Demos/Working file/Home_AI-Assistant_3-One-Click-Integration.screenstudio/recording/cursors/windowResizeEastWest.png",
+      "category": "product-visual",
+      "keywords": [
+        "windowresizeeastwest",
+        "ai",
+        "artificial intelligence"
+      ]
+    },
+    {
+      "path": "brand-assets/product-visuals/_NEW_AI-Assistant/AI-Assistant-Screen-Studio-Demos/Working file/Home_AI-Assistant_3-One-Click-Integration.screenstudio/recording/cursors/windowResizeNorth.png",
+      "category": "product-visual",
+      "keywords": [
+        "windowresizenorth",
+        "ai",
+        "artificial intelligence"
+      ]
+    },
+    {
+      "path": "brand-assets/product-visuals/_NEW_AI-Assistant/AI-Assistant-Screen-Studio-Demos/Working file/Home_AI-Assistant_3-One-Click-Integration.screenstudio/recording/cursors/windowResizeNorthEastSouthWest.png",
+      "category": "product-visual",
+      "keywords": [
+        "windowresizenortheastsouthwest",
+        "ai",
+        "artificial intelligence"
+      ]
+    },
+    {
+      "path": "brand-assets/product-visuals/_NEW_AI-Assistant/AI-Assistant-Screen-Studio-Demos/Working file/Home_AI-Assistant_3-One-Click-Integration.screenstudio/recording/cursors/windowResizeNorthSouth.png",
+      "category": "product-visual",
+      "keywords": [
+        "windowresizenorthsouth",
+        "ai",
+        "artificial intelligence"
+      ]
+    },
+    {
+      "path": "brand-assets/product-visuals/_NEW_AI-Assistant/AI-Assistant-Screen-Studio-Demos/Working file/Home_AI-Assistant_3-One-Click-Integration.screenstudio/recording/cursors/windowResizeNorthWest.png",
+      "category": "product-visual",
+      "keywords": [
+        "windowresizenorthwest",
+        "ai",
+        "artificial intelligence"
+      ]
+    },
+    {
+      "path": "brand-assets/product-visuals/_NEW_AI-Assistant/AI-Assistant-Screen-Studio-Demos/Working file/Home_AI-Assistant_3-One-Click-Integration.screenstudio/recording/cursors/windowResizeNorthWestSouthEast.png",
+      "category": "product-visual",
+      "keywords": [
+        "windowresizenorthwestsoutheast",
+        "ai",
+        "artificial intelligence"
+      ]
+    },
+    {
+      "path": "brand-assets/product-visuals/_NEW_AI-Assistant/AI-Assistant-Screen-Studio-Demos/Working file/Home_AI-Assistant_3-One-Click-Integration.screenstudio/recording/cursors/windowResizeSouth.png",
+      "category": "product-visual",
+      "keywords": [
+        "windowresizesouth",
+        "ai",
+        "artificial intelligence"
+      ]
+    },
+    {
+      "path": "brand-assets/product-visuals/_NEW_AI-Assistant/AI-Assistant-Screen-Studio-Demos/Working file/Home_AI-Assistant_3-One-Click-Integration.screenstudio/recording/cursors/windowResizeSouthEast.png",
+      "category": "product-visual",
+      "keywords": [
+        "windowresizesoutheast",
+        "ai",
+        "artificial intelligence"
+      ]
+    },
+    {
+      "path": "brand-assets/product-visuals/_NEW_AI-Assistant/AI-Assistant-Screen-Studio-Demos/Working file/Home_AI-Assistant_3-One-Click-Integration.screenstudio/recording/cursors/windowResizeSouthWest.png",
+      "category": "product-visual",
+      "keywords": [
+        "windowresizesouthwest",
+        "ai",
+        "artificial intelligence"
+      ]
+    },
+    {
+      "path": "brand-assets/product-visuals/_NEW_AI-Assistant/AI-Assistant-Screen-Studio-Demos/Working file/Home_AI-Assistant_3-One-Click-Integration.screenstudio/recording/cursors/windowResizeWest.png",
+      "category": "product-visual",
+      "keywords": [
+        "windowresizewest",
+        "ai",
+        "artificial intelligence"
+      ]
+    },
+    {
+      "path": "brand-assets/product-visuals/_NEW_AI-Assistant/AI-Assistant-Screen-Studio-Demos/Working file/Home_AI-Assistant_4-Telephony(NEW).screenstudio/recording/cursors/arrow.png",
+      "category": "product-visual",
+      "keywords": [
+        "arrow",
+        "ai",
+        "artificial intelligence"
+      ]
+    },
+    {
+      "path": "brand-assets/product-visuals/_NEW_AI-Assistant/AI-Assistant-Screen-Studio-Demos/Working file/Home_AI-Assistant_4-Telephony(NEW).screenstudio/recording/cursors/bottomLeftResize.png",
+      "category": "product-visual",
+      "keywords": [
+        "bottomleftresize",
+        "ai",
+        "artificial intelligence"
+      ]
+    },
+    {
+      "path": "brand-assets/product-visuals/_NEW_AI-Assistant/AI-Assistant-Screen-Studio-Demos/Working file/Home_AI-Assistant_4-Telephony(NEW).screenstudio/recording/cursors/bottomRightResize.png",
+      "category": "product-visual",
+      "keywords": [
+        "bottomrightresize",
+        "ai",
+        "artificial intelligence"
+      ]
+    },
+    {
+      "path": "brand-assets/product-visuals/_NEW_AI-Assistant/AI-Assistant-Screen-Studio-Demos/Working file/Home_AI-Assistant_4-Telephony(NEW).screenstudio/recording/cursors/closedHand.png",
+      "category": "product-visual",
+      "keywords": [
+        "closedhand",
+        "ai",
+        "artificial intelligence"
+      ]
+    },
+    {
+      "path": "brand-assets/product-visuals/_NEW_AI-Assistant/AI-Assistant-Screen-Studio-Demos/Working file/Home_AI-Assistant_4-Telephony(NEW).screenstudio/recording/cursors/contextualMenu.png",
+      "category": "product-visual",
+      "keywords": [
+        "contextualmenu",
+        "ai",
+        "artificial intelligence"
+      ]
+    },
+    {
+      "path": "brand-assets/product-visuals/_NEW_AI-Assistant/AI-Assistant-Screen-Studio-Demos/Working file/Home_AI-Assistant_4-Telephony(NEW).screenstudio/recording/cursors/disappearingItem.png",
+      "category": "product-visual",
+      "keywords": [
+        "disappearingitem",
+        "ai",
+        "artificial intelligence"
+      ]
+    },
+    {
+      "path": "brand-assets/product-visuals/_NEW_AI-Assistant/AI-Assistant-Screen-Studio-Demos/Working file/Home_AI-Assistant_4-Telephony(NEW).screenstudio/recording/cursors/dragCopy.png",
+      "category": "product-visual",
+      "keywords": [
+        "dragcopy",
+        "ai",
+        "artificial intelligence"
+      ]
+    },
+    {
+      "path": "brand-assets/product-visuals/_NEW_AI-Assistant/AI-Assistant-Screen-Studio-Demos/Working file/Home_AI-Assistant_4-Telephony(NEW).screenstudio/recording/cursors/dragLink.png",
+      "category": "product-visual",
+      "keywords": [
+        "draglink",
+        "ai",
+        "artificial intelligence"
+      ]
+    },
+    {
+      "path": "brand-assets/product-visuals/_NEW_AI-Assistant/AI-Assistant-Screen-Studio-Demos/Working file/Home_AI-Assistant_4-Telephony(NEW).screenstudio/recording/cursors/help.png",
+      "category": "product-visual",
+      "keywords": [
+        "help",
+        "ai",
+        "artificial intelligence"
+      ]
+    },
+    {
+      "path": "brand-assets/product-visuals/_NEW_AI-Assistant/AI-Assistant-Screen-Studio-Demos/Working file/Home_AI-Assistant_4-Telephony(NEW).screenstudio/recording/cursors/iBeam.png",
+      "category": "product-visual",
+      "keywords": [
+        "ibeam",
+        "ai",
+        "artificial intelligence"
+      ]
+    },
+    {
+      "path": "brand-assets/product-visuals/_NEW_AI-Assistant/AI-Assistant-Screen-Studio-Demos/Working file/Home_AI-Assistant_4-Telephony(NEW).screenstudio/recording/cursors/iBeamCursorForVerticalLayout.png",
+      "category": "product-visual",
+      "keywords": [
+        "ibeamcursorforverticallayout",
+        "ai",
+        "artificial intelligence"
+      ]
+    },
+    {
+      "path": "brand-assets/product-visuals/_NEW_AI-Assistant/AI-Assistant-Screen-Studio-Demos/Working file/Home_AI-Assistant_4-Telephony(NEW).screenstudio/recording/cursors/openHand.png",
+      "category": "product-visual",
+      "keywords": [
+        "openhand",
+        "ai",
+        "artificial intelligence"
+      ]
+    },
+    {
+      "path": "brand-assets/product-visuals/_NEW_AI-Assistant/AI-Assistant-Screen-Studio-Demos/Working file/Home_AI-Assistant_4-Telephony(NEW).screenstudio/recording/cursors/operationNotAllowed.png",
+      "category": "product-visual",
+      "keywords": [
+        "operationnotallowed",
+        "ai",
+        "artificial intelligence"
+      ]
+    },
+    {
+      "path": "brand-assets/product-visuals/_NEW_AI-Assistant/AI-Assistant-Screen-Studio-Demos/Working file/Home_AI-Assistant_4-Telephony(NEW).screenstudio/recording/cursors/pointingHand.png",
+      "category": "product-visual",
+      "keywords": [
+        "pointinghand",
+        "ai",
+        "artificial intelligence"
+      ]
+    },
+    {
+      "path": "brand-assets/product-visuals/_NEW_AI-Assistant/AI-Assistant-Screen-Studio-Demos/Working file/Home_AI-Assistant_4-Telephony(NEW).screenstudio/recording/cursors/resizeDown.png",
+      "category": "product-visual",
+      "keywords": [
+        "resizedown",
+        "ai",
+        "artificial intelligence"
+      ]
+    },
+    {
+      "path": "brand-assets/product-visuals/_NEW_AI-Assistant/AI-Assistant-Screen-Studio-Demos/Working file/Home_AI-Assistant_4-Telephony(NEW).screenstudio/recording/cursors/resizeLeftRight.png",
+      "category": "product-visual",
+      "keywords": [
+        "resizeleftright",
+        "ai",
+        "artificial intelligence"
+      ]
+    },
+    {
+      "path": "brand-assets/product-visuals/_NEW_AI-Assistant/AI-Assistant-Screen-Studio-Demos/Working file/Home_AI-Assistant_4-Telephony(NEW).screenstudio/recording/cursors/topLeftResize.png",
+      "category": "product-visual",
+      "keywords": [
+        "topleftresize",
+        "ai",
+        "artificial intelligence"
+      ]
+    },
+    {
+      "path": "brand-assets/product-visuals/_NEW_AI-Assistant/AI-Assistant-Screen-Studio-Demos/Working file/Home_AI-Assistant_4-Telephony(NEW).screenstudio/recording/cursors/topRightResize.png",
+      "category": "product-visual",
+      "keywords": [
+        "toprightresize",
+        "ai",
+        "artificial intelligence"
+      ]
+    },
+    {
+      "path": "brand-assets/product-visuals/_NEW_AI-Assistant/AI-Assistant-Screen-Studio-Demos/Working file/Home_AI-Assistant_4-Telephony(NEW).screenstudio/recording/cursors/windowResizeEast.png",
+      "category": "product-visual",
+      "keywords": [
+        "windowresizeeast",
+        "ai",
+        "artificial intelligence"
+      ]
+    },
+    {
+      "path": "brand-assets/product-visuals/_NEW_AI-Assistant/AI-Assistant-Screen-Studio-Demos/Working file/Home_AI-Assistant_4-Telephony(NEW).screenstudio/recording/cursors/windowResizeEastWest.png",
+      "category": "product-visual",
+      "keywords": [
+        "windowresizeeastwest",
+        "ai",
+        "artificial intelligence"
+      ]
+    },
+    {
+      "path": "brand-assets/product-visuals/_NEW_AI-Assistant/AI-Assistant-Screen-Studio-Demos/Working file/Home_AI-Assistant_4-Telephony(NEW).screenstudio/recording/cursors/windowResizeNorth.png",
+      "category": "product-visual",
+      "keywords": [
+        "windowresizenorth",
+        "ai",
+        "artificial intelligence"
+      ]
+    },
+    {
+      "path": "brand-assets/product-visuals/_NEW_AI-Assistant/AI-Assistant-Screen-Studio-Demos/Working file/Home_AI-Assistant_4-Telephony(NEW).screenstudio/recording/cursors/windowResizeNorthEast.png",
+      "category": "product-visual",
+      "keywords": [
+        "windowresizenortheast",
+        "ai",
+        "artificial intelligence"
+      ]
+    },
+    {
+      "path": "brand-assets/product-visuals/_NEW_AI-Assistant/AI-Assistant-Screen-Studio-Demos/Working file/Home_AI-Assistant_4-Telephony(NEW).screenstudio/recording/cursors/windowResizeNorthEastSouthWest.png",
+      "category": "product-visual",
+      "keywords": [
+        "windowresizenortheastsouthwest",
+        "ai",
+        "artificial intelligence"
+      ]
+    },
+    {
+      "path": "brand-assets/product-visuals/_NEW_AI-Assistant/AI-Assistant-Screen-Studio-Demos/Working file/Home_AI-Assistant_4-Telephony(NEW).screenstudio/recording/cursors/windowResizeNorthSouth.png",
+      "category": "product-visual",
+      "keywords": [
+        "windowresizenorthsouth",
+        "ai",
+        "artificial intelligence"
+      ]
+    },
+    {
+      "path": "brand-assets/product-visuals/_NEW_AI-Assistant/AI-Assistant-Screen-Studio-Demos/Working file/Home_AI-Assistant_4-Telephony(NEW).screenstudio/recording/cursors/windowResizeNorthWest.png",
+      "category": "product-visual",
+      "keywords": [
+        "windowresizenorthwest",
+        "ai",
+        "artificial intelligence"
+      ]
+    },
+    {
+      "path": "brand-assets/product-visuals/_NEW_AI-Assistant/AI-Assistant-Screen-Studio-Demos/Working file/Home_AI-Assistant_4-Telephony(NEW).screenstudio/recording/cursors/windowResizeNorthWestSouthEast.png",
+      "category": "product-visual",
+      "keywords": [
+        "windowresizenorthwestsoutheast",
+        "ai",
+        "artificial intelligence"
+      ]
+    },
+    {
+      "path": "brand-assets/product-visuals/_NEW_AI-Assistant/AI-Assistant-Screen-Studio-Demos/Working file/Home_AI-Assistant_4-Telephony(NEW).screenstudio/recording/cursors/windowResizeSouth.png",
+      "category": "product-visual",
+      "keywords": [
+        "windowresizesouth",
+        "ai",
+        "artificial intelligence"
+      ]
+    },
+    {
+      "path": "brand-assets/product-visuals/_NEW_AI-Assistant/AI-Assistant-Screen-Studio-Demos/Working file/Home_AI-Assistant_4-Telephony(NEW).screenstudio/recording/cursors/windowResizeSouthEast.png",
+      "category": "product-visual",
+      "keywords": [
+        "windowresizesoutheast",
+        "ai",
+        "artificial intelligence"
+      ]
+    },
+    {
+      "path": "brand-assets/product-visuals/_NEW_AI-Assistant/AI-Assistant-Screen-Studio-Demos/Working file/Home_AI-Assistant_4-Telephony(NEW).screenstudio/recording/cursors/windowResizeSouthWest.png",
+      "category": "product-visual",
+      "keywords": [
+        "windowresizesouthwest",
+        "ai",
+        "artificial intelligence"
+      ]
+    },
+    {
+      "path": "brand-assets/product-visuals/_NEW_AI-Assistant/AI-Assistant-Screen-Studio-Demos/Working file/Home_AI-Assistant_4-Telephony(NEW).screenstudio/recording/cursors/windowResizeWest.png",
+      "category": "product-visual",
+      "keywords": [
+        "windowresizewest",
+        "ai",
+        "artificial intelligence"
+      ]
+    },
+    {
+      "path": "brand-assets/product-visuals/_NEW_AI-Assistant/AI-Assistant-Screen-Studio-Demos/Working file/Home_AI-Assistant_5-Conversation-History.screenstudio/recording/cursors/arrow.png",
+      "category": "product-visual",
+      "keywords": [
+        "arrow",
+        "ai",
+        "artificial intelligence"
+      ]
+    },
+    {
+      "path": "brand-assets/product-visuals/_NEW_AI-Assistant/AI-Assistant-Screen-Studio-Demos/Working file/Home_AI-Assistant_5-Conversation-History.screenstudio/recording/cursors/bottomLeftResize.png",
+      "category": "product-visual",
+      "keywords": [
+        "bottomleftresize",
+        "ai",
+        "artificial intelligence"
+      ]
+    },
+    {
+      "path": "brand-assets/product-visuals/_NEW_AI-Assistant/AI-Assistant-Screen-Studio-Demos/Working file/Home_AI-Assistant_5-Conversation-History.screenstudio/recording/cursors/bottomRightResize.png",
+      "category": "product-visual",
+      "keywords": [
+        "bottomrightresize",
+        "ai",
+        "artificial intelligence"
+      ]
+    },
+    {
+      "path": "brand-assets/product-visuals/_NEW_AI-Assistant/AI-Assistant-Screen-Studio-Demos/Working file/Home_AI-Assistant_5-Conversation-History.screenstudio/recording/cursors/closedHand.png",
+      "category": "product-visual",
+      "keywords": [
+        "closedhand",
+        "ai",
+        "artificial intelligence"
+      ]
+    },
+    {
+      "path": "brand-assets/product-visuals/_NEW_AI-Assistant/AI-Assistant-Screen-Studio-Demos/Working file/Home_AI-Assistant_5-Conversation-History.screenstudio/recording/cursors/contextualMenu.png",
+      "category": "product-visual",
+      "keywords": [
+        "contextualmenu",
+        "ai",
+        "artificial intelligence"
+      ]
+    },
+    {
+      "path": "brand-assets/product-visuals/_NEW_AI-Assistant/AI-Assistant-Screen-Studio-Demos/Working file/Home_AI-Assistant_5-Conversation-History.screenstudio/recording/cursors/dragLink.png",
+      "category": "product-visual",
+      "keywords": [
+        "draglink",
+        "ai",
+        "artificial intelligence"
+      ]
+    },
+    {
+      "path": "brand-assets/product-visuals/_NEW_AI-Assistant/AI-Assistant-Screen-Studio-Demos/Working file/Home_AI-Assistant_5-Conversation-History.screenstudio/recording/cursors/help.png",
+      "category": "product-visual",
+      "keywords": [
+        "help",
+        "ai",
+        "artificial intelligence"
+      ]
+    },
+    {
+      "path": "brand-assets/product-visuals/_NEW_AI-Assistant/AI-Assistant-Screen-Studio-Demos/Working file/Home_AI-Assistant_5-Conversation-History.screenstudio/recording/cursors/iBeam.png",
+      "category": "product-visual",
+      "keywords": [
+        "ibeam",
+        "ai",
+        "artificial intelligence"
+      ]
+    },
+    {
+      "path": "brand-assets/product-visuals/_NEW_AI-Assistant/AI-Assistant-Screen-Studio-Demos/Working file/Home_AI-Assistant_5-Conversation-History.screenstudio/recording/cursors/iBeamCursorForVerticalLayout.png",
+      "category": "product-visual",
+      "keywords": [
+        "ibeamcursorforverticallayout",
+        "ai",
+        "artificial intelligence"
+      ]
+    },
+    {
+      "path": "brand-assets/product-visuals/_NEW_AI-Assistant/AI-Assistant-Screen-Studio-Demos/Working file/Home_AI-Assistant_5-Conversation-History.screenstudio/recording/cursors/openHand.png",
+      "category": "product-visual",
+      "keywords": [
+        "openhand",
+        "ai",
+        "artificial intelligence"
+      ]
+    },
+    {
+      "path": "brand-assets/product-visuals/_NEW_AI-Assistant/AI-Assistant-Screen-Studio-Demos/Working file/Home_AI-Assistant_5-Conversation-History.screenstudio/recording/cursors/operationNotAllowed.png",
+      "category": "product-visual",
+      "keywords": [
+        "operationnotallowed",
+        "ai",
+        "artificial intelligence"
+      ]
+    },
+    {
+      "path": "brand-assets/product-visuals/_NEW_AI-Assistant/AI-Assistant-Screen-Studio-Demos/Working file/Home_AI-Assistant_5-Conversation-History.screenstudio/recording/cursors/pointingHand.png",
+      "category": "product-visual",
+      "keywords": [
+        "pointinghand",
+        "ai",
+        "artificial intelligence"
+      ]
+    },
+    {
+      "path": "brand-assets/product-visuals/_NEW_AI-Assistant/AI-Assistant-Screen-Studio-Demos/Working file/Home_AI-Assistant_5-Conversation-History.screenstudio/recording/cursors/resizeDown.png",
+      "category": "product-visual",
+      "keywords": [
+        "resizedown",
+        "ai",
+        "artificial intelligence"
+      ]
+    },
+    {
+      "path": "brand-assets/product-visuals/_NEW_AI-Assistant/AI-Assistant-Screen-Studio-Demos/Working file/Home_AI-Assistant_5-Conversation-History.screenstudio/recording/cursors/resizeLeft.png",
+      "category": "product-visual",
+      "keywords": [
+        "resizeleft",
+        "ai",
+        "artificial intelligence"
+      ]
+    },
+    {
+      "path": "brand-assets/product-visuals/_NEW_AI-Assistant/AI-Assistant-Screen-Studio-Demos/Working file/Home_AI-Assistant_5-Conversation-History.screenstudio/recording/cursors/resizeLeftRight.png",
+      "category": "product-visual",
+      "keywords": [
+        "resizeleftright",
+        "ai",
+        "artificial intelligence"
+      ]
+    },
+    {
+      "path": "brand-assets/product-visuals/_NEW_AI-Assistant/AI-Assistant-Screen-Studio-Demos/Working file/Home_AI-Assistant_5-Conversation-History.screenstudio/recording/cursors/resizeRight.png",
+      "category": "product-visual",
+      "keywords": [
+        "resizeright",
+        "ai",
+        "artificial intelligence"
+      ]
+    },
+    {
+      "path": "brand-assets/product-visuals/_NEW_AI-Assistant/AI-Assistant-Screen-Studio-Demos/Working file/Home_AI-Assistant_5-Conversation-History.screenstudio/recording/cursors/resizeUp.png",
+      "category": "product-visual",
+      "keywords": [
+        "resizeup",
+        "ai",
+        "artificial intelligence"
+      ]
+    },
+    {
+      "path": "brand-assets/product-visuals/_NEW_AI-Assistant/AI-Assistant-Screen-Studio-Demos/Working file/Home_AI-Assistant_5-Conversation-History.screenstudio/recording/cursors/resizeUpDown.png",
+      "category": "product-visual",
+      "keywords": [
+        "resizeupdown",
+        "ai",
+        "artificial intelligence"
+      ]
+    },
+    {
+      "path": "brand-assets/product-visuals/_NEW_AI-Assistant/AI-Assistant-Screen-Studio-Demos/Working file/Home_AI-Assistant_5-Conversation-History.screenstudio/recording/cursors/topLeftResize.png",
+      "category": "product-visual",
+      "keywords": [
+        "topleftresize",
+        "ai",
+        "artificial intelligence"
+      ]
+    },
+    {
+      "path": "brand-assets/product-visuals/_NEW_AI-Assistant/AI-Assistant-Screen-Studio-Demos/Working file/Home_AI-Assistant_5-Conversation-History.screenstudio/recording/cursors/topRightResize.png",
+      "category": "product-visual",
+      "keywords": [
+        "toprightresize",
+        "ai",
+        "artificial intelligence"
+      ]
+    },
+    {
+      "path": "brand-assets/product-visuals/_NEW_AI-Assistant/AI-Assistant-Screen-Studio-Demos/Working file/Home_AI-Assistant_5-Conversation-History.screenstudio/recording/cursors/windowResizeEast.png",
+      "category": "product-visual",
+      "keywords": [
+        "windowresizeeast",
+        "ai",
+        "artificial intelligence"
+      ]
+    },
+    {
+      "path": "brand-assets/product-visuals/_NEW_AI-Assistant/AI-Assistant-Screen-Studio-Demos/Working file/Home_AI-Assistant_5-Conversation-History.screenstudio/recording/cursors/windowResizeEastWest.png",
+      "category": "product-visual",
+      "keywords": [
+        "windowresizeeastwest",
+        "ai",
+        "artificial intelligence"
+      ]
+    },
+    {
+      "path": "brand-assets/product-visuals/_NEW_AI-Assistant/AI-Assistant-Screen-Studio-Demos/Working file/Home_AI-Assistant_5-Conversation-History.screenstudio/recording/cursors/windowResizeNorth.png",
+      "category": "product-visual",
+      "keywords": [
+        "windowresizenorth",
+        "ai",
+        "artificial intelligence"
+      ]
+    },
+    {
+      "path": "brand-assets/product-visuals/_NEW_AI-Assistant/AI-Assistant-Screen-Studio-Demos/Working file/Home_AI-Assistant_5-Conversation-History.screenstudio/recording/cursors/windowResizeNorthEast.png",
+      "category": "product-visual",
+      "keywords": [
+        "windowresizenortheast",
+        "ai",
+        "artificial intelligence"
+      ]
+    },
+    {
+      "path": "brand-assets/product-visuals/_NEW_AI-Assistant/AI-Assistant-Screen-Studio-Demos/Working file/Home_AI-Assistant_5-Conversation-History.screenstudio/recording/cursors/windowResizeNorthEastSouthWest.png",
+      "category": "product-visual",
+      "keywords": [
+        "windowresizenortheastsouthwest",
+        "ai",
+        "artificial intelligence"
+      ]
+    },
+    {
+      "path": "brand-assets/product-visuals/_NEW_AI-Assistant/AI-Assistant-Screen-Studio-Demos/Working file/Home_AI-Assistant_5-Conversation-History.screenstudio/recording/cursors/windowResizeNorthSouth.png",
+      "category": "product-visual",
+      "keywords": [
+        "windowresizenorthsouth",
+        "ai",
+        "artificial intelligence"
+      ]
+    },
+    {
+      "path": "brand-assets/product-visuals/_NEW_AI-Assistant/AI-Assistant-Screen-Studio-Demos/Working file/Home_AI-Assistant_5-Conversation-History.screenstudio/recording/cursors/windowResizeNorthWest.png",
+      "category": "product-visual",
+      "keywords": [
+        "windowresizenorthwest",
+        "ai",
+        "artificial intelligence"
+      ]
+    },
+    {
+      "path": "brand-assets/product-visuals/_NEW_AI-Assistant/AI-Assistant-Screen-Studio-Demos/Working file/Home_AI-Assistant_5-Conversation-History.screenstudio/recording/cursors/windowResizeNorthWestSouthEast.png",
+      "category": "product-visual",
+      "keywords": [
+        "windowresizenorthwestsoutheast",
+        "ai",
+        "artificial intelligence"
+      ]
+    },
+    {
+      "path": "brand-assets/product-visuals/_NEW_AI-Assistant/AI-Assistant-Screen-Studio-Demos/Working file/Home_AI-Assistant_5-Conversation-History.screenstudio/recording/cursors/windowResizeSouth.png",
+      "category": "product-visual",
+      "keywords": [
+        "windowresizesouth",
+        "ai",
+        "artificial intelligence"
+      ]
+    },
+    {
+      "path": "brand-assets/product-visuals/_NEW_AI-Assistant/AI-Assistant-Screen-Studio-Demos/Working file/Home_AI-Assistant_5-Conversation-History.screenstudio/recording/cursors/windowResizeSouthEast.png",
+      "category": "product-visual",
+      "keywords": [
+        "windowresizesoutheast",
+        "ai",
+        "artificial intelligence"
+      ]
+    },
+    {
+      "path": "brand-assets/product-visuals/_NEW_AI-Assistant/AI-Assistant-Screen-Studio-Demos/Working file/Home_AI-Assistant_5-Conversation-History.screenstudio/recording/cursors/windowResizeSouthWest.png",
+      "category": "product-visual",
+      "keywords": [
+        "windowresizesouthwest",
+        "ai",
+        "artificial intelligence"
+      ]
+    },
+    {
+      "path": "brand-assets/product-visuals/_NEW_AI-Assistant/AI-Assistant-Screen-Studio-Demos/Working file/Home_AI-Assistant_5-Conversation-History.screenstudio/recording/cursors/windowResizeWest.png",
+      "category": "product-visual",
+      "keywords": [
+        "windowresizewest",
+        "ai",
+        "artificial intelligence"
+      ]
+    },
+    {
+      "path": "brand-assets/product-visuals/_NEW_AI-Assistant/AI-Assistant-Screen-Studio-Demos/Working file/Home_AI-Assistant_6-Conversation-Insights.screenstudio/recording/cursors/arrow.png",
+      "category": "product-visual",
+      "keywords": [
+        "arrow",
+        "ai",
+        "artificial intelligence"
+      ]
+    },
+    {
+      "path": "brand-assets/product-visuals/_NEW_AI-Assistant/AI-Assistant-Screen-Studio-Demos/Working file/Home_AI-Assistant_6-Conversation-Insights.screenstudio/recording/cursors/bottomLeftResize.png",
+      "category": "product-visual",
+      "keywords": [
+        "bottomleftresize",
+        "ai",
+        "artificial intelligence"
+      ]
+    },
+    {
+      "path": "brand-assets/product-visuals/_NEW_AI-Assistant/AI-Assistant-Screen-Studio-Demos/Working file/Home_AI-Assistant_6-Conversation-Insights.screenstudio/recording/cursors/bottomRightResize.png",
+      "category": "product-visual",
+      "keywords": [
+        "bottomrightresize",
+        "ai",
+        "artificial intelligence"
+      ]
+    },
+    {
+      "path": "brand-assets/product-visuals/_NEW_AI-Assistant/AI-Assistant-Screen-Studio-Demos/Working file/Home_AI-Assistant_6-Conversation-Insights.screenstudio/recording/cursors/closedHand.png",
+      "category": "product-visual",
+      "keywords": [
+        "closedhand",
+        "ai",
+        "artificial intelligence"
+      ]
+    },
+    {
+      "path": "brand-assets/product-visuals/_NEW_AI-Assistant/AI-Assistant-Screen-Studio-Demos/Working file/Home_AI-Assistant_6-Conversation-Insights.screenstudio/recording/cursors/contextualMenu.png",
+      "category": "product-visual",
+      "keywords": [
+        "contextualmenu",
+        "ai",
+        "artificial intelligence"
+      ]
+    },
+    {
+      "path": "brand-assets/product-visuals/_NEW_AI-Assistant/AI-Assistant-Screen-Studio-Demos/Working file/Home_AI-Assistant_6-Conversation-Insights.screenstudio/recording/cursors/crosshair.png",
+      "category": "product-visual",
+      "keywords": [
+        "crosshair",
+        "ai",
+        "artificial intelligence"
+      ]
+    },
+    {
+      "path": "brand-assets/product-visuals/_NEW_AI-Assistant/AI-Assistant-Screen-Studio-Demos/Working file/Home_AI-Assistant_6-Conversation-Insights.screenstudio/recording/cursors/disappearingItem.png",
+      "category": "product-visual",
+      "keywords": [
+        "disappearingitem",
+        "ai",
+        "artificial intelligence"
+      ]
+    },
+    {
+      "path": "brand-assets/product-visuals/_NEW_AI-Assistant/AI-Assistant-Screen-Studio-Demos/Working file/Home_AI-Assistant_6-Conversation-Insights.screenstudio/recording/cursors/dragCopy.png",
+      "category": "product-visual",
+      "keywords": [
+        "dragcopy",
+        "ai",
+        "artificial intelligence"
+      ]
+    },
+    {
+      "path": "brand-assets/product-visuals/_NEW_AI-Assistant/AI-Assistant-Screen-Studio-Demos/Working file/Home_AI-Assistant_6-Conversation-Insights.screenstudio/recording/cursors/dragLink.png",
+      "category": "product-visual",
+      "keywords": [
+        "draglink",
+        "ai",
+        "artificial intelligence"
+      ]
+    },
+    {
+      "path": "brand-assets/product-visuals/_NEW_AI-Assistant/AI-Assistant-Screen-Studio-Demos/Working file/Home_AI-Assistant_6-Conversation-Insights.screenstudio/recording/cursors/help.png",
+      "category": "product-visual",
+      "keywords": [
+        "help",
+        "ai",
+        "artificial intelligence"
+      ]
+    },
+    {
+      "path": "brand-assets/product-visuals/_NEW_AI-Assistant/AI-Assistant-Screen-Studio-Demos/Working file/Home_AI-Assistant_6-Conversation-Insights.screenstudio/recording/cursors/iBeam.png",
+      "category": "product-visual",
+      "keywords": [
+        "ibeam",
+        "ai",
+        "artificial intelligence"
+      ]
+    },
+    {
+      "path": "brand-assets/product-visuals/_NEW_AI-Assistant/AI-Assistant-Screen-Studio-Demos/Working file/Home_AI-Assistant_6-Conversation-Insights.screenstudio/recording/cursors/iBeamCursorForVerticalLayout.png",
+      "category": "product-visual",
+      "keywords": [
+        "ibeamcursorforverticallayout",
+        "ai",
+        "artificial intelligence"
+      ]
+    },
+    {
+      "path": "brand-assets/product-visuals/_NEW_AI-Assistant/AI-Assistant-Screen-Studio-Demos/Working file/Home_AI-Assistant_6-Conversation-Insights.screenstudio/recording/cursors/pointingHand.png",
+      "category": "product-visual",
+      "keywords": [
+        "pointinghand",
+        "ai",
+        "artificial intelligence"
+      ]
+    },
+    {
+      "path": "brand-assets/product-visuals/_NEW_AI-Assistant/AI-Assistant-Screen-Studio-Demos/Working file/Home_AI-Assistant_6-Conversation-Insights.screenstudio/recording/cursors/resizeLeftRight.png",
+      "category": "product-visual",
+      "keywords": [
+        "resizeleftright",
+        "ai",
+        "artificial intelligence"
+      ]
+    },
+    {
+      "path": "brand-assets/product-visuals/_NEW_AI-Assistant/AI-Assistant-Screen-Studio-Demos/Working file/Home_AI-Assistant_6-Conversation-Insights.screenstudio/recording/cursors/resizeRight.png",
+      "category": "product-visual",
+      "keywords": [
+        "resizeright",
+        "ai",
+        "artificial intelligence"
+      ]
+    },
+    {
+      "path": "brand-assets/product-visuals/_NEW_AI-Assistant/AI-Assistant-Screen-Studio-Demos/Working file/Home_AI-Assistant_6-Conversation-Insights.screenstudio/recording/cursors/resizeUp.png",
+      "category": "product-visual",
+      "keywords": [
+        "resizeup",
+        "ai",
+        "artificial intelligence"
+      ]
+    },
+    {
+      "path": "brand-assets/product-visuals/_NEW_AI-Assistant/AI-Assistant-Screen-Studio-Demos/Working file/Home_AI-Assistant_6-Conversation-Insights.screenstudio/recording/cursors/resizeUpDown.png",
+      "category": "product-visual",
+      "keywords": [
+        "resizeupdown",
+        "ai",
+        "artificial intelligence"
+      ]
+    },
+    {
+      "path": "brand-assets/product-visuals/_NEW_AI-Assistant/AI-Assistant-Screen-Studio-Demos/Working file/Home_AI-Assistant_6-Conversation-Insights.screenstudio/recording/cursors/topLeftResize.png",
+      "category": "product-visual",
+      "keywords": [
+        "topleftresize",
+        "ai",
+        "artificial intelligence"
+      ]
+    },
+    {
+      "path": "brand-assets/product-visuals/_NEW_AI-Assistant/AI-Assistant-Screen-Studio-Demos/Working file/Home_AI-Assistant_6-Conversation-Insights.screenstudio/recording/cursors/topRightResize.png",
+      "category": "product-visual",
+      "keywords": [
+        "toprightresize",
+        "ai",
+        "artificial intelligence"
+      ]
+    },
+    {
+      "path": "brand-assets/product-visuals/_NEW_AI-Assistant/AI-Assistant-Screen-Studio-Demos/Working file/Home_AI-Assistant_6-Conversation-Insights.screenstudio/recording/cursors/windowResizeEast.png",
+      "category": "product-visual",
+      "keywords": [
+        "windowresizeeast",
+        "ai",
+        "artificial intelligence"
+      ]
+    },
+    {
+      "path": "brand-assets/product-visuals/_NEW_AI-Assistant/AI-Assistant-Screen-Studio-Demos/Working file/Home_AI-Assistant_6-Conversation-Insights.screenstudio/recording/cursors/windowResizeEastWest.png",
+      "category": "product-visual",
+      "keywords": [
+        "windowresizeeastwest",
+        "ai",
+        "artificial intelligence"
+      ]
+    },
+    {
+      "path": "brand-assets/product-visuals/_NEW_AI-Assistant/AI-Assistant-Screen-Studio-Demos/Working file/Home_AI-Assistant_6-Conversation-Insights.screenstudio/recording/cursors/windowResizeNorth.png",
+      "category": "product-visual",
+      "keywords": [
+        "windowresizenorth",
+        "ai",
+        "artificial intelligence"
+      ]
+    },
+    {
+      "path": "brand-assets/product-visuals/_NEW_AI-Assistant/AI-Assistant-Screen-Studio-Demos/Working file/Home_AI-Assistant_6-Conversation-Insights.screenstudio/recording/cursors/windowResizeNorthEast.png",
+      "category": "product-visual",
+      "keywords": [
+        "windowresizenortheast",
+        "ai",
+        "artificial intelligence"
+      ]
+    },
+    {
+      "path": "brand-assets/product-visuals/_NEW_AI-Assistant/AI-Assistant-Screen-Studio-Demos/Working file/Home_AI-Assistant_6-Conversation-Insights.screenstudio/recording/cursors/windowResizeNorthEastSouthWest.png",
+      "category": "product-visual",
+      "keywords": [
+        "windowresizenortheastsouthwest",
+        "ai",
+        "artificial intelligence"
+      ]
+    },
+    {
+      "path": "brand-assets/product-visuals/_NEW_AI-Assistant/AI-Assistant-Screen-Studio-Demos/Working file/Home_AI-Assistant_6-Conversation-Insights.screenstudio/recording/cursors/windowResizeNorthSouth.png",
+      "category": "product-visual",
+      "keywords": [
+        "windowresizenorthsouth",
+        "ai",
+        "artificial intelligence"
+      ]
+    },
+    {
+      "path": "brand-assets/product-visuals/_NEW_AI-Assistant/AI-Assistant-Screen-Studio-Demos/Working file/Home_AI-Assistant_6-Conversation-Insights.screenstudio/recording/cursors/windowResizeNorthWest.png",
+      "category": "product-visual",
+      "keywords": [
+        "windowresizenorthwest",
+        "ai",
+        "artificial intelligence"
+      ]
+    },
+    {
+      "path": "brand-assets/product-visuals/_NEW_AI-Assistant/AI-Assistant-Screen-Studio-Demos/Working file/Home_AI-Assistant_6-Conversation-Insights.screenstudio/recording/cursors/windowResizeNorthWestSouthEast.png",
+      "category": "product-visual",
+      "keywords": [
+        "windowresizenorthwestsoutheast",
+        "ai",
+        "artificial intelligence"
+      ]
+    },
+    {
+      "path": "brand-assets/product-visuals/_NEW_AI-Assistant/AI-Assistant-Screen-Studio-Demos/Working file/Home_AI-Assistant_6-Conversation-Insights.screenstudio/recording/cursors/windowResizeSouth.png",
+      "category": "product-visual",
+      "keywords": [
+        "windowresizesouth",
+        "ai",
+        "artificial intelligence"
+      ]
+    },
+    {
+      "path": "brand-assets/product-visuals/_NEW_AI-Assistant/AI-Assistant-Screen-Studio-Demos/Working file/Home_AI-Assistant_6-Conversation-Insights.screenstudio/recording/cursors/windowResizeSouthEast.png",
+      "category": "product-visual",
+      "keywords": [
+        "windowresizesoutheast",
+        "ai",
+        "artificial intelligence"
+      ]
+    },
+    {
+      "path": "brand-assets/product-visuals/_NEW_AI-Assistant/AI-Assistant-Screen-Studio-Demos/Working file/Home_AI-Assistant_6-Conversation-Insights.screenstudio/recording/cursors/windowResizeSouthWest.png",
+      "category": "product-visual",
+      "keywords": [
+        "windowresizesouthwest",
+        "ai",
+        "artificial intelligence"
+      ]
+    },
+    {
+      "path": "brand-assets/product-visuals/_NEW_AI-Assistant/AI-Assistant-Screen-Studio-Demos/Working file/Home_AI-Assistant_6-Conversation-Insights.screenstudio/recording/cursors/windowResizeWest.png",
+      "category": "product-visual",
+      "keywords": [
+        "windowresizewest",
+        "ai",
+        "artificial intelligence"
+      ]
+    }
+  ],
+  "icons": [],
+  "brandAssets": [
+    {
+      "path": "brand-assets/telnyx.com-sections/Photography Promo Carousel/@1x/Visual-Promo-Asset-7.jpg",
+      "category": "general-asset",
+      "keywords": [
+        "visual",
+        "promo",
+        "asset"
+      ]
+    },
+    {
+      "path": "brand-assets/telnyx.com-sections/Photography Promo Carousel/@1x/Visual-Promo-Asset-9.jpg",
+      "category": "general-asset",
+      "keywords": [
+        "visual",
+        "promo",
+        "asset"
+      ]
+    },
+    {
+      "path": "brand-assets/telnyx.com-sections/Photography Promo Carousel/@2x/Visual-Promo-Asset-2.jpg",
+      "category": "general-asset",
+      "keywords": [
+        "visual",
+        "promo",
+        "asset"
+      ]
+    },
+    {
+      "path": "brand-assets/assets/brand/stack/brand-stack-compressed.png",
+      "category": "general-asset",
+      "keywords": [
+        "brand",
+        "stack",
+        "compressed"
+      ]
+    },
+    {
+      "path": "brand-assets/assets/icons/category/icon-category-cursor-text.png",
+      "category": "general-asset",
+      "keywords": [
+        "icon",
+        "category",
+        "cursor",
+        "text"
+      ]
+    },
+    {
+      "path": "brand-assets/assets/icons/product/icon-wordmark/ai-icon-wordmark.png",
+      "category": "general-asset",
+      "keywords": [
+        "icon",
+        "wordmark"
+      ]
+    },
+    {
+      "path": "brand-assets/assets/industry/hero/industry_automotive_hero.png",
+      "category": "general-asset",
+      "keywords": [
+        "industry",
+        "automotive",
+        "hero"
+      ],
+      "industry": "automotive",
+      "bestFor": [
+        "automotive industry"
+      ]
+    },
+    {
+      "path": "brand-assets/assets/industry/hero/industry_finance_hero.png",
+      "category": "general-asset",
+      "keywords": [
+        "industry",
+        "finance",
+        "hero"
+      ],
+      "industry": "finance",
+      "bestFor": [
+        "finance industry"
+      ]
+    },
+    {
+      "path": "brand-assets/assets/industry/hero/industry_retail_ecommerce_hero.png",
+      "category": "general-asset",
+      "keywords": [
+        "industry",
+        "retail",
+        "ecommerce",
+        "hero"
+      ],
+      "industry": "retail",
+      "bestFor": [
+        "retail industry"
+      ]
+    },
+    {
+      "path": "brand-assets/assets/industry/use-cases/travel-hospitality/industry-usecases-travel-hospitality-booking-management.png",
+      "category": "general-asset",
+      "keywords": [
+        "industry",
+        "usecases",
+        "travel",
+        "hospitality",
+        "booking",
+        "management"
+      ],
+      "industry": "travel",
+      "bestFor": [
+        "travel industry"
+      ]
+    },
+    {
+      "path": "brand-assets/assets/industry/use-cases/travel-hospitality/industry-usecases-travel-hospitality-modify-booking.png",
+      "category": "general-asset",
+      "keywords": [
+        "industry",
+        "usecases",
+        "travel",
+        "hospitality",
+        "modify",
+        "booking"
+      ],
+      "industry": "travel",
+      "bestFor": [
+        "travel industry"
+      ]
+    },
+    {
+      "path": "brand-assets/assets/logo/White:Black/Telnyx_Lockup_Primary_One-color_Cream_Large (7).png",
+      "category": "general-asset",
+      "keywords": [
+        "telnyx",
+        "lockup",
+        "primary",
+        "one",
+        "color",
+        "cream",
+        "large",
+        "(7)"
+      ]
+    },
+    {
+      "path": "brand-assets/assets/logo/White:Black/Telnyx_Media-Kit_Logo-Black (1).png",
+      "category": "general-asset",
+      "keywords": [
+        "telnyx",
+        "media",
+        "kit",
+        "logo",
+        "black",
+        "(1)"
+      ]
+    },
+    {
+      "path": "brand-assets/assets/logo/green/telnyx-logo-icon-green.png",
+      "category": "general-asset",
+      "keywords": [
+        "telnyx",
+        "logo",
+        "icon",
+        "green"
+      ]
+    },
+    {
+      "path": "brand-assets/assets/logo/green/telnyx-logo-wordmark-green.png",
+      "category": "general-asset",
+      "keywords": [
+        "telnyx",
+        "logo",
+        "wordmark",
+        "green"
+      ]
+    },
+    {
+      "path": "brand-assets/assets/photography/people-devices/photography-people-devices-man-suit-work-phone-text.jpg",
+      "category": "general-asset",
+      "keywords": [
+        "photography",
+        "people",
+        "devices",
+        "man",
+        "suit",
+        "work",
+        "phone",
+        "text"
+      ]
+    },
+    {
+      "path": "brand-assets/assets/photography/people-devices/photography-people-devices-people-cafe-coffee-phone-call.jpg",
+      "category": "general-asset",
+      "keywords": [
+        "photography",
+        "people",
+        "devices",
+        "cafe",
+        "coffee",
+        "phone",
+        "call"
+      ]
+    },
+    {
+      "path": "brand-assets/assets/photography/people-devices/photography-people-devices-people-cafe-phone-table.jpg",
+      "category": "general-asset",
+      "keywords": [
+        "photography",
+        "people",
+        "devices",
+        "cafe",
+        "phone",
+        "table"
+      ]
+    },
+    {
+      "path": "brand-assets/assets/templates/Reports/report_linkedin_1.91_1.png",
+      "category": "general-asset",
+      "keywords": [
+        "report",
+        "linkedin",
+        "1.91"
+      ]
+    },
+    {
+      "path": "brand-assets/assets/templates/Reports/report_linkedin_4x5.png",
+      "category": "general-asset",
+      "keywords": [
+        "report",
+        "linkedin",
+        "4x5"
+      ]
+    },
+    {
+      "path": "brand-assets/-new-social-video/TTS/January 2026/Editable/TTS Languages Asset/(Footage)/Gemini_Generated_Image_vf3yq1vf3yq1vf3y.jpeg",
+      "category": "general-asset",
+      "keywords": [
+        "gemini",
+        "generated",
+        "image",
+        "vf3yq1vf3yq1vf3y"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,4 @@
+company,domain,country,region,vertical,productFit,status,confidenceTier,confidenceScore,archetype,evidenceType,evidenceSnippet,description
+"Calabrio","calabrio.com","Sweden","EMEA","Any","ai-agent","validated","tier3","70","","","","Workforce performance and customer experience solutions."
+"Vocale.ai","vocale.ai","UK","EMEA","ai-voice","ai-agent","unverified","tier3","30","","voice_agent","Real-time voice AI platform for sales teams","Real-time voice AI for sales teams."
+"Plexus.ai","plexus.ai","France","EMEA","healthcare","ai-agent","unverified","tier3","30","","voice_agent","AI-powered platform for automating tasks in healthcare","Offers an AI-powered platform for automating tasks in healthcare, including voice-based communication."

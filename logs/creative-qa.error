@@ -18,3 +18,113 @@ Traceback (most recent call last):
   File "/Users/azizalsinafi/.openclaw/workspace/demand-gen-hub/scripts/creative-manager.py", line 23, in <module>
     from agent_base import BaseAgent, CampaignContext
 ImportError: cannot import name 'CampaignContext' from 'agent_base' (/Users/azizalsinafi/.openclaw/workspace/demand-gen-hub/scripts/lib/agent_base.py)
+  ❌ StackAdapt creative analysis error: attempted relative import with no known parent package
+Traceback (most recent call last):
+  File "/Users/azizalsinafi/.openclaw/workspace/demand-gen-hub/scripts/creative-manager.py", line 226, in <module>
+    main()
+    ~~~~^^
+  File "/Users/azizalsinafi/.openclaw/workspace/demand-gen-hub/scripts/creative-manager.py", line 220, in main
+    result = agent.run()
+  File "/Users/azizalsinafi/.openclaw/workspace/demand-gen-hub/scripts/creative-manager.py", line 171, in run
+    self.log_run_start()
+    ~~~~~~~~~~~~~~~~~~^^
+  File "/Users/azizalsinafi/.openclaw/workspace/demand-gen-hub/scripts/lib/agent_base.py", line 540, in log_run_start
+    self.check_kill_switch()
+    ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/Users/azizalsinafi/.openclaw/workspace/demand-gen-hub/scripts/lib/agent_base.py", line 189, in check_kill_switch
+    raise KillSwitchTriggered(msg)
+agent_base.KillSwitchTriggered: 🚨 KILL SWITCH: CPA spiked 65% day-over-day ($120.54 → $198.96). All auto-actions aborted for Creative Manager.
+  ❌ StackAdapt creative analysis error: attempted relative import with no known parent package
+  ❌ StackAdapt creative analysis error: attempted relative import with no known parent package
+  ❌ StackAdapt creative analysis error: attempted relative import with no known parent package
+Traceback (most recent call last):
+  File "/Users/azizalsinafi/.openclaw/workspace/demand-gen-hub/scripts/creative-manager.py", line 226, in <module>
+    main()
+    ~~~~^^
+  File "/Users/azizalsinafi/.openclaw/workspace/demand-gen-hub/scripts/creative-manager.py", line 220, in main
+    result = agent.run()
+  File "/Users/azizalsinafi/.openclaw/workspace/demand-gen-hub/scripts/creative-manager.py", line 171, in run
+    self.log_run_start()
+    ~~~~~~~~~~~~~~~~~~^^
+  File "/Users/azizalsinafi/.openclaw/workspace/demand-gen-hub/scripts/lib/agent_base.py", line 540, in log_run_start
+    self.check_kill_switch()
+    ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/Users/azizalsinafi/.openclaw/workspace/demand-gen-hub/scripts/lib/agent_base.py", line 189, in check_kill_switch
+    raise KillSwitchTriggered(msg)
+agent_base.KillSwitchTriggered: 🚨 KILL SWITCH: CPA spiked 58% day-over-day ($98.18 → $155.37). All auto-actions aborted for Creative Manager.
+  ❌ StackAdapt creative analysis error: attempted relative import with no known parent package
+  ❌ StackAdapt creative analysis error: attempted relative import with no known parent package
+Traceback (most recent call last):
+  File "/Users/azizalsinafi/.openclaw/workspace/demand-gen-hub/scripts/creative-manager.py", line 226, in <module>
+    main()
+    ~~~~^^
+  File "/Users/azizalsinafi/.openclaw/workspace/demand-gen-hub/scripts/creative-manager.py", line 220, in main
+    result = agent.run()
+  File "/Users/azizalsinafi/.openclaw/workspace/demand-gen-hub/scripts/creative-manager.py", line 171, in run
+    self.log_run_start()
+    ~~~~~~~~~~~~~~~~~~^^
+  File "/Users/azizalsinafi/.openclaw/workspace/demand-gen-hub/scripts/lib/agent_base.py", line 540, in log_run_start
+    self.check_kill_switch()
+    ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/Users/azizalsinafi/.openclaw/workspace/demand-gen-hub/scripts/lib/agent_base.py", line 189, in check_kill_switch
+    raise KillSwitchTriggered(msg)
+agent_base.KillSwitchTriggered: 🚨 KILL SWITCH: CPA spiked 71% day-over-day ($86.96 → $149.01). All auto-actions aborted for Creative Manager.
+  ❌ StackAdapt creative analysis error: attempted relative import with no known parent package
+  ❌ StackAdapt creative analysis error: attempted relative import with no known parent package
+  ❌ StackAdapt creative analysis error: attempted relative import with no known parent package
+  ❌ StackAdapt creative analysis error: attempted relative import with no known parent package
+  ❌ StackAdapt creative analysis error: attempted relative import with no known parent package
+  ❌ StackAdapt creative analysis error: attempted relative import with no known parent package
+Traceback (most recent call last):
+  File "/Users/azizalsinafi/.openclaw/workspace/demand-gen-hub/scripts/creative-manager.py", line 226, in <module>
+    main()
+    ~~~~^^
+  File "/Users/azizalsinafi/.openclaw/workspace/demand-gen-hub/scripts/creative-manager.py", line 220, in main
+    result = agent.run()
+  File "/Users/azizalsinafi/.openclaw/workspace/demand-gen-hub/scripts/creative-manager.py", line 171, in run
+    self.log_run_start()
+    ~~~~~~~~~~~~~~~~~~^^
+  File "/Users/azizalsinafi/.openclaw/workspace/demand-gen-hub/scripts/lib/agent_base.py", line 540, in log_run_start
+    self.check_kill_switch()
+    ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/Users/azizalsinafi/.openclaw/workspace/demand-gen-hub/scripts/lib/agent_base.py", line 189, in check_kill_switch
+    raise KillSwitchTriggered(msg)
+agent_base.KillSwitchTriggered: 🚨 KILL SWITCH: CPA spiked 51% day-over-day ($111.79 → $169.17). All auto-actions aborted for Creative Manager.
+  ❌ StackAdapt creative analysis error: attempted relative import with no known parent package
+  ❌ StackAdapt creative analysis error: attempted relative import with no known parent package
+Traceback (most recent call last):
+  File "/Users/azizalsinafi/.openclaw/workspace/demand-gen-hub/scripts/creative-manager.py", line 226, in <module>
+    main()
+    ~~~~^^
+  File "/Users/azizalsinafi/.openclaw/workspace/demand-gen-hub/scripts/creative-manager.py", line 220, in main
+    result = agent.run()
+  File "/Users/azizalsinafi/.openclaw/workspace/demand-gen-hub/scripts/creative-manager.py", line 171, in run
+    self.log_run_start()
+    ~~~~~~~~~~~~~~~~~~^^
+  File "/Users/azizalsinafi/.openclaw/workspace/demand-gen-hub/scripts/lib/agent_base.py", line 540, in log_run_start
+    self.check_kill_switch()
+    ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/Users/azizalsinafi/.openclaw/workspace/demand-gen-hub/scripts/lib/agent_base.py", line 189, in check_kill_switch
+    raise KillSwitchTriggered(msg)
+agent_base.KillSwitchTriggered: 🚨 KILL SWITCH: CPA spiked 56% day-over-day ($87.59 → $136.69). All auto-actions aborted for Creative Manager.
+  ❌ StackAdapt creative analysis error: attempted relative import with no known parent package
+  ❌ StackAdapt creative analysis error: attempted relative import with no known parent package
+  ❌ StackAdapt creative analysis error: attempted relative import with no known parent package
+  ❌ StackAdapt creative analysis error: attempted relative import with no known parent package
+  ❌ StackAdapt creative analysis error: attempted relative import with no known parent package
+  ❌ StackAdapt creative analysis error: attempted relative import with no known parent package
+Traceback (most recent call last):
+  File "/Users/azizalsinafi/.openclaw/workspace/demand-gen-hub/scripts/creative-manager.py", line 226, in <module>
+    main()
+    ~~~~^^
+  File "/Users/azizalsinafi/.openclaw/workspace/demand-gen-hub/scripts/creative-manager.py", line 220, in main
+    result = agent.run()
+  File "/Users/azizalsinafi/.openclaw/workspace/demand-gen-hub/scripts/creative-manager.py", line 171, in run
+    self.log_run_start()
+    ~~~~~~~~~~~~~~~~~~^^
+  File "/Users/azizalsinafi/.openclaw/workspace/demand-gen-hub/scripts/lib/agent_base.py", line 540, in log_run_start
+    self.check_kill_switch()
+    ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/Users/azizalsinafi/.openclaw/workspace/demand-gen-hub/scripts/lib/agent_base.py", line 189, in check_kill_switch
+    raise KillSwitchTriggered(msg)
+agent_base.KillSwitchTriggered: 🚨 KILL SWITCH: CPA spiked 55% day-over-day ($87.02 → $135.03). All auto-actions aborted for Creative Manager.

@@ -1,5 +1,9 @@
 // AI client via Telnyx LiteLLM gateway (direct, no OpenClaw proxy)
 import OpenAI from "openai";
+import dotenv from "dotenv";
+
+// Load env vars before using them
+dotenv.config();
 
 const LITELLM_BASE = process.env.LITELLM_BASE_URL || "http://litellm-aiswe.query.prod.telnyx.io:4000/v1";
 const LITELLM_KEY = process.env.LITELLM_API_KEY || "";
@@ -32,7 +36,7 @@ export interface CompletionOptions {
 
 export async function createCompletion(options: CompletionOptions): Promise<string> {
   const model = options.model || "openai/gpt-4.1-mini";
-  
+
   // Use LiteLLM if key is configured, otherwise fall back to OpenClaw gateway
   const client = LITELLM_KEY ? litellm : openclaw;
   const finalModel = LITELLM_KEY ? model : "claude-3-5-haiku-latest";

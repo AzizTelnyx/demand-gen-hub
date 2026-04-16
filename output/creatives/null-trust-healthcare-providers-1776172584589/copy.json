@@ -1,0 +1,37 @@
+{
+  "brief": {
+    "platform": null,
+    "format": null,
+    "audience": "healthcare providers",
+    "painPoints": [
+      "need for HIPAA-compliant patient communications"
+    ],
+    "coreMessage": "HIPAA-compliant voice AI for patient communications",
+    "pillar": "trust",
+    "adCopyExample": null,
+    "ctaSuggestion": null
+  },
+  "copy": {
+    "headlines": [
+      "HIPAA-Compliant Voice AI with Sub-200ms Latency",
+      "Secure Patient Communications Across 140+ Countries",
+      "Telnyx Voice AI: 99.999% Uptime for Healthcare Providers",
+      "One Platform for HIPAA, SOC2, and PCI Compliant Voice AI",
+      "Voice AI with Inference Co-Located on Own Network",
+      "Reduce Latency in Patient Calls with Telnyx Voice AI",
+      "HIPAA-Ready Voice AI Backed by SOC 2 Type II Compliance",
+      "Manage Patient Communications on a Single Secure Platform",
+      "Voice AI Engineered for Healthcare Compliance and Reliability",
+      "Telnyx Voice AI: Secure, Fast, and Globally Available"
+    ],
+    "descriptions": [
+      "Telnyx Voice AI operates on a proprietary network with sub-200ms latency, ensuring secure and timely patient communications compliant with HIPAA, SOC 2 Type II, and PCI standards.",
+      "Our platform supports HIPAA-compliant voice AI across 140+ countries, delivering 99.999% uptime and eliminating the need for multiple vendors in healthcare communication workflows.",
+      "Leverage Telnyx’s own telephony infrastructure for HIPAA-ready voice AI that meets SOC 2 Type II compliance, optimizing patient interactions with low latency and high reliability.",
+      "Telnyx consolidates voice AI and telephony on one platform, providing healthcare providers with secure, compliant, and fast patient communication tools backed by proven uptime and global reach.",
+      "Engineered for healthcare, Telnyx Voice AI ensures HIPAA compliance and sub-200ms inference latency by operating on a dedicated network with SOC 2 Type II and PCI certifications."
+    ],
+    "cta": "Learn More"
+  },
+  "generatedAt": "2026-04-14T13:16:30.560Z"
+}

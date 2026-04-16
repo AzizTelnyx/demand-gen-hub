@@ -1,0 +1,39 @@
+{
+  "brief": {
+    "platform": null,
+    "format": null,
+    "audience": "auto insurance companies and claims departments",
+    "painPoints": [
+      "inefficient claims processing",
+      "high operational costs",
+      "slow customer service"
+    ],
+    "coreMessage": "Automate auto insurance claims with AI voice agents to improve efficiency and customer experience",
+    "pillar": "infrastructure",
+    "adCopyExample": null,
+    "ctaSuggestion": "Get Started"
+  },
+  "copy": {
+    "headlines": [
+      "Automate Auto Claims with AI Voice Agents on One Platform",
+      "Reduce Claims Processing Time with Sub-200ms Latency Voice AI",
+      "Telnyx Owns Network for Auto Insurance AI Voice Automation",
+      "Process Auto Claims Across 140+ Countries with AI Voice Agents",
+      "Cut Operational Costs Using HIPAA/SOC2/PCI Compliant Voice AI",
+      "Single Platform Voice AI for Auto Insurance Claims Efficiency",
+      "Zero Extra Hops Voice AI Network for Faster Claims Processing",
+      "AI Voice Agents Embedded in Telnyx Network for Auto Claims",
+      "Improve Auto Claims Workflow with Telnyx Voice AI Infrastructure",
+      "Telnyx Voice AI: Auto Claims Automation with Direct Network Access"
+    ],
+    "descriptions": [
+      "Automate auto insurance claims using AI voice agents hosted on Telnyx’s own network with sub-200ms latency and coverage in 140+ countries.",
+      "Streamline claims processing and reduce operational costs with a single platform that ensures zero extra hops and complies with HIPAA, SOC2, and PCI standards.",
+      "Telnyx Voice AI integrates inference directly with telephony infrastructure to deliver fast, secure, and compliant auto claims automation worldwide.",
+      "Replace multi-vendor setups with one platform offering direct network control, low latency, and global reach for efficient auto insurance claims handling.",
+      "Enable faster customer service response times by automating claims with AI voice agents on Telnyx’s proprietary network covering over 140 countries."
+    ],
+    "cta": "Learn More"
+  },
+  "generatedAt": "2026-04-14T12:53:49.252Z"
+}

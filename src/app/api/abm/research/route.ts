@@ -30,6 +30,16 @@ export async function POST(request: NextRequest) {
         },
       });
 
+      // Fire-and-forget: kick off processing in background
+      const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || (process.env.VERCEL_URL
+        ? `https://${process.env.VERCEL_URL}`
+        : "http://localhost:3000");
+      fetch(`${baseUrl}/api/abm/process`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ jobId: job.id }),
+      }).catch(err => console.error("Failed to trigger ABM processing:", err));
+
       return NextResponse.json({
         ok: true,
         jobId: job.id,
@@ -37,7 +47,7 @@ export async function POST(request: NextRequest) {
         listName: existingList.name,
         jobType: "expand",
         target: clampedTarget,
-        message: `Expansion job queued — adding up to ${clampedTarget} companies to "${existingList.name}"`,
+        message: `Expansion job started — adding up to ${clampedTarget} companies to "${existingList.name}"`,
       });
     }
 
@@ -66,6 +76,16 @@ export async function POST(request: NextRequest) {
       },
     });
 
+    // Fire-and-forget: kick off processing in background
+    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || (process.env.VERCEL_URL
+      ? `https://${process.env.VERCEL_URL}`
+      : "http://localhost:3000");
+    fetch(`${baseUrl}/api/abm/process`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ jobId: job.id }),
+    }).catch(err => console.error("Failed to trigger ABM processing:", err));
+
     return NextResponse.json({
       ok: true,
       jobId: job.id,
@@ -74,7 +94,7 @@ export async function POST(request: NextRequest) {
       listType,
       jobType: "generate",
       target: clampedTarget,
-      message: `Job queued — finding up to ${clampedTarget} companies`,
+      message: `Job started — finding up to ${clampedTarget} companies`,
     });
   } catch (error: any) {
     console.error("ABM research error:", error);

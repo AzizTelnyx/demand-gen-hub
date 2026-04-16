@@ -1,0 +1,3 @@
+company,domain,country,region,vertical,productFit,status,confidenceTier,confidenceScore,archetype,evidenceType,evidenceSnippet,description
+"Wluper","wluper.com","UK","EMEA","any","ai-agent","validated","tier1","100","AI agent / voice agent builders","ai_agent_builders","conversational ai platform","Provides conversational AI platform for building voice and chat assistants."
+"Lemonade","lemonade.com","Netherlands","EMEA","insurtech","voice-ai","validated","tier1","90","AI agent / voice agent builders","ai_agent_builders","voice automation","AI-powered insurance company using chatbots for claims and customer support."

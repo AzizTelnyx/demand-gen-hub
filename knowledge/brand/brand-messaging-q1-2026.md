@@ -1,5 +1,15 @@
 # Telnyx Brand Messaging - Q1 2026
 
+> **CANONICAL POSITIONING — use the Narrative Positioning System for ALL ad copy:**
+> `knowledge/brand/narrative-positioning-constitution.md` (full positioning — category, 3 layers, personas, competitive, language rules, sales scripts)
+> `knowledge/brand/content-operating-system.md` (content engine, cadence, narrative discipline)
+> `knowledge/brand/support-as-infrastructure-proof.md` (support as proof of infrastructure ownership)
+> `knowledge/brand/content-templates/` (5 content archetypes for replication)
+>
+> **The 3-layer framework (Global Communications/Trust → Voice AI Platform/Infrastructure → Edge Compute/Physics) is canonical and supersedes the 4-pillar framework below for all new ad copy.**
+>
+> Source repo: https://github.com/team-telnyx/telnyx-narrative-positioning-system
+
 **Tone of voice:** Authoritative · Grounded · Confident · Plainspoken
 
 ---

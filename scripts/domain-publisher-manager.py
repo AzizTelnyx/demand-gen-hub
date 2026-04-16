@@ -126,7 +126,7 @@ class DomainPublisherManager(BaseAgent):
         findings = []
         
         try:
-            from stackadapt import StackAdaptConnector
+            from platforms.stackadapt import StackAdaptConnector
             conn = StackAdaptConnector()
             
             if not conn.load_credentials():
@@ -217,7 +217,7 @@ class DomainPublisherManager(BaseAgent):
         
         try:
             if platform == 'stackadapt' and action == 'exclude_domains':
-                from stackadapt import StackAdaptConnector
+                from platforms.stackadapt import StackAdaptConnector
                 conn = StackAdaptConnector()
                 conn.load_credentials()
                 

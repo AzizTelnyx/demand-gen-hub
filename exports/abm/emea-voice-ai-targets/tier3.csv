@@ -1,0 +1,2 @@
+company,domain,country,region,vertical,productFit,status,confidenceTier,confidenceScore,archetype,evidenceType,evidenceSnippet,description
+"Klu","klu.ai","FR","EMEA","Fintech","ai-agent","unverified","tier3","30","","voice_agent","Klu automates customer service tasks with AI through voice","AI-powered assistant that automates customer service tasks through voice."

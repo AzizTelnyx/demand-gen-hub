@@ -1,0 +1,39 @@
+{
+  "brief": {
+    "platform": null,
+    "format": null,
+    "audience": "healthcare providers and administrators responsible for appointment scheduling",
+    "painPoints": [
+      "inefficient appointment scheduling",
+      "high call volumes",
+      "staff time spent on scheduling"
+    ],
+    "coreMessage": "AI voice agents streamline appointment scheduling in healthcare",
+    "pillar": "infrastructure",
+    "adCopyExample": null,
+    "ctaSuggestion": "Schedule a Demo"
+  },
+  "copy": {
+    "headlines": [
+      "Streamline healthcare scheduling with AI voice agents",
+      "Reduce staff workload with Telnyx Voice AI appointment system",
+      "Manage high call volumes in 140+ countries with one platform",
+      "Sub-200ms latency AI voice agents for healthcare scheduling",
+      "HIPAA-compliant AI voice scheduling on Telnyx’s own network",
+      "One platform, zero extra hops for healthcare appointment calls",
+      "Telnyx Voice AI cuts scheduling time for healthcare providers",
+      "Secure, compliant AI voice agents for healthcare administrators",
+      "Optimize appointment scheduling with Telnyx’s global network",
+      "AI-powered voice scheduling on a single, integrated platform"
+    ],
+    "descriptions": [
+      "Telnyx Voice AI uses a single platform with a proprietary network to handle appointment scheduling across 140+ countries, reducing call latency below 200ms.",
+      "Our HIPAA, SOC2, and PCI compliant infrastructure processes appointment calls without extra network hops, decreasing staff time spent on scheduling tasks.",
+      "Telnyx Voice AI addresses high call volumes by co-locating AI inference with telephony on an owned network, ensuring fast and secure healthcare appointment management.",
+      "Replace multiple vendors with Telnyx’s one platform solution that supports global healthcare scheduling with low latency and full compliance.",
+      "Leverage Telnyx’s infrastructure to automate appointment scheduling, minimizing inefficiencies and supporting administrators with scalable AI voice agents."
+    ],
+    "cta": "Learn More"
+  },
+  "generatedAt": "2026-04-14T16:39:21.593Z"
+}

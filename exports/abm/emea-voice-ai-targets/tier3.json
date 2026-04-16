@@ -1,0 +1,17 @@
+[
+  {
+    "company": "Klu",
+    "domain": "klu.ai",
+    "country": "FR",
+    "region": "EMEA",
+    "vertical": "Fintech",
+    "productFit": "ai-agent",
+    "status": "unverified",
+    "confidenceTier": "tier3",
+    "confidenceScore": 30,
+    "archetype": "",
+    "evidenceType": "voice_agent",
+    "evidenceSnippet": "Klu automates customer service tasks with AI through voice",
+    "description": "AI-powered assistant that automates customer service tasks through voice."
+  }
+]

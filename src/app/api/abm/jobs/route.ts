@@ -31,6 +31,20 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ ok: true });
   }
 
+  // Retry a failed/stuck job
+  if (body.action === "retry") {
+    const job = await prisma.aBMJob.findUnique({ where: { id: body.jobId } });
+    if (!job) return NextResponse.json({ error: "Job not found" }, { status: 404 });
+    if (job.status !== "error" && job.status !== "queued") {
+      return NextResponse.json({ error: `Cannot retry job in ${job.status} state` }, { status: 400 });
+    }
+    await prisma.aBMJob.update({
+      where: { id: body.jobId },
+      data: { status: "queued", error: null },
+    });
+    return NextResponse.json({ ok: true });
+  }
+
   // Create new job
   const { query, target = 500 } = body;
   if (!query) return NextResponse.json({ error: "query required" }, { status: 400 });

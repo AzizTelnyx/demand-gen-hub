@@ -1,0 +1,39 @@
+{
+  "brief": {
+    "platform": null,
+    "format": null,
+    "audience": "healthcare providers and administrators",
+    "painPoints": [
+      "inefficient appointment scheduling",
+      "lack of effective patient communication",
+      "need for HIPAA compliance"
+    ],
+    "coreMessage": "AI voice agents enable efficient, HIPAA-compliant appointment scheduling and patient communication",
+    "pillar": "trust",
+    "adCopyExample": null,
+    "ctaSuggestion": "Get Started"
+  },
+  "copy": {
+    "headlines": [
+      "Enable HIPAA-Compliant AI Voice Scheduling with 200ms Latency",
+      "Reduce Appointment Scheduling Time Using Telnyx Voice AI",
+      "Secure Patient Communication Across 140+ Countries",
+      "One Platform for HIPAA, SOC 2, and PCI Compliant Voice AI",
+      "99.999% Uptime for Reliable Healthcare Voice Automation",
+      "Telnyx Voice AI: Co-Located Inference and Telephony Under 200ms",
+      "Streamline Patient Communication with Telnyx’s Own Network",
+      "HIPAA-Ready Voice AI for Appointment Scheduling",
+      "Voice AI with SOC 2 Type II Compliance for Healthcare Providers",
+      "Telnyx Voice AI Drives Efficient, Secure Patient Interactions"
+    ],
+    "descriptions": [
+      "Telnyx Voice AI integrates HIPAA, SOC 2, and PCI compliance with sub-200ms latency by co-locating inference alongside telephony on our own network.",
+      "Our platform supports secure, efficient patient communication and appointment scheduling across 140+ countries with 99.999% uptime.",
+      "Consolidate voice AI services on one platform without relying on multiple vendors or resellers, ensuring compliance and reliability.",
+      "Telnyx Voice AI reduces scheduling inefficiencies by leveraging a proprietary network with inference processing near telephony endpoints.",
+      "Maintain HIPAA compliance and data security while improving patient communication speed and reliability with Telnyx’s engineered voice AI."
+    ],
+    "cta": "Learn More"
+  },
+  "generatedAt": "2026-04-14T14:55:31.222Z"
+}

@@ -9,8 +9,9 @@ const CREDS_PATH = path.join(os.homedir(), '.config/linkedin-ads/credentials.jso
 const creds = JSON.parse(fs.readFileSync(CREDS_PATH, 'utf-8'));
 
 const PORT = 9877;
-const REDIRECT_URI = `http://localhost:${PORT}/callback`;
-const SCOPES = 'r_ads,r_ads_reporting,r_organization_social,r_organization';
+// Use ngrok URL if registered in LinkedIn app, otherwise localhost
+const REDIRECT_URI = process.env.LINKEDIN_REDIRECT_URI || `https://telnyx-dg-hub.ngrok.app/api/auth/linkedin/callback`;
+const SCOPES = 'r_ads,r_ads_reporting,r_organization_social,r_organization,rw_ads';
 
 // Step 1: Print auth URL
 const authUrl = `https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=${creds.client_id}&redirect_uri=${encodeURIComponent(REDIRECT_URI)}&scope=${encodeURIComponent(SCOPES)}`;

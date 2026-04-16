@@ -1,0 +1,278 @@
+{
+  "description": "Comprehensive asset library index for intelligent creative generation",
+  "version": "1.0.0",
+  "lastUpdated": "2026-04-14",
+
+  "backgrounds": [
+    {
+      "path": "brand-assets/assets/backgrounds/voice-ai/background_voice-ai-agent-6.png",
+      "category": "product-background",
+      "keywords": ["voice ai", "ai agent", "conversational ai", "voice assistant", "telephony", "automation"],
+      "products": ["voice-ai", "voice-api"],
+      "pillars": ["physics", "infrastructure"],
+      "visualStyle": "gradient-tech",
+      "bestFor": ["product launches", "feature announcements", "technical demos"]
+    },
+    {
+      "path": "brand-assets/assets/backgrounds/rcs/gradient_rcs-1.png",
+      "category": "product-background",
+      "keywords": ["rcs", "messaging", "rich communication", "sms", "mms"],
+      "products": ["rcs", "messaging", "sms"],
+      "pillars": ["infrastructure"],
+      "visualStyle": "gradient-modern",
+      "bestFor": ["messaging products", "communication platforms"]
+    }
+  ],
+
+  "productScreenshots": [
+    {
+      "path": "brand-assets/assets/features/voice-ai/voice-ai-features-multi-agent-handoffs.png",
+      "category": "feature-screenshot",
+      "keywords": ["multi-agent", "handoff", "transfer", "routing", "voice ai", "agent transfer", "conversation"],
+      "products": ["voice-ai"],
+      "features": ["multi-agent-handoffs", "agent-routing", "conversation-management"],
+      "pillars": ["infrastructure"],
+      "bestFor": ["showcasing agent capabilities", "technical features", "product UI"]
+    },
+    {
+      "path": "brand-assets/assets/features/voice-ai/voice-ai-features-voice-playground-language.png",
+      "category": "feature-screenshot",
+      "keywords": ["language", "multilingual", "voice playground", "testing", "configuration", "setup"],
+      "products": ["voice-ai"],
+      "features": ["voice-playground", "language-support", "configuration"],
+      "pillars": ["infrastructure"],
+      "bestFor": ["developer tools", "configuration", "language capabilities"]
+    },
+    {
+      "path": "brand-assets/assets/features/voice-api/voice-api-feature-real-time-media-streaming.png",
+      "category": "feature-screenshot",
+      "keywords": ["streaming", "real-time", "media", "voice api", "latency", "performance"],
+      "products": ["voice-api"],
+      "features": ["real-time-streaming", "media-streaming"],
+      "pillars": ["physics"],
+      "bestFor": ["latency claims", "real-time features", "performance"]
+    },
+    {
+      "path": "brand-assets/assets/features/voice-api/voice-api-feature-hd-voice.png",
+      "category": "feature-screenshot",
+      "keywords": ["hd voice", "quality", "audio quality", "clarity", "voice api"],
+      "products": ["voice-api"],
+      "features": ["hd-voice", "audio-quality"],
+      "pillars": ["trust", "physics"],
+      "bestFor": ["quality claims", "audio features"]
+    },
+    {
+      "path": "brand-assets/assets/features/voice-api/voice-api-feature-call-recording.png",
+      "category": "feature-screenshot",
+      "keywords": ["recording", "call recording", "compliance", "voice api", "storage"],
+      "products": ["voice-api"],
+      "features": ["call-recording", "compliance"],
+      "pillars": ["trust"],
+      "bestFor": ["compliance features", "security", "recording capabilities"]
+    }
+  ],
+
+  "industryPhotography": [
+    {
+      "path": "brand-assets/assets/photography/industry/insurance/industry-insurance-photography-family-child-home-couch.jpg",
+      "category": "industry-photo",
+      "industry": "insurance",
+      "keywords": ["insurance", "family", "home", "protection", "coverage", "life insurance", "home insurance"],
+      "mood": "warm, family-oriented, protective",
+      "bestFor": ["family insurance", "home insurance", "life insurance", "protection messaging"]
+    },
+    {
+      "path": "brand-assets/assets/photography/industry/insurance/industry-insurance-photography-male-phone-car-breakdown.jpg",
+      "category": "industry-photo",
+      "industry": "insurance",
+      "keywords": ["insurance", "car", "auto insurance", "breakdown", "roadside", "emergency", "claims"],
+      "mood": "urgent, helpful, supportive",
+      "bestFor": ["auto insurance", "roadside assistance", "emergency claims", "customer support"]
+    },
+    {
+      "path": "brand-assets/assets/photography/industry/insurance/industry-insurance-photography-car-tow-truck-accident.jpg",
+      "category": "industry-photo",
+      "industry": "insurance",
+      "keywords": ["insurance", "accident", "towing", "claims", "auto insurance", "emergency"],
+      "mood": "serious, reliable, support",
+      "bestFor": ["claims processing", "accident support", "emergency services"]
+    },
+    {
+      "path": "brand-assets/assets/photography/industry/logistics/industry-logistics-photography-man-delivery-boxes-street.jpg",
+      "category": "industry-photo",
+      "industry": "logistics",
+      "keywords": ["logistics", "delivery", "shipping", "packages", "courier", "last-mile", "fulfillment"],
+      "mood": "active, efficient, urban",
+      "bestFor": ["delivery services", "last-mile logistics", "courier services", "shipping"]
+    },
+    {
+      "path": "brand-assets/assets/photography/industry/logistics/industry-logistics-photography-airplane-airport-landscape.jpg",
+      "category": "industry-photo",
+      "industry": "logistics",
+      "keywords": ["logistics", "air freight", "shipping", "cargo", "global", "international", "airport"],
+      "mood": "global, scale, professional",
+      "bestFor": ["international shipping", "freight", "global logistics", "supply chain"]
+    },
+    {
+      "path": "brand-assets/assets/photography/industry/logistics/industry-logistics-photography-taxi-street-meter.jpg",
+      "category": "industry-photo",
+      "industry": "logistics",
+      "keywords": ["logistics", "taxi", "rideshare", "transportation", "urban mobility", "meter"],
+      "mood": "urban, mobility, service",
+      "bestFor": ["rideshare", "taxi services", "urban transportation", "mobility"]
+    },
+    {
+      "path": "brand-assets/assets/photography/industry/restaurants/industry-restaurants-photography-people-dining-waiter.jpg",
+      "category": "industry-photo",
+      "industry": "restaurants",
+      "keywords": ["restaurant", "dining", "hospitality", "service", "food service", "waiter", "customer service"],
+      "mood": "service-oriented, warm, hospitality",
+      "bestFor": ["restaurant services", "hospitality", "dining experiences", "customer service"]
+    },
+    {
+      "path": "brand-assets/assets/photography/industry/restaurants/industry-restaurants-photography-bar-cafe-food-drinks-dine-outside-people.jpg",
+      "category": "industry-photo",
+      "industry": "restaurants",
+      "keywords": ["restaurant", "cafe", "bar", "outdoor dining", "social", "food", "drinks", "hospitality"],
+      "mood": "social, relaxed, lifestyle",
+      "bestFor": ["cafes", "bars", "outdoor dining", "social dining", "reservations"]
+    },
+    {
+      "path": "brand-assets/assets/photography/industry/restaurants/industry-restaurants-photography-people-food-takeout-home.jpg",
+      "category": "industry-photo",
+      "industry": "restaurants",
+      "keywords": ["restaurant", "takeout", "delivery", "food delivery", "home", "convenience"],
+      "mood": "convenient, modern, home",
+      "bestFor": ["food delivery", "takeout services", "online ordering", "delivery apps"]
+    },
+    {
+      "path": "brand-assets/assets/photography/industry/travel/industry-travel-photography-people-train-passports-bags.jpg",
+      "category": "industry-photo",
+      "industry": "travel",
+      "keywords": ["travel", "tourism", "booking", "vacation", "hotel", "hospitality", "passengers", "journey"],
+      "mood": "adventure, excitement, travel",
+      "bestFor": ["travel booking", "hospitality", "tourism", "hotels", "travel agencies"]
+    },
+    {
+      "path": "brand-assets/assets/photography/industry/travel/industry-travel-photography-holiday-landscape.jpg",
+      "category": "industry-photo",
+      "industry": "travel",
+      "keywords": ["travel", "vacation", "tourism", "holiday", "destination", "leisure"],
+      "mood": "aspirational, peaceful, vacation",
+      "bestFor": ["vacation packages", "destinations", "leisure travel", "tourism"]
+    },
+    {
+      "path": "brand-assets/assets/photography/people-devices/photography-people-devices-people-cafe-phone-table.jpg",
+      "category": "lifestyle-photo",
+      "industry": "general",
+      "keywords": ["professional", "phone", "communication", "digital", "mobile", "connectivity", "business"],
+      "mood": "professional, modern, connected",
+      "bestFor": ["business communications", "professional services"]
+    },
+    {
+      "path": "brand-assets/assets/photography/people-devices/photography-people-devices-people-cafe-coffee-phone-call.jpg",
+      "category": "lifestyle-photo",
+      "industry": "general",
+      "keywords": ["business", "professional", "phone call", "communication", "mobile", "work"],
+      "mood": "professional, accessible, modern",
+      "bestFor": ["business communications", "professional services", "customer support"]
+    },
+    {
+      "path": "brand-assets/assets/photography/people-devices/photography-people-devices-man-suit-work-phone-text.jpg",
+      "category": "lifestyle-photo",
+      "industry": "finance",
+      "keywords": ["finance", "business", "professional", "corporate", "banking", "financial services", "mobile"],
+      "mood": "professional, corporate, serious",
+      "bestFor": ["financial services", "banking", "corporate communications", "professional services"]
+    }
+  ],
+
+  "industryHeroes": [
+    {
+      "path": "brand-assets/assets/industry/hero/industry_automotive_hero.png",
+      "category": "industry-hero",
+      "industry": "automotive",
+      "keywords": ["automotive", "car", "vehicle", "dealership", "auto"],
+      "bestFor": ["automotive industry", "car dealerships", "vehicle services"]
+    },
+    {
+      "path": "brand-assets/assets/industry/hero/industry_finance_hero.png",
+      "category": "industry-hero",
+      "industry": "finance",
+      "keywords": ["finance", "banking", "financial services", "fintech"],
+      "bestFor": ["financial services", "banking", "fintech", "investment"]
+    },
+    {
+      "path": "brand-assets/assets/industry/hero/industry_retail_ecommerce_hero.png",
+      "category": "industry-hero",
+      "industry": "retail",
+      "keywords": ["retail", "ecommerce", "shopping", "commerce", "online shopping"],
+      "bestFor": ["retail", "ecommerce", "online shopping", "commerce platforms"]
+    }
+  ],
+
+  "useCaseScreenshots": [
+    {
+      "path": "brand-assets/assets/industry/use-cases/travel-hospitality/industry-usecases-travel-hospitality-booking-management.png",
+      "category": "use-case-screenshot",
+      "industry": "travel",
+      "keywords": ["travel", "booking", "reservation", "hotel", "hospitality", "management"],
+      "bestFor": ["booking systems", "reservation management", "hotel tech"]
+    },
+    {
+      "path": "brand-assets/assets/industry/use-cases/travel-hospitality/industry-usecases-travel-hospitality-modify-booking.png",
+      "category": "use-case-screenshot",
+      "industry": "travel",
+      "keywords": ["travel", "booking", "modification", "change", "flexibility", "customer service"],
+      "bestFor": ["booking modifications", "customer service", "flexible bookings"]
+    },
+    {
+      "path": "brand-assets/industry-visuals/Social_Assets/Healthcare/zOld/Industry_Healthcare_Appointment-Schedule@2x.png",
+      "category": "use-case-screenshot",
+      "industry": "healthcare",
+      "keywords": ["healthcare", "appointment", "scheduling", "patient", "hipaa", "medical", "booking"],
+      "bestFor": ["healthcare appointments", "patient scheduling", "medical booking", "telemedicine"]
+    },
+    {
+      "path": "brand-assets/industry-visuals/Social_Assets/Healthcare/zOld/Industry_Healthcare_Lab-Results@2x.png",
+      "category": "use-case-screenshot",
+      "industry": "healthcare",
+      "keywords": ["healthcare", "lab results", "medical", "patient", "hipaa", "diagnostics", "test results"],
+      "bestFor": ["lab results", "medical diagnostics", "patient communication", "hipaa compliance"]
+    },
+    {
+      "path": "brand-assets/industry-visuals/Social_Assets/Healthcare/zOld/Industry_Healthcare_Perscriptions@2x.png",
+      "category": "use-case-screenshot",
+      "industry": "healthcare",
+      "keywords": ["healthcare", "prescriptions", "pharmacy", "patient", "hipaa", "medical", "medication"],
+      "bestFor": ["prescription management", "pharmacy", "medication reminders", "patient care"]
+    },
+    {
+      "path": "brand-assets/industry-visuals/Social_Assets/Healthcare/zOld/Industry_Healthcare_Symptom-Triage@2x.png",
+      "category": "use-case-screenshot",
+      "industry": "healthcare",
+      "keywords": ["healthcare", "symptom", "triage", "patient", "hipaa", "medical", "diagnosis", "ai"],
+      "bestFor": ["symptom checking", "patient triage", "ai diagnosis", "healthcare automation"]
+    }
+  ],
+
+  "icons": [
+    {
+      "path": "brand-assets/assets/icons/product/icon-wordmark/ai-icon-wordmark.png",
+      "category": "product-icon",
+      "keywords": ["ai", "artificial intelligence", "voice ai", "automation"],
+      "products": ["voice-ai"],
+      "bestFor": ["AI product badges", "feature callouts"]
+    }
+  ],
+
+  "brandAssets": [
+    {
+      "path": "brand-assets/assets/brand/stack/brand-stack-compressed.png",
+      "category": "brand-graphic",
+      "keywords": ["platform", "stack", "integration", "vendor", "consolidation"],
+      "pillars": ["infrastructure"],
+      "bestFor": ["platform messaging", "vendor consolidation", "integration"]
+    }
+  ]
+}

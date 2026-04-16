@@ -1,0 +1,39 @@
+{
+  "brief": {
+    "platform": null,
+    "format": null,
+    "audience": "healthcare providers and administrators",
+    "painPoints": [
+      "inefficient appointment scheduling",
+      "high call volume",
+      "staff workload"
+    ],
+    "coreMessage": "AI voice agents streamline appointment scheduling in healthcare",
+    "pillar": "infrastructure",
+    "adCopyExample": null,
+    "ctaSuggestion": "Schedule a Demo"
+  },
+  "copy": {
+    "headlines": [
+      "Reduce Scheduling Delays with AI Voice Agents",
+      "Streamline Healthcare Calls Across 140+ Countries",
+      "Sub-200ms Latency AI Voice for Appointment Booking",
+      "Single Platform for HIPAA-Compliant Voice Automation",
+      "Cut Staff Workload Using Telnyx’s Own Network",
+      "Zero Extra Hops in Healthcare Voice AI Infrastructure",
+      "Manage High Call Volume with AI on a Unified Platform",
+      "Secure Voice AI Scheduling with SOC2 and PCI Compliance",
+      "Global Voice AI Coverage for Healthcare Providers",
+      "Improve Appointment Efficiency with Telnyx Voice AI"
+    ],
+    "descriptions": [
+      "Telnyx Voice AI uses a single platform with a proprietary network to reduce latency below 200ms, enabling faster appointment scheduling and lower staff workload.",
+      "Handle high call volumes across 140+ countries with HIPAA, SOC2, and PCI-compliant AI voice agents integrated directly into Telnyx’s infrastructure.",
+      "Eliminate scheduling inefficiencies by deploying AI voice agents on a network that avoids extra hops, ensuring reliable, secure communication for healthcare providers.",
+      "Telnyx Voice AI combines telephony and AI inference on the same network, reducing latency and improving patient appointment experiences globally.",
+      "Use one platform instead of multiple vendors to streamline appointment scheduling, reduce staff burden, and maintain compliance with healthcare regulations."
+    ],
+    "cta": "Learn More"
+  },
+  "generatedAt": "2026-04-14T14:58:44.922Z"
+}

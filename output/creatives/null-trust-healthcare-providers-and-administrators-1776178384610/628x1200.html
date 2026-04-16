@@ -1,0 +1,140 @@
+<!DOCTYPE html><html><head>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    width: 628px;
+    height: 1200px;
+    background: linear-gradient(135deg, #FAE5FF 0%, #FEFDF5 40%, #E6E3D3 100%);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    color: #000000;
+    overflow: hidden;
+    position: relative;
+  }
+
+  /* Subtle accent overlay */
+  .accent-overlay {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 50%;
+    height: 100%;
+    background: radial-gradient(circle at top right, #E57EFF06 0%, transparent 70%);
+    z-index: 0;
+  }
+
+  .content {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    height: 100%;
+    padding: 70px;
+    padding-bottom: 130px;
+    align-items: center;
+    gap: 70px;
+  }
+
+  .left {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+  }
+
+  .right {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    display: none;
+  }
+
+  /* Product badge */
+  .product-badge {
+    display: inline-block;
+    background: #E57EFF;
+    color: #FFFFFF;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 8px 20px;
+    border-radius: 20px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    align-self: flex-start;
+  }
+
+  /* Headline - Inter Bold (700) like real ads */
+  .headline {
+    font-family: 'Inter', sans-serif;
+    font-size: 36px;
+    font-weight: 700;
+    line-height: 1.15;
+    letter-spacing: -0.5px;
+    color: #000000;
+    margin-top: 10px;
+  }
+
+  /* Description */
+  .description {
+    font-size: 14px;
+    line-height: 1.6;
+    color: #666666;
+    max-width: 90%;
+    font-weight: 400;
+  }
+
+  /* CTA Button - WHITE with BLACK text like real ads */
+  .cta-button {
+    display: inline-block;
+    background: #FFFFFF;
+    color: #000000;
+    padding: 16px 20px;
+    border-radius: 8px;
+    border: 2px solid #000000;
+    font-family: 'Inter', sans-serif;
+    font-weight: 800;
+    font-size: 18px;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    margin-top: 24px;
+    align-self: flex-start;
+    text-align: center;
+  }
+
+  /* Product screenshot */
+  .product-visual {
+    max-width: 88%;
+    max-height: 696px;
+    border-radius: 12px;
+    box-shadow: 0 20px 50px #E57EFF18, 0 8px 20px rgba(0,0,0,0.08);
+    border: 1px solid #E57EFF12;
+  }
+
+  /* Logo - BIGGER */
+  .logo-bottom {
+    position: absolute;
+    bottom: 62px;
+    left: 70px;
+    height: 42px;
+    opacity: 1;
+    z-index: 10;
+  }
+</style></head><body>
+  <div class="accent-overlay"></div>
+
+  <div class="content">
+    <div class="left">
+      <div class="product-badge">VOICE AI</div>
+      <div class="headline">Enable HIPAA-Compliant Patient Calls with AI Voice Agents</div>
+      <div class="description">Telnyx Voice AI uses a proprietary network to deliver HIPAA-compliant appointment scheduling with sub-200ms latency.</div>
+      <div class="cta-button">Learn More</div>
+    </div>
+
+    
+  </div>
+
+  <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAbkAAACHCAYAAACLUydBAAAACXBIWXMAACE4AAAhOAFFljFgAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAABNGSURBVHgB7d1fltvGlQbwT3PybnsFKc0CxvIKXMoCxpq8TwRlA/Z4ARaSBcSaWcA0lPdEdt4TQhtw7LxHhDdgORsQw5siTrPhJoi69Rfk9zunjiyrGwABEBf3oqoAEBERERERERERERERERERERERERERERERERERERERERERERERERERERHd7wGug9m3T/bt0aHJ398/+vdv9+3HfXu9b/2hERERVa3Zt82+7Tzbdt9u4IIhERFRVZ7ABapdhMZgR0REVZAS5CvECW7TzM6CiIioEIN42dup9hxERESZGaQPcAx0RESUnUG+AMdAR0REWeUOcGOzICIiSkgyql2htsXdsXZERETRGJQLcGNrQURElECH8kHuLTiGjoioWmud1svAlQs1erjpu4ZDM3DP1z6GLmB1+/YMREREkWyge4ZmZ5Zp4MqPmozOgIiIKAILXYAzC5ffKJa/ARERUQQSsFJnWi8U67C4PB2Y2daoge64tCC6Mv+GdWngfwH9DdyzNx+fKX7nOYiIqCprC3K+gWSAy0Y0fuP58xYcIE5EVJU1BbkG/llcC/+MbNSB2RwR0aqtKchpsriXCOM7NMCC2RwRUTXWEuQa6LK4UP2h+WA2R0RUibUEuRJZ3EjzbO4JiIiouDUEuQZlsrhRD/9s7ksQEVFxtQc5g7JZ3Mg3mzP79hRERFRU7UFOAoWBnxTzSPbwz+ZkQDlfxUNEVFDNQc7AlSp9dPAPRkv5ZnMS4D4DEREVU3OQa6Gb3SSVHv4B9FMwmyMiKqbWIGfg/0yrg37g91LM5oiIVqTWINfCX8osbtTjurK590BEtGI/Q506+M05+SPSZ3Ej6dhicB0MdAzyHQ8iIiJvBrrXufD9euk14Kt2iBZZ21sIKA+DsEBlcZnTm0nZ2RwaOxTFYY4aUXQlypWPkPYCIaXLb2f+fbxQ1XaRGpCuxCef9dHCn/0YrrNM6P5p4YLdV/v2HeI5d3xD2X37ELfn6fjn3P4YDk0+518Pf6bcxhQM/P14aEtZuCnvPsTpwDY+epD91+/ba7D07cPnu37KAO7zIJIh7BK1Le7/4siB/zTxukNbg3QaALsLaTeI6/jceIt427k9bKtFfI1ym9qZZWqWt8F5Bi6rD9m3rxBnP7bK9Vuk8xjuXPFtp6YOfAB3o7ULaN8gjQeHbddu1xusxAZhB+BUk51n7lmfXMBiXrxStQbpNAB2F9JuEIeFu3jmODe2iDvNW6PcjnZmmZrlbWaWJzcPXyqXO7c+A71WuV6LdB4rt+n/Z5b5kXKZY3uHNEOf2sBtMlC4pGdy/4W7KbaB+1Jwei06ZuDOC2lSOstxbhi43sJbXMecpvIZ5bPGvlDaw3Kfg+ZIJhcypEoyri8Q9znpQ7iEQ+u3UJZQLyXIyQE9fgZi4C5iFkS35EsmFwCLMgxcsAvNSGom2VuHtDcPLRjozpleE319gPls0YcETTle2nNCbmxaKF1CkBtwdwfIjrzkiwj5M6grq7dw2xPaQaAmsl+l/JuizHWfFgx0c6TE92uEsYjzbswG+gqGfI5fIMAlBLl28ne5kBkQOQZ1ZvUGLqu8lPLlDfK/LLgFp82bE6Ns+TuE3RhKmfIL6KnLlKO1B7kBd98dZ8D3uNEtg/qz+g7rf5O8ZFSlPoOs24BOCS1bhgSpsUxpoBNUphytPcj1k7+3IHLWVLaWLMhgnRqU/d7Jcb4BnRKjbCnZsoU/KccXK1OO1h7kmMXRKWsqW48BeW29gA3qeC5mwU5mc2KVLX1/54/QCy5TjtYe5I7TcAsip8H6bngM1vd8yaCeGwl2QpkXWraUrMzn/CxephytOcjJAfvx6O+X1FON9AzSXPDG6aaOW2yX+nxp3Hf9UfOZDmwJC97ozgktW/qMnZPneNrvYLQy5ajE3JUyaDtFWeZDhOtxO9figLxif+mvlWRwBuHkeEg5vIe7oRpO/NyjQ7OIkz3K86XHWL8e7rv0NU7vO4Pb/WYR7gn83/d4TcaypTYAjWPn5oJQNWXKUYkg5zupaw493HviBlymHu7zLWERr9TX79v/Iu5kxXPnjkH49GiyfNnmF1h2nn57aB1ciaVBWCZpse738Q1w51q/8Ge7Q5MbBRlnZ6An5y2HFMyTIPcJ9JUvC3cz8dWJf28Clh21THmJ5MG9Zk60FjRlEDaRaqn92iBsm+UzG4QzCNt/7ZnlNwmWu4vQOoRVaQzCJxc2M8tvlcu0SCfF3JXnhM5t+QPuP85Sptwql6mem/Kc3JmcTKvkG+WXZiAaclfTTv6fHLy5MT9yB7PkDt/C/6AtXXZqA9x+30CnR5kgFzI33gB3wRkQbjgsSy7Ymou+fI4W6yLnboMwA273m4GOhQu2dFqMsqU8n/v86P+FjomLXqYswcA/ut9guY3nsreT3186a7rFMtZze6S1qIvvPh3bU+RnoL8z3SHNXeSTgO2xM8ttlMtsZ5YZsu+2iLv/bMC2vJhZbqtcpkU6JTI5EfpKHsm87NHyngUsK+krdHL2rmzhL2Rsxznt5O8bxK3n9/B/CC538Ck65Wh9Dx3t74V4Aj05zwbEJ9lNDx2L9WgRd//10O+3j0FLSHAJ7W05jp0bMzvtdkTtTTmVK8hZ+N/dd0iXvg64O5D8OdIMQfAN0hLg+OBcJ+Ti1iGdl9BZy8V6gP4zzvkaOjXdJNYudJC4PNtr4W7ODXQuokwpJEvyTWEN/PisY9ozaOvxuxZ+Oo9lS5OXeNbyRe2gKz9Y5Kd9+elXSOt96Lbr7cwyG+Uy25ll7pTtBmkY6LfplFa5PIt0SpUrRzHeJK5tWd70nSOTs9AFhgHpHHdpN0g7ALeFH2Zz/t6H/sbgFdKSjkSaIRTyeQzqlyKLEwP0nbCYzS0nwSZ0bkvtepOWKUc5gtwN/AxI+ywutwH+F4KQ9P8ahZSav0N62nVY1C/mGMipAToMcn5Cy5Ya2cqUqYNcA/+LtQSEAZdFMjOfu1L5kj4HLWWgl/IiPRqgU/vFekDaIS85bkDICZ3b0scWGXuSpw5yvhfqAZc5xmWcRcNHA2ZzSxnoDKibQd0G0KXIVbbMVqYcpQxyDfy/pC0u94uzdJqoY76l3mulzXgM8jxg12bl74Eonxxly+y9KVMGOU0Wl+ohdg002ZwFZ1Zf4lKfwXwAorxSli2zlilHqYJcA10Wd+k02RyfzV0vZnKUW6qyZfYy5ShVkPO9MEuEv+QsbsRsjohql6JsWWzQd4og18A/i7ukIQPnSDb31vN3mM0RUU4xy5ZFypSj2EHOgFncOZLN/dbvV5jNEVFWscqWxcqUo9hB7imYxS0h2dwAP8zmiGhtir8kO2aQM/B/n9S1ZXHHfIO7RdhM+0RES8mcln9EOOkhHGueTZWYQU4zFVWJOdNq0cH/dSJfgogordAXoE7JzblFIbGCnIH/pMIb6N8ZdSl8szmDMi8kvWS7ihtRCQ8R9/GIBE3J5oqMZ/0Z4mjh75qzuFF/aHb5r/xrX8u7torWuS9IzechjzHlJgHpz4hPAqe8WPVzZBYjyBnU9ULUtZFsznr8vIHLmltQDB2ISMQuU07JdetPyFzBi1GubOHvGntUntLD/6DL80++ToSIYopdppwqUrYMDXIGzOJi8A36fLHqXQP0eLNAlK5MOTWWLbMJDXIt/DGL+6kezOZChDy7yrUPHygaUQ6py5RTcoNukUlIkDNgFhcTszm9kCD3IdJr9+2dollQDQwuW+oy5VTWsmVIkGvhj1ncaT38O0Ewm3NC5tj7COkZ0Jql/I6V/v7mKlNOZStbaoOchX8WJwFuAM3RZHM578BqNUDvY6THV+bUYYBOqmxfAoxFOSFlShnHKdMT+r5V5ViWsqU2yPleWKWc1KEex+Utg3oM8J/mTE6Ua8/m5HgO0LFIv/+0y+c4uTpYpPOfKCekTDnA3ZSHJC9j2TIpTZAz8D/or1FXFndc3qotQHTwx2dzboC8Vur9Z6ET61Un5Gj3p0GaQGdR7iZbAswfoCNZXAt3EyavDXsGvYdIPOZXE+Q0kwTX9GXd4m5PRs3nSUmzr2qb6usR8uuhJ882HyKNBjoMcPEN0It9nZAg8zuUIeuWc17zPZUA1+3b74/+nyQxX0HvCyS8ZmiC3CdYLwlwx+82MsjzTMaHpkRlUFdGWuIc6aEv78m+kxnXY3fbDykHvQbFFlLWlhvJWDdC47OwEjeDwiCsTDl9H+b47jnt9y9p2VJbrvT1c+QxN9ntBi7ADUc/36C+nm/aE7+mYG337X+Ql3zBQrIf2e/yRYsV6OQVIxI4DXRC7ozpNO05Mt4IfYAwcn5JwCzVYSyk+/5Yphzu+TcpW4b0npfvXzWPXTSzqcsOSJ1pWLigdV8z9/z8Y+g+i0VaDXTb1SC+TrktY2uRd2CzRfjM/1u4O3btNj84/P5fA7dhTqNcbjuzTM3yNkirg267zMwyP1Muc2yvoA90DyKsf2yazEfW/0y5vncL1inL30D/mX5AgqQj1lsIzhm7uqe8u+8X/tzYbTfGCwFjyz0o85wBYeSzPIU7Nt8jji1O90Dt4f9Whymzb2/gLrD/h9s7/93M74wB0cKVaj9FmB6UimTIIe9llGdzknVI1iLn4W7B78j5YQ7rLfm4x0A/Nm3AT8uUU7IvpGz5DXRJzfiC1V+gMMnKtJG6RbnpimS9shO/RNgdlEUasm0hd/8pvjwNwvZVirY5s8028vq2cHfvLdxd8OOjJn+XO/Obw8/FWqfBvEa53HZmmSmORagOuu0yZ5a7US73vnOjhTsXxuz/uMn/exZxfcfNN5OT7XmpXJdkcb/CciHZ6jtELltqMjl59qEtPT6Hu7OXAYTfIQ/Z1p/DDeh8gvCy6TD5e2jQNnD7JHT2kn8gvh7r08NdVB4jDnNouXrhduCkCam9RpybVYN1TMYg16gGfoFqJIGnw93elOfI9V1uui38ybZKtikZ94BCOsS/K1lTO9ZWtF2pnnluAewqahucZ+Dq+zVt95L2BsueSTTK5bczy0x1LEJ00G2XObNc+a6EVKRqaD6ZnGSUW+V6lp6TUx8h7PP9BZFoelde8/idfvL3HJP7LtEj3ewYL7E+A84/P6iRPOcZQKnJdyVkOqqYUl9PJTNqoZ+6q4XunJRHLyG9LS0K9ra8hLsgbXs62RfbSrcrJjneNWVFGywX+vw1Z/PpDNEo19HOLDP1sdDooNsus2DZcl6/US4/VpMOGtrejksyudS9Kc+RfgZb5fqlReltqcnk5C5ojXf3Mbw++m/pYWVQ3oC0A4fleK8xKxLSm7dD/TrkH1d47eS8/jXKkYv/L5GWQdrelOdIMhSyj8felkG0EzS/gPsA12RaSqpl4KLccAxIS473Buskd7IvUK8OYXP/kV6PMueGZCjTiSliK1WmnOoRVhq2KHitjTWocQ1NyhrHHTsM6ihVvkE+8vm/AbAr3DbQaeFKMKW3f2zvoJ+YtlGus51ZZs5jsVQH3XYZ+LlRrkfT5Dt7PKtRinJl6TLlVIyyZerJRE5a0zOPkB1sJp+7rWC7tL2eQhiUD3Qb6Bm4/VY62Mk2WOg1yvW2M8vMfSyW6KDbLgN/qa9lcs79/Z5tSxHkSvSmPOexcnvGVnTyjhZ13SHHbBLgpnNJPqxgu0oEuGMtyh3zDcI1yB/sZF0/HPZd6F1po9yGdmaZpY7FnA667TLQaZHmnJBlShC977jHDnI5B337kO16pdyucdtyjVW9l5Qu1zguaa7dF0hC0+4YXxa5oymWuh8xcGWed8gbLDaIp4Ebj5PqM4zLlXWEDvafbrdme9qZZZY+FvfpoNsuAz2D2/M6xvGXY29n1hc7yNVUppyS62dIz3xV2TLW3JXy8FZGqD/HbXf20JlASpAdKb2uZM7CF7g79mycvdsgP9muHq63U486DHBfKOmQY+HecGyQPgDH7PDUHZrB7WeQP48/w9LzeHf03+MbEb4+tAHx7RCXZnmxt2FKLmpb5DXg9ryW65nM3CHnw5LzYNwfYw90OfY98pFt/G/o9plse+pe1G8P69C+R0+C5Bf79rnPL6UIRAbuQvErpJ+xP5bji9JL/HRgtZzkUm54irzG7aopuF0DKVHLMZfB/mbf3sPpm5vh8KdMUydTq/XggO5LYw/tP+DOCzP59/F7Ku1vhz+XTs4gQ0c0F/0blB0CsRo5si2D+g1n/v0R8r/gUL4oA9LNZEJEZcn191w58xQGOSIiqtq/Q/98KvXzs4uR631yRETkjK/h+TMoOQY5IrompTvEyTO9TxG3ty3NYJAjomsh46xC3goeg0EcKd4feZEY5IjoWtzXM3KN5JncAFpEO0EzERGV8x1oEQY5IqJ1GcBxs4sxyBERrYeUKmt5q/kqMMgREa3HADczEy3EIEdEtA5jFjeAFmOQIyKqnwQ4mQSfpUpPDHJERHUbAxznqlRgkCMiqpcEOHntzy/BydpVOBiciKg+44Bvyd56kBqDHBFReccvoO3hXub7e1AwBjkiuhYD3HvYavM93Fuz5c/XYFmSiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIhC/BNWltaNQX4tkAAAAABJRU5ErkJggg==" class="logo-bottom" alt="Telnyx" />
+</body></html>

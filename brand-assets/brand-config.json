@@ -1,0 +1,84 @@
+{
+  "name": "Telnyx",
+  "colors": {
+    "primary": {
+      "darkBg": "#0D1117",
+      "brandGreen": "#00C08B",
+      "white": "#FFFFFF"
+    },
+    "secondary": {
+      "gray": "#8892a6",
+      "subtleGray": "#5a6478"
+    }
+  },
+  "typography": {
+    "headline": {
+      "fontFamily": "PP Formula",
+      "fontWeight": "Extrabold",
+      "fontFile": "fonts/PP Formula - Extrabold v2.0/PPFormula-Extrabold.ttf",
+      "usage": "Headlines, hero text, data points"
+    },
+    "body": {
+      "fontFamily": "Inter",
+      "fontWeight": "Regular",
+      "fontFile": "fonts/Inter-VariableFont_slnt,wght.ttf",
+      "usage": "Descriptions, body copy, captions"
+    },
+    "weights": {
+      "inter": {
+        "thin": "fonts/static/Inter-Thin.ttf",
+        "light": "fonts/static/Inter-Light.ttf",
+        "regular": "fonts/static/Inter-Regular.ttf",
+        "medium": "fonts/static/Inter-Medium.ttf",
+        "semibold": "fonts/static/Inter-SemiBold.ttf",
+        "bold": "fonts/static/Inter-Bold.ttf",
+        "extrabold": "fonts/static/Inter-ExtraBold.ttf",
+        "black": "fonts/static/Inter-Black.ttf"
+      }
+    }
+  },
+  "logos": {
+    "wordmark": "assets/logo/green/telnyx-logo-wordmark-green.png",
+    "icon": "assets/logo/green/telnyx-logo-icon-green.png"
+  },
+  "assets": {
+    "basePath": "assets",
+    "backgrounds": {
+      "voiceAI": "assets/backgrounds/voice-ai/background_voice-ai-agent-6.png",
+      "rcs": "assets/backgrounds/rcs/gradient_rcs-1.png"
+    },
+    "icons": {
+      "ai": "assets/icons/product/icon-wordmark/ai-icon-wordmark.png"
+    },
+    "photography": {
+      "healthcare": "assets/photography/industry/healthcare",
+      "restaurants": "assets/photography/industry/restaurants",
+      "insurance": "assets/photography/industry/insurance",
+      "logistics": "assets/photography/industry/logistics",
+      "travel": "assets/photography/industry/travel"
+    },
+    "features": {
+      "voiceAI": "assets/features/voice-ai"
+    }
+  },
+  "messaging": {
+    "pillars": {
+      "trust": {
+        "keywords": ["HIPAA", "compliance", "secure", "SOC2", "PCI"],
+        "dataPoints": ["HIPAA-ready", "SOC 2 Type II", "99.999% uptime"],
+        "visuals": ["compliance shield", "security badges"]
+      },
+      "infrastructure": {
+        "keywords": ["network", "vendor", "platform", "integration"],
+        "dataPoints": ["1 platform", "Own network", "140+ countries"],
+        "visuals": ["architecture diagram", "vendor comparison"]
+      },
+      "physics": {
+        "keywords": ["latency", "ms", "speed", "performance"],
+        "dataPoints": ["<200ms", "Sub-500ms", "Co-located inference"],
+        "visuals": ["latency chart", "speed comparison"]
+      }
+    }
+  },
+  "lastUpdated": "2026-04-13"
+}

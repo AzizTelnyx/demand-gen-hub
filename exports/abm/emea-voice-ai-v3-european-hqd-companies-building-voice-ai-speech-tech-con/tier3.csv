@@ -1,0 +1,9 @@
+company,domain,country,region,vertical,productFit,status,confidenceTier,confidenceScore,archetype,evidenceType,evidenceSnippet,description
+"Involve AI","involve.ai","UK","EMEA","fintech","ai-agent","unverified","tier3","30","","","","Uses AI to automate customer onboarding and relationship management for financial institutions."
+"Aiscension","aiscension.io","UK","EMEA","contact center","ai-agent","unverified","tier3","50","","","","Call center automation with AI"
+"Yapay","yapay.ai","France","EMEA","Travel","ai-agent","unverified","tier3","60","","","","AI-powered virtual assistant for travel expense management, automating processes through voice interaction."
+"TalkMore","talkmore.ai","Spain","EMEA","customer service","ai-agent","unverified","tier3","30","","","","AI-powered call center solutions for lead qualification and sales engagement."
+"Zelo.ai","zelo.ai","UK","EMEA","contact-center","ai-agent","unverified","tier3","30","","","","Contact Center AI and Automation Solutions"
+"Cloudfactory.com","cloudfactory.com","UK","EMEA","BPO","ai-agent","validated","tier3","70","Contact-center / BPO / CX operators","","","Provides a workforce and platform for AI data annotation and augmentation, with potential applications in voice AI data preparation."
+"Vocale","vocale.ai","France","EMEA","customer service","ai-agent","unverified","tier3","50","","","","AI-powered voice agent for customer support."
+"Leadscale","leadscale.ai","Germany","EMEA","sales","ai-agent","unverified","tier3","50","","","","AI-driven sales platform that could integrate voice AI for lead qualification and engagement."

@@ -1,0 +1,5 @@
+company,domain,country,region,vertical,productFit,status,confidenceTier,confidenceScore,archetype,evidenceType,evidenceSnippet,description
+"Vocale.ai","vocale.ai","UK","EMEA","ai-voice","ai-agent","unverified","tier3","30","","voice_agent","conversational AI for voice customer experience","Conversational AI solutions for enhancing voice customer experiences."
+"Yumit","yumit.ai","FR","EMEA","customer_service","ai-agent","unverified","tier3","30","","ai_agent","AI-based Customer Service Agent","AI-based Customer Service Agent"
+"Encharge","encharge.io","BG","EMEA","marketing","ai-agent","unverified","tier3","30","","phone_workflow","Marketing automation platform that helps B2B SaaS companies automate their customer journeys. integrates with telephony platforms","Encharge is a marketing automation platform that helps B2B SaaS companies automate their customer journeys."
+"Zobot","zobot.de","DE","EMEA","customer service","ai-agent","unverified","tier3","50","","voice_agent","KI Voice Assistants - Automate your phone calls with AI","Offers AI voice assistants for customer service."

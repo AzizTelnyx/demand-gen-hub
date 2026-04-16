@@ -1,0 +1,62 @@
+[
+  {
+    "company": "Sabio Group",
+    "domain": "sabiogroup.com",
+    "country": "UK",
+    "region": "EMEA",
+    "vertical": "any",
+    "productFit": "voice-ai",
+    "status": "validated",
+    "confidenceTier": "tier2",
+    "confidenceScore": 70,
+    "archetype": "AI agent / voice agent builders",
+    "evidenceType": "ai_agent_builders",
+    "evidenceSnippet": "voice ai solution",
+    "description": "Customer experience and contact center solutions provider with AI and automation."
+  },
+  {
+    "company": "Rasa",
+    "domain": "rasa.com",
+    "country": "Germany",
+    "region": "EMEA",
+    "vertical": "any",
+    "productFit": "voice-api",
+    "status": "validated",
+    "confidenceTier": "tier2",
+    "confidenceScore": 70,
+    "archetype": "AI agent / voice agent builders",
+    "evidenceType": "ai_agent_builders",
+    "evidenceSnippet": "conversational ai platform",
+    "description": "Open source conversational AI platform."
+  },
+  {
+    "company": "Spitch",
+    "domain": "spitch.com",
+    "country": "Switzerland",
+    "region": "EMEA",
+    "vertical": "ai-voice",
+    "productFit": "ai-agent",
+    "status": "validated",
+    "confidenceTier": "tier2",
+    "confidenceScore": 70,
+    "archetype": "AI agent / voice agent builders",
+    "evidenceType": "ai_agent_builders",
+    "evidenceSnippet": "conversational ai platform",
+    "description": "Conversational AI solutions for customer service and automation."
+  },
+  {
+    "company": "Webio",
+    "domain": "webio.com",
+    "country": "IE",
+    "region": "EMEA",
+    "vertical": "ai-voice",
+    "productFit": "ai-agent",
+    "status": "validated",
+    "confidenceTier": "tier2",
+    "confidenceScore": 70,
+    "archetype": "AI agent / voice agent builders",
+    "evidenceType": "ai_agent_builders",
+    "evidenceSnippet": "conversational ai platform",
+    "description": "Conversational AI platform for customer engagement."
+  }
+]

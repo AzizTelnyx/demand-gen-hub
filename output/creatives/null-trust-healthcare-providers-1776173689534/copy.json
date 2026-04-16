@@ -1,0 +1,38 @@
+{
+  "brief": {
+    "platform": null,
+    "format": null,
+    "audience": "healthcare providers",
+    "painPoints": [
+      "need for HIPAA-compliant communication",
+      "secure patient communications"
+    ],
+    "coreMessage": "HIPAA-compliant voice AI for patient communications",
+    "pillar": "trust",
+    "adCopyExample": null,
+    "ctaSuggestion": null
+  },
+  "copy": {
+    "headlines": [
+      "HIPAA-Compliant Voice AI with Sub-200ms Latency",
+      "Secure Patient Communications Across 140+ Countries",
+      "Telnyx Voice AI: 99.999% Uptime, SOC 2 Type II Certified",
+      "One Platform for HIPAA-Ready Voice AI in Healthcare",
+      "Own Network Voice AI Ensuring HIPAA and PCI Compliance",
+      "Voice AI Co-Located with Telephony for Minimal Latency",
+      "Trusted Voice AI for Healthcare with SOC 2 and HIPAA Compliance",
+      "Secure Voice AI Communications with Sub-200ms Inference",
+      "Telnyx Voice AI: HIPAA, SOC 2, PCI Compliant in One Platform",
+      "Global HIPAA-Compliant Voice AI with 99.999% Uptime"
+    ],
+    "descriptions": [
+      "Telnyx Voice AI operates on a proprietary network with sub-200ms latency, ensuring secure and compliant patient communications under HIPAA, SOC 2, and PCI standards.",
+      "Manage patient voice interactions securely across 140+ countries using a single platform built for healthcare providers requiring HIPAA-ready, SOC 2 Type II certified solutions.",
+      "Our platform delivers 99.999% uptime with voice AI inference co-located on telephony infrastructure to minimize latency and maintain compliance with HIPAA and PCI.",
+      "Secure patient communication is enabled by Telnyx Voice AI’s ownership of the network, eliminating third-party vendors and ensuring consistent compliance and performance.",
+      "Telnyx provides healthcare-grade voice AI with comprehensive compliance certifications and global reach, consolidating multiple vendor functions into a single, reliable platform."
+    ],
+    "cta": "Learn More"
+  },
+  "generatedAt": "2026-04-14T13:34:55.522Z"
+}

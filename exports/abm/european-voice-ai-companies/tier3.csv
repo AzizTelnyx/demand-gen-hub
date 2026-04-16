@@ -1,0 +1,6 @@
+company,domain,country,region,vertical,productFit,status,confidenceTier,confidenceScore,archetype,evidenceType,evidenceSnippet,description
+"Cognitive Voice","cognitivevoice.io","Germany","EMEA","ai-voice","ai-agent","unverified","tier3","30","","voice_agent","AI-powered voice assistants for automating customer service","Develops AI-powered voice assistants for automating customer service interactions."
+"Yann AI","yann.ai","France","EMEA","ai-voice","ai-agent","unverified","tier3","30","","voice_agent","Phone voice agent","Voice agent to answer the phone for the company."
+"OneUp Sales","oneupsales.com","Spain","EMEA","ai-voice","ai-agent","unverified","tier3","30","","phone_workflow","Call center software","Call center software."
+"Vocale.ai","vocale.ai","UK","EMEA","ai-voice","ai-agent","unverified","tier3","30","","voice_agent","Build conversational AI agents that can understand, engage and resolve customer issues.","Provides a platform for building conversational AI agents for customer service."
+"Sharpen","sharpencx.com","UK","EMEA","contact-center","contact-center","validated","tier3","70","","","","Contact center platform for cloud communications"

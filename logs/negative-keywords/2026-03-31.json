@@ -1,0 +1,25 @@
+{
+  "timestamp": "2026-03-31T09:00:03.884115+00:00",
+  "runtime_seconds": 610.107598,
+  "dry_run": true,
+  "days_analyzed": 7,
+  "campaigns_processed": 48,
+  "search_terms_analyzed": 227,
+  "skipped": 9773,
+  "decisions": {
+    "blocked": 0,
+    "campaign_blocked": 0,
+    "review": 0,
+    "campaign_review": 0,
+    "monitored": 126,
+    "kept": 101
+  },
+  "blocks_applied": [],
+  "review_items": [],
+  "estimated_savings": {
+    "weekly_waste": 0.0,
+    "monthly_waste": 0.0,
+    "weekly_campaign_bleed": 0.0,
+    "monthly_campaign_bleed": 0.0
+  }
+}

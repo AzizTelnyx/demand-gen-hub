@@ -1,0 +1,52 @@
+{
+  "description": "Core brand assets that should ALWAYS be used in creative generation",
+  "version": "2.0.0",
+  "lastUpdated": "2026-04-14",
+
+  "brand": {
+    "name": "Telnyx",
+    "colorSystem": "config/brand-colors.json",
+    "typography": {
+      "headline": "PP Formula Extrabold",
+      "headlineAlt": "Inter",
+      "body": "Inter",
+      "fallbacks": "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif"
+    }
+  },
+
+  "logos": {
+    "description": "Logo variants for different backgrounds. System will auto-select based on background color.",
+    "white": {
+      "path": "brand-assets/assets/logo/White:Black/Telnyx_Lockup_Primary_One-color_Cream_Large (7).png",
+      "usage": "Use on dark backgrounds (black, dark grays, dark product colors)",
+      "formats": ["png"]
+    },
+    "black": {
+      "path": "brand-assets/assets/logo/White:Black/Telnyx_Media-Kit_Logo-Black (1).png",
+      "usage": "Use on light backgrounds (cream, white, light tints)",
+      "formats": ["png"]
+    },
+    "green": {
+      "path": "brand-assets/assets/logo/green/telnyx-logo-wordmark-green.png",
+      "usage": "Use where brand green makes sense (special occasions, brand-focused content)",
+      "formats": ["png"]
+    },
+    "icon": {
+      "green": "brand-assets/assets/logo/green/telnyx-logo-icon-green.png"
+    }
+  },
+
+  "logoSelectionRules": {
+    "default": "black",
+    "onDarkBackgrounds": "white",
+    "onLightBackgrounds": "black",
+    "onBrandGreen": "white",
+    "specialOccasions": "green"
+  },
+
+  "instructions": {
+    "logoUsage": "The system automatically selects the correct logo color based on background. White logo on dark, black logo on light, green for special emphasis.",
+    "colorSystem": "All colors are defined in config/brand-colors.json. Follow the product color system and composition patterns.",
+    "addingLogos": "Place new logo variants in brand-assets/assets/logo/ and add entries to the 'logos' section above"
+  }
+}

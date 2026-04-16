@@ -1,0 +1,926 @@
+{
+  "timestamp": "2026-04-09T07:10:21.188984Z",
+  "method": "Gemini \u2192 Perplexica \u2192 Clearbit hybrid",
+  "summary": "\nResults Summary:\n- Total candidates: 25\n- Perplexica verified: 25 (100%)\n- Clearbit found: 22 (88%)\n- EMEA confirmed: 18 (72%)\n- Passed all checks (score \u2265 4): 25 (100%)\n\nTop 10 Validated Companies:\n",
+  "stats": {
+    "total": 25,
+    "perplexica_verified": 25,
+    "clearbit_found": 22,
+    "emea_confirmed": 18,
+    "passed": 25
+  },
+  "results": [
+    {
+      "company": "AccuRx",
+      "domain": "accurx.com",
+      "country_input": "UK",
+      "vertical": "Patient Messaging",
+      "productFit": "SMS API",
+      "description_input": "Patient communication and consultation platform for GPs.",
+      "verification": {
+        "perplexica_verified": true,
+        "perplexica_confidence": "high",
+        "still_operating": true,
+        "healthcare_comms_relevant": true,
+        "perplexica_summary": "AccuRx is a health technology company that specializes in digital communication solutions for the healthcare sector, particularly in the United Kingdom. Founded in 2016 and heavily integrated within the National Health Service (NHS), AccuRx focuses on enhancing the communication between patients and healthcare professionals, thereby streamlining processes and improving patient care.\n\n## Core Functions and Services\n\n### 1. **Digital Communication Platform**\nAccuRx provides a user-friendly platfor",
+        "perplexica_sources": [
+          "https://support.accurx.com/en/articles/6592599-patient-support-how-to-submit-a-request-to-your-gp-practice-using-the-nhs-app",
+          "https://www.accurx.com/",
+          "https://www.accurx.com/security-for-healthcare-professionals"
+        ]
+      },
+      "validation": {
+        "clearbit_found": true,
+        "clearbit_name": "Accurx",
+        "clearbit_country": "GB",
+        "clearbit_emea": true,
+        "clearbit_employees": "51-250",
+        "clearbit_category": "Health Care/Health Care Providers & Services",
+        "clearbit_description": "Accurx is a healthtech company revolutionizing healthcare communication. Their platform connects patients and healthcare professionals, facilitating seamless collaboration and improving patient care. ",
+        "clearbit_tech": [
+          "activecampaign",
+          "google_apps",
+          "intercom",
+          "linked_in_advertiser",
+          "microsoft_exchange_online"
+        ]
+      },
+      "score": 6,
+      "passed": true
+    },
+    {
+      "company": "Lumeon",
+      "domain": "lumeon.com",
+      "country_input": "UK",
+      "vertical": "Patient Engagement",
+      "productFit": "SMS API, Phone Numbers",
+      "description_input": "Care pathway orchestration platform with patient communication features.",
+      "verification": {
+        "perplexica_verified": true,
+        "perplexica_confidence": "high",
+        "still_operating": true,
+        "healthcare_comms_relevant": true,
+        "perplexica_summary": "Lumeon is a prominent digital health company specializing in care orchestration solutions aimed at improving patient care and operational efficiency within healthcare organizations. Their innovative platform integrates various clinical and administrative processes to streamline care delivery and enhance the overall patient experience.\n\n## Overview of Lumeon's Services\n\n### 1. Care Pathway Management\nLumeon is pioneering in the field of Care Pathway Management (CPM), which focuses on optimizing t",
+        "perplexica_sources": [
+          "https://lumeon.com/",
+          "https://www.crunchbase.com/organization/lumeon",
+          "https://www.healthcatalyst.com/news/health-catalyst-acquires-lumeon"
+        ]
+      },
+      "validation": {
+        "clearbit_found": true,
+        "clearbit_name": "Lumeon",
+        "clearbit_country": "GB",
+        "clearbit_emea": true,
+        "clearbit_employees": "51-250",
+        "clearbit_category": "Health Care/Health Care Providers & Services",
+        "clearbit_description": "Lumeon is a digital health company that specializes in Care Orchestration, offering an enterprise platform for automating care coordination tasks and workflow. Their innovative platform transforms car",
+        "clearbit_tech": [
+          "aws_route_53",
+          "bing_advertiser",
+          "facebook_advertiser",
+          "facebook_connect",
+          "google_cloud"
+        ]
+      },
+      "score": 6,
+      "passed": true
+    },
+    {
+      "company": "Ada Health",
+      "domain": "ada.com",
+      "country_input": "Germany",
+      "vertical": "Voice AI for Healthcare",
+      "productFit": "SIP Trunking, Phone Numbers",
+      "description_input": "AI-powered symptom assessment and telehealth platform.",
+      "verification": {
+        "perplexica_verified": true,
+        "perplexica_confidence": "high",
+        "still_operating": true,
+        "healthcare_comms_relevant": true,
+        "perplexica_summary": "Ada Health is a pioneering organization in the field of digital healthcare, known primarily for its AI-powered symptom assessment and care navigation platform. Founded in 2011, Ada Health aims to improve personal health management through innovative technology that mimics the diagnostic thinking of human physicians. Here\u2019s a detailed overview of what Ada Health does:\n\n## Comprehensive Symptom Assessment\n\nAda Health provides a widely used application that allows users to input their symptoms and ",
+        "perplexica_sources": [
+          "https://www.foxnews.com/health",
+          "https://ada.com/",
+          "https://www.cdc.gov/child-development/about/developmental-disability-basics.html"
+        ]
+      },
+      "validation": {
+        "clearbit_found": true,
+        "clearbit_name": "Ada",
+        "clearbit_country": "DE",
+        "clearbit_emea": true,
+        "clearbit_employees": "251-1K",
+        "clearbit_category": "Telecommunication Services/Diversified Telecommunication Services",
+        "clearbit_description": "Ada is a global health company that provides a Personal Health Companion app to help individuals manage their health and offers enterprise solutions to partners for improving health outcomes. With a t",
+        "clearbit_tech": [
+          "amazon_ses",
+          "cloud_flare",
+          "google_apps",
+          "ios",
+          "mailchimp"
+        ]
+      },
+      "score": 6,
+      "passed": true
+    },
+    {
+      "company": "TeleClinic",
+      "domain": "teleclinic.com",
+      "country_input": "Germany",
+      "vertical": "Telehealth Platforms",
+      "productFit": "Video Infrastructure, Phone Numbers",
+      "description_input": "Telehealth platform offering online consultations with doctors.",
+      "verification": {
+        "perplexica_verified": true,
+        "perplexica_confidence": "high",
+        "still_operating": true,
+        "healthcare_comms_relevant": true,
+        "perplexica_summary": "TeleClinic, based in Germany, is a pioneering healthcare company specializing in telemedicine services that facilitate convenient access to medical consultations and healthcare advice through digital platforms. Below is a comprehensive overview of what they do:\n\n## Overview of TeleClinic\n\n**1. Telemedicine Services**  \nTeleClinic provides a wide range of telemedicine services, which allow patients to consult with healthcare professionals remotely. This can be done through video calls, chat, or p",
+        "perplexica_sources": [
+          "https://www.teleclinicz.com/states/california",
+          "https://telehealthtechnology.org/innovation-watch/",
+          "https://www.vigzdrowie.pl/en/"
+        ]
+      },
+      "validation": {
+        "clearbit_found": true,
+        "clearbit_name": "TeleClinic",
+        "clearbit_country": "DE",
+        "clearbit_emea": true,
+        "clearbit_employees": "51-250",
+        "clearbit_category": "Health Care/Health Care Providers & Services",
+        "clearbit_description": "TeleClinic is the first digital clinic in the German-speaking region, providing online doctor consultations, prescriptions, and sick notes within minutes. Access German doctors 24/7, schedule speciali",
+        "clearbit_tech": [
+          "cloud_flare",
+          "google_apps",
+          "wordpress",
+          "zendesk",
+          "sybase"
+        ]
+      },
+      "score": 6,
+      "passed": true
+    },
+    {
+      "company": "Qare",
+      "domain": "qare.fr",
+      "country_input": "France",
+      "vertical": "Telehealth Platforms",
+      "productFit": "Video Infrastructure, Phone Numbers",
+      "description_input": "Telehealth platform offering online consultations with doctors.",
+      "verification": {
+        "perplexica_verified": true,
+        "perplexica_confidence": "high",
+        "still_operating": true,
+        "healthcare_comms_relevant": true,
+        "perplexica_summary": "Qare, operating under the domain qare.fr, is a leading French telehealth provider that has been making significant strides in revolutionizing healthcare delivery. Here's a detailed overview of what Qare offers:\n\n## Services Provided by Qare\n\n### 1. **Telemedicine Consultations**\nQare specializes in online medical consultations, allowing patients to connect with healthcare professionals from the comfort of their homes. Patients can access general practitioners and specialists across various field",
+        "perplexica_sources": [
+          "https://www.medicare.gov/coverage/telehealth",
+          "https://www.linkedin.com/pulse/acute-care-telemedicine-services-market-application-hcndf/",
+          "https://infusionhealth.org/iv-lounge/telemedicine-vs-in-person-care-benefits-and-challenges/"
+        ]
+      },
+      "validation": {
+        "clearbit_found": true,
+        "clearbit_name": "Qare",
+        "clearbit_country": "FR",
+        "clearbit_emea": true,
+        "clearbit_employees": "51-250",
+        "clearbit_category": "Industrials/Professional Services",
+        "clearbit_description": "Qare is a leading online medical teleconsultation platform in France, offering 7-day access to healthcare services. With a focus on custom development and continuous training for healthcare profession",
+        "clearbit_tech": [
+          "aws_route_53",
+          "google_apps",
+          "google_tag_manager",
+          "mailchimp",
+          "mandrill"
+        ]
+      },
+      "score": 6,
+      "passed": true
+    },
+    {
+      "company": "Lifen",
+      "domain": "lifen.fr",
+      "country_input": "France",
+      "vertical": "Clinical Communication",
+      "productFit": "SMS API",
+      "description_input": "Platform for secure exchange of medical documents and communication between healthcare professionals.",
+      "verification": {
+        "perplexica_verified": true,
+        "perplexica_confidence": "high",
+        "still_operating": true,
+        "healthcare_comms_relevant": true,
+        "perplexica_summary": "Lifen is a French healthcare technology company established in 2015, focused on transforming how medical data is shared and managed among healthcare professionals, hospitals, and patients. Their primary offering is a digital platform that facilitates the secure exchange of health data, making it easier for healthcare providers to communicate and collaborate effectively.\n\n## Key Functions and Services of Lifen\n\n### 1. **Medical Data Exchange**\nLifen specializes in the integration and transmission",
+        "perplexica_sources": [
+          "https://www.aetna.com/individuals-families/using-your-aetna-benefits/find-form.html",
+          "https://myehcs.com/",
+          "https://home.globelifeinsurance.com/claims"
+        ]
+      },
+      "validation": {
+        "clearbit_found": true,
+        "clearbit_name": "Lifen",
+        "clearbit_country": "FR",
+        "clearbit_emea": true,
+        "clearbit_employees": "51-250",
+        "clearbit_category": "Information Technology/Internet Software & Services",
+        "clearbit_description": "Lifen is a healthcare platform that enables all stakeholders in the healthcare ecosystem to collaborate and provide better care by leveraging the most relevant health data and innovations. They develo",
+        "clearbit_tech": [
+          "aws_route_53",
+          "google_apps",
+          "google_tag_manager",
+          "rabbitmq",
+          "apache_hadoop"
+        ]
+      },
+      "score": 6,
+      "passed": true
+    },
+    {
+      "company": "Alan",
+      "domain": "alan.com",
+      "country_input": "France",
+      "vertical": "Patient Engagement",
+      "productFit": "SMS API, Phone Numbers",
+      "description_input": "Digital health insurance company with patient communication features.",
+      "verification": {
+        "perplexica_verified": true,
+        "perplexica_confidence": "high",
+        "still_operating": true,
+        "healthcare_comms_relevant": true,
+        "perplexica_summary": "Alan is an innovative health insurance company based in France that aims to transform the healthcare experience by integrating health insurance with efficient healthcare delivery. Founded in 2016, Alan stands out as a digital health partner that prioritizes both prevention and treatment, making healthcare more accessible and personalized for its users.\n\n## Core Offerings\n\n### 1. **Health Insurance**\nAlan provides health insurance plans that cater to both individuals and businesses. Unlike conven",
+        "perplexica_sources": [
+          "https://alan.com/en",
+          "https://www.afslaw.com/",
+          "https://jobs.ashbyhq.com/alan/ed6125d2-7e67-418f-b8aa-bfe5009eccee?source=xgA7zbmLWw"
+        ]
+      },
+      "validation": {
+        "clearbit_found": true,
+        "clearbit_name": "Alan",
+        "clearbit_country": "FR",
+        "clearbit_emea": true,
+        "clearbit_employees": "251-1K",
+        "clearbit_category": "Financials/Insurance",
+        "clearbit_description": "Alan provides a comprehensive health partnership that combines prevention and insurance services, empowering individuals to take control of their physical and mental well-being through a unique user e",
+        "clearbit_tech": [
+          "cloud_flare",
+          "express",
+          "google_apps",
+          "intercom",
+          "lever"
+        ]
+      },
+      "score": 6,
+      "passed": true
+    },
+    {
+      "company": "Zava",
+      "domain": "zavamed.com",
+      "country_input": "UK",
+      "vertical": "Telehealth Platforms",
+      "productFit": "Video Infrastructure, Phone Numbers",
+      "description_input": "Online doctor service providing prescriptions and consultations.",
+      "verification": {
+        "perplexica_verified": true,
+        "perplexica_confidence": "high",
+        "still_operating": true,
+        "healthcare_comms_relevant": true,
+        "perplexica_summary": "Zava, operating through its website zavamed.com, is a prominent online healthcare company that specializes in providing accessible and discreet medical services through digital platforms. Founded in 2010 and based in London, Zava has made significant strides in modernizing healthcare delivery, catering primarily to patients seeking treatment for various common medical conditions.\n\n## Overview of Services\n\nZava offers a range of services designed to simplify healthcare access:\n\n1. **Online Consul",
+        "perplexica_sources": [
+          "https://www.zavamed.com/uk/discounts-and-promotions.html",
+          "https://www.zavamed.com/uk/faq.html",
+          "https://uk.hotdeals.com/brands/zava-discount-codes"
+        ]
+      },
+      "validation": {
+        "clearbit_found": true,
+        "clearbit_name": "ZAVA",
+        "clearbit_country": "GB",
+        "clearbit_emea": true,
+        "clearbit_employees": "51-250",
+        "clearbit_category": "Telecommunication Services/Diversified Telecommunication Services",
+        "clearbit_description": "ZAVA is a leading digital healthcare provider offering discreet and convenient online medical treatment. Founded in 2011, ZAVA aims to break down barriers to health by providing accessible, dependable",
+        "clearbit_tech": [
+          "amazon_ses",
+          "aws_route_53",
+          "cloud_flare",
+          "customer_io",
+          "google_apps"
+        ]
+      },
+      "score": 6,
+      "passed": true
+    },
+    {
+      "company": "SkinVision",
+      "domain": "skinvision.com",
+      "country_input": "Netherlands",
+      "vertical": "Telehealth Platforms",
+      "productFit": "SMS API, Phone Numbers",
+      "description_input": "AI-powered skin cancer detection app with telehealth features.",
+      "verification": {
+        "perplexica_verified": true,
+        "perplexica_confidence": "high",
+        "still_operating": true,
+        "healthcare_comms_relevant": true,
+        "perplexica_summary": "SkinVision is a healthcare company that specializes in skin health, primarily through the development of its mobile application designed for the early detection of skin cancer. Here\u2019s a closer look at what they offer and how their technology works.\n\n## Overview of SkinVision\n\nFounded in Amsterdam in 2011, SkinVision leverages advanced artificial intelligence (AI) to empower users in monitoring their skin health. The application allows users to analyze moles and skin changes and evaluate risk fac",
+        "perplexica_sources": [
+          "https://qodeinteractive.com/",
+          "https://www.linkedin.com/posts/digital-health-executives_%F0%9D%90%92%F0%9D%90%A4%F0%9D%90%A2%F0%9D%90%A7%F0%9D%90%95%F0%9D%90%A2%F0%9D%90%AC%F0%9D%90%A2%F0%9D%90%A8%F0%9D%90%A7-%F0%9D%90%87%F0%9D%90%9A%F0%9D%90%AC-%F0%9D%90%84%F0%9D%90%9A%F0%9D%90%AB%F0%9D%90%A7%F0%9D%90%9E%F0%9D%90%9D-activity-7371931795560345600-cuaE",
+          "https://patient.klara.com/"
+        ]
+      },
+      "validation": {
+        "clearbit_found": true,
+        "clearbit_name": "SkinVision",
+        "clearbit_country": "NL",
+        "clearbit_emea": true,
+        "clearbit_employees": "11-50",
+        "clearbit_category": "Consumer Discretionary/Diversified Consumer Services",
+        "clearbit_description": "SkinVision is a leading mobile app that provides accurate and timely skin cancer detection, personalized skin health advice, and health path recommendations. With over 2 million users worldwide, SkinV",
+        "clearbit_tech": [
+          "apache",
+          "aws_route_53",
+          "google_apps",
+          "google_tag_manager",
+          "unix"
+        ]
+      },
+      "score": 6,
+      "passed": true
+    },
+    {
+      "company": "Luscii",
+      "domain": "luscii.com",
+      "country_input": "Netherlands",
+      "vertical": "Patient Engagement",
+      "productFit": "SMS API, Phone Numbers",
+      "description_input": "Remote patient monitoring platform with communication features.",
+      "verification": {
+        "perplexica_verified": true,
+        "perplexica_confidence": "high",
+        "still_operating": true,
+        "healthcare_comms_relevant": true,
+        "perplexica_summary": "Luscii is a pioneering healthcare technology company that specializes in creating digital health solutions for remote patient monitoring. Their platform is designed to facilitate healthcare management for both patients and providers, enabling the delivery of care outside traditional clinical settings. Here\u2019s an overview of what they do:\n\n## Overview of Luscii\u2019s Operations\n\n### Digital Health Platform\nLuscii\u2019s platform, known as Luscii Builder\u00ae, allows healthcare professionals to design and custo",
+        "perplexica_sources": [
+          "https://luscii.co.uk/product",
+          "https://go.luscii.com/en-gb/en-gb/en/luscii-dorset",
+          "https://go.luscii.com/en-gb/en/luscii-sbri-wast-pilot"
+        ]
+      },
+      "validation": {
+        "clearbit_found": true,
+        "clearbit_name": "Luscii",
+        "clearbit_country": "NL",
+        "clearbit_emea": true,
+        "clearbit_employees": "11-50",
+        "clearbit_category": "Health Care/Health Care Providers & Services",
+        "clearbit_description": "Luscii is the most successful patient monitoring platform in Europe and Africa, offering over 100 home monitoring programs for hospitals, general practitioners, and regions. Their platform allows for ",
+        "clearbit_tech": [
+          "aws_route_53",
+          "cloud_flare",
+          "google_apps",
+          "google_tag_manager",
+          "mandrill"
+        ]
+      },
+      "score": 6,
+      "passed": true
+    },
+    {
+      "company": "Corti",
+      "domain": "corti.ai",
+      "country_input": "Denmark",
+      "vertical": "Voice AI for Healthcare",
+      "productFit": "SIP Trunking, Phone Numbers",
+      "description_input": "AI-powered platform for emergency call centers.",
+      "verification": {
+        "perplexica_verified": true,
+        "perplexica_confidence": "high",
+        "still_operating": true,
+        "healthcare_comms_relevant": true,
+        "perplexica_summary": "Corti is a pioneering healthcare technology company based in Copenhagen, Denmark, that specializes in artificial intelligence (AI) solutions designed to enhance patient care and streamline clinical workflows. Here\u2019s a detailed overview of what Corti does and its impact on the healthcare industry:\n\n## AI-Powered Healthcare Solutions\n\n### 1. **Real-Time Speech Analysis**\nCorti's flagship technology involves a speech recognition platform that analyzes emergency medical service calls in real time. T",
+        "perplexica_sources": [
+          "https://pmc.ncbi.nlm.nih.gov/articles/PMC9662146/",
+          "https://www.paramedicpractice.com/content/minds-and-machines/a-need-for-national-oversight-in-ambulance-ai-integration",
+          "https://www.york.ac.uk/assuring-autonomy/about/aaip/demonstrators/ai-ambulance-response/"
+        ]
+      },
+      "validation": {
+        "clearbit_found": true,
+        "clearbit_name": "Corti",
+        "clearbit_country": "DK",
+        "clearbit_emea": true,
+        "clearbit_employees": "51-250",
+        "clearbit_category": "Information Technology/Internet Software & Services",
+        "clearbit_description": "Corti offers a clinically proven AI guide that augments, automates, and analyzes virtual care and face-to-face patient engagements. Healthcare practitioners benefit from a voice-based AI platform for ",
+        "clearbit_tech": [
+          "amazon_ses",
+          "google_apps",
+          "google_tag_manager",
+          "vimeo",
+          "zendesk"
+        ]
+      },
+      "score": 6,
+      "passed": true
+    },
+    {
+      "company": "Monsenso",
+      "domain": "monsenso.com",
+      "country_input": "Denmark",
+      "vertical": "Patient Engagement",
+      "productFit": "SMS API, Phone Numbers",
+      "description_input": "Digital health platform for mental health management.",
+      "verification": {
+        "perplexica_verified": true,
+        "perplexica_confidence": "high",
+        "still_operating": true,
+        "healthcare_comms_relevant": true,
+        "perplexica_summary": "Monsenso is an innovative healthcare company based in Denmark focused on revolutionizing mental health care through digital solutions. Their primary offering is a mobile health (mHealth) platform designed to assist in the prevention, early intervention, and treatment of mental and behavioral disorders. Here\u2019s a detailed overview of what Monsenso does:\n\n## Core Services and Solutions\n\n### mHealth Platform\nMonsenso's main product is a scalable and evidence-based mHealth solution that helps enhance",
+        "perplexica_sources": [
+          "https://www.wsj.com/market-data/quotes/DK/XCSE/MONSO",
+          "https://walletinvestor.com/cse-stock-forecast/monso-stock-prediction",
+          "https://www.morningstar.com/stocks/xcse/monso/chart"
+        ]
+      },
+      "validation": {
+        "clearbit_found": true,
+        "clearbit_name": "Monsenso",
+        "clearbit_country": "DK",
+        "clearbit_emea": true,
+        "clearbit_employees": "11-50",
+        "clearbit_category": "Consumer Discretionary/Family Services",
+        "clearbit_description": "Monsenso provides a comprehensive mHealth solution for mental health, connecting individuals and clinicians for personalized treatment support, empowering healthcare providers, researchers, and indivi",
+        "clearbit_tech": [
+          "facebook_advertiser",
+          "facebook_connect",
+          "google_apps",
+          "linked_in_advertiser",
+          "mailjet"
+        ]
+      },
+      "score": 6,
+      "passed": true
+    },
+    {
+      "company": "Buddy Healthcare",
+      "domain": "buddyhealthcare.com",
+      "country_input": "Finland",
+      "vertical": "Patient Engagement",
+      "productFit": "SMS API, Phone Numbers",
+      "description_input": "Patient engagement and care coordination platform.",
+      "verification": {
+        "perplexica_verified": true,
+        "perplexica_confidence": "high",
+        "still_operating": true,
+        "healthcare_comms_relevant": true,
+        "perplexica_summary": "Buddy Healthcare is a Finnish technology company that specializes in digital health solutions. Its primary focus is on improving the efficiency of healthcare delivery, particularly in managing surgical pathways and enhancing patient care through digital means. \n\n## Core Offerings\n\n### Digital Care Coordination\nAt the heart of Buddy Healthcare's operations is the BuddyCare Platform. This platform facilitates care coordination by streamlining various health processes used in clinical settings, par",
+        "perplexica_sources": [
+          "https://chatgpt.com/",
+          "https://www.wolframalpha.com/input/?i=Buddy+Healthcare+company+overview",
+          "https://www.seedtable.com/startups/buddyhealthcare"
+        ]
+      },
+      "validation": {
+        "clearbit_found": true,
+        "clearbit_name": "Buddy Healthcare",
+        "clearbit_country": "FI",
+        "clearbit_emea": true,
+        "clearbit_employees": "11-50",
+        "clearbit_category": "Health Care/Health Care Providers & Services",
+        "clearbit_description": "Buddy Healthcare offers a mobile care coordination platform that automates and digitizes care pathways, significantly reducing pre-operative time, cancelled appointments, and administrative burdens in",
+        "clearbit_tech": [
+          "amazon_ses",
+          "cloud_flare",
+          "google_apps",
+          "google_tag_manager",
+          "hubspot"
+        ]
+      },
+      "score": 6,
+      "passed": true
+    },
+    {
+      "company": "Aifloo",
+      "domain": "aifloo.com",
+      "country_input": "Sweden",
+      "vertical": "Clinical Communication",
+      "productFit": "SMS API, Phone Numbers",
+      "description_input": "AI-powered safety and communication system for elderly care.",
+      "verification": {
+        "perplexica_verified": true,
+        "perplexica_confidence": "high",
+        "still_operating": true,
+        "healthcare_comms_relevant": true,
+        "perplexica_summary": "Aifloo is a Swedish healthcare company that primarily focuses on developing innovative e-health systems designed to enhance the safety and health of elderly individuals. Their distinctive approach combines advanced artificial intelligence (AI) with hardware sensors to create intelligent solutions aimed at monitoring the well-being of seniors, particularly those in home care settings.\n\n### Key Offerings and Technologies\n\n- **Smart Wristband**: Aifloo's flagship product is a smart wristband that u",
+        "perplexica_sources": [
+          "https://www.linkedin.com/posts/airflow-design-services-ltd_airflow-ventilation-hvac-activity-7447627763802484749-mZxx",
+          "https://www.airflow.com/",
+          "http://airflowservices.uk/"
+        ]
+      },
+      "validation": {
+        "clearbit_found": true,
+        "clearbit_name": "Aifloo",
+        "clearbit_country": "SE",
+        "clearbit_emea": true,
+        "clearbit_employees": "1-10",
+        "clearbit_category": "Health Care/Health Care Providers & Services",
+        "clearbit_description": "Aifloo Health, founded in 2015, is a pioneering company that specializes in modern remote care systems for the elderly. With a focus on delivering freedom, peace of mind, and security to users, their ",
+        "clearbit_tech": [
+          "cloud_flare",
+          "wordpress",
+          "mysql"
+        ]
+      },
+      "score": 6,
+      "passed": true
+    },
+    {
+      "company": "MedEngine",
+      "domain": "medengine.fi",
+      "country_input": "Finland",
+      "vertical": "Clinical Communication",
+      "productFit": "SMS API, Phone Numbers",
+      "description_input": "Medical affairs agency providing communication and engagement solutions.",
+      "verification": {
+        "perplexica_verified": true,
+        "perplexica_confidence": "high",
+        "still_operating": true,
+        "healthcare_comms_relevant": true,
+        "perplexica_summary": "MedEngine is a Nordic company that specializes in providing a range of services and solutions focused on healthcare, particularly within the pharmaceutical and health technology sectors. Their offerings are centered around three primary areas:\n\n### 1. **Medical Data Science**\nMedEngine leverages advanced medical data analytics to support pharmaceutical development and market access strategies. They focus on the generation of real-world evidence that helps healthcare companies understand treatmen",
+        "perplexica_sources": [
+          "https://tracxn.com/d/companies/medengine/__4glSKekO94Tu8Rje1JpJEOYcTmzheXdbv8bYy63K-7A",
+          "https://www.signalhire.com/companies/medengine",
+          "https://www.crunchbase.com/organization/medengine"
+        ]
+      },
+      "validation": {
+        "clearbit_found": true,
+        "clearbit_name": "MedEngine",
+        "clearbit_country": "FI",
+        "clearbit_emea": true,
+        "clearbit_employees": "11-50",
+        "clearbit_category": "Industrials/Professional Services",
+        "clearbit_description": "MedEngine specializes in providing comprehensive medical science services, including tailored medical affairs, communications, scientific research, and business consultation, to support the healthcare",
+        "clearbit_tech": [
+          "google_apps",
+          "google_tag_manager",
+          "linked_in_advertiser",
+          "microsoft_exchange_online",
+          "nginx"
+        ]
+      },
+      "score": 6,
+      "passed": true
+    },
+    {
+      "company": "Healthy.io",
+      "domain": "healthy.io",
+      "country_input": "Israel",
+      "vertical": "Telehealth Platforms",
+      "productFit": "SMS API, Phone Numbers",
+      "description_input": "AI-powered at-home urinalysis platform with telehealth features.",
+      "verification": {
+        "perplexica_verified": true,
+        "perplexica_confidence": "high",
+        "still_operating": true,
+        "healthcare_comms_relevant": true,
+        "perplexica_summary": "Healthy.io is a pioneering healthcare technology company that leverages smartphone capabilities to transform how medical diagnostics and services are delivered. Founded in 2013 by Yonatan Adiri, the company aims to improve patient outcomes by enabling at-home diagnostic testing, which can significantly enhance accessibility and convenience for patients.\n\n## Services Offered by Healthy.io\n\n### 1. **At-Home Diagnostics**\nHealthy.io is best known for its innovative approach to bringing clinical-gra",
+        "perplexica_sources": [
+          "https://www.coopersurgical.com/",
+          "https://www.bing.com/",
+          "https://www.datanyze.com/companies/healthyio/447849166"
+        ]
+      },
+      "validation": {
+        "clearbit_found": true,
+        "clearbit_name": "Healthy.io",
+        "clearbit_country": "IL",
+        "clearbit_emea": true,
+        "clearbit_employees": "251-1K",
+        "clearbit_category": "Health Care/Pharmaceuticals",
+        "clearbit_description": "Healthy.io provides home urinalysis and digitized wound care services using computer vision and machine learning technology. By transforming smartphone cameras into clinical-grade medical devices, the",
+        "clearbit_tech": [
+          "cloud_flare",
+          "google_apps",
+          "google_tag_manager",
+          "marketo",
+          "salesforce"
+        ]
+      },
+      "score": 6,
+      "passed": true
+    },
+    {
+      "company": "TytoCare",
+      "domain": "tytocare.com",
+      "country_input": "Israel",
+      "vertical": "Telehealth Platforms",
+      "productFit": "Video Infrastructure, Phone Numbers",
+      "description_input": "Handheld remote examination device and telehealth platform.",
+      "verification": {
+        "perplexica_verified": true,
+        "perplexica_confidence": "high",
+        "still_operating": true,
+        "healthcare_comms_relevant": true,
+        "perplexica_summary": "TytoCare is an innovative healthcare technology company that specializes in providing telehealth solutions designed to facilitate remote medical examinations. Their primary offerings enable patients to conduct self-examinations and interact with healthcare providers from the comfort of their homes. Here\u2019s a closer look at what they do:\n\n## Overview of TytoCare's Services\n\n### Remote Medical Examination\nTytoCare offers a portable handheld device that allows patients to perform physical examinatio",
+        "perplexica_sources": [
+          "https://www.crunchbase.com/organization/tyto",
+          "https://usearch.com/company/tytocare/overview",
+          "https://pitchbook.com/profiles/company/61983-19"
+        ]
+      },
+      "validation": {
+        "clearbit_found": true,
+        "clearbit_name": "TytoCare",
+        "clearbit_country": "IL",
+        "clearbit_emea": true,
+        "clearbit_employees": "51-250",
+        "clearbit_category": "Health Care/Health Care Providers & Services",
+        "clearbit_description": "TytoCare offers innovative telehealth solutions that enable high-quality primary care from the comfort of home. Their platform and handheld device allow users to perform accurate physical examinations",
+        "clearbit_tech": [
+          "activecampaign",
+          "amazon_ses",
+          "apache",
+          "aws_route_53",
+          "chili_piper"
+        ]
+      },
+      "score": 6,
+      "passed": true
+    },
+    {
+      "company": "Sweetch",
+      "domain": "sweetch.com",
+      "country_input": "Israel",
+      "vertical": "Patient Engagement",
+      "productFit": "SMS API, Phone Numbers",
+      "description_input": "AI-powered digital therapeutics platform for chronic conditions.",
+      "verification": {
+        "perplexica_verified": true,
+        "perplexica_confidence": "high",
+        "still_operating": true,
+        "healthcare_comms_relevant": true,
+        "perplexica_summary": "Sweetch is a pioneering healthcare technology company that specializes in behavioral science and the use of artificial intelligence (AI) to enhance patient engagement and health outcomes. Their primary focus is on transforming how healthcare providers, pharmaceutical companies, and payers interact with patients, particularly those managing chronic conditions.\n\n## Key Offerings and Services\n\n### 1. **AI-Driven Engagement Platform**\nSweetch's core product is a smart health engagement platform that",
+        "perplexica_sources": [
+          "https://www.nbcnews.com/us-news",
+          "https://markdowntohtml.com/",
+          "https://www.solventum.com/en-us/home/health-information-technology/"
+        ]
+      },
+      "validation": {
+        "clearbit_found": true,
+        "clearbit_name": "Sweetch",
+        "clearbit_country": "IL",
+        "clearbit_emea": true,
+        "clearbit_employees": "11-50",
+        "clearbit_category": "Health Care/Health Care Providers & Services",
+        "clearbit_description": "Sweetch specializes in utilizing behavioral science, artificial intelligence, and emotional intelligence to create personalized health solutions that help individuals with chronic conditions achieve l",
+        "clearbit_tech": [
+          "aws_route_53",
+          "google_apps",
+          "mailgun",
+          "segment",
+          "zendesk"
+        ]
+      },
+      "score": 6,
+      "passed": true
+    },
+    {
+      "company": "Florence Healthcare",
+      "domain": "florencehc.com",
+      "country_input": "UK",
+      "vertical": "Clinical Communication",
+      "productFit": "SMS API, Phone Numbers",
+      "description_input": "Clinical trial workflow platform with communication features.",
+      "verification": {
+        "perplexica_verified": true,
+        "perplexica_confidence": "high",
+        "still_operating": true,
+        "healthcare_comms_relevant": true,
+        "perplexica_summary": "Florence Healthcare, headquartered in Atlanta, Georgia, specializes in developing software solutions designed to streamline clinical trials and enhance collaboration between various stakeholders in the healthcare sector, particularly in clinical research. Here\u2019s an in-depth look at what Florence Healthcare does:\n\n## Overview of Florence Healthcare\n\n### Clinical Trial Software\nFlorence Healthcare provides a comprehensive suite of tools focused on managing the workflow of clinical trials. Their pl",
+        "perplexica_sources": [
+          "https://www.florencehc.com/",
+          "https://www.crunchbase.com/organization/florence-heathcare",
+          "https://www.whoop.com/"
+        ]
+      },
+      "validation": {
+        "clearbit_found": true,
+        "clearbit_name": "Florence",
+        "clearbit_country": "US",
+        "clearbit_emea": false,
+        "clearbit_employees": "251-1K",
+        "clearbit_category": "Information Technology/Internet Software & Services",
+        "clearbit_description": "Florence Healthcare provides a Site Enablement Platform that facilitates sponsor site collaboration in clinical trials. Their software solutions streamline operations, enable remote monitoring, and in",
+        "clearbit_tech": [
+          "adroll",
+          "aws_route_53",
+          "facebook_advertiser",
+          "google_analytics",
+          "google_tag_manager"
+        ]
+      },
+      "score": 5,
+      "passed": true
+    },
+    {
+      "company": "Medloop",
+      "domain": "medloop.com",
+      "country_input": "Germany",
+      "vertical": "Patient Engagement",
+      "productFit": "SMS API, Phone Numbers",
+      "description_input": "Patient portal and communication platform for doctors and patients.",
+      "verification": {
+        "perplexica_verified": true,
+        "perplexica_confidence": "high",
+        "still_operating": true,
+        "healthcare_comms_relevant": true,
+        "perplexica_summary": "Medloop, accessible at medloop.com, is a healthcare technology company focused on improving the efficiency and delivery of primary care. Their mission revolves around enhancing the interaction between patients and healthcare providers, with an emphasis on preventative care and streamlined patient management.\n\n## Core Services and Solutions\n\n### Digital Tools for Healthcare Providers\nMedloop provides a suite of digital solutions designed to support general practitioners (GPs) and primary care tea",
+        "perplexica_sources": [
+          "https://www.glassdoor.com/Overview/Working-at-Medloop-EI_IE7619942.11,18.htm",
+          "https://www.dnb.com/business-directory/company-profiles.medloop_limited.f9408a47b14a801e539afb8ba0e3c56b.html",
+          "https://www.glassdoor.ca/Overview/Working-at-Medloop-Technologies-EI_IE2884447.11,31.htm"
+        ]
+      },
+      "validation": {
+        "clearbit_found": true,
+        "clearbit_name": "medloop.com",
+        "clearbit_country": "",
+        "clearbit_emea": false,
+        "clearbit_employees": null,
+        "clearbit_category": "Information Technology/Internet Software & Services",
+        "clearbit_description": "medloop.com provides a platform for developers, influencers, and entrepreneurs to engage and collaborate while utilizing the CONTRIB token to enhance their token economies.",
+        "clearbit_tech": [
+          "amazon_s3",
+          "piwik"
+        ]
+      },
+      "score": 5,
+      "passed": true
+    },
+    {
+      "company": "Fernarzt",
+      "domain": "fernarzt.com",
+      "country_input": "Germany",
+      "vertical": "Telehealth Platforms",
+      "productFit": "Video Infrastructure, Phone Numbers",
+      "description_input": "Online doctor service providing prescriptions and consultations.",
+      "verification": {
+        "perplexica_verified": true,
+        "perplexica_confidence": "high",
+        "still_operating": true,
+        "healthcare_comms_relevant": true,
+        "perplexica_summary": "**Overview of Fernarzt**\n\nFernarzt, operating at fernarzt.com, is a prominent digital healthcare provider based in Germany, established in 2017. It forms part of the HealthHero group, a company focused on enhancing access to healthcare services through technology. This telemedicine platform is designed to offer flexible, on-demand medical consultations to patients, bridging the gap between traditional healthcare methods and digital convenience.\n\n### Services Offered\n\n**1. Online Medical Consulta",
+        "perplexica_sources": [
+          "https://news.decresearch.com/digital-firm-healthhero-buys-medical-consultation-platform-fernarzt/",
+          "https://pharmaphorum.com/news/new-digital-health-player-healthhero-launches-with-fernarzt-buy",
+          "https://www.linkedin.com/posts/fernarzt_healthcare-leadership-team-activity-6914463320473247744-vCcu"
+        ]
+      },
+      "validation": {
+        "clearbit_found": true,
+        "clearbit_name": "Fernarzt",
+        "clearbit_country": "US",
+        "clearbit_emea": false,
+        "clearbit_employees": "11-50",
+        "clearbit_category": "Health Care/Health Care Providers & Services",
+        "clearbit_description": "Fernarzt.com is an eHealth platform that connects patients with doctors and pharmacies, offering digital symptom checks, online consultations, and Post COVID support. Part of HealthHero, Fernarzt simp",
+        "clearbit_tech": [
+          "cloud_flare",
+          "contentful",
+          "microsoft_exchange_online",
+          "outlook",
+          "microsoft_office_365"
+        ]
+      },
+      "score": 5,
+      "passed": true
+    },
+    {
+      "company": "Mindstrong Health",
+      "domain": "mindstrong.com",
+      "country_input": "UK",
+      "vertical": "Patient Engagement",
+      "productFit": "SMS API, Phone Numbers",
+      "description_input": "Mental health platform using digital phenotyping. (Has UK presence)",
+      "verification": {
+        "perplexica_verified": true,
+        "perplexica_confidence": "high",
+        "still_operating": true,
+        "healthcare_comms_relevant": true,
+        "perplexica_summary": "Mindstrong Health is a healthcare innovation company focused on revolutionizing mental health care through the use of technology, particularly artificial intelligence (AI) and digital measurement tools. Established with the mission to transform the diagnosis, treatment, and management of neuropsychiatric disorders, Mindstrong leverages mobile technology to provide proactive mental health services.\n\n## Key Aspects of Mindstrong Health's Operations\n\n### 1. **AI-Driven Insights**\nMindstrong integra",
+        "perplexica_sources": [
+          "https://dhbriefs.com/dbentry/mindstrong-health/",
+          "https://www.healthtechalpha.com/venture/mindstrong-health",
+          "https://tbsailisting.wordpress.com/2025/01/28/5-ai-tools-revolutionizing-mental-health/"
+        ]
+      },
+      "validation": {
+        "clearbit_found": true,
+        "clearbit_name": "Mindstrong",
+        "clearbit_country": "US",
+        "clearbit_emea": false,
+        "clearbit_employees": "51-250",
+        "clearbit_category": "Health Care/Health Care Providers & Services",
+        "clearbit_description": "Mindstrong is a virtual mental health platform dedicated to transforming mental health through digital measurement, data science, and virtual care models. They provide mental health care with the stre",
+        "clearbit_tech": [
+          "amazon_ses",
+          "google_apps",
+          "mailchimp",
+          "mandrill",
+          "zendesk"
+        ]
+      },
+      "score": 5,
+      "passed": true
+    },
+    {
+      "company": "Patchwork Health",
+      "domain": "patchworkhealth.com",
+      "country_input": "UK",
+      "vertical": "Clinical Communication",
+      "productFit": "SMS API, Phone Numbers",
+      "description_input": "Workforce management platform for healthcare, including communication tools.",
+      "verification": {
+        "perplexica_verified": true,
+        "perplexica_confidence": "high",
+        "still_operating": true,
+        "healthcare_comms_relevant": true,
+        "perplexica_summary": "Patchwork Health is a prominent player in the healthcare technology sector, primarily focused on optimizing workforce management for healthcare organizations. Founded in response to the increasing challenges faced by the National Health Service (NHS) in the UK, Patchwork Health aims to address staffing shortages and improve operational efficiency in healthcare settings.\n\n## Overview of Services\n\n### Workforce Management Solutions\n\nPatchwork Health provides a comprehensive suite of digital soluti",
+        "perplexica_sources": [
+          "https://www.glassdoor.com/Overview/Working-at-Patchwork-Health-EI_IE3843231.11,27.htm",
+          "https://www.cumberlandccleonline.com/post/growing-pains-an-overview-of-the-mature-minor-doctrine-and-its-patchwork-criteria-for-application",
+          "https://www.ccnsa-nccah.ca/docs/context/FS-OverviewAbororiginalHealth-EN.pdf"
+        ]
+      },
+      "validation": {
+        "clearbit_found": false,
+        "clearbit_emea": false,
+        "clearbit_employees": "N/A"
+      },
+      "score": 4,
+      "passed": true
+    },
+    {
+      "company": "Happyr Health",
+      "domain": "happyrhealth.com",
+      "country_input": "UK",
+      "vertical": "Patient Engagement",
+      "productFit": "SMS API, Phone Numbers",
+      "description_input": "Digital therapeutics company focused on mental health.",
+      "verification": {
+        "perplexica_verified": true,
+        "perplexica_confidence": "high",
+        "still_operating": true,
+        "healthcare_comms_relevant": true,
+        "perplexica_summary": "Happyr Health is a healthcare technology company focused on enhancing the accessibility and quality of healthcare services. Their primary aim is to improve how individuals, particularly those with chronic health conditions, manage their health through innovative digital solutions.\n\n## Key Features of Happyr Health\n\n### 1. **Chronic Condition Management**\nHappyr Health offers tools that help users manage chronic conditions effectively. This might include features such as medication reminders, hea",
+        "perplexica_sources": [
+          "https://www.foxnews.com/health",
+          "https://www.bizapedia.com/co/happy-pets-of-rino-animal-health-center-llc.html",
+          "https://www.bizapedia.com/va/bee-happy-home-health-care-llc.html"
+        ]
+      },
+      "validation": {
+        "clearbit_found": false,
+        "clearbit_emea": false,
+        "clearbit_employees": "N/A"
+      },
+      "score": 4,
+      "passed": true
+    },
+    {
+      "company": "Medigate",
+      "domain": "claroty.com/medigate",
+      "country_input": "Israel",
+      "vertical": "Clinical Communication",
+      "productFit": "SMS API, Phone Numbers",
+      "description_input": "Healthcare IoT security platform, needs communication for alerts and reporting. (Acquired by Claroty)",
+      "verification": {
+        "perplexica_verified": true,
+        "perplexica_confidence": "high",
+        "still_operating": true,
+        "healthcare_comms_relevant": true,
+        "perplexica_summary": "Medigate, a subsidiary of Claroty, is a leading provider in healthcare cybersecurity, specifically focused on securing Internet of Medical Things (IoMT) devices. The company offers robust solutions tailored to meet the unique cybersecurity challenges facing healthcare systems, hospitals, and other medical facilities. \n\n## Key Offerings of Medigate\n\n### 1. **Healthcare IoT Security Platform**\nMedigate provides a dedicated healthcare IoT (Internet of Things) security platform that addresses the si",
+        "perplexica_sources": [
+          "https://claroty.com/healthcare-cybersecurity/xdome-for-healthcare",
+          "https://www.elisity.com/blog/healthcare-cybersecurity-in-2025-why-clarotys-medigate-microsegmentation-and-iomt-security-are-critical-for-compliance",
+          "https://tracxn.com/d/companies/claroty/__zzp-FdACFe32Bua4VDCRj_rHmQgLAHo1M_K8nKpBc1U"
+        ]
+      },
+      "validation": {
+        "clearbit_found": false,
+        "clearbit_emea": false,
+        "clearbit_employees": "N/A"
+      },
+      "score": 4,
+      "passed": true
+    }
+  ]
+}

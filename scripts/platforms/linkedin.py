@@ -223,5 +223,60 @@ class LinkedInConnector(PlatformConnector):
 
         return creatives
 
+    def fetch_creative_content(self, creative_id: str) -> dict:
+        """Fetch creative content (headlines, descriptions, URLs) from adContentsV2.
+        
+        LinkedIn's adCreativesV2 only returns metadata. Use this to get actual ad copy.
+        Returns: {"headlines": [...], "descriptions": [...], "final_url": str, "image_url": str}
+        """
+        if not self._token:
+            self.load_credentials()
+        
+        url = f"https://api.linkedin.com/v2/adContentsV2/{creative_id}"
+        try:
+            data = self._api_get(url)
+        except Exception as e:
+            return {"error": str(e)}
+        
+        result = {"headlines": [], "descriptions": [], "final_url": "", "image_url": ""}
+        
+        # Extract content based on ad type
+        elements = data.get("elements", [])
+        if elements:
+            el = elements[0]
+            content = el.get("content", {})
+            
+            # Headlines (title, intro text)
+            if content.get("title"):
+                result["headlines"].append(content["title"])
+            if content.get("introText"):
+                result["descriptions"].append(content["introText"])
+            
+            # Description/body text
+            if content.get("text"):
+                result["descriptions"].append(content["text"])
+            
+            # Destination URL
+            if content.get("destinationUrl"):
+                result["final_url"] = content["destinationUrl"]
+            
+            # Image
+            if content.get("image"):
+                result["image_url"] = content["image"].get("url", "")
+        
+        return result
+
+    def enrich_creatives(self, creatives: list[CreativeData]) -> list[CreativeData]:
+        """Enrich creatives with content from adContentsV2."""
+        for c in creatives:
+            if c.external_id:
+                content = self.fetch_creative_content(c.external_id)
+                if "error" not in content:
+                    c.headlines = content.get("headlines", [])
+                    c.descriptions = content.get("descriptions", [])
+                    c.final_url = content.get("final_url", "")
+                    c.image_url = content.get("image_url", "")
+        return creatives
+
     # ─── Write (read-only for now — needs rw_ads scope) ───
     # pause_campaign and enable_campaign use defaults (not supported)

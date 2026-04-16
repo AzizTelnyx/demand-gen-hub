@@ -1,0 +1,39 @@
+{
+  "brief": {
+    "platform": null,
+    "format": null,
+    "audience": "auto insurance companies and claims departments",
+    "painPoints": [
+      "manual claims processing",
+      "inefficient customer interactions",
+      "slow claims resolution"
+    ],
+    "coreMessage": "Automate auto insurance claims with AI voice agents to improve efficiency and customer experience",
+    "pillar": "infrastructure",
+    "adCopyExample": null,
+    "ctaSuggestion": "Get Started"
+  },
+  "copy": {
+    "headlines": [
+      "Automate Auto Claims with AI Voice Agents Using One Platform",
+      "Reduce Claims Processing Time with Sub-200ms Latency Voice AI",
+      "Telnyx Voice AI: Own Network, Zero Extra Hops, 140+ Countries",
+      "Streamline Auto Insurance Claims with HIPAA and SOC2 Compliant AI",
+      "Single Platform Voice AI for Auto Claims Across 140+ Countries",
+      "Cut Manual Claims Steps with Co-Located Inference Voice AI",
+      "Telnyx Voice AI: Infrastructure Built for Auto Claims Efficiency",
+      "Improve Auto Claims Resolution Speed with Telnyx’s Own Network",
+      "Voice AI for Auto Claims with PCI Compliance and Low Latency",
+      "One Platform, Own Network, Faster Auto Claims Automation"
+    ],
+    "descriptions": [
+      "Automate auto insurance claims using Telnyx Voice AI with sub-200ms latency and own network infrastructure across 140+ countries.",
+      "Telnyx Voice AI reduces manual claims processing by integrating inference co-located with telephony to accelerate claims resolution.",
+      "Leverage a single platform with HIPAA, SOC2, and PCI compliance to automate auto insurance claims and improve customer interactions.",
+      "Eliminate delays with zero extra hops on Telnyx’s own network, designed to support voice AI for auto claims processing worldwide.",
+      "Deploy AI voice agents on a platform that controls its entire network infrastructure, ensuring efficient and compliant auto claims handling."
+    ],
+    "cta": "Learn More"
+  },
+  "generatedAt": "2026-04-14T12:46:53.670Z"
+}

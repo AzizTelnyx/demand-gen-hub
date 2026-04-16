@@ -1,0 +1,5 @@
+company,domain,country,region,vertical,productFit,status,confidenceTier,confidenceScore,archetype,evidenceType,evidenceSnippet,description
+"Sabio Group","sabiogroup.com","UK","EMEA","any","voice-ai","validated","tier2","70","AI agent / voice agent builders","ai_agent_builders","voice ai solution","Customer experience and contact center solutions provider with AI and automation."
+"Rasa","rasa.com","Germany","EMEA","any","voice-api","validated","tier2","70","AI agent / voice agent builders","ai_agent_builders","conversational ai platform","Open source conversational AI platform."
+"Spitch","spitch.com","Switzerland","EMEA","ai-voice","ai-agent","validated","tier2","70","AI agent / voice agent builders","ai_agent_builders","conversational ai platform","Conversational AI solutions for customer service and automation."
+"Webio","webio.com","IE","EMEA","ai-voice","ai-agent","validated","tier2","70","AI agent / voice agent builders","ai_agent_builders","conversational ai platform","Conversational AI platform for customer engagement."

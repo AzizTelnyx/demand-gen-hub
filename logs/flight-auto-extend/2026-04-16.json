@@ -1,0 +1,19 @@
+{
+  "timestamp": "2026-04-16T13:01:58.869838+00:00",
+  "checked": 15,
+  "extended": 0,
+  "errors": 0,
+  "recently_ended": 1,
+  "details": {
+    "extended": [],
+    "errors": [],
+    "recently_ended": [
+      {
+        "name": "202502 MOFU Twilio Voice API NA GLOBAL",
+        "id": "1930698",
+        "end_date": "2026-05-01T01:59:59-05:00",
+        "budget": 500
+      }
+    ]
+  }
+}

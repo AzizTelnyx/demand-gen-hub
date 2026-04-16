@@ -1,0 +1,37 @@
+{
+  "brief": {
+    "platform": "linkedin",
+    "format": null,
+    "audience": "fintech compliance professionals",
+    "painPoints": [
+      "compliance challenges in fintech"
+    ],
+    "coreMessage": null,
+    "pillar": "trust",
+    "adCopyExample": null,
+    "ctaSuggestion": null
+  },
+  "copy": {
+    "headlines": [
+      "Telnyx Voice AI delivers sub-200ms latency with HIPAA, SOC 2, and PCI compliance",
+      "Manage fintech compliance challenges with Telnyx’s secure, low-latency Voice AI platform",
+      "Telnyx Voice AI: Single platform with 99.999% uptime across 140+ countries",
+      "Reduce compliance risk with Telnyx Voice AI’s HIPAA-ready, SOC 2 Type II certified network",
+      "Fintech compliance meets reliable voice AI with Telnyx’s owned global network",
+      "Telnyx Voice AI offers under 200ms inference latency and PCI compliance",
+      "One platform, 140+ countries, 99.999% uptime — Telnyx Voice AI for fintech compliance",
+      "Secure voice AI for fintech: Telnyx’s HIPAA and SOC 2 certified network",
+      "Trust Telnyx Voice AI for compliance with sub-200ms latency and extensive certifications",
+      "Telnyx Voice AI: engineered for fintech compliance with owned network and global reach"
+    ],
+    "descriptions": [
+      "Telnyx Voice AI integrates inference directly with telephony infrastructure, achieving sub-200ms latency. Our platform is HIPAA-ready, SOC 2 Type II, and PCI compliant, supporting fintech compliance needs across 140+ countries with 99.999% uptime.",
+      "Fintech compliance requires secure, reliable communications. Telnyx Voice AI operates on an owned global network, not resold infrastructure, ensuring full control. Our single platform reduces vendor complexity while meeting HIPAA, SOC 2, and PCI standards.",
+      "Address compliance challenges with Telnyx Voice AI’s engineered solution. We maintain 99.999% uptime and provide voice AI services co-located with telephony to minimize latency. Our platform supports fintech security requirements with HIPAA, SOC 2 Type II, and PCI compliance.",
+      "Telnyx Voice AI delivers a unified platform for fintech compliance professionals. Our network ownership enables sub-200ms latency and consistent performance. Certified for HIPAA, SOC 2 Type II, and PCI, we support secure voice AI across 140+ countries.",
+      "With Telnyx Voice AI, fintech teams access a single compliant platform with built-in HIPAA, SOC 2, and PCI certifications. Our owned network reduces latency to under 200ms and maintains 99.999% uptime globally, simplifying compliance management."
+    ],
+    "cta": "Learn More"
+  },
+  "generatedAt": "2026-04-14T10:08:39.306Z"
+}

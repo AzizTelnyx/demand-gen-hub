@@ -1,0 +1,37 @@
+{
+  "brief": {
+    "platform": null,
+    "format": null,
+    "audience": "healthcare providers",
+    "painPoints": [
+      "need for HIPAA-compliant patient communications"
+    ],
+    "coreMessage": "HIPAA-compliant voice AI for patient communications",
+    "pillar": "trust",
+    "adCopyExample": null,
+    "ctaSuggestion": "Learn More"
+  },
+  "copy": {
+    "headlines": [
+      "HIPAA-Compliant Voice AI with Sub-200ms Latency",
+      "Secure Patient Communications on a Network You Control",
+      "Telnyx Voice AI: 99.999% Uptime for Healthcare Providers",
+      "One Platform for HIPAA-Ready Voice AI in 140+ Countries",
+      "Voice AI with SOC 2 Type II Compliance for Patient Data",
+      "HIPAA-Ready Voice AI Integrated with Your Telephony",
+      "Telnyx Owns Its Network to Ensure Compliance and Speed",
+      "Reduce Patient Communication Latency Below 200ms",
+      "Secure Voice AI for Healthcare with Single Platform Access",
+      "Voice AI for Healthcare with PCI and SOC 2 Compliance"
+    ],
+    "descriptions": [
+      "Deploy HIPAA-compliant voice AI on a proprietary network with sub-200ms latency, ensuring secure and fast patient communications.",
+      "Manage patient data securely with SOC 2 Type II and PCI compliance on a platform with 99.999% uptime across 140+ countries.",
+      "Telnyx Voice AI provides one integrated platform, eliminating vendor complexity while meeting HIPAA and security standards.",
+      "Leverage a voice AI solution co-located with telephony infrastructure to reduce latency and maintain HIPAA compliance.",
+      "Secure patient interactions on a platform owned end-to-end, with compliance certifications and global reach for healthcare providers."
+    ],
+    "cta": "Learn More"
+  },
+  "generatedAt": "2026-04-14T13:12:40.833Z"
+}

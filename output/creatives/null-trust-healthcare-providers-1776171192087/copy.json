@@ -1,0 +1,37 @@
+{
+  "brief": {
+    "platform": null,
+    "format": null,
+    "audience": "healthcare providers",
+    "painPoints": [
+      "need for HIPAA-compliant patient communications"
+    ],
+    "coreMessage": "HIPAA-compliant voice AI for patient communications",
+    "pillar": "trust",
+    "adCopyExample": null,
+    "ctaSuggestion": null
+  },
+  "copy": {
+    "headlines": [
+      "HIPAA-Compliant Voice AI with Sub-200ms Latency",
+      "Secure Patient Communications Across 140+ Countries",
+      "99.999% Uptime for Healthcare Voice AI",
+      "Telnyx Owns Network for Reliable HIPAA Voice AI",
+      "One Platform for HIPAA, SOC 2, and PCI Compliance",
+      "Voice AI Engineered for Healthcare Data Security",
+      "Low-Latency Voice AI Integrated with Telephony",
+      "HIPAA-Ready Voice AI Without Vendor Fragmentation",
+      "Secure Patient Calls with Telnyx’s Dedicated Network",
+      "Voice AI Compliant with HIPAA and SOC 2 Type II"
+    ],
+    "descriptions": [
+      "Telnyx Voice AI delivers HIPAA, SOC 2 Type II, and PCI compliance with sub-200ms inference latency by co-locating AI processing with telephony infrastructure.",
+      "Manage patient communications securely across 140+ countries on a platform with 99.999% uptime and full ownership of the network, eliminating third-party vendor risks.",
+      "Consolidate voice AI and telephony into one platform built for healthcare providers requiring strict HIPAA compliance and fast, reliable patient interactions.",
+      "Our network ownership ensures no reselling delays. Voice AI processing occurs within the telephony network for latency under 200 milliseconds, meeting healthcare security standards.",
+      "Telnyx provides a single platform solution with HIPAA-ready voice AI, backed by SOC 2 Type II certification and PCI compliance to secure sensitive patient data."
+    ],
+    "cta": "Learn More"
+  },
+  "generatedAt": "2026-04-14T12:53:18.054Z"
+}

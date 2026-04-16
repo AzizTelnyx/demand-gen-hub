@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap');
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      width: 1200px;
+      height: 1200px;
+      background: #0A0A0A;
+      color: #FFFFFF;
+      font-family: 'Inter', sans-serif;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 120px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .background-pattern {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0.05;
+      background: linear-gradient(135deg, #00CE9C 0%, transparent 100%);
+    }
+
+    .content {
+      z-index: 10;
+      text-align: center;
+      max-width: 85%;
+    }
+
+    .data-highlight {
+      font-size: 120px;
+      font-weight: 900;
+      color: #00CE9C;
+      margin-bottom: 60px;
+      line-height: 1;
+    }
+
+    .headline {
+      font-size: 48px;
+      font-weight: 800;
+      color: #FFFFFF;
+      margin-bottom: 48px;
+      line-height: 1.2;
+      
+    }
+
+    .description {
+      font-size: 20px;
+      color: #FFFFFF;
+      opacity: 0.85;
+      margin-bottom: 60px;
+      line-height: 1.4;
+      
+    }
+
+    .cta-button {
+      background: #00CE9C;
+      color: #0A0A0A;
+      padding: 48px 96px;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 18px;
+      display: inline-block;
+      
+    }
+
+    .logo {
+      position: absolute;
+      bottom: 72px;
+      right: 72px;
+      font-size: 28px;
+      font-weight: 900;
+      color: #FFFFFF;
+      letter-spacing: 2px;
+    }
+
+    .pillar-indicator {
+      position: absolute;
+      top: 60px;
+      left: 60px;
+      font-size: 12px;
+      color: #00CE9C;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      opacity: 0.6;
+    }
+  </style>
+</head>
+<body>
+  <div class="background-pattern"></div>
+
+  <div class="pillar-indicator">TRUST</div>
+
+  <div class="content">
+    <div class="data-highlight">HIPAA-ready</div>
+    <div class="headline">Ensure HIPAA compliance in healthcare communications with Telnyx Voice AI</div>
+    <div class="description">Telnyx Voice AI delivers healthcare communication solutions with HIPAA, SOC 2 Type II, and PCI compliance. Our platform owns its network, ensuring sub-200ms latency and 99.999% uptime across 140+ countries. Simplify compliance and security with one integrated platform, eliminating the need for multiple vendors.</div>
+    <div class="cta-button">Learn More</div>
+
+    
+  </div>
+
+  <div class="logo">TELNYX</div>
+</body>
+</html>

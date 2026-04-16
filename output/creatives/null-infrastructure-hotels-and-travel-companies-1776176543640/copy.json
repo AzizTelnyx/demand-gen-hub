@@ -1,0 +1,39 @@
+{
+  "brief": {
+    "platform": null,
+    "format": null,
+    "audience": "hotels and travel companies",
+    "painPoints": [
+      "inefficient travel booking processes",
+      "lack of personalized concierge services",
+      "need for AI-driven voice assistance"
+    ],
+    "coreMessage": "AI voice agents providing travel booking assistance and concierge services for hotels and travel companies",
+    "pillar": "infrastructure",
+    "adCopyExample": null,
+    "ctaSuggestion": "Get Started"
+  },
+  "copy": {
+    "headlines": [
+      "AI Voice Agents for Travel Booking in 140+ Countries",
+      "Sub-200ms Latency Voice AI for Hotels and Travel Services",
+      "One Platform Voice AI with Zero Extra Network Hops",
+      "Telnyx Owns Network: AI Voice for Travel and Concierge",
+      "HIPAA, SOC2, PCI Compliant AI Voice for Travel Industry",
+      "AI-Driven Voice Assistance Across 140+ Countries",
+      "Single Platform Voice AI Integrating Booking and Concierge",
+      "Reduce Travel Booking Latency with Telnyx Voice AI",
+      "Telnyx Voice AI: Infrastructure Built for Travel and Hotels",
+      "Efficient Travel Booking with AI Voice Agents on Own Network"
+    ],
+    "descriptions": [
+      "Deploy AI voice agents on a single platform spanning 140+ countries with sub-200ms latency. Telnyx owns the network, eliminating extra hops for travel booking and concierge services.",
+      "Telnyx Voice AI delivers HIPAA, SOC2, and PCI compliant voice assistance with inference co-located on telephony infrastructure. Optimize hotel and travel booking workflows with low latency.",
+      "Use one platform for AI-driven voice booking and concierge services. Telnyx avoids multi-vendor complexity by owning its network, providing direct access in over 140 countries.",
+      "Integrate AI voice agents with travel booking systems on a platform designed for zero extra network hops. Telnyx’s infrastructure supports compliance and delivers responses under 200 milliseconds.",
+      "Telnyx Voice AI supports hotels and travel companies with a single platform approach, global coverage, and secure, low-latency voice interactions using proprietary network infrastructure."
+    ],
+    "cta": "Learn More"
+  },
+  "generatedAt": "2026-04-14T14:22:29.626Z"
+}

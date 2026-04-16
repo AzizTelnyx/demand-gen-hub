@@ -4,7 +4,7 @@
  * Supports: generate (new list), expand (add to existing list)
  * List types: vertical, use-case, conquest
  *
- * Validation layer: DNS + Clearbit + Perplexica AI Search + LinkedIn signals
+ * Validation layer: DNS + Clearbit + Brave Search + LinkedIn signals
  * Confidence scoring: ≥60 validated, 30-59 unverified, <30 rejected
  */
 
@@ -33,17 +33,97 @@ const TG_THREAD_ID = 164; // Agent Activity topic
 // Validation API keys
 const CLEARBIT_KEY = process.env.CLEARBIT_API_KEY || "sk_6a6f1e4c6f26338d6340d688ad197d48";
 
-// Perplexica config (self-hosted AI search) — set PERPLEXICA_ENABLED=false to disable
-const PERPLEXICA_ENABLED = process.env.PERPLEXICA_ENABLED !== "false";
-const PERPLEXICA_URL = process.env.PERPLEXICA_URL || "http://localhost:3001";
-const PERPLEXICA_CHAT_PROVIDER_ID = process.env.PERPLEXICA_CHAT_PROVIDER_ID || "449be310-cb57-4601-86af-a3fd02362ad7";
-const PERPLEXICA_CHAT_MODEL = process.env.PERPLEXICA_CHAT_MODEL || "openai/gpt-4o-mini";
-const PERPLEXICA_EMBED_PROVIDER_ID = process.env.PERPLEXICA_EMBED_PROVIDER_ID || "a8688d79-9404-4e04-b046-cdd7bb979fef";
-const PERPLEXICA_EMBED_MODEL = process.env.PERPLEXICA_EMBED_MODEL || "Xenova/all-MiniLM-L6-v2";
+// Brave Search config — set BRAVE_SEARCH_ENABLED=false to disable
+const BRAVE_SEARCH_ENABLED = process.env.BRAVE_SEARCH_ENABLED !== "false";
+const BRAVE_SEARCH_URL = process.env.BRAVE_SEARCH_URL || "http://localhost:3001";
+const BRAVE_CHAT_PROVIDER_ID = process.env.BRAVE_CHAT_PROVIDER_ID || "449be310-cb57-4601-86af-a3fd02362ad7";
+const BRAVE_CHAT_MODEL = process.env.BRAVE_CHAT_MODEL || "openai/gpt-4o-mini";
+const BRAVE_EMBED_PROVIDER_ID = process.env.BRAVE_EMBED_PROVIDER_ID || "a8688d79-9404-4e04-b046-cdd7bb979fef";
+const BRAVE_EMBED_MODEL = process.env.BRAVE_EMBED_MODEL || "Xenova/all-MiniLM-L6-v2";
+const BRAVE_API_KEY = process.env.BRAVE_API_KEY || "BSAsk8vZjTl-aldJt4FA2jxxd3tvYmA";
 
 // Scoring weights
-const SCORE = { CLEARBIT: 40, DNS: 20, PERPLEXICA: 20, LINKEDIN: 10, AI_BASELINE: 10 };
-const THRESHOLD = { VALIDATED: 60, UNVERIFIED: 30 };
+const SCORE = { CLEARBIT: 40, DNS: 20, BRAVE_SEARCH: 20, LINKEDIN: 10, AI_BASELINE: 10 };
+const THRESHOLD = { VALIDATED: 70, UNVERIFIED: 50 };
+
+// ─── Exclusion & ICP Lists (loaded from DB at startup, refreshed every 6h) ───
+let EXCLUSION_DATA = { competitors: [], customers: [], partners: [], wonDealDomains: new Set(), openDealDomains: new Set(), openDealCompanies: [] };
+let EXCLUSION_LOADED_AT = 0;
+const EXCLUSION_REFRESH_MS = 6 * 60 * 60 * 1000; // 6 hours
+
+async function loadExclusionData() {
+  const now = Date.now();
+  if (now - EXCLUSION_LOADED_AT < EXCLUSION_REFRESH_MS && EXCLUSION_DATA.competitors.length > 0) return EXCLUSION_DATA;
+
+  try {
+    // Competitors — hardcoded list (sourced from knowledge/competitors/voice-ai-landscape.md)
+    EXCLUSION_DATA.competitors = [
+      "vapi.ai", "retellai.com", "bland.ai", "poly.ai", "synthflow.ai",
+      "twilio.com", "vonage.com", "plivo.com", "bandwidth.com", "sinch.com",
+      "8x8.com", "ringcentral.com", "dialpad.com", "agora.io", "signalwire.com",
+      "messagebird.com", "infobip.com", "telesign.com", "voximplant.com",
+      "genesys.com", "talkdesk.com", "nice.com", "five9.com", "aircall.io",
+      "openai.com", "deepgram.com", "assemblyai.com", "elevenlabs.io", "cartesia.ai",
+      "play.ht", "resemble.ai", "wellsaidlabs.com", "picovoice.ai", "soundhound.com",
+      "nuance.com", "rev.com", "speechmatics.com", "soniox.com", "gnani.ai",
+      "uniphore.com", "observe.ai", "cognigy.com", "onereach.com", "kore.ai",
+      "amplify.ai", "voiceflow.com", "botpress.com", "yellow.ai", "convylabs.com",
+      "nextiva.com", "livekit.io", "hologram.io", "murf.ai",
+    ];
+
+    // Customers, Partners, Won Deals from SF
+    const customers = await prisma.sFAccount.findMany({
+      where: { accountType: { in: ["Customer", "Partner", "Churned"] } },
+      select: { name: true, domain: true, accountType: true },
+    });
+    EXCLUSION_DATA.customers = customers.filter(c => c.accountType === "Customer").map(c => c.domain).filter(Boolean);
+    EXCLUSION_DATA.partners = customers.filter(c => c.accountType === "Partner").map(c => c.domain).filter(Boolean);
+    const churned = customers.filter(c => c.accountType === "Churned").map(c => c.domain).filter(Boolean);
+
+    // Won deals — exclude (existing customers)
+    const wonDeals = await prisma.sFOpportunity.findMany({
+      where: { isWon: true },
+      select: { accountName: true, accountDomain: true },
+      distinct: ["accountDomain"],
+    });
+    EXCLUSION_DATA.wonDealDomains = new Set(wonDeals.map(d => d.accountDomain).filter(Boolean));
+
+    // Open deals — use as ICP lookalike signals (NOT excluded)
+    const openDeals = await prisma.sFOpportunity.findMany({
+      where: { isClosed: false, amount: { gte: 25000 } },
+      select: { accountName: true, accountDomain: true, stageName: true, amount: true },
+      orderBy: { amount: "desc" },
+    });
+    EXCLUSION_DATA.openDealDomains = new Set(openDeals.map(d => d.accountDomain).filter(Boolean));
+    // Filter out competitors/customers/partners from ICP signals too
+    const excludedDomainSet = EXCLUSION_DATA.allExcludedDomains || new Set();
+    EXCLUSION_DATA.openDealCompanies = openDeals
+      .filter(d => d.accountDomain && !excludedDomainSet.has(d.accountDomain))
+      .slice(0, 30)
+      .map(d => ({
+      name: d.accountName,
+      domain: d.accountDomain,
+      stage: d.stageName,
+      amount: d.amount,
+    }));
+
+    // All excluded domains combined
+    const allExcluded = new Set([
+      ...EXCLUSION_DATA.competitors,
+      ...EXCLUSION_DATA.customers,
+      ...EXCLUSION_DATA.partners,
+      ...churned,
+      ...EXCLUSION_DATA.wonDealDomains,
+    ]);
+    EXCLUSION_DATA.allExcludedDomains = allExcluded;
+    EXCLUSION_LOADED_AT = now;
+
+    console.log(`[Exclusions] Loaded: ${EXCLUSION_DATA.competitors.length} competitors, ${EXCLUSION_DATA.customers.length} customers, ${EXCLUSION_DATA.partners.length} partners, ${EXCLUSION_DATA.wonDealDomains.size} won deals, ${EXCLUSION_DATA.openDealCompanies.length} top open deals for ICP`);
+  } catch (err) {
+    console.error("[Exclusions] Failed to load:", err.message);
+  }
+  return EXCLUSION_DATA;
+}
 
 const TG_ENABLED = process.env.TG_NOTIFICATIONS !== "false";
 
@@ -229,7 +309,9 @@ function isAiAgentNonBuyer(clearbitData, company, domain) {
 function isAiAgentProfile(productFit, vertical) {
   const pf = (productFit || "").toLowerCase();
   const v = (vertical || "").toLowerCase();
-  return pf === "ai-agent" || pf === "voice-ai" || v.includes("voice") || v.includes("contact_center") || v.includes("contact center") || v.includes("healthcare") || v.includes("fintech") || v.includes("travel");
+  // Only trigger strict evidence gate for companies explicitly tagged as voice/AI/agent
+  // Generic verticals like "healthcare" or "fintech" don't trigger it on their own
+  return pf === "ai-agent" || pf === "voice-ai" || v.includes("voice") || v.includes("ai-voice") || v.includes("contact_center") || v.includes("contact center");
 }
 
 function textBlob(...parts) {
@@ -286,11 +368,42 @@ function getEvidence(candidate, clearbitData) {
   return { evidenceType: null, evidenceSnippet: null, archetype: inferArchetype(candidate, clearbitData)?.label || null };
 }
 
+/**
+ * Same as getEvidence but uses a pre-built blob that includes Brave search snippets.
+ * This allows evidence matching against web search result text, not just candidate + Clearbit data.
+ */
+function getEvidenceWithBlob(candidate, clearbitData, enrichedBlob) {
+  for (const archetype of ARCHETYPES) {
+    for (const kw of archetype.evidenceKeywords) {
+      if (enrichedBlob.includes(kw)) {
+        return {
+          evidenceType: archetype.key,
+          evidenceSnippet: kw,
+          archetype: archetype.label,
+          source: "brave_search",
+        };
+      }
+    }
+  }
+
+  if ((candidate.currentProvider || "").match(/twilio|vonage|bandwidth|plivo/i)) {
+    return {
+      evidenceType: "provider_signal",
+      evidenceSnippet: candidate.currentProvider,
+      archetype: inferArchetype(candidate, clearbitData)?.label || null,
+    };
+  }
+
+  return { evidenceType: null, evidenceSnippet: null, archetype: inferArchetype(candidate, clearbitData)?.label || null };
+}
+
 function negativeClassMatch(candidate, clearbitData) {
   const blob = textBlob(
     candidate.company,
     candidate.domain,
     candidate.description,
+    candidate.vertical,
+    candidate.productFit,
     clearbitData?.industry,
     clearbitData?.sector,
     clearbitData?.description,
@@ -374,12 +487,17 @@ async function checkClearbit(domain) {
       const data = await res.json();
       return {
         found: true,
+        _rawDomain: data.domain || null,
+        _rawName: data.name || null,
         employeeCount: data.metrics?.employeesRange || data.metrics?.employees || null,
         industry: data.category?.industry || null,
         sector: data.category?.sector || null,
         techUsed: data.tech ? data.tech.slice(0, 20) : null,
         funding: data.metrics?.raised || null,
         description: data.description || null,
+        hqCountry: data.geo?.country || data.geo?.countryCode || null,
+        hqState: data.geo?.state || null,
+        hqCity: data.geo?.city || null,
       };
     }
     if (res.status === 202) return { found: false, queued: true };
@@ -389,31 +507,91 @@ async function checkClearbit(domain) {
   }
 }
 
+// Resolve the correct domain for a company name using Clearbit's name search
+// Returns { domain, corrected } or null if not found
+async function resolveDomainByName(companyName, originalDomain) {
+  if (!companyName || !CLEARBIT_KEY) return null;
+  try {
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 8000);
+    const res = await fetch(
+      `https://company.clearbit.com/v1/companies/search?query=${encodeURIComponent(companyName)}`,
+      { headers: { Authorization: `Bearer ${CLEARBIT_KEY}` }, signal: controller.signal }
+    );
+    clearTimeout(timeout);
+
+    if (res.status === 200) {
+      const data = await res.json();
+      // Clearbit search returns array of results
+      const results = Array.isArray(data) ? data : (data.results || []);
+      if (results.length > 0) {
+        const best = results[0];
+        const resolvedDomain = best.domain || best.website?.replace(/^https?:\/\//, "").replace(/\/.*$/, "") || null;
+        if (resolvedDomain && resolvedDomain !== originalDomain) {
+          return { domain: resolvedDomain, corrected: true, companyName: best.name || companyName };
+        }
+        if (resolvedDomain) {
+          return { domain: resolvedDomain, corrected: false, companyName: best.name || companyName };
+        }
+      }
+    }
+    // Fallback: try Clearbit /v2/find with common TLD variants
+    const slug = companyName.toLowerCase().replace(/[^a-z0-9]/g, "");
+    if (slug) {
+      const tldVariants = [".ai", ".io", ".co", ".dev", ".tech", ".app"];
+      for (const tld of tldVariants) {
+        const tryDomain = slug + tld;
+        if (tryDomain === originalDomain) continue; // skip the one we already have
+        try {
+          const ctrl2 = new AbortController();
+          const t2 = setTimeout(() => ctrl2.abort(), 5000);
+          const r2 = await fetch(
+            `https://company.clearbit.com/v2/companies/find?domain=${encodeURIComponent(tryDomain)}`,
+            { headers: { Authorization: `Bearer ${CLEARBIT_KEY}` }, signal: ctrl2.signal }
+          );
+          clearTimeout(t2);
+          if (r2.status === 200) {
+            const d2 = await r2.json();
+            const name = d2.name || companyName;
+            // Verify it's actually the same company (name similarity check)
+            const nameSlug = name.toLowerCase().replace(/[^a-z0-9]/g, "");
+            if (nameSlug === slug || nameSlug.includes(slug) || slug.includes(nameSlug)) {
+              console.log(`[Domain Fix] TLD variant "${companyName}" ${originalDomain} → ${tryDomain} (Clearbit confirmed)`);
+              return { domain: tryDomain, corrected: true, companyName: name };
+            }
+          }
+        } catch { /* ignore */ }
+      }
+    }
+    return null;
+  } catch {
+    return null;
+  }
+}
+
 /**
- * Perplexica AI search verification. Returns { found, linkedinFound }.
- * Uses self-hosted Perplexica instance (SearxNG + AI summarization).
+ * Brave Search verification. Returns { found, linkedinFound }.
+ * Uses Brave Search API for company verification.
  */
-async function checkPerplexica(companyName, domain) {
-  if (!PERPLEXICA_ENABLED) return { found: false, linkedinFound: false };
+async function checkBraveSearch(companyName, domain) {
+  if (!BRAVE_SEARCH_ENABLED) return { found: false, linkedinFound: false };
   if (!companyName) return { found: false, linkedinFound: false };
   try {
     const cleanDomain = domain ? domain.replace(/^https?:\/\//, "").replace(/\/.*$/, "") : "";
-    const query = `"${companyName}" ${cleanDomain} — does this company exist? What do they do?`;
+    const query = cleanDomain ? `${companyName} ${cleanDomain}` : companyName;
+
+    // Use Brave Search API instead of Brave Search API
+    if (!BRAVE_API_KEY) return { found: false, linkedinFound: false };
+
     const controller = new AbortController();
-    const timeout = setTimeout(() => controller.abort(), 15000);
-    const res = await fetch(`${PERPLEXICA_URL}/api/search`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        chatModel: { providerId: PERPLEXICA_CHAT_PROVIDER_ID, key: PERPLEXICA_CHAT_MODEL },
-        embeddingModel: { providerId: PERPLEXICA_EMBED_PROVIDER_ID, key: PERPLEXICA_EMBED_MODEL },
-        optimizationMode: "speed",
-        sources: ["web"],
-        query,
-        stream: false,
-      }),
-      signal: controller.signal,
-    });
+    const timeout = setTimeout(() => controller.abort(), 10000);
+    const res = await fetch(
+      `https://api.search.brave.com/res/v1/web/search?q=${encodeURIComponent(query)}&count=5&search_lang=en`,
+      {
+        headers: { "Accept": "application/json", "Accept-Encoding": "gzip", "X-Subscription-Token": BRAVE_API_KEY },
+        signal: controller.signal,
+      },
+    );
     clearTimeout(timeout);
 
     if (!res.ok) return { found: false, linkedinFound: false };
@@ -422,44 +600,73 @@ async function checkPerplexica(companyName, domain) {
     const nameLower = companyName.toLowerCase();
     let found = false;
     let linkedinFound = false;
+    const snippets = []; // Collect search result text for evidence extraction
 
-    // Check AI message for company confirmation
-    const message = (data.message || "").toLowerCase();
-    if (message.includes(nameLower) || (cleanDomain && message.includes(cleanDomain))) {
-      found = true;
-    }
-
-    // Check sources for LinkedIn and company mentions
-    for (const s of (data.sources || [])) {
-      const text = `${s.content || ""} ${s.metadata?.title || ""} ${s.metadata?.url || ""}`.toLowerCase();
+    // Check web results for company confirmation
+    for (const r of (data.web?.results || [])) {
+      const text = `${r.title || ""} ${r.description || ""} ${r.url || ""}`.toLowerCase();
+      snippets.push(`${r.title || ""} ${r.description || ""}`);
       if (text.includes(nameLower) || (cleanDomain && text.includes(cleanDomain))) {
         found = true;
       }
-      if (s.metadata?.url && s.metadata.url.includes("linkedin.com/company/")) {
+      if (r.url && r.url.includes("linkedin.com/company/")) {
         linkedinFound = true;
       }
     }
 
-    return { found, linkedinFound };
+    return { found, linkedinFound, snippets: snippets.join(" ") };
   } catch (e) {
-    if (PERPLEXICA_ENABLED) console.error(`[Perplexica] Verify error for "${companyName}": ${e.message}`);
+    if (BRAVE_SEARCH_ENABLED) console.error(`[Brave Search] Verify error for "${companyName}": ${e.message}`);
     return { found: false, linkedinFound: false };
   }
 }
 
 /**
  * Validate an array of candidates with confidence scoring.
- * Runs DNS in parallel (batch of 5), Clearbit sequentially, Perplexica at 2s intervals.
+ * Runs DNS in parallel (batch of 5), Clearbit sequentially, Brave at 1.5s intervals.
  */
-async function validateCandidates(candidates) {
+async function validateCandidates(candidates, criteriaRegions = null) {
   const results = candidates.map(c => ({
     ...c,
     confidenceScore: SCORE.AI_BASELINE, // baseline for AI-generated
-    validationSignals: { clearbit: false, dns: false, perplexica: false, linkedin: false },
+    validationSignals: { clearbit: false, dns: false, brave_search: false, linkedin: false },
     clearbitData: null,
   }));
 
   // 1. DNS checks in parallel (batches of 5)
+  // But first, try to resolve wrong domains via Clearbit name search
+  // Do this in batches too — only for domains that look suspicious or might be wrong
+  for (let i = 0; i < results.length; i += 5) {
+    const batch = results.slice(i, i + 5);
+    // Pre-check: which domains does Clearbit recognize?
+    const cbDomainChecks = await Promise.all(batch.map(c => {
+      const domain = (c.domain || "").toLowerCase().replace(/^www\./, "");
+      return checkClearbit(domain);
+    }));
+    const resolutions = await Promise.all(
+      batch.map((c, idx) => {
+        const domain = (c.domain || "").toLowerCase().replace(/^www\./, "");
+        const companySlug = (c.company || "").toLowerCase().replace(/[^a-z0-9]/g, "");
+        const domainBase = domain.split(".")[0].replace(/[^a-z0-9]/g, "");
+        const looksCorrect = domainBase && companySlug && (domainBase === companySlug || companySlug.includes(domainBase) || domainBase.includes(companySlug));
+        // If Clearbit doesn't recognize this domain, force name resolution even if name matches
+        const clearbitRecognized = cbDomainChecks[idx] && cbDomainChecks[idx].found;
+        if (clearbitRecognized && looksCorrect) return Promise.resolve(null);
+        // Always resolve if Clearbit doesn't know the domain (could be parked/wrong TLD)
+        return resolveDomainByName(c.company, domain);
+      })
+    );
+    for (let j = 0; j < batch.length; j++) {
+      const resolved = resolutions[j];
+      if (resolved && resolved.corrected) {
+        console.log(`[Domain Fix] "${batch[j].company}" ${batch[j].domain} → ${resolved.domain}`);
+        batch[j].domain = resolved.domain;
+        if (resolved.companyName) batch[j].company = resolved.companyName;
+      }
+    }
+  }
+
+  // 1b. DNS checks in parallel (batches of 5)
   for (let i = 0; i < results.length; i += 5) {
     const batch = results.slice(i, i + 5);
     const dnsResults = await Promise.all(batch.map(c => checkDNS(c.domain)));
@@ -475,28 +682,72 @@ async function validateCandidates(candidates) {
     }
   }
 
-  // Remove dead domains before expensive Clearbit/Perplexica calls
+  // Remove dead domains before expensive Clearbit/Brave calls
   const alive = results.filter(c => c.confidenceScore > 0);
   const dead = results.filter(c => c.confidenceScore === 0);
   if (dead.length > 0) {
     console.log(`[Validation] ${dead.length} dead domains skipped before enrichment`);
   }
 
-  // 2. Clearbit sequentially (250ms delay) + Perplexica at 2s — run interleaved
-  for (let i = 0; i < alive.length; i++) {
-    const c = alive[i];
+  // 1b. Exclude competitors, customers, partners, won deals by domain
+  const excluded = alive.filter(c => {
+    const domain = (c.domain || "").toLowerCase().replace(/^www\./, "");
+    if (EXCLUSION_DATA.allExcludedDomains?.has(domain)) {
+      console.log(`[Exclusion] Rejected "${c.company}" (${domain}) — in exclusion list`);
+      return false;
+    }
+    return true;
+  });
+  if (alive.length - excluded.length > 0) {
+    console.log(`[Exclusion] ${alive.length - excluded.length} excluded companies removed`);
+  }
+
+  // 2. Clearbit sequentially (250ms delay) + Brave at 1.5s — run interleaved
+  for (let i = 0; i < excluded.length; i++) {
+    const c = excluded[i];
 
     // Clearbit
     const cbResult = checkClearbit(c.domain);
-    // Perplexica (runs concurrently with Clearbit for this candidate)
-    const perplexicaResult = checkPerplexica(c.company, c.domain);
+    // Brave (runs concurrently with Clearbit for this candidate)
+    const braveResult = checkBraveSearch(c.company, c.domain);
 
-    const [cb, perplexica] = await Promise.all([cbResult, perplexicaResult]);
+    const [cb, brave] = await Promise.all([cbResult, braveResult]);
 
     if (cb && cb.found) {
       c.confidenceScore += SCORE.CLEARBIT;
       c.validationSignals.clearbit = true;
       c.clearbitData = cb;
+
+      // ─── Domain Mismatch Check (acquired/repurposed domains) ───
+      // If Clearbit returns a very different domain for this domain, the company was likely acquired
+      // e.g., speechly.com → Clearbit says "Roblox" (speechly was acquired by Roblox)
+      if (cb._rawDomain && c.domain) {
+        const clearbitDomain = cb._rawDomain.toLowerCase().replace(/^www\./, "");
+        const candidateDomain = c.domain.toLowerCase().replace(/^www\./, "");
+        if (clearbitDomain && clearbitDomain !== candidateDomain) {
+          c.confidenceScore = 0;
+          c.rejectReason = `Domain acquired/repurposed: ${candidateDomain} maps to ${clearbitDomain} (${cb._rawName || "unknown"})`;
+          console.log(`[Domain Mismatch] Rejected "${c.company}" (${candidateDomain}) — maps to ${clearbitDomain} (${cb._rawName || "?"})`);
+          continue;
+        }
+      }
+
+      // ─── HQ Region Check (hard reject if not in target region) ───
+      // Use Clearbit HQ country to verify the company is actually HQ'd in the target region
+      if (cb.hqCountry && criteriaRegions && criteriaRegions.length > 0) {
+        const hqRegion = resolveRegion(cb.hqCountry);
+        if (hqRegion && !criteriaRegions.includes(hqRegion)) {
+          c.confidenceScore = 0;
+          c.rejectReason = `HQ outside target region: ${cb.hqCountry} (${hqRegion}), wanted: ${criteriaRegions.join(",")}`;
+          console.log(`[HQ Region] Rejected "${c.company}" — Clearbit HQ: ${cb.hqCountry} (${hqRegion}), wanted: ${criteriaRegions.join(",")}`);
+          continue;
+        }
+        // If Clearbit has HQ country, override the AI-generated country
+        if (hqRegion) {
+          c.country = cb.hqCountry;
+          c.region = hqRegion;
+        }
+      }
       
       // ─── Non-Target Segment Check (Hard Reject) ───
       const segmentCheck = isNonTargetSegment(cb, c.company, c.country);
@@ -528,14 +779,23 @@ async function validateCandidates(candidates) {
       }
 
       // ─── Evidence Extraction / Gate ───
-      const evidence = getEvidence(c, cb);
+      // Include Brave search snippets as additional evidence text
+      const evidenceBlob = brave.snippets
+        ? textBlob(c.company, c.description, c.voiceSignal, c.evidenceSnippet, cb?.industry, cb?.sector, cb?.description, brave.snippets)
+        : undefined;
+      const evidence = evidenceBlob
+        ? getEvidenceWithBlob(c, cb, evidenceBlob)
+        : getEvidence(c, cb);
       c.evidenceType = evidence.evidenceType;
       c.evidenceSnippet = evidence.evidenceSnippet;
       c.archetype = evidence.archetype;
-      if (!c.evidenceType && isAiAgentProfile(c.productFit, c.vertical)) {
+      // Evidence gate: ALL companies must have voice/phone/call/speech evidence
+      // Exception: BPOs and CX operators (archetype matched) pass on archetype alone
+      const isBpoOrCx = c.archetype && (c.archetype.includes("BPO") || c.archetype.includes("CX") || c.archetype.includes("Contact"));
+      if (!c.evidenceType && !isBpoOrCx) {
         c.confidenceScore = 0;
         c.rejectReason = "Missing explicit voice/telephony/workflow evidence";
-        console.log(`[Evidence Gate] Rejected "${c.company}" — missing explicit evidence`);
+        console.log(`[Evidence Gate] Rejected "${c.company}" — missing explicit evidence (brave_snippets: ${brave.snippets ? brave.snippets.slice(0,80) : 'none'})`);
         continue;
       }
       
@@ -544,24 +804,63 @@ async function validateCandidates(candidates) {
       if (icpMatch.matched) {
         c.icpMatch = icpMatch;
       }
+    } else {
+      // ─── Fallback Region Gate (Clearbit miss) ───
+      // When Clearbit doesn't find the company, we can't verify HQ independently.
+      // If criteria specify regions, use Brave Search snippets to cross-check country.
+      // If Brave also doesn't help, hard-reject — we can't confirm the company is in-region.
+      if (criteriaRegions && criteriaRegions.length > 0) {
+        let regionConfirmed = false;
+
+        // Try Brave snippets for country signals
+        if (brave.snippets) {
+          const snippetLower = brave.snippets.toLowerCase();
+          // Look for explicit country mentions in search results
+          for (const [countryName, region] of Object.entries(COUNTRY_REGION)) {
+            if (criteriaRegions.includes(region) && snippetLower.includes(countryName.toLowerCase())) {
+              regionConfirmed = true;
+              c.country = countryName;
+              c.region = region;
+              console.log(`[Region Fallback] Brave confirmed "${c.company}" in ${countryName} (${region})`);
+              break;
+            }
+          }
+        }
+
+        if (!regionConfirmed) {
+          // Last resort: trust the AI-generated country IF it maps to a target region
+          // But penalize confidence since it's unverified
+          const aiRegion = resolveRegion(c.country);
+          if (aiRegion && criteriaRegions.includes(aiRegion)) {
+            c.region = aiRegion;
+            c.confidenceScore -= 10; // Penalty for unverified region
+            console.log(`[Region Fallback] Unverified region for "${c.company}" — AI says ${c.country} (${aiRegion}), no Clearbit/Brave confirmation (−10 confidence)`);
+          } else {
+            c.confidenceScore = 0;
+            c.rejectReason = `HQ region unverified: AI says ${c.country} (${aiRegion || "unknown"}), Clearbit miss, no Brave confirmation. Wanted: ${criteriaRegions.join(",")}`;
+            console.log(`[Region Fallback] Rejected "${c.company}" — can't verify region (AI: ${c.country}/${aiRegion}, wanted: ${criteriaRegions.join(",")})`);
+            continue;
+          }
+        }
+      }
     }
 
-    if (perplexica.found) {
-      c.confidenceScore += SCORE.PERPLEXICA;
-      c.validationSignals.perplexica = true;
+    if (brave.found) {
+      c.confidenceScore += SCORE.BRAVE_SEARCH;
+      c.validationSignals.brave_search = true;
     }
-    if (perplexica.linkedinFound) {
+    if (brave.linkedinFound) {
       c.confidenceScore += SCORE.LINKEDIN;
       c.validationSignals.linkedin = true;
     }
 
-    // Rate limit: 2s between Perplexica calls (SearxNG upstream rate limits)
+    // Rate limit: 1.5s between Brave Search calls (Brave API rate limits)
     if (i < results.length - 1) {
-      await new Promise(r => setTimeout(r, 2000));
+      await new Promise(r => setTimeout(r, 1500));
     }
   }
 
-  return [...alive, ...dead];
+  return [...excluded, ...dead];
 }
 
 /**
@@ -573,15 +872,15 @@ function scoreToStatus(score) {
   return "rejected";
 }
 
-// ─── Perplexica Discovery Wave ────────────────────────────────────
+// ─── Brave Discovery Wave ────────────────────────────────────
 
 /**
- * Uses Perplexica (AI-powered search) to discover real companies.
+ * Uses Brave Search to discover real companies.
  * Returns results in the same format as runWave().
  */
-async function perplexicaDiscoveryWave(job, listInfo) {
-  // Skip if Perplexica disabled
-  if (!PERPLEXICA_ENABLED) return { generated: 0, newCount: 0, added: 0 };
+async function braveDiscoveryWave(job, listInfo) {
+  // Skip if Brave Search disabled
+  if (!BRAVE_SEARCH_ENABLED) return { generated: 0, newCount: 0, added: 0 };
 
     // Blocklist of news/listing domains to exclude
     const BLOCKED_DOMAINS = new Set([
@@ -600,7 +899,7 @@ async function perplexicaDiscoveryWave(job, listInfo) {
     if (!criteria.targetCompanyProfile) criteria = null;
   } catch {}
 
-  // Build a single rich query (Perplexica returns AI-synthesized results)
+  // Build a single rich query (Brave returns web search results)
   let query;
   if (criteria) {
     const vertical = criteria.vertical || "";
@@ -621,17 +920,17 @@ async function perplexicaDiscoveryWave(job, listInfo) {
   const existingNames = new Set(existingMembers.map(m => m.account.company.toLowerCase()));
   const criteriaRegions = criteria?.regions?.length ? criteria.regions : null;
 
-  // Query Perplexica
+  // Query Brave Search
   const discovered = new Map();
   try {
     const controller = new AbortController();
     const timeout = setTimeout(() => controller.abort(), 30000);
-    const res = await fetch(`${PERPLEXICA_URL}/api/search`, {
+    const res = await fetch(`${BRAVE_SEARCH_URL}/api/search`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        chatModel: { providerId: PERPLEXICA_CHAT_PROVIDER_ID, key: PERPLEXICA_CHAT_MODEL },
-        embeddingModel: { providerId: PERPLEXICA_EMBED_PROVIDER_ID, key: PERPLEXICA_EMBED_MODEL },
+        chatModel: { providerId: BRAVE_CHAT_PROVIDER_ID, key: BRAVE_CHAT_MODEL },
+        embeddingModel: { providerId: BRAVE_EMBED_PROVIDER_ID, key: BRAVE_EMBED_MODEL },
         optimizationMode: "speed",
         sources: ["web"],
         query,
@@ -642,7 +941,7 @@ async function perplexicaDiscoveryWave(job, listInfo) {
     clearTimeout(timeout);
 
     if (!res.ok) {
-      console.error(`[Perplexica Discovery] API error: ${res.status}`);
+      console.error(`[Brave Discovery] API error: ${res.status}`);
       return { generated: 0, newCount: 0, added: 0 };
     }
     const data = await res.json();
@@ -685,12 +984,12 @@ async function perplexicaDiscoveryWave(job, listInfo) {
       } catch {} // invalid URL
     }
   } catch (e) {
-    if (PERPLEXICA_ENABLED) console.error(`[Perplexica Discovery] Search error: ${e.message}`);
+    if (BRAVE_SEARCH_ENABLED) console.error(`[Brave Discovery] Search error: ${e.message}`);
     return { generated: 0, newCount: 0, added: 0 };
   }
 
   let companies = Array.from(discovered.values()).slice(0, WAVE_SIZE);
-  console.log(`[Perplexica Discovery] Found ${companies.length} candidate companies`);
+  console.log(`[Brave Discovery] Found ${companies.length} candidate companies`);
 
   if (companies.length === 0) return { generated: 0, newCount: 0, added: 0 };
 
@@ -718,7 +1017,7 @@ Return: [{"country":"US","region":"AMER"},...] — use AMER/EMEA/APAC/MENA regio
   if (criteriaRegions) {
     companies = companies.filter(c => {
       if (!c.region || !criteriaRegions.includes(c.region)) {
-        console.log(`[Region filter] Rejected Perplexica discovery "${c.company}" — ${c.region || "unknown"}, wanted: ${criteriaRegions.join(",")}`);
+        console.log(`[Region filter] Rejected Brave discovery "${c.company}" — ${c.region || "unknown"}, wanted: ${criteriaRegions.join(",")}`);
         return false;
       }
       return true;
@@ -726,24 +1025,22 @@ Return: [{"country":"US","region":"AMER"},...] — use AMER/EMEA/APAC/MENA regio
   }
 
   // Validate through the same pipeline
-  const validated = await validateCandidates(companies);
-
-  // Log validation results
-  const counts = { validated: 0, unverified: 0, rejected: 0, clearbit: 0, perplexica: 0, dns: 0, icpFiltered: 0 };
+  const validated = await validateCandidates(companies, criteriaRegions);
+  const counts = { validated: 0, unverified: 0, rejected: 0, clearbit: 0, brave_search: 0, dns: 0, icpFiltered: 0 };
   for (const c of validated) {
     const s = scoreToStatus(c.confidenceScore);
     counts[s]++;
     if (c.validationSignals.clearbit) counts.clearbit++;
-    if (c.validationSignals.perplexica) counts.perplexica++;
+    if (c.validationSignals.brave_search) counts.brave_search++;
     if (c.validationSignals.dns) counts.dns++;
     if (c.rejectReason) counts.icpFiltered++;
   }
-  console.log(`[Job ${job.id}] Perplexica Discovery: ${validated.length} candidates → ${counts.validated} validated, ${counts.unverified} unverified, ${counts.rejected} rejected`);
-  console.log(`[Job ${job.id}] Clearbit: ${counts.clearbit}/${validated.length}, Perplexica: ${counts.perplexica}/${validated.length}, DNS: ${counts.dns}/${validated.length}, ICP Filtered: ${counts.icpFiltered}`);
+  console.log(`[Job ${job.id}] Brave Discovery: ${validated.length} candidates → ${counts.validated} validated, ${counts.unverified} unverified, ${counts.rejected} rejected`);
+  console.log(`[Job ${job.id}] Clearbit: ${counts.clearbit}/${validated.length}, Brave: ${counts.brave_search}/${validated.length}, DNS: ${counts.dns}/${validated.length}, ICP Filtered: ${counts.icpFiltered}`);
 
   // Save non-rejected to DB
   const memberStatus = job.jobType === "expand" ? "pending" : "active";
-  const addedBy = job.jobType === "expand" ? "expansion" : "perplexica-discovery";
+  const addedBy = job.jobType === "expand" ? "expansion" : "brave-discovery";
   let added = 0;
 
   for (const c of validated) {
@@ -753,12 +1050,36 @@ Return: [{"country":"US","region":"AMER"},...] — use AMER/EMEA/APAC/MENA regio
       continue;
     }
 
+    // ─── Quality Gate: Require Clearbit data ───
+    // Without Clearbit, we can't verify industry, region, or evidence properly.
+    if (!c.validationSignals.clearbit && !c.clearbitData?.found) {
+      console.log(`[Quality Gate] Rejected "${c.company}" — no Clearbit data, can't verify industry/region`);
+      continue;
+    }
+
+    // ─── Quality Gate: Require tier1 or tier2 only ───
+    const tier = assignConfidenceTier(c);
+    if (tier === "tier3") {
+      console.log(`[Quality Gate] Rejected "${c.company}" — tier3 (score ${c.confidenceScore}, no evidence or low confidence)`);
+      continue;
+    }
+
     try {
       let account = await prisma.aBMAccount.findFirst({
         where: { company: { equals: c.company, mode: "insensitive" } },
       });
 
-      if (account && criteriaRegions && account.region && !criteriaRegions.includes(account.region)) continue;
+      if (account && criteriaRegions) {
+        // If the existing account has a known region that doesn't match, skip
+        if (account.region && !criteriaRegions.includes(account.region)) continue;
+        // If the existing account has NO region, check the candidate's validated region
+        if (!account.region && c.region && !criteriaRegions.includes(c.region)) continue;
+        // If neither has region info, skip — can't confirm it's in-region
+        if (!account.region && !c.region) {
+          console.log(`[Region Gate] Skipped existing "${account.company}" — no region data, can't confirm in-region`);
+          continue;
+        }
+      }
 
       // Build notes JSON with validation data
       c.confidenceTier = assignConfidenceTier(c);
@@ -785,7 +1106,7 @@ Return: [{"country":"US","region":"AMER"},...] — use AMER/EMEA/APAC/MENA regio
             region: c.region || null,
             vertical: c.vertical || null,
             status,
-            source: "perplexica-discovery",
+            source: "brave-discovery",
             productFit: c.productFit || null,
             notes: JSON.stringify(notesData),
           },
@@ -817,34 +1138,34 @@ Return: [{"country":"US","region":"AMER"},...] — use AMER/EMEA/APAC/MENA regio
 // Country → Region mapping (HQ-based, not "operates in")
 const COUNTRY_REGION = {
   // AMER
-  "US": "AMER", "USA": "AMER", "United States": "AMER", "Canada": "AMER", "Mexico": "AMER",
-  "Brazil": "AMER", "Argentina": "AMER", "Colombia": "AMER", "Chile": "AMER", "Peru": "AMER",
-  "Costa Rica": "AMER", "Panama": "AMER", "Uruguay": "AMER", "Ecuador": "AMER", "Venezuela": "AMER",
-  "Dominican Republic": "AMER", "Guatemala": "AMER", "Puerto Rico": "AMER", "Jamaica": "AMER",
+  "US": "AMER", "USA": "AMER", "United States": "AMER", "CA": "AMER", "Canada": "AMER", "MX": "AMER", "Mexico": "AMER",
+  "BR": "AMER", "Brazil": "AMER", "AR": "AMER", "Argentina": "AMER", "CO": "AMER", "Colombia": "AMER", "CL": "AMER", "Chile": "AMER", "PE": "AMER", "Peru": "AMER",
+  "CR": "AMER", "Costa Rica": "AMER", "PA": "AMER", "Panama": "AMER", "UY": "AMER", "Uruguay": "AMER", "EC": "AMER", "Ecuador": "AMER", "VE": "AMER", "Venezuela": "AMER",
+  "DO": "AMER", "Dominican Republic": "AMER", "GT": "AMER", "Guatemala": "AMER", "PR": "AMER", "Puerto Rico": "AMER", "JM": "AMER", "Jamaica": "AMER",
   // EMEA - Europe
-  "UK": "EMEA", "United Kingdom": "EMEA", "Germany": "EMEA", "France": "EMEA", "Netherlands": "EMEA",
-  "Spain": "EMEA", "Italy": "EMEA", "Sweden": "EMEA", "Norway": "EMEA", "Denmark": "EMEA",
-  "Finland": "EMEA", "Ireland": "EMEA", "Belgium": "EMEA", "Austria": "EMEA", "Switzerland": "EMEA",
-  "Portugal": "EMEA", "Poland": "EMEA", "Czech Republic": "EMEA", "Romania": "EMEA", "Hungary": "EMEA",
-  "Greece": "EMEA", "Croatia": "EMEA", "Bulgaria": "EMEA", "Slovakia": "EMEA", "Slovenia": "EMEA",
-  "Estonia": "EMEA", "Latvia": "EMEA", "Lithuania": "EMEA", "Luxembourg": "EMEA", "Malta": "EMEA",
-  "Cyprus": "EMEA", "Iceland": "EMEA", "Serbia": "EMEA", "Montenegro": "EMEA", "Albania": "EMEA",
-  "Bosnia": "EMEA", "North Macedonia": "EMEA", "Moldova": "EMEA", "Ukraine": "EMEA",
-  "Georgia": "EMEA", "Armenia": "EMEA",
+  "UK": "EMEA", "GB": "EMEA", "United Kingdom": "EMEA", "DE": "EMEA", "Germany": "EMEA", "FR": "EMEA", "France": "EMEA", "NL": "EMEA", "Netherlands": "EMEA",
+  "ES": "EMEA", "Spain": "EMEA", "IT": "EMEA", "Italy": "EMEA", "SE": "EMEA", "Sweden": "EMEA", "NO": "EMEA", "Norway": "EMEA", "DK": "EMEA", "Denmark": "EMEA",
+  "FI": "EMEA", "Finland": "EMEA", "IE": "EMEA", "Ireland": "EMEA", "BE": "EMEA", "Belgium": "EMEA", "AT": "EMEA", "Austria": "EMEA", "CH": "EMEA", "Switzerland": "EMEA",
+  "PT": "EMEA", "Portugal": "EMEA", "PL": "EMEA", "Poland": "EMEA", "CZ": "EMEA", "Czech Republic": "EMEA", "Czechia": "EMEA", "RO": "EMEA", "Romania": "EMEA", "HU": "EMEA", "Hungary": "EMEA",
+  "GR": "EMEA", "Greece": "EMEA", "HR": "EMEA", "Croatia": "EMEA", "BG": "EMEA", "Bulgaria": "EMEA", "SK": "EMEA", "Slovakia": "EMEA", "SI": "EMEA", "Slovenia": "EMEA",
+  "EE": "EMEA", "Estonia": "EMEA", "LV": "EMEA", "Latvia": "EMEA", "LT": "EMEA", "Lithuania": "EMEA", "LU": "EMEA", "Luxembourg": "EMEA", "MT": "EMEA", "Malta": "EMEA",
+  "CY": "EMEA", "Cyprus": "EMEA", "IS": "EMEA", "Iceland": "EMEA", "RS": "EMEA", "Serbia": "EMEA", "ME": "EMEA", "Montenegro": "EMEA", "AL": "EMEA", "Albania": "EMEA",
+  "BA": "EMEA", "Bosnia": "EMEA", "MK": "EMEA", "North Macedonia": "EMEA", "MD": "EMEA", "Moldova": "EMEA", "UA": "EMEA", "Ukraine": "EMEA",
+  "GE": "EMEA", "Georgia": "EMEA", "AM": "EMEA", "Armenia": "EMEA",
   // EMEA - Africa
-  "South Africa": "EMEA", "Nigeria": "EMEA", "Kenya": "EMEA", "Egypt": "EMEA", "Ghana": "EMEA",
-  "Tanzania": "EMEA", "Ethiopia": "EMEA", "Rwanda": "EMEA", "Senegal": "EMEA",
+  "ZA": "EMEA", "South Africa": "EMEA", "NG": "EMEA", "Nigeria": "EMEA", "KE": "EMEA", "Kenya": "EMEA", "EG": "EMEA", "Egypt": "EMEA", "GH": "EMEA", "Ghana": "EMEA",
+  "TZ": "EMEA", "Tanzania": "EMEA", "ET": "EMEA", "Ethiopia": "EMEA", "RW": "EMEA", "Rwanda": "EMEA", "SN": "EMEA", "Senegal": "EMEA",
   // MENA
-  "UAE": "MENA", "United Arab Emirates": "MENA", "Saudi Arabia": "MENA", "Israel": "MENA",
-  "Turkey": "MENA", "Qatar": "MENA", "Kuwait": "MENA", "Bahrain": "MENA", "Oman": "MENA",
-  "Jordan": "MENA", "Lebanon": "MENA", "Morocco": "MENA", "Tunisia": "MENA", "Iraq": "MENA",
-  "Iran": "MENA", "Pakistan": "MENA",
+  "AE": "MENA", "UAE": "MENA", "United Arab Emirates": "MENA", "SA": "MENA", "Saudi Arabia": "MENA", "IL": "MENA", "Israel": "MENA",
+  "TR": "MENA", "Turkey": "MENA", "QA": "MENA", "Qatar": "MENA", "KW": "MENA", "Kuwait": "MENA", "BH": "MENA", "Bahrain": "MENA", "OM": "MENA", "Oman": "MENA",
+  "JO": "MENA", "Jordan": "MENA", "LB": "MENA", "Lebanon": "MENA", "MA": "MENA", "Morocco": "MENA", "TN": "MENA", "Tunisia": "MENA", "IQ": "MENA", "Iraq": "MENA",
+  "IR": "MENA", "Iran": "MENA", "PK": "MENA", "Pakistan": "MENA",
   // APAC
-  "India": "APAC", "China": "APAC", "Japan": "APAC", "South Korea": "APAC", "Australia": "APAC",
-  "New Zealand": "APAC", "Singapore": "APAC", "Indonesia": "APAC", "Malaysia": "APAC",
-  "Thailand": "APAC", "Vietnam": "APAC", "Philippines": "APAC", "Taiwan": "APAC",
-  "Hong Kong": "APAC", "Bangladesh": "APAC", "Sri Lanka": "APAC", "Myanmar": "APAC",
-  "Cambodia": "APAC", "Nepal": "APAC",
+  "IN": "APAC", "India": "APAC", "CN": "APAC", "China": "APAC", "JP": "APAC", "Japan": "APAC", "KR": "APAC", "South Korea": "APAC", "AU": "APAC", "Australia": "APAC",
+  "NZ": "APAC", "New Zealand": "APAC", "SG": "APAC", "Singapore": "APAC", "ID": "APAC", "Indonesia": "APAC", "MY": "APAC", "Malaysia": "APAC",
+  "TH": "APAC", "Thailand": "APAC", "VN": "APAC", "Vietnam": "APAC", "PH": "APAC", "Philippines": "APAC", "TW": "APAC", "Taiwan": "APAC",
+  "HK": "APAC", "Hong Kong": "APAC", "BD": "APAC", "Bangladesh": "APAC", "LK": "APAC", "Sri Lanka": "APAC", "MM": "APAC", "Myanmar": "APAC",
+  "KH": "APAC", "Cambodia": "APAC", "NP": "APAC", "Nepal": "APAC",
 };
 
 function resolveRegion(country) {
@@ -856,7 +1177,7 @@ function resolveRegion(country) {
   }
   return null;
 }
-const MAX_DRY_STREAK = 3;
+const MAX_DRY_STREAK = 6;
 const POLL_INTERVAL_MS = 5000;
 const WAVE_DELAY_MS = 5000;
 
@@ -963,6 +1284,18 @@ function buildPrompt(job, existingNames, listInfo) {
     const exampleStr = criteria.exampleCompanies?.length ? `\nExample companies (find SIMILAR ones, not these exact ones): ${criteria.exampleCompanies.join(", ")}` : "";
     const excludeStr = criteria.excludeCompanies?.length ? `\nDO NOT include: ${criteria.excludeCompanies.join(", ")}` : "";
 
+    // Build dynamic exclusion string from DB
+    const exc = EXCLUSION_DATA;
+    const competitorStr = exc.competitors.length ? `\nNEVER include these competitors or their domains: ${exc.competitors.join(", ")}` : "";
+    const customerStr = exc.customers.length ? `\nNEVER include existing customers (domains): ${exc.customers.slice(0, 50).join(", ")}` : "";
+    const partnerStr = exc.partners.length ? `\nNEVER include partners (domains): ${exc.partners.join(", ")}` : "";
+    const wonStr = exc.wonDealDomains.size ? `\nNEVER include closed-won accounts (domains): ${[...exc.wonDealDomains].slice(0, 50).join(", ")}` : "";
+
+    // Open deals as ICP lookalike signals
+    const icpSignals = exc.openDealCompanies.length
+      ? `\n\nICP LOOKALIKE SIGNALS — these are companies with active deals ($${(exc.openDealCompanies.reduce((s, d) => s + (d.amount || 0), 0) / 1000).toFixed(0)}K+ pipeline). Find companies SIMILAR to these:\n${exc.openDealCompanies.map(d => `- ${d.name} (${d.domain}) — $${(d.amount / 1000).toFixed(0)}K ${d.stage}`).join("\n")}`
+      : "";
+
     return `You are an ABM research agent for Telnyx, a cloud communications company.
 
 RESEARCH BRIEF:
@@ -970,20 +1303,25 @@ ${criteria.targetCompanyProfile}
 
 ${regionStr}
 ${productStr}
-Vertical: ${criteria.vertical || "any"}${providerStr}${exampleStr}${excludeStr}
+Vertical: ${criteria.vertical || "any"}${providerStr}${exampleStr}${excludeStr}${competitorStr}${customerStr}${partnerStr}${wonStr}${icpSignals}
 
 Find exactly ${WAVE_SIZE} REAL companies matching this brief. These must be actual companies that exist.${alreadyFoundStr}
 
 Rules:
-- Only real, verifiable companies
-- Include the actual website domain and HQ country
+- Only real, verifiable companies that CURRENTLY EXIST as independent entities
+- Do NOT include companies that were acquired (e.g., Speechly → acquired by Roblox, no longer independent)
+- Do NOT include companies whose domain redirects to a different company
+- Include the actual website domain and HQ country — double-check the TLD (.com vs .ai vs .io)
 - Diverse across the criteria (don't cluster on one sub-segment)
 - If you can't find ${WAVE_SIZE} genuinely matching companies, return fewer rather than making them up
-- NEVER include Telnyx competitors: Twilio, Vonage, Bandwidth, Plivo, Sinch, ElevenLabs, Vapi, Retell, LiveKit, Bland AI, Five9, Genesys, Nice, Talkdesk, Dialpad, RingCentral, 8x8, Nextiva, Aircall, MessageBird, Infobip, Deepgram, AssemblyAI, Poly AI, Cognigy, Kore.ai, Hologram, Agora, Resemble AI, Cartesia, Play.ht, Murf AI, WellSaid
+- NEVER include Telnyx competitors, existing customers, partners, or closed-won accounts listed above
 - ICP means likely BUYER, not just company in a related market
 - If product fit is ai-agent / voice AI, prioritize BUYERS like AI startups, SaaS platforms, contact-center operators, BPOs, healthcare/fintech/travel companies with clear voice use cases
 - If product fit is ai-agent / voice AI, EXCLUDE non-buyers like telecom carriers, mobile operators, ISPs, broadband providers, CPaaS vendors, UCaaS vendors, CCaaS vendors, wholesale voice/SMS providers, network operators, and infrastructure vendors
 - Do not include large telcos/carriers just because they operate in communications
+- EXCLUDE companies with NO voice/phone/call connection: solar energy, hardware devices, medical devices, construction, real estate, graphic design, project management, accounting, generic SaaS, e-commerce platforms, marketplaces
+- A company is only a voice AI buyer if voice/phone/calls are CENTRAL to their product, not peripheral
+- Use the ICP LOOKALIKE SIGNALS to find companies similar to those already in our pipeline — these are proven buyer profiles
 
 RESPOND WITH ONLY a raw JSON array. No markdown, no code fences:
 [{"company":"Name","domain":"example.com","country":"US","region":"AMER","vertical":"fintech","productFit":"ai-agent","description":"One line why relevant"${criteria.includeProviders?.length ? ',"currentProvider":"Twilio","switchSignal":"Reason they might switch"' : ""}}]
@@ -1024,14 +1362,17 @@ USER REQUEST: "${job.query}"${contextLine}${typeGuidance}
 Find exactly ${WAVE_SIZE} REAL companies matching this request. These must be actual companies that exist.${alreadyFoundStr}
 
 Rules:
-- Only real, verifiable companies
-- Include the actual website domain and HQ country
+- Only real, verifiable companies that CURRENTLY EXIST as independent entities
+- Do NOT include companies that were acquired or whose domain redirects to a different company
+- Include the actual website domain and HQ country — double-check the TLD (.com vs .ai vs .io)
 - Diverse across the criteria (don't cluster on one sub-segment)
 - If you can't find ${WAVE_SIZE} genuinely matching companies, return fewer rather than making them up
 - NEVER include Telnyx competitors: Twilio, Vonage, Bandwidth, Plivo, Sinch, ElevenLabs, Vapi, Retell, LiveKit, Bland AI, Five9, Genesys, Nice, Talkdesk, Dialpad, RingCentral, 8x8, Nextiva, Aircall, MessageBird, Infobip, Deepgram, AssemblyAI, Poly AI, Cognigy, Kore.ai, Hologram, Agora, Resemble AI, Cartesia, Play.ht, Murf AI, WellSaid
 - ICP means likely BUYER, not just adjacent company names
 - For Voice AI / AI Agent requests, prioritize AI startups, SaaS platforms, contact-center operators, BPOs, and companies with clear voice automation use cases
 - For Voice AI / AI Agent requests, EXCLUDE telecom carriers, ISPs, mobile operators, CPaaS/UCaaS/CCaaS vendors, wholesale voice/SMS providers, and network operators
+- EXCLUDE companies with NO voice/phone/call connection: solar energy, hardware devices, medical devices, construction, real estate, graphic design, project management, accounting, generic SaaS, e-commerce platforms, marketplaces
+- A company is only a voice AI buyer if voice/phone/calls are CENTRAL to their product, not peripheral
 
 RESPOND WITH ONLY a raw JSON array. No markdown, no code fences:
 [{"company":"Name","domain":"example.com","country":"US","region":"AMER","vertical":"fintech","productFit":"ai-agent","description":"One line why relevant"${listType === "conquest" ? ',"currentProvider":"Twilio","switchSignal":"Reason they might switch"' : ""}}]
@@ -1110,20 +1451,20 @@ async function runWave(job, listInfo) {
   });
 
   // ─── VALIDATION LAYER ───
-  const validated = await validateCandidates(newCompanies);
+  const validated = await validateCandidates(newCompanies, criteriaRegions);
 
   // Log validation results
-  const counts = { validated: 0, unverified: 0, rejected: 0, clearbit: 0, perplexica: 0, dns: 0, icpFiltered: 0 };
+  const counts = { validated: 0, unverified: 0, rejected: 0, clearbit: 0, brave_search: 0, dns: 0, icpFiltered: 0 };
   for (const c of validated) {
     const s = scoreToStatus(c.confidenceScore);
     counts[s]++;
     if (c.validationSignals.clearbit) counts.clearbit++;
-    if (c.validationSignals.perplexica) counts.perplexica++;
+    if (c.validationSignals.brave_search) counts.brave_search++;
     if (c.validationSignals.dns) counts.dns++;
     if (c.rejectReason) counts.icpFiltered++;
   }
   console.log(`[Job ${job.id}] Validation: ${validated.length} candidates → ${counts.validated} validated (≥${THRESHOLD.VALIDATED}), ${counts.unverified} unverified (${THRESHOLD.UNVERIFIED}-${THRESHOLD.VALIDATED - 1}), ${counts.rejected} rejected (<${THRESHOLD.UNVERIFIED})`);
-  console.log(`[Job ${job.id}] Clearbit: ${counts.clearbit}/${validated.length} found, Perplexica: ${counts.perplexica}/${validated.length} confirmed, DNS: ${counts.dns}/${validated.length} resolved, ICP Filtered: ${counts.icpFiltered}`);
+  console.log(`[Job ${job.id}] Clearbit: ${counts.clearbit}/${validated.length} found, Brave: ${counts.brave_search}/${validated.length} confirmed, DNS: ${counts.dns}/${validated.length} resolved, ICP Filtered: ${counts.icpFiltered}`);
 
   // For expand jobs, new members start as "pending" for review
   const memberStatus = job.jobType === "expand" ? "pending" : "active";
@@ -1138,14 +1479,37 @@ async function runWave(job, listInfo) {
       continue;
     }
 
+    // ─── Quality Gate: Require Clearbit data ───
+    if (!c.validationSignals.clearbit && !c.clearbitData?.found) {
+      console.log(`[Quality Gate] Rejected "${c.company}" — no Clearbit data`);
+      continue;
+    }
+
+    // ─── Quality Gate: Require tier1 or tier2 only ───
+    const tier = assignConfidenceTier(c);
+    if (tier === "tier3") {
+      console.log(`[Quality Gate] Rejected "${c.company}" — tier3`);
+      continue;
+    }
+
     try {
       let account = await prisma.aBMAccount.findFirst({
         where: { company: { equals: c.company, mode: "insensitive" } },
       });
 
-      if (account && criteriaRegions && account.region && !criteriaRegions.includes(account.region)) {
-        console.log(`[Region filter] Skipped existing "${account.company}" — HQ: ${account.country} (${account.region}), wanted: ${criteriaRegions.join(",")}`);
-        continue;
+      if (account && criteriaRegions) {
+        if (account.region && !criteriaRegions.includes(account.region)) {
+          console.log(`[Region filter] Skipped existing "${account.company}" — HQ: ${account.country} (${account.region}), wanted: ${criteriaRegions.join(",")}`);
+          continue;
+        }
+        if (!account.region && c.region && !criteriaRegions.includes(c.region)) {
+          console.log(`[Region filter] Skipped existing "${account.company}" — candidate region ${c.region} not in ${criteriaRegions.join(",")}`);
+          continue;
+        }
+        if (!account.region && !c.region) {
+          console.log(`[Region filter] Skipped existing "${account.company}" — no region data, can't confirm in-region`);
+          continue;
+        }
       }
 
       // Build notes JSON with validation data
@@ -1290,12 +1654,12 @@ async function processJob(job) {
 
     waveNumber++;
     try {
-      console.log(`[Job ${job.id}] Wave ${waveNumber} (found: ${current.found}/${current.target}) [${waveNumber % 2 === 0 ? "Perplexica Discovery" : "AI Generation"}]`);
+      console.log(`[Job ${job.id}] Wave ${waveNumber} (found: ${current.found}/${current.target}) [${waveNumber % 2 === 0 ? "Brave Discovery" : "AI Generation"}]`);
 
       let result;
-      // Alternate: odd waves = AI, even waves = Perplexica discovery
+      // Alternate: odd waves = AI, even waves = Brave discovery
       if (waveNumber % 2 === 0) {
-        result = await perplexicaDiscoveryWave(current, listInfo);
+        result = await braveDiscoveryWave(current, listInfo);
       } else {
         result = await runWave(current, listInfo);
       }
@@ -1339,10 +1703,16 @@ async function processJob(job) {
 
 async function pollLoop() {
   console.log("ABM Worker started. Polling for jobs...");
-  console.log(`[Config] Clearbit: ${CLEARBIT_KEY ? "configured" : "MISSING"}, Perplexica: ${PERPLEXICA_ENABLED ? PERPLEXICA_URL : "disabled"}`);
+  console.log(`[Config] Clearbit: ${CLEARBIT_KEY ? "configured" : "MISSING"}, Brave: ${BRAVE_SEARCH_ENABLED ? "enabled" : "disabled"}`);
+
+  // Load exclusion data at startup
+  await loadExclusionData();
 
   while (true) {
     try {
+      // Refresh exclusions every 6h (checked inside loadExclusionData)
+      await loadExclusionData();
+
       const jobs = await prisma.aBMJob.findMany({
         where: { status: { in: ["queued", "running"] } },
         orderBy: { createdAt: "asc" },

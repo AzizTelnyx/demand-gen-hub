@@ -1,0 +1,38 @@
+{
+  "brief": {
+    "platform": null,
+    "format": null,
+    "audience": "hotels and travel industry professionals seeking concierge service solutions",
+    "painPoints": [
+      "lack of efficient concierge services",
+      "need for AI-driven voice assistance"
+    ],
+    "coreMessage": "AI voice agents providing concierge services for hotels and travel",
+    "pillar": null,
+    "adCopyExample": null,
+    "ctaSuggestion": null
+  },
+  "copy": {
+    "headlines": [
+      "Telnyx Voice AI: Concierge Services in 140+ Countries",
+      "Sub-200ms Latency AI Voice Agents for Hotels and Travel",
+      "One Platform for AI-Driven Concierge Across Global Networks",
+      "Telnyx Owns Network, Reducing Latency for Voice AI Concierge",
+      "HIPAA, SOC2, PCI Compliant Voice AI for Travel Industry",
+      "AI Voice Concierge with Zero Extra Hops in 140+ Countries",
+      "Efficient AI Voice Agents with Co-Located Inference and Telephony",
+      "Simplify Hotel Concierge with Telnyx Voice AI Platform",
+      "Telnyx Voice AI: Single Vendor, Single Platform, Global Reach",
+      "AI Concierge Services with Sub-200ms Latency Across 140+ Countries"
+    ],
+    "descriptions": [
+      "Deploy AI voice agents for hotel concierge services using Telnyx’s own network with sub-200ms latency and coverage in over 140 countries.",
+      "Telnyx Voice AI integrates telephony and inference on one platform, enabling real-time concierge assistance with HIPAA, SOC2, and PCI compliance.",
+      "Improve travel customer service with AI-driven voice agents hosted on a single platform owning its network to minimize latency and hops.",
+      "Telnyx Voice AI offers concierge solutions for hotels and travel with zero extra network hops and compliance certifications for secure operations.",
+      "Leverage Telnyx’s global network and one-platform approach to deliver AI voice concierge services with consistent latency under 200 milliseconds."
+    ],
+    "cta": "Learn More"
+  },
+  "generatedAt": "2026-04-14T14:50:54.600Z"
+}

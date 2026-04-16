@@ -274,29 +274,23 @@ This gives us immediate visibility into what's actually running on LinkedIn.
 
 **Description:**
 
-> We are a LinkedIn Advertising API partner (App Client ID: 86hy8fnr3lz69z) using the Marketing API to manage ad campaigns. We need access to the Community Management API for a specific use case: resolving organization URNs to company names and websites for ad attribution.
+> We use the LinkedIn Marketing/Advertising API to run and measure ad campaigns for our business (Telnyx). We need access to the Organization Lookup API to resolve organization URNs into company names and website URLs.
 >
-> **Business Problem:**
-> Our LinkedIn ad campaigns generate impressions attributed to organizations via URNs in the format `li_org:XXXXXXX`. Currently, 97.2% of our impression data (743,101 out of 764,570 impressions) is stuck in this URN format with no way to resolve these IDs to actual company names or website domains.
->
-> Without this resolution, we cannot:
-> - Match LinkedIn ad impressions to our Salesforce pipeline accounts
-> - Calculate accurate ROI from our $30K/month LinkedIn ad spend
-> - Attribute pipeline revenue to specific campaigns and audiences
+> **The problem:**
+> When we pull impression data from the LinkedIn Ads API, organizations are returned as URNs in the format `li_org:XXXXXXX`. We have no way to resolve these URNs to identify which companies they represent. Currently, 97.2% of our LinkedIn impression data (743,101 out of 764,570 impressions) cannot be identified because they arrive as `li_org:` URNs instead of resolvable company domains.
 >
 > **What we need:**
-> - Organization Lookup API: Given an organization URN (li_org:XXXXXXX), retrieve the company name, website URL, and vanity name
-> - Read-only access only — we do NOT need posting, commenting, or content management capabilities
-> - The `GET /v2/organizations/{id}` endpoint or equivalent
+> The ability to call an Organization Lookup endpoint (e.g., `GET /v2/organizations/{id}`) that, given an organization URN, returns the company name and website URL. We need read-only access to organization metadata only — we do not need any content posting, page management, or community interaction capabilities.
+>
+> **Why this matters:**
+> Without being able to resolve `li_org:` URNs to company names and websites, we cannot match our LinkedIn ad impressions to accounts in our CRM (Salesforce). This means we cannot attribute pipeline revenue or measure ROI on our LinkedIn ad spend ($30K/month, ~$580K in pipeline currently unattributed).
 >
 > **Current setup:**
-> - Active Advertising API app (Client ID: 86hy8fnr3lz69z) with scopes: r_ads, r_ads_reporting, r_organization_social, r_organization, rw_ads
-> - Also using DMP Segments API for audience management
+> - Active Advertising API app (Client ID: 86hy8fnr3lz69z)
+> - Scopes: r_ads, r_ads_reporting, r_organization_social, r_organization, rw_ads
 > - Ad account ID: 505973078
 >
-> We understand the Community Management API may require a separate application. We are happy to create a new app if needed — we just need guidance on the approval process.
->
-> **Business impact:** High — unable to attribute approximately $580K in pipeline from 36 deals to our LinkedIn advertising efforts.
+> If a separate application is required for Community Management API access, we're happy to create one — just need guidance on the approval process.
 
 ---
 

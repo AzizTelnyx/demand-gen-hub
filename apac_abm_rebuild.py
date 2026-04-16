@@ -65,7 +65,7 @@ def is_excluded(name, domain, cb):
     if n in EXCLUDE_NAMES or d in EXCLUDE_NAMES:
         return True, "competitor/carrier"
     combined = " ".join([
-        name or "", domain or "", cb.get("industry", ""), cb.get("sector", ""), cb.get("description", "")
+        name or "", domain or "", cb.get("industry") or "", cb.get("sector") or "", cb.get("description") or ""
     ]).lower()
     for t in EXCLUDE_TERMS:
         if t in combined:

@@ -138,5 +138,66 @@ def main():
             f.write('"' + '","'.join(vals) + '"\n')
     print(json.dumps(out["stats"], indent=2))
 
+    # ── Sync to DG Hub DB ────────────────────────────────
+    import psycopg2
+    DB_URL = "postgresql://azizalsinafi@localhost:5432/dghub"
+    try:
+        conn = psycopg2.connect(DB_URL)
+        cur = conn.cursor()
+        now = datetime.now(timezone.utc)
+
+        list_name = f"APAC Expansion - {now.strftime('%Y-%m-%d %H:%M')} — AI Voice ICP"
+        list_id = f"apac-expansion-{int(now.timestamp())}"
+        cur.execute(
+            'INSERT INTO "ABMList" (id, name, count, source, status, "listType", description, "createdAt", "updatedAt") VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)',
+            (list_id, list_name, 0, "research-agent", "active", "vertical",
+             f"APAC ABM rebuild — {len(results)} companies across {len(set(r['country'] for r in results))} countries", now, now)
+        )
+
+        db_inserted = 0
+        for r in results:
+            company = r.get("company", "")
+            domain = r.get("domain", "")
+            country = r.get("country", "")
+            vertical = r.get("vertical", "")
+            use_case = r.get("useCase", "")
+            why_fit = r.get("whyFit", "")
+            if not domain:
+                continue
+            notes = None
+            if use_case or why_fit:
+                parts = []
+                if use_case: parts.append(f"Use case: {use_case}")
+                if why_fit: parts.append(f"Why fit: {why_fit}")
+                notes = " | ".join(parts)
+            cur.execute(
+                '''INSERT INTO "ABMAccount" (id, company, domain, vertical, country, region, source, status, notes, "createdAt", "updatedAt")
+                   VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+                   ON CONFLICT (company, domain) DO UPDATE SET
+                       vertical = EXCLUDED.vertical, country = EXCLUDED.country,
+                       region = EXCLUDED.region, source = EXCLUDED.source,
+                       notes = EXCLUDED.notes, "updatedAt" = EXCLUDED."updatedAt"
+                   RETURNING id''',
+                (f"abm-{domain.replace('.','-')}", company, domain, vertical, country, "APAC",
+                 "apac-abm-rebuild", "active", notes, now, now)
+            )
+            account_id = cur.fetchone()[0]
+            member_id = f"{list_id}-{account_id}"
+            cur.execute(
+                '''INSERT INTO "ABMListMember" (id, "listId", "accountId", "addedAt", "addedBy", reason, status)
+                   VALUES (%s, %s, %s, %s, %s, %s, %s)
+                   ON CONFLICT (id) DO UPDATE SET status = EXCLUDED.status, reason = EXCLUDED.reason''',
+                (member_id, list_id, account_id, now, "apac-abm-rebuild", "AI Voice ICP match", "active")
+            )
+            db_inserted += 1
+
+        cur.execute('UPDATE "ABMList" SET count = %s, "updatedAt" = %s WHERE id = %s', (db_inserted, now, list_id))
+        conn.commit()
+        cur.close()
+        conn.close()
+        print(f"Hub DB: {db_inserted} accounts synced to list '{list_name}'")
+    except Exception as e:
+        print(f"⚠ Hub DB sync failed: {e}")
+
 if __name__ == "__main__":
     main()

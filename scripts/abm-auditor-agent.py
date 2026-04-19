@@ -194,6 +194,86 @@ def run_audit(cur, dry_run=False):
     
     scorecard["sections"]["undersized"] = undersized
 
+    # ─── Section 5: Stale Campaign Cleanup ─────────────────
+    # Find ABMCampaignSegment rows linked to ended/paused campaigns
+    cur.execute("""
+        SELECT cs."campaignId", cs."campaignName", cs.platform, cs."segmentName",
+               c.status as campaign_status
+        FROM "ABMCampaignSegment" cs
+        LEFT JOIN "Campaign" c ON cs."campaignId" = c.id
+        WHERE c.status NOT IN ('enabled', 'live', 'ACTIVE', 'active', 'LIVE')
+           OR c.id IS NULL
+        ORDER BY cs.platform, cs."campaignName"
+    """)
+
+    stale_segments = []
+    for row in cur.fetchall():
+        camp_id, camp_name, platform, seg_name, status = row
+        stale_segments.append({
+            "campaign_id": camp_id,
+            "campaign": camp_name,
+            "platform": platform,
+            "segment": seg_name or "unknown",
+            "status": status or "NOT_FOUND",
+        })
+
+    scorecard["sections"]["stale_campaigns"] = {
+        "count": len(stale_segments),
+        "segments": stale_segments[:20],
+        "action": f"DELETE FROM \"ABMCampaignSegment\" WHERE campaign linked to ended/paused campaigns ({len(stale_segments)} rows)",
+    }
+
+    # ─── Section 6: Orphan Exclusion Audiences ─────────────
+    # Exclusion audiences with no active campaigns for that product
+    cur.execute("""
+        SELECT e.category, count(DISTINCT e.domain) as domains,
+               COUNT(DISTINCT cs."campaignId") FILTER (WHERE c.status IN ('enabled','live','ACTIVE','active','LIVE')) as active_campaigns
+        FROM "ABMExclusion" e
+        LEFT JOIN "ABMCampaignSegment" cs ON cs."parsedProduct" = e.category
+        LEFT JOIN "Campaign" c ON cs."campaignId" = c.id
+        WHERE e."addedBy" = 'negative_builder'
+        GROUP BY e.category
+    """)
+
+    orphan_audiences = []
+    for row in cur.fetchall():
+        product, domains, active_camps = row
+        orphan_audiences.append({
+            "product": product,
+            "excluded_domains": domains,
+            "active_campaigns": active_camps or 0,
+            "orphaned": (active_camps or 0) == 0,
+        })
+
+    scorecard["sections"]["orphan_exclusions"] = orphan_audiences
+
+    # ─── Section 7: Missing Exclusion Audiences ─────────────
+    # Active campaigns that don't have exclusion audiences attached
+    cur.execute("""
+        SELECT cs."campaignId", cs."campaignName", cs.platform, cs."parsedProduct"
+        FROM "ABMCampaignSegment" cs
+        JOIN "Campaign" c ON cs."campaignId" = c.id
+        WHERE c.status IN ('enabled', 'live', 'ACTIVE', 'active', 'LIVE')
+          AND NOT EXISTS (
+            SELECT 1 FROM "ABMExclusion" e
+            WHERE e.category = cs."parsedProduct"
+              AND e."addedBy" = 'negative_builder'
+          )
+        GROUP BY cs."campaignId", cs."campaignName", cs.platform, cs."parsedProduct"
+    """)
+
+    missing_exclusions = []
+    for row in cur.fetchall():
+        camp_id, camp_name, platform, product = row
+        missing_exclusions.append({
+            "campaign_id": camp_id,
+            "campaign": camp_name,
+            "platform": platform,
+            "product": product,
+        })
+
+    scorecard["sections"]["missing_exclusions"] = missing_exclusions
+
     return scorecard
 
 
@@ -244,6 +324,33 @@ def format_scorecard(scorecard):
         for seg in f[:5]:
             flags_str = ", ".join(seg["flags"])
             lines.append(f"   {seg['campaign'][:35]} | {seg['segment'][:20]} | {flags_str}")
+    lines.append("")
+    
+    # Section 5: Stale campaigns
+    stale = scorecard["sections"].get("stale_campaigns", {})
+    if stale.get("count", 0) > 0:
+        lines.append(f"🧹 <b>Stale Campaigns:</b> {stale['count']} segments linked to ended/paused campaigns")
+        for s in stale.get("segments", [])[:5]:
+            lines.append(f"   ❌ {s['campaign'][:35]} ({s['platform']}) — status: {s['status']}")
+        lines.append(f"   → Action: Re-sync ABMCampaignSegment to purge stale rows")
+        lines.append("")
+    
+    # Section 6: Orphan exclusions
+    orphans = scorecard["sections"].get("orphan_exclusions", [])
+    orphan_products = [o for o in orphans if o.get("orphaned")]
+    if orphan_products:
+        lines.append(f"🔌 <b>Orphan Exclusion Audiences:</b> {len(orphan_products)} products with exclusions but no active campaigns")
+        for o in orphan_products:
+            lines.append(f"   ⚠️ {o['product']}: {o['excluded_domains']} domains excluded, 0 active campaigns")
+        lines.append("")
+    
+    # Section 7: Missing exclusions
+    missing = scorecard["sections"].get("missing_exclusions", [])
+    if missing:
+        lines.append(f"🚫 <b>Missing Exclusions:</b> {len(missing)} active campaigns without exclusion audiences")
+        for m in missing[:5]:
+            lines.append(f"   ⚠️ {m['campaign'][:35]} ({m['product']}) — no negative_builder exclusions")
+        lines.append("")
     
     return "\n".join(lines)
 

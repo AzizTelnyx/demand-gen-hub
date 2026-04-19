@@ -204,28 +204,37 @@ def find_undersized_segments(cur, product_filter=None):
 def get_icp_rules(cur, product, variant=None):
     """Get ABMListRule for a given product/variant."""
     sql = """
-        SELECT "ruleType", field, operator, value,
-               "useCaseKeywords", "competitorNames", "descriptionKeywords"
+        SELECT "useCaseKeywords", "competitorNames", "descriptionKeywords",
+               verticals, regions, "excludeVerticals", "excludeCompetitors"
         FROM "ABMListRule"
-        WHERE (field = 'parsedProduct' AND value = %s)
-           OR (field = 'parsedVariant' AND value = %s)
+        WHERE product = %s
+          AND (variant = %s OR variant IS NULL)
+        ORDER BY variant DESC NULLS LAST
+        LIMIT 1
     """
     cur.execute(sql, (product, variant or ""))
-    rows = cur.fetchall()
+    row = cur.fetchone()
 
-    rules = {"useCaseKeywords": [], "competitorNames": [], "descriptionKeywords": []}
-    for r in rows:
-        _, _, _, _, use_case, comp, desc_kw = r
+    rules = {"useCaseKeywords": [], "competitorNames": [], "descriptionKeywords": [],
+             "verticals": [], "regions": [], "excludeVerticals": [], "excludeCompetitors": []}
+    if row:
+        use_case, comp, desc_kw, verticals, regions, exc_vert, exc_comp = row
         if use_case:
-            rules["useCaseKeywords"].extend(use_case if isinstance(use_case, list) else json.loads(use_case))
+            rules["useCaseKeywords"] = use_case if isinstance(use_case, list) else json.loads(use_case)
         if comp:
-            rules["competitorNames"].extend(comp if isinstance(comp, list) else json.loads(comp))
+            rules["competitorNames"] = comp if isinstance(comp, list) else json.loads(comp)
         if desc_kw:
-            rules["descriptionKeywords"].extend(desc_kw if isinstance(desc_kw, list) else json.loads(desc_kw))
+            rules["descriptionKeywords"] = desc_kw if isinstance(desc_kw, list) else json.loads(desc_kw)
+        if verticals:
+            rules["verticals"] = verticals if isinstance(verticals, list) else json.loads(verticals)
+        if regions:
+            rules["regions"] = regions if isinstance(regions, list) else json.loads(regions)
+        if exc_vert:
+            rules["excludeVerticals"] = exc_vert if isinstance(exc_vert, list) else json.loads(exc_vert)
+        if exc_comp:
+            rules["excludeCompetitors"] = exc_comp if isinstance(exc_comp, list) else json.loads(exc_comp)
 
-    # Deduplicate
-    for k in rules:
-        rules[k] = list(set(rules[k]))
+    return rules
 
     return rules
 
@@ -694,14 +703,14 @@ def is_shared_segment(cur, segment_id, product, variant):
 def is_excluded(cur, domain, product=None):
     """Check if domain is in ABMExclusion."""
     cur.execute("""
-        SELECT id, scope FROM "ABMExclusion"
-        WHERE domain = %s OR "exclusionType" = 'domain'
+        SELECT id, category FROM "ABMExclusion"
+        WHERE domain = %s
     """, (domain,))
     for row in cur.fetchall():
-        scope = row[1] or ["*"]
-        if isinstance(scope, str):
-            scope = json.loads(scope)
-        if "*" in scope or product in scope:
+        category = row[1] or "*"
+        if isinstance(category, str):
+            pass  # category is text, not json
+        if category == "*" or category == product:
             return True
     return False
 
@@ -710,8 +719,8 @@ def seed_competitor_exclusions(cur):
     """Gap #12: Seed ABMExclusion with competitor domains if not already present."""
     for domain in COMPETITOR_DOMAINS:
         cur.execute("""
-            INSERT INTO "ABMExclusion" (id, domain, "exclusionType", scope, reason, "createdAt")
-            VALUES (gen_random_uuid()::text, %s, 'domain', '["*"]'::jsonb, 'competitor', now())
+            INSERT INTO "ABMExclusion" (id, domain, category, reason, "addedAt", "addedBy")
+            VALUES (gen_random_uuid()::text, %s, '*', 'competitor', now(), 'expander')
             ON CONFLICT DO NOTHING
         """, (domain,))
     cur.execute("COMMIT")

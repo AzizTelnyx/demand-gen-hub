@@ -359,6 +359,7 @@ model AgentRun {
   recsCount       Int              @default(0)
   error           String?
   costUsd         Float?
+  metadata        Json?
   startedAt       DateTime?
   completedAt     DateTime?
   createdAt       DateTime         @default(now())
@@ -620,6 +621,29 @@ model ABMExclusion {
 
   @@index([domain])
   @@index([category])
+}
+
+model ABMListRule {
+  id                String   @id @default(cuid())
+  listId            String?
+  product           String
+  variant           String?
+  verticals         Json     @default("[]")
+  regions           Json     @default("[]")
+  companySizeMin    Int?
+  companySizeMax    Int?
+  productFit        String?
+  excludeVerticals  Json     @default("[]")
+  excludeCompetitors Json    @default("[]")
+  useCaseKeywords   Json     @default("[]")
+  descriptionKeywords Json  @default("[]")
+  competitorNames   Json    @default("[]")
+  targetAudienceSize Int?
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  @@index([product])
+  @@index([product, variant])
 }
 
 model ABMCampaignSegment {

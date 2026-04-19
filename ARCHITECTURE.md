@@ -2,7 +2,7 @@
 
 _Single source of truth for how the system works. Updated every time we change something._
 
-Last updated: 2026-03-16
+Last updated: 2026-04-19
 
 ---
 
@@ -53,7 +53,8 @@ Last updated: 2026-03-16
 │   ├── AgentRun (run history per agent)                       │
 │   ├── Recommendation (pending/approved/rejected)             │
 │   ├── SFOpportunity, SFAccount, SFCampaign (Salesforce)     │
-│   ├── ABMAccount, ABMList, ABMListMember                     │
+│   ├── ABMAccount (2555), ABMExclusion (~3810)            │
+│   ├── ABMCampaignSegment (287), ABMListRule             │
 │   └── BudgetAllocation, CampaignChange, WorkItem            │
 │                                                              │
 │   Knowledge Base: 38 files in knowledge/                     │
@@ -185,6 +186,10 @@ Lobster handles multi-step deterministic pipelines. Agent logic stays in Python;
 | morning-briefing.lobster | First heartbeat of day | Email + calendar + weather + agents + health |
 | memory-maintenance.lobster | Heartbeat rotation | File sizes, staleness, prune |
 | audience-hygiene-scan.lobster | Mon 5 AM (cron) | ABM audience contamination scan |
+| abm-expander.lobster | Tue 6 AM (cron) | Grow undersized ABM segments with AI research |
+| abm-pruner.lobster | Sun 5 AM (cron) | Remove zero-engagement + mismatch accounts |
+| abm-negative-builder.lobster | 1st of month 4 AM (cron) | Build exclusion lists from irrelevant patterns |
+| abm-auditor.lobster | Mon 6 AM (cron) | Weekly health scorecard + waste detection |
 
 ---
 
@@ -226,13 +231,14 @@ Lobster handles multi-step deterministic pipelines. Agent logic stays in Python;
 
 Campaign data syncs from ad platforms every 6 hours via OpenClaw cron:
 
-| Cron | Script | Platforms |
-|------|--------|-----------|
-| Campaign Sync | sync_local.py | Google Ads, StackAdapt, Reddit, LinkedIn |
-| Sync Changes | sync_changes.py | Tracks campaign changes over time |
-| LinkedIn Org Mapping | (multiple scripts) | Resolves li_org: → company domains |
+**Split sync architecture (2026-04-19):** Old combined sync (6 scripts, 600s timeout) was timing out. Now two staggered crons:
 
-Sync staleness thresholds: >12h = warning, >24h = critical.
+| Cron | Scripts | Schedule | Timeout |
+|------|---------|----------|--------|
+| Fast sync (`bda9e9f6`) | sync_local.py, sync_linkedin.py, sync_salesforce.py | Every 6h at :00 | 600s |
+| Slow sync (`863f5015`) | sync_ad_impressions.py, sync_creatives.py, sync_linkedin_impressions.py | Every 6h at :30 | 900s |
+
+Old combined cron `f2a2f45b` is disabled. All `urlopen()` calls have `timeout=60`.
 
 ---
 
@@ -287,20 +293,23 @@ Architecture gist: https://gist.github.com/AzizTelnyx/5c95cfb88077272806c223947f
 
 ---
 
-## Known Issues (as of 2026-03-16)
+## Known Issues (as of 2026-04-19)
 
-See `LAUNCH-PLAN.md` for the full audit and fix plan.
+1. `externalId` column missing from Campaign table (breaks 3 fleet agents)
+2. Hub health check can't find pm2 (PATH issue)
+3. Reddit Telegram send HTTP 400
+4. Agent success rate shows 0% for working agents (tracking bug)
+5. 17 Google Ads segments have 0 members (possibly dead lists)
+6. LinkedIn Community Management API approval stalled (since 2026-03-12)
+7. ~344 ABMAccount rows still missing country/Clearbit data (backfill running)
+8. Aziz needs to run `crontab -r` to remove old dangerous system crontab entries
 
-Summary:
-1. `CampaignContext` + `ActionLevel` missing from agent_base.py (breaks 2 agents)
-2. `externalId` column missing from Campaign table (breaks 3 fleet agents)
-3. Hub health check can't find pm2 (PATH issue)
-4. Campaign sync >18h stale on Google Ads + Reddit
-5. neg-keyword A2A version hangs (cron version works)
-6. Reddit Telegram send HTTP 400
-7. Agent success rate shows 0% for working agents (tracking bug)
-8. 4 crons in error state
-9. Reddit Ops has no cron or A2A worker
+**Fixed (2026-04-19):**
+- abm-worker-v2 Prisma client regenerated — no more schema mismatch errors
+- Sync crons split into fast + slow to prevent timeouts
+- All urllib calls have explicit timeouts
+- Agent table IDs/slugs aligned
+- Google Ads segment sizes populated (21/38 from API)
 
 ---
 

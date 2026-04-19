@@ -25,6 +25,10 @@ All agents share a knowledge base (38 files), guardrails system, approval workfl
 | 9 | **Device & Geo Optimizer** | `device-geo-optimizer.py` | Fleet daily 7 AM | Device bids, geographic performance analysis | Google Ads R/W |
 | 10 | **Landing Page Validator** | `landing-page-validator.py` | Fleet daily 7 AM | LP URLs, UTM parameters, broken link checks | Google Ads R, HTTP |
 | 15 | **Flight Auto-Extend** | `flight-auto-extend-agent.py` | Daily 6 AM | Extends StackAdapt flights nearing end date, prevents campaigns from going dark | StackAdapt R/W |
+| 16 | **ABM Negative Builder** | `abm-negative-builder-agent.py` | Monthly 1st 4 AM | Builds exclusion lists from irrelevant-domain patterns | DB R/W |
+| 17 | **ABM Expander** | `abm-expander-agent.py` | Weekly Tue 6 AM | AI research + Clearbit validation to grow undersized segments | DB R/W, Clearbit |
+| 18 | **ABM Pruner** | `abm-pruner-agent.py` | Weekly Sun 5 AM | Removes zero-engagement + relevance-mismatch accounts | DB R/W |
+| 19 | **ABM Auditor** | `abm-auditor-agent.py` | Weekly Mon 6 AM | Health scorecard + waste detection + undersized alerts | DB R |
 
 **Flight Auto-Extend SLAs:**
 - Max dead time: 24 hours (daily check ensures this)
@@ -141,7 +145,12 @@ Shared foundation every agent inherits:
 | 6:00 AM | Hub Doctor | Daily |
 | 6:00 AM | Flight Auto-Extend Agent | Daily |
 | 7:00 AM | Fleet Run (8 agents in sequence) | Daily |
-| Every 6h | Campaign Sync (all platforms + Salesforce) | 4x daily |
+| Every 6h :00 | Campaign Sync (Fast: local + LinkedIn + Salesforce) | 4x daily |
+| Every 6h :30 | Campaign Sync (Slow: impressions + creatives) | 4x daily |
+| 1st 4 AM | ABM Negative Builder | Monthly |
+| Tue 6 AM | ABM Expander | Weekly |
+| Sun 5 AM | ABM Pruner | Weekly |
+| Mon 6 AM | ABM Auditor | Weekly |
 
 ---
 
@@ -237,9 +246,38 @@ For any orchestration layer or cross-team dispatch:
 
 ## Immediate Priorities
 
-1. Fix StackAdapt GQL connector (unblocks 3 agents)
-2. Fix Landing Page Validator (hung runs)
-3. Investigate PM2 restarts (277+)
-4. Begin Phase 1 agent migration (Neg Keyword, Budget Pacing, Google Ads Optimizer)
-5. Follow up on LinkedIn API scope
-6. Align interface contract with AEO fleet for cross-team coordination
+1. Fix Landing Page Validator (hung runs)
+2. Investigate PM2 restarts (277+)
+3. Begin Phase 1 agent migration (Neg Keyword, Budget Pacing, Google Ads Optimizer)
+4. Follow up on LinkedIn API scope + Community Management API approval
+5. Align interface contract with AEO fleet for cross-team coordination
+6. Aziz must run `crontab -r` to remove old dangerous system crontab entries
+7. Investigate 17 Google Ads segments with 0 members
+8. Complete Clearbit/country backfill for remaining ~344 ABMAccount rows
+
+## ABM Agent Details
+
+All ABM agents use Lobster workflows for orchestration:
+- `workflows/abm-expander.lobster` — preview → approve → execute
+- `workflows/abm-pruner.lobster` — preview → approve → execute
+- `workflows/abm-negative-builder.lobster` — run → report
+- `workflows/abm-auditor.lobster` — run → report (read-only, no approval needed)
+
+Expander is the only ABM agent that uses LLM (AI research step). All others are fully deterministic.
+All support `--dry-run` flag.
+
+### ABM DB Tables
+| Table | Rows | Purpose |
+|-------|------|---------|
+| ABMAccount | 2,555 | Companies with Clearbit data (domain, country, desc, employees, industry) |
+| ABMExclusion | ~3,810 | Excluded domains (competitors, ISPs, hospitals, etc.) |
+| ABMCampaignSegment | 287 | Campaign-segment pairs with performance + health flags + segment sizes |
+| ABMList / ABMListMember | — | ABM list membership |
+| ABMListRule | — | Rules for segment building |
+
+### Sync Cron Architecture (updated 2026-04-19)
+Old single cron (6 scripts, 600s timeout) kept timing out. Split into:
+- **Fast sync** (cron `bda9e9f6`): sync_local.py, sync_linkedin.py, sync_salesforce.py — every 6h at :00, 600s timeout
+- **Slow sync** (cron `863f5015`): sync_ad_impressions.py, sync_creatives.py, sync_linkedin_impressions.py — every 6h at :30, 900s timeout
+- Old combined cron `f2a2f45b` disabled
+- All `urllib.request.urlopen()` calls have `timeout=60` to prevent hangs

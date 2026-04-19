@@ -190,23 +190,29 @@ class StackAdaptConnector:
 
         return all_success
 
-    def attach_audience_to_campaign(self, audience_id, campaign_id):
+
+    def _read_campaign_audience(self, campaign_id):
+        """Read campaign metadata needed for upsertCampaign.
+        Returns dict with id, campaignGroupId, subtype_key, customSegmentIds, customSegmentExclusionIds
+        or None if campaign not found.
         """
-        Attach an ABM audience to a campaign via upsertCampaign.
-        Reads current audience settings, adds the new segment ID, and updates.
+        # Map GraphQL __typename to the CampaignInput subtype key
+        typename_map = {
+            "DisplayCampaign": "display",
+            "NativeCampaign": "native",
+            "VideoCampaign": "video",
+            "CtvCampaign": "ctv",
+            "DoohCampaign": "dooh",
+            # AudioCampaign doesn't exist as a separate type in the API
+        }
         
-        Args:
-            audience_id: StackAdapt custom segment ID
-            campaign_id: StackAdapt campaign ID
-        
-        Returns: success (bool)
-        """
-        # 1. Read current campaign audience settings
         query = """
         {
           campaigns(filterBy: {ids: [%s]}, first: 1) {
             nodes {
               id
+              __typename
+              campaignGroup { id }
               audience {
                 customSegments { nodes { id name } }
                 customSegmentExclusions { nodes { id name } }
@@ -221,36 +227,63 @@ class StackAdaptConnector:
         
         if not campaigns:
             logger.error(f"Campaign {campaign_id} not found")
+            return None
+        
+        camp = campaigns[0]
+        segments = camp.get("audience", {}).get("customSegments", {}).get("nodes", [])
+        exclusions = camp.get("audience", {}).get("customSegmentExclusions", {}).get("nodes", [])
+        
+        typename = camp.get("__typename", "DisplayCampaign")
+        subtype_key = typename_map.get(typename, "display")
+        
+        return {
+            "id": str(camp["id"]),
+            "campaignGroupId": int(camp["campaignGroup"]["id"]),
+            "subtype_key": subtype_key,
+            "customSegmentIds": [int(s["id"]) for s in segments],
+            "customSegmentExclusionIds": [int(e["id"]) for e in exclusions],
+        }
+
+    def attach_audience_to_campaign(self, audience_id, campaign_id):
+        """
+        Attach an ABM audience to a campaign via upsertCampaign.
+        Reads current audience settings, adds the new segment ID, and updates.
+        
+        Args:
+            audience_id: StackAdapt custom segment ID
+            campaign_id: StackAdapt campaign ID
+        
+        Returns: success (bool)
+        """
+        meta = self._read_campaign_audience(campaign_id)
+        if not meta:
             return False
         
-        target = campaigns[0]
-        
-        # 2. Build updated segment list (add new one)
-        current_segments = target.get("audience", {}).get("customSegments", {}).get("nodes", [])
-        current_ids = [str(s["id"]) for s in current_segments]
-        
-        if str(audience_id) in current_ids:
+        audience_id = int(audience_id)
+        if audience_id in meta["customSegmentIds"]:
             logger.info(f"Audience {audience_id} already attached to campaign {campaign_id}")
             return True
         
-        new_ids = current_ids + [str(audience_id)]
+        new_ids = meta["customSegmentIds"] + [audience_id]
         
-        # 3. Upsert campaign with updated audience
         upsert = """
         mutation upsertCampaign($input: CampaignInput!) {
           upsertCampaign(input: $input) {
             campaign { id name }
+            userErrors { message path }
           }
         }
         """
         
         variables = {
             "input": {
-                "display": {
-                    "id": str(campaign_id),
-                    "advertiserId": str(self.advertiser_id),
+                meta["subtype_key"]: {
+                    "id": int(campaign_id),
+                    "advertiserId": int(self.advertiser_id),
+                    "campaignGroupId": meta["campaignGroupId"],
                     "audience": {
-                        "customSegmentIds": new_ids
+                        "customSegmentIds": new_ids,
+                        "customSegmentExclusionIds": meta["customSegmentExclusionIds"],
                     }
                 }
             }
@@ -258,6 +291,11 @@ class StackAdaptConnector:
         
         try:
             result = self._graphql_request(upsert, variables)
+            errors = result.get("upsertCampaign", {}).get("userErrors", [])
+            if errors:
+                for e in errors:
+                    logger.error(f"Attach error: {e['message']} (path: {e.get('path')})")
+                return False
             campaign = result.get("upsertCampaign", {}).get("campaign", {})
             logger.info(f"Attached audience {audience_id} to campaign {campaign.get('id')} ({campaign.get('name')})")
             return True
@@ -276,56 +314,35 @@ class StackAdaptConnector:
         
         Returns: success (bool)
         """
-        # 1. Read current campaign audience settings
-        query = """
-        {
-          campaigns(filterBy: {ids: [%s]}, first: 1) {
-            nodes {
-              id
-              audience {
-                customSegments { nodes { id name } }
-                customSegmentExclusions { nodes { id name } }
-              }
-            }
-          }
-        }
-        """ % campaign_id
-        
-        result = self._graphql_request(query)
-        campaigns = result.get("campaigns", {}).get("nodes", [])
-        
-        if not campaigns:
-            logger.error(f"Campaign {campaign_id} not found")
+        meta = self._read_campaign_audience(campaign_id)
+        if not meta:
             return False
         
-        target = campaigns[0]
-        
-        # 2. Build updated segment list (remove the one)
-        current_segments = target.get("audience", {}).get("customSegments", {}).get("nodes", [])
-        current_ids = [str(s["id"]) for s in current_segments]
-        
-        if str(audience_id) not in current_ids:
+        audience_id = int(audience_id)
+        if audience_id not in meta["customSegmentIds"]:
             logger.info(f"Audience {audience_id} not attached to campaign {campaign_id}")
             return True
         
-        new_ids = [sid for sid in current_ids if sid != str(audience_id)]
+        new_ids = [sid for sid in meta["customSegmentIds"] if sid != audience_id]
         
-        # 3. Upsert campaign with updated audience
         upsert = """
         mutation upsertCampaign($input: CampaignInput!) {
           upsertCampaign(input: $input) {
             campaign { id name }
+            userErrors { message path }
           }
         }
         """
         
         variables = {
             "input": {
-                "display": {
-                    "id": str(campaign_id),
-                    "advertiserId": str(self.advertiser_id),
+                meta["subtype_key"]: {
+                    "id": int(campaign_id),
+                    "advertiserId": int(self.advertiser_id),
+                    "campaignGroupId": meta["campaignGroupId"],
                     "audience": {
-                        "customSegmentIds": new_ids
+                        "customSegmentIds": new_ids,
+                        "customSegmentExclusionIds": meta["customSegmentExclusionIds"],
                     }
                 }
             }
@@ -333,6 +350,11 @@ class StackAdaptConnector:
         
         try:
             result = self._graphql_request(upsert, variables)
+            errors = result.get("upsertCampaign", {}).get("userErrors", [])
+            if errors:
+                for e in errors:
+                    logger.error(f"Detach error: {e['message']} (path: {e.get('path')})")
+                return False
             campaign = result.get("upsertCampaign", {}).get("campaign", {})
             logger.info(f"Detached audience {audience_id} from campaign {campaign.get('id')} ({campaign.get('name')})")
             return True
@@ -351,56 +373,35 @@ class StackAdaptConnector:
         
         Returns: success (bool)
         """
-        # 1. Read current campaign audience settings
-        query = """
-        {
-          campaigns(filterBy: {ids: [%s]}, first: 1) {
-            nodes {
-              id
-              audience {
-                customSegments { nodes { id name } }
-                customSegmentExclusions { nodes { id name } }
-              }
-            }
-          }
-        }
-        """ % campaign_id
-        
-        result = self._graphql_request(query)
-        campaigns = result.get("campaigns", {}).get("nodes", [])
-        
-        if not campaigns:
-            logger.error(f"Campaign {campaign_id} not found")
+        meta = self._read_campaign_audience(campaign_id)
+        if not meta:
             return False
         
-        target = campaigns[0]
-        
-        # 2. Build updated exclusion list
-        current_exclusions = target.get("audience", {}).get("customSegmentExclusions", {}).get("nodes", []) or []
-        current_excl_ids = [str(e.get("id", e)) for e in current_exclusions]
-        
-        if str(exclusion_segment_id) in current_excl_ids:
+        exclusion_segment_id = int(exclusion_segment_id)
+        if exclusion_segment_id in meta["customSegmentExclusionIds"]:
             logger.info(f"Exclusion {exclusion_segment_id} already on campaign {campaign_id}")
             return True
         
-        new_excl_ids = current_excl_ids + [str(exclusion_segment_id)]
+        new_excl_ids = meta["customSegmentExclusionIds"] + [exclusion_segment_id]
         
-        # 3. Upsert campaign with updated exclusions
         upsert = """
         mutation upsertCampaign($input: CampaignInput!) {
           upsertCampaign(input: $input) {
             campaign { id name }
+            userErrors { message path }
           }
         }
         """
         
         variables = {
             "input": {
-                "display": {
-                    "id": str(campaign_id),
-                    "advertiserId": str(self.advertiser_id),
+                meta["subtype_key"]: {
+                    "id": int(campaign_id),
+                    "advertiserId": int(self.advertiser_id),
+                    "campaignGroupId": meta["campaignGroupId"],
                     "audience": {
-                        "customSegmentExclusionIds": new_excl_ids
+                        "customSegmentIds": meta["customSegmentIds"],
+                        "customSegmentExclusionIds": new_excl_ids,
                     }
                 }
             }
@@ -408,6 +409,11 @@ class StackAdaptConnector:
         
         try:
             result = self._graphql_request(upsert, variables)
+            errors = result.get("upsertCampaign", {}).get("userErrors", [])
+            if errors:
+                for e in errors:
+                    logger.error(f"Exclusion error: {e['message']} (path: {e.get('path')})")
+                return False
             campaign = result.get("upsertCampaign", {}).get("campaign", {})
             logger.info(f"Added exclusion {exclusion_segment_id} to campaign {campaign.get('id')}")
             return True
@@ -427,7 +433,7 @@ class StackAdaptConnector:
         query = """
         mutation deleteSegment($input: DeleteCustomSegmentInput!) {
           deleteCustomSegment(input: $input) {
-            customSegment { id name }
+            clientMutationId
           }
         }
         """
@@ -440,8 +446,7 @@ class StackAdaptConnector:
         
         try:
             result = self._graphql_request(query, variables)
-            segment = result.get("deleteCustomSegment", {}).get("customSegment", {})
-            logger.info(f"Deleted segment: {segment.get('name')} (id={segment.get('id')})")
+            logger.info(f"Deleted segment {audience_id}")
             return True
         except Exception as e:
             logger.error(f"Error deleting segment: {e}")

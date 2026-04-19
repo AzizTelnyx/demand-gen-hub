@@ -31,7 +31,7 @@ async function convertHTMLtoPNG(html: string, outputPath: string, width: number,
   const browser = await puppeteer.launch({ headless: true, args: ['--no-sandbox'] });
   try {
     const page = await browser.newPage();
-    await page.setViewport({ width, height, deviceScaleFactor: 2 });
+    await page.setViewport({ width, height, deviceScaleFactor: 1 });
     await page.setContent(html, { waitUntil: 'load', timeout: 60000 });
     await new Promise(r => setTimeout(r, 500));
     await page.screenshot({ path: outputPath, type: 'png', clip: { x: 0, y: 0, width, height } });

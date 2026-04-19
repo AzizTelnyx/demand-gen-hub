@@ -62,11 +62,19 @@ JUNK_PATTERNS = [
 # Product keywords for relevance checking (same as pruner)
 PRODUCT_KEYWORDS = {
     "AI Agent": ["ai agent", "ai voice", "voice ai", "conversational ai", "llm", "chatbot",
-                 "voicebot", "virtual agent", "autonomous agent"],
-    "Voice API": ["voice api", "voip", "sip", "pbx", "call routing", "ivr", "telephony", "cpaas"],
-    "SMS": ["sms api", "messaging", "text messaging", "a2p", "messaging api"],
-    "SIP": ["sip trunk", "sip trunking", "voip gateway", "pbx", "unified communications"],
-    "IoT SIM": ["iot sim", "iot connectivity", "cellular iot", "m2m", "esim"],
+                 "voicebot", "virtual agent", "autonomous agent",
+                 "ivr", "voip", "voice", "telephony", "sms", "communication",
+                 "messaging", "phone", "cpaas", "uccas", "ccas", "call center",
+                 "contact center"],
+    "Voice API": ["voice api", "voip", "sip", "pbx", "call routing", "ivr", "telephony", "cpaas",
+                   "voice", "communication", "phone", "messaging", "call center",
+                   "contact center", "uccas", "ccas"],
+    "SMS": ["sms api", "messaging", "text messaging", "a2p", "messaging api",
+             "communication", "voice", "phone", "cpaas"],
+    "SIP": ["sip trunk", "sip trunking", "voip gateway", "pbx", "unified communications",
+             "voice", "telephony", "communication", "call center", "uccas"],
+    "IoT SIM": ["iot sim", "iot connectivity", "cellular iot", "m2m", "esim",
+                 "connectivity", "cellular", "telematics", "sensor"],
 }
 
 
@@ -135,9 +143,18 @@ def compute_relevance_for_product(account, product):
     
     # Industry signal
     if industry:
-        tech_industries = ["software", "technology", "information", "telecommunications"]
+        tech_industries = ["software", "technology", "information", "telecommunications",
+                           "telemarketing", "call center"]
         if any(t in industry for t in tech_industries):
             score += 0.3
+    
+    # Telecom/comm override — if description has strong telecom signals,
+    # don't let "E-commerce" or other waste industry labels tank the score
+    telecom_signals = ["voice", "voip", "ivr", "sms", "telephony", "sip",
+                        "communication", "cpaas", "call center", "contact center",
+                        "messaging", "phone", "pbx"]
+    if desc and any(t in desc for t in telecom_signals):
+        score = max(score, 0.35)  # Floor for companies with telecom signals
     
     return min(score, 1.0)
 

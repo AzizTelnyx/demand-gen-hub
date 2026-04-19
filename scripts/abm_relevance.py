@@ -36,11 +36,14 @@ PRODUCT_KEYWORDS = {
             "natural language", "machine learning", "NLP", "generative",
             "SaaS", "platform", "software", "API", "cloud",
             "contact center", "call center", "customer service",
+            "IVR", "VoIP", "voice", "telephony", "SMS",
+            "communication", "messaging", "phone",
+            "CPaaS", "UCaaS", "CCaaS",
         ],
         "buyer_industries": [
             "Information Technology & Services", "Technology", "Software",
             "Telecommunications", "Artificial Intelligence",
-            "Call Center", "Telemedicine",
+            "Call Center", "Telemedicine", "Telemarketing",
         ],
         "waste_industries": [
             # Travel agencies/services — NOT travel tech (Sabre, Booking are buyers)
@@ -182,11 +185,22 @@ class RelevanceScorer:
         domain = (account.get("domain", "") or "").lower()
         
         # Hard penalty for waste industries — but only if it's the PRIMARY industry
+        # Telecom/comm keywords in description can partially override waste penalty
         primary_industry = tags[0] if tags else ""
+        telecom_override_terms = ["voice", "voip", "ivr", "sms", "telephony", "sip",
+                                   "communication", "cpaas", "call center", "contact center",
+                                   "messaging", "phone"]
+        has_telecom_signal = any(t in desc for t in telecom_override_terms)
         if primary_industry in keywords.get("waste_industries", []):
-            total = min(total, 0.25)
+            if has_telecom_signal:
+                total = min(total, 0.45)  # Telecom signal partially overrides waste
+            else:
+                total = min(total, 0.25)
         elif any(t in keywords.get("waste_industries", []) for t in tags[1:3]):
-            total = min(total, 0.4)
+            if has_telecom_signal:
+                total = min(total, 0.55)  # Partial override
+            else:
+                total = min(total, 0.4)
         
         # Integration/middleware penalty — they connect TO APIs but don't BUY them
         integration_terms = keywords.get("integration_exclusions", [])
@@ -274,7 +288,9 @@ class RelevanceScorer:
         ratio = len(matches) / len(all_keywords)
         
         # Also consider match quality — some keywords are stronger signals
-        strong_signals = ["SaaS", "platform", "software", "API", "AI", "voice", "automation"]
+        strong_signals = ["SaaS", "platform", "software", "API", "AI", "voice", "automation",
+                           "IVR", "VoIP", "SMS", "telephony", "CPaaS", "UCaaS", "CCaaS",
+                           "communication", "messaging"]
         strong_matches = [m for m in matches if m.lower() in [s.lower() for s in strong_signals]]
         
         if strong_matches:

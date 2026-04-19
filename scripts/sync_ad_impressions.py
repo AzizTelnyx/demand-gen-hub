@@ -93,7 +93,7 @@ def gql_request(token, query, variables=None):
     req = urllib.request.Request("https://api.stackadapt.com/graphql", data=data, headers={
         "Authorization": f"Bearer {token}", "Content-Type": "application/json"
     })
-    return json.loads(urllib.request.urlopen(req).read())
+    return json.loads(urllib.request.urlopen(req, timeout=60).read())
 
 
 def get_all_sa_campaigns(token):

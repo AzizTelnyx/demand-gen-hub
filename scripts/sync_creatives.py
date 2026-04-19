@@ -319,7 +319,7 @@ def sync_stackadapt_creatives(conn):
         data=json.dumps({"query": "query { campaigns(first: 500) { edges { node { id name campaignStatus { state status } } } } }"}).encode(),
         headers={"Authorization": f"Bearer {token}", "Content-Type": "application/json"})
     try:
-        with urllib.request.urlopen(req) as resp:
+        with urllib.request.urlopen(req, timeout=60) as resp:
             camp_data = json.loads(resp.read())
     except Exception as e:
         print(f"  Campaign fetch error: {e}"); return 0
@@ -353,7 +353,7 @@ def sync_stackadapt_creatives(conn):
             data=json.dumps({"query": ads_query, "variables": {"filter": {"campaignIds": batch}}}).encode(),
             headers={"Authorization": f"Bearer {token}", "Content-Type": "application/json"})
         try:
-            with urllib.request.urlopen(req) as resp:
+            with urllib.request.urlopen(req, timeout=60) as resp:
                 ads_data = json.loads(resp.read())
         except Exception as e:
             print(f"  Ads batch error: {e}"); continue
@@ -417,7 +417,7 @@ def _fetch_linkedin_campaigns(token, account_id):
         url = f"https://api.linkedin.com/v2/adCampaignsV2?q=search&search.account.values[0]={urllib.parse.quote(account_urn)}&count=100&start={start}"
         req = urllib.request.Request(url, headers=headers_dict)
         try:
-            with urllib.request.urlopen(req) as resp:
+            with urllib.request.urlopen(req, timeout=60) as resp:
                 data = json.loads(resp.read())
         except Exception as e:
             print(f"  Campaign fetch error: {e}"); break
@@ -447,7 +447,7 @@ def sync_linkedin_batch(conn, token, account_id, campaigns_json):
         cr_url = f"https://api.linkedin.com/v2/adCreativesV2?q=search&search.campaign.values[0]={urllib.parse.quote(camp_urn)}&count=50"
         req = urllib.request.Request(cr_url, headers=headers_dict)
         try:
-            with urllib.request.urlopen(req) as resp:
+            with urllib.request.urlopen(req, timeout=60) as resp:
                 cr_data = json.loads(resp.read())
         except:
             continue
@@ -488,7 +488,7 @@ def sync_linkedin_batch(conn, token, account_id, campaigns_json):
                     try:
                         encoded = urllib.parse.quote(share_ref)
                         ugc_req = urllib.request.Request(f"https://api.linkedin.com/v2/ugcPosts/{encoded}", headers=headers_dict)
-                        with urllib.request.urlopen(ugc_req) as resp:
+                        with urllib.request.urlopen(ugc_req, timeout=60) as resp:
                             ugc = json.loads(resp.read())
                         sc = ugc.get("specificContent", {}).get("com.linkedin.ugc.ShareContent", {})
                         commentary = sc.get("shareCommentary", {}).get("text", "")

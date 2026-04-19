@@ -192,49 +192,294 @@ class StackAdaptConnector:
 
     def attach_audience_to_campaign(self, audience_id, campaign_id):
         """
-        Attach an ABM audience to a campaign.
-        This is done via campaign update (upsertCampaign) with the audience as a targeting criterion.
+        Attach an ABM audience to a campaign via upsertCampaign.
+        Reads current audience settings, adds the new segment ID, and updates.
         
-        Note: StackAdapt doesn't have a dedicated attach mutation.
-        Audiences are attached via the campaign UI or campaign creation/update.
-        This is a placeholder for future implementation.
+        Args:
+            audience_id: StackAdapt custom segment ID
+            campaign_id: StackAdapt campaign ID
         
         Returns: success (bool)
         """
-        logger.warning("attach_audience_to_campaign: StackAdapt requires campaign update via UI or upsertCampaign mutation. Not yet implemented.")
-        return False
-
-    # ─── Read Operations ────────────────────────────────
-
-    def list_audiences(self, limit=100):
-        """
-        List all profile lists (audiences) for the advertiser.
-        Returns: list of {id, name, size}
-        """
+        # 1. Read current campaign audience settings
         query = """
-        query listProfileLists($advertiserId: ID!, $limit: Int) {
-            advertiser(id: $advertiserId) {
-                profileLists(first: $limit) {
-                    edges {
-                        node {
-                            id
-                            name
-                            size
-                            campaignsCount
-                        }
+        {
+          campaigns(filterBy: {ids: [%s]}, first: 1) {
+            nodes {
+              id
+              audience {
+                customSegments { nodes { id name } }
+                customSegmentExclusions { nodes { id name } }
+              }
+            }
+          }
+        }
+        """ % campaign_id
+        
+        result = self._graphql_request(query)
+        campaigns = result.get("campaigns", {}).get("nodes", [])
+        
+        if not campaigns:
+            logger.error(f"Campaign {campaign_id} not found")
+            return False
+        
+        target = campaigns[0]
+        
+        # 2. Build updated segment list (add new one)
+        current_segments = target.get("audience", {}).get("customSegments", {}).get("nodes", [])
+        current_ids = [str(s["id"]) for s in current_segments]
+        
+        if str(audience_id) in current_ids:
+            logger.info(f"Audience {audience_id} already attached to campaign {campaign_id}")
+            return True
+        
+        new_ids = current_ids + [str(audience_id)]
+        
+        # 3. Upsert campaign with updated audience
+        upsert = """
+        mutation upsertCampaign($input: CampaignInput!) {
+          upsertCampaign(input: $input) {
+            campaign { id name }
+          }
+        }
+        """
+        
+        variables = {
+            "input": {
+                "display": {
+                    "id": str(campaign_id),
+                    "advertiserId": str(self.advertiser_id),
+                    "audience": {
+                        "customSegmentIds": new_ids
                     }
                 }
             }
         }
+        
+        try:
+            result = self._graphql_request(upsert, variables)
+            campaign = result.get("upsertCampaign", {}).get("campaign", {})
+            logger.info(f"Attached audience {audience_id} to campaign {campaign.get('id')} ({campaign.get('name')})")
+            return True
+        except Exception as e:
+            logger.error(f"Error attaching audience to campaign: {e}")
+            return False
+
+    def detach_audience_from_campaign(self, audience_id, campaign_id):
         """
+        Remove an ABM audience from a campaign via upsertCampaign.
+        Reads current audience settings, removes the segment ID, and updates.
+        
+        Args:
+            audience_id: StackAdapt custom segment ID
+            campaign_id: StackAdapt campaign ID
+        
+        Returns: success (bool)
+        """
+        # 1. Read current campaign audience settings
+        query = """
+        {
+          campaigns(filterBy: {ids: [%s]}, first: 1) {
+            nodes {
+              id
+              audience {
+                customSegments { nodes { id name } }
+                customSegmentExclusions { nodes { id name } }
+              }
+            }
+          }
+        }
+        """ % campaign_id
+        
+        result = self._graphql_request(query)
+        campaigns = result.get("campaigns", {}).get("nodes", [])
+        
+        if not campaigns:
+            logger.error(f"Campaign {campaign_id} not found")
+            return False
+        
+        target = campaigns[0]
+        
+        # 2. Build updated segment list (remove the one)
+        current_segments = target.get("audience", {}).get("customSegments", {}).get("nodes", [])
+        current_ids = [str(s["id"]) for s in current_segments]
+        
+        if str(audience_id) not in current_ids:
+            logger.info(f"Audience {audience_id} not attached to campaign {campaign_id}")
+            return True
+        
+        new_ids = [sid for sid in current_ids if sid != str(audience_id)]
+        
+        # 3. Upsert campaign with updated audience
+        upsert = """
+        mutation upsertCampaign($input: CampaignInput!) {
+          upsertCampaign(input: $input) {
+            campaign { id name }
+          }
+        }
+        """
+        
         variables = {
-            "advertiserId": str(self.advertiser_id),
-            "limit": limit,
+            "input": {
+                "display": {
+                    "id": str(campaign_id),
+                    "advertiserId": str(self.advertiser_id),
+                    "audience": {
+                        "customSegmentIds": new_ids
+                    }
+                }
+            }
         }
         
-        result = self._graphql_request(query, variables)
-        edges = result.get("advertiser", {}).get("profileLists", {}).get("edges", [])
-        return [edge["node"] for edge in edges]
+        try:
+            result = self._graphql_request(upsert, variables)
+            campaign = result.get("upsertCampaign", {}).get("campaign", {})
+            logger.info(f"Detached audience {audience_id} from campaign {campaign.get('id')} ({campaign.get('name')})")
+            return True
+        except Exception as e:
+            logger.error(f"Error detaching audience from campaign: {e}")
+            return False
+
+    def add_exclusion_to_campaign(self, exclusion_segment_id, campaign_id):
+        """
+        Add a segment as an exclusion target on a campaign.
+        Used by Negative Builder to push exclusion lists.
+        
+        Args:
+            exclusion_segment_id: StackAdapt custom segment ID to use as exclusion
+            campaign_id: StackAdapt campaign ID
+        
+        Returns: success (bool)
+        """
+        # 1. Read current campaign audience settings
+        query = """
+        {
+          campaigns(filterBy: {ids: [%s]}, first: 1) {
+            nodes {
+              id
+              audience {
+                customSegments { nodes { id name } }
+                customSegmentExclusions { nodes { id name } }
+              }
+            }
+          }
+        }
+        """ % campaign_id
+        
+        result = self._graphql_request(query)
+        campaigns = result.get("campaigns", {}).get("nodes", [])
+        
+        if not campaigns:
+            logger.error(f"Campaign {campaign_id} not found")
+            return False
+        
+        target = campaigns[0]
+        
+        # 2. Build updated exclusion list
+        current_exclusions = target.get("audience", {}).get("customSegmentExclusions", {}).get("nodes", []) or []
+        current_excl_ids = [str(e.get("id", e)) for e in current_exclusions]
+        
+        if str(exclusion_segment_id) in current_excl_ids:
+            logger.info(f"Exclusion {exclusion_segment_id} already on campaign {campaign_id}")
+            return True
+        
+        new_excl_ids = current_excl_ids + [str(exclusion_segment_id)]
+        
+        # 3. Upsert campaign with updated exclusions
+        upsert = """
+        mutation upsertCampaign($input: CampaignInput!) {
+          upsertCampaign(input: $input) {
+            campaign { id name }
+          }
+        }
+        """
+        
+        variables = {
+            "input": {
+                "display": {
+                    "id": str(campaign_id),
+                    "advertiserId": str(self.advertiser_id),
+                    "audience": {
+                        "customSegmentExclusionIds": new_excl_ids
+                    }
+                }
+            }
+        }
+        
+        try:
+            result = self._graphql_request(upsert, variables)
+            campaign = result.get("upsertCampaign", {}).get("campaign", {})
+            logger.info(f"Added exclusion {exclusion_segment_id} to campaign {campaign.get('id')}")
+            return True
+        except Exception as e:
+            logger.error(f"Error adding exclusion to campaign: {e}")
+            return False
+
+    def delete_audience(self, audience_id):
+        """
+        Delete a custom segment (ABM audience) from StackAdapt.
+        
+        Args:
+            audience_id: StackAdapt custom segment ID
+        
+        Returns: success (bool)
+        """
+        query = """
+        mutation deleteSegment($input: DeleteCustomSegmentInput!) {
+          deleteCustomSegment(input: $input) {
+            customSegment { id name }
+          }
+        }
+        """
+        
+        variables = {
+            "input": {
+                "id": str(audience_id)
+            }
+        }
+        
+        try:
+            result = self._graphql_request(query, variables)
+            segment = result.get("deleteCustomSegment", {}).get("customSegment", {})
+            logger.info(f"Deleted segment: {segment.get('name')} (id={segment.get('id')})")
+            return True
+        except Exception as e:
+            logger.error(f"Error deleting segment: {e}")
+            return False
+
+    # ─── Read Operations ────────────────────────────────
+
+    def list_audiences(self, limit=200):
+        """
+        List all custom segments (ABM audiences) for the advertiser.
+        Uses the root-level campaigns query to find attached segments,
+        then deduplicates to get unique audience list.
+        Returns: list of {id, name, size}
+        """
+        query = """
+        {
+          campaigns(filterBy: {advertiserIds: [%s]}, first: 200) {
+            nodes {
+              audience {
+                customSegments { nodes { id name size duidSize } }
+              }
+            }
+          }
+        }
+        """ % self.advertiser_id
+        
+        result = self._graphql_request(query)
+        campaigns = result.get("campaigns", {}).get("nodes", [])
+        
+        # Deduplicate segments by ID
+        seen = {}
+        for camp in campaigns:
+            segments = camp.get("audience", {}).get("customSegments", {}).get("nodes", [])
+            for seg in segments:
+                if seg["id"] not in seen:
+                    seen[seg["id"]] = seg
+        
+        return list(seen.values())
 
     def get_campaign_by_name(self, campaign_name):
         """
@@ -252,37 +497,22 @@ class StackAdaptConnector:
     def list_campaigns(self, status=None, limit=200):
         """
         List campaigns for the advertiser.
-        Uses the daaMetadata connection on the advertiser.
+        Uses the root-level campaigns query with filterBy.
         Returns: list of {id, name, status}
         """
         query = """
-        query listCampaigns($advertiserId: ID!, $limit: Int) {
-            advertiser(id: $advertiserId) {
-                daaMetadata {
-                    campaigns(first: $limit) {
-                        edges {
-                            node {
-                                id
-                                name
-                                status
-                            }
-                        }
-                    }
-                }
+        {
+          campaigns(filterBy: {advertiserIds: [%s]}, first: %d) {
+            nodes {
+              id
+              name
             }
+          }
         }
-        """
-        variables = {
-            "advertiserId": str(self.advertiser_id),
-            "limit": limit,
-        }
+        """ % (self.advertiser_id, limit)
         
-        result = self._graphql_request(query, variables)
-        # Try multiple paths as the schema may vary
-        edges = (
-            result.get("advertiser", {}).get("daaMetadata", {}).get("campaigns", {}).get("edges", [])
-        )
-        campaigns = [edge["node"] for edge in edges]
+        result = self._graphql_request(query)
+        campaigns = result.get("campaigns", {}).get("nodes", [])
         
         if status:
             campaigns = [c for c in campaigns if c.get("status") == status]

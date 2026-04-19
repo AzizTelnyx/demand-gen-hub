@@ -21,7 +21,8 @@
     "test-v8": "tsx scripts/test-v8.ts",
     "linkedin": "tsx scripts/linkedin-1200x627.ts",
     "linkedin-light": "tsx scripts/linkedin-light.ts",
-    "linkedin-v2": "tsx scripts/linkedin-v2.ts"
+    "linkedin-v2": "tsx scripts/linkedin-v2.ts",
+    "dynamic": "tsx scripts/dynamic-banner.ts"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.72.1",

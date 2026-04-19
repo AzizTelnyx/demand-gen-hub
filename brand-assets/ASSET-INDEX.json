@@ -1,0 +1,158 @@
+{
+  "version": "1.0",
+  "updated": "2026-04-19",
+  "categories": {
+    "composedVisuals": {
+      "description": "Pre-composed scenes with people, phones, UI - ready for ads",
+      "assets": [
+        {
+          "id": "warm-transfers",
+          "path": "telnyx-assets/_NEW_Collection_Product-Features/01_Voice-AI-Agent/Voice-AI-Agent_Feature_Warm transfers/Voice-AI-Agent_Feature_Warm transfers900x620.png",
+          "description": "Person on phone with call transfer UI mockup, gradient background",
+          "useFor": ["voice-ai", "call-center", "enterprise"],
+          "background": "gradient",
+          "hasTransparency": false,
+          "dimensions": "900x620"
+        },
+        {
+          "id": "finance-multilingual",
+          "path": "telnyx-assets/_NEW_AdGen_Library/industry/use-cases/finances/industry-usecases-finance-multilingual.png",
+          "description": "AI agent chat showing language switching, gradient background",
+          "useFor": ["fintech", "multilingual", "ai-agents"],
+          "background": "gradient",
+          "hasTransparency": false
+        },
+        {
+          "id": "restaurants-reorder",
+          "path": "telnyx-assets/Industry_Visuals/Social_Assets/Restaurants/Industry_Restaurants_Reorder.png",
+          "description": "Person on phone with reorder chat bubble",
+          "useFor": ["restaurants", "food", "reorder"],
+          "background": "photo",
+          "hasTransparency": false
+        },
+        {
+          "id": "retail-ecommerce",
+          "path": "telnyx-assets/_NEW_AdGen_Library/industry/hero/industry_retail_ecommerce_hero.png",
+          "description": "Delivery person with package notification overlay",
+          "useFor": ["retail", "ecommerce", "delivery", "logistics"],
+          "background": "photo",
+          "hasTransparency": false
+        },
+        {
+          "id": "ai-agent-chat",
+          "path": "telnyx-assets/Product_Visuals/Voice_AI/Static/With background/AI agent.png",
+          "description": "Simple AI agent chat bubble on light background",
+          "useFor": ["ai-agents", "chat", "simple"],
+          "background": "light",
+          "hasTransparency": false
+        }
+      ]
+    },
+    "backgrounds": {
+      "description": "Gradient backgrounds for banners",
+      "assets": [
+        {
+          "id": "gradient-teal",
+          "path": "telnyx-assets/_NEW_AdGen_Library/backgrounds/rcs/gradient_rcs-4.png",
+          "description": "Teal/cyan gradient waves",
+          "useFor": ["any"],
+          "colors": ["#00D4CC", "#00E5E5", "#FFFFFF"]
+        }
+      ]
+    },
+    "stockPhotos": {
+      "description": "Stock photography for backgrounds",
+      "assets": [
+        {
+          "id": "finance-payment",
+          "path": "telnyx-assets/_NEW_AdGen_Library/photography/industry/finance/industry-finance-photography-tap-payment-transaction-contactless-phone-iphone.jpg",
+          "useFor": ["fintech", "payments", "mobile"],
+          "treatment": "grayscale recommended"
+        },
+        {
+          "id": "logistics-taxi",
+          "path": "telnyx-assets/_NEW_AdGen_Library/photography/industry/logistics/industry-logistics-photography-street-taxi.jpg",
+          "useFor": ["logistics", "transportation", "delivery"]
+        },
+        {
+          "id": "restaurants-takeout",
+          "path": "telnyx-assets/_NEW_AdGen_Library/photography/industry/restaurants/industry-restaurants-photography-food-takeout.jpg",
+          "useFor": ["restaurants", "food", "takeout"]
+        },
+        {
+          "id": "person-laptop-1",
+          "path": "telnyx-assets/Photography/Stock_Unsplash (Free)/01_People+Device/christin-hume-Hcfwew744z4-unsplash (1).jpg",
+          "useFor": ["remote-work", "business", "general"]
+        },
+        {
+          "id": "person-laptop-2",
+          "path": "telnyx-assets/Photography/Stock_Unsplash (Free)/01_People+Device/tim-gouw-1K9T5YiZ2WU-unsplash.jpg",
+          "useFor": ["remote-work", "business", "general"]
+        },
+        {
+          "id": "insurance",
+          "path": "telnyx-assets/Photography/Stock_Unsplash (Free)/03_Industry-Verticals/02_Insurance/md-rifat-X0bOUOFlnck-unsplash.jpg",
+          "useFor": ["insurance", "healthcare"]
+        },
+        {
+          "id": "logistics-delivery",
+          "path": "telnyx-assets/Photography/Stock_Unsplash (Free)/03_Industry-Verticals/05_Logistics/isaac-tE2br7mJZ3E-unsplash.jpg",
+          "useFor": ["logistics", "delivery", "shipping"]
+        }
+      ]
+    },
+    "icons3D": {
+      "description": "3D product icons - USE ON DARK BACKGROUNDS ONLY (have black bg)",
+      "assets": [
+        {
+          "id": "ai-star",
+          "path": "telnyx-assets/_NEW_Collection_Product-Icons/_NEW_Product-Icon-Static/Icon_Colorful_Static/00_AI/AI00050.png",
+          "description": "4-point star gradient icon",
+          "useFor": ["ai", "voice-ai"],
+          "requiresDarkBg": true
+        },
+        {
+          "id": "voice-ai-blob",
+          "path": "telnyx-assets/_NEW_Collection_Product-Icons/_NEW_Product-Icon-Static/Icon_Colorful_Static/01_Voice-AI-Agent/Voice ai_00033.png",
+          "description": "Teal/purple gradient blob",
+          "useFor": ["voice-ai", "ai-agents"],
+          "requiresDarkBg": true
+        },
+        {
+          "id": "voice-api",
+          "path": "telnyx-assets/_NEW_Collection_Product-Icons/_NEW_Product-Icon-Static/Icon_Colorful_Static/02_Voice-API/voiceAPI_00063.png",
+          "useFor": ["voice-api", "telephony"],
+          "requiresDarkBg": true
+        },
+        {
+          "id": "esim",
+          "path": "telnyx-assets/_NEW_Collection_Product-Icons/_NEW_Product-Icon-Static/Icon_Colorful_Static/03_eSIM/eSim_00033.png",
+          "useFor": ["esim", "mobile", "iot"],
+          "requiresDarkBg": true
+        },
+        {
+          "id": "rcs",
+          "path": "telnyx-assets/_NEW_Collection_Product-Icons/_NEW_Product-Icon-Static/Icon_Colorful_Static/04_RCS/RCS_00045.png",
+          "useFor": ["rcs", "messaging"],
+          "requiresDarkBg": true
+        }
+      ]
+    },
+    "patterns": {
+      "description": "Background patterns",
+      "assets": [
+        {
+          "id": "rcs-pattern",
+          "path": "telnyx-assets/_NEW_Collection_Product-Icons/_NEW_Product-Icon-Static/Pattern_Colorful_Static/04_RCS/RCS_Bkrd-4_16x9.png",
+          "description": "RCS themed background pattern"
+        }
+      ]
+    }
+  },
+  "usageRules": {
+    "3dIcons": "Only use on dark (#0A0A0A) backgrounds - they have black backgrounds baked in",
+    "composedVisuals": "Best for main banner visual - already have gradient/photo backgrounds",
+    "stockPhotos": "Apply grayscale filter for dark mode, use as-is for light mode",
+    "gradients": "Use as full banner background, overlay text on top"
+  }
+}

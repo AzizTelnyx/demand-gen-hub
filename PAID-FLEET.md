@@ -246,14 +246,15 @@ For any orchestration layer or cross-team dispatch:
 
 ## Immediate Priorities
 
-1. Fix Landing Page Validator (hung runs)
-2. Investigate PM2 restarts (277+)
-3. Begin Phase 1 agent migration (Neg Keyword, Budget Pacing, Google Ads Optimizer)
-4. Follow up on LinkedIn API scope + Community Management API approval
-5. Align interface contract with AEO fleet for cross-team coordination
-6. Aziz must run `crontab -r` to remove old dangerous system crontab entries
+1. Attach AI Agent + IoT SIM exclusion audiences to live SA campaigns
+2. Create SA campaigns for SIP, SMS, Voice API (orphaned exclusion audiences)
+3. Fix Landing Page Validator (hung runs)
+4. Investigate PM2 restarts (277+)
+5. Follow up on LinkedIn API scope + Community Management API approval
+6. Align interface contract with AEO fleet for cross-team coordination
 7. Investigate 17 Google Ads segments with 0 members
 8. Complete Clearbit/country backfill for remaining ~344 ABMAccount rows
+9. Build attribution query (StackAdapt domain impressions → SF pipeline)
 
 ## ABM Agent Details
 
@@ -270,10 +271,10 @@ All support `--dry-run` flag.
 | Table | Rows | Purpose |
 |-------|------|---------|
 | ABMAccount | 2,555 | Companies with Clearbit data (domain, country, desc, employees, industry) |
-| ABMExclusion | ~3,810 | Excluded domains (competitors, ISPs, hospitals, etc.) |
+| ABMExclusion | ~1,348 | Product-scoped exclusions by negative_builder (AI Agent 262, IoT SIM 277, SIP 271, SMS 267, Voice API 271) |
 | ABMCampaignSegment | 287 | Campaign-segment pairs with performance + health flags + segment sizes |
 | ABMList / ABMListMember | — | ABM list membership |
-| ABMListRule | — | Rules for segment building |
+| ABMListRule | 8 | ICP rules for segment building (AI Agent×4 variants, Voice API, SMS, SIP, IoT SIM) |
 
 ### Sync Cron Architecture (updated 2026-04-19)
 Old single cron (6 scripts, 600s timeout) kept timing out. Split into:
@@ -281,3 +282,23 @@ Old single cron (6 scripts, 600s timeout) kept timing out. Split into:
 - **Slow sync** (cron `863f5015`): sync_ad_impressions.py, sync_creatives.py, sync_linkedin_impressions.py — every 6h at :30, 900s timeout
 - Old combined cron `f2a2f45b` disabled
 - All `urllib.request.urlopen()` calls have `timeout=60` to prevent hangs
+
+### ABM Scoring Fix (2026-04-19)
+**Problem:** Telecom/comm companies (IVR providers, VoIP services, call centers) scored 0.0 and were excluded from AI Agent targeting. Root cause: `clearbitTags` always `[]`, AI Agent keywords lacked telecom terms.
+
+**Fix applied to both `abm_relevance.py` and `abm-negative-builder-agent.py`:**
+- AI Agent `description_keywords`: +IVR, VoIP, voice, telephony, SMS, communication, messaging, phone, CPaaS, UCaaS, CCaaS
+- AI Agent `buyer_industries`: +Telemarketing
+- `strong_signals` expanded with telecom terms
+- Waste penalty now has telecom override (desc with voice/VoIP/IVR partially overrides waste industry)
+- Negative builder `compute_relevance_for_product()` floor of 0.35 for telecom signals
+- Telemarketing + Call Center added to `tech_industries`
+
+### StackAdapt ABM Exclusion Audiences (LIVE, 2026-04-19)
+| Audience | SA ID | Domains | Status |
+|----------|-------|---------|--------|
+| ABM Exclusions - AI Agent | 2502391 | 262 | Ready to attach to 11 live SA campaigns |
+| ABM Exclusions - IoT SIM | 2502392 | 277 | Ready to attach to 2 live SA campaigns |
+| ABM Exclusions - SIP | 2502393 | 271 | Orphaned (no SA campaigns yet) |
+| ABM Exclusions - SMS | 2502394 | 267 | Orphaned (no SA campaigns yet) |
+| ABM Exclusions - Voice API | 2502395 | 271 | Orphaned (no SA campaigns yet) |

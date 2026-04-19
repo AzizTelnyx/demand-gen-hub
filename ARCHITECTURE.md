@@ -53,7 +53,7 @@ Last updated: 2026-04-19
 │   ├── AgentRun (run history per agent)                       │
 │   ├── Recommendation (pending/approved/rejected)             │
 │   ├── SFOpportunity, SFAccount, SFCampaign (Salesforce)     │
-│   ├── ABMAccount (2555), ABMExclusion (~3810)            │
+│   ├── ABMAccount (2555), ABMExclusion (~1348)             │
 │   ├── ABMCampaignSegment (287), ABMListRule             │
 │   └── BudgetAllocation, CampaignChange, WorkItem            │
 │                                                              │
@@ -302,7 +302,8 @@ Architecture gist: https://gist.github.com/AzizTelnyx/5c95cfb88077272806c223947f
 5. 17 Google Ads segments have 0 members (possibly dead lists)
 6. LinkedIn Community Management API approval stalled (since 2026-03-12)
 7. ~344 ABMAccount rows still missing country/Clearbit data (backfill running)
-8. Aziz needs to run `crontab -r` to remove old dangerous system crontab entries
+8. SIP/SMS/Voice API SA exclusion audiences are orphaned — no live SA campaigns for these products yet
+9. Attribution query not built (StackAdapt domain impressions → SF pipeline)
 
 **Fixed (2026-04-19):**
 - abm-worker-v2 Prisma client regenerated — no more schema mismatch errors
@@ -310,6 +311,10 @@ Architecture gist: https://gist.github.com/AzizTelnyx/5c95cfb88077272806c223947f
 - All urllib calls have explicit timeouts
 - Agent table IDs/slugs aligned
 - Google Ads segment sizes populated (21/38 from API)
+- ABM scoring fix: telecom/comm companies no longer false-positive excluded (IVR, VoIP, voice terms added to AI Agent keywords + telecom override in waste penalty)
+- 24 false positive exclusions removed (10 from AI Agent, 14 from Voice API/SIP/SMS)
+- StackAdapt exclusion audiences pushed live (5 audiences, 1,348 domains, 0 failures)
+- Old crontab entries removed (Aziz ran `crontab -r`)
 
 ---
 

@@ -24,8 +24,10 @@ export interface TemplateData {
 
 export interface TemplateAssets {
   logoBase64: string;
-  productIcon?: string;
-  backgroundPattern?: string;
+  productIconBase64?: string;       // 3D product icon
+  backgroundPatternBase64?: string; // Colorful pattern background
+  iconPosition?: 'right' | 'left' | 'center';
+  iconScale?: number;
 }
 
 export interface MetricCard {
@@ -167,6 +169,12 @@ export function generateDarkModeTemplateV3(
     </div>
   ` : '';
 
+  // Product icon positioning
+  const iconSize = Math.min(width, height) * (assets.iconScale || 0.5);
+  const iconPosition = assets.iconPosition || 'right';
+  const hasProductIcon = !!assets.productIconBase64;
+  const hasPatternBg = !!assets.backgroundPatternBase64;
+
   return `<!DOCTYPE html><html><head>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
@@ -180,6 +188,50 @@ export function generateDarkModeTemplateV3(
     overflow: hidden;
     position: relative;
   }
+
+  /* Pattern background overlay */
+  ${hasPatternBg ? `
+  .pattern-bg {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 70%;
+    height: 100%;
+    background-image: url('${assets.backgroundPatternBase64}');
+    background-size: cover;
+    background-position: center right;
+    opacity: 0.15;
+    mask-image: linear-gradient(to left, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0) 80%);
+    -webkit-mask-image: linear-gradient(to left, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0) 80%);
+    pointer-events: none;
+  }
+  ` : ''}
+
+  /* 3D Product icon */
+  ${hasProductIcon ? `
+  .product-icon {
+    position: absolute;
+    ${iconPosition === 'right' ? `
+      right: ${padding}px;
+      top: 50%;
+      transform: translateY(-50%);
+    ` : iconPosition === 'center' ? `
+      right: ${padding * 2}px;
+      top: 50%;
+      transform: translateY(-50%);
+    ` : `
+      left: ${padding}px;
+      top: 50%;
+      transform: translateY(-50%);
+    `}
+    width: ${iconSize}px;
+    height: ${iconSize}px;
+    object-fit: contain;
+    opacity: 0.9;
+    z-index: 1;
+    filter: drop-shadow(0 0 30px rgba(0,227,170,0.3));
+  }
+  ` : ''}
 
   /* Subtle glow effect */
   .glow-overlay {
@@ -271,7 +323,9 @@ export function generateDarkModeTemplateV3(
     height: ${Math.round(padding * 0.5)}px;
   }
 </style></head><body>
+  ${hasPatternBg ? '<div class="pattern-bg"></div>' : ''}
   <div class="glow-overlay"></div>
+  ${hasProductIcon ? `<img src="${assets.productIconBase64}" class="product-icon" alt="Product" />` : ''}
 
   <div class="content">
     <div class="text-section">
@@ -373,6 +427,11 @@ export function generateComparisonTemplateV3(
     </div>
   `;
 
+  // Product icon and pattern setup
+  const iconSize = Math.min(width, height) * (assets.iconScale || 0.35);
+  const hasProductIcon = !!assets.productIconBase64;
+  const hasPatternBg = !!assets.backgroundPatternBase64;
+
   return `<!DOCTYPE html><html><head>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
@@ -386,6 +445,37 @@ export function generateComparisonTemplateV3(
     overflow: hidden;
     position: relative;
   }
+
+  ${hasPatternBg ? `
+  .pattern-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 50%;
+    height: 100%;
+    background-image: url('${assets.backgroundPatternBase64}');
+    background-size: cover;
+    background-position: center left;
+    opacity: 0.1;
+    mask-image: linear-gradient(to right, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0) 80%);
+    -webkit-mask-image: linear-gradient(to right, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0) 80%);
+    pointer-events: none;
+  }
+  ` : ''}
+
+  ${hasProductIcon ? `
+  .product-icon {
+    position: absolute;
+    left: ${padding * 0.5}px;
+    bottom: ${padding * 1.5}px;
+    width: ${iconSize}px;
+    height: ${iconSize}px;
+    object-fit: contain;
+    opacity: 0.4;
+    z-index: 1;
+    filter: drop-shadow(0 0 20px rgba(0,227,170,0.2));
+  }
+  ` : ''}
 
   .glow-overlay {
     position: absolute;
@@ -470,7 +560,9 @@ export function generateComparisonTemplateV3(
     height: ${Math.round(padding * 0.5)}px;
   }
 </style></head><body>
+  ${hasPatternBg ? '<div class="pattern-bg"></div>' : ''}
   <div class="glow-overlay"></div>
+  ${hasProductIcon ? `<img src="${assets.productIconBase64}" class="product-icon" alt="Product" />` : ''}
 
   <div class="content">
     <div class="text-section">
@@ -569,6 +661,11 @@ export function generateStepsTemplateV3(
     </div>
   ` : '';
 
+  // Product icon and pattern setup for steps template
+  const stepsIconSize = Math.min(width, height) * (assets.iconScale || 0.4);
+  const hasStepsProductIcon = !!assets.productIconBase64;
+  const hasStepsPatternBg = !!assets.backgroundPatternBase64;
+
   return `<!DOCTYPE html><html><head>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
@@ -582,6 +679,38 @@ export function generateStepsTemplateV3(
     overflow: hidden;
     position: relative;
   }
+
+  ${hasStepsPatternBg ? `
+  .pattern-bg {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 60%;
+    height: 100%;
+    background-image: url('${assets.backgroundPatternBase64}');
+    background-size: cover;
+    background-position: center right;
+    opacity: 0.12;
+    mask-image: linear-gradient(to left, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0) 80%);
+    -webkit-mask-image: linear-gradient(to left, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0) 80%);
+    pointer-events: none;
+  }
+  ` : ''}
+
+  ${hasStepsProductIcon ? `
+  .product-icon {
+    position: absolute;
+    right: ${padding}px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: ${stepsIconSize}px;
+    height: ${stepsIconSize}px;
+    object-fit: contain;
+    opacity: 0.3;
+    z-index: 1;
+    filter: drop-shadow(0 0 25px rgba(0,227,170,0.25));
+  }
+  ` : ''}
 
   .glow-overlay {
     position: absolute;
@@ -663,7 +792,9 @@ export function generateStepsTemplateV3(
     height: ${Math.round(padding * 0.5)}px;
   }
 </style></head><body>
+  ${hasStepsPatternBg ? '<div class="pattern-bg"></div>' : ''}
   <div class="glow-overlay"></div>
+  ${hasStepsProductIcon ? `<img src="${assets.productIconBase64}" class="product-icon" alt="Product" />` : ''}
 
   <div class="content">
     <div class="text-section">
@@ -757,6 +888,11 @@ export function generateStatsGridTemplateV3(
     </div>
   ` : '';
 
+  // Product icon and pattern setup for stats grid template
+  const statsIconSize = Math.min(width, height) * (assets.iconScale || 0.35);
+  const hasStatsProductIcon = !!assets.productIconBase64;
+  const hasStatsPatternBg = !!assets.backgroundPatternBase64;
+
   return `<!DOCTYPE html><html><head>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
@@ -770,6 +906,37 @@ export function generateStatsGridTemplateV3(
     overflow: hidden;
     position: relative;
   }
+
+  ${hasStatsPatternBg ? `
+  .pattern-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 50%;
+    height: 100%;
+    background-image: url('${assets.backgroundPatternBase64}');
+    background-size: cover;
+    background-position: center left;
+    opacity: 0.1;
+    mask-image: linear-gradient(to right, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0) 80%);
+    -webkit-mask-image: linear-gradient(to right, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0) 80%);
+    pointer-events: none;
+  }
+  ` : ''}
+
+  ${hasStatsProductIcon ? `
+  .product-icon {
+    position: absolute;
+    left: ${padding}px;
+    bottom: ${padding * 1.2}px;
+    width: ${statsIconSize}px;
+    height: ${statsIconSize}px;
+    object-fit: contain;
+    opacity: 0.35;
+    z-index: 1;
+    filter: drop-shadow(0 0 20px rgba(0,227,170,0.2));
+  }
+  ` : ''}
 
   .glow-overlay {
     position: absolute;
@@ -859,7 +1026,9 @@ export function generateStatsGridTemplateV3(
     height: ${Math.round(padding * 0.5)}px;
   }
 </style></head><body>
+  ${hasStatsPatternBg ? '<div class="pattern-bg"></div>' : ''}
   <div class="glow-overlay"></div>
+  ${hasStatsProductIcon ? `<img src="${assets.productIconBase64}" class="product-icon" alt="Product" />` : ''}
 
   <div class="content">
     <div class="text-section">

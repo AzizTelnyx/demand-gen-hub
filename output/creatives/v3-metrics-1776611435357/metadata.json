@@ -1,0 +1,33 @@
+{
+  "brief": {
+    "platform": "linkedin",
+    "audience": "developers",
+    "painPoints": [
+      "high latency in Voice AI applications",
+      "slow response times affecting user experience"
+    ],
+    "coreMessage": "Voice AI offers significant latency advantages for developers",
+    "pillar": "physics",
+    "ctaSuggestion": "Discover how to reduce Voice AI latency today"
+  },
+  "copy": {
+    "headlines": [
+      "Achieve <500ms Latency",
+      "Own Your Voice AI Stack",
+      "Scale Across 140+ Countries"
+    ],
+    "greenWords": [
+      "<500ms",
+      "140+",
+      "one platform"
+    ],
+    "descriptions": [
+      "Telnyx Voice AI co-locates inference with telephony on our own network, delivering sub-500ms latency for real-time applications.",
+      "Replace 4-5 vendors with one platform that is HIPAA, SOC2, and PCI compliant, supporting 70+ languages globally."
+    ],
+    "cta": "Own The Stack",
+    "label": "VOICE AI AGENTS"
+  },
+  "templateType": "metrics",
+  "generatedAt": "2026-04-19T15:10:42.230Z"
+}

@@ -13,7 +13,9 @@
     "generate-creative-v3": "tsx scripts/generate-creative-v3.ts",
     "create-manual-creative": "tsx scripts/create-manual-creative.ts",
     "create-telnyx-creative": "tsx scripts/create-telnyx-creative.ts",
-    "create-professional": "tsx scripts/create-manual-creative-pro.ts"
+    "create-professional": "tsx scripts/create-manual-creative-pro.ts",
+    "generate-creative-v4": "tsx scripts/generate-creative-v4.ts",
+    "test-v5": "tsx scripts/test-v5.ts"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.72.1",

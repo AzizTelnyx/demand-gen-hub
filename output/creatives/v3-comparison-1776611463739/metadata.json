@@ -1,0 +1,35 @@
+{
+  "brief": {
+    "platform": "linkedin",
+    "audience": "Voice AI developers",
+    "painPoints": [
+      "Complexity of managing a multi-vendor stack",
+      "Integration challenges with multiple vendors",
+      "Performance and reliability concerns",
+      "Need for a streamlined, unified platform"
+    ],
+    "coreMessage": "Telnyx offers a unified platform that simplifies voice AI development compared to managing a complex multi-vendor stack.",
+    "pillar": "infrastructure",
+    "ctaSuggestion": "Discover how Telnyx can simplify your Voice AI development today"
+  },
+  "copy": {
+    "headlines": [
+      "Simplify Multi-Vendor Stacks",
+      "Achieve <500ms Latency",
+      "Unified Platform in 140+ Countries"
+    ],
+    "greenWords": [
+      "<500ms",
+      "140+ Countries",
+      "Unified Platform"
+    ],
+    "descriptions": [
+      "Telnyx Voice AI eliminates integration complexity by replacing 4-5 vendors with a single platform owning its network.",
+      "Ensure HIPAA/SOC2/PCI compliance and sub-500ms inference latency co-located with telephony for reliable, scalable voice AI."
+    ],
+    "cta": "Own The Stack",
+    "label": "VOICE AI AGENTS"
+  },
+  "templateType": "comparison",
+  "generatedAt": "2026-04-19T15:11:09.126Z"
+}

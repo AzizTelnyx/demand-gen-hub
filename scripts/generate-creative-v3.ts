@@ -25,6 +25,7 @@ import { getTypography, Typography } from '../src/lib/typography';
 import { selectPattern, PatternSelection } from '../src/lib/pattern-selector';
 import { selectLogo } from '../src/lib/logo-selector';
 import { Pillar } from '../src/lib/components';
+import { detectProductType, loadProductAssetsAsBase64 } from '../src/lib/product-assets';
 
 import {
   TEMPLATES_V3,
@@ -352,7 +353,10 @@ async function convertHTMLtoPNG(html: string, outputPath: string, width: number,
   try {
     const page = await browser.newPage();
     await page.setViewport({ width, height });
-    await page.setContent(html, { waitUntil: 'networkidle0' });
+    // Use 'load' instead of 'networkidle0' to avoid timeout with large base64 images
+    await page.setContent(html, { waitUntil: 'load', timeout: 60000 });
+    // Small delay to ensure images render
+    await new Promise(resolve => setTimeout(resolve, 500));
     await fs.writeFile(outputPath.replace('.png', '.html'), html);
     await page.screenshot({ path: outputPath, type: 'png', fullPage: false });
   } finally {
@@ -389,8 +393,23 @@ async function generateCreative(promptText: string) {
   console.log('\n🖼️  Loading assets...');
   const logoPath = await selectLogo('#000000'); // Dark background
   const logoBase64 = await imageToBase64(logoPath);
-  const assets: TemplateAssets = { logoBase64 };
+
+  // Load 3D product icon and pattern background
+  const productType = detectProductType(promptText);
+  console.log(`   Product type: ${productType}`);
+  const productAssets = await loadProductAssetsAsBase64(productType, 'landscape');
+
+  const assets: TemplateAssets = {
+    logoBase64,
+    productIconBase64: productAssets.iconBase64 || undefined,
+    backgroundPatternBase64: productAssets.patternBase64 || undefined,
+    iconPosition: productAssets.iconPosition,
+    iconScale: productAssets.iconScale,
+  };
+
   console.log(`   ✓ Logo loaded`);
+  if (assets.productIconBase64) console.log(`   ✓ Product icon loaded`);
+  if (assets.backgroundPatternBase64) console.log(`   ✓ Pattern background loaded`);
 
   // Step 5: Generate visuals
   const platform = brief.platform || 'linkedin';
@@ -408,7 +427,21 @@ async function generateCreative(promptText: string) {
 
   for (const size of sizes) {
     console.log(`   → ${size.label}...`);
-    const html = generateHTML(brief, copy, size.width, size.height, assets, templateType, promptText);
+
+    // Get aspect ratio for this size
+    const aspectRatio: 'landscape' | 'square' | 'portrait' =
+      size.width > size.height * 1.2 ? 'landscape' :
+      size.height > size.width * 1.2 ? 'portrait' : 'square';
+
+    // Update icon position and scale for this aspect ratio
+    const sizeAssets = await loadProductAssetsAsBase64(productType, aspectRatio);
+    const sizeSpecificAssets: TemplateAssets = {
+      ...assets,
+      iconPosition: sizeAssets.iconPosition,
+      iconScale: sizeAssets.iconScale,
+    };
+
+    const html = generateHTML(brief, copy, size.width, size.height, sizeSpecificAssets, templateType, promptText);
     const outputPath = path.join(outputDir, `${size.label}.png`);
     await convertHTMLtoPNG(html, outputPath, size.width, size.height);
   }

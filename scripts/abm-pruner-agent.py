@@ -210,27 +210,46 @@ def run_pruner(dry_run=False, limit=None, product_filter=None):
     existing_exclusions = {(row[0], row[1]) for row in cur.fetchall()}
     log(f"Existing exclusions: {len(existing_exclusions)}")
     
-    # Get enabled campaign segments (product/variant combos)
+    # Get active campaign segments (product/variant combos) from LIVE campaigns only
     query = """
-        SELECT DISTINCT "parsedProduct", "parsedVariant"
-        FROM "ABMCampaignSegment"
-        WHERE "campaignStatus" = 'enabled' AND "parsedProduct" IS NOT NULL
+        SELECT DISTINCT cs."parsedProduct", cs."parsedVariant"
+        FROM "ABMCampaignSegment" cs
+        JOIN "Campaign" c ON cs."campaignId" = c.id
+        WHERE c.status IN ('enabled', 'live', 'ACTIVE', 'active', 'LIVE')
+          AND cs."parsedProduct" IS NOT NULL
     """
     params = []
     if product_filter:
-        query += ' AND "parsedProduct" = %s'
+        query += ' AND cs."parsedProduct" = %s'
         params.append(product_filter)
     
     cur.execute(query, params)
     product_variants = [(row[0], row[1]) for row in cur.fetchall()]
-    log(f"Found {len(product_variants)} product/variant combinations to check")
+    log(f"Found {len(product_variants)} product/variant combinations from active campaigns")
     
-    # Get all enriched accounts
-    cur.execute("""
-        SELECT id, domain, company, "clearbitDesc", "clearbitTags",
-               "clearbitTech", industry, "employeeCount", "createdAt"
-        FROM "ABMAccount"
-        WHERE domain IS NOT NULL AND domain != ''
+    # Get accounts that are NOT already excluded and have enrichment data
+    # Only evaluate accounts NOT already handled by negative_builder (which uses the same scoring)
+    # The pruner catches accounts that became irrelevant AFTER initial targeting
+    last_run_condition = ""
+    cur.execute('SELECT max("completedAt") FROM "AgentRun" WHERE "agentId" = %s AND status = %s',
+                (AGENT_SLUG, 'done'))
+    last_run = cur.fetchone()[0]
+    if last_run:
+        # Only evaluate accounts added/modified since last successful run
+        last_run_condition = f' AND a."createdAt" > \'{last_run.isoformat()}\''
+        log(f"Last successful run: {last_run}. Only evaluating accounts added since then.")
+    else:
+        # First run — only evaluate accounts not already processed by negative_builder
+        log(f"No previous run found. Evaluating accounts not in ABMExclusion from negative_builder.")
+    
+    cur.execute(f"""
+        SELECT a.id, a.domain, a.company, a."clearbitDesc", a."clearbitTags",
+               a."clearbitTech", a.industry, a."employeeCount", a."createdAt"
+        FROM "ABMAccount" a
+        WHERE a.domain IS NOT NULL AND a.domain != ''
+          AND (a."clearbitDesc" IS NOT NULL OR a."clearbitTags" IS NOT NULL
+               OR a."clearbitTech" IS NOT NULL OR a.industry IS NOT NULL)
+          {last_run_condition}
     """)
     accounts = cur.fetchall()
     log(f"Accounts to evaluate: {len(accounts)}")
@@ -243,34 +262,43 @@ def run_pruner(dry_run=False, limit=None, product_filter=None):
         "auto_excluded": 0,
         "flagged_for_review": 0,
         "already_excluded": 0,
-        "exclusions_by_scope": defaultdict(int),
+        "exclusions_by_category": defaultdict(int),
         "review_candidates": [],
         "auto_exclusions": [],
     }
     
     # Score each account against each product/variant
+    # Only score accounts NOT already excluded for that product — skip if already in ABMExclusion
+    seen_domains_per_product = defaultdict(set)  # Track domains we've already decided on per product
+    
     for product, variant in product_variants:
         product_exclusions = []
         product_reviews = []
+        category = product  # ABMExclusion uses product as category
         
         log(f"\n--- Evaluating: {product}/{variant or 'generic'} ---")
         
         for acct in accounts:
-            acct_id, domain, company, desc, tags, tech, industry, emp_count, created = acct
+            acct_id, domain, company, desc, tags, tech, acct_industry, emp_count, created = acct
+            
+            # Skip if we already processed this domain for this product (dedup across variants)
+            if domain in seen_domains_per_product[product]:
+                continue
+            seen_domains_per_product[product].add(domain)
             
             # Safety gate
             if domain in sf_protected:
                 results["sf_blocked"] += 1
                 continue
             
-            # Learning period
-            if created and created > datetime.utcnow() - timedelta(days=LEARNING_PERIOD_DAYS):
+            # Learning period — skip if account has enrichment data (vetted by sync)
+            has_enrichment = desc or tags or tech or acct_industry
+            if not has_enrichment and created and created > datetime.utcnow() - timedelta(days=LEARNING_PERIOD_DAYS):
                 results["learning_period_blocked"] += 1
                 continue
             
-            # Already excluded for this product/scope?
-            category = f"{product}/{variant}" if variant else product
-            if (domain, scope) in existing_exclusions or (domain, "*") in existing_exclusions:
+            # Already excluded for this product/category?
+            if (domain, category) in existing_exclusions:
                 results["already_excluded"] += 1
                 continue
             
@@ -279,27 +307,25 @@ def run_pruner(dry_run=False, limit=None, product_filter=None):
                 "clearbitDesc": desc,
                 "clearbitTags": tags,
                 "clearbitTech": tech,
-                "industry": industry,
+                "industry": acct_industry,
                 "employeeCount": emp_count,
             }
             relevance = compute_relevance_score(account_data, product, variant)
             
             if relevance < RELEVANCE_CUTOFF:
-                # Very low relevance — candidate for exclusion
                 product_exclusions.append({
                     "domain": domain,
                     "company": company,
                     "relevance": round(relevance, 3),
-                    "scope": scope,
+                    "category": category,
                     "reason": f"Low relevance ({relevance:.2f}) to {product}/{variant or 'generic'}",
                 })
             elif relevance < RELEVANCE_REVIEW:
-                # Marginal relevance — flag for review
                 product_reviews.append({
                     "domain": domain,
                     "company": company,
                     "relevance": round(relevance, 3),
-                    "scope": scope,
+                    "category": category,
                     "reason": f"Marginal relevance ({relevance:.2f}) to {product}/{variant or 'generic'}",
                 })
         
@@ -308,7 +334,6 @@ def run_pruner(dry_run=False, limit=None, product_filter=None):
         
         # Process exclusions
         if len(product_exclusions) <= AUTO_EXCLUDE_LIMIT:
-            # Auto-execute small batches
             for exc in product_exclusions:
                 if not dry_run:
                     try:
@@ -316,24 +341,23 @@ def run_pruner(dry_run=False, limit=None, product_filter=None):
                             '''INSERT INTO "ABMExclusion" (id, domain, category, reason, "notes", "addedAt", "addedBy")
                                VALUES (gen_random_uuid()::text, %s, %s, %s, %s, NOW(), 'pruner')
                                ON CONFLICT DO NOTHING''',
-                            (exc["domain"], exc["category"], exc["reason"], f"Auto-excluded by ABM Pruner (relevance={exc["relevance"]})")
+                            (exc["domain"], exc["category"], exc["reason"],
+                             f"Auto-excluded by ABM Pruner (relevance={exc['relevance']})")
                         )
                         results["auto_excluded"] += 1
-                        results["exclusions_by_scope"][exc["category"]] += 1
-                        log(f"  ✅ Excluded: {exc['domain']} ({exc['scope']}, relevance={exc['relevance']})")
+                        results["exclusions_by_category"][exc["category"]] += 1
+                        log(f"  ✅ Excluded: {exc['domain']} ({exc['category']}, relevance={exc['relevance']})")
                     except Exception as e:
                         log(f"  ❌ Failed to exclude {exc['domain']}: {e}", "WARN")
                 else:
-                    log(f"  🔍 DRY RUN: Would exclude {exc['domain']} ({exc['scope']}, relevance={exc['relevance']})")
+                    log(f"  🔍 DRY RUN: Would exclude {exc['domain']} ({exc['category']}, relevance={exc['relevance']})")
                     results["auto_exclusions"].append(exc)
         else:
-            # Too many — flag for human review
             for exc in product_exclusions:
                 results["review_candidates"].append(exc)
                 results["flagged_for_review"] += 1
             log(f"  🚫 {len(product_exclusions)} exclusions need human approval (>{AUTO_EXCLUDE_LIMIT})")
         
-        # Add review candidates
         for rev in product_reviews:
             results["review_candidates"].append(rev)
             results["flagged_for_review"] += 1
@@ -350,8 +374,8 @@ def run_pruner(dry_run=False, limit=None, product_filter=None):
     log(f"Already excluded: {results['already_excluded']}")
     log(f"Auto-excluded: {results['auto_excluded']}")
     log(f"Flagged for review: {results['flagged_for_review']}")
-    for scope, count in sorted(results["exclusions_by_scope"].items()):
-        log(f"  {scope}: {count}")
+    for category, count in sorted(results["exclusions_by_category"].items()):
+        log(f"  {category}: {count}")
     
     # Log to DB
     log_agent_run(results, dry_run)

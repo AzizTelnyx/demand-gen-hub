@@ -1,0 +1,41 @@
+{
+  "brief": {
+    "platform": "",
+    "format": "video",
+    "audience": "",
+    "painPoints": [],
+    "coreMessage": "Demonstrating call recording and real-time transcription capabilities of Voice API",
+    "pillar": "infrastructure",
+    "adCopyExample": "",
+    "ctaSuggestion": "See Demo"
+  },
+  "copy": {
+    "headlines": [
+      "Record Calls and Transcribe in Real-Time with Sub-500ms Latency",
+      "Voice API with 140+ Country Coverage and Instant Transcription",
+      "Secure Call Recording and Live Transcription on a Single Platform",
+      "Voice AI Powered by Telnyx’s Own Network for Low Latency",
+      "HIPAA/SOC2/PCI Compliant Voice API with Real-Time Call Transcription"
+    ],
+    "descriptions": [
+      "Use Telnyx Voice API to capture call recordings and generate transcripts instantly with inference co-located on the telephony network, ensuring under 500ms latency.",
+      "Deploy voice applications in 70+ languages across 140+ countries with a single platform that integrates call recording and real-time transcription while maintaining HIPAA, SOC2, and PCI compliance.",
+      "Telnyx’s integrated Voice API provides simultaneous call recording and transcription, leveraging a proprietary network to reduce latency and simplify infrastructure management."
+    ],
+    "cta": "Learn More"
+  },
+  "pattern": {
+    "pattern": "product-highlight",
+    "confidence": 0.9,
+    "product": "voice-api",
+    "visualizationComponent": "none",
+    "showProductScreenshot": true,
+    "showIndustryPhoto": false,
+    "reasons": [
+      "Product highlight for voice-api with 4 product keywords",
+      "Will show voice-api product screenshot"
+    ]
+  },
+  "generatedAt": "2026-04-19T12:36:51.825Z",
+  "generator": "creative-generator-v2"
+}

@@ -1,0 +1,1049 @@
+#!/usr/bin/env python3
+"""
+ABM Expander Agent v2
+======================
+Grows undersized ABM lists with companies that have a USE CASE for the campaign.
+
+7-step pipeline:
+1. Find undersized segments (budget-aware, geo-aware)
+2. AI Research — find candidate companies via LLM (variant-aware prompting)
+3. Clearbit validate — confirm firmographics + retry 202s + hallucination check
+4. Salesforce cross-check — skip only Customers/Partners, pass Prospects/ABM Targets
+5. Relevance score — weighted formula (description 40%, tags 30%, tech 15%, size 15%) with variant-aware tags
+6. Cross-campaign dedup — check by list + by segment ID (catches shared segments)
+7. Execute — add to DB + flag for platform upload + post review candidates to Telegram
+
+Model strategy: gpt-4.1-mini via LiteLLM for research (fast, cheap).
+                 Fallback: claude-3-5-haiku via LiteLLM if gpt-4.1-mini fails.
+
+Run: python3 scripts/abm-expander-agent.py [--dry-run] [--limit N] [--product AI_Agent]
+Cron: Weekly Tuesday 5 AM PST
+"""
+
+import json
+import os
+import sys
+import time
+import argparse
+import urllib.request
+import urllib.parse
+import urllib.error
+import traceback
+import uuid as uuid_mod
+from datetime import datetime, timezone, timedelta
+from difflib import SequenceMatcher
+
+import psycopg2
+import requests
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+
+# ─── Config ───────────────────────────────────────────
+
+AGENT_SLUG = "abm-expander"
+AGENT_NAME = "ABM Expander Agent v2"
+
+DB_URL = "postgresql://localhost:5432/dghub"
+PSQL = "/opt/homebrew/Cellar/postgresql@17/17.8/bin/psql"
+LOG_DIR = os.path.expanduser("~/.openclaw/workspace/demand-gen-hub/logs/abm-expander")
+os.makedirs(LOG_DIR, exist_ok=True)
+
+CLEARBIT_API_KEY = "sk_6a6f1e4c6f26338d6340d688ad197d48"
+CLEARBIT_URL = "https://company.clearbit.com/v2/companies/find"
+
+# Model strategy: cheap primary, smarter fallback
+LITELLM_URL = "http://litellm-aiswe.query.prod.telnyx.io:4000/v1/chat/completions"
+LITELLM_KEY = "sk-JcJEnHgGiRKTnIdkGfv3Rw"
+LITELLM_MODEL_PRIMARY = "gpt-4.1-mini"    # Fast, cheap, good enough for research
+LITELLM_MODEL_FALLBACK = "claude-3-5-haiku-20241022"  # Smarter if primary fails
+
+# Relevance scoring weights
+W_DESCRIPTION = 0.40
+W_TAGS = 0.30
+W_TECH = 0.15
+W_SIZE = 0.15
+
+# Intent-stage-aware thresholds
+THRESHOLDS = {
+    "TOFU": {"auto_add": 0.6, "review": 0.35},   # Looser — awareness plays
+    "MOFU": {"auto_add": 0.7, "review": 0.4},    # Default
+    "BOFU": {"auto_add": 0.8, "review": 0.5},    # Stricter — targeting buyers
+    "UPSELL": {"auto_add": 0.8, "review": 0.5},  # Same as BOFU
+    "default": {"auto_add": 0.7, "review": 0.4},
+}
+
+# Platform minimum segment sizes (base + budget-scaled)
+BASE_MIN_SEGMENT_SIZE = {"linkedin": 300, "stackadapt": 500, "google_ads": 100}
+# If campaign is spending $X/mo, segment should be at least X*0.5
+BUDGET_SEGMENT_FACTOR = 0.5
+
+# Geo mapping from campaign name tokens to Clearbit country codes
+GEO_MAP = {
+    "NA": ["US", "CA", "MX"],
+    "AMER": ["US", "CA", "MX", "BR", "AR", "CO", "CL"],
+    "EMEA": ["GB", "DE", "FR", "NL", "IE", "SE", "NO", "DK", "FI", "IT", "ES", "PT", "BE", "AT", "CH", "PL", "ZA", "AE", "IL"],
+    "APAC": ["AU", "SG", "JP", "IN", "KR", "NZ", "HK", "MY", "TH", "PH", "ID"],
+    "GLOBAL": None,  # No geo filter
+}
+
+# Variant-aware target tags (Gap #4)
+VARIANT_TAGS = {
+    "Healthcare": ["health care", "medical", "hospital", "telemedicine", "biotechnology", "pharmaceuticals", "health"],
+    "Fintech": ["financial", "banking", "payments", "fintech", "insurance", "trading"],
+    "Travel": ["travel", "hospitality", "tourism", "airlines", "booking", "lodging"],
+    "Contact Center": ["call center", "customer service", "contact center", "bpo", "outsourcing"],
+    "Social Boost": ["social media", "marketing", "advertising", "influencer"],
+    "ElevenLabs+Vapi": ["voice", "speech", "audio", "tts", "conversational"],
+    "TTS API": ["speech", "tts", "voice", "audio", "synthesis"],
+    "STT API": ["speech", "stt", "transcription", "voice", "recognition"],
+    "Sabre": ["travel", "gds", "sabre", "booking", "distribution"],
+    "Twilio": ["telecom", "voip", "communication", "cpaas", "twilio"],
+}
+
+# Competitor domains to seed in ABMExclusion (Gap #12)
+COMPETITOR_DOMAINS = [
+    "twilio.com", "vonage.com", "bandwidth.com", "plivo.com",
+    "signalwire.com", "messagebird.com", "infobip.com", "sinch.com",
+]
+
+# SF account types to SKIP (Gap #1) — only these are truly not targets
+SF_SKIP_TYPES = {"Customer", "Partner"}
+# SF opportunity stages that mean active pipeline
+SF_ACTIVE_OPP_STAGES = {"Negotiation", "Closed Won", "Proposal"}
+
+# ─── DB ────────────────────────────────────────────────
+
+def get_db():
+    return psycopg2.connect(DB_URL)
+
+
+def log(msg, level="INFO"):
+    ts = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S UTC")
+    print(f"[{ts}] [{level}] {msg}", flush=True)
+
+
+# ─── Step 1: Find Undersized Segments ─────────────────
+
+def parse_geo_from_name(campaign_name):
+    """Extract geo scope from campaign name (Gap #3)."""
+    if not campaign_name:
+        return None, None  # No filter
+    name_upper = campaign_name.upper()
+    for token, countries in GEO_MAP.items():
+        # Check for exact token match (not substring — GLOBAL before NA matters)
+        if f" {token}" in name_upper or name_upper.startswith(token):
+            return token, countries
+    return None, None
+
+
+def find_undersized_segments(cur, product_filter=None):
+    """Find campaign-segment pairs that need more companies.
+    
+    Budget-aware (Gap #9): Skip segments with zero spend AND zero impressions.
+    Geo-aware (Gap #3): Parse geo from campaign name for later filtering.
+    """
+    sql = """
+        SELECT cs."campaignId", cs."campaignName", cs.platform,
+               cs."parsedProduct", cs."parsedVariant", cs."parsedIntent",
+               cs."segmentId", cs."segmentName", cs."segmentSize",
+               cs."healthFlags", cs."impressions30d", cs."spend30d"
+        FROM "ABMCampaignSegment" cs
+        WHERE cs."campaignStatus" IN ('enabled', 'live')
+          AND cs."parsedProduct" IS NOT NULL
+          AND cs."parsedProduct" != ''
+    """
+    params = []
+    if product_filter:
+        sql += ' AND cs."parsedProduct" = %s'
+        params.append(product_filter)
+
+    cur.execute(sql, params)
+    rows = cur.fetchall()
+
+    undersized = []
+    for r in rows:
+        campaign_id, camp_name, platform, product, variant, intent, seg_id, seg_name, seg_size, flags, imp, spend = r
+        base_min = BASE_MIN_SEGMENT_SIZE.get(platform, 300)
+        # Budget-scaled minimum (Gap #9)
+        budget_min = int((spend or 0) * BUDGET_SEGMENT_FACTOR) if spend else 0
+        min_size = max(base_min, budget_min)
+
+        is_undersized = (
+            seg_size is None
+            or seg_size < min_size
+            or (flags and "undersized" in json.dumps(flags))
+        )
+
+        # Gap #9: Skip zero-delivery campaigns (enabled but not spending)
+        is_dead = (imp or 0) == 0 and (spend or 0) == 0
+
+        if is_undersized and not is_dead:
+            geo_token, geo_countries = parse_geo_from_name(camp_name)
+            undersized.append({
+                "campaignId": campaign_id,
+                "campaignName": camp_name,
+                "platform": platform,
+                "product": product,
+                "variant": variant,
+                "intent": intent,
+                "segmentId": seg_id,
+                "segmentName": seg_name,
+                "segmentSize": seg_size,
+                "healthFlags": flags,
+                "impressions30d": imp,
+                "spend30d": spend,
+                "geoToken": geo_token,
+                "geoCountries": geo_countries,
+            })
+
+    return undersized
+
+
+# ─── Step 1b: Get ICP Rules for a Product ────────────
+
+def get_icp_rules(cur, product, variant=None):
+    """Get ABMListRule for a given product/variant."""
+    sql = """
+        SELECT "ruleType", field, operator, value,
+               "useCaseKeywords", "competitorNames", "descriptionKeywords"
+        FROM "ABMListRule"
+        WHERE (field = 'parsedProduct' AND value = %s)
+           OR (field = 'parsedVariant' AND value = %s)
+    """
+    cur.execute(sql, (product, variant or ""))
+    rows = cur.fetchall()
+
+    rules = {"useCaseKeywords": [], "competitorNames": [], "descriptionKeywords": []}
+    for r in rows:
+        _, _, _, _, use_case, comp, desc_kw = r
+        if use_case:
+            rules["useCaseKeywords"].extend(use_case if isinstance(use_case, list) else json.loads(use_case))
+        if comp:
+            rules["competitorNames"].extend(comp if isinstance(comp, list) else json.loads(comp))
+        if desc_kw:
+            rules["descriptionKeywords"].extend(desc_kw if isinstance(desc_kw, list) else json.loads(desc_kw))
+
+    # Deduplicate
+    for k in rules:
+        rules[k] = list(set(rules[k]))
+
+    return rules
+
+
+# ─── Step 2: AI Research ──────────────────────────────
+
+def ai_research(segment, icp_rules, max_candidates=20):
+    """Use LLM to find candidate companies for a campaign segment.
+    
+    Gap #3: Includes geo targeting in prompt.
+    Gap #14: Tags candidates as ai_research source.
+    Uses primary model (gpt-4.1-mini), falls back to claude-3-5-haiku.
+    """
+    product = segment.get("product", "")
+    variant = segment.get("variant", "")
+    platform = segment.get("platform", "")
+    intent = segment.get("intent", "")
+    campaign_name = segment.get("campaignName", "")
+    geo_token = segment.get("geoToken")
+    geo_countries = segment.get("geoCountries")
+
+    use_case_kw = ", ".join(icp_rules.get("useCaseKeywords", [])[:10])
+    competitors = ", ".join(icp_rules.get("competitorKeywords", [])[:8])
+    desc_kw = ", ".join(icp_rules.get("descriptionKeywords", [])[:10])
+
+    # Build variant-specific guidance
+    if variant:
+        variant_guidance = f"""This is a VERTICAL-SPECIFIC campaign targeting the '{variant}' vertical.
+Find companies that BUILD or DEPLOY {product} solutions specifically for the {variant} industry.
+Do NOT suggest generic AI companies — they must have a clear {variant} use case."""
+    else:
+        variant_guidance = f"""This is a GENERIC {product} campaign — it targets companies across ALL industries.
+Find companies that BUILD or DEPLOY {product} solutions in ANY industry.
+Do NOT over-index on one vertical (e.g., don't only find healthcare companies).
+Mix across verticals: healthcare, fintech, logistics, retail, manufacturing, etc.
+If a company is only relevant to one specific vertical (e.g., only healthcare),
+they likely belong on a vertical-specific campaign instead of this generic one."""
+
+    # Build geo guidance (Gap #3)
+    if geo_token and geo_token != "GLOBAL":
+        country_names = {
+            "US": "United States", "CA": "Canada", "MX": "Mexico", "GB": "United Kingdom",
+            "DE": "Germany", "FR": "France", "NL": "Netherlands", "IE": "Ireland",
+            "AU": "Australia", "SG": "Singapore", "JP": "Japan", "IN": "India",
+        }
+        country_list = ", ".join(country_names.get(c, c) for c in (geo_countries or [])[:5])
+        geo_guidance = f"""GEOGRAPHIC RESTRICTION: This campaign targets {geo_token} ({country_list}).
+Only suggest companies headquartered in these countries.
+Do NOT suggest companies from outside this region."""
+    else:
+        geo_guidance = "This is a GLOBAL campaign — companies from any region are acceptable."
+
+    prompt = f"""You are an account-based marketing research agent for Telnyx, a cloud communications platform.
+
+CAMPAIGN CONTEXT:
+- Campaign name: {campaign_name}
+- Product: {product}
+- Variant: {variant or 'None (generic)'}
+- Intent stage: {intent}
+- Platform: {platform}
+
+{variant_guidance}
+
+{geo_guidance}
+
+ICP RULES:
+- Use case keywords: {use_case_kw}
+- Competitive alternatives: {competitors}
+- Description signals: {desc_kw}
+
+TASK: Find {max_candidates} real companies that would be good targets for this campaign.
+
+For each company, provide:
+1. Company name (exact, real company)
+2. Domain (e.g., company.com)
+3. Country code (ISO 2-letter, e.g., US, GB, DE)
+4. Why they fit: 1-sentence explanation of their use case
+
+RULES:
+- Only include REAL companies you are confident exist
+- Prefer mid-market companies (50-5000 employees)
+- Exclude telecom carriers, ISPs, and CPaaS platforms (they are competitors or infrastructure)
+- Exclude companies that are purely end-users (e.g., a hospital) without a software/AI product
+- For competitive variants, find companies currently using {competitors}
+- CRITICAL: Read the FULL campaign name above. A 'Travel' variant campaign targets travel companies,
+  not generic AI companies. A generic 'AI Agent' campaign targets cross-industry AI companies, not just one vertical.
+- Do NOT fabricate companies. If you're not confident a company exists, omit it.
+
+Return as JSON array:
+[{{"name": "Company Name", "domain": "example.com", "country": "US", "reason": "They build X for Y market"}}]"""
+
+    # Try primary model, then fallback (model strategy)
+    for model in [LITELLM_MODEL_PRIMARY, LITELLM_MODEL_FALLBACK]:
+        try:
+            payload = json.dumps({
+                "model": model,
+                "messages": [{"role": "user", "content": prompt}],
+                "max_tokens": 2000,
+                "temperature": 0.3,
+            }).encode("utf-8")
+
+            req = urllib.request.Request(
+                LITELLM_URL,
+                data=payload,
+                headers={
+                    "Content-Type": "application/json",
+                    "Authorization": f"Bearer {LITELLM_KEY}",
+                },
+            )
+            with urllib.request.urlopen(req, timeout=30) as resp:
+                data = json.loads(resp.read().decode("utf-8"))
+                content = data["choices"][0]["message"]["content"]
+
+                # Parse JSON from response
+                start = content.find("[")
+                end = content.rfind("]") + 1
+                if start >= 0 and end > start:
+                    candidates = json.loads(content[start:end])
+                    # Tag source (Gap #14)
+                    for c in candidates:
+                        c["discoverySource"] = "ai_research"
+                        c["llmModel"] = model
+                    return candidates
+                return []
+        except Exception as e:
+            log(f"AI research failed with {model}: {e}", "WARN")
+            continue
+    
+    log(f"AI research failed with all models", "ERROR")
+    return []
+
+
+# ─── Step 3: Clearbit Validate ───────────────────────
+
+def clearbit_enrich(domain):
+    """Enrich a domain via Clearbit Company API.
+    
+    Gap #6: Retry on 202 (async pending) after 3s delay.
+    """
+    try:
+        resp = requests.get(
+            CLEARBIT_URL,
+            params={"domain": domain},
+            headers={"Authorization": f"Bearer {CLEARBIT_API_KEY}"},
+            timeout=15,
+        )
+        if resp.status_code == 200:
+            return resp.json()
+        elif resp.status_code == 202:
+            # Async pending — Clearbit is fetching data. Retry after delay.
+            log(f"    Clearbit 202 for {domain} — retrying in 3s")
+            time.sleep(3)
+            resp2 = requests.get(
+                CLEARBIT_URL,
+                params={"domain": domain},
+                headers={"Authorization": f"Bearer {CLEARBIT_API_KEY}"},
+                timeout=15,
+            )
+            if resp2.status_code == 200:
+                return resp2.json()
+            log(f"    Clearbit still pending for {domain} after retry")
+        return None
+    except Exception:
+        return None
+
+
+def check_hallucination(suggested_name, clearbit_data):
+    """Gap #5: Verify LLM-suggested company matches Clearbit data.
+    
+    If the names are totally different, the LLM likely hallucinated.
+    Returns (ok, reason).
+    """
+    if not clearbit_data:
+        return True, "no_clearbit_to_compare"  # Can't verify, let it pass to scoring
+    
+    clearbit_name = (clearbit_data.get("name") or "").lower()
+    suggested_lower = suggested_name.lower()
+    
+    if not clearbit_name:
+        return True, "no_name_in_clearbit"
+    
+    # Fuzzy match — 0.5 threshold (lenient because names often differ: "Acme Inc" vs "Acme")
+    ratio = SequenceMatcher(None, suggested_lower, clearbit_name).ratio()
+    if ratio < 0.5:
+        # Check if one name contains the other (e.g., "VoiceTech" in "VoiceTech AI Inc")
+        if suggested_lower in clearbit_name or clearbit_name in suggested_lower:
+            return True, f"substring_match({ratio:.2f})"
+        return False, f"name_mismatch({ratio:.2f}): '{suggested_name}' vs '{clearbit_data.get("name")}'"
+    
+    return True, f"name_match({ratio:.2f})"
+
+
+def clearbit_validate(clearbit_data, icp_rules, product):
+    """Check if Clearbit data matches the ICP. Returns (valid, reason)."""
+    if not clearbit_data:
+        return False, "no_clearbit_data"
+
+    tags = clearbit_data.get("tags", [])
+    desc = clearbit_data.get("description", "") or ""
+    employees = (clearbit_data.get("metrics") or {}).get("employees")
+
+    # Check exclusions
+    exclude_industries = ["ISP", "Telecom Carriers", "Broadcast Media"]
+    for tag in tags:
+        if tag in exclude_industries:
+            return False, f"excluded_industry:{tag}"
+
+    # Check description keywords
+    desc_lower = desc.lower()
+    desc_matches = sum(1 for kw in icp_rules.get("descriptionKeywords", [])
+                       if kw.lower() in desc_lower)
+
+    if not desc and not tags:
+        return False, "no_signals"
+
+    return True, f"tags:{len(tags)}_desc_matches:{desc_matches}"
+
+
+# ─── Step 4: Salesforce Cross-Check ───────────────────
+
+def salesforce_batch_check(domains):
+    """Gap #8: Batch SF lookup for multiple domains at once.
+    Gap #1: Only skip Customers and Partners. Prospects/ABM Targets pass through.
+    
+    Returns: dict mapping domain -> {status, accountType, name, hasActiveOpp}
+    """
+    if not domains:
+        return {}
+    
+    try:
+        # Query SF accounts by cleanDomain (exact match, no LIKE %substr%)
+        domain_list = ", ".join(f"'{d}'" for d in domains)
+        query = f"""SELECT Id, Name, Website, Type, CleanDomain__c FROM Account 
+                   WHERE CleanDomain__c IN ({domain_list}) LIMIT 100"""
+        result = subprocess.run(
+            ["sf", "data", "query", "--target-org", "telnyx-prod", "--query", query, "--json"],
+            capture_output=True, text=True, timeout=30
+        )
+        
+        results_map = {}
+        if result.returncode == 0:
+            data = json.loads(result.stdout)
+            records = data.get("result", {}).get("records", [])
+            for rec in records:
+                domain = (rec.get("CleanDomain__c") or rec.get("Website") or "").lower().strip()
+                if domain.startswith("www."):
+                    domain = domain[4:]
+                results_map[domain] = {
+                    "status": "exists",
+                    "name": rec.get("Name"),
+                    "accountType": rec.get("Type"),
+                }
+        
+        # Fill in domains not found
+        for d in domains:
+            if d not in results_map:
+                results_map[d] = {"status": "not_found"}
+        
+        return results_map
+        
+    except Exception as e:
+        log(f"SF batch check failed: {e}", "WARN")
+        return {d: {"status": "error"} for d in domains}
+
+
+def salesforce_should_skip(sf_result):
+    """Gap #1: Only skip Customers and Partners.
+    Prospects, ABM Targets, and Target Accounts are companies we WANT to reach.
+    """
+    if sf_result.get("status") != "exists":
+        return False, "not_in_sf"
+    
+    acct_type = (sf_result.get("accountType") or "").strip()
+    if acct_type in SF_SKIP_TYPES:
+        return True, f"sf_{acct_type.lower()}"
+    
+    # Prospect, ABM Target Account, Target Account, blank type — all PASS
+    return False, f"sf_{acct_type.lower() or 'unknown'}_pass"
+
+
+# ─── Step 5: Relevance Scoring ────────────────────────
+
+def relevance_score(clearbit_data, icp_rules, product, variant=None):
+    """
+    Score a company's relevance to a campaign.
+
+    Weights:
+    - Description match: 40%
+    - Tags match: 30%  (variant-aware — Gap #4)
+    - Tech match: 15%
+    - Size fit: 15%
+
+    Returns: (score 0-1, reasoning dict)
+    """
+    if not clearbit_data:
+        return 0.0, {"reason": "no_data"}
+
+    scores = {}
+
+    # 1. Description match (40%) — variant keywords boost when variant is set
+    desc = (clearbit_data.get("description") or "").lower()
+    desc_kw = [k.lower() for k in icp_rules.get("descriptionKeywords", [])]
+    # Gap #4: Add variant-specific keywords to description matching
+    if variant and variant in VARIANT_TAGS:
+        desc_kw.extend(VARIANT_TAGS[variant])
+    if desc and desc_kw:
+        matches = sum(1 for kw in desc_kw if kw in desc)
+        scores["description"] = min(1.0, matches / max(3, len(desc_kw) * 0.3))
+    else:
+        scores["description"] = 0.3  # No description = uncertain
+
+    # 2. Tags match (30%) — variant-aware (Gap #4)
+    tags = [t.lower() for t in clearbit_data.get("tags", [])]
+    # Map product to target industries
+    industry_map = {
+        "AI Agent": ["software", "information technology", "saas", "artificial intelligence", "health care", "financial"],
+        "Voice API": ["software", "information technology", "telecom", "voip", "communication"],
+        "SIP": ["telecom", "voip", "software", "information technology", "communication"],
+        "IoT SIM": ["iot", "software", "information technology", "manufacturing", "telecom"],
+        "SMS": ["software", "information technology", "communication", "telecom"],
+    }
+    target_tags = [t.lower() for t in industry_map.get(product, ["software", "information technology"])]
+    # Gap #4: Add variant-specific tags
+    if variant and variant in VARIANT_TAGS:
+        target_tags.extend(VARIANT_TAGS[variant])
+    if tags:
+        tag_matches = sum(1 for t in target_tags if any(t in tag for tag in tags))
+        scores["tags"] = min(1.0, tag_matches / max(1, len(target_tags) * 0.5))
+    else:
+        scores["tags"] = 0.2
+
+    # 3. Tech match (15%)
+    tech = [t.lower() for t in clearbit_data.get("tech", [])]
+    tech_signals = ["aws", "google cloud", "azure", "kubernetes", "docker", "react", "node.js"]
+    if tech:
+        tech_matches = sum(1 for s in tech_signals if any(s in t for t in tech))
+        scores["tech"] = min(1.0, tech_matches / 3)
+    else:
+        scores["tech"] = 0.3
+
+    # 4. Size fit (15%)
+    employees = (clearbit_data.get("metrics") or {}).get("employees")
+    if employees:
+        if 10 <= employees <= 10000:
+            scores["size"] = 1.0
+        elif employees < 10:
+            scores["size"] = 0.3
+        else:
+            scores["size"] = 0.7
+    else:
+        scores["size"] = 0.5
+
+    # Weighted total
+    total = (
+        scores.get("description", 0) * W_DESCRIPTION +
+        scores.get("tags", 0) * W_TAGS +
+        scores.get("tech", 0) * W_TECH +
+        scores.get("size", 0) * W_SIZE
+    )
+
+    return round(total, 3), scores
+
+
+# ─── Step 6: Execute ──────────────────────────────────
+
+def add_account_to_db(cur, domain, company, product, variant, relevance, reason, source="expander"):
+    """Add a new ABMAccount + ABMListMember if not already present."""
+    # Check if domain already exists
+    cur.execute('SELECT id FROM "ABMAccount" WHERE domain = %s', (domain,))
+    existing = cur.fetchone()
+
+    if existing:
+        account_id = existing[0]
+        # Check if already in a list for this product
+        cur.execute("""
+            SELECT lm.id FROM "ABMListMember" lm
+            JOIN "ABMList" l ON lm."listId" = l.id
+            WHERE lm."accountId" = %s AND l.source = %s
+        """, (account_id, source))
+        if cur.fetchone():
+            return account_id, "already_member"
+    else:
+        # Insert new account
+        account_id = str(uuid.uuid4()) if 'uuid' in sys.modules else f"exp-{domain.replace('.','-')}"
+        cur.execute("""
+            INSERT INTO "ABMAccount" (id, company, domain, source, "productFit", "createdAt", "updatedAt")
+            VALUES (%s, %s, %s, %s, %s, now(), now())
+            ON CONFLICT DO NOTHING
+        """, (account_id, company, domain, source, product))
+
+    # Find or create a list for this product
+    list_id = get_or_create_list(cur, product, variant)
+
+    # Add to list member
+    cur.execute("""
+        INSERT INTO "ABMListMember" (id, "listId", "accountId", "addedAt", "addedBy", reason, status)
+        VALUES (gen_random_uuid()::text, %s, %s, now(), 'expander', %s, 'active')
+        ON CONFLICT DO NOTHING
+    """, (list_id, account_id, f"Relevance: {relevance:.2f}. {reason}"))
+
+    return account_id, "added"
+
+
+def get_or_create_list(cur, product, variant=None):
+    """Find or create an ABMList for the given product/variant."""
+    list_name = f"Expander: {product}"
+    if variant:
+        list_name += f" / {variant}"
+
+    cur.execute('SELECT id FROM "ABMList" WHERE name = %s', (list_name,))
+    existing = cur.fetchone()
+    if existing:
+        return existing[0]
+
+    list_id = f"exp-{product.lower().replace(' ','-')}"
+    if variant:
+        list_id += f"-{variant.lower().replace(' ','-')}"
+
+    cur.execute("""
+        INSERT INTO "ABMList" (id, name, source, "listType", status, "createdBy", "createdAt", "updatedAt")
+        VALUES (%s, %s, 'expander', 'company_list', 'active', 'expander', now(), now())
+        ON CONFLICT (id) DO UPDATE SET "updatedAt" = now()
+        RETURNING id
+    """, (list_id, list_name))
+    result = cur.fetchone()
+    return result[0] if result else list_id
+
+
+# ─── Check Exclusions ────────────────────────────────
+
+def is_shared_segment(cur, segment_id, product, variant):
+    """Gap #2: Check if a platform segment is shared across campaigns with different variants.
+    
+    If segment X is on both 'AI Agent Healthcare' and 'AI Agent Fintech',
+    adding a domain to this segment means it hits BOTH campaigns.
+    Returns: (is_shared, list of conflicting campaigns)
+    """
+    cur.execute("""
+        SELECT DISTINCT "parsedProduct", "parsedVariant", "campaignName"
+        FROM "ABMCampaignSegment"
+        WHERE "segmentId" = %s AND "campaignStatus" IN ('enabled', 'live')
+    """, (segment_id,))
+    attached_campaigns = cur.fetchall()
+    
+    if len(attached_campaigns) <= 1:
+        return False, []
+    
+    # Check if there's a variant conflict
+    variants_on_segment = set()
+    products_on_segment = set()
+    for prod, var, cname in attached_campaigns:
+        if var:
+            variants_on_segment.add(var)
+        products_on_segment.add(prod or "unknown")
+    
+    # Shared across different products OR different variants = risky
+    conflicts = []
+    if len(variants_on_segment) > 1:
+        conflicts = [f"{v or 'generic'}" for v in variants_on_segment]
+    if len(products_on_segment) > 1:
+        conflicts.append(f"multiple products: {products_on_segment}")
+    
+    return len(conflicts) > 0, conflicts
+
+
+def is_excluded(cur, domain, product=None):
+    """Check if domain is in ABMExclusion."""
+    cur.execute("""
+        SELECT id, scope FROM "ABMExclusion"
+        WHERE domain = %s OR "exclusionType" = 'domain'
+    """, (domain,))
+    for row in cur.fetchall():
+        scope = row[1] or ["*"]
+        if isinstance(scope, str):
+            scope = json.loads(scope)
+        if "*" in scope or product in scope:
+            return True
+    return False
+
+
+def seed_competitor_exclusions(cur):
+    """Gap #12: Seed ABMExclusion with competitor domains if not already present."""
+    for domain in COMPETITOR_DOMAINS:
+        cur.execute("""
+            INSERT INTO "ABMExclusion" (id, domain, "exclusionType", scope, reason, "createdAt")
+            VALUES (gen_random_uuid()::text, %s, 'domain', '["*"]'::jsonb, 'competitor', now())
+            ON CONFLICT DO NOTHING
+        """, (domain,))
+    cur.execute("COMMIT")
+
+
+def is_already_targeted(cur, domain, product, variant=None):
+    """Check if a domain is already in an ABM list for the same product.
+    
+    Key: If domain is on a VARIANT-SPECIFIC list (e.g., AI Agent Healthcare),
+    don't also add it to a GENERIC list — that causes double-serving.
+    If domain is on a generic list and we're adding to a variant list, that's fine.
+    """
+    cur.execute("""
+        SELECT l.name, l.source FROM "ABMListMember" lm
+        JOIN "ABMList" l ON lm."listId" = l.id
+        JOIN "ABMAccount" a ON lm."accountId" = a.id
+        WHERE a.domain = %s AND lm.status = 'active'
+    """, (domain,))
+    existing_lists = cur.fetchall()
+    
+    for list_name, source in existing_lists:
+        if variant:
+            if variant.lower() in list_name.lower():
+                return True, f"already on same variant list: {list_name}"
+        else:
+            if product.lower() in list_name.lower():
+                return True, f"already on product list: {list_name}"
+    
+    return False, None
+
+
+# ─── Main Pipeline ────────────────────────────────────
+
+def check_geo_match(geo_countries, clearbit_data):
+    """Gap #3: Verify company HQ country matches campaign geo targeting."""
+    if not geo_countries:
+        return True, "global_or_no_filter"
+    
+    hq_country = (clearbit_data.get("geo") or {}).get("countryCode")
+    if not hq_country:
+        return True, "no_hq_country_in_clearbit"  # Can't verify, let pass
+    
+    if hq_country in geo_countries:
+        return True, f"hq_match:{hq_country}"
+    
+    return False, f"hq_mismatch:{hq_country}_need:{geo_countries[:3]}"
+
+
+def get_thresholds(intent):
+    """Gap #13: Get intent-aware thresholds."""
+    return THRESHOLDS.get(intent, THRESHOLDS["default"])
+
+
+def post_review_to_telegram(results):
+    """Gap #7: Post moderate-review candidates to Telegram for human approval."""
+    if not results:
+        return
+    
+    lines = ["🟡 *ABM Expander — Review Candidates*\n"]
+    for r in results[:10]:
+        variant_str = f"/{r['variant']}" if r.get('variant') else ""
+        lines.append(f"• *{r['name']}* ({r['domain']}) — {r['product']}{variant_str} Score: {r['score']:.2f}")
+        lines.append(f"  {r['reason']}")
+    
+    if len(results) > 10:
+        lines.append(f"\n_+{len(results)-10} more..._")
+    
+    msg = "\n".join(lines)
+    
+    try:
+        import urllib.request as ur
+        gateway_url = "http://127.0.0.1:18789/v1/chat/completions"
+        gateway_token = "4048247f6c1914a3fd5bb11a05fda47ec3f8df15bc48b19c"
+        payload = json.dumps({
+            "model": "openclaw/main",
+            "messages": [{"role": "user", "content": msg}],
+            "channel": "telegram",
+            "chat_id": "telegram:7675214611",
+            "thread_id": 164,  # Agent Activity topic
+        }).encode()
+        req = ur.Request(gateway_url, data=payload, headers={
+            "Content-Type": "application/json",
+            "Authorization": f"Bearer {gateway_token}",
+        })
+        with ur.urlopen(req, timeout=10) as resp:
+            log(f"Posted {len(results)} review candidates to Telegram")
+    except Exception as e:
+        log(f"Failed to post review to Telegram: {e}", "WARN")
+
+
+def add_unique_constraint(conn):
+    """Gap #11: Add unique constraint on (listId, accountId) if missing."""
+    cur = conn.cursor()
+    try:
+        cur.execute("""
+            ALTER TABLE "ABMListMember" 
+            ADD CONSTRAINT "ABMListMember_list_account_unique" 
+            UNIQUE ("listId", "accountId")
+        """)
+        conn.commit()
+        log("Added unique constraint on ABMListMember(listId, accountId)")
+    except Exception as e:
+        if 'already exists' in str(e) or 'duplicate' in str(e).lower():
+            conn.rollback()
+            log("Unique constraint already exists on ABMListMember")
+        else:
+            conn.rollback()
+            log(f"Could not add unique constraint: {e}", "WARN")
+    finally:
+        cur.close()
+
+
+def run_expander(dry_run=False, limit=None, product_filter=None):
+    """Run the full Expander pipeline (v2 — all 15 gaps fixed)."""
+    log(f"🚀 {AGENT_NAME} starting... (dry_run={dry_run})")
+
+    conn = get_db()
+    cur = conn.cursor()
+
+    # Gap #11: Ensure unique constraint exists
+    add_unique_constraint(conn)
+
+    # Gap #12: Seed competitor exclusions
+    if not dry_run:
+        seed_competitor_exclusions(cur)
+
+    # Step 1: Find undersized segments (budget-aware, geo-aware)
+    segments = find_undersized_segments(cur, product_filter)
+    log(f"Found {len(segments)} undersized segments")
+
+    if limit:
+        segments = segments[:limit]
+
+    total_added = 0
+    total_skipped = 0
+    total_review = 0
+    results = []
+    review_candidates = []  # Gap #7: collect for Telegram posting
+
+    for seg in segments:
+        product = seg.get("product", "")
+        variant = seg.get("variant", "")
+        platform = seg.get("platform", "")
+        intent = seg.get("intent", "")
+        segment_id = seg.get("segmentId", "")
+        geo_countries = seg.get("geoCountries")
+
+        log(f"\n{'='*60}")
+        log(f"Processing: {seg['campaignName']} | {product}/{variant or 'generic'} | {platform}")
+        log(f"  Segment: {seg['segmentName']} (size: {seg['segmentSize']})")
+
+        # Gap #2: Check if segment is shared across conflicting campaigns
+        is_shared, conflicts = is_shared_segment(cur, segment_id, product, variant)
+        if is_shared:
+            log(f"  ⚠ SHARED SEGMENT across {len(conflicts)} variants: {conflicts}")
+            log(f"  Flagging for Segment Engine — adding domains could hit multiple campaigns")
+            seg["sharedSegmentWarning"] = conflicts
+
+        # Get ICP rules
+        icp_rules = get_icp_rules(cur, product, variant)
+        if not icp_rules.get("useCaseKeywords") and not icp_rules.get("descriptionKeywords"):
+            log(f"  ⚠ No ICP rules found for {product}/{variant} — skipping")
+            continue
+
+        log(f"  ICP: {len(icp_rules['useCaseKeywords'])} use-case keywords, {len(icp_rules['descriptionKeywords'])} desc keywords")
+
+        # Step 2: AI Research (variant-aware, geo-aware, fallback model)
+        log(f"  🔍 Running AI research...")
+        candidates = ai_research(seg, icp_rules, max_candidates=15)
+        log(f"  Found {len(candidates)} candidates from AI research")
+
+        if not candidates:
+            log(f"  No candidates found — skipping segment")
+            continue
+
+        # Gap #8: Batch SF lookup for all candidate domains
+        candidate_domains = []
+        for c in candidates:
+            d = c.get("domain", "").lower().strip().rstrip("/")
+            if d.startswith("www."):
+                d = d[4:]
+            c["domain"] = d
+            if d:
+                candidate_domains.append(d)
+        
+        sf_results = salesforce_batch_check(candidate_domains)
+
+        for candidate in candidates:
+            name = candidate.get("name", "")
+            domain = candidate.get("domain", "")
+            reason = candidate.get("reason", "")
+            discovery_source = candidate.get("discoverySource", "ai_research")  # Gap #14
+            llm_model = candidate.get("llmModel", "unknown")  # Gap #14
+
+            if not domain or not name:
+                total_skipped += 1
+                continue
+
+            log(f"  📋 Evaluating: {name} ({domain})")
+
+            # Check exclusions (including competitor domains from Gap #12)
+            if is_excluded(cur, domain, product):
+                log(f"    ❌ Excluded")
+                total_skipped += 1
+                continue
+
+            # Cross-campaign dedup
+            already_targeted, dedup_reason = is_already_targeted(cur, domain, product, variant)
+            if already_targeted:
+                log(f"    ❌ Already targeted: {dedup_reason}")
+                total_skipped += 1
+                continue
+
+            # Step 3: Clearbit validate (with 202 retry — Gap #6)
+            clearbit_data = clearbit_enrich(domain)
+            valid, validation_reason = clearbit_validate(clearbit_data, icp_rules, product)
+
+            if not valid:
+                log(f"    ❌ Clearbit validation failed: {validation_reason}")
+                total_skipped += 1
+                continue
+
+            # Gap #5: Hallucination check
+            hallucination_ok, hallucination_reason = check_hallucination(name, clearbit_data)
+            if not hallucination_ok:
+                log(f"    ❌ Hallucination check failed: {hallucination_reason}")
+                total_skipped += 1
+                continue
+
+            # Gap #3: Geo match
+            geo_ok, geo_reason = check_geo_match(geo_countries, clearbit_data)
+            if not geo_ok:
+                log(f"    ❌ Geo mismatch: {geo_reason}")
+                total_skipped += 1
+                continue
+
+            # Step 5: Relevance score (variant-aware — Gap #4)
+            score, score_detail = relevance_score(clearbit_data, icp_rules, product, variant)
+            log(f"    📊 Relevance: {score:.3f} ({score_detail})")
+
+            # Gap #13: Intent-aware thresholds
+            thresholds = get_thresholds(intent)
+
+            if score < thresholds["review"]:
+                log(f"    ❌ Low relevance — skipping")
+                total_skipped += 1
+                continue
+
+            # Step 4: Salesforce cross-check (Gap #1: only skip Customers/Partners)
+            sf_result = sf_results.get(domain, {"status": "not_found"})
+            should_skip, skip_reason = salesforce_should_skip(sf_result)
+            if should_skip:
+                log(f"    ❌ SF skip: {skip_reason}")
+                total_skipped += 1
+                continue
+
+            # Step 7: Execute
+            if score >= thresholds["auto_add"]:
+                if not dry_run:
+                    account_id, status = add_account_to_db(
+                        cur, domain, name, product, variant, score, reason,
+                        source=discovery_source
+                    )
+                    conn.commit()
+                    log(f"    ✅ Added ({status}, score={score:.3f})")
+                else:
+                    log(f"    ✅ Would add (dry run, score={score:.3f})")
+                total_added += 1
+                results.append({
+                    "name": name, "domain": domain, "score": score,
+                    "reason": reason, "action": "added",
+                    "product": product, "variant": variant,
+                    "discoverySource": discovery_source,
+                    "llmModel": llm_model,
+                    "geoReason": geo_reason,
+                    "sharedSegmentWarning": seg.get("sharedSegmentWarning"),
+                })
+            elif score >= thresholds["review"]:
+                log(f"    🟡 Moderate fit — queue for review")
+                total_review += 1
+                review_candidates.append({
+                    "name": name, "domain": domain, "score": score,
+                    "reason": reason, "action": "review",
+                    "product": product, "variant": variant,
+                    "discoverySource": discovery_source,
+                    "llmModel": llm_model,
+                })
+
+        # Rate limit between segments
+        time.sleep(2)
+
+    # Gap #7: Post review candidates to Telegram
+    if review_candidates and not dry_run:
+        post_review_to_telegram(review_candidates)
+    results.extend(review_candidates)
+
+    # Summary
+    log(f"\n{'='*60}")
+    log(f"📊 EXPANDER SUMMARY")
+    log(f"  Segments processed: {len(segments)}")
+    log(f"  Candidates added: {total_added}")
+    log(f"  Candidates for review: {total_review}")
+    log(f"  Candidates skipped: {total_skipped}")
+
+    # Log to AgentRun
+    if not dry_run:
+        cur.execute("""
+            INSERT INTO "AgentRun" (id, "agentName", status, "startedAt", "completedAt", findings)
+            VALUES (gen_random_uuid()::text, %s, 'done', now(), now(), %s)
+        """, (AGENT_SLUG, json.dumps({
+            "version": "v2",
+            "segmentsProcessed": len(segments),
+            "added": total_added,
+            "review": total_review,
+            "skipped": total_skipped,
+            "results": results[:50],
+        })))
+        conn.commit()
+
+    cur.close()
+    conn.close()
+
+    return results
+
+
+# ─── CLI ──────────────────────────────────────────────
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description=AGENT_NAME)
+    parser.add_argument("--dry-run", action="store_true", help="Preview only, no DB writes")
+    parser.add_argument("--limit", type=int, default=None, help="Max segments to process")
+    parser.add_argument("--product", type=str, default=None, help="Filter by product (e.g., 'AI Agent')")
+    args = parser.parse_args()
+
+    results = run_expander(dry_run=args.dry_run, limit=args.limit, product_filter=args.product)

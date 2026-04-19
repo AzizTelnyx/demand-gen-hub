@@ -9,6 +9,8 @@
     "lint": "eslint",
     "postinstall": "prisma generate",
     "generate-creative": "tsx scripts/generate-creative.ts",
+    "generate-creative-v2": "tsx scripts/generate-creative-v2.ts",
+    "generate-creative-v3": "tsx scripts/generate-creative-v3.ts",
     "create-manual-creative": "tsx scripts/create-manual-creative.ts",
     "create-telnyx-creative": "tsx scripts/create-telnyx-creative.ts",
     "create-professional": "tsx scripts/create-manual-creative-pro.ts"

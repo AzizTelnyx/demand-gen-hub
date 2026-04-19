@@ -130,3 +130,9 @@
   "pending_approval": 0,
   "dry_run": false
 }
+{
+  "total_findings": 0,
+  "auto_executed": 0,
+  "pending_approval": 0,
+  "dry_run": false
+}

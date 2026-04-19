@@ -567,6 +567,182 @@ class StackAdaptConnector(PlatformConnector):
         except Exception as e:
             return WriteResult(success=False, error=str(e))
 
+    # ─── ABM Audience Management ─────────────────────────────────
+
+    def create_abm_audience(self, name: str, domains: list[str]) -> WriteResult:
+        """Create an ABM audience with a list of company domains.
+
+        Uses the D&B (Dun & Bradstreet) provider as the enrichment layer.
+        StackAdapt requires a provider block for ABM audiences — D&B is the
+        standard choice for domain-based B2B targeting.
+
+        Args:
+            name: Audience name (visible in StackAdapt UI)
+            domains: List of company domains to target (e.g., ["stripe.com", "plaid.com"])
+
+        Returns:
+            WriteResult with resource_name containing the segment ID
+        """
+        if not self._token:
+            self.load_credentials()
+        domains_str = json.dumps(domains)
+        mutation = """
+        mutation {
+          createAbmAudienceWithDomainsList(input: {
+            dunAndBradstreet: {
+              name: %s
+              domainsList: %s
+            }
+          }) {
+            abmAudience { id name size active }
+            userErrors { message }
+          }
+        }
+        """ % (json.dumps(name), domains_str)
+        try:
+            data = self._gql(mutation, timeout=30)
+            errors = data.get("errors", [])
+            if errors:
+                return WriteResult(success=False, error=str(errors[0].get("message", errors)))
+            result = data.get("data", {}).get("createAbmAudienceWithDomainsList", {})
+            user_errors = result.get("userErrors", [])
+            if user_errors:
+                return WriteResult(success=False, error=str(user_errors[0].get("message", user_errors)))
+            audience = result.get("abmAudience", {})
+            return WriteResult(
+                success=True,
+                resource_name=f"customSegments/{audience.get('id')}",
+                metadata={"id": audience.get("id"), "name": audience.get("name"), "size": audience.get("size")},
+            )
+        except Exception as e:
+            return WriteResult(success=False, error=str(e))
+
+    def update_abm_audience_domains(self, segment_id: int, domains: list[str]) -> WriteResult:
+        """Update an existing ABM audience's domain list.
+
+        Replaces the entire domain list. Caller must merge with existing if appending.
+
+        Args:
+            segment_id: StackAdapt custom segment ID
+            domains: Complete list of domains (replaces existing)
+
+        Returns:
+            WriteResult with updated segment metadata
+        """
+        if not self._token:
+            self.load_credentials()
+        domains_str = json.dumps(domains)
+        mutation = """
+        mutation {
+          updateAbmAudienceWithDomainsList(input: {
+            dunAndBradstreet: {
+              id: %d
+              domainsList: %s
+            }
+          }) {
+            abmAudience { id name size active }
+            userErrors { message }
+          }
+        }
+        """ % (segment_id, domains_str)
+        try:
+            data = self._gql(mutation, timeout=30)
+            errors = data.get("errors", [])
+            if errors:
+                return WriteResult(success=False, error=str(errors[0].get("message", errors)))
+            result = data.get("data", {}).get("updateAbmAudienceWithDomainsList", {})
+            user_errors = result.get("userErrors", [])
+            if user_errors:
+                return WriteResult(success=False, error=str(user_errors[0].get("message", user_errors)))
+            audience = result.get("abmAudience", {})
+            return WriteResult(
+                success=True,
+                resource_name=f"customSegments/{audience.get('id')}",
+                metadata={"id": audience.get("id"), "name": audience.get("name"), "size": audience.get("size")},
+            )
+        except Exception as e:
+            return WriteResult(success=False, error=str(e))
+
+    def attach_segment_to_campaign(self, campaign_id: int, segment_ids: list[int]) -> WriteResult:
+        """Attach custom segments to a campaign.
+
+        Replaces the entire segment list for the campaign. Caller must include
+        existing segments if they should remain attached.
+
+        Args:
+            campaign_id: StackAdapt campaign ID
+            segment_ids: Complete list of segment IDs to attach
+
+        Returns:
+            WriteResult with campaign info
+        """
+        if not self._token:
+            self.load_credentials()
+        segment_ids_str = ", ".join(str(sid) for sid in segment_ids)
+        mutation = """
+        mutation {
+          upsertCampaign(input: {
+            native: {
+              id: %d
+              audience: { customSegmentIds: [%s] }
+            }
+          }) {
+            campaign { id name audience { customSegments { nodes { id name } } } }
+            userErrors { message }
+          }
+        }
+        """ % (campaign_id, segment_ids_str)
+        try:
+            data = self._gql(mutation, timeout=30)
+            errors = data.get("errors", [])
+            if errors:
+                return WriteResult(success=False, error=str(errors[0].get("message", errors)))
+            result = data.get("data", {}).get("upsertCampaign", {})
+            user_errors = result.get("userErrors", [])
+            if user_errors:
+                return WriteResult(success=False, error=str(user_errors[0].get("message", user_errors)))
+            campaign = result.get("campaign", {})
+            attached = campaign.get("audience", {}).get("customSegments", {}).get("nodes", [])
+            return WriteResult(
+                success=True,
+                resource_name=f"campaigns/{campaign_id}",
+                metadata={"attached_count": len(attached), "segments": [s["name"] for s in attached]},
+            )
+        except Exception as e:
+            return WriteResult(success=False, error=str(e))
+
+    def delete_segment(self, segment_id: int) -> WriteResult:
+        """Delete a custom segment/audience.
+
+        Args:
+            segment_id: StackAdapt custom segment ID
+
+        Returns:
+            WriteResult indicating success/failure
+        """
+        if not self._token:
+            self.load_credentials()
+        mutation = """
+        mutation {
+          deleteCustomSegment(input: { id: %s }) {
+            clientMutationId
+            userErrors { message }
+          }
+        }
+        """ % segment_id
+        try:
+            data = self._gql(mutation, timeout=30)
+            errors = data.get("errors", [])
+            if errors:
+                return WriteResult(success=False, error=str(errors[0].get("message", errors)))
+            result = data.get("data", {}).get("deleteCustomSegment", {})
+            user_errors = result.get("userErrors", [])
+            if user_errors:
+                return WriteResult(success=False, error=str(user_errors[0].get("message", user_errors)))
+            return WriteResult(success=True, resource_name=f"customSegments/{segment_id}")
+        except Exception as e:
+            return WriteResult(success=False, error=str(e))
+
     def update_creative_impression_share(self, campaign_id: str, creative_id: str, weight: int) -> WriteResult:
         """Update native ad weight (impression share) within a campaign."""
         if not self._token:

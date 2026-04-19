@@ -1,0 +1,44 @@
+{
+  "brief": {
+    "platform": "linkedin",
+    "format": "",
+    "audience": "healthcare professionals concerned with HIPAA compliance and patient scheduling",
+    "painPoints": [
+      "HIPAA compliance challenges in patient scheduling"
+    ],
+    "coreMessage": "Voice AI solution ensuring HIPAA compliance for patient scheduling",
+    "pillar": "trust",
+    "adCopyExample": "",
+    "ctaSuggestion": "Learn More"
+  },
+  "copy": {
+    "headlines": [
+      "Ensure HIPAA-compliant patient scheduling with Telnyx Voice AI",
+      "Reduce patient scheduling delays with sub-500ms latency Voice AI",
+      "Telnyx Voice AI: Secure, compliant scheduling across 140+ countries",
+      "Simplify HIPAA compliance in healthcare scheduling with one Voice AI platform",
+      "Voice AI built on Telnyx's own network for secure patient interactions"
+    ],
+    "descriptions": [
+      "Telnyx Voice AI integrates HIPAA, SOC2, and PCI compliance into a single platform, reducing scheduling delays with sub-500ms latency. Our solution supports 140+ countries and 70+ languages, helping healthcare providers maintain trust and meet regulatory requirements without relying on multiple vendors.",
+      "Manage patient scheduling while ensuring HIPAA compliance using Telnyx's Voice AI. With inference co-located on our own network, latency stays under 500ms, enabling fast, secure interactions. Our platform eliminates the need for multiple vendors, streamlining compliance and operational efficiency.",
+      "Telnyx Voice AI offers healthcare providers a compliant scheduling solution with built-in HIPAA, SOC2, and PCI standards. Operating on our proprietary network, the platform delivers under 500ms latency and supports global operations in 140+ countries and 70+ languages, simplifying patient communication and compliance."
+    ],
+    "cta": "Learn More"
+  },
+  "pattern": {
+    "pattern": "clean-saas",
+    "confidence": 0.7,
+    "product": "voice-ai",
+    "industry": "healthcare",
+    "visualizationComponent": "none",
+    "showProductScreenshot": false,
+    "showIndustryPhoto": true,
+    "reasons": [
+      "Default clean SaaS pattern",
+      "Will show healthcare industry photo"
+    ]
+  },
+  "generatedAt": "2026-04-19T12:36:23.301Z",
+  "generator": "creative-generator-v2"
+}

@@ -2405,3 +2405,228 @@ Sending approval cards...
 
 Log: /Users/azizalsinafi/.openclaw/workspace/demand-gen-hub/logs/budget-pacing-manager/2026-04-16.json
 Runtime: 74s
+🔧 Budget & Pacing Manager — 2026-04-17 03:00 UTC
+   ⚠️  DRY RUN — no changes will be applied
+
+Loading context...
+  Knowledge loaded (9945 chars)
+
+Checking CPA spike...
+  No CPA spike detected
+
+Collecting platform spend...
+  google_ads: $56,888 (276 campaigns)
+  linkedin: $9,763 (22 campaigns)
+  stackadapt: $942 (13 campaigns)
+  reddit: $100 (2 campaigns)
+  Total MTD: $67,693
+
+Collecting campaign budgets...
+  72 campaigns with budgets
+  Allocations: {}
+
+Analyzing pacing...
+
+Generating actions...
+  Auto-actions: 19
+  Approval requests: 15
+
+Executing auto-actions...
+  Applied: 0, Skipped: 0
+
+Sending Telegram report...
+  Telegram error: HTTP Error 400: Bad Request
+Sending approval cards...
+  [DRY RUN] Would send approval card: SMS Landing Page Test #1 (pause_campaign)
+  [DRY RUN] Would send approval card: 202104 MOFU Voice API SA EMEA (pause_campaign)
+  [DRY RUN] Would send approval card: 202104 MOFU SMS SA EMEA (pause_campaign)
+  [DRY RUN] Would send approval card: 202306 BOFU Voice API Twilio DA GLOBAL (pause_campaign)
+  [DRY RUN] Would send approval card: 202603 TOFU Sierra SA EMEA (pause_campaign)
+  [DRY RUN] Would send approval card: 202603 TOFU Sierra SA AMER (pause_campaign)
+  [DRY RUN] Would send approval card: 202603 TOFU Sierra SA APAC (pause_campaign)
+  [DRY RUN] Would send approval card: 202509 TOFU AI Agent Vapi+ElevenLabs SI GLOBAL (pause_campaign)
+  [DRY RUN] Would send approval card: 202510 TOFU AI Agent Healthcare SI GLOBAL (pause_campaign)
+  [DRY RUN] Would send approval card: 202510 TOFU AI Agent Healthcare VA GLOBAL (pause_campaign)
+  [DRY RUN] Would send approval card: 202512 TOFU AI Agent Travel SI GLOBAL (pause_campaign)
+  [DRY RUN] Would send approval card: 202601 TOFU AI Agent Social Boost SI GLOBAL (pause_campaign)
+  [DRY RUN] Would send approval card: 202604 BOFU BRAND SPA AMER (pause_campaign)
+  [DRY RUN] Would send approval card: 202604 BOFU BRAND SPA EMEA APAC (pause_campaign)
+  [DRY RUN] Would send approval card: 202604 TOFU Brand AI Agent SI APAC (pause_campaign)
+
+Log: /Users/azizalsinafi/.openclaw/workspace/demand-gen-hub/logs/budget-pacing-manager/2026-04-17.json
+Runtime: 70s
+🔧 Budget & Pacing Manager — 2026-04-17 14:00 UTC
+   ⚠️  DRY RUN — no changes will be applied
+
+Loading context...
+  Knowledge loaded (9945 chars)
+
+Checking CPA spike...
+  No CPA spike detected
+
+Collecting platform spend...
+  google_ads: $58,355 (276 campaigns)
+  linkedin: $10,301 (22 campaigns)
+  stackadapt: $1,000 (14 campaigns)
+  reddit: $111 (2 campaigns)
+  Total MTD: $69,767
+
+Collecting campaign budgets...
+  72 campaigns with budgets
+  Allocations: {}
+
+Analyzing pacing...
+
+Generating actions...
+  Auto-actions: 18
+  Approval requests: 16
+
+Executing auto-actions...
+  Applied: 0, Skipped: 0
+
+Sending Telegram report...
+  Telegram error: HTTP Error 400: Bad Request
+Sending approval cards...
+  [DRY RUN] Would send approval card: SMS Landing Page Test #1 (pause_campaign)
+  [DRY RUN] Would send approval card: 202104 MOFU Voice API SA EMEA (pause_campaign)
+  [DRY RUN] Would send approval card: 202104 MOFU SMS SA EMEA (pause_campaign)
+  [DRY RUN] Would send approval card: 202306 BOFU Voice API Twilio DA GLOBAL (pause_campaign)
+  [DRY RUN] Would send approval card: 202603 TOFU Sierra SA EMEA (pause_campaign)
+  [DRY RUN] Would send approval card: 202603 TOFU Sierra SA AMER (pause_campaign)
+  [DRY RUN] Would send approval card: 202603 TOFU AI Agent Synthflow SA AMER (pause_campaign)
+  [DRY RUN] Would send approval card: 202603 TOFU Sierra SA APAC (pause_campaign)
+  [DRY RUN] Would send approval card: 202509 TOFU AI Agent Vapi+ElevenLabs SI GLOBAL (pause_campaign)
+  [DRY RUN] Would send approval card: 202510 TOFU AI Agent Healthcare SI GLOBAL (pause_campaign)
+  [DRY RUN] Would send approval card: 202510 TOFU AI Agent Healthcare VA GLOBAL (pause_campaign)
+  [DRY RUN] Would send approval card: 202512 TOFU AI Agent Travel SI GLOBAL (pause_campaign)
+  [DRY RUN] Would send approval card: 202601 TOFU AI Agent Social Boost SI GLOBAL (pause_campaign)
+  [DRY RUN] Would send approval card: 202604 BOFU BRAND SPA AMER (pause_campaign)
+  [DRY RUN] Would send approval card: 202604 BOFU BRAND SPA EMEA APAC (pause_campaign)
+  [DRY RUN] Would send approval card: 202604 TOFU Brand AI Agent SI APAC (pause_campaign)
+
+Log: /Users/azizalsinafi/.openclaw/workspace/demand-gen-hub/logs/budget-pacing-manager/2026-04-17.json
+Runtime: 81s
+🔧 Budget & Pacing Manager — 2026-04-18 03:00 UTC
+   ⚠️  DRY RUN — no changes will be applied
+
+Loading context...
+  Knowledge loaded (9945 chars)
+
+Checking CPA spike...
+  No CPA spike detected
+
+Collecting platform spend...
+  google_ads: $60,369 (276 campaigns)
+  linkedin: $10,605 (22 campaigns)
+  stackadapt: $1,000 (14 campaigns)
+  reddit: $120 (2 campaigns)
+  Total MTD: $72,095
+
+Collecting campaign budgets...
+  72 campaigns with budgets
+  Warning: Could not load allocations: column "planned" does not exist
+LINE 1: SELECT platform, planned FROM "BudgetAllocation" WHERE year ...
+                         ^
+
+  Allocations: {}
+
+Analyzing pacing...
+
+Generating actions...
+  Auto-actions: 19
+  Approval requests: 15
+
+Executing auto-actions...
+🔧 Budget & Pacing Manager — 2026-04-18 14:00 UTC
+   ⚠️  DRY RUN — no changes will be applied
+
+Loading context...
+  Knowledge loaded (9945 chars)
+
+Checking CPA spike...
+  No CPA spike detected
+
+Collecting platform spend...
+  google_ads: $61,517 (276 campaigns)
+  linkedin: $10,987 (22 campaigns)
+  stackadapt: $1,124 (14 campaigns)
+  reddit: $133 (2 campaigns)
+  Total MTD: $73,762
+
+Collecting campaign budgets...
+  72 campaigns with budgets
+  Warning: Could not load allocations: column "planned" does not exist
+LINE 1: SELECT platform, planned FROM "BudgetAllocation" WHERE year ...
+                         ^
+
+  Allocations: {}
+
+Analyzing pacing...
+
+Generating actions...
+  Auto-actions: 19
+  Approval requests: 16
+
+Executing auto-actions...
+🔧 Budget & Pacing Manager — 2026-04-19 03:00 UTC
+   ⚠️  DRY RUN — no changes will be applied
+
+Loading context...
+  Knowledge loaded (9945 chars)
+
+Checking CPA spike...
+  No CPA spike detected
+
+Collecting platform spend...
+  google_ads: $63,261 (276 campaigns)
+  linkedin: $11,224 (22 campaigns)
+  stackadapt: $1,124 (14 campaigns)
+  reddit: $146 (2 campaigns)
+  Total MTD: $75,755
+
+Collecting campaign budgets...
+  72 campaigns with budgets
+  Warning: Could not load allocations: column "planned" does not exist
+LINE 1: SELECT platform, planned FROM "BudgetAllocation" WHERE year ...
+                         ^
+
+  Allocations: {}
+
+Analyzing pacing...
+
+Generating actions...
+  Auto-actions: 19
+  Approval requests: 16
+
+Executing auto-actions...
+🔧 Budget & Pacing Manager — 2026-04-19 14:00 UTC
+   ⚠️  DRY RUN — no changes will be applied
+
+Loading context...
+  Knowledge loaded (9945 chars)
+
+Checking CPA spike...
+  No CPA spike detected
+
+Collecting platform spend...
+  google_ads: $64,593 (276 campaigns)
+  linkedin: $11,420 (22 campaigns)
+  stackadapt: $1,208 (14 campaigns)
+  reddit: $157 (2 campaigns)
+  Total MTD: $77,378
+
+Collecting campaign budgets...
+  72 campaigns with budgets
+  Warning: Could not load allocations: column "planned" does not exist
+LINE 1: SELECT platform, planned FROM "BudgetAllocation" WHERE year ...
+                         ^
+
+  Allocations: {}
+
+Analyzing pacing...
+
+Generating actions...
+  Auto-actions: 19
+  Approval requests: 16
+
+Executing auto-actions...

@@ -1654,3 +1654,102 @@
 
   13 issue(s) found — CRITICAL
 
+
+🔴 Hub Doctor — CRITICAL
+  2026-04-17T13:00:04.894581+00:00
+
+  🔴 pm2        pm2 jlist failed: /bin/sh: pm2: command not found
+  ⚠️ crons      No gateway token file
+     ↳ no token
+  ✅ database   size=95 MB | Campaign=691, AdImpression=50039, AgentRun=435, Recommendation=15670, CampaignChange=229 | backup: latest dghub_2026-04-17_0100.dump (5h ago)
+  🔴 sync       google_ads=12.9h ago, stackadapt=12.9h ago, reddit=12.8h ago, linkedin=12.8h ago
+     ↳ google_ads: last sync 13h ago
+     ↳ stackadapt: last sync 13h ago
+     ↳ reddit: last sync 13h ago
+     ↳ linkedin: last sync 13h ago
+  🔴 agents     budget-pacing: 0/13 (0%), avg 0.0s; creative-manager: 0/10 (0%), avg 1809.5s; creative-qa: 0/6 (0%), avg 0.0s; hub-doctor: 7/7 (100%), avg 0.0s; keyword-bid-optimizer: 0/5 (0%), avg 0.0s; keyword-hygiene: 0/7 (0%), avg 3.4s; neg-keyword: 0/5 (0%), avg 0.0s; negative-keyword: 0/6 (0%), avg 542.6s; stackadapt-ops: 0/2 (0%), avg 0.0s
+     ↳ budget-pacing: success rate 0% < 90%
+     ↳ creative-manager: success rate 0% < 90%
+     ↳ creative-qa: success rate 0% < 90%
+     ↳ keyword-bid-optimizer: success rate 0% < 90%
+     ↳ keyword-hygiene: success rate 0% < 90%
+     ↳ neg-keyword: success rate 0% < 90%
+     ↳ negative-keyword: success rate 0% < 90%
+     ↳ stackadapt-ops: success rate 0% < 90%
+  ✅ api        /api/campaigns: 200 (0.3s), /api/budget: 200 (0.0s), /api/agents: 200 (0.0s)
+
+  Alerts (13):
+    🟡 [crons] no token
+    🔴 [sync] google_ads: last sync 13h ago
+    🔴 [sync] stackadapt: last sync 13h ago
+    🔴 [sync] reddit: last sync 13h ago
+    🔴 [sync] linkedin: last sync 13h ago
+    🔴 [agents] budget-pacing: success rate 0% < 90%
+    🔴 [agents] creative-manager: success rate 0% < 90%
+    🔴 [agents] creative-qa: success rate 0% < 90%
+    🔴 [agents] keyword-bid-optimizer: success rate 0% < 90%
+    🔴 [agents] keyword-hygiene: success rate 0% < 90%
+    🔴 [agents] neg-keyword: success rate 0% < 90%
+    🔴 [agents] negative-keyword: success rate 0% < 90%
+    🔴 [agents] stackadapt-ops: success rate 0% < 90%
+
+  13 issue(s) found — CRITICAL
+
+
+🔴 Hub Doctor — CRITICAL
+  2026-04-18T13:00:05.137319+00:00
+
+  🔴 pm2        pm2 jlist failed: /bin/sh: pm2: command not found
+  ⚠️ crons      No gateway token file
+     ↳ no token
+  ✅ database   size=54 MB | Campaign=695, AdImpression=32017, AgentRun=0, Recommendation=0, CampaignChange=0 | backup: latest dghub_2026-04-18_0314.dump (3h ago)
+  🔴 sync       google_ads=18.5h ago, stackadapt=18.6h ago, reddit=18.5h ago, linkedin=18.5h ago
+     ↳ google_ads: last sync 19h ago
+     ↳ stackadapt: last sync 19h ago
+     ↳ reddit: last sync 19h ago
+     ↳ linkedin: last sync 18h ago
+  ⚠️ agents     No agent runs in 7 days or query failed
+     ↳ no data
+  🔴 api        /api/campaigns: 500 (0.0s), /api/budget: 500 (0.0s), /api/agents: 500 (0.0s)
+     ↳ /api/campaigns: HTTP 500
+     ↳ /api/budget: HTTP 500
+     ↳ /api/agents: HTTP 500
+
+  Alerts (9):
+    🟡 [crons] no token
+    🔴 [sync] google_ads: last sync 19h ago
+    🔴 [sync] stackadapt: last sync 19h ago
+    🔴 [sync] reddit: last sync 19h ago
+    🔴 [sync] linkedin: last sync 18h ago
+    🟡 [agents] no data
+    🔴 [api] /api/campaigns: HTTP 500
+    🔴 [api] /api/budget: HTTP 500
+    🔴 [api] /api/agents: HTTP 500
+
+  9 issue(s) found — CRITICAL
+
+
+🔴 Hub Doctor — CRITICAL
+  2026-04-19T13:00:01.805105+00:00
+
+  🔴 pm2        pm2 jlist failed: /bin/sh: pm2: command not found
+  ⚠️ crons      No gateway token file
+     ↳ no token
+  ✅ database   size=70 MB | Campaign=695, AdImpression=32591, AgentRun=1, Recommendation=8, CampaignChange=0 | backup: latest dghub_2026-04-19_0434.dump (1h ago)
+  ✅ sync       google_ads=7.7h ago, stackadapt=7.7h ago, reddit=7.7h ago, linkedin=7.7h ago
+  ⚠️ agents     No agent runs in 7 days or query failed
+     ↳ no data
+  🔴 api        /api/campaigns: 500 (0.0s), /api/budget: 500 (0.0s), /api/agents: 500 (0.0s)
+     ↳ /api/campaigns: HTTP 500
+     ↳ /api/budget: HTTP 500
+     ↳ /api/agents: HTTP 500
+
+  Alerts (5):
+    🟡 [crons] no token
+    🟡 [agents] no data
+    🔴 [api] /api/campaigns: HTTP 500
+    🔴 [api] /api/budget: HTTP 500
+    🔴 [api] /api/agents: HTTP 500
+
+  5 issue(s) found — CRITICAL
+

@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <style>
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap');
+
+  body {
+    width: 300px;
+    height: 250px;
+    background: #0D1117;
+    font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    color: #FFFFFF;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .bg-grid {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-image:
+      radial-gradient(circle at 80% 20%, rgba(0,192,139,0.06) 0%, transparent 50%),
+      radial-gradient(circle at 20% 80%, rgba(0,192,139,0.04) 0%, transparent 50%);
+    z-index: 0;
+  }
+
+  .content {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    padding: 10px 13px 10px 13px;
+    align-items: stretch;
+    gap: 0;
+  }
+
+  .left {
+    flex: 1;
+    margin-bottom: 20px;
+  }
+
+  .right {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: center;
+    
+  }
+
+  .logo {
+    font-size: 14px;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    color: #00C08B;
+    margin-bottom: 9px;
+  }
+  .logo span { color: #FFFFFF; }
+
+  .tag {
+    display: none;
+    position: absolute;
+    top: 16px;
+    right: 19px;
+    background: rgba(0,192,139,0.1);
+    border: 1px solid rgba(0,192,139,0.25);
+    color: #00C08B;
+    font-size: 8px;
+    font-weight: 600;
+    padding: 2px 5px;
+    border-radius: 20px;
+    letter-spacing: 0.5px;
+    z-index: 2;
+  }
+
+  .category {
+    font-size: 9px;
+    font-weight: 600;
+    color: #00C08B;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 5px;
+  }
+
+  .headline {
+    font-size: 16px;
+    font-weight: 800;
+    line-height: 1.08;
+    letter-spacing: -1.5px;
+    margin-bottom: 6px;
+  }
+  .headline em {
+    font-style: normal;
+    color: #00C08B;
+  }
+
+  .sub {
+    font-size: 11px;
+    color: #8892a6;
+    line-height: 1.5;
+  }
+
+  .divider {
+    display: none;
+    width: 1px;
+    background: rgba(255,255,255,0.06);
+    height: 106px;
+    flex-shrink: 0;
+    margin: 0 9px;
+    align-self: center;
+  }
+
+  .logo-bottom {
+    
+    position: absolute;
+    bottom: 14px;
+    left: 13px;
+    z-index: 2;
+    font-size: 12px;
+    font-weight: 800;
+    color: #00C08B;
+    letter-spacing: -0.5px;
+  }
+  
+
+  .stack-compare {
+    width: 100%;
+  }
+
+  .stack-box {
+    padding: 6px 6px;
+    border-radius: 4px;
+    margin-bottom: 4px;
+  }
+
+  .stack-box.bad {
+    background: rgba(231,76,60,0.05);
+    border: 1px solid rgba(231,76,60,0.15);
+  }
+
+  .stack-box.good {
+    background: rgba(0,192,139,0.06);
+    border: 1px solid rgba(0,192,139,0.2);
+  }
+
+  .stack-title {
+    font-size: 10px;
+    font-weight: 700;
+    margin-bottom: 3px;
+  }
+
+  .stack-title.bad { color: #e74c3c; }
+  .stack-title.good { color: #00C08B; }
+
+  .stack-item {
+    font-size: 10px;
+    color: #8892a6;
+    line-height: 1.8;
+    padding-left: 7px;
+    position: relative;
+  }
+
+  .stack-item::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+  }
+
+  .stack-box.bad .stack-item::before {
+    content: '✕';
+    color: #e74c3c;
+  }
+
+  .stack-box.good .stack-item::before {
+    content: '✓';
+    color: #00C08B;
+  }
+  
+  </style>
+</head>
+<body>
+  <div class="bg-grid"></div>
+
+  <div class="tag">OWN THE STACK</div>
+  <div class="content">
+    <div class="left">
+      <div class="category">Voice AI Agents</div>
+      <div class="headline">Stop stitching.<br><em>Start shipping.</em></div>
+      <div class="sub">Import your agents, voice flows,<br>and settings. No rebuilding.<br>Lower latency from day one.</div>
+    </div>
+    <div class="divider"></div>
+    <div class="right">
+
+    <div class="stack-compare">
+      <div class="stack-box bad">
+        <div class="stack-title bad">Multi-vendor stack</div>
+        <div class="stack-item">SIP provider + STT vendor + TTS vendor</div>
+<div class="stack-item">3-5 carrier hops per call</div>
+<div class="stack-item">4 dashboards to debug one failed call</div>
+      </div>
+      <div class="stack-box good">
+        <div class="stack-title good">Telnyx Voice AI</div>
+        <div class="stack-item">One platform: network + telephony + AI</div>
+<div class="stack-item">Sub-second latency, one hop</div>
+<div class="stack-item">End-to-end call traces in one dashboard</div>
+      </div>
+    </div>
+  
+    </div>
+  </div>
+  <div class="logo-bottom">telnyx</div>
+
+</body>
+</html>

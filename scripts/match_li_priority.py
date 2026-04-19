@@ -16,8 +16,9 @@ args = parser.parse_args()
 conn = psycopg2.connect(DB_URL)
 cur = conn.cursor()
 
-cur.execute('CREATE TABLE IF NOT EXISTS "LinkedInOrgMapping" ("linkedinOrgId" TEXT PRIMARY KEY, "orgName" TEXT, "cleanDomain" TEXT, "vanityName" TEXT, "resolvedAt" TIMESTAMP DEFAULT NOW())')
-cur.execute('CREATE TABLE IF NOT EXISTS "LinkedInVanityAttempt" (domain TEXT PRIMARY KEY, "orgId" TEXT, "attemptedAt" TIMESTAMP DEFAULT NOW())')
+# Ensure columns exist on the actual tables (created by prior migrations)
+cur.execute('ALTER TABLE "LinkedInOrgMapping" ADD COLUMN IF NOT EXISTS "cleanDomain" TEXT')
+cur.execute('ALTER TABLE "LinkedInOrgMapping" ADD COLUMN IF NOT EXISTS "vanityName" TEXT')
 conn.commit()
 
 # Priority: biggest new business deals first (no renewals/upsells/cross-sells)
@@ -26,7 +27,7 @@ cur.execute("""
     FROM "SFOpportunity" o
     WHERE o."accountDomain" IS NOT NULL AND o."accountDomain" != ''
     AND o."oppType" NOT IN ('Renewal', 'Upsell', 'Cross-sell', 'Cross-Sell')
-    AND o."accountDomain" NOT IN (SELECT domain FROM "LinkedInVanityAttempt")
+    AND o."accountDomain" NOT IN (SELECT id FROM "LinkedInVanityAttempt")
     GROUP BY o."accountDomain"
     ORDER BY pipe DESC
     LIMIT %s
@@ -40,10 +41,26 @@ matched = 0
 updated = 0
 print(f"Processing {len(domains)} domains (by deal value), {len(unmatched)} unmatched orgs")
 
+def upsert_vanity(domain, org_id, vanity, success):
+    """Insert or update a LinkedInVanityAttempt record."""
+    # Use separate insert/update to avoid NULLIF/COALESCE issues with parameterized queries
+    cur.execute('SELECT 1 FROM "LinkedInVanityAttempt" WHERE id = %s', (domain,))
+    exists = cur.fetchone()
+    if exists:
+        if org_id:
+            cur.execute('UPDATE "LinkedInVanityAttempt" SET "orgId" = %s, "attempted" = %s, "success" = %s WHERE id = %s',
+                (org_id, vanity, success, domain))
+        else:
+            cur.execute('UPDATE "LinkedInVanityAttempt" SET "attempted" = %s, "success" = %s WHERE id = %s',
+                (vanity, success, domain))
+    else:
+        cur.execute('INSERT INTO "LinkedInVanityAttempt" ("id","orgId","attempted","success") VALUES (%s,%s,%s,%s)',
+            (domain, org_id or '', vanity, success))
+
 for i, (domain, pipe) in enumerate(domains):
     vanity = domain.split(".")[0].lower().strip()
     if not vanity or len(vanity) < 2:
-        cur.execute('INSERT INTO "LinkedInVanityAttempt" (domain) VALUES (%s) ON CONFLICT DO NOTHING', (domain,))
+        upsert_vanity(domain, None, vanity, False)
         conn.commit()
         continue
     try:
@@ -53,7 +70,7 @@ for i, (domain, pipe) in enumerate(domains):
             conn.commit()
             time.sleep(60)
             r = requests.get(f"https://api.linkedin.com/v2/organizations?q=vanityName&vanityName={vanity}", headers=HEADERS, timeout=10)
-        
+
         org_id = None
         if r.status_code == 200:
             els = r.json().get("elements", [])
@@ -61,22 +78,28 @@ for i, (domain, pipe) in enumerate(domains):
                 org = els[0]
                 org_id = str(org["id"])
                 name = org.get("localizedName", "")
-                cur.execute('INSERT INTO "LinkedInOrgMapping" ("linkedinOrgId","orgName","cleanDomain","vanityName") VALUES (%s,%s,%s,%s) ON CONFLICT ("linkedinOrgId") DO UPDATE SET "cleanDomain"=EXCLUDED."cleanDomain"',
-                    (org_id, name, domain, vanity))
+                cur.execute('''INSERT INTO "LinkedInOrgMapping" ("id","orgId","orgName","cleanDomain","vanityName")
+                    VALUES (%s,%s,%s,%s,%s)
+                    ON CONFLICT ("id") DO UPDATE SET "cleanDomain"=EXCLUDED."cleanDomain", "vanityName"=EXCLUDED."vanityName"''',
+                    (org_id, org_id, name, domain, vanity))
                 if org_id in unmatched:
                     cur.execute('UPDATE "AdImpression" SET domain=%s WHERE domain=%s', (domain, f"li_org:{org_id}"))
                     n = cur.rowcount
                     updated += n
                     matched += 1
                     print(f"  ✓ [{i+1}] {vanity} → {name} (org {org_id}) — {n} impressions (${pipe:,.0f} pipeline)")
-        
-        cur.execute('INSERT INTO "LinkedInVanityAttempt" (domain,"orgId") VALUES (%s,%s) ON CONFLICT DO NOTHING', (domain, org_id))
+
+        upsert_vanity(domain, org_id, vanity, org_id is not None)
         conn.commit()
         time.sleep(0.3)
     except Exception as e:
         print(f"  ✗ [{i+1}] {vanity}: {e}")
-        cur.execute('INSERT INTO "LinkedInVanityAttempt" (domain) VALUES (%s) ON CONFLICT DO NOTHING', (domain,))
-        conn.commit()
+        conn.rollback()
+        try:
+            upsert_vanity(domain, None, vanity, False)
+            conn.commit()
+        except Exception:
+            conn.rollback()
 
 cur.execute("SELECT COUNT(*), SUM(impressions) FROM \"AdImpression\" WHERE platform='linkedin' AND domain NOT LIKE 'li_org:%%'")
 total_matched, total_impr = cur.fetchone()

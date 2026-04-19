@@ -1,0 +1,43 @@
+{
+  "brief": {
+    "platform": "",
+    "format": "",
+    "audience": "developers",
+    "painPoints": [
+      "latency concerns",
+      "performance comparison"
+    ],
+    "coreMessage": "Compare Telnyx vs Twilio for developers with latency data",
+    "pillar": "physics",
+    "adCopyExample": "",
+    "ctaSuggestion": "Compare Now"
+  },
+  "copy": {
+    "headlines": [
+      "Telnyx Voice AI: Sub-500ms Latency Versus Twilio’s Higher Delay",
+      "Compare Voice AI Latency: Telnyx Owns Network, Twilio Resells",
+      "Telnyx Voice AI: Single Platform, 140+ Countries, 70+ Languages",
+      "Latency Matters: Telnyx Voice AI Inference Co-Located with Telephony",
+      "Telnyx vs Twilio: Performance Data for Developers in Dark Mode"
+    ],
+    "descriptions": [
+      "Measure latency precisely: Telnyx delivers under 500ms with inference co-located on its own network, unlike Twilio’s multi-vendor setup.",
+      "Telnyx Voice AI offers HIPAA, SOC2, and PCI compliance with a unified platform spanning 140+ countries and 70+ languages.",
+      "Avoid Twilio’s fragmented infrastructure. Telnyx provides a direct network connection for consistent, low-latency voice AI performance."
+    ],
+    "cta": "Compare Latency Data"
+  },
+  "pattern": {
+    "pattern": "dark-mode",
+    "confidence": 0.95,
+    "visualizationComponent": "comparison-table",
+    "showProductScreenshot": false,
+    "showIndustryPhoto": false,
+    "reasons": [
+      "Dark mode triggered by 7 competitive/technical keywords",
+      "Will render comparison-table component"
+    ]
+  },
+  "generatedAt": "2026-04-19T12:35:40.291Z",
+  "generator": "creative-generator-v2"
+}

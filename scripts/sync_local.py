@@ -426,6 +426,20 @@ def sync_parsed_fields(conn):
         rows = cur.fetchall()
         for row_id, name in rows:
             parsed = parse_campaign_name(name)
+            # Handle parsedDate: must be valid timestamp or NULL
+            parsed_date = parsed.get("date")
+            if parsed_date and not isinstance(parsed_date, (type(None),)):
+                parsed_date_str = str(parsed_date)
+                # If it looks like YYYYMM, convert to YYYY-MM-01
+                import re
+                if re.match(r'^\d{6}$', parsed_date_str):
+                    mm = int(parsed_date_str[4:6])
+                    if 1 <= mm <= 12:
+                        parsed_date = f"{parsed_date_str[:4]}-{parsed_date_str[4:6]}-01"
+                    else:
+                        parsed_date = None  # Invalid month
+                elif not re.match(r'^\d{4}-\d{2}', parsed_date_str):
+                    parsed_date = None  # Can't parse as date
             cur.execute('''
                 UPDATE "Campaign" SET
                     "parsedDate" = %s, "parsedIntent" = %s, "parsedProduct" = %s,
@@ -433,7 +447,7 @@ def sync_parsed_fields(conn):
                     "parseConfidence" = %s
                 WHERE id = %s
             ''', (
-                parsed["date"], parsed["intent"], parsed["product"],
+                parsed_date, parsed["intent"], parsed["product"],
                 parsed["variant"], parsed["adType"], parsed["region"],
                 parsed["confidence"], row_id,
             ))
@@ -443,6 +457,7 @@ def sync_parsed_fields(conn):
         print(f"  Error parsing campaign names: {e}")
         import traceback
         traceback.print_exc()
+        conn.rollback()  # Prevent transaction poisoning
 
 
 def sync_audiences(conn):

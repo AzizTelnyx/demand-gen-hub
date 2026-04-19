@@ -214,16 +214,28 @@ def save_changes_to_db(changes):
         return 0
     conn = psycopg2.connect(DB_URL)
     cur = conn.cursor()
+    inserted = 0
     for c in changes:
+        # Look up campaignId by name + platform
+        cur.execute('SELECT id FROM "Campaign" WHERE name = %s AND platform = %s LIMIT 1',
+                    (c["campaignName"], c["platform"]))
+        row = cur.fetchone()
+        if not row:
+            print(f"  ⚠ Campaign not found in DB: {c['campaignName']} ({c['platform']})")
+            continue
+        campaign_id = row[0]
+        # Map to actual CampaignChange schema: campaignId, field, oldValue, newValue, reason, status
+        field = c["changeType"]  # e.g. 'status', 'budget', 'launch', 'pause', 'resume', 'end'
+        reason = c.get("description", "")
         cur.execute('''
-            INSERT INTO "CampaignChange" (id, "campaignName", platform, "changeType", description, "oldValue", "newValue", source, actor, timestamp, "createdAt")
-            VALUES (gen_random_uuid()::text, %s, %s, %s, %s, %s, %s, %s, %s, %s, NOW())
-        ''', (c["campaignName"], c["platform"], c["changeType"], c["description"],
-              c["oldValue"], c["newValue"], c["source"], c["actor"], c["timestamp"]))
+            INSERT INTO "CampaignChange" (id, "campaignId", field, "oldValue", "newValue", reason, status, "createdAt")
+            VALUES (gen_random_uuid()::text, %s, %s, %s, %s, %s, 'pending', NOW())
+        ''', (campaign_id, field, c.get("oldValue"), c.get("newValue"), reason))
+        inserted += 1
     conn.commit()
     cur.close()
     conn.close()
-    return len(changes)
+    return inserted
 
 # ── State Management ────────────────────────────────────────────────
 

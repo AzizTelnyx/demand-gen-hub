@@ -48,6 +48,7 @@ model Campaign {
   parseConfidence  String?
   CampaignAudience CampaignAudience[]
   initiativeLinks  InitiativeCampaign[]
+  abmSegments      ABMCampaignSegment[]
 }
 
 model AdCopy {
@@ -149,8 +150,8 @@ model SyncState {
 
 model ABMAccount {
   id              String          @id @default(cuid())
-  company         String
-  domain          String?
+  company         String          @default("Unknown")
+  domain          String?         @unique
   vertical        String?
   country         String?
   region          String?
@@ -168,9 +169,17 @@ model ABMAccount {
   inPipeline      Boolean         @default(false)
   sfAccountId     String?
   switchSignal    String?
+  industry        String?
+  clearbitTags    Json            @default("[]")
+  clearbitTech    Json            @default("[]")
+  clearbitDesc    String?
+  employeeCount   Int?
+  annualRevenue   String?
+  lastEnrichedAt  DateTime?
+  enrichmentSource String         @default("clearbit")
   lists           ABMListMember[]
 
-  @@unique([company, domain])
+  // @@unique([company, domain]) -- removed: domain is unique on its own now
 }
 
 model ABMListMember {
@@ -326,7 +335,7 @@ model SFAccount {
 
 model Agent {
   id          String     @id @default(cuid())
-  slug        String     @unique
+  slug        String     @default("unknown") @unique
   name        String
   description String?
   model       String     @default("anthropic/claude-sonnet-4-20250514")
@@ -341,7 +350,7 @@ model Agent {
 
 model AgentRun {
   id              String           @id @default(cuid())
-  agentId         String
+  agentId         String          @default("unknown")
   workflowRunId   String?
   status          String           @default("queued")
   input           String?
@@ -365,8 +374,8 @@ model Recommendation {
   severity     String    @default("medium")
   target       String?
   targetId     String?
-  action       String
-  rationale    String
+  action       String          @default("review")
+  rationale    String          @default("")
   impact       String?
   status       String    @default("pending")
   appliedAt    DateTime?
@@ -382,7 +391,7 @@ model Recommendation {
 
 model Workflow {
   id          String        @id @default(cuid())
-  slug        String        @unique
+  slug        String        @default("unknown") @unique
   name        String
   description String?
   steps       String
@@ -419,17 +428,22 @@ model BudgetChange {
 }
 
 model LinkedInOrgMapping {
-  linkedinOrgId String    @id
+  id            String    @id @default(cuid())
+  linkedinOrgId String    @unique
   orgName       String?
   cleanDomain   String?
   vanityName    String?
+  vanityUrl     String?
   resolvedAt    DateTime? @default(now())
 }
 
 model LinkedInVanityAttempt {
-  domain      String    @id
+  id          String    @id @default(cuid())
+  domain      String?
   orgId       String?
-  attemptedAt DateTime? @default(now())
+  attempted   DateTime? @default(now())
+  success     Boolean?  @default(false)
+  createdAt   DateTime? @default(now())
 }
 
 model WorkItem {
@@ -606,4 +620,41 @@ model ABMExclusion {
 
   @@index([domain])
   @@index([category])
+}
+
+model ABMCampaignSegment {
+  id              String    @id @default(cuid())
+  campaignId      String
+  campaignName    String
+  campaignStatus  String
+  campaignBudget  Float?
+  platform        String
+  parsedProduct   String?
+  parsedVariant   String?
+  parsedIntent    String?
+  segmentId       String
+  segmentName     String?
+  segmentType     String?
+  segmentSize     Int?
+  segmentSource   String?
+  segmentWritable Boolean   @default(false)
+  impressions30d  Int       @default(0)
+  clicks30d       Int       @default(0)
+  spend30d        Float     @default(0)
+  conversions30d  Int       @default(0)
+  ctr30d          Float?
+  cpc30d          Float?
+  cpm30d          Float?
+  healthFlags     Json      @default("[]")
+  lastSyncedAt    DateTime?
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  campaign        Campaign  @relation(fields: [campaignId], references: [id], onDelete: Cascade)
+
+  @@unique([campaignId, segmentId, platform])
+  @@index([platform])
+  @@index([segmentId])
+  @@index([parsedProduct])
+  @@index([healthFlags])
 }

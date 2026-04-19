@@ -1,0 +1,84 @@
+Traceback (most recent call last):
+  File "/Users/azizalsinafi/.openclaw/workspace/demand-gen-hub/scripts/budget-pacing-manager.py", line 700, in <module>
+    main()
+    ~~~~^^
+  File "/Users/azizalsinafi/.openclaw/workspace/demand-gen-hub/scripts/budget-pacing-manager.py", line 663, in main
+    auto_results = execute_actions(auto_actions, dry_run=args.dry_run)
+  File "/Users/azizalsinafi/.openclaw/workspace/demand-gen-hub/scripts/budget-pacing-manager.py", line 422, in execute_actions
+    count = get_auto_action_count_today(cur, cid)
+  File "/Users/azizalsinafi/.openclaw/workspace/demand-gen-hub/scripts/budget-pacing-manager.py", line 91, in get_auto_action_count_today
+    cur.execute(
+    ~~~~~~~~~~~^
+        'SELECT COUNT(*) FROM "CampaignChange" WHERE "campaignId" = %s AND source = \'agent\' AND timestamp >= CURRENT_DATE',
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        (campaign_id,),
+        ^^^^^^^^^^^^^^^
+    )
+    ^
+psycopg2.errors.UndefinedColumn: column "source" does not exist
+LINE 1: ...ignChange" WHERE "campaignId" = '16559802209' AND source = '...
+                                                             ^
+
+Traceback (most recent call last):
+  File "/Users/azizalsinafi/.openclaw/workspace/demand-gen-hub/scripts/budget-pacing-manager.py", line 700, in <module>
+    main()
+    ~~~~^^
+  File "/Users/azizalsinafi/.openclaw/workspace/demand-gen-hub/scripts/budget-pacing-manager.py", line 663, in main
+    auto_results = execute_actions(auto_actions, dry_run=args.dry_run)
+  File "/Users/azizalsinafi/.openclaw/workspace/demand-gen-hub/scripts/budget-pacing-manager.py", line 422, in execute_actions
+    count = get_auto_action_count_today(cur, cid)
+  File "/Users/azizalsinafi/.openclaw/workspace/demand-gen-hub/scripts/budget-pacing-manager.py", line 91, in get_auto_action_count_today
+    cur.execute(
+    ~~~~~~~~~~~^
+        'SELECT COUNT(*) FROM "CampaignChange" WHERE "campaignId" = %s AND source = \'agent\' AND timestamp >= CURRENT_DATE',
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        (campaign_id,),
+        ^^^^^^^^^^^^^^^
+    )
+    ^
+psycopg2.errors.UndefinedColumn: column "source" does not exist
+LINE 1: ...ignChange" WHERE "campaignId" = '16559802209' AND source = '...
+                                                             ^
+
+Traceback (most recent call last):
+  File "/Users/azizalsinafi/.openclaw/workspace/demand-gen-hub/scripts/budget-pacing-manager.py", line 700, in <module>
+    main()
+    ~~~~^^
+  File "/Users/azizalsinafi/.openclaw/workspace/demand-gen-hub/scripts/budget-pacing-manager.py", line 663, in main
+    auto_results = execute_actions(auto_actions, dry_run=args.dry_run)
+  File "/Users/azizalsinafi/.openclaw/workspace/demand-gen-hub/scripts/budget-pacing-manager.py", line 422, in execute_actions
+    count = get_auto_action_count_today(cur, cid)
+  File "/Users/azizalsinafi/.openclaw/workspace/demand-gen-hub/scripts/budget-pacing-manager.py", line 91, in get_auto_action_count_today
+    cur.execute(
+    ~~~~~~~~~~~^
+        'SELECT COUNT(*) FROM "CampaignChange" WHERE "campaignId" = %s AND source = \'agent\' AND timestamp >= CURRENT_DATE',
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        (campaign_id,),
+        ^^^^^^^^^^^^^^^
+    )
+    ^
+psycopg2.errors.UndefinedColumn: column "source" does not exist
+LINE 1: ...ignChange" WHERE "campaignId" = '16559802209' AND source = '...
+                                                             ^
+
+Traceback (most recent call last):
+  File "/Users/azizalsinafi/.openclaw/workspace/demand-gen-hub/scripts/budget-pacing-manager.py", line 700, in <module>
+    main()
+    ~~~~^^
+  File "/Users/azizalsinafi/.openclaw/workspace/demand-gen-hub/scripts/budget-pacing-manager.py", line 663, in main
+    auto_results = execute_actions(auto_actions, dry_run=args.dry_run)
+  File "/Users/azizalsinafi/.openclaw/workspace/demand-gen-hub/scripts/budget-pacing-manager.py", line 422, in execute_actions
+    count = get_auto_action_count_today(cur, cid)
+  File "/Users/azizalsinafi/.openclaw/workspace/demand-gen-hub/scripts/budget-pacing-manager.py", line 91, in get_auto_action_count_today
+    cur.execute(
+    ~~~~~~~~~~~^
+        'SELECT COUNT(*) FROM "CampaignChange" WHERE "campaignId" = %s AND source = \'agent\' AND timestamp >= CURRENT_DATE',
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        (campaign_id,),
+        ^^^^^^^^^^^^^^^
+    )
+    ^
+psycopg2.errors.UndefinedColumn: column "source" does not exist
+LINE 1: ...ignChange" WHERE "campaignId" = '16559802209' AND source = '...
+                                                             ^
+

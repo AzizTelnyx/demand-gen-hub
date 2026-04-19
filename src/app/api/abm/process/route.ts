@@ -193,7 +193,7 @@ async function processJob(job: any): Promise<{
         try {
           // Upsert account
           const account = await prisma.aBMAccount.upsert({
-            where: { company_domain: { company: company.name, domain: company.domain ?? null } },
+            where: { domain: company.domain || `${company.name.toLowerCase().replace(/[^a-z0-9]/g, '')}.unknown` },
             create: {
               company: company.name,
               domain: company.domain || null,

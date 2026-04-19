@@ -128,3 +128,45 @@ Traceback (most recent call last):
   File "/Users/azizalsinafi/.openclaw/workspace/demand-gen-hub/scripts/lib/agent_base.py", line 189, in check_kill_switch
     raise KillSwitchTriggered(msg)
 agent_base.KillSwitchTriggered: 🚨 KILL SWITCH: CPA spiked 55% day-over-day ($87.02 → $135.03). All auto-actions aborted for Creative Manager.
+Traceback (most recent call last):
+  File "/Users/azizalsinafi/.openclaw/workspace/demand-gen-hub/scripts/creative-manager.py", line 226, in <module>
+    main()
+    ~~~~^^
+  File "/Users/azizalsinafi/.openclaw/workspace/demand-gen-hub/scripts/creative-manager.py", line 220, in main
+    result = agent.run()
+  File "/Users/azizalsinafi/.openclaw/workspace/demand-gen-hub/scripts/creative-manager.py", line 171, in run
+    self.log_run_start()
+    ~~~~~~~~~~~~~~~~~~^^
+  File "/Users/azizalsinafi/.openclaw/workspace/demand-gen-hub/scripts/lib/agent_base.py", line 541, in log_run_start
+    self.register_run()
+    ~~~~~~~~~~~~~~~~~^^
+  File "/Users/azizalsinafi/.openclaw/workspace/demand-gen-hub/scripts/lib/agent_base.py", line 217, in register_run
+    agent_id = self._get_agent_db_id()
+  File "/Users/azizalsinafi/.openclaw/workspace/demand-gen-hub/scripts/lib/agent_base.py", line 205, in _get_agent_db_id
+    cur.execute('SELECT id FROM "Agent" WHERE slug = %s', (self.AGENT_SLUG,))
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.errors.UndefinedColumn: column "slug" does not exist
+LINE 1: SELECT id FROM "Agent" WHERE slug = 'creative-manager'
+                                     ^
+
+Traceback (most recent call last):
+  File "/Users/azizalsinafi/.openclaw/workspace/demand-gen-hub/scripts/creative-manager.py", line 226, in <module>
+    main()
+    ~~~~^^
+  File "/Users/azizalsinafi/.openclaw/workspace/demand-gen-hub/scripts/creative-manager.py", line 220, in main
+    result = agent.run()
+  File "/Users/azizalsinafi/.openclaw/workspace/demand-gen-hub/scripts/creative-manager.py", line 171, in run
+    self.log_run_start()
+    ~~~~~~~~~~~~~~~~~~^^
+  File "/Users/azizalsinafi/.openclaw/workspace/demand-gen-hub/scripts/lib/agent_base.py", line 541, in log_run_start
+    self.register_run()
+    ~~~~~~~~~~~~~~~~~^^
+  File "/Users/azizalsinafi/.openclaw/workspace/demand-gen-hub/scripts/lib/agent_base.py", line 217, in register_run
+    agent_id = self._get_agent_db_id()
+  File "/Users/azizalsinafi/.openclaw/workspace/demand-gen-hub/scripts/lib/agent_base.py", line 205, in _get_agent_db_id
+    cur.execute('SELECT id FROM "Agent" WHERE slug = %s', (self.AGENT_SLUG,))
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.errors.UndefinedColumn: column "slug" does not exist
+LINE 1: SELECT id FROM "Agent" WHERE slug = 'creative-manager'
+                                     ^
+

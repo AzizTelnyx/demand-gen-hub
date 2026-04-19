@@ -1,0 +1,32 @@
+{
+  "brief": {
+    "id": "creative-1776506668841",
+    "platform": "linkedin",
+    "audience": "healthcare IT decision makers",
+    "painPoints": [
+      "HIPAA compliance challenges",
+      "need for 24/7 patient access"
+    ],
+    "coreMessage": "Focus on HIPAA compliance and 24/7 patient access with Voice AI",
+    "pillar": "trust",
+    "adCopyExample": null,
+    "ctaSuggestion": "Learn More"
+  },
+  "copy": {
+    "headlines": [
+      "Secure Voice AI with Sub-500ms Latency for Healthcare",
+      "HIPAA-Ready Voice AI Ensuring 24/7 Patient Access",
+      "Reliable Voice AI Infrastructure Across 140+ Countries",
+      "Voice AI Built on Own Network with 99.999% Uptime",
+      "Simplify Compliance and Patient Access with Voice AI"
+    ],
+    "descriptions": [
+      "Telnyx Voice AI delivers HIPAA, SOC 2 Type II, and PCI compliant voice services with sub-500ms latency by co-locating AI inference with telephony on our own network. Support 24/7 patient access across 140+ countries with a single, unified stack designed for healthcare IT needs.",
+      "Address HIPAA compliance challenges and provide uninterrupted patient access using Telnyx Voice AI. Our infrastructure offers 99.999% uptime, SOC 2 Type II compliance, and operation in over 30 licensed countries. Reduce complexity with one voice AI stack instead of multiple vendors.",
+      "Leverage a voice AI stack built for healthcare IT decision makers. Telnyx owns its network, ensuring inference latency under 500ms and compliance with HIPAA, SOC 2 Type II, and PCI standards. Enable 24/7 patient access worldwide while maintaining strict regulatory requirements."
+    ],
+    "cta": "Learn More"
+  },
+  "templateUsed": "voice-ai-product",
+  "generatedAt": "2026-04-18T10:04:37.205Z"
+}

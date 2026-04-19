@@ -313,8 +313,8 @@ def run_pruner(dry_run=False, limit=None, product_filter=None):
                 if not dry_run:
                     try:
                         cur.execute(
-                            '''INSERT INTO "ABMExclusion" (domain, category, reason, "notes", "addedAt")
-                               VALUES (%s, %s, %s, %s, NOW())
+                            '''INSERT INTO "ABMExclusion" (id, domain, category, reason, "notes", "addedAt", "addedBy")
+                               VALUES (gen_random_uuid()::text, %s, %s, %s, %s, NOW(), 'pruner')
                                ON CONFLICT DO NOTHING''',
                             (exc["domain"], exc["category"], exc["reason"], f"Auto-excluded by ABM Pruner (relevance={exc["relevance"]})")
                         )

@@ -18,7 +18,8 @@
     "test-v5": "tsx scripts/test-v5.ts",
     "test-v6-light": "tsx scripts/test-v6-light.ts",
     "test-v7": "tsx scripts/test-v7.ts",
-    "test-v8": "tsx scripts/test-v8.ts"
+    "test-v8": "tsx scripts/test-v8.ts",
+    "linkedin": "tsx scripts/linkedin-1200x627.ts"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.72.1",

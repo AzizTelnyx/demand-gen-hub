@@ -270,8 +270,8 @@ def run_negative_builder(dry_run=False):
         for exc in deduped:
             try:
                 cur.execute(
-                    '''INSERT INTO "ABMExclusion" (domain, category, reason, "notes", "addedAt")
-                       VALUES (%s, %s, %s, %s, NOW())
+                    '''INSERT INTO "ABMExclusion" (id, domain, category, reason, "notes", "addedAt", "addedBy")
+                       VALUES (gen_random_uuid()::text, %s, %s, %s, %s, NOW(), 'negative_builder')
                        ON CONFLICT DO NOTHING''',
                     (exc["domain"], exc["category"], exc["reason"], exc["source"])
                 )

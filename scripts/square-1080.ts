@@ -18,6 +18,29 @@ import { selectLogo } from '../src/lib/logo-selector';
 
 const SIZE = 1080;
 const BRAND_ASSETS = '/Users/azizalsinafi/.openclaw/workspace/demand-gen-hub/brand-assets';
+const PP_FORMULA_FONT = `${BRAND_ASSETS}/fonts/PP Formula - Extrabold v2.0/PPFormula-Extrabold.ttf`;
+
+// Load font as base64 for embedding in HTML
+async function loadFontBase64(fontPath: string): Promise<string> {
+  try {
+    const fontBuffer = await fs.readFile(fontPath);
+    return fontBuffer.toString('base64');
+  } catch (e) {
+    console.error(`Failed to load font: ${fontPath}`);
+    return '';
+  }
+}
+
+function getFontFaceCSS(fontBase64: string): string {
+  return `
+    @font-face {
+      font-family: 'PP Formula';
+      src: url(data:font/truetype;base64,${fontBase64}) format('truetype');
+      font-weight: bold;
+      font-style: normal;
+    }
+  `;
+}
 
 // Asset paths
 const ASSETS = {
@@ -26,11 +49,18 @@ const ASSETS = {
     restaurants: `${BRAND_ASSETS}/telnyx-assets/_NEW_AdGen_Library/photography/industry/restaurants/industry-restaurants-photography-food-takeout.jpg`,
     logistics: `${BRAND_ASSETS}/telnyx-assets/_NEW_AdGen_Library/photography/industry/logistics/industry-logistics-photography-street-taxi.jpg`,
     personLaptop: `${BRAND_ASSETS}/telnyx-assets/Photography/Stock_Unsplash (Free)/01_People+Device/christin-hume-Hcfwew744z4-unsplash (1).jpg`,
+    personLaptop2: `${BRAND_ASSETS}/telnyx-assets/Photography/Stock_Unsplash (Free)/01_People+Device/tim-gouw-1K9T5YiZ2WU-unsplash.jpg`,
   },
   composed: {
     financeChat: `${BRAND_ASSETS}/telnyx-assets/_NEW_AdGen_Library/industry/use-cases/finances/industry-usecases-finance-multilingual.png`,
     warmTransfers: `${BRAND_ASSETS}/telnyx-assets/_NEW_Collection_Product-Features/01_Voice-AI-Agent/Voice-AI-Agent_Feature_Warm transfers/Voice-AI-Agent_Feature_Warm transfers900x620.png`,
     retailHero: `${BRAND_ASSETS}/telnyx-assets/_NEW_AdGen_Library/industry/hero/industry_retail_ecommerce_hero.png`,
+    aiAgent: `${BRAND_ASSETS}/telnyx-assets/Product_Visuals/Voice_AI/Static/With background/AI agent.png`,
+    restaurantReorder: `${BRAND_ASSETS}/telnyx-assets/Industry_Visuals/Social_Assets/Restaurants/Industry_Restaurants_Reorder.png`,
+  },
+  icons3d: {
+    aiStar: `${BRAND_ASSETS}/telnyx-assets/_NEW_Collection_Product-Icons/_NEW_Product-Icon-Static/Icon_Colorful_Static/00_AI/AI00050.png`,
+    voiceAi: `${BRAND_ASSETS}/telnyx-assets/_NEW_Collection_Product-Icons/_NEW_Product-Icon-Static/Icon_Colorful_Static/01_Voice-AI-Agent/Voice ai_00033.png`,
   },
 };
 
@@ -60,7 +90,7 @@ async function renderAndSave(html: string, outputPath: string): Promise<void> {
   }
 }
 
-// ─── Template 1: Infrastructure Dark (pills stack) ──────────────────────────
+// ─── Template 1: Infrastructure Dark with 3D Icon ───────────────────────────
 
 function infrastructureDarkTemplate(
   config: {
@@ -69,7 +99,9 @@ function infrastructureDarkTemplate(
     cta: string;
     pills: Array<{ icon: string; label: string; primary?: boolean }>;
   },
-  logoBase64: string
+  logoBase64: string,
+  icon3dBase64: string,
+  fontBase64: string
 ): string {
   let processedHeadline = config.headline;
   config.highlightWords.forEach(word => {
@@ -86,7 +118,7 @@ function infrastructureDarkTemplate(
         <span class="pill-icon">${pill.icon}</span>
         <span class="pill-label">${pill.label}</span>
       </div>
-      ${!isLast ? '<div class="connector"></div>' : '<div class="connector connector-fade"></div>'}
+      ${!isLast ? '<div class="connector"></div>' : ''}
     `;
   }).join('');
 
@@ -94,6 +126,7 @@ function infrastructureDarkTemplate(
 <html><head>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
+  ${getFontFaceCSS(fontBase64)}
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body {
     width: ${SIZE}px;
@@ -105,30 +138,26 @@ function infrastructureDarkTemplate(
     overflow: hidden;
   }
 
-  /* Arches - taller, more spread */
-  .arch {
+  /* 3D Icon - large, centered */
+  .icon-3d {
     position: absolute;
-    border-radius: 999px;
-    background: linear-gradient(180deg, rgba(13, 74, 74, 0.6) 0%, transparent 100%);
-  }
-  .arch-l1 { left: -30px; top: 80px; height: 500px; width: 100px; }
-  .arch-l2 { left: 60px; top: 140px; height: 450px; width: 80px; opacity: 0.6; }
-  .arch-r1 { right: -30px; top: 60px; height: 520px; width: 100px; }
-  .arch-r2 { right: 70px; top: 120px; height: 480px; width: 80px; opacity: 0.6; }
-  .arch-r3 { right: 150px; top: 180px; height: 400px; width: 60px; opacity: 0.4; }
-  .arch-c1 { left: 50%; transform: translateX(-50%); top: 250px; height: 350px; width: 50px; opacity: 0.3; }
-  .arch-c2 { left: 45%; top: 280px; height: 300px; width: 45px; opacity: 0.25; }
-  .arch-c3 { left: 55%; top: 300px; height: 280px; width: 45px; opacity: 0.25; }
-
-  /* Glow */
-  .glow {
-    position: absolute;
+    top: 80px;
     left: 50%;
-    top: 160px;
     transform: translateX(-50%);
-    width: 350px;
-    height: 200px;
-    background: radial-gradient(ellipse, rgba(0, 200, 200, 0.2) 0%, transparent 70%);
+    width: 320px;
+    height: 320px;
+    object-fit: contain;
+  }
+
+  /* Glow behind icon */
+  .icon-glow {
+    position: absolute;
+    top: 120px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 400px;
+    height: 300px;
+    background: radial-gradient(ellipse, rgba(0, 220, 200, 0.25) 0%, transparent 70%);
   }
 
   .logo {
@@ -136,91 +165,51 @@ function infrastructureDarkTemplate(
     top: 40px;
     left: 50%;
     transform: translateX(-50%);
-    height: 34px;
+    height: 32px;
   }
 
-  /* Pills - positioned in upper-middle */
-  .pills-container {
+  /* Pills row - horizontal under icon */
+  .pills-row {
     position: absolute;
-    top: 120px;
+    top: 420px;
     left: 50%;
     transform: translateX(-50%);
     display: flex;
-    flex-direction: column;
     align-items: center;
+    gap: 16px;
   }
 
   .pill {
     background: rgba(200, 240, 235, 0.95);
     color: #1A1A1A;
-    padding: 16px 36px;
+    padding: 14px 28px;
     border-radius: 50px;
-    font-size: 22px;
+    font-size: 18px;
     font-weight: 600;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-  }
-  .pill-primary {
-    background: linear-gradient(135deg, #7EEEE0 0%, #5DE0D0 100%);
-    padding: 24px 52px;
-    font-size: 30px;
-    box-shadow: 0 0 100px rgba(0, 220, 200, 0.6);
-  }
-  .connector {
-    width: 2px;
-    height: 28px;
-    background: rgba(255, 255, 255, 0.4);
-  }
-  .connector-fade {
-    height: 80px;
-    background: linear-gradient(180deg, rgba(255,255,255,0.4) 0%, transparent 100%);
-  }
-
-  /* Floating UI elements in middle area */
-  .float-card {
-    position: absolute;
-    background: rgba(30, 40, 45, 0.9);
-    border: 1px solid rgba(0, 220, 200, 0.2);
-    border-radius: 12px;
-    padding: 14px 20px;
-    font-size: 13px;
-    color: rgba(255,255,255,0.7);
     display: flex;
     align-items: center;
     gap: 10px;
   }
-  .float-card-left {
-    left: 60px;
-    top: 420px;
+  .pill-primary {
+    background: linear-gradient(135deg, #7EEEE0 0%, #5DE0D0 100%);
+    padding: 16px 32px;
+    font-size: 20px;
+    box-shadow: 0 0 60px rgba(0, 220, 200, 0.4);
   }
-  .float-card-right {
-    right: 60px;
-    top: 520px;
-  }
-  .float-icon {
-    width: 32px;
-    height: 32px;
-    background: linear-gradient(135deg, #00D4CC 0%, #00A89F 100%);
-    border-radius: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 16px;
-  }
-  .float-text span {
-    color: #00E5CC;
-    font-weight: 600;
+  .connector {
+    width: 30px;
+    height: 2px;
+    background: rgba(255, 255, 255, 0.3);
   }
 
-  /* Stats indicator */
+  /* Stats row */
   .stats-row {
     position: absolute;
-    top: 580px;
+    top: 520px;
     left: 50%;
     transform: translateX(-50%);
     display: flex;
-    gap: 40px;
+    gap: 50px;
   }
   .stat-item {
     text-align: center;
@@ -231,60 +220,48 @@ function infrastructureDarkTemplate(
     color: #00E5CC;
   }
   .stat-label {
-    font-size: 12px;
+    font-size: 11px;
     color: rgba(255,255,255,0.5);
     text-transform: uppercase;
     letter-spacing: 1px;
   }
 
-  /* Headline - positioned to fill space */
+  /* Headline */
   .headline-container {
     position: absolute;
-    bottom: 100px;
+    bottom: 140px;
     left: 50%;
     transform: translateX(-50%);
     text-align: center;
-    width: 88%;
+    width: 90%;
   }
   .headline {
-    font-size: 48px;
-    font-weight: 700;
-    line-height: 1.15;
+    font-family: 'PP Formula', 'Inter', sans-serif;
+    font-size: 44px;
+    font-weight: bold;
+    line-height: 1.1;
     letter-spacing: -1px;
   }
   .headline .hl { color: #00E5CC; }
 
   .cta {
     position: absolute;
-    bottom: 55px;
+    bottom: 60px;
     left: 50%;
     transform: translateX(-50%);
-    font-size: 18px;
-    font-weight: 500;
+    background: #00D4CC;
+    color: #0A0A0A;
+    padding: 18px 40px;
+    border-radius: 50px;
+    font-size: 16px;
+    font-weight: 600;
   }
 </style>
 </head><body>
-  <div class="arch arch-l1"></div>
-  <div class="arch arch-l2"></div>
-  <div class="arch arch-r1"></div>
-  <div class="arch arch-r2"></div>
-  <div class="arch arch-r3"></div>
-  <div class="arch arch-c1"></div>
-  <div class="arch arch-c2"></div>
-  <div class="arch arch-c3"></div>
-  <div class="glow"></div>
+  <div class="icon-glow"></div>
   <img src="${logoBase64}" class="logo" />
-  <div class="pills-container">${pillsHTML}</div>
-
-  <div class="float-card float-card-left">
-    <div class="float-icon">🔊</div>
-    <div class="float-text">Latency: <span>~200ms</span></div>
-  </div>
-  <div class="float-card float-card-right">
-    <div class="float-icon">📊</div>
-    <div class="float-text">Uptime: <span>99.99%</span></div>
-  </div>
-
+  <img src="${icon3dBase64}" class="icon-3d" />
+  <div class="pills-row">${pillsHTML}</div>
   <div class="stats-row">
     <div class="stat-item">
       <div class="stat-value">50+</div>
@@ -299,13 +276,12 @@ function infrastructureDarkTemplate(
       <div class="stat-label">Carriers</div>
     </div>
   </div>
-
   <div class="headline-container"><div class="headline">${processedHeadline}</div></div>
   <div class="cta">${config.cta} &gt;</div>
 </body></html>`;
 }
 
-// ─── Template 2: Light Mode with Stars & UI ─────────────────────────────────
+// ─── Template 2: Light Mode with Composed Visual ────────────────────────────
 
 function lightModeTemplate(
   config: {
@@ -314,7 +290,9 @@ function lightModeTemplate(
     subtext?: string;
     cta?: string;
   },
-  logoBase64: string
+  logoBase64: string,
+  visualBase64: string,
+  fontBase64: string
 ): string {
   let processedHeadline = config.headline;
   config.highlightWords.forEach(word => {
@@ -328,11 +306,12 @@ function lightModeTemplate(
 <html><head>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
+  ${getFontFaceCSS(fontBase64)}
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body {
     width: ${SIZE}px;
     height: ${SIZE}px;
-    background: linear-gradient(145deg, #F5F5F0 0%, #E8F4F2 50%, #E0F0EE 100%);
+    background: linear-gradient(160deg, #F8FAF9 0%, #E6F3F0 100%);
     font-family: 'Inter', sans-serif;
     color: #1A1A1A;
     position: relative;
@@ -344,254 +323,131 @@ function lightModeTemplate(
     top: 48px;
     left: 48px;
     height: 32px;
+    z-index: 10;
   }
 
-  /* Gradient stars - bigger, more prominent */
+  /* Large composed visual - fills right side */
+  .visual {
+    position: absolute;
+    top: 0;
+    right: -100px;
+    width: 750px;
+    height: 100%;
+    object-fit: contain;
+    object-position: center right;
+  }
+
+  /* Gradient fade on left edge of visual */
+  .visual-fade {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg,
+      rgba(248,250,249,1) 0%,
+      rgba(248,250,249,0.95) 25%,
+      rgba(248,250,249,0.6) 40%,
+      transparent 55%
+    );
+  }
+
+  /* Small accent stars */
   .star {
     position: absolute;
     background: linear-gradient(180deg, #00E8FF 0%, #00D4AA 100%);
     clip-path: polygon(50% 0%, 61% 35%, 100% 50%, 61% 65%, 50% 100%, 39% 65%, 0% 50%, 39% 35%);
   }
-  .star-1 { width: 400px; height: 400px; left: -80px; bottom: 80px; }
-  .star-2 { width: 200px; height: 200px; right: 320px; top: 80px; }
-  .star-3 { width: 140px; height: 140px; right: 140px; bottom: 380px; opacity: 0.8; }
-  .star-4 { width: 80px; height: 80px; left: 280px; top: 400px; opacity: 0.6; }
-  .star-5 { width: 60px; height: 60px; right: 60px; top: 280px; opacity: 0.5; }
+  .star-1 { width: 80px; height: 80px; left: 380px; top: 120px; opacity: 0.6; }
+  .star-2 { width: 50px; height: 50px; left: 280px; bottom: 180px; opacity: 0.4; }
+  .star-3 { width: 35px; height: 35px; left: 450px; bottom: 300px; opacity: 0.3; }
 
-  /* Dashed lines */
-  .dashed {
-    position: absolute;
-    border: 2px dashed rgba(0,0,0,0.12);
-  }
-  .dashed-1 {
-    top: 100px;
-    right: 180px;
-    width: 120px;
-    height: 80px;
-    border-radius: 0 20px 0 0;
-    border-left: none;
-    border-bottom: none;
-  }
-  .dashed-2 {
-    right: 180px;
-    top: 180px;
-    width: 2px;
-    height: 300px;
-    border: none;
-    border-right: 2px dashed rgba(0,0,0,0.12);
-  }
-  .dashed-3 {
-    right: 60px;
-    top: 480px;
-    width: 120px;
-    height: 2px;
-    border: none;
-    border-top: 2px dashed rgba(0,0,0,0.12);
-  }
-
-  /* Sound wave card */
-  .wave-card {
-    position: absolute;
-    top: 80px;
-    right: 60px;
-    background: rgba(220, 235, 245, 0.95);
-    border-radius: 16px;
-    padding: 20px 24px;
-    display: flex;
-    gap: 5px;
-    align-items: center;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.06);
-  }
-  .wave-bar {
-    width: 6px;
-    background: #1A1A1A;
-    border-radius: 3px;
-  }
-  .wave-bar:nth-child(1) { height: 18px; }
-  .wave-bar:nth-child(2) { height: 32px; }
-  .wave-bar:nth-child(3) { height: 24px; }
-  .wave-bar:nth-child(4) { height: 36px; }
-  .wave-bar:nth-child(5) { height: 20px; }
-
-  /* Browser card - larger, more prominent */
-  .browser-card {
-    position: absolute;
-    right: 40px;
-    bottom: 140px;
-    background: rgba(255, 255, 255, 0.95);
-    border-radius: 16px;
-    width: 320px;
-    overflow: hidden;
-    box-shadow: 0 12px 40px rgba(0,0,0,0.12);
-  }
-  .browser-header {
-    background: rgba(240, 245, 250, 0.95);
-    padding: 14px 18px;
-    display: flex;
-    gap: 8px;
-  }
-  .browser-dot {
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-    background: #CBD5E0;
-  }
-  .browser-content {
-    padding: 24px;
-  }
-  .browser-line {
-    height: 12px;
-    background: #E8EDF2;
-    border-radius: 6px;
-    margin-bottom: 12px;
-  }
-  .browser-line:nth-child(1) { width: 100%; }
-  .browser-line:nth-child(2) { width: 80%; }
-  .browser-line:nth-child(3) { width: 60%; margin-bottom: 0; }
-
-  /* AI badge - bigger */
-  .ai-badge {
-    position: absolute;
-    right: 60px;
-    bottom: 500px;
-    width: 64px;
-    height: 64px;
-    background: #1A1A1A;
-    border-radius: 16px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 8px 24px rgba(0,0,0,0.2);
-    color: #00D4AA;
-    font-size: 28px;
-  }
-
-  /* Chat bubble */
-  .chat-bubble {
-    position: absolute;
-    right: 200px;
-    bottom: 300px;
-    background: rgba(255, 255, 255, 0.95);
-    border-radius: 16px 16px 4px 16px;
-    padding: 16px 20px;
-    font-size: 14px;
-    color: #333;
-    box-shadow: 0 6px 20px rgba(0,0,0,0.08);
-    max-width: 180px;
-  }
-  .chat-bubble::after {
-    content: '✦';
-    position: absolute;
-    right: -30px;
-    bottom: 8px;
-    color: #00D4CC;
-    font-size: 20px;
-  }
-
-  /* Floating metric */
-  .metric-badge {
-    position: absolute;
-    left: 400px;
-    bottom: 100px;
-    background: rgba(255, 255, 255, 0.95);
-    border-radius: 12px;
-    padding: 14px 20px;
-    box-shadow: 0 4px 16px rgba(0,0,0,0.08);
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-  .metric-badge .num {
-    font-size: 24px;
-    font-weight: 700;
-    color: #00C9D4;
-  }
-  .metric-badge .label {
-    font-size: 12px;
-    color: #666;
-  }
-
-  /* Content */
+  /* Content on left */
   .content {
     position: absolute;
-    top: 160px;
+    top: 50%;
+    transform: translateY(-50%);
     left: 48px;
-    max-width: 500px;
+    max-width: 420px;
+    z-index: 5;
   }
+
   .headline {
-    font-size: 52px;
-    font-weight: 700;
-    line-height: 1.1;
-    letter-spacing: -1.5px;
+    font-family: 'PP Formula', 'Inter', sans-serif;
+    font-size: 48px;
+    font-weight: bold;
+    line-height: 1.08;
+    letter-spacing: -1px;
     margin-bottom: 20px;
   }
   .headline .hl { color: #00C9D4; }
+
   .subtext {
-    font-size: 20px;
+    font-size: 18px;
     color: #555;
-    line-height: 1.4;
+    line-height: 1.5;
     margin-bottom: 28px;
   }
+
   .cta {
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    background: #FFFFFF;
-    color: #1A1A1A;
+    background: #1A1A1A;
+    color: #FFFFFF;
     font-size: 16px;
     font-weight: 600;
-    padding: 16px 28px;
+    padding: 18px 32px;
     border-radius: 50px;
-    box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+  }
+
+  /* Stats bar at bottom */
+  .stats-bar {
+    position: absolute;
+    bottom: 48px;
+    left: 48px;
+    display: flex;
+    gap: 40px;
+  }
+  .stat {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .stat-num {
+    font-size: 24px;
+    font-weight: 700;
+    color: #00C9D4;
+  }
+  .stat-text {
+    font-size: 13px;
+    color: #666;
   }
 </style>
 </head><body>
   <img src="${logoBase64}" class="logo" />
+  <img src="${visualBase64}" class="visual" />
+  <div class="visual-fade"></div>
 
   <div class="star star-1"></div>
   <div class="star star-2"></div>
   <div class="star star-3"></div>
-  <div class="star star-4"></div>
-  <div class="star star-5"></div>
-
-  <div class="dashed dashed-1"></div>
-  <div class="dashed dashed-2"></div>
-  <div class="dashed dashed-3"></div>
-
-  <div class="wave-card">
-    <div class="wave-bar"></div>
-    <div class="wave-bar"></div>
-    <div class="wave-bar"></div>
-    <div class="wave-bar"></div>
-    <div class="wave-bar"></div>
-  </div>
-
-  <div class="ai-badge">✦</div>
-
-  <div class="chat-bubble">How can I help you today?</div>
-
-  <div class="browser-card">
-    <div class="browser-header">
-      <div class="browser-dot"></div>
-      <div class="browser-dot"></div>
-      <div class="browser-dot"></div>
-    </div>
-    <div class="browser-content">
-      <div class="browser-line"></div>
-      <div class="browser-line"></div>
-      <div class="browser-line"></div>
-    </div>
-  </div>
-
-  <div class="metric-badge">
-    <div class="num">99.99%</div>
-    <div class="label">Uptime</div>
-  </div>
 
   <div class="content">
     <div class="headline">${processedHeadline}</div>
     ${config.subtext ? `<div class="subtext">${config.subtext}</div>` : ''}
     ${config.cta ? `<div class="cta">${config.cta} &gt;</div>` : ''}
+  </div>
+
+  <div class="stats-bar">
+    <div class="stat">
+      <span class="stat-num">99.99%</span>
+      <span class="stat-text">Uptime</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num">&lt;200ms</span>
+      <span class="stat-text">Latency</span>
+    </div>
   </div>
 </body></html>`;
 }
@@ -606,7 +462,8 @@ function photoOverlayTemplate(
     cta?: string;
   },
   logoBase64: string,
-  photoBase64: string
+  photoBase64: string,
+  fontBase64: string
 ): string {
   let processedHeadline = config.headline;
   config.highlightWords.forEach(word => {
@@ -620,6 +477,7 @@ function photoOverlayTemplate(
 <html><head>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
+  ${getFontFaceCSS(fontBase64)}
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body {
     width: ${SIZE}px;
@@ -670,8 +528,9 @@ function photoOverlayTemplate(
   }
 
   .headline {
+    font-family: 'PP Formula', 'Inter', sans-serif;
     font-size: 50px;
-    font-weight: 700;
+    font-weight: bold;
     line-height: 1.12;
     letter-spacing: -1px;
     margin-bottom: 20px;
@@ -709,7 +568,7 @@ function photoOverlayTemplate(
 </body></html>`;
 }
 
-// ─── Template 4: Composed Visual ────────────────────────────────────────────
+// ─── Template 4: Full Bleed Composed Visual ─────────────────────────────────
 
 function composedVisualTemplate(
   config: {
@@ -718,7 +577,8 @@ function composedVisualTemplate(
     cta?: string;
   },
   logoBase64: string,
-  visualBase64: string
+  visualBase64: string,
+  fontBase64: string
 ): string {
   let processedHeadline = config.headline;
   config.highlightWords.forEach(word => {
@@ -732,6 +592,7 @@ function composedVisualTemplate(
 <html><head>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
+  ${getFontFaceCSS(fontBase64)}
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body {
     width: ${SIZE}px;
@@ -740,41 +601,52 @@ function composedVisualTemplate(
     color: #1A1A1A;
     position: relative;
     overflow: hidden;
-    background: linear-gradient(145deg, #E8F5F2 0%, #D8F0EE 100%);
+    background: linear-gradient(160deg, #E8F5F2 0%, #D4EFEB 100%);
   }
 
   .logo {
     position: absolute;
-    top: 48px;
-    left: 48px;
-    height: 32px;
+    top: 40px;
+    left: 40px;
+    height: 30px;
     z-index: 10;
   }
 
-  /* Visual takes top portion */
+  /* Visual fills most of canvas */
   .visual {
     position: absolute;
-    top: 100px;
+    top: 40px;
     left: 50%;
     transform: translateX(-50%);
-    width: 90%;
-    height: 55%;
+    width: 105%;
+    height: 70%;
     object-fit: contain;
-    border-radius: 16px;
+  }
+
+  /* Gradient overlay at bottom */
+  .bottom-gradient {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 350px;
+    background: linear-gradient(180deg, transparent 0%, rgba(228, 243, 240, 0.9) 30%, rgba(220, 240, 236, 1) 100%);
   }
 
   .content {
     position: absolute;
-    bottom: 70px;
-    left: 50px;
-    right: 50px;
+    bottom: 40px;
+    left: 40px;
+    right: 40px;
     text-align: center;
+    z-index: 5;
   }
 
   .headline {
-    font-size: 44px;
-    font-weight: 700;
-    line-height: 1.12;
+    font-family: 'PP Formula', 'Inter', sans-serif;
+    font-size: 48px;
+    font-weight: bold;
+    line-height: 1.08;
     letter-spacing: -1px;
     margin-bottom: 24px;
   }
@@ -788,13 +660,25 @@ function composedVisualTemplate(
     color: #FFFFFF;
     font-size: 16px;
     font-weight: 600;
-    padding: 16px 32px;
+    padding: 18px 40px;
     border-radius: 50px;
   }
+
+  /* Accent elements */
+  .accent-star {
+    position: absolute;
+    background: linear-gradient(180deg, #00E8FF 0%, #00D4AA 100%);
+    clip-path: polygon(50% 0%, 61% 35%, 100% 50%, 61% 65%, 50% 100%, 39% 65%, 0% 50%, 39% 35%);
+  }
+  .accent-star-1 { width: 60px; height: 60px; bottom: 180px; left: 60px; opacity: 0.5; }
+  .accent-star-2 { width: 40px; height: 40px; bottom: 220px; right: 80px; opacity: 0.4; }
 </style>
 </head><body>
   <img src="${logoBase64}" class="logo" />
   <img src="${visualBase64}" class="visual" />
+  <div class="bottom-gradient"></div>
+  <div class="accent-star accent-star-1"></div>
+  <div class="accent-star accent-star-2"></div>
   <div class="content">
     <div class="headline">${processedHeadline}</div>
     ${config.cta ? `<div class="cta">${config.cta} &gt;</div>` : ''}
@@ -802,7 +686,7 @@ function composedVisualTemplate(
 </body></html>`;
 }
 
-// ─── Template 5: Dark with Composed Visual ──────────────────────────────────
+// ─── Template 5: Dark Full Bleed with Composed Visual ───────────────────────
 
 function darkComposedTemplate(
   config: {
@@ -812,7 +696,8 @@ function darkComposedTemplate(
     cta?: string;
   },
   logoBase64: string,
-  visualBase64: string
+  visualBase64: string,
+  fontBase64: string
 ): string {
   let processedHeadline = config.headline;
   config.highlightWords.forEach(word => {
@@ -826,6 +711,7 @@ function darkComposedTemplate(
 <html><head>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
+  ${getFontFaceCSS(fontBase64)}
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body {
     width: ${SIZE}px;
@@ -837,58 +723,70 @@ function darkComposedTemplate(
     background: #0A0A0A;
   }
 
-  /* Gradient glow behind visual */
+  /* Gradient glow */
   .glow-bg {
     position: absolute;
-    top: 50px;
+    top: 0;
     left: 50%;
     transform: translateX(-50%);
-    width: 700px;
-    height: 500px;
-    background: radial-gradient(ellipse, rgba(0, 180, 180, 0.15) 0%, transparent 70%);
+    width: 100%;
+    height: 70%;
+    background: radial-gradient(ellipse at center top, rgba(0, 200, 200, 0.2) 0%, transparent 60%);
   }
 
   .logo {
     position: absolute;
-    top: 48px;
-    left: 48px;
-    height: 32px;
+    top: 40px;
+    left: 40px;
+    height: 30px;
     z-index: 10;
   }
 
-  /* Visual fills upper-middle */
+  /* Visual - full width, upper 70% */
   .visual {
     position: absolute;
-    top: 80px;
+    top: 20px;
     left: 50%;
     transform: translateX(-50%);
-    width: 95%;
-    height: 58%;
+    width: 110%;
+    height: 72%;
     object-fit: contain;
+  }
+
+  /* Dark gradient at bottom */
+  .bottom-gradient {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 380px;
+    background: linear-gradient(180deg, transparent 0%, rgba(10,10,10,0.8) 30%, #0A0A0A 60%);
   }
 
   /* Content at bottom */
   .content {
     position: absolute;
-    bottom: 60px;
-    left: 50px;
-    right: 50px;
+    bottom: 40px;
+    left: 40px;
+    right: 40px;
     text-align: center;
+    z-index: 5;
   }
 
   .headline {
+    font-family: 'PP Formula', 'Inter', sans-serif;
     font-size: 44px;
-    font-weight: 700;
-    line-height: 1.12;
+    font-weight: bold;
+    line-height: 1.08;
     letter-spacing: -1px;
-    margin-bottom: 16px;
+    margin-bottom: 12px;
   }
   .headline .hl { color: #00E5CC; }
 
   .subtext {
-    font-size: 18px;
-    color: rgba(255,255,255,0.7);
-    margin-bottom: 24px;
+    font-size: 16px;
+    color: rgba(255,255,255,0.6);
+    margin-bottom: 20px;
   }
 
   .cta {
@@ -899,27 +797,15 @@ function darkComposedTemplate(
     color: #0A0A0A;
     font-size: 16px;
     font-weight: 600;
-    padding: 16px 32px;
+    padding: 18px 40px;
     border-radius: 50px;
   }
-
-  /* Decorative elements */
-  .corner-accent {
-    position: absolute;
-    width: 100px;
-    height: 100px;
-    border: 2px solid rgba(0, 220, 200, 0.3);
-    border-radius: 50%;
-  }
-  .corner-accent-1 { top: 40px; right: 40px; }
-  .corner-accent-2 { bottom: 250px; left: 30px; width: 60px; height: 60px; opacity: 0.5; }
 </style>
 </head><body>
   <div class="glow-bg"></div>
-  <div class="corner-accent corner-accent-1"></div>
-  <div class="corner-accent corner-accent-2"></div>
   <img src="${logoBase64}" class="logo" />
   <img src="${visualBase64}" class="visual" />
+  <div class="bottom-gradient"></div>
   <div class="content">
     <div class="headline">${processedHeadline}</div>
     ${config.subtext ? `<div class="subtext">${config.subtext}</div>` : ''}
@@ -939,7 +825,8 @@ function splitLayoutTemplate(
     bullets?: string[];
   },
   logoBase64: string,
-  photoBase64: string
+  photoBase64: string,
+  fontBase64: string
 ): string {
   let processedHeadline = config.headline;
   config.highlightWords.forEach(word => {
@@ -955,6 +842,7 @@ function splitLayoutTemplate(
 <html><head>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
+  ${getFontFaceCSS(fontBase64)}
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body {
     width: ${SIZE}px;
@@ -974,12 +862,12 @@ function splitLayoutTemplate(
     z-index: 10;
   }
 
-  /* Photo takes right half */
+  /* Photo takes right portion - with softer blend */
   .photo-container {
     position: absolute;
     top: 0;
     right: 0;
-    width: 50%;
+    width: 55%;
     height: 100%;
     overflow: hidden;
   }
@@ -991,7 +879,12 @@ function splitLayoutTemplate(
   .photo-overlay {
     position: absolute;
     top: 0; left: 0; right: 0; bottom: 0;
-    background: linear-gradient(90deg, rgba(250,250,250,1) 0%, rgba(250,250,250,0.3) 30%, transparent 100%);
+    background: linear-gradient(90deg,
+      rgba(250,250,250,1) 0%,
+      rgba(250,250,250,0.95) 15%,
+      rgba(250,250,250,0.4) 40%,
+      transparent 70%
+    );
   }
 
   /* Content on left */
@@ -999,40 +892,42 @@ function splitLayoutTemplate(
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    left: 48px;
-    max-width: 480px;
+    left: 56px;
+    max-width: 460px;
   }
 
   .headline {
-    font-size: 42px;
-    font-weight: 700;
-    line-height: 1.15;
-    letter-spacing: -1px;
-    margin-bottom: 20px;
+    font-family: 'PP Formula', 'Inter', sans-serif;
+    font-size: 40px;
+    font-weight: bold;
+    line-height: 1.12;
+    letter-spacing: -0.5px;
+    margin-bottom: 16px;
   }
   .headline .hl { color: #00C9D4; }
 
   .subtext {
-    font-size: 18px;
+    font-size: 17px;
     color: #555;
     line-height: 1.5;
-    margin-bottom: 24px;
+    margin-bottom: 20px;
   }
 
   .bullets {
-    margin-bottom: 28px;
+    margin-bottom: 24px;
   }
   .bullet {
     display: flex;
     align-items: center;
-    gap: 12px;
-    font-size: 16px;
+    gap: 10px;
+    font-size: 15px;
     color: #333;
-    margin-bottom: 12px;
+    margin-bottom: 10px;
   }
   .bullet-check {
     color: #00C9D4;
     font-weight: 700;
+    font-size: 16px;
   }
 
   .cta {
@@ -1041,24 +936,25 @@ function splitLayoutTemplate(
     gap: 8px;
     background: #1A1A1A;
     color: #FFFFFF;
-    font-size: 16px;
+    font-size: 15px;
     font-weight: 600;
-    padding: 16px 32px;
+    padding: 16px 30px;
     border-radius: 50px;
   }
 
-  /* Accent shapes */
+  /* Accent line */
   .accent-line {
     position: absolute;
-    bottom: 48px;
-    left: 48px;
-    width: 80px;
+    top: 56px;
+    left: 56px;
+    width: 60px;
     height: 4px;
     background: linear-gradient(90deg, #00E8FF, #00D4AA);
     border-radius: 2px;
   }
 </style>
 </head><body>
+  <div class="accent-line"></div>
   <img src="${logoBase64}" class="logo" />
 
   <div class="photo-container">
@@ -1072,8 +968,6 @@ function splitLayoutTemplate(
     ${config.bullets ? `<div class="bullets">${bulletsHTML}</div>` : ''}
     ${config.cta ? `<div class="cta">${config.cta} &gt;</div>` : ''}
   </div>
-
-  <div class="accent-line"></div>
 </body></html>`;
 }
 
@@ -1091,22 +985,34 @@ async function main() {
   const whiteLogo = await imageToBase64(path.join(process.cwd(), whiteLogoPath));
   const blackLogo = await imageToBase64(path.join(process.cwd(), blackLogoPath));
 
+  // Photos
   const financePhoto = await imageToBase64(ASSETS.photos.finance);
-  const restaurantPhoto = await imageToBase64(ASSETS.photos.restaurants);
   const personPhoto = await imageToBase64(ASSETS.photos.personLaptop);
+
+  // Composed visuals
   const financeChat = await imageToBase64(ASSETS.composed.financeChat);
   const warmTransfers = await imageToBase64(ASSETS.composed.warmTransfers);
-  const retailHero = await imageToBase64(ASSETS.composed.retailHero);
+  const restaurantReorder = await imageToBase64(ASSETS.composed.restaurantReorder);
+  const aiAgent = await imageToBase64(ASSETS.composed.aiAgent);
+
+  // 3D Icons (for dark backgrounds only)
+  const aiStarIcon = await imageToBase64(ASSETS.icons3d.aiStar);
+  const voiceAiIcon = await imageToBase64(ASSETS.icons3d.voiceAi);
+
+  // Load PP Formula font
+  const ppFormulaFont = await loadFontBase64(PP_FORMULA_FONT);
 
   console.log('   Logos:', whiteLogo ? '✓' : '✗', blackLogo ? '✓' : '✗');
-  console.log('   Photos:', financePhoto ? '✓' : '✗', restaurantPhoto ? '✓' : '✗', personPhoto ? '✓' : '✗');
-  console.log('   Composed:', financeChat ? '✓' : '✗', warmTransfers ? '✓' : '✗', retailHero ? '✓' : '✗');
+  console.log('   Font:', ppFormulaFont ? '✓ PP Formula' : '✗');
+  console.log('   Photos:', financePhoto ? '✓' : '✗', personPhoto ? '✓' : '✗');
+  console.log('   Composed:', financeChat ? '✓' : '✗', warmTransfers ? '✓' : '✗', restaurantReorder ? '✓' : '✗');
+  console.log('   3D Icons:', aiStarIcon ? '✓' : '✗', voiceAiIcon ? '✓' : '✗');
   console.log('');
 
-  // 1. Infrastructure Dark
+  // 1. Infrastructure Dark with 3D Icon
   const infra = infrastructureDarkTemplate(
     {
-      headline: 'Reliable Voice AI starts with a unified infrastructure',
+      headline: 'Reliable Voice AI starts with unified infrastructure',
       highlightWords: ['Voice AI'],
       cta: 'Learn more',
       pills: [
@@ -1115,12 +1021,14 @@ async function main() {
         { icon: '📞', label: 'Numbers' },
       ],
     },
-    whiteLogo
+    whiteLogo,
+    voiceAiIcon,
+    ppFormulaFont
   );
   await renderAndSave(infra, path.join(outputDir, '01-infrastructure-dark.png'));
   console.log('   ✓ 01-infrastructure-dark.png');
 
-  // 2. Light Mode
+  // 2. Light Mode with Composed Visual
   const light = lightModeTemplate(
     {
       headline: 'Voice AI built for fintech stacks',
@@ -1128,7 +1036,9 @@ async function main() {
       subtext: 'From prototype to production on one platform.',
       cta: 'Try Telnyx Free',
     },
-    blackLogo
+    blackLogo,
+    aiAgent,
+    ppFormulaFont
   );
   await renderAndSave(light, path.join(outputDir, '02-light-fintech.png'));
   console.log('   ✓ 02-light-fintech.png');
@@ -1142,7 +1052,8 @@ async function main() {
       cta: 'See How It Works',
     },
     whiteLogo,
-    financePhoto
+    financePhoto,
+    ppFormulaFont
   );
   await renderAndSave(photo, path.join(outputDir, '03-photo-fintech.png'));
   console.log('   ✓ 03-photo-fintech.png');
@@ -1155,7 +1066,8 @@ async function main() {
       cta: 'See Multilingual Demo',
     },
     blackLogo,
-    financeChat
+    financeChat,
+    ppFormulaFont
   );
   await renderAndSave(composed, path.join(outputDir, '04-composed-multilingual.png'));
   console.log('   ✓ 04-composed-multilingual.png');
@@ -1169,12 +1081,13 @@ async function main() {
       cta: 'See Live Demo',
     },
     whiteLogo,
-    warmTransfers
+    warmTransfers,
+    ppFormulaFont
   );
   await renderAndSave(darkComposed, path.join(outputDir, '05-dark-warm-transfers.png'));
   console.log('   ✓ 05-dark-warm-transfers.png');
 
-  // 6. Split Layout - Retail
+  // 6. Split Layout - Business
   const split = splitLayoutTemplate(
     {
       headline: 'Automate customer calls at scale',
@@ -1190,8 +1103,8 @@ async function main() {
     blackLogo,
     personPhoto
   );
-  await renderAndSave(split, path.join(outputDir, '06-split-retail.png'));
-  console.log('   ✓ 06-split-retail.png');
+  await renderAndSave(split, path.join(outputDir, '06-split-business.png'));
+  console.log('   ✓ 06-split-business.png');
 
   console.log(`\n✅ Output: ${outputDir}\n`);
 

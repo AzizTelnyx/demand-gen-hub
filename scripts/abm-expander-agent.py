@@ -25,6 +25,7 @@ import os
 import sys
 import time
 import argparse
+import subprocess
 import urllib.request
 import urllib.parse
 import urllib.error
@@ -815,6 +816,16 @@ def add_unique_constraint(conn):
     """Gap #11: Add unique constraint on (listId, accountId) if missing."""
     cur = conn.cursor()
     try:
+        # Check if constraint already exists first
+        cur.execute("""
+            SELECT 1 FROM information_schema.table_constraints
+            WHERE table_name = 'ABMListMember'
+              AND constraint_name = 'ABMListMember_list_account_unique'
+        """)
+        if cur.fetchone():
+            log("Unique constraint already exists on ABMListMember")
+            cur.close()
+            return
         cur.execute("""
             ALTER TABLE "ABMListMember" 
             ADD CONSTRAINT "ABMListMember_list_account_unique" 
@@ -823,12 +834,8 @@ def add_unique_constraint(conn):
         conn.commit()
         log("Added unique constraint on ABMListMember(listId, accountId)")
     except Exception as e:
-        if 'already exists' in str(e) or 'duplicate' in str(e).lower():
-            conn.rollback()
-            log("Unique constraint already exists on ABMListMember")
-        else:
-            conn.rollback()
-            log(f"Could not add unique constraint: {e}", "WARN")
+        conn.rollback()
+        log(f"Could not add unique constraint: {e}", "WARN")
     finally:
         cur.close()
 

@@ -1,16 +1,26 @@
 #!/usr/bin/env python3
 """
-ABM Expander Agent v2
+ABM Expander Agent v3
 ======================
-Grows undersized ABM lists with companies that have a USE CASE for the campaign.
+Two-phase expansion: pipeline-driven (primary) + segment-size (fallback).
 
-7-step pipeline:
-1. Find undersized segments (budget-aware, geo-aware)
-2. AI Research — find candidate companies via LLM (variant-aware prompting)
+Phase 1 — Pipeline-Driven (PRIMARY):
+  Pulls accounts with active SF opportunities, builds ICP profiles from their
+  shared traits (industry, tags, tech stack), then uses AI to find lookalike companies.
+  'Find companies like Agora, Rasa, SoundHound — AI platforms building voice agents'
+  is much more targeted than 'find AI Agent ICP companies'.
+
+Phase 2 — Segment-Size (FALLBACK):
+  For products with no pipeline seeds, falls back to finding undersized segments
+  and filling them with ICP-matching candidates.
+
+7-step pipeline per phase:
+1. Get seed data (pipeline accounts or undersized segments)
+2. AI Research — find candidates via LLM (pipeline-aware or variant-aware prompting)
 3. Clearbit validate — confirm firmographics + retry 202s + hallucination check
-4. Salesforce cross-check — skip only Customers/Partners, pass Prospects/ABM Targets
-5. Relevance score — weighted formula (description 40%, tags 30%, tech 15%, size 15%) with variant-aware tags
-6. Cross-campaign dedup — check by list + by segment ID (catches shared segments)
+4. Salesforce cross-check — skip only Customers/Partners
+5. Relevance score — weighted formula (description 40%, tags 30%, tech 15%, size 15%)
+6. Cross-campaign dedup — check by list + by segment ID
 7. Execute — add to DB + flag for platform upload + post review candidates to Telegram
 
 Model strategy: gpt-4.1-mini via LiteLLM for research (fast, cheap).
@@ -840,9 +850,372 @@ def add_unique_constraint(conn):
         cur.close()
 
 
+def get_pipeline_seeds(cur, product_filter=None):
+    """Get pipeline accounts grouped by product — these are our ICP seed data.
+    
+    Pipeline accounts have active SF opportunities, meaning they're REAL buyers.
+    Their shared traits (industry, tags, tech) define what a good prospect looks like.
+    """
+    sql = '''
+        SELECT a.domain, a.company, a."productFit", 
+               a."clearbitTags", a."clearbitDesc", a."clearbitTech",
+               a.industry, a."annualRevenue", a.country
+        FROM "ABMAccount" a
+        WHERE a."inPipeline" = true
+          AND a."productFit" IS NOT NULL
+          AND a."productFit" != ''
+    '''
+    params = []
+    if product_filter:
+        sql += ' AND a."productFit" = %s'
+        params.append(product_filter)
+    sql += ' ORDER BY a."productFit", a.domain'
+    
+    cur.execute(sql, params)
+    rows = cur.fetchall()
+    
+    # Group by product
+    seeds = {}
+    for r in rows:
+        domain, company, product, tags, desc, tech, industry, revenue, country = r
+        if product not in seeds:
+            seeds[product] = []
+        tags_list = tags if isinstance(tags, list) else (json.loads(tags) if tags else [])
+        tech_list = tech if isinstance(tech, list) else (json.loads(tech) if tech else [])
+        seeds[product].append({
+            "domain": domain,
+            "company": company,
+            "tags": tags_list,
+            "description": desc or "",
+            "tech": tech_list,
+            "industry": industry or "",
+            "revenue": revenue,
+            "country": country or "",
+        })
+    
+    return seeds
+
+
+def build_icp_profile_from_seeds(seeds_list):
+    """Extract the common traits from pipeline accounts.
+    
+    Returns a profile with top tags, industries, and tech that define the ICP.
+    """
+    from collections import Counter
+    
+    all_tags = []
+    all_industries = []
+    all_tech = []
+    
+    for seed in seeds_list:
+        all_tags.extend(seed.get("tags", []))
+        if seed.get("industry"):
+            all_industries.append(seed["industry"])
+        all_tech.extend(seed.get("tech", []))
+    
+    # Top tags (excluding generic ones like B2B, Enterprise, etc.)
+    generic_tags = {"B2B", "B2C", "Enterprise", "Information Technology & Services", 
+                    "Technology", "Information", "Computers", "SAAS", "E-commerce"}
+    tag_counts = Counter(t for t in all_tags if t not in generic_tags)
+    top_tags = [t for t, _ in tag_counts.most_common(15)]
+    
+    # Top industries
+    ind_counts = Counter(all_industries)
+    top_industries = [i for i, _ in ind_counts.most_common(5)]
+    
+    # Top tech
+    generic_tech = {"google_analytics", "google_tag_manager", "wordpress", "jquery"}
+    tech_counts = Counter(t for t in all_tech if t not in generic_tech)
+    top_tech = [t for t, _ in tech_counts.most_common(10)]
+    
+    # Company names for the prompt
+    company_names = [s["company"] for s in seeds_list if s.get("company")]
+    
+    return {
+        "top_tags": top_tags,
+        "top_industries": top_industries,
+        "top_tech": top_tech,
+        "company_names": company_names[:10],
+        "seed_count": len(seeds_list),
+    }
+
+
+def ai_research_pipeline(product, icp_profile, icp_rules, max_candidates=20):
+    """Pipeline-driven AI research — find companies SIMILAR to our pipeline accounts.
+    
+    This is much more targeted than segment-size research because we're saying:
+    'Find companies like THESE actual buyers' not 'find companies matching this generic ICP'.
+    """
+    company_examples = ", ".join(icp_profile["company_names"][:5])
+    tag_signal = ", ".join(icp_profile["top_tags"][:8])
+    tech_signal = ", ".join(icp_profile["top_tech"][:5])
+    industry_signal = ", ".join(icp_profile["top_industries"][:3])
+    
+    use_case_kw = ", ".join(icp_rules.get("useCaseKeywords", [])[:8])
+    
+    prompt = f"""You are a B2B prospect researcher for Telnyx, a cloud communications platform.
+
+We have {icp_profile['seed_count']} ACTIVE PIPELINE accounts for {product}. These are companies with open Salesforce opportunities — real buyers.
+
+Our pipeline accounts include: {company_examples}
+
+Common traits across our pipeline:
+- Industries: {industry_signal}
+- Business categories: {tag_signal}
+- Tech stack: {tech_signal}
+
+Their use cases: {use_case_kw}
+
+TASK: Find 15-20 OTHER companies that are SIMILAR to these pipeline accounts.
+They should:
+1. Be in similar industries or serve similar markets
+2. Have similar tech stacks or infrastructure needs
+3. Build or deploy {product} solutions
+4. Be the kind of company that would evaluate Telnyx
+
+DO NOT suggest:
+- Companies already in our pipeline
+- Companies in waste industries (hospitals, airlines, retail, banking, government, law firms)
+- Companies without a clear {product} use case
+- Consumer-facing companies with no B2B angle
+
+Return a JSON array of objects with: name, domain, reason (why they're similar to our pipeline accounts)
+Return ONLY the JSON array, no other text."""
+
+    # Try primary model, then fallback
+    for model in [LITELLM_MODEL_PRIMARY, LITELLM_MODEL_FALLBACK]:
+        try:
+            payload = json.dumps({
+                "model": model,
+                "messages": [{"role": "user", "content": prompt}],
+                "max_tokens": 2000,
+                "temperature": 0.3,
+            }).encode("utf-8")
+
+            req = urllib.request.Request(
+                LITELLM_URL,
+                data=payload,
+                headers={
+                    "Content-Type": "application/json",
+                    "Authorization": f"Bearer {LITELLM_KEY}",
+                },
+            )
+            with urllib.request.urlopen(req, timeout=30) as resp:
+                data = json.loads(resp.read().decode("utf-8"))
+                content = data["choices"][0]["message"]["content"]
+
+                # Parse JSON from response
+                start = content.find("[")
+                end = content.rfind("]") + 1
+                if start >= 0 and end > start:
+                    candidates = json.loads(content[start:end])
+                    for c in candidates:
+                        c["discoverySource"] = "pipeline_lookalike"
+                        c["llmModel"] = model
+                    return candidates
+                return []
+        except Exception as e:
+            log(f"Pipeline research failed with {model}: {e}", "WARN")
+            continue
+    
+    log(f"Pipeline research failed with all models", "ERROR")
+    return []
+
+
+def run_expander_pipeline(dry_run=False, limit=None, product_filter=None):
+    """Pipeline-driven expansion — find lookalikes of accounts with active SF opps.
+    
+    This runs BEFORE the segment-size expander. If a product has pipeline accounts,
+    we use them as seed data. If not, the segment-size fallback handles it.
+    """
+    log(f"🎯 Pipeline-driven expansion starting... (dry_run={dry_run})")
+
+    conn = get_db()
+    cur = conn.cursor()
+
+    add_unique_constraint(conn)
+    if not dry_run:
+        seed_competitor_exclusions(cur)
+
+    # Step 1: Get pipeline seeds grouped by product
+    seeds = get_pipeline_seeds(cur, product_filter)
+    log(f"Found pipeline seeds: {', '.join(f'{p} ({len(s)} accounts)' for p, s in seeds.items())}")
+
+    total_added = 0
+    total_skipped = 0
+    total_review = 0
+    results = []
+    review_candidates = []
+
+    for product, product_seeds in seeds.items():
+        if limit and len(results) >= limit:
+            break
+
+        log(f"\n{'='*60}")
+        log(f"🔬 Pipeline expansion: {product} ({len(product_seeds)} seed accounts)")
+
+        # Build ICP profile from pipeline accounts
+        icp_profile = build_icp_profile_from_seeds(product_seeds)
+        log(f"  ICP Profile: tags={icp_profile['top_tags'][:5]}, industries={icp_profile['top_industries'][:3]}")
+
+        # Get ICP rules for the product
+        icp_rules = get_icp_rules(cur, product)
+
+        # Step 2: AI Research — pipeline-driven prompt
+        log(f"  🔍 Running pipeline-driven AI research...")
+        candidates = ai_research_pipeline(product, icp_profile, icp_rules, max_candidates=20)
+        log(f"  Found {len(candidates)} candidates from pipeline research")
+
+        if not candidates:
+            log(f"  No candidates found — skipping product")
+            continue
+
+        # Batch SF lookup
+        candidate_domains = []
+        for c in candidates:
+            d = c.get("domain", "").lower().strip().rstrip("/")
+            if d.startswith("www."):
+                d = d[4:]
+            c["domain"] = d
+            if d:
+                candidate_domains.append(d)
+        
+        sf_results = salesforce_batch_check(candidate_domains)
+
+        for candidate in candidates:
+            name = candidate.get("name", "")
+            domain = candidate.get("domain", "")
+            reason = candidate.get("reason", "")
+            discovery_source = "pipeline_lookalike"
+
+            if not domain or not name:
+                total_skipped += 1
+                continue
+
+            log(f"  📋 Evaluating: {name} ({domain})")
+
+            # Check exclusions
+            if is_excluded(cur, domain, product):
+                log(f"    ❌ Excluded")
+                total_skipped += 1
+                continue
+
+            # Cross-campaign dedup
+            already_targeted, dedup_reason = is_already_targeted(cur, domain, product)
+            if already_targeted:
+                log(f"    ❌ Already targeted: {dedup_reason}")
+                total_skipped += 1
+                continue
+
+            # Clearbit validate
+            clearbit_data = clearbit_enrich(domain)
+            valid, validation_reason = clearbit_validate(clearbit_data, icp_rules, product)
+
+            if not valid:
+                log(f"    ❌ Clearbit validation failed: {validation_reason}")
+                total_skipped += 1
+                continue
+
+            # Hallucination check
+            hallucination_ok, hallucination_reason = check_hallucination(name, clearbit_data)
+            if not hallucination_ok:
+                log(f"    ❌ Hallucination check failed: {hallucination_reason}")
+                total_skipped += 1
+                continue
+
+            # Relevance score
+            score, score_detail = relevance_score(clearbit_data, icp_rules, product)
+            log(f"    📊 Relevance: {score:.3f} ({score_detail})")
+
+            # Pipeline lookalikes use MOFU thresholds (they're expansion from real buyers)
+            thresholds = get_thresholds("MOFU")
+
+            if score < thresholds["review"]:
+                log(f"    ❌ Low relevance — skipping")
+                total_skipped += 1
+                continue
+
+            # SF cross-check
+            sf_result = sf_results.get(domain, {"status": "not_found"})
+            should_skip, skip_reason = salesforce_should_skip(sf_result)
+            if should_skip:
+                log(f"    ❌ SF skip: {skip_reason}")
+                total_skipped += 1
+                continue
+
+            # Execute
+            if score >= thresholds["auto_add"]:
+                if not dry_run:
+                    account_id, status = add_account_to_db(
+                        cur, domain, name, product, None, score, reason,
+                        source=discovery_source
+                    )
+                    conn.commit()
+                    log(f"    ✅ Added ({status}, score={score:.3f})")
+                else:
+                    log(f"    ✅ Would add (dry run, score={score:.3f})")
+                total_added += 1
+                results.append({
+                    "name": name, "domain": domain, "score": score,
+                    "reason": reason, "action": "added",
+                    "product": product, "variant": None,
+                    "discoverySource": discovery_source,
+                })
+            elif score >= thresholds["review"]:
+                log(f"    🟡 Moderate fit — queue for review")
+                total_review += 1
+                review_candidates.append({
+                    "name": name, "domain": domain, "score": score,
+                    "reason": reason, "action": "review",
+                    "product": product, "variant": None,
+                    "discoverySource": discovery_source,
+                })
+
+        time.sleep(2)
+
+    # Post review candidates
+    if review_candidates and not dry_run:
+        post_review_to_telegram(review_candidates)
+    results.extend(review_candidates)
+
+    log(f"\n{'='*60}")
+    log(f"📊 PIPELINE EXPANSION SUMMARY")
+    log(f"  Products processed: {len(seeds)}")
+    log(f"  Candidates added: {total_added}")
+    log(f"  Candidates for review: {total_review}")
+    log(f"  Candidates skipped: {total_skipped}")
+
+    # Log to AgentRun
+    if not dry_run:
+        cur.execute("""
+            INSERT INTO "AgentRun" (id, "agentName", status, "startedAt", "completedAt", findings)
+            VALUES (gen_random_uuid()::text, %s, 'done', now(), now(), %s)
+        """, (AGENT_SLUG + "-pipeline", json.dumps({
+            "version": "v3-pipeline",
+            "productsProcessed": len(seeds),
+            "added": total_added,
+            "review": total_review,
+            "skipped": total_skipped,
+            "results": results[:50],
+        })))
+        conn.commit()
+
+    cur.close()
+    conn.close()
+
+    return results
+
+
 def run_expander(dry_run=False, limit=None, product_filter=None):
-    """Run the full Expander pipeline (v2 — all 15 gaps fixed)."""
-    log(f"🚀 {AGENT_NAME} starting... (dry_run={dry_run})")
+    """Run the full Expander pipeline (v3 — pipeline-driven + segment-size fallback).
+    
+    Pipeline-driven mode runs FIRST: for each product with pipeline accounts,
+    find lookalikes based on shared traits of real buyers.
+    
+    Segment-size fallback runs AFTER: fills undersized segments that don't have
+    pipeline seeds yet.
+    """
+    log(f"🚀 {AGENT_NAME} v3 starting... (dry_run={dry_run})")
 
     conn = get_db()
     cur = conn.cursor()
@@ -853,10 +1226,218 @@ def run_expander(dry_run=False, limit=None, product_filter=None):
     # Gap #12: Seed competitor exclusions
     if not dry_run:
         seed_competitor_exclusions(cur)
+    cur.close()
+    conn.close()
 
-    # Step 1: Find undersized segments (budget-aware, geo-aware)
+    # PHASE 1: Pipeline-driven expansion
+    pipeline_seeds = get_pipeline_seeds_via_db(product_filter)
+    pipeline_products = set(pipeline_seeds.keys()) if pipeline_seeds else set()
+    
+    if pipeline_products:
+        log(f"🎯 PHASE 1: Pipeline-driven expansion for: {', '.join(pipeline_products)}")
+        pipeline_results = run_expander_pipeline(dry_run=dry_run, limit=limit, product_filter=product_filter)
+    else:
+        log(f"No pipeline seeds found — skipping pipeline-driven phase")
+        pipeline_results = []
+
+    # PHASE 2: Segment-size fallback (for products without pipeline seeds)
+    conn = get_db()
+    cur = conn.cursor()
     segments = find_undersized_segments(cur, product_filter)
-    log(f"Found {len(segments)} undersized segments")
+    
+    # Only process segments for products that DON'T have pipeline seeds
+    # (pipeline mode already handled those)
+    non_pipeline_segments = [s for s in segments if s.get("product") not in pipeline_products]
+    
+    if non_pipeline_segments:
+        log(f"📐 PHASE 2: Segment-size expansion for {len(non_pipeline_segments)} undersized segments (no pipeline seeds)")
+        # Run the original segment-size logic for remaining products
+        _run_segment_expansion(cur, conn, non_pipeline_segments, dry_run=dry_run, limit=limit, results_so_far=pipeline_results)
+    else:
+        log(f"No undersized segments without pipeline seeds — done")
+
+    cur.close()
+    conn.close()
+
+
+def get_pipeline_seeds_via_db(product_filter=None):
+    """Quick check for pipeline seeds without opening a new connection in run_expander."""
+    conn = get_db()
+    cur = conn.cursor()
+    seeds = get_pipeline_seeds(cur, product_filter)
+    cur.close()
+    conn.close()
+    return seeds
+
+
+def _run_segment_expansion(cur, conn, segments, dry_run=False, limit=None, results_so_far=None):
+    """Original segment-size driven expansion (runs as Phase 2 fallback)."""
+    if results_so_far is None:
+        results_so_far = []
+    
+    total_added = sum(1 for r in results_so_far if r.get("action") == "added")
+    total_review = sum(1 for r in results_so_far if r.get("action") == "review")
+    total_skipped = 0
+    results = list(results_so_far)
+    review_candidates = []
+
+    for seg in segments:
+        product = seg.get("product", "")
+        variant = seg.get("variant", "")
+        platform = seg.get("platform", "")
+        intent = seg.get("intent", "")
+        segment_id = seg.get("segmentId", "")
+        geo_countries = seg.get("geoCountries")
+
+        log(f"\n{'='*60}")
+        log(f"Processing: {seg['campaignName']} | {product}/{variant or 'generic'} | {platform}")
+        log(f"  Segment: {seg['segmentName']} (size: {seg['segmentSize']})")
+
+        is_shared, conflicts = is_shared_segment(cur, segment_id, product, variant)
+        if is_shared:
+            log(f"  ⚠ SHARED SEGMENT across {len(conflicts)} variants: {conflicts}")
+            seg["sharedSegmentWarning"] = conflicts
+
+        icp_rules = get_icp_rules(cur, product, variant)
+        if not icp_rules.get("useCaseKeywords") and not icp_rules.get("descriptionKeywords"):
+            log(f"  ⚠ No ICP rules found for {product}/{variant} — skipping")
+            continue
+
+        log(f"  ICP: {len(icp_rules['useCaseKeywords'])} use-case keywords, {len(icp_rules['descriptionKeywords'])} desc keywords")
+
+        log(f"  🔍 Running AI research...")
+        candidates = ai_research(seg, icp_rules, max_candidates=15)
+        log(f"  Found {len(candidates)} candidates from AI research")
+
+        if not candidates:
+            log(f"  No candidates found — skipping segment")
+            continue
+
+        candidate_domains = []
+        for c in candidates:
+            d = c.get("domain", "").lower().strip().rstrip("/")
+            if d.startswith("www."):
+                d = d[4:]
+            c["domain"] = d
+            if d:
+                candidate_domains.append(d)
+        
+        sf_results = salesforce_batch_check(candidate_domains)
+
+        for candidate in candidates:
+            name = candidate.get("name", "")
+            domain = candidate.get("domain", "")
+            reason = candidate.get("reason", "")
+            discovery_source = candidate.get("discoverySource", "ai_research")
+
+            if not domain or not name:
+                total_skipped += 1
+                continue
+
+            log(f"  📋 Evaluating: {name} ({domain})")
+
+            if is_excluded(cur, domain, product):
+                log(f"    ❌ Excluded")
+                total_skipped += 1
+                continue
+
+            already_targeted, dedup_reason = is_already_targeted(cur, domain, product, variant)
+            if already_targeted:
+                log(f"    ❌ Already targeted: {dedup_reason}")
+                total_skipped += 1
+                continue
+
+            clearbit_data = clearbit_enrich(domain)
+            valid, validation_reason = clearbit_validate(clearbit_data, icp_rules, product)
+
+            if not valid:
+                log(f"    ❌ Clearbit validation failed: {validation_reason}")
+                total_skipped += 1
+                continue
+
+            hallucination_ok, hallucination_reason = check_hallucination(name, clearbit_data)
+            if not hallucination_ok:
+                log(f"    ❌ Hallucination check failed: {hallucination_reason}")
+                total_skipped += 1
+                continue
+
+            geo_ok, geo_reason = check_geo_match(geo_countries, clearbit_data)
+            if not geo_ok:
+                log(f"    ❌ Geo mismatch: {geo_reason}")
+                total_skipped += 1
+                continue
+
+            score, score_detail = relevance_score(clearbit_data, icp_rules, product, variant)
+            log(f"    📊 Relevance: {score:.3f} ({score_detail})")
+
+            thresholds = get_thresholds(intent)
+
+            if score < thresholds["review"]:
+                log(f"    ❌ Low relevance — skipping")
+                total_skipped += 1
+                continue
+
+            sf_result = sf_results.get(domain, {"status": "not_found"})
+            should_skip, skip_reason = salesforce_should_skip(sf_result)
+            if should_skip:
+                log(f"    ❌ SF skip: {skip_reason}")
+                total_skipped += 1
+                continue
+
+            if score >= thresholds["auto_add"]:
+                if not dry_run:
+                    account_id, status = add_account_to_db(
+                        cur, domain, name, product, variant, score, reason,
+                        source=discovery_source
+                    )
+                    conn.commit()
+                    log(f"    ✅ Added ({status}, score={score:.3f})")
+                else:
+                    log(f"    ✅ Would add (dry run, score={score:.3f})")
+                total_added += 1
+                results.append({
+                    "name": name, "domain": domain, "score": score,
+                    "reason": reason, "action": "added",
+                    "product": product, "variant": variant,
+                    "discoverySource": discovery_source,
+                    "sharedSegmentWarning": seg.get("sharedSegmentWarning"),
+                })
+            elif score >= thresholds["review"]:
+                log(f"    🟡 Moderate fit — queue for review")
+                total_review += 1
+                review_candidates.append({
+                    "name": name, "domain": domain, "score": score,
+                    "reason": reason, "action": "review",
+                    "product": product, "variant": variant,
+                    "discoverySource": discovery_source,
+                })
+
+        time.sleep(2)
+
+    if review_candidates and not dry_run:
+        post_review_to_telegram(review_candidates)
+    results.extend(review_candidates)
+
+    log(f"\n{'='*60}")
+    log(f"📊 SEGMENT EXPANSION SUMMARY")
+    log(f"  Segments processed: {len(segments)}")
+    log(f"  Candidates added: {total_added}")
+    log(f"  Candidates for review: {total_review}")
+    log(f"  Candidates skipped: {total_skipped}")
+
+    if not dry_run:
+        cur.execute("""
+            INSERT INTO "AgentRun" (id, "agentName", status, "startedAt", "completedAt", findings)
+            VALUES (gen_random_uuid()::text, %s, 'done', now(), now(), %s)
+        """, (AGENT_SLUG + "-segment", json.dumps({
+            "version": "v3-segment",
+            "segmentsProcessed": len(segments),
+            "added": total_added,
+            "review": total_review,
+            "skipped": total_skipped,
+            "results": results[:50],
+        })))
+        conn.commit()
 
     if limit:
         segments = segments[:limit]
@@ -1063,3 +1644,4 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     results = run_expander(dry_run=args.dry_run, limit=args.limit, product_filter=args.product)
+    # run_expander now calls both pipeline-driven (phase 1) and segment-size (phase 2) internally

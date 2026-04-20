@@ -11,6 +11,9 @@ import {
   Loader2,
   X,
   Building2,
+  ShieldOff,
+  Target,
+  Info,
 } from 'lucide-react';
 import InfoTooltip from '@/components/InfoTooltip';
 import SfBadge from '@/components/SfBadge';
@@ -44,10 +47,55 @@ interface DomainsResponse {
   limit: number;
 }
 
-const PRODUCTS = ['AI Agent', 'Voice API', 'SMS API', 'SIP Trunking', 'IoT SIM', 'Fax', 'Numbers'];
+const PRODUCTS = ['AI Agent', 'Voice API', 'SMS', 'SIP', 'IoT SIM', 'Fax', 'Numbers'];
 const SF_STATUSES = ['none', 'lead', 'account', 'opportunity', 'customer'];
 
+const EXCLUSION_LABELS: Record<string, string> = {
+  hospital: '🏥 Hospital',
+  banking: '🏦 Banking',
+  hospitality_travel: '✈️ Travel',
+  ecommerce_retail: '🛒 Retail',
+  real_estate: '🏠 Real Estate',
+  government: '🏛️ Government',
+  agency: '📢 Agency',
+  consulting: '💼 Consulting',
+  media: '📺 Media',
+  legal: '⚖️ Legal',
+  pharma: '💊 Pharma',
+  finance_consulting: '💰 FinConsulting',
+  other_waste: '❌ Other Waste',
+  '*': '🚫 All Products',
+};
+
+function ExclusionBadge({ categories }: { categories: string[] }) {
+  if (!categories.length) return null;
+  // Show the most specific category label
+  const nonWildcard = categories.filter(c => c !== '*');
+  const displayCats = nonWildcard.length > 0 ? nonWildcard : categories;
+  return (
+    <div className="flex flex-wrap gap-1">
+      {displayCats.slice(0, 2).map((cat) => (
+        <span
+          key={cat}
+          className="px-1.5 py-0.5 text-[10px] bg-red-500/10 text-red-400 rounded border border-red-500/20"
+          title={`Excluded from ad targeting: ${cat}`}
+        >
+          {EXCLUSION_LABELS[cat] || cat}
+        </span>
+      ))}
+      {displayCats.length > 2 && (
+        <span className="px-1.5 py-0.5 text-[10px] text-red-400">+{displayCats.length - 2}</span>
+      )}
+    </div>
+  );
+}
+
+type TabType = 'targets' | 'excluded';
+
 export default function DomainsPage() {
+  // Tab state
+  const [tab, setTab] = useState<TabType>('targets');
+
   // Data state
   const [domains, setDomains] = useState<Domain[]>([]);
   const [total, setTotal] = useState(0);
@@ -59,7 +107,6 @@ export default function DomainsPage() {
   const [productFilter, setProductFilter] = useState('');
   const [countryFilter, setCountryFilter] = useState('');
   const [sfStatusFilter, setSfStatusFilter] = useState('');
-  const [excludedFilter, setExcludedFilter] = useState<'all' | 'excluded' | 'not_excluded'>('all');
   const [showFilters, setShowFilters] = useState(false);
 
   // Pagination & sorting
@@ -77,6 +124,9 @@ export default function DomainsPage() {
   const [newProduct, setNewProduct] = useState('');
   const [addLoading, setAddLoading] = useState(false);
   const [addError, setAddError] = useState<string | null>(null);
+
+  // Reset page on tab change
+  useEffect(() => { setPage(1); }, [tab]);
 
   // Debounce search
   useEffect(() => {
@@ -96,8 +146,11 @@ export default function DomainsPage() {
       if (productFilter) params.set('product', productFilter);
       if (countryFilter) params.set('country', countryFilter);
       if (sfStatusFilter) params.set('sfStatus', sfStatusFilter);
-      if (excludedFilter !== 'all') {
-        params.set('excluded', excludedFilter === 'excluded' ? 'true' : 'false');
+      // Tab drives exclusion filter
+      if (tab === 'targets') {
+        params.set('excluded', 'false');
+      } else {
+        params.set('excluded', 'true');
       }
       params.set('page', page.toString());
       params.set('limit', limit.toString());
@@ -113,7 +166,7 @@ export default function DomainsPage() {
     } finally {
       setLoading(false);
     }
-  }, [debouncedSearch, productFilter, countryFilter, sfStatusFilter, excludedFilter, page, limit, sort, order]);
+  }, [debouncedSearch, productFilter, countryFilter, sfStatusFilter, tab, page, limit, sort, order]);
 
   useEffect(() => {
     fetchDomains();
@@ -178,16 +231,18 @@ export default function DomainsPage() {
     setProductFilter('');
     setCountryFilter('');
     setSfStatusFilter('');
-    setExcludedFilter('all');
     setPage(1);
   };
 
-  const hasFilters = search || productFilter || countryFilter || sfStatusFilter || excludedFilter !== 'all';
+  const hasFilters = search || productFilter || countryFilter || sfStatusFilter;
 
   // Pagination
   const totalPages = Math.ceil(total / limit);
   const startItem = (page - 1) * limit + 1;
   const endItem = Math.min(page * limit, total);
+
+  // Count excluded in view for tab badge
+  const excludedCount = useMemo(() => domains.filter(d => d.hasExclusion).length, [domains]);
 
   return (
     <div className="min-h-screen bg-[var(--bg-base)] p-6">
@@ -195,9 +250,9 @@ export default function DomainsPage() {
       <div className="mb-6">
         <div className="flex items-center justify-between mb-2">
           <div>
-            <h1 className="text-2xl font-bold text-[var(--text-primary)]">Domains</h1>
+            <h1 className="text-2xl font-bold text-[var(--text-primary)]">ABM Domains</h1>
             <p className="text-sm text-[var(--text-muted)]">
-              {total.toLocaleString()} domains in the ABM database
+              Companies discovered and scored for ad targeting across StackAdapt, Google, LinkedIn, and Reddit
             </p>
           </div>
           <button
@@ -210,9 +265,66 @@ export default function DomainsPage() {
         </div>
       </div>
 
+      {/* Tabs */}
+      <div className="mb-4 flex items-center gap-1 p-1 bg-[var(--bg-elevated)] rounded-lg border border-[var(--border-primary)] w-fit">
+        <button
+          onClick={() => setTab('targets')}
+          className={`flex items-center gap-2 px-4 py-2 rounded-md text-sm font-medium transition-colors ${
+            tab === 'targets'
+              ? 'bg-indigo-600 text-white'
+              : 'text-[var(--text-muted)] hover:text-[var(--text-secondary)]'
+          }`}
+        >
+          <Target size={14} />
+          Active Targets
+          {tab === 'targets' && (
+            <span className="ml-1 px-1.5 py-0.5 text-[10px] bg-white/20 rounded-full">
+              {total.toLocaleString()}
+            </span>
+          )}
+        </button>
+        <button
+          onClick={() => setTab('excluded')}
+          className={`flex items-center gap-2 px-4 py-2 rounded-md text-sm font-medium transition-colors ${
+            tab === 'excluded'
+              ? 'bg-red-600 text-white'
+              : 'text-[var(--text-muted)] hover:text-[var(--text-secondary)]'
+          }`}
+        >
+          <ShieldOff size={14} />
+          Excluded
+          {tab === 'excluded' && (
+            <span className="ml-1 px-1.5 py-0.5 text-[10px] bg-white/20 rounded-full">
+              {total.toLocaleString()}
+            </span>
+          )}
+        </button>
+      </div>
+
+      {/* Tab explanation */}
+      {tab === 'excluded' && (
+        <div className="mb-4 p-3 bg-red-500/5 border border-red-500/20 rounded-lg flex items-start gap-3">
+          <Info size={16} className="text-red-400 mt-0.5 shrink-0" />
+          <div className="text-xs text-[var(--text-secondary)]">
+            <strong className="text-red-400">Excluded from ad targeting.</strong> These domains are blocked from receiving ads because they&apos;re in waste industries 
+            (hospitals, banks, airlines, retail, government, etc.) or are competitors. Even if a company has a product fit score, 
+            they&apos;re excluded because they&apos;re end-users without a software/AI product, not platforms that would buy Telnyx APIs.
+          </div>
+        </div>
+      )}
+
+      {tab === 'targets' && (
+        <div className="mb-4 p-3 bg-emerald-500/5 border border-emerald-500/20 rounded-lg flex items-start gap-3">
+          <Info size={16} className="text-emerald-400 mt-0.5 shrink-0" />
+          <div className="text-xs text-[var(--text-secondary)]">
+            <strong className="text-emerald-400">Active ad targets.</strong> These are companies that match Telnyx ICP and are eligible for ad targeting. 
+            Product fit shows which Telnyx product they&apos;re most relevant for. SF pipeline accounts are protected from exclusion.
+          </div>
+        </div>
+      )}
+
       {/* Search and Filters */}
       <div className="mb-4 space-y-3">
-        {/* Search bar */}
         <div className="flex items-center gap-3">
           <div className="relative flex-1 max-w-md">
             <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-[var(--text-muted)]" />
@@ -246,7 +358,7 @@ export default function DomainsPage() {
             Filters
             {hasFilters && (
               <span className="ml-1 px-1.5 py-0.5 text-[10px] bg-indigo-500 text-white rounded-full">
-                {[productFilter, countryFilter, sfStatusFilter, excludedFilter !== 'all' ? 1 : 0].filter(Boolean).length}
+                {[productFilter, countryFilter, sfStatusFilter].filter(Boolean).length}
               </span>
             )}
           </button>
@@ -259,18 +371,11 @@ export default function DomainsPage() {
               <label className="text-xs text-[var(--text-muted)]">Product</label>
               <select
                 value={productFilter}
-                onChange={(e) => {
-                  setProductFilter(e.target.value);
-                  setPage(1);
-                }}
+                onChange={(e) => { setProductFilter(e.target.value); setPage(1); }}
                 className="px-2 py-1.5 bg-[var(--bg-tertiary)] border border-[var(--border-primary)] rounded text-xs text-[var(--text-primary)]"
               >
                 <option value="">All</option>
-                {PRODUCTS.map((p) => (
-                  <option key={p} value={p}>
-                    {p}
-                  </option>
-                ))}
+                {PRODUCTS.map((p) => <option key={p} value={p}>{p}</option>)}
               </select>
             </div>
 
@@ -278,61 +383,30 @@ export default function DomainsPage() {
               <label className="text-xs text-[var(--text-muted)]">Country</label>
               <select
                 value={countryFilter}
-                onChange={(e) => {
-                  setCountryFilter(e.target.value);
-                  setPage(1);
-                }}
+                onChange={(e) => { setCountryFilter(e.target.value); setPage(1); }}
                 className="px-2 py-1.5 bg-[var(--bg-tertiary)] border border-[var(--border-primary)] rounded text-xs text-[var(--text-primary)]"
               >
                 <option value="">All</option>
-                {countries.map((c) => (
-                  <option key={c} value={c}>
-                    {c}
-                  </option>
-                ))}
+                {countries.map((c) => <option key={c} value={c}>{c}</option>)}
               </select>
             </div>
 
-            <div className="flex items-center gap-2">
-              <label className="text-xs text-[var(--text-muted)]">SF Status</label>
-              <select
-                value={sfStatusFilter}
-                onChange={(e) => {
-                  setSfStatusFilter(e.target.value);
-                  setPage(1);
-                }}
-                className="px-2 py-1.5 bg-[var(--bg-tertiary)] border border-[var(--border-primary)] rounded text-xs text-[var(--text-primary)]"
-              >
-                <option value="">All</option>
-                {SF_STATUSES.map((s) => (
-                  <option key={s} value={s}>
-                    {s.charAt(0).toUpperCase() + s.slice(1)}
-                  </option>
-                ))}
-              </select>
-            </div>
-
-            <div className="flex items-center gap-2">
-              <label className="text-xs text-[var(--text-muted)]">Exclusion</label>
-              <select
-                value={excludedFilter}
-                onChange={(e) => {
-                  setExcludedFilter(e.target.value as 'all' | 'excluded' | 'not_excluded');
-                  setPage(1);
-                }}
-                className="px-2 py-1.5 bg-[var(--bg-tertiary)] border border-[var(--border-primary)] rounded text-xs text-[var(--text-primary)]"
-              >
-                <option value="all">All</option>
-                <option value="excluded">Excluded only</option>
-                <option value="not_excluded">Not excluded</option>
-              </select>
-            </div>
+            {tab === 'targets' && (
+              <div className="flex items-center gap-2">
+                <label className="text-xs text-[var(--text-muted)]">SF Status</label>
+                <select
+                  value={sfStatusFilter}
+                  onChange={(e) => { setSfStatusFilter(e.target.value); setPage(1); }}
+                  className="px-2 py-1.5 bg-[var(--bg-tertiary)] border border-[var(--border-primary)] rounded text-xs text-[var(--text-primary)]"
+                >
+                  <option value="">All</option>
+                  {SF_STATUSES.map((s) => <option key={s} value={s}>{s.charAt(0).toUpperCase() + s.slice(1)}</option>)}
+                </select>
+              </div>
+            )}
 
             {hasFilters && (
-              <button
-                onClick={clearFilters}
-                className="ml-auto text-xs text-[var(--text-muted)] hover:text-[var(--text-secondary)]"
-              >
+              <button onClick={clearFilters} className="ml-auto text-xs text-[var(--text-muted)] hover:text-[var(--text-secondary)]">
                 Clear all
               </button>
             )}
@@ -346,45 +420,74 @@ export default function DomainsPage() {
           <table className="w-full">
             <thead>
               <tr className="border-b border-[var(--border-primary)]">
-                {[
-                  { key: 'domain', label: 'Domain', sortable: true },
-                  { key: 'company', label: 'Company', sortable: true },
-                  { key: 'productFit', label: 'Product', sortable: true },
-                  { key: 'country', label: 'Country', sortable: true },
-                  { key: 'industry', label: 'Industry', sortable: true },
-                  { key: 'sfStatus', label: 'SF Status', sortable: false },
-                  { key: 'campaignCount', label: 'Campaigns', sortable: false, tooltip: 'Number of campaigns targeting this product' },
-                  { key: 'lastActivity', label: 'Last Activity', sortable: true },
-                ].map((col) => (
-                  <th
-                    key={col.key}
-                    className={`px-4 py-3 text-left text-xs font-medium text-[var(--text-muted)] uppercase tracking-wider ${
-                      col.sortable ? 'cursor-pointer hover:text-[var(--text-secondary)]' : ''
-                    }`}
-                    onClick={() => col.sortable && handleSort(col.key)}
-                  >
-                    <div className="flex items-center gap-1">
-                      {col.label}
-                      {col.tooltip && <InfoTooltip content={col.tooltip} size={12} />}
-                      {col.sortable && sort === col.key && (
-                        <ArrowUpDown size={12} className={order === 'asc' ? 'rotate-180' : ''} />
-                      )}
-                    </div>
-                  </th>
-                ))}
+                {tab === 'targets' ? (
+                  <>
+                    {[
+                      { key: 'domain', label: 'Domain', sortable: true },
+                      { key: 'company', label: 'Company', sortable: true },
+                      { key: 'productFit', label: 'Product', sortable: true },
+                      { key: 'country', label: 'Country', sortable: true },
+                      { key: 'industry', label: 'Industry', sortable: true },
+                      { key: 'sfStatus', label: 'SF Status', sortable: false },
+                      { key: 'lastActivity', label: 'Last Activity', sortable: true },
+                    ].map((col) => (
+                      <th
+                        key={col.key}
+                        className={`px-4 py-3 text-left text-xs font-medium text-[var(--text-muted)] uppercase tracking-wider ${
+                          col.sortable ? 'cursor-pointer hover:text-[var(--text-secondary)]' : ''
+                        }`}
+                        onClick={() => col.sortable && handleSort(col.key)}
+                      >
+                        <div className="flex items-center gap-1">
+                          {col.label}
+                          {col.sortable && sort === col.key && (
+                            <ArrowUpDown size={12} className={order === 'asc' ? 'rotate-180' : ''} />
+                          )}
+                        </div>
+                      </th>
+                    ))}
+                  </>
+                ) : (
+                  <>
+                    {[
+                      { key: 'domain', label: 'Domain', sortable: true },
+                      { key: 'company', label: 'Company', sortable: true },
+                      { key: 'industry', label: 'Industry', sortable: true },
+                      { key: 'exclusionCategories', label: 'Excluded Because', sortable: false },
+                      { key: 'productFit', label: 'Had Product Fit', sortable: true, tooltip: 'Even excluded domains may have a product fit score. They\'re excluded because of their industry, not their product relevance.' },
+                      { key: 'country', label: 'Country', sortable: true },
+                    ].map((col) => (
+                      <th
+                        key={col.key}
+                        className={`px-4 py-3 text-left text-xs font-medium text-[var(--text-muted)] uppercase tracking-wider ${
+                          col.sortable ? 'cursor-pointer hover:text-[var(--text-secondary)]' : ''
+                        }`}
+                        onClick={() => col.sortable && handleSort(col.key)}
+                      >
+                        <div className="flex items-center gap-1">
+                          {col.label}
+                          {col.tooltip && <InfoTooltip content={col.tooltip} size={12} />}
+                          {col.sortable && sort === col.key && (
+                            <ArrowUpDown size={12} className={order === 'asc' ? 'rotate-180' : ''} />
+                          )}
+                        </div>
+                      </th>
+                    ))}
+                  </>
+                )}
               </tr>
             </thead>
             <tbody className="divide-y divide-[var(--border-primary)]">
               {loading ? (
                 <tr>
-                  <td colSpan={8} className="px-4 py-12 text-center">
+                  <td colSpan={tab === 'targets' ? 7 : 6} className="px-4 py-12 text-center">
                     <Loader2 className="animate-spin mx-auto text-[var(--text-muted)]" size={24} />
                   </td>
                 </tr>
               ) : domains.length === 0 ? (
                 <tr>
-                  <td colSpan={8} className="px-4 py-12 text-center text-[var(--text-muted)]">
-                    No domains found matching your filters
+                  <td colSpan={tab === 'targets' ? 7 : 6} className="px-4 py-12 text-center text-[var(--text-muted)]">
+                    {tab === 'targets' ? 'No active targets found' : 'No excluded domains found'}
                   </td>
                 </tr>
               ) : (
@@ -392,55 +495,80 @@ export default function DomainsPage() {
                   <tr
                     key={d.id}
                     onClick={() => setSelectedDomain(d.domain)}
-                    className="hover:bg-[var(--bg-tertiary)] cursor-pointer transition-colors"
+                    className={`hover:bg-[var(--bg-tertiary)] cursor-pointer transition-colors ${
+                      tab === 'excluded' ? 'opacity-75' : ''
+                    }`}
                   >
+                    {/* Domain column */}
                     <td className="px-4 py-3">
                       <div className="flex items-center gap-2">
                         <img
                           src={`https://logo.clearbit.com/${d.domain}`}
                           alt=""
                           className="w-5 h-5 rounded"
-                          onError={(e) => {
-                            (e.target as HTMLImageElement).style.display = 'none';
-                          }}
+                          onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }}
                         />
                         <span className="text-sm font-medium text-indigo-400 hover:text-indigo-300">
                           {d.domain || '—'}
                         </span>
-                        {d.hasExclusion && (
-                          <span className="px-1.5 py-0.5 text-[10px] bg-red-500/10 text-red-400 rounded border border-red-500/20">
-                            Excluded
-                          </span>
-                        )}
                       </div>
                     </td>
+
+                    {/* Company */}
                     <td className="px-4 py-3 text-sm text-[var(--text-primary)]">{d.company}</td>
-                    <td className="px-4 py-3">
-                      {d.productFit ? (
-                        <span className="px-2 py-0.5 text-xs bg-violet-500/10 text-violet-400 rounded border border-violet-500/20">
-                          {d.productFit}
-                        </span>
-                      ) : (
-                        <span className="text-xs text-[var(--text-muted)]">—</span>
-                      )}
-                    </td>
-                    <td className="px-4 py-3 text-sm text-[var(--text-secondary)]">{d.country || '—'}</td>
-                    <td className="px-4 py-3 text-sm text-[var(--text-secondary)]">{d.industry || '—'}</td>
-                    <td className="px-4 py-3">
-                      <SfBadge status={d.sfStatus} />
-                    </td>
-                    <td className="px-4 py-3">
-                      {d.campaignCount > 0 ? (
-                        <span className="px-2 py-0.5 text-xs bg-emerald-500/10 text-emerald-400 rounded border border-emerald-500/20">
-                          {d.campaignCount}
-                        </span>
-                      ) : (
-                        <span className="text-xs text-[var(--text-muted)]">0</span>
-                      )}
-                    </td>
-                    <td className="px-4 py-3 text-xs text-[var(--text-muted)]">
-                      {formatRelativeTime(d.lastActivity)}
-                    </td>
+
+                    {tab === 'targets' ? (
+                      <>
+                        {/* Product */}
+                        <td className="px-4 py-3">
+                          {d.productFit ? (
+                            <span className="px-2 py-0.5 text-xs bg-violet-500/10 text-violet-400 rounded border border-violet-500/20">
+                              {d.productFit}
+                            </span>
+                          ) : (
+                            <span className="text-xs text-[var(--text-muted)]">—</span>
+                          )}
+                        </td>
+                        {/* Country */}
+                        <td className="px-4 py-3 text-sm text-[var(--text-secondary)]">{d.country || '—'}</td>
+                        {/* Industry */}
+                        <td className="px-4 py-3 text-sm text-[var(--text-secondary)]">{d.industry || '—'}</td>
+                        {/* SF Status */}
+                        <td className="px-4 py-3">
+                          <SfBadge status={d.sfStatus} />
+                          {d.inPipeline && (
+                            <span className="ml-1 px-1.5 py-0.5 text-[10px] bg-emerald-500/10 text-emerald-400 rounded border border-emerald-500/20">
+                              Pipeline
+                            </span>
+                          )}
+                        </td>
+                        {/* Last Activity */}
+                        <td className="px-4 py-3 text-xs text-[var(--text-muted)]">
+                          {formatRelativeTime(d.lastActivity)}
+                        </td>
+                      </>
+                    ) : (
+                      <>
+                        {/* Industry (more prominent in excluded view) */}
+                        <td className="px-4 py-3 text-sm text-[var(--text-secondary)]">{d.industry || '—'}</td>
+                        {/* Exclusion reason */}
+                        <td className="px-4 py-3">
+                          <ExclusionBadge categories={d.exclusionCategories} />
+                        </td>
+                        {/* Had Product Fit */}
+                        <td className="px-4 py-3">
+                          {d.productFit ? (
+                            <span className="px-2 py-0.5 text-xs bg-violet-500/10 text-violet-400/60 rounded border border-violet-500/10 line-through decoration-violet-400/40">
+                              {d.productFit}
+                            </span>
+                          ) : (
+                            <span className="text-xs text-[var(--text-muted)]">None</span>
+                          )}
+                        </td>
+                        {/* Country */}
+                        <td className="px-4 py-3 text-sm text-[var(--text-secondary)]">{d.country || '—'}</td>
+                      </>
+                    )}
                   </tr>
                 ))
               )}
@@ -452,7 +580,7 @@ export default function DomainsPage() {
         {!loading && total > 0 && (
           <div className="px-4 py-3 border-t border-[var(--border-primary)] flex items-center justify-between">
             <span className="text-xs text-[var(--text-muted)]">
-              Showing {startItem.toLocaleString()}-{endItem.toLocaleString()} of {total.toLocaleString()}
+              Showing {startItem.toLocaleString()}-{endItem.toLocaleString()} of {total.toLocaleString()} {tab === 'targets' ? 'targets' : 'excluded'}
             </span>
             <div className="flex items-center gap-2">
               <button
@@ -520,11 +648,7 @@ export default function DomainsPage() {
                   className="w-full px-3 py-2 bg-[var(--bg-elevated)] border border-[var(--border-primary)] rounded-lg text-sm text-[var(--text-primary)]"
                 >
                   <option value="">Select product...</option>
-                  {PRODUCTS.map((p) => (
-                    <option key={p} value={p}>
-                      {p}
-                    </option>
-                  ))}
+                  {PRODUCTS.map((p) => <option key={p} value={p}>{p}</option>)}
                 </select>
               </div>
 
@@ -533,12 +657,7 @@ export default function DomainsPage() {
 
             <div className="flex justify-end gap-2 mt-5">
               <button
-                onClick={() => {
-                  setShowAddModal(false);
-                  setNewDomain('');
-                  setNewProduct('');
-                  setAddError(null);
-                }}
+                onClick={() => { setShowAddModal(false); setNewDomain(''); setNewProduct(''); setAddError(null); }}
                 className="px-3 py-1.5 text-xs text-[var(--text-muted)]"
               >
                 Cancel

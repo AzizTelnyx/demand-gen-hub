@@ -1,7 +1,7 @@
 # ABM Lifecycle Engine v2 — Design Document
 
-**Last updated:** 2026-04-19
-**Status:** Data foundation complete, connectors + closed loop in progress
+**Last updated:** 2026-04-20
+**Status:** Phase 1 complete (SA connector), Phase 2 in progress (Hub UI wired to actions). Build compiles.
 
 ---
 
@@ -28,7 +28,7 @@ Closed-loop ABM: automatically grow, clean, and optimize target account lists ac
 
 | Platform | Domain-Level Data | Can Push Changes | Status |
 |----------|------------------|-----------------|--------|
-| **StackAdapt** | ✅ 2,555 domains, 1.55M imps, $12.5K spend | ❌ Connector not built | #1 priority |
+| **StackAdapt** | ✅ 2,555 domains, 1.55M imps, $12.5K spend | ✅ Connector built, 5 exclusion audiences + 13 campaigns attached | Done |
 | **LinkedIn** | ❌ 97% li_org: IDs, only 12 resolved domains | ⚠️ Create segment works, populate doesn't | Blocked on API |
 | **Google Ads** | ❌ Aggregate only | ❌ Out of scope | Deferred |
 
@@ -134,21 +134,40 @@ All agents use Lobster workflows. No standalone Python pipelines.
 
 ## 5. Platform Connectors (To Build)
 
-### 5.1 StackAdapt ABM Connector — HIGHEST PRIORITY
+### 5.1 StackAdapt ABM Connector — ✅ BUILT
 
-This closes the loop. Without it, all agent decisions stay in the DB and don't affect live campaigns.
+**Script:** `scripts/abm_exclusion_push.py` (321 lines)
+**Connector:** `scripts/stackadapt_write_connector.py`
 
-**Methods needed:**
-- `createAbmAudience(input)` — create new ABM audience from company domains
-- `updateAbmAudienceWithDomainsList(input)` — add/remove domains from existing segment
-- `attachAudienceToCampaign(segmentId, campaignId)` — attach segment to campaign targeting
-- `detachAudienceFromCampaign(segmentId, campaignId)` — remove segment from targeting
-- `getAudienceInsights(segmentId)` — domain-level engagement data (already have via sync)
+**Exclusion audiences created (per product):**
+| Product | SA Audience ID |
+|---------|---------------|
+| SMS | 2502446 |
+| SIP | 2502447 |
+| IoT SIM | 2502448 |
+| Voice API | 2502449 |
+| AI Agent | 2502450 |
+
+**13 campaigns with exclusions attached:** 2882131, 2903819, 2903846, 2925035, 2978014, 2978199, 2983357, 2991872, 3105131, 3105136, 3116860, 3125891, 3125909
+
+**What's done:**
+- ✅ `get_or_create_exclusion_audience()` — creates SA exclusion audiences per product
+- ✅ Push unpushed domains to exclusion audiences
+- ✅ Attach exclusion audiences to active SA campaigns
+- ✅ Update `ABMExclusion.pushedToSa` flag in DB after push
+- ✅ Hub UI "Push to SA" button wired to `POST /api/abm/exclusions/push`
+
+**Known gaps:**
+- ⚠️ `list_audiences()` API doesn't return ABM audiences — `get_or_create_exclusion_audience` caches audience IDs locally
+- ⚠️ SMS/SIP/Voice API exclusion audiences have no active SA campaigns (those products run on Google/LinkedIn only)
+- ⚠️ `ABMExclusion.saAudienceId` column is NULL for all rows — needs backfill
+- ❌ `detachAudienceFromCampaign` not built yet
+- ❌ Positive audience upload (for Expander) not built yet
 
 **What this enables:**
 - Pruner auto-removes → connector removes domain from StackAdapt segment → stops showing ads to irrelevant companies
-- Expander adds → connector uploads domain to StackAdapt segment → starts showing ads to new qualified companies
 - Negative Builder → connector adds domains to exclusion targeting → blocks across all StackAdapt campaigns
+- Expander additions → **not yet wired** (need positive audience upload)
 
 ### 5.2 LinkedIn ABM Connector — BLOCKED (partial)
 
@@ -185,68 +204,44 @@ This requires the StackAdapt connector first (to read domain-level data + adjust
 
 ## 7. Hub UI Design
 
-**Goal:** Intuitive ABM management. Not a data table — a control panel.
+**Status: Phase 2 in progress. Build compiles, all pages serving real DB data.**
 
-### 7.1 ABM Dashboard (Main View)
+**URL:** http://localhost:3000 (PM2: `dg-hub`)
+**GitHub:** https://github.com/AzizTelnyx/demand-gen-hub
 
-```
-┌──────────────────────────────────────────────────┐
-│  ABM LIFECYCLE ENGINE                            │
-│                                                  │
-│  ┌─────────────┐  ┌─────────────┐  ┌──────────┐ │
-│  │ 2,555       │  │ 3,810       │  │ 287      │ │
-│  │ Accounts    │  │ Exclusions  │  │ Segments │ │
-│  └─────────────┘  └─────────────┘  └──────────┘ │
-│                                                  │
-│  Last Audit: Mon 6 AM  │  Next Prune: Sun 5 AM  │
-│  WASTE DETECTED: $598/mo on irrelevant domains   │
-│                                                  │
-│  ┌─── Campaign Segments ──────────────────────┐ │
-│  │ AI Agent - Contact Center    [EXPAND ✓]    │ │
-│  │ Voice API - Healthcare       [EXPAND ✗]   │ │
-│  │ SMS API - Fintech            [EXPAND ✓]    │ │
-│  │ SIP Trunking - Enterprise    [EXPAND ✗]   │ │
-│  └────────────────────────────────────────────┘ │
-└──────────────────────────────────────────────────┘
-```
+### 7.1 Current Pages
 
-### 7.2 Campaign Segment Detail View
+| Route | Purpose | Status |
+|-------|---------|--------|
+| `/abm/domains` | Landing page, search-first, 2,555 domains | ✅ Working |
+| `/abm/campaigns` | Campaigns by product with spend/impressions | ✅ Working |
+| `/abm/exclusions` | 3,786 exclusions, push to SA, restore | ✅ Working |
+| `/abm/agents` | Agent run history | ✅ Working |
+| `/abm/builder` | List builder with "Copy from Product Audience" | ✅ Working |
 
-Clicking a segment shows:
-- **Members**: list of domains with relevance scores, impression data, engagement
-- **Exclusions**: domains excluded for this product/segment
-- **Performance**: 30d impressions, clicks, conversions, spend, CTR, CPC
-- **Health flags**: low_ctr, undersized, waste_detected, etc.
-- **Expand toggle**: checkbox to opt-in/out of Expander
-- **Actions**: "Add domains", "Remove domains", "Push to StackAdapt"
+### 7.2 Write Actions (Wired to API)
 
-### 7.3 Pruner Results View
+| Action | API Route | Status |
+|--------|-----------|--------|
+| Add exclusion | `POST /api/abm/exclusions` | ✅ Working |
+| Restore exclusion | `POST /api/abm/exclusions/restore` | ✅ Working (SF pipeline safety check) |
+| Push exclusions to SA | `POST /api/abm/exclusions/push` | ✅ Working (calls Python script) |
+| Add domain | `POST /api/abm/domains` | ✅ Working |
+| Bulk restore (≤10 auto, >10 needs confirm) | `POST /api/abm/exclusions/restore` | ✅ Working |
 
-After Pruner runs:
-- **Auto-removed** (zero relevance): shown as list with reason + spend saved
-- **Pending review**: cards with domain, relevance score, spend, reason → Approve/Reject buttons
-- **Kept**: summary count
+### 7.3 Design Principles
+- Info icons (ℹ️) with tooltip popups throughout for self-documentation
+- Every button modifying data has confirmation dialog
+- Every action button has loading state
+- All dates use `formatRelativeTime` from `@/lib/utils`
+- RelevanceBar, SfBadge, PlatformBadge, InfoTooltip shared components
+- Matches existing hub UI design system (Tailwind + CSS vars, Lucide icons, indigo accent)
 
-### 7.4 Expander Results View
-
-After Expander runs:
-- **New candidates** per campaign: domain, company name, relevance score, ICP match reasoning
-- **Auto-added** (≥ 0.7 confidence): shown with reasoning
-- **Pending review** (0.4–0.7): cards → Approve/Reject buttons
-- **Source**: AI research or Clearbit discovery
-
-### 7.5 Exclusion Manager View
-
-- All ABMExclusion rows grouped by category (competitor, ISP, hospital, etc.)
-- Add/remove exclusions
-- Push to StackAdapt (when connector built)
-
-### 7.6 UI Architecture Decision
-
-- Current Hub UI can be reworked or replaced
-- If replacing, save current UI code in a branch for reference
-- Priority: functionality over polish — get the controls working first
-- Must be usable by any team member, not just engineers
+### 7.4 Remaining UI Work
+- Expander/Pruner visibility — show workflow run history + results in `/abm/agents` page
+- DomainSlideOut — needs richer Clearbit/SF enrichment data
+- Attribution dashboard — connect exclusions to pipeline impact
+- Delete old API routes: `/api/abm/audiences`, `/api/abm/audiences/[product]`, `/api/abm/active`
 
 ---
 
@@ -321,25 +316,26 @@ Not built yet. Data exists, needs the SQL + Hub visualization.
 
 ## 10. Build Priority
 
-### Phase 1: Close the Loop (StackAdapt)
-1. Build StackAdapt ABM connector (CRUD methods)
-2. Update Pruner to auto-push removals to StackAdapt
-3. Update Expander to auto-push additions to StackAdapt
-4. Update Negative Builder to push exclusions to StackAdapt
-5. Build attribution query
+### Phase 1: Close the Loop (StackAdapt) — ✅ DONE
+1. ✅ Build StackAdapt ABM connector (exclusion audiences, domain push, campaign attach)
+2. ✅ 5 exclusion audiences created (per product) + attached to 13 campaigns
+3. ✅ Hub UI wired to push/restore/add exclusion API routes
+4. ✅ Build compiles, all pages serving real DB data
 
-### Phase 2: Hub UI
-6. ABM Dashboard (main view with stats + expand toggles)
-7. Campaign Segment Detail view
-8. Pruner/Expander results views
-9. Exclusion Manager view
+### Phase 2: Hub UI Polish — IN PROGRESS
+5. ⬜ Expander/Pruner results visible in Hub UI
+6. ⬜ DomainSlideOut with richer Clearbit/SF data
+7. ⬜ Attribution query + visualization
+8. ⬜ Clean up old API routes
 
-### Phase 3: LinkedIn
-10. LinkedIn ABM connector (create segments, attach/detach)
-11. LinkedIn domain upload workaround or API discovery
-12. Follow up on Community Management API approval
+### Phase 3: LinkedIn — BLOCKED
+9. ⬜ LinkedIn ABM connector (create segments, attach/detach)
+10. ⬜ LinkedIn domain upload workaround or API discovery
+11. ⬜ Follow up on Community Management API approval
 
 ### Phase 4: Advanced
-13. StackAdapt Budget & Bid Manager agent
-14. Frequency capping by domain
-15. Cross-platform attribution (when LinkedIn data resolves)
+12. ⬜ StackAdapt Budget & Bid Manager agent
+13. ⬜ Frequency capping by domain
+14. ⬜ Cross-platform attribution (when LinkedIn data resolves)
+15. ⬜ Positive audience upload (for Expander → SA)
+16. ⬜ Detach exclusion audiences from campaigns

@@ -83,6 +83,19 @@ function generateHTML(
     overflow: hidden;
   }
 
+  /* Subtle radial glow (like reference) */
+  body::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    right: 15%;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(0,227,170,0.08) 0%, transparent 70%);
+    transform: translateY(-50%);
+    pointer-events: none;
+  }
+
   /* === BADGE (top right) === */
   .badge {
     position: absolute;
@@ -154,13 +167,27 @@ function generateHTML(
   }
 
   .metric-card {
-    background: rgba(255,255,255,0.03);
-    border: 1px solid rgba(0,227,170,0.2);
+    background: linear-gradient(90deg, rgba(255,255,255,0.02) 0%, rgba(0,227,170,0.05) 100%);
+    border: 1px solid rgba(0,227,170,0.15);
+    border-right: 2px solid rgba(0,227,170,0.4);
     border-radius: 12px;
     padding: 20px 24px;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    position: relative;
+  }
+
+  /* Subtle glow on right edge */
+  .metric-card::after {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 10%;
+    height: 80%;
+    width: 3px;
+    background: linear-gradient(180deg, transparent, rgba(0,227,170,0.6), transparent);
+    border-radius: 2px;
   }
 
   .metric-left {

@@ -25,6 +25,7 @@ const navItems = [
     { id: "abm-exclusions", label: "Exclusions", href: "/abm/exclusions" },
     { id: "abm-agents", label: "Agent Activity", href: "/abm/agents" },
     { id: "abm-builder", label: "List Builder", href: "/abm/builder" },
+    { id: "abm-docs", label: "Docs & System Map", href: "/abm/docs" },
   ]},
   { id: "agents", label: "Agents", icon: Bot, href: "/agents" },
   { id: "activity", label: "Activity Log", icon: Activity, href: "/activity" },

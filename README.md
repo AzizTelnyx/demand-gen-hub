@@ -2,154 +2,84 @@
 
 Unified operations platform for Telnyx Demand Generation — campaign management, ABM lifecycle, agent automation, and cross-platform analytics.
 
-## Architecture
+## How It Works
 
-```
-┌──────────────────────────────────────────────────────────┐
-│                    DG Hub (Next.js)                       │
-│  localhost:3000 / telnyx-dg-hub.ngrok.app                 │
-├──────────┬──────────┬──────────┬──────────┬──────────────┤
-│ Campaigns│   ABM    │   Ads    │  Agents  │    Docs      │
-│Dashboard │ Lifecycle│ Library  │  Fleet   │   System     │
-└────┬─────┴────┬─────┴────┬─────┴────┬─────┴──────┬───────┘
-     │          │          │          │            │
-     ▼          ▼          ▼          ▼            ▼
-┌──────────────────────────────────────────────────────────┐
-│              PostgreSQL (dghub)                           │
-│  ABMAccount · ABMExclusion · ABMCampaignSegment          │
-│  SFAccount · SFOpportunity · Campaign · Creative         │
-│  AdImpression · AgentRun · WorkItem · ABMList             │
-└──────────────────────────────────────────────────────────┘
-     │          │          │          │
-     ▼          ▼          ▼          ▼
-┌────────┐ ┌────────┐ ┌────────┐ ┌────────┐ ┌────────┐
-│ Google │ │LinkedIn│ │StackAdt│ │ Reddit │ │Salesfrce│
-│  Ads   │ │  Ads   │ │        │ │  Ads   │ │         │
-└────────┘ └────────┘ └────────┘ └────────┘ └─────────┘
-```
+### ABM Lifecycle — Account → Campaign → Pipeline
 
-## Core Modules
+The ABM system manages the full lifecycle of target accounts: from discovery to campaign targeting to pipeline attribution.
 
-### 🎯 Campaigns Dashboard
-- Unified view across Google Ads, LinkedIn, StackAdapt, Reddit
-- Budget pacing, spend tracking, CPA monitoring
-- Filter by platform, status, product, region
+**1. Account Ingestion**
+Accounts come from StackAdapt impression data — when a company sees our ads, their domain is captured. These get enriched with Clearbit data (industry, tags, tech stack, description, revenue, employee count) and stored in `ABMAccount`. Salesforce accounts are matched by domain to add pipeline data (active opps, stage, amount).
 
-### 🏢 ABM Lifecycle Engine
-Full account-based marketing pipeline from identification to exclusion:
+**2. Product Classification**
+Each account is scored against 5 products (AI Agent, Voice API, SMS, SIP, IoT SIM) using Clearbit signals — description keywords (40%), industry tags (30%), tech stack (15%), and company size (15%). Accounts that don't match any product get `null` productFit — these are waste impressions (hospitals, airlines, retail) that need exclusion.
 
-| Component | What It Does |
-|-----------|-------------|
-| **Product Fit Scorer** | Classifies 2,555 accounts into Voice API, SMS, SIP, IoT SIM, or AI Agent based on Clearbit data + SF signals |
-| **Structural Exclusions** | Tag-based waste classifier — 136 non-buyer domains excluded (hospitals, airlines, banks, etc.) with rescue logic for healthtech/fintech |
-| **ABM Sync** | Daily Clearbit enrichment + relevance scoring for all accounts |
-| **ABM Expander** | AI-powered segment expansion — finds new accounts via research + lookalike matching |
-| **ABM Pruner** | Removes stale/unresponsive accounts from active segments |
-| **ABM Negative Builder** | Generates negative keywords from excluded domains per product |
+**3. Waste Exclusion**
+Accounts tagged with non-buyer categories (hospitals, airlines, banks, retail, law firms, government) are automatically excluded — unless they also have tech rescue tags (Technology, SAAS, Cloud Solutions) which means they're healthtech/fintech, not actual hospitals/banks. All excluded domains are pushed to StackAdapt exclusion audiences so they stop seeing our ads. Pipeline accounts ($14.2M across 41 active opps) are always protected from exclusion.
 
-→ **Full docs:** [`docs/abm/`](./docs/abm/README.md)
+**4. Segment Management**
+Accounts with a product fit are grouped into segments per product. These segments are pushed to StackAdapt as targeting audiences — so the right companies see the right product ads. Segments are kept fresh by daily sync (new accounts, updated firmographics) and weekly pruning (remove unresponsive accounts that haven't converted after multiple touchpoints).
 
-### 📋 Ads Library
-- 777 active creatives across Google (497), LinkedIn (130), StackAdapt (100), Reddit (50)
-- Search by headline, copy, platform, campaign
-- Copy review against brand guidelines
+**5. Expansion (AI-Powered)**
+The Expander looks at accounts with open Salesforce opportunities, analyzes what makes them a good fit (industry, tech stack, use case), then searches for similar companies NOT yet in the system. Found companies are added to the relevant product segment and pushed to StackAdapt campaigns. This is how we go from reactive (who saw our ads) to proactive (who SHOULD see our ads).
 
-### 🤖 Agent Fleet
-All agents follow the hybrid layered architecture:
+**6. Campaign Hygiene**
+The Negative Builder generates negative keywords per product so we stop bidding on irrelevant search terms. The Auditor runs weekly checks on segment health — stale accounts, misaligned product fit, exclusion overlaps. The Hub Doctor monitors all agents and flags anomalies.
 
-```
-GLOBAL (cross-platform)         PLATFORM FLEETS
-├── Budget & Pacing ✅           Google Ads:
-├── Creative QA ✅              ├── neg-keyword ✅
-├── Attribution 🆕               ├── keyword-bid-optimizer ✅
-└── Hub Doctor ✅                └── creative-specialist ✅
-                                 StackAdapt: stackadapt-ops ✅
-                                 LinkedIn: 🆕 (blocked on API)
-                                 Reddit: reddit-ops ✅
-```
+### Campaign Management
 
-**Design rules:**
-- Platform specialists stay SEPARATE (focused context, isolated failures)
-- No orchestrator — hub + DB + budget-pacing coordinate
-- Creative QA = compliance. Creative OPTIMIZATION = per-platform
-- All agents use `BaseAgent` framework, Lobster workflows, DB logging, approval gates
+All campaigns across Google Ads, LinkedIn, StackAdapt, and Reddit are synced into a unified dashboard. Creative assets (777 active ads) are cataloged and searchable. Budget pacing is monitored against the $140K/mo cap with per-platform limits.
 
-→ **Agent details:** [`docs/abm/03-agent-fleet.md`](./docs/abm/03-agent-fleet.md)
+### Agent Fleet
 
-### 📊 Salesforce Integration
-- 122 accounts linked to SF via domain matching
-- 41 accounts with active pipeline ($14.2M total)
-- `switchSignal` populated from SF opp source for 260 accounts
-- Pipeline accounts protected from all exclusion logic
+Agents are organized in a hybrid layered model — global agents that work across all platforms, and platform specialists that handle platform-specific optimization:
 
-→ **SF integration:** [`docs/abm/05-salesforce-integration.md`](./docs/abm/05-salesforce-integration.md)
+**Global agents:** Budget & Pacing, Creative QA (compliance), Attribution, Hub Doctor
+**Platform specialists:** Google (negative keywords, bid optimization, creative), StackAdapt (campaign ops, audience management), Reddit (campaign ops)
 
-## Product Fit Scoring
+All agents follow the same framework: `BaseAgent` for guardrails + DB logging, Lobster workflows for deterministic steps, LLM for analysis, approval gates for actions. No agent makes a material change without going through the approval system.
 
-Accounts are classified using a multi-signal scorer:
+## Current Status
 
-| Signal | Weight | Source |
-|--------|--------|--------|
-| Description keywords | 40% | Clearbit |
-| Industry/Tags | 30% | Clearbit |
-| Tech stack | 15% | Clearbit |
-| Company size/employee range | 15% | Clearbit + SF |
+### What's Live
+- ✅ Account ingestion + Clearbit enrichment (2,555 accounts)
+- ✅ Product fit scoring with strict AI Agent keywords
+- ✅ Structural waste exclusion (136 domains, tag-based with rescue logic)
+- ✅ StackAdapt exclusion audiences pushed and attached to 13 active campaigns
+- ✅ Salesforce linking (122 accounts, 41 pipeline, $14.2M)
+- ✅ ABM Sync agent (daily Clearbit refresh)
+- ✅ Negative keyword agent (daily, Google Ads)
+- ✅ Hub UI — campaigns, ABM domains, ads library, docs
+- ✅ Campaign + creative sync across all 4 platforms
 
-**Current distribution (2,555 accounts):**
+### What's Designed But Needs Live Validation
+- 🔶 ABM Expander — Lobster workflow built, needs a live run to verify domains push correctly to SA
+- 🔶 ABM Pruner — workflow built, only dry-run tested
+- 🔶 ABM Negative Builder — updated keywords, needs re-run with corrected productFit
 
-| Product | Accounts | Notes |
-|---------|----------|-------|
-| AI Agent | 498 | Strict keywords only — no generic telecom terms |
-| IoT SIM | 182 | Includes logistics/emergency response |
-| Voice API | 165 | Telecom infrastructure gets routed here |
-| SMS | 66 | Messaging platform companies |
-| SIP | 27 | VoIP/telephony providers |
-| null | 1,617 | No strong product signal — waste/pruning candidates |
-
-→ **Scoring details:** [`docs/abm/02-product-fit-scoring.md`](./docs/abm/02-product-fit-scoring.md)
-
-## Structural Exclusions
-
-Tag-based waste classification using Clearbit's curated multi-label tags:
-
-**Algorithm:**
-1. Must have a waste tag (e.g., "Medical Care", "Banking", "Airlines")
-2. Must NOT have a rescue tag (e.g., "Technology", "SAAS", "Cloud Solutions") — healthtech/fintech rescued
-3. Pipeline accounts always protected
-4. Description provides secondary confirmation
-
-| Category | Excluded |
-|----------|----------|
-| Hospital / Healthcare | 68 |
-| Hospitality / Travel / Airlines | 31 |
-| E-commerce / Retail | 21 |
-| Banking / Insurance | 18 |
-| Real Estate | 10 |
-| Agencies | 8 |
-| Pharma / Biotech | 3 |
-| Media / Publishing | 3 |
-| Government | 2 |
-| Legal | 1 |
-| **Total** | **136** |
-
-All pushed to 6 StackAdapt exclusion audiences (5 product + 1 structural).
+### What's Next
+- 🆕 Attach exclusion audiences to remaining SA campaigns
+- 🆕 LinkedIn attribution fix (blocked on Community Management API approval)
+- 🆕 Attribution query — connect ad impressions → SF pipeline
+- 🆕 Google Ads Customer Match for ABM audiences
+- 🆕 DomainSlideOut in Hub UI — show SF pipeline + opp data per account
 
 ## Platform Connectors
 
-| Platform | Status | Capabilities |
+| Platform | Status | What It Does |
 |----------|--------|-------------|
-| **Google Ads** | ✅ Active | Campaign sync, creative sync, negative keywords, bid management |
-| **StackAdapt** | ✅ Active | Campaign sync, ABM audience create/update/push, exclusion audiences, creative sync |
-| **Reddit** | ✅ Active | Campaign sync, creative sync |
-| **LinkedIn** | 🔴 Blocked | Advertising API works, Community Management API stalled (needed for attribution fix) |
-| **Salesforce** | ✅ Active | Account linking, pipeline data, opp stages |
+| **Google Ads** | ✅ Active | Sync campaigns/creatives, negative keywords, bid management |
+| **StackAdapt** | ✅ Active | Sync campaigns/creatives, ABM audience create/update/push, exclusion audiences |
+| **Reddit** | ✅ Active | Sync campaigns/creatives |
+| **LinkedIn** | 🔴 Blocked | Ads API works, but attribution needs Community Management API (stalled) |
+| **Salesforce** | ✅ Active | Account matching, pipeline data, opp stages |
 
 ## Tech Stack
 
 - **Frontend:** Next.js 16, React, Tailwind CSS, Prisma
 - **Database:** PostgreSQL 17 (localhost:5432/dghub)
 - **Agents:** Python (BaseAgent framework) + Lobster workflows
-- **Orchestration:** OpenClaw (Ares) + A2A hooks
+- **Orchestration:** OpenClaw + A2A hooks
 - **Hosting:** PM2 (localhost:3000) + ngrok
 
 ## Documentation
@@ -158,35 +88,22 @@ Full system documentation in [`docs/abm/`](./docs/abm/):
 
 | Doc | Content |
 |-----|---------|
-| [README](./docs/abm/README.md) | Architecture overview, quick start |
-| [Data Model](./docs/abm/01-data-model.md) | All tables, columns, relationships |
-| [Product Fit Scoring](./docs/abm/02-product-fit-scoring.md) | Scoring algorithm, keywords, distribution |
-| [Agent Fleet](./docs/abm/03-agent-fleet.md) | All agents, schedules, workflows, SLAs |
-| [Platform Connectors](./docs/abm/04-platform-connectors.md) | SA, LinkedIn, Google, Reddit connectors |
-| [Salesforce Integration](./docs/abm/05-salesforce-integration.md) | Pipeline data, attribution loop |
+| [README](./docs/abm/README.md) | Architecture overview |
+| [Data Model](./docs/abm/01-data-model.md) | Tables, columns, relationships |
+| [Product Fit Scoring](./docs/abm/02-product-fit-scoring.md) | Algorithm, keywords, distribution |
+| [Agent Fleet](./docs/abm/03-agent-fleet.md) | Agents, schedules, workflows |
+| [Platform Connectors](./docs/abm/04-platform-connectors.md) | SA, LinkedIn, Google, Reddit |
+| [Salesforce](./docs/abm/05-salesforce-integration.md) | Pipeline data, attribution |
 | [Hub UI](./docs/abm/06-hub-ui.md) | Pages, routes, components |
 | [Gaps & Next Steps](./docs/abm/07-gaps-and-next-steps.md) | Prioritized backlog |
 
 ## Getting Started
 
 ```bash
-# Install dependencies
 npm install
-
-# Set up database
 npx prisma generate
 npx prisma db push
-
-# Run development server
 npm run dev
-```
-
-## Environment Variables
-
-```
-DATABASE_URL="postgresql://localhost:5432/dghub"
-APP_PASSWORD="your-shared-password"
-NGROK_URL="https://telnyx-dg-hub.ngrok.app"
 ```
 
 ## License

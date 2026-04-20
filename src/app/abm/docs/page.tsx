@@ -93,6 +93,7 @@ export default function ABMDocsPage() {
       {/* Key Metrics */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
         <Metric label="Total Accounts" value="2,555" sub="1,669 need product fit" />
+        <Metric label="SF-Linked Accounts" value="122" sub="41 in active pipeline" />
         <Metric label="Exclusions" value="3,810" sub="across 5 products" />
         <Metric label="Campaign Segments" value="287" sub="with 30d performance" />
         <Metric label="SA Exclusion Audiences" value="5" sub="13 campaigns attached" />
@@ -319,7 +320,10 @@ ABM LIFECYCLE (product-agnostic)
               <li>✅ Exclusion audiences created: SMS (2502446), SIP (2502447), IoT SIM (2502448), Voice API (2502449), AI Agent (2502450)</li>
               <li>✅ Domain push working — 1,348 excluded domains pushed</li>
               <li>✅ 13 campaigns have exclusion audiences attached</li>
-              <li>⚠️ Missing connector methods: <code className="px-1 py-0.5 bg-[var(--bg-primary)] rounded text-[11px]">createAbmAudience</code>, <code className="px-1 py-0.5 bg-[var(--bg-primary)] rounded text-[11px]">updateAbmAudienceWithDomainsList</code>, <code className="px-1 py-0.5 bg-[var(--bg-primary)] rounded text-[11px]">attachAudienceToCampaign</code></li>
+              <li>✅ Connector methods built: <code className="px-1 py-0.5 bg-[var(--bg-primary)] rounded text-[11px]">createAbmAudience</code>, <code className="px-1 py-0.5 bg-[var(--bg-primary)] rounded text-[11px]">updateAbmAudienceWithDomainsList</code>, <code className="px-1 py-0.5 bg-[var(--bg-primary)] rounded text-[11px]">attachSegmentToCampaign</code></li>
+              <li>✅ Domain push working — 1,348 excluded domains pushed</li>
+              <li>✅ 13 campaigns have exclusion audiences attached</li>
+              <li>⚠️ Expander/Pruner auto-push needs end-to-end live validation</li>
             </ul>
           </div>
 
@@ -379,22 +383,28 @@ ABM LIFECYCLE (product-agnostic)
         <div className="space-y-3">
           {[
             {
-              title: "1,669 accounts with null productFit",
+              title: "1,617 accounts with null productFit",
               severity: "high" as const,
-              desc: "65% of accounts have no product fit signal. These were previously miscategorized as AI Agent. Need better Clearbit enrichment or AI-powered classification to assign them correctly. Until fixed, these accounts can't be properly targeted or excluded.",
-              action: "Run enrichment batch for null-productFit accounts. Consider AI classification for accounts with descriptions but no keyword match.",
+              desc: "63% of accounts have no product fit signal. These were previously miscategorized as AI Agent. Most are genuinely irrelevant (pharmacies, food companies, fashion) — they got impressions on broad campaigns. 122 now linked to Salesforce. 41 have active pipeline opps worth $14.2M.",
+              action: "Options: (1) Exclude null-productFit domains from product-specific campaigns, (2) Use SF industry data for coarser classification, (3) Accept that ~60% are low-relevance and let the Pruner handle them.",
             },
             {
-              title: "SA connector: missing 3 methods",
-              severity: "high" as const,
-              desc: "createAbmAudience, updateAbmAudienceWithDomainsList, attachAudienceToCampaign are not in the SA connector. The Expander and Pruner can't automatically push changes to StackAdapt without these.",
-              action: "Build the 3 missing connector methods. Map to SA API endpoints for audience CRUD + campaign attachment.",
+              title: "SA connector: Expander/Pruner not auto-pushing",
+              severity: "medium" as const,
+              desc: "SA connector has createAbmAudience, updateAbmAudienceWithDomainsList, attachSegmentToCampaign methods built. The abm_push_to_stackadapt.py bridge script exists and is called by Lobster workflows. But the auto-push hasn't been tested end-to-end after agent runs — needs a live validation.",
+              action: "Run a live Expander cycle and verify domains push to SA correctly. Test Pruner push flow too.",
             },
             {
               title: "LinkedIn API blocked",
               severity: "high" as const,
               desc: "Community Management API approval stalled since March 12. 97.2% of LinkedIn impressions are invisible (li_org: prefix). Can't match to Salesforce. Currently attributing ~$580K pipeline from only 36 deals (tiny fraction).",
               action: "Escalate with LinkedIn support. Follow up on pending approval. Consider alternative: LI Marketing API for impression data.",
+            },
+            {
+              title: "Salesforce data not linked to ABM accounts",
+              severity: "medium" as const,
+              desc: "SF Account, Opportunity, and Campaign data exists in the DB but wasn't connected to ABMAccount. 122 accounts now linked (sfAccountId), 41 marked as inPipeline ($14.2M active). But sfAccountId, switchSignal, currentProvider, and opp data isn't surfaced in the Hub UI — domains slideout shows stale/empty fields.",
+              action: "Wire DomainSlideOut.tsx to pull from SFAccount + SFOpportunity tables. Show pipeline status, opp stage, amount, and switchSignal.",
             },
             {
               title: "Attribution engine",

@@ -21,7 +21,7 @@ Accounts tagged with non-buyer categories (hospitals, airlines, banks, retail, l
 Accounts with a product fit are grouped into segments per product. These segments are pushed to StackAdapt as targeting audiences — so the right companies see the right product ads. Segments are kept fresh by daily sync (new accounts, updated firmographics) and weekly pruning (remove unresponsive accounts that haven't converted after multiple touchpoints).
 
 **5. Expansion (AI-Powered)**
-The Expander looks at accounts with open Salesforce opportunities, analyzes what makes them a good fit (industry, tech stack, use case), then searches for similar companies NOT yet in the system. Found companies are added to the relevant product segment and pushed to StackAdapt campaigns. This is how we go from reactive (who saw our ads) to proactive (who SHOULD see our ads).
+The Expander finds undersized ABM segments — audiences that are below the minimum size for their platform (StackAdapt needs 500, LinkedIn needs 300). It uses an LLM to research companies matching the product ICP, validates them against Clearbit data, cross-checks Salesforce to skip existing customers/partners, then relevance-scores and adds them to the segment. New domains get pushed to StackAdapt targeting audiences. This turns thin audiences into properly sized ones.
 
 **6. Campaign Hygiene**
 The Negative Builder generates negative keywords per product so we stop bidding on irrelevant search terms. The Auditor runs weekly checks on segment health — stale accounts, misaligned product fit, exclusion overlaps. The Hub Doctor monitors all agents and flags anomalies.

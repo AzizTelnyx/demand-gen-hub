@@ -39,20 +39,20 @@ export async function GET(req: NextRequest) {
     prisma.workItem.findMany({
       where,
       include: {
-        updates: {
+        WorkItemUpdate: {
           orderBy: { createdAt: 'desc' },
           take: 5,
         },
-        children: includeChildren ? {
+        other_WorkItem: includeChildren ? {
           include: {
-            updates: {
+            WorkItemUpdate: {
               orderBy: { createdAt: 'desc' },
               take: 3,
             },
           },
           orderBy: { createdAt: 'desc' },
         } : false,
-        _count: { select: { children: true } },
+        _count: { select: { other_WorkItem: true } },
       },
       orderBy: [
         { status: 'asc' },
@@ -83,7 +83,8 @@ export async function POST(req: NextRequest) {
   }
 
   const item = await prisma.workItem.create({
-    data: {
+    data: { id: crypto.randomUUID(),
+      updatedAt: new Date(),
       title,
       description: description || null,
       type,
@@ -96,8 +97,9 @@ export async function POST(req: NextRequest) {
       dueDate: dueDate ? new Date(dueDate) : null,
       tags: tags || [],
       parentId: parentId || null,
-      updates: initialUpdate ? {
+      WorkItemUpdate: initialUpdate ? {
         create: {
+          id: crypto.randomUUID(),
           author: initialUpdate.author || 'system',
           type: 'note',
           content: initialUpdate.content,
@@ -105,7 +107,7 @@ export async function POST(req: NextRequest) {
         },
       } : undefined,
     },
-    include: { updates: true },
+    include: { WorkItemUpdate: true },
   });
 
   return NextResponse.json(item, { status: 201 });

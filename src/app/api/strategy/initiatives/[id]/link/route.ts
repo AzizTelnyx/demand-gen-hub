@@ -38,7 +38,7 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ id:
     if (campaignId) {
       const link = await prisma.initiativeCampaign.upsert({
         where: { initiativeId_campaignId: { initiativeId: id, campaignId } },
-        create: { initiativeId: id, campaignId, autoLinked: false },
+        create: { id: crypto.randomUUID(), initiativeId: id, campaignId, autoLinked: false },
         update: {},
       });
       return NextResponse.json(link);
@@ -65,7 +65,7 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ id:
 
         if (score >= 2) {
           await prisma.initiativeCampaign.create({
-            data: { initiativeId: id, campaignId: c.id, autoLinked: true },
+            data: { id: crypto.randomUUID(), initiativeId: id, campaignId: c.id, autoLinked: true },
           });
           linked.push(c.name);
         }

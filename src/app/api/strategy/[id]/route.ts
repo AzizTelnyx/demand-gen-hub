@@ -7,10 +7,10 @@ export async function GET(_req: NextRequest, { params }: { params: Promise<{ id:
     const strategy = await prisma.strategy.findUnique({
       where: { id },
       include: {
-        initiatives: {
+        Initiative: {
           include: {
-            campaigns: { include: { campaign: true } },
-            notes: { orderBy: { createdAt: "desc" }, take: 20 },
+            InitiativeCampaign: { include: { Campaign: true } },
+            InitiativeNote: { orderBy: { createdAt: "desc" }, take: 20 },
           },
           orderBy: { createdAt: "desc" },
         },
@@ -19,9 +19,9 @@ export async function GET(_req: NextRequest, { params }: { params: Promise<{ id:
     if (!strategy) return NextResponse.json({ error: "Not found" }, { status: 404 });
 
     // Rollup metrics
-    const totalBudget = strategy.initiatives.reduce((a, i) => a + (i.budget || 0), 0);
-    const totalSpent = strategy.initiatives.reduce((a, i) => a + (i.budgetSpent || 0), 0);
-    const totalCampaigns = strategy.initiatives.reduce((a, i) => a + i.campaigns.length, 0);
+    const totalBudget = strategy.Initiative.reduce((a, i) => a + (i.budget || 0), 0);
+    const totalSpent = strategy.Initiative.reduce((a, i) => a + (i.budgetSpent || 0), 0);
+    const totalCampaigns = strategy.Initiative.reduce((a, i) => a + i.InitiativeCampaign.length, 0);
 
     return NextResponse.json({ ...strategy, totalBudget, totalSpent, totalCampaigns });
   } catch (error) {
@@ -37,7 +37,7 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
     const { name, description, region, status, startDate, endDate } = body;
     const strategy = await prisma.strategy.update({
       where: { id },
-      data: {
+      data: { id: crypto.randomUUID(),
         ...(name !== undefined && { name }),
         ...(description !== undefined && { description }),
         ...(region !== undefined && { region }),
@@ -57,8 +57,8 @@ export async function DELETE(_req: NextRequest, { params }: { params: Promise<{ 
   try {
     const { id } = await params;
     // Delete related initiatives first
-    await prisma.initiativeNote.deleteMany({ where: { initiative: { strategyId: id } } });
-    await prisma.initiativeCampaign.deleteMany({ where: { initiative: { strategyId: id } } });
+    await prisma.initiativeNote.deleteMany({ where: { Initiative: { strategyId: id } } });
+    await prisma.initiativeCampaign.deleteMany({ where: { Initiative: { strategyId: id } } });
     await prisma.initiative.deleteMany({ where: { strategyId: id } });
     await prisma.strategy.delete({ where: { id } });
     return NextResponse.json({ ok: true });

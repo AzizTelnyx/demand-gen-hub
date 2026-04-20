@@ -166,10 +166,10 @@ export async function GET() {
       const runs = await prisma.agentRun.findMany({
         orderBy: { startedAt: "desc" },
         take: 20,
-        include: { agent: { select: { slug: true, name: true } } },
+        include: { Agent: { select: { slug: true, name: true } } },
       });
       agentRuns = runs.map(r => ({
-        id: r.id, agentSlug: r.agent?.slug, agentName: r.agent?.name,
+        id: r.id, agentSlug: r.Agent?.slug, agentName: r.Agent?.name,
         status: r.status, findingsCount: r.findingsCount, recsCount: r.recsCount,
         output: r.output ? (r.output.length > 300 ? r.output.slice(0, 300) + "…" : r.output) : null,
         startedAt: r.startedAt?.toISOString(),

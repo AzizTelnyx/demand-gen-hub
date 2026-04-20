@@ -1,11 +1,6 @@
 #!/usr/bin/env ts-node
 /**
- * Square 1080x1080 Banner Generator
- *
- * Templates:
- * 1. Infrastructure (dark) - UI pills stack
- * 2. Light mode - gradient stars + UI elements
- * 3. Photo overlay - stock photo with text
+ * Square 1080x1080 Banner Generator - Matching Reference Designs
  */
 
 import dotenv from 'dotenv';
@@ -20,49 +15,21 @@ const SIZE = 1080;
 const BRAND_ASSETS = '/Users/azizalsinafi/.openclaw/workspace/demand-gen-hub/brand-assets';
 const PP_FORMULA_FONT = `${BRAND_ASSETS}/fonts/PP Formula - Extrabold v2.0/PPFormula-Extrabold.ttf`;
 
-// Load font as base64 for embedding in HTML
-async function loadFontBase64(fontPath: string): Promise<string> {
-  try {
-    const fontBuffer = await fs.readFile(fontPath);
-    return fontBuffer.toString('base64');
-  } catch (e) {
-    console.error(`Failed to load font: ${fontPath}`);
-    return '';
-  }
-}
-
-function getFontFaceCSS(fontBase64: string): string {
-  return `
-    @font-face {
-      font-family: 'PP Formula';
-      src: url(data:font/truetype;base64,${fontBase64}) format('truetype');
-      font-weight: bold;
-      font-style: normal;
-    }
-  `;
-}
-
-// Asset paths
 const ASSETS = {
   photos: {
     finance: `${BRAND_ASSETS}/telnyx-assets/_NEW_AdGen_Library/photography/industry/finance/industry-finance-photography-tap-payment-transaction-contactless-phone-iphone.jpg`,
-    restaurants: `${BRAND_ASSETS}/telnyx-assets/_NEW_AdGen_Library/photography/industry/restaurants/industry-restaurants-photography-food-takeout.jpg`,
-    logistics: `${BRAND_ASSETS}/telnyx-assets/_NEW_AdGen_Library/photography/industry/logistics/industry-logistics-photography-street-taxi.jpg`,
     personLaptop: `${BRAND_ASSETS}/telnyx-assets/Photography/Stock_Unsplash (Free)/01_People+Device/christin-hume-Hcfwew744z4-unsplash (1).jpg`,
-    personLaptop2: `${BRAND_ASSETS}/telnyx-assets/Photography/Stock_Unsplash (Free)/01_People+Device/tim-gouw-1K9T5YiZ2WU-unsplash.jpg`,
   },
   composed: {
     financeChat: `${BRAND_ASSETS}/telnyx-assets/_NEW_AdGen_Library/industry/use-cases/finances/industry-usecases-finance-multilingual.png`,
     warmTransfers: `${BRAND_ASSETS}/telnyx-assets/_NEW_Collection_Product-Features/01_Voice-AI-Agent/Voice-AI-Agent_Feature_Warm transfers/Voice-AI-Agent_Feature_Warm transfers900x620.png`,
-    retailHero: `${BRAND_ASSETS}/telnyx-assets/_NEW_AdGen_Library/industry/hero/industry_retail_ecommerce_hero.png`,
-    aiAgent: `${BRAND_ASSETS}/telnyx-assets/Product_Visuals/Voice_AI/Static/With background/AI agent.png`,
-    restaurantReorder: `${BRAND_ASSETS}/telnyx-assets/Industry_Visuals/Social_Assets/Restaurants/Industry_Restaurants_Reorder.png`,
-  },
-  icons3d: {
-    aiStar: `${BRAND_ASSETS}/telnyx-assets/_NEW_Collection_Product-Icons/_NEW_Product-Icon-Static/Icon_Colorful_Static/00_AI/AI00050.png`,
-    voiceAi: `${BRAND_ASSETS}/telnyx-assets/_NEW_Collection_Product-Icons/_NEW_Product-Icon-Static/Icon_Colorful_Static/01_Voice-AI-Agent/Voice ai_00033.png`,
   },
 };
+
+async function loadFontBase64(fontPath: string): Promise<string> {
+  const fontBuffer = await fs.readFile(fontPath);
+  return fontBuffer.toString('base64');
+}
 
 async function imageToBase64(imagePath: string): Promise<string> {
   try {
@@ -71,7 +38,7 @@ async function imageToBase64(imagePath: string): Promise<string> {
     const ext = path.extname(imagePath).slice(1).toLowerCase();
     const mimeType = ext === 'jpg' || ext === 'jpeg' ? 'jpeg' : ext;
     return `data:image/${mimeType};base64,${base64}`;
-  } catch (e) {
+  } catch {
     console.error(`Failed to load: ${imagePath}`);
     return '';
   }
@@ -82,237 +49,168 @@ async function renderAndSave(html: string, outputPath: string): Promise<void> {
   try {
     const page = await browser.newPage();
     await page.setViewport({ width: SIZE, height: SIZE, deviceScaleFactor: 1 });
-    await page.setContent(html, { waitUntil: 'load', timeout: 60000 });
-    await new Promise(r => setTimeout(r, 300));
-    await page.screenshot({ path: outputPath, type: 'png', clip: { x: 0, y: 0, width: SIZE, height: SIZE } });
+    await page.setContent(html, { waitUntil: 'networkidle0', timeout: 60000 });
+    await new Promise(r => setTimeout(r, 500));
+    await page.screenshot({ path: outputPath, type: 'png' });
   } finally {
     await browser.close();
   }
 }
 
-// ─── Template 1: Infrastructure Dark with 3D Icon ───────────────────────────
+// ─── Template 1: Dark Pills (matching banner_2_v2) ──────────────────────────
 
-function infrastructureDarkTemplate(
-  config: {
-    headline: string;
-    highlightWords: string[];
-    cta: string;
-    pills: Array<{ icon: string; label: string; primary?: boolean }>;
-  },
-  logoBase64: string,
-  icon3dBase64: string,
-  fontBase64: string
-): string {
-  let processedHeadline = config.headline;
-  config.highlightWords.forEach(word => {
-    processedHeadline = processedHeadline.replace(
-      new RegExp(`(${word})`, 'gi'),
-      '<span class="hl">$1</span>'
-    );
-  });
-
-  const pillsHTML = config.pills.map((pill, i) => {
-    const isLast = i === config.pills.length - 1;
-    return `
-      <div class="pill ${pill.primary ? 'pill-primary' : ''}">
-        <span class="pill-icon">${pill.icon}</span>
-        <span class="pill-label">${pill.label}</span>
-      </div>
-      ${!isLast ? '<div class="connector"></div>' : ''}
-    `;
-  }).join('');
-
+function darkPillsTemplate(fontBase64: string, logoBase64: string): string {
   return `<!DOCTYPE html>
 <html><head>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-  ${getFontFaceCSS(fontBase64)}
+  @font-face {
+    font-family: 'PP Formula';
+    src: url(data:font/truetype;base64,${fontBase64}) format('truetype');
+  }
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body {
     width: ${SIZE}px;
     height: ${SIZE}px;
     background: #0A0A0A;
-    font-family: 'Inter', sans-serif;
+    font-family: 'PP Formula', sans-serif;
     color: #FFFFFF;
     position: relative;
     overflow: hidden;
   }
 
-  /* 3D Icon - large, centered */
-  .icon-3d {
+  /* Large arches filling sides */
+  .arch {
     position: absolute;
-    top: 80px;
+    border-radius: 999px;
+    background: linear-gradient(180deg, rgba(0, 80, 80, 0.7) 0%, rgba(0, 60, 60, 0.3) 60%, transparent 100%);
+  }
+  .arch-l1 { left: -60px; top: 40px; width: 140px; height: 600px; }
+  .arch-l2 { left: 60px; top: 100px; width: 100px; height: 500px; opacity: 0.7; }
+  .arch-r1 { right: -60px; top: 20px; width: 140px; height: 620px; }
+  .arch-r2 { right: 60px; top: 80px; width: 100px; height: 520px; opacity: 0.7; }
+  .arch-r3 { right: 160px; top: 140px; width: 80px; height: 440px; opacity: 0.5; }
+  .arch-c1 { left: 50%; transform: translateX(-50%); top: 200px; width: 60px; height: 400px; opacity: 0.3; }
+  .arch-c2 { left: 46%; top: 240px; width: 50px; height: 360px; opacity: 0.25; }
+  .arch-c3 { right: 46%; top: 260px; width: 50px; height: 340px; opacity: 0.25; }
+
+  .logo {
+    position: absolute;
+    top: 50px;
     left: 50%;
     transform: translateX(-50%);
-    width: 320px;
-    height: 320px;
-    object-fit: contain;
+    height: 56px;
   }
 
-  /* Glow behind icon */
-  .icon-glow {
+  /* Glow behind pills */
+  .glow {
     position: absolute;
-    top: 120px;
+    top: 140px;
     left: 50%;
     transform: translateX(-50%);
     width: 400px;
     height: 300px;
-    background: radial-gradient(ellipse, rgba(0, 220, 200, 0.25) 0%, transparent 70%);
+    background: radial-gradient(ellipse, rgba(0, 200, 200, 0.25) 0%, transparent 70%);
   }
 
-  .logo {
+  /* Pills stack - centered, vertical */
+  .pills {
     position: absolute;
-    top: 40px;
-    left: 50%;
-    transform: translateX(-50%);
-    height: 32px;
-  }
-
-  /* Pills row - horizontal under icon */
-  .pills-row {
-    position: absolute;
-    top: 420px;
+    top: 160px;
     left: 50%;
     transform: translateX(-50%);
     display: flex;
+    flex-direction: column;
     align-items: center;
-    gap: 16px;
   }
-
   .pill {
     background: rgba(200, 240, 235, 0.95);
     color: #1A1A1A;
-    padding: 14px 28px;
-    border-radius: 50px;
-    font-size: 18px;
+    padding: 18px 44px;
+    border-radius: 60px;
+    font-size: 28px;
     font-weight: 600;
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 14px;
+    font-family: system-ui, sans-serif;
   }
   .pill-primary {
-    background: linear-gradient(135deg, #7EEEE0 0%, #5DE0D0 100%);
-    padding: 16px 32px;
-    font-size: 20px;
-    box-shadow: 0 0 60px rgba(0, 220, 200, 0.4);
+    background: linear-gradient(135deg, #7EEEE0 0%, #4DD8CC 100%);
+    padding: 26px 56px;
+    font-size: 36px;
+    box-shadow: 0 0 120px rgba(0, 220, 200, 0.6);
   }
   .connector {
-    width: 30px;
-    height: 2px;
-    background: rgba(255, 255, 255, 0.3);
+    width: 3px;
+    height: 35px;
+    background: rgba(255, 255, 255, 0.5);
   }
 
-  /* Stats row */
-  .stats-row {
-    position: absolute;
-    top: 520px;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    gap: 50px;
-  }
-  .stat-item {
-    text-align: center;
-  }
-  .stat-value {
-    font-size: 32px;
-    font-weight: 700;
-    color: #00E5CC;
-  }
-  .stat-label {
-    font-size: 11px;
-    color: rgba(255,255,255,0.5);
-    text-transform: uppercase;
-    letter-spacing: 1px;
-  }
-
-  /* Headline */
-  .headline-container {
+  .headline {
     position: absolute;
     bottom: 140px;
     left: 50%;
     transform: translateX(-50%);
     text-align: center;
     width: 90%;
-  }
-  .headline {
-    font-family: 'PP Formula', 'Inter', sans-serif;
-    font-size: 44px;
+    font-size: 58px;
     font-weight: bold;
-    line-height: 1.1;
-    letter-spacing: -1px;
+    line-height: 1.05;
   }
-  .headline .hl { color: #00E5CC; }
+  .hl { color: #5DE8DC; }
 
   .cta {
     position: absolute;
     bottom: 60px;
     left: 50%;
     transform: translateX(-50%);
-    background: #00D4CC;
-    color: #0A0A0A;
-    padding: 18px 40px;
-    border-radius: 50px;
-    font-size: 16px;
-    font-weight: 600;
+    font-size: 22px;
+    font-family: system-ui, sans-serif;
   }
 </style>
 </head><body>
-  <div class="icon-glow"></div>
+  <div class="arch arch-l1"></div>
+  <div class="arch arch-l2"></div>
+  <div class="arch arch-r1"></div>
+  <div class="arch arch-r2"></div>
+  <div class="arch arch-r3"></div>
+  <div class="arch arch-c1"></div>
+  <div class="arch arch-c2"></div>
+  <div class="arch arch-c3"></div>
+  <div class="glow"></div>
+
   <img src="${logoBase64}" class="logo" />
-  <img src="${icon3dBase64}" class="icon-3d" />
-  <div class="pills-row">${pillsHTML}</div>
-  <div class="stats-row">
-    <div class="stat-item">
-      <div class="stat-value">50+</div>
-      <div class="stat-label">Countries</div>
-    </div>
-    <div class="stat-item">
-      <div class="stat-value">5B+</div>
-      <div class="stat-label">API Calls</div>
-    </div>
-    <div class="stat-item">
-      <div class="stat-value">200+</div>
-      <div class="stat-label">Carriers</div>
-    </div>
+
+  <div class="pills">
+    <div class="pill pill-primary">✦ Ai</div>
+    <div class="connector"></div>
+    <div class="pill">🌐 Network</div>
+    <div class="connector"></div>
+    <div class="pill">📞 Numbers</div>
+    <div class="connector"></div>
   </div>
-  <div class="headline-container"><div class="headline">${processedHeadline}</div></div>
-  <div class="cta">${config.cta} &gt;</div>
+
+  <div class="headline">Reliable <span class="hl">Voice AI</span> starts with a unified infrastructure</div>
+  <div class="cta">Learn more ></div>
 </body></html>`;
 }
 
-// ─── Template 2: Light Mode with Composed Visual ────────────────────────────
+// ─── Template 2: Light Stars (matching banner_36) ───────────────────────────
 
-function lightModeTemplate(
-  config: {
-    headline: string;
-    highlightWords: string[];
-    subtext?: string;
-    cta?: string;
-  },
-  logoBase64: string,
-  visualBase64: string,
-  fontBase64: string
-): string {
-  let processedHeadline = config.headline;
-  config.highlightWords.forEach(word => {
-    processedHeadline = processedHeadline.replace(
-      new RegExp(`(${word})`, 'gi'),
-      '<span class="hl">$1</span>'
-    );
-  });
-
+function lightStarsTemplate(fontBase64: string, logoBase64: string): string {
   return `<!DOCTYPE html>
 <html><head>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-  ${getFontFaceCSS(fontBase64)}
+  @font-face {
+    font-family: 'PP Formula';
+    src: url(data:font/truetype;base64,${fontBase64}) format('truetype');
+  }
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body {
     width: ${SIZE}px;
     height: ${SIZE}px;
-    background: linear-gradient(160deg, #F8FAF9 0%, #E6F3F0 100%);
-    font-family: 'Inter', sans-serif;
+    background: linear-gradient(160deg, #F5F5F0 0%, #E8F4F2 100%);
+    font-family: 'PP Formula', sans-serif;
     color: #1A1A1A;
     position: relative;
     overflow: hidden;
@@ -320,169 +218,530 @@ function lightModeTemplate(
 
   .logo {
     position: absolute;
-    top: 48px;
-    left: 48px;
-    height: 32px;
-    z-index: 10;
+    top: 50px;
+    left: 50px;
+    height: 56px;
   }
 
-  /* Large composed visual - fills right side */
-  .visual {
-    position: absolute;
-    top: 0;
-    right: -100px;
-    width: 750px;
-    height: 100%;
-    object-fit: contain;
-    object-position: center right;
-  }
-
-  /* Gradient fade on left edge of visual */
-  .visual-fade {
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg,
-      rgba(248,250,249,1) 0%,
-      rgba(248,250,249,0.95) 25%,
-      rgba(248,250,249,0.6) 40%,
-      transparent 55%
-    );
-  }
-
-  /* Small accent stars */
+  /* Large gradient stars */
   .star {
     position: absolute;
     background: linear-gradient(180deg, #00E8FF 0%, #00D4AA 100%);
     clip-path: polygon(50% 0%, 61% 35%, 100% 50%, 61% 65%, 50% 100%, 39% 65%, 0% 50%, 39% 35%);
   }
-  .star-1 { width: 80px; height: 80px; left: 380px; top: 120px; opacity: 0.6; }
-  .star-2 { width: 50px; height: 50px; left: 280px; bottom: 180px; opacity: 0.4; }
-  .star-3 { width: 35px; height: 35px; left: 450px; bottom: 300px; opacity: 0.3; }
+  .star-1 { width: 500px; height: 500px; left: -80px; bottom: 100px; }
+  .star-2 { width: 220px; height: 220px; right: 200px; top: 180px; }
+  .star-3 { width: 120px; height: 120px; right: 120px; bottom: 380px; opacity: 0.7; }
 
-  /* Content on left */
-  .content {
+  /* Sound wave card */
+  .wave-card {
     position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    left: 48px;
-    max-width: 420px;
-    z-index: 5;
+    top: 60px;
+    right: 60px;
+    background: rgba(220, 235, 250, 0.95);
+    border-radius: 20px;
+    padding: 24px 30px;
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+  }
+  .wave-bar {
+    width: 8px;
+    background: #1A1A1A;
+    border-radius: 4px;
+  }
+  .wave-bar:nth-child(1) { height: 24px; }
+  .wave-bar:nth-child(2) { height: 40px; }
+  .wave-bar:nth-child(3) { height: 30px; }
+  .wave-bar:nth-child(4) { height: 48px; }
+  .wave-bar:nth-child(5) { height: 28px; }
+
+  /* Dashed connection lines */
+  .dashed-v {
+    position: absolute;
+    right: 220px;
+    top: 180px;
+    width: 3px;
+    height: 400px;
+    border-right: 3px dashed rgba(0,0,0,0.15);
+  }
+  .dashed-h {
+    position: absolute;
+    right: 60px;
+    bottom: 280px;
+    width: 160px;
+    height: 3px;
+    border-top: 3px dashed rgba(0,0,0,0.15);
+  }
+  .dashed-corner {
+    position: absolute;
+    right: 220px;
+    top: 120px;
+    width: 140px;
+    height: 60px;
+    border-right: 3px dashed rgba(0,0,0,0.15);
+    border-top: 3px dashed rgba(0,0,0,0.15);
+    border-radius: 0 20px 0 0;
+  }
+
+  /* Browser card */
+  .browser-card {
+    position: absolute;
+    right: 60px;
+    bottom: 100px;
+    background: rgba(230, 240, 250, 0.98);
+    border-radius: 16px;
+    width: 300px;
+    overflow: hidden;
+    box-shadow: 0 12px 40px rgba(0,0,0,0.1);
+  }
+  .browser-header {
+    background: rgba(200, 215, 235, 0.95);
+    padding: 14px 18px;
+    display: flex;
+    gap: 8px;
+  }
+  .browser-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: #B0C0D0;
+  }
+  .browser-content {
+    padding: 20px;
+  }
+  .browser-line {
+    height: 12px;
+    background: #C8D4E0;
+    border-radius: 6px;
+    margin-bottom: 12px;
+  }
+  .browser-line:last-child { width: 60%; margin-bottom: 0; }
+
+  /* AI badge */
+  .ai-badge {
+    position: absolute;
+    right: 40px;
+    bottom: 420px;
+    width: 70px;
+    height: 70px;
+    background: #1A1A1A;
+    border-radius: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+    color: #5DE8DC;
+    font-size: 32px;
   }
 
   .headline {
-    font-family: 'PP Formula', 'Inter', sans-serif;
-    font-size: 48px;
-    font-weight: bold;
-    line-height: 1.08;
-    letter-spacing: -1px;
-    margin-bottom: 20px;
-  }
-  .headline .hl { color: #00C9D4; }
-
-  .subtext {
-    font-size: 18px;
-    color: #555;
-    line-height: 1.5;
-    margin-bottom: 28px;
-  }
-
-  .cta {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    background: #1A1A1A;
-    color: #FFFFFF;
-    font-size: 16px;
-    font-weight: 600;
-    padding: 18px 32px;
-    border-radius: 50px;
-  }
-
-  /* Stats bar at bottom */
-  .stats-bar {
     position: absolute;
-    bottom: 48px;
-    left: 48px;
-    display: flex;
-    gap: 40px;
+    top: 180px;
+    left: 50px;
+    max-width: 520px;
+    font-size: 64px;
+    font-weight: bold;
+    line-height: 1.0;
   }
-  .stat {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-  .stat-num {
-    font-size: 24px;
-    font-weight: 700;
-    color: #00C9D4;
-  }
-  .stat-text {
-    font-size: 13px;
-    color: #666;
-  }
+  .hl { color: #00C9D4; }
 </style>
 </head><body>
   <img src="${logoBase64}" class="logo" />
-  <img src="${visualBase64}" class="visual" />
-  <div class="visual-fade"></div>
 
   <div class="star star-1"></div>
   <div class="star star-2"></div>
   <div class="star star-3"></div>
 
-  <div class="content">
-    <div class="headline">${processedHeadline}</div>
-    ${config.subtext ? `<div class="subtext">${config.subtext}</div>` : ''}
-    ${config.cta ? `<div class="cta">${config.cta} &gt;</div>` : ''}
+  <div class="dashed-corner"></div>
+  <div class="dashed-v"></div>
+  <div class="dashed-h"></div>
+
+  <div class="wave-card">
+    <div class="wave-bar"></div>
+    <div class="wave-bar"></div>
+    <div class="wave-bar"></div>
+    <div class="wave-bar"></div>
+    <div class="wave-bar"></div>
   </div>
 
-  <div class="stats-bar">
-    <div class="stat">
-      <span class="stat-num">99.99%</span>
-      <span class="stat-text">Uptime</span>
+  <div class="ai-badge">✦</div>
+
+  <div class="browser-card">
+    <div class="browser-header">
+      <div class="browser-dot"></div>
+      <div class="browser-dot"></div>
+      <div class="browser-dot"></div>
     </div>
-    <div class="stat">
-      <span class="stat-num">&lt;200ms</span>
-      <span class="stat-text">Latency</span>
+    <div class="browser-content">
+      <div class="browser-line"></div>
+      <div class="browser-line"></div>
+      <div class="browser-line"></div>
+    </div>
+  </div>
+
+  <div class="headline"><span class="hl">Voice AI</span> built for fintech stacks</div>
+</body></html>`;
+}
+
+// ─── Template 3: Dark Phone Mockup (matching banner_43) ─────────────────────
+
+function darkPhoneTemplate(fontBase64: string, logoBase64: string): string {
+  return `<!DOCTYPE html>
+<html><head>
+<style>
+  @font-face {
+    font-family: 'PP Formula';
+    src: url(data:font/truetype;base64,${fontBase64}) format('truetype');
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    width: ${SIZE}px;
+    height: ${SIZE}px;
+    background: #0A0A0A;
+    font-family: 'PP Formula', sans-serif;
+    color: #FFFFFF;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .logo {
+    position: absolute;
+    top: 50px;
+    left: 50%;
+    transform: translateX(-50%);
+    height: 56px;
+  }
+
+  .headline {
+    position: absolute;
+    top: 140px;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    width: 90%;
+    font-size: 54px;
+    font-weight: bold;
+    line-height: 1.05;
+  }
+  .hl { color: #5DE8DC; }
+
+  /* Phone mockup */
+  .phone {
+    position: absolute;
+    bottom: -60px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 420px;
+    height: 640px;
+    background: #1A1A1A;
+    border-radius: 50px;
+    padding: 12px;
+    box-shadow: 0 20px 80px rgba(0, 200, 200, 0.15);
+  }
+  .phone-screen {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(180deg, #2A2A2A 0%, #1A1A1A 100%);
+    border-radius: 40px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+  }
+  .phone-status {
+    display: flex;
+    justify-content: space-between;
+    font-size: 16px;
+    font-family: system-ui, sans-serif;
+    color: #888;
+    margin-bottom: 20px;
+  }
+  .phone-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 40px;
+  }
+  .phone-back {
+    width: 50px;
+    height: 50px;
+    background: #333;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    color: #888;
+  }
+  .phone-edit {
+    background: #333;
+    padding: 12px 24px;
+    border-radius: 14px;
+    font-size: 18px;
+    font-family: system-ui, sans-serif;
+    color: #FFF;
+  }
+  .phone-avatar {
+    width: 140px;
+    height: 140px;
+    background: linear-gradient(135deg, #5DE8DC 0%, #00B4A8 100%);
+    border-radius: 50%;
+    margin: 0 auto 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 60px;
+    color: #1A1A1A;
+  }
+  .phone-name {
+    text-align: center;
+    font-size: 32px;
+    font-family: system-ui, sans-serif;
+    font-weight: 600;
+    margin-bottom: 30px;
+  }
+  .phone-actions {
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+    margin-top: auto;
+    padding-bottom: 20px;
+  }
+  .phone-action {
+    width: 70px;
+    height: 70px;
+    background: #333;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+  }
+</style>
+</head><body>
+  <img src="${logoBase64}" class="logo" />
+
+  <div class="headline"><span class="hl">AI voice</span> agents built to scale fintech support</div>
+
+  <div class="phone">
+    <div class="phone-screen">
+      <div class="phone-status">
+        <span>9:41</span>
+        <span>📶 🔋</span>
+      </div>
+      <div class="phone-nav">
+        <div class="phone-back"><</div>
+        <div class="phone-edit">Edit</div>
+      </div>
+      <div class="phone-avatar">✦</div>
+      <div class="phone-name">Fintech AI</div>
+      <div class="phone-actions">
+        <div class="phone-action">💬</div>
+        <div class="phone-action">📞</div>
+        <div class="phone-action">📹</div>
+        <div class="phone-action">✉️</div>
+      </div>
     </div>
   </div>
 </body></html>`;
 }
 
-// ─── Template 3: Photo Overlay ──────────────────────────────────────────────
+// ─── Template 4: Light with Visual (matching banner_1) ──────────────────────
 
-function photoOverlayTemplate(
-  config: {
-    headline: string;
-    highlightWords: string[];
-    subtext?: string;
-    cta?: string;
-  },
-  logoBase64: string,
-  photoBase64: string,
-  fontBase64: string
-): string {
-  let processedHeadline = config.headline;
-  config.highlightWords.forEach(word => {
-    processedHeadline = processedHeadline.replace(
-      new RegExp(`(${word})`, 'gi'),
-      '<span class="hl">$1</span>'
-    );
-  });
-
+function lightVisualTemplate(fontBase64: string, logoBase64: string, visualBase64: string): string {
   return `<!DOCTYPE html>
 <html><head>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-  ${getFontFaceCSS(fontBase64)}
+  @font-face {
+    font-family: 'PP Formula';
+    src: url(data:font/truetype;base64,${fontBase64}) format('truetype');
+  }
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body {
     width: ${SIZE}px;
     height: ${SIZE}px;
-    font-family: 'Inter', sans-serif;
+    background: linear-gradient(160deg, #D8F0EE 0%, #B8E8E4 100%);
+    font-family: 'PP Formula', sans-serif;
+    color: #1A1A1A;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .logo {
+    position: absolute;
+    top: 50px;
+    left: 50px;
+    height: 56px;
+  }
+
+  .headline {
+    position: absolute;
+    top: 160px;
+    left: 50px;
+    max-width: 600px;
+    font-size: 64px;
+    font-weight: bold;
+    line-height: 1.0;
+  }
+
+  .subtext {
+    position: absolute;
+    top: 400px;
+    left: 50px;
+    max-width: 500px;
+    font-size: 24px;
+    font-family: system-ui, sans-serif;
+    line-height: 1.5;
+    color: #333;
+  }
+
+  .cta {
+    position: absolute;
+    top: 540px;
+    left: 50px;
+    background: #FFFFFF;
+    color: #1A1A1A;
+    padding: 20px 36px;
+    border-radius: 50px;
+    font-size: 20px;
+    font-family: system-ui, sans-serif;
+    font-weight: 600;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+  }
+
+  /* Visual fills bottom right */
+  .visual {
+    position: absolute;
+    bottom: -50px;
+    right: -50px;
+    width: 700px;
+    height: 600px;
+    object-fit: contain;
+  }
+</style>
+</head><body>
+  <img src="${logoBase64}" class="logo" />
+
+  <div class="headline">AI agents that speak any language</div>
+  <div class="subtext">Deploy multilingual voice AI in minutes. Support customers in 30+ languages with natural conversations.</div>
+  <div class="cta">Try Telnyx Free ></div>
+
+  <img src="${visualBase64}" class="visual" />
+</body></html>`;
+}
+
+// ─── Template 5: Dark Composed Visual ────────────────────────────────────────
+
+function darkVisualTemplate(fontBase64: string, logoBase64: string, visualBase64: string): string {
+  return `<!DOCTYPE html>
+<html><head>
+<style>
+  @font-face {
+    font-family: 'PP Formula';
+    src: url(data:font/truetype;base64,${fontBase64}) format('truetype');
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    width: ${SIZE}px;
+    height: ${SIZE}px;
+    background: #0A0A0A;
+    font-family: 'PP Formula', sans-serif;
+    color: #FFFFFF;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .logo {
+    position: absolute;
+    top: 50px;
+    left: 50px;
+    height: 56px;
+    z-index: 10;
+  }
+
+  /* Glow */
+  .glow {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    height: 80%;
+    background: radial-gradient(ellipse at center 30%, rgba(0, 200, 200, 0.2) 0%, transparent 60%);
+  }
+
+  /* Visual fills most of canvas */
+  .visual {
+    position: absolute;
+    top: 50px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    height: 65%;
+    object-fit: contain;
+  }
+
+  /* Dark gradient at bottom */
+  .bottom-fade {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 400px;
+    background: linear-gradient(180deg, transparent 0%, #0A0A0A 50%);
+  }
+
+  .headline {
+    position: absolute;
+    bottom: 130px;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    width: 90%;
+    font-size: 52px;
+    font-weight: bold;
+    line-height: 1.05;
+    z-index: 5;
+  }
+  .hl { color: #5DE8DC; }
+
+  .subtext {
+    position: absolute;
+    bottom: 80px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 20px;
+    font-family: system-ui, sans-serif;
+    color: rgba(255,255,255,0.7);
+    z-index: 5;
+  }
+</style>
+</head><body>
+  <div class="glow"></div>
+  <img src="${logoBase64}" class="logo" />
+  <img src="${visualBase64}" class="visual" />
+  <div class="bottom-fade"></div>
+  <div class="headline"><span class="hl">Warm transfers</span> that feel seamless</div>
+  <div class="subtext">AI-powered handoffs to live agents in seconds</div>
+</body></html>`;
+}
+
+// ─── Template 6: Photo Background ────────────────────────────────────────────
+
+function photoTemplate(fontBase64: string, logoBase64: string, photoBase64: string): string {
+  return `<!DOCTYPE html>
+<html><head>
+<style>
+  @font-face {
+    font-family: 'PP Formula';
+    src: url(data:font/truetype;base64,${fontBase64}) format('truetype');
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    width: ${SIZE}px;
+    height: ${SIZE}px;
+    font-family: 'PP Formula', sans-serif;
     color: #FFFFFF;
     position: relative;
     overflow: hidden;
@@ -490,31 +749,29 @@ function photoOverlayTemplate(
 
   .photo {
     position: absolute;
-    top: 0; left: 0;
+    top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
     object-fit: cover;
-    filter: grayscale(100%) brightness(0.5);
+    filter: grayscale(100%) brightness(0.4);
   }
 
-  /* Gradient overlay - darker at bottom for text */
   .overlay {
     position: absolute;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background: linear-gradient(
-      180deg,
-      rgba(0,0,0,0.2) 0%,
-      rgba(0,0,0,0.3) 40%,
-      rgba(0,0,0,0.7) 100%
-    );
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(180deg, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.6) 100%);
   }
 
   .logo {
     position: absolute;
-    top: 48px;
+    top: 50px;
     left: 50%;
     transform: translateX(-50%);
-    height: 34px;
+    height: 56px;
     z-index: 10;
   }
 
@@ -528,32 +785,29 @@ function photoOverlayTemplate(
   }
 
   .headline {
-    font-family: 'PP Formula', 'Inter', sans-serif;
-    font-size: 50px;
+    font-size: 56px;
     font-weight: bold;
-    line-height: 1.12;
-    letter-spacing: -1px;
-    margin-bottom: 20px;
+    line-height: 1.05;
+    margin-bottom: 24px;
   }
-  .headline .hl { color: #00E5CC; }
+  .hl { color: #5DE8DC; }
 
   .subtext {
-    font-size: 20px;
+    font-size: 22px;
+    font-family: system-ui, sans-serif;
     color: rgba(255,255,255,0.85);
-    line-height: 1.4;
-    margin-bottom: 28px;
+    margin-bottom: 32px;
   }
 
   .cta {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
+    display: inline-block;
     background: #00D4CC;
     color: #0A0A0A;
-    font-size: 16px;
-    font-weight: 600;
-    padding: 16px 32px;
+    padding: 20px 44px;
     border-radius: 50px;
+    font-size: 20px;
+    font-family: system-ui, sans-serif;
+    font-weight: 600;
   }
 </style>
 </head><body>
@@ -561,412 +815,9 @@ function photoOverlayTemplate(
   <div class="overlay"></div>
   <img src="${logoBase64}" class="logo" />
   <div class="content">
-    <div class="headline">${processedHeadline}</div>
-    ${config.subtext ? `<div class="subtext">${config.subtext}</div>` : ''}
-    ${config.cta ? `<div class="cta">${config.cta} &gt;</div>` : ''}
-  </div>
-</body></html>`;
-}
-
-// ─── Template 4: Full Bleed Composed Visual ─────────────────────────────────
-
-function composedVisualTemplate(
-  config: {
-    headline: string;
-    highlightWords: string[];
-    cta?: string;
-  },
-  logoBase64: string,
-  visualBase64: string,
-  fontBase64: string
-): string {
-  let processedHeadline = config.headline;
-  config.highlightWords.forEach(word => {
-    processedHeadline = processedHeadline.replace(
-      new RegExp(`(${word})`, 'gi'),
-      '<span class="hl">$1</span>'
-    );
-  });
-
-  return `<!DOCTYPE html>
-<html><head>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<style>
-  ${getFontFaceCSS(fontBase64)}
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  body {
-    width: ${SIZE}px;
-    height: ${SIZE}px;
-    font-family: 'Inter', sans-serif;
-    color: #1A1A1A;
-    position: relative;
-    overflow: hidden;
-    background: linear-gradient(160deg, #E8F5F2 0%, #D4EFEB 100%);
-  }
-
-  .logo {
-    position: absolute;
-    top: 40px;
-    left: 40px;
-    height: 30px;
-    z-index: 10;
-  }
-
-  /* Visual fills most of canvas */
-  .visual {
-    position: absolute;
-    top: 40px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 105%;
-    height: 70%;
-    object-fit: contain;
-  }
-
-  /* Gradient overlay at bottom */
-  .bottom-gradient {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 350px;
-    background: linear-gradient(180deg, transparent 0%, rgba(228, 243, 240, 0.9) 30%, rgba(220, 240, 236, 1) 100%);
-  }
-
-  .content {
-    position: absolute;
-    bottom: 40px;
-    left: 40px;
-    right: 40px;
-    text-align: center;
-    z-index: 5;
-  }
-
-  .headline {
-    font-family: 'PP Formula', 'Inter', sans-serif;
-    font-size: 48px;
-    font-weight: bold;
-    line-height: 1.08;
-    letter-spacing: -1px;
-    margin-bottom: 24px;
-  }
-  .headline .hl { color: #00C9D4; }
-
-  .cta {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    background: #1A1A1A;
-    color: #FFFFFF;
-    font-size: 16px;
-    font-weight: 600;
-    padding: 18px 40px;
-    border-radius: 50px;
-  }
-
-  /* Accent elements */
-  .accent-star {
-    position: absolute;
-    background: linear-gradient(180deg, #00E8FF 0%, #00D4AA 100%);
-    clip-path: polygon(50% 0%, 61% 35%, 100% 50%, 61% 65%, 50% 100%, 39% 65%, 0% 50%, 39% 35%);
-  }
-  .accent-star-1 { width: 60px; height: 60px; bottom: 180px; left: 60px; opacity: 0.5; }
-  .accent-star-2 { width: 40px; height: 40px; bottom: 220px; right: 80px; opacity: 0.4; }
-</style>
-</head><body>
-  <img src="${logoBase64}" class="logo" />
-  <img src="${visualBase64}" class="visual" />
-  <div class="bottom-gradient"></div>
-  <div class="accent-star accent-star-1"></div>
-  <div class="accent-star accent-star-2"></div>
-  <div class="content">
-    <div class="headline">${processedHeadline}</div>
-    ${config.cta ? `<div class="cta">${config.cta} &gt;</div>` : ''}
-  </div>
-</body></html>`;
-}
-
-// ─── Template 5: Dark Full Bleed with Composed Visual ───────────────────────
-
-function darkComposedTemplate(
-  config: {
-    headline: string;
-    highlightWords: string[];
-    subtext?: string;
-    cta?: string;
-  },
-  logoBase64: string,
-  visualBase64: string,
-  fontBase64: string
-): string {
-  let processedHeadline = config.headline;
-  config.highlightWords.forEach(word => {
-    processedHeadline = processedHeadline.replace(
-      new RegExp(`(${word})`, 'gi'),
-      '<span class="hl">$1</span>'
-    );
-  });
-
-  return `<!DOCTYPE html>
-<html><head>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<style>
-  ${getFontFaceCSS(fontBase64)}
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  body {
-    width: ${SIZE}px;
-    height: ${SIZE}px;
-    font-family: 'Inter', sans-serif;
-    color: #FFFFFF;
-    position: relative;
-    overflow: hidden;
-    background: #0A0A0A;
-  }
-
-  /* Gradient glow */
-  .glow-bg {
-    position: absolute;
-    top: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 100%;
-    height: 70%;
-    background: radial-gradient(ellipse at center top, rgba(0, 200, 200, 0.2) 0%, transparent 60%);
-  }
-
-  .logo {
-    position: absolute;
-    top: 40px;
-    left: 40px;
-    height: 30px;
-    z-index: 10;
-  }
-
-  /* Visual - full width, upper 70% */
-  .visual {
-    position: absolute;
-    top: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 110%;
-    height: 72%;
-    object-fit: contain;
-  }
-
-  /* Dark gradient at bottom */
-  .bottom-gradient {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 380px;
-    background: linear-gradient(180deg, transparent 0%, rgba(10,10,10,0.8) 30%, #0A0A0A 60%);
-  }
-
-  /* Content at bottom */
-  .content {
-    position: absolute;
-    bottom: 40px;
-    left: 40px;
-    right: 40px;
-    text-align: center;
-    z-index: 5;
-  }
-
-  .headline {
-    font-family: 'PP Formula', 'Inter', sans-serif;
-    font-size: 44px;
-    font-weight: bold;
-    line-height: 1.08;
-    letter-spacing: -1px;
-    margin-bottom: 12px;
-  }
-  .headline .hl { color: #00E5CC; }
-
-  .subtext {
-    font-size: 16px;
-    color: rgba(255,255,255,0.6);
-    margin-bottom: 20px;
-  }
-
-  .cta {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    background: #00D4CC;
-    color: #0A0A0A;
-    font-size: 16px;
-    font-weight: 600;
-    padding: 18px 40px;
-    border-radius: 50px;
-  }
-</style>
-</head><body>
-  <div class="glow-bg"></div>
-  <img src="${logoBase64}" class="logo" />
-  <img src="${visualBase64}" class="visual" />
-  <div class="bottom-gradient"></div>
-  <div class="content">
-    <div class="headline">${processedHeadline}</div>
-    ${config.subtext ? `<div class="subtext">${config.subtext}</div>` : ''}
-    ${config.cta ? `<div class="cta">${config.cta} &gt;</div>` : ''}
-  </div>
-</body></html>`;
-}
-
-// ─── Template 6: Split Layout (Photo + Content) ─────────────────────────────
-
-function splitLayoutTemplate(
-  config: {
-    headline: string;
-    highlightWords: string[];
-    subtext?: string;
-    cta?: string;
-    bullets?: string[];
-  },
-  logoBase64: string,
-  photoBase64: string,
-  fontBase64: string
-): string {
-  let processedHeadline = config.headline;
-  config.highlightWords.forEach(word => {
-    processedHeadline = processedHeadline.replace(
-      new RegExp(`(${word})`, 'gi'),
-      '<span class="hl">$1</span>'
-    );
-  });
-
-  const bulletsHTML = config.bullets?.map(b => `<div class="bullet"><span class="bullet-check">✓</span>${b}</div>`).join('') || '';
-
-  return `<!DOCTYPE html>
-<html><head>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<style>
-  ${getFontFaceCSS(fontBase64)}
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  body {
-    width: ${SIZE}px;
-    height: ${SIZE}px;
-    font-family: 'Inter', sans-serif;
-    color: #1A1A1A;
-    position: relative;
-    overflow: hidden;
-    background: #FAFAFA;
-  }
-
-  .logo {
-    position: absolute;
-    top: 48px;
-    left: 48px;
-    height: 32px;
-    z-index: 10;
-  }
-
-  /* Photo takes right portion - with softer blend */
-  .photo-container {
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 55%;
-    height: 100%;
-    overflow: hidden;
-  }
-  .photo {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-  .photo-overlay {
-    position: absolute;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background: linear-gradient(90deg,
-      rgba(250,250,250,1) 0%,
-      rgba(250,250,250,0.95) 15%,
-      rgba(250,250,250,0.4) 40%,
-      transparent 70%
-    );
-  }
-
-  /* Content on left */
-  .content {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    left: 56px;
-    max-width: 460px;
-  }
-
-  .headline {
-    font-family: 'PP Formula', 'Inter', sans-serif;
-    font-size: 40px;
-    font-weight: bold;
-    line-height: 1.12;
-    letter-spacing: -0.5px;
-    margin-bottom: 16px;
-  }
-  .headline .hl { color: #00C9D4; }
-
-  .subtext {
-    font-size: 17px;
-    color: #555;
-    line-height: 1.5;
-    margin-bottom: 20px;
-  }
-
-  .bullets {
-    margin-bottom: 24px;
-  }
-  .bullet {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    font-size: 15px;
-    color: #333;
-    margin-bottom: 10px;
-  }
-  .bullet-check {
-    color: #00C9D4;
-    font-weight: 700;
-    font-size: 16px;
-  }
-
-  .cta {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    background: #1A1A1A;
-    color: #FFFFFF;
-    font-size: 15px;
-    font-weight: 600;
-    padding: 16px 30px;
-    border-radius: 50px;
-  }
-
-  /* Accent line */
-  .accent-line {
-    position: absolute;
-    top: 56px;
-    left: 56px;
-    width: 60px;
-    height: 4px;
-    background: linear-gradient(90deg, #00E8FF, #00D4AA);
-    border-radius: 2px;
-  }
-</style>
-</head><body>
-  <div class="accent-line"></div>
-  <img src="${logoBase64}" class="logo" />
-
-  <div class="photo-container">
-    <img src="${photoBase64}" class="photo" />
-    <div class="photo-overlay"></div>
-  </div>
-
-  <div class="content">
-    <div class="headline">${processedHeadline}</div>
-    ${config.subtext ? `<div class="subtext">${config.subtext}</div>` : ''}
-    ${config.bullets ? `<div class="bullets">${bulletsHTML}</div>` : ''}
-    ${config.cta ? `<div class="cta">${config.cta} &gt;</div>` : ''}
+    <div class="headline"><span class="hl">Voice AI</span> for regulated fintech flows</div>
+    <div class="subtext">Secure, compliant, production-ready.</div>
+    <div class="cta">See How It Works ></div>
   </div>
 </body></html>`;
 }
@@ -974,137 +825,42 @@ function splitLayoutTemplate(
 // ─── Main ───────────────────────────────────────────────────────────────────
 
 async function main() {
-  console.log('\n🎯 Square 1080x1080 - All Templates\n');
+  console.log('\n🎯 Square 1080x1080 - Matching Reference Designs\n');
 
   const outputDir = path.join(process.cwd(), 'output', 'creatives', `square-${Date.now()}`);
   await fs.mkdir(outputDir, { recursive: true });
 
   // Load assets
-  const whiteLogoPath = await selectLogo('#000000');
-  const blackLogoPath = await selectLogo('#FFFFFF');
-  const whiteLogo = await imageToBase64(path.join(process.cwd(), whiteLogoPath));
-  const blackLogo = await imageToBase64(path.join(process.cwd(), blackLogoPath));
-
-  // Photos
-  const financePhoto = await imageToBase64(ASSETS.photos.finance);
-  const personPhoto = await imageToBase64(ASSETS.photos.personLaptop);
-
-  // Composed visuals
+  const ppFont = await loadFontBase64(PP_FORMULA_FONT);
+  const whiteLogo = await imageToBase64(path.join(process.cwd(), await selectLogo('#000000')));
+  const blackLogo = await imageToBase64(path.join(process.cwd(), await selectLogo('#FFFFFF')));
   const financeChat = await imageToBase64(ASSETS.composed.financeChat);
   const warmTransfers = await imageToBase64(ASSETS.composed.warmTransfers);
-  const restaurantReorder = await imageToBase64(ASSETS.composed.restaurantReorder);
-  const aiAgent = await imageToBase64(ASSETS.composed.aiAgent);
+  const financePhoto = await imageToBase64(ASSETS.photos.finance);
 
-  // 3D Icons (for dark backgrounds only)
-  const aiStarIcon = await imageToBase64(ASSETS.icons3d.aiStar);
-  const voiceAiIcon = await imageToBase64(ASSETS.icons3d.voiceAi);
-
-  // Load PP Formula font
-  const ppFormulaFont = await loadFontBase64(PP_FORMULA_FONT);
-
+  console.log('   Font:', ppFont ? '✓' : '✗');
   console.log('   Logos:', whiteLogo ? '✓' : '✗', blackLogo ? '✓' : '✗');
-  console.log('   Font:', ppFormulaFont ? '✓ PP Formula' : '✗');
-  console.log('   Photos:', financePhoto ? '✓' : '✗', personPhoto ? '✓' : '✗');
-  console.log('   Composed:', financeChat ? '✓' : '✗', warmTransfers ? '✓' : '✗', restaurantReorder ? '✓' : '✗');
-  console.log('   3D Icons:', aiStarIcon ? '✓' : '✗', voiceAiIcon ? '✓' : '✗');
+  console.log('   Assets:', financeChat ? '✓' : '✗', warmTransfers ? '✓' : '✗');
   console.log('');
 
-  // 1. Infrastructure Dark with 3D Icon
-  const infra = infrastructureDarkTemplate(
-    {
-      headline: 'Reliable Voice AI starts with unified infrastructure',
-      highlightWords: ['Voice AI'],
-      cta: 'Learn more',
-      pills: [
-        { icon: '✦', label: 'Ai', primary: true },
-        { icon: '🌐', label: 'Network' },
-        { icon: '📞', label: 'Numbers' },
-      ],
-    },
-    whiteLogo,
-    voiceAiIcon,
-    ppFormulaFont
-  );
-  await renderAndSave(infra, path.join(outputDir, '01-infrastructure-dark.png'));
-  console.log('   ✓ 01-infrastructure-dark.png');
+  // Generate all templates
+  await renderAndSave(darkPillsTemplate(ppFont, whiteLogo), path.join(outputDir, '01-dark-pills.png'));
+  console.log('   ✓ 01-dark-pills.png');
 
-  // 2. Light Mode with Composed Visual
-  const light = lightModeTemplate(
-    {
-      headline: 'Voice AI built for fintech stacks',
-      highlightWords: ['Voice AI'],
-      subtext: 'From prototype to production on one platform.',
-      cta: 'Try Telnyx Free',
-    },
-    blackLogo,
-    aiAgent,
-    ppFormulaFont
-  );
-  await renderAndSave(light, path.join(outputDir, '02-light-fintech.png'));
-  console.log('   ✓ 02-light-fintech.png');
+  await renderAndSave(lightStarsTemplate(ppFont, blackLogo), path.join(outputDir, '02-light-stars.png'));
+  console.log('   ✓ 02-light-stars.png');
 
-  // 3. Photo Overlay - Finance
-  const photo = photoOverlayTemplate(
-    {
-      headline: 'Voice AI for regulated fintech flows',
-      highlightWords: ['Voice AI'],
-      subtext: 'Secure, compliant, production-ready.',
-      cta: 'See How It Works',
-    },
-    whiteLogo,
-    financePhoto,
-    ppFormulaFont
-  );
-  await renderAndSave(photo, path.join(outputDir, '03-photo-fintech.png'));
-  console.log('   ✓ 03-photo-fintech.png');
+  await renderAndSave(darkPhoneTemplate(ppFont, whiteLogo), path.join(outputDir, '03-dark-phone.png'));
+  console.log('   ✓ 03-dark-phone.png');
 
-  // 4. Composed Visual - Multilingual
-  const composed = composedVisualTemplate(
-    {
-      headline: 'AI agents that speak any language',
-      highlightWords: ['AI agents'],
-      cta: 'See Multilingual Demo',
-    },
-    blackLogo,
-    financeChat,
-    ppFormulaFont
-  );
-  await renderAndSave(composed, path.join(outputDir, '04-composed-multilingual.png'));
-  console.log('   ✓ 04-composed-multilingual.png');
+  await renderAndSave(lightVisualTemplate(ppFont, blackLogo, financeChat), path.join(outputDir, '04-light-visual.png'));
+  console.log('   ✓ 04-light-visual.png');
 
-  // 5. Dark Composed - Warm Transfers
-  const darkComposed = darkComposedTemplate(
-    {
-      headline: 'Warm transfers that feel seamless',
-      highlightWords: ['Warm transfers'],
-      subtext: 'AI-powered handoffs to live agents in seconds.',
-      cta: 'See Live Demo',
-    },
-    whiteLogo,
-    warmTransfers,
-    ppFormulaFont
-  );
-  await renderAndSave(darkComposed, path.join(outputDir, '05-dark-warm-transfers.png'));
-  console.log('   ✓ 05-dark-warm-transfers.png');
+  await renderAndSave(darkVisualTemplate(ppFont, whiteLogo, warmTransfers), path.join(outputDir, '05-dark-visual.png'));
+  console.log('   ✓ 05-dark-visual.png');
 
-  // 6. Split Layout - Business
-  const split = splitLayoutTemplate(
-    {
-      headline: 'Automate customer calls at scale',
-      highlightWords: ['Automate'],
-      subtext: 'Deploy AI voice agents that handle orders, returns, and support.',
-      bullets: [
-        '24/7 availability',
-        'Sub-second response times',
-        'Seamless CRM integration',
-      ],
-      cta: 'Start Building',
-    },
-    blackLogo,
-    personPhoto
-  );
-  await renderAndSave(split, path.join(outputDir, '06-split-business.png'));
-  console.log('   ✓ 06-split-business.png');
+  await renderAndSave(photoTemplate(ppFont, whiteLogo, financePhoto), path.join(outputDir, '06-photo.png'));
+  console.log('   ✓ 06-photo.png');
 
   console.log(`\n✅ Output: ${outputDir}\n`);
 

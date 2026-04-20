@@ -133,9 +133,13 @@ class StackAdaptConnector:
             }
         }
         result = self._graphql_request(query, variables)
-        audience = result.get("createAbmAudienceWithDomainsList", {}).get("abmAudience", {})
+        audience = result.get("createAbmAudienceWithDomainsList", {}).get("abmAudience") or {}
         logger.info(f"Created ABM audience: {audience.get('name')} (id={audience.get('id')}, size={audience.get('size')})")
-        return audience.get("id")
+        aid = audience.get('id')
+        if not aid:
+            logger.error(f"Failed to create audience. API result: {result}")
+            return None
+        return str(aid)
 
     def update_audience_with_domains(self, audience_id, domains, action="ADD"):
         """

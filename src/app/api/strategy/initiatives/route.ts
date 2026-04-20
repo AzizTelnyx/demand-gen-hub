@@ -22,9 +22,9 @@ export async function GET(request: NextRequest) {
     const initiatives = await prisma.initiative.findMany({
       where,
       include: {
-        strategy: { select: { id: true, name: true } },
-        campaigns: { include: { campaign: true } },
-        notes: { orderBy: { createdAt: "desc" }, take: 5 },
+        Strategy: { select: { id: true, name: true } },
+        InitiativeCampaign: { include: { Campaign: true } },
+        InitiativeNote: { orderBy: { createdAt: "desc" }, take: 5 },
       },
       orderBy: { createdAt: "desc" },
     });
@@ -86,7 +86,8 @@ Example: "Competitor takeout targeting Vapi in APAC, $15K, goal 20 SQOs on Googl
       }
 
       const initiative = await prisma.initiative.create({
-        data: {
+        data: { id: crypto.randomUUID(),
+          updatedAt: new Date(),
           strategyId,
           name: parsed.name || brief.slice(0, 60),
           description: parsed.description || brief,
@@ -103,7 +104,7 @@ Example: "Competitor takeout targeting Vapi in APAC, $15K, goal 20 SQOs on Googl
           tags: parsed.tags || [],
           ...fields,
         },
-        include: { strategy: { select: { id: true, name: true } } },
+        include: { Strategy: { select: { id: true, name: true } } },
       });
 
       return NextResponse.json(initiative, { status: 201 });
@@ -111,7 +112,8 @@ Example: "Competitor takeout targeting Vapi in APAC, $15K, goal 20 SQOs on Googl
 
     // Direct creation with structured fields
     const initiative = await prisma.initiative.create({
-      data: {
+      data: { id: crypto.randomUUID(),
+        updatedAt: new Date(),
         strategyId,
         name: fields.name,
         description: fields.description || null,
@@ -130,7 +132,7 @@ Example: "Competitor takeout targeting Vapi in APAC, $15K, goal 20 SQOs on Googl
         startDate: fields.startDate ? new Date(fields.startDate) : null,
         endDate: fields.endDate ? new Date(fields.endDate) : null,
       },
-      include: { strategy: { select: { id: true, name: true } } },
+      include: { Strategy: { select: { id: true, name: true } } },
     });
 
     return NextResponse.json(initiative, { status: 201 });

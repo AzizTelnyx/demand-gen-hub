@@ -8,646 +8,42 @@ datasource db {
   directUrl = env("POSTGRES_URL_NON_POOLING")
 }
 
-model User {
-  id        String   @id @default(cuid())
-  email     String   @unique
-  password  String
-  name      String?
-  role      String   @default("user")
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-}
-
-model Campaign {
-  id               String               @id @default(cuid())
-  name             String
-  platform         String
-  platformId       String?
-  status           String
-  funnelStage      String?
-  region           String?
-  channel          String?
-  budget           Float?
-  spend            Float?
-  impressions      Int?
-  clicks           Int?
-  conversions      Int?
-  startDate        DateTime?
-  endDate          DateTime?
-  lastSyncedAt     DateTime?
-  metadata         String?
-  createdAt        DateTime             @default(now())
-  updatedAt        DateTime             @updatedAt
-  servingStatus    String?
-  parsedDate       String?
-  parsedIntent     String?
-  parsedProduct    String?
-  parsedVariant    String?
-  parsedAdType     String?
-  parsedRegion     String?
-  parseConfidence  String?
-  CampaignAudience CampaignAudience[]
-  initiativeLinks  InitiativeCampaign[]
-  abmSegments      ABMCampaignSegment[]
-}
-
-model AdCopy {
-  id           String   @id @default(cuid())
-  campaignId   String?
-  name         String?
-  headlines    String?
-  descriptions String?
-  status       String   @default("draft")
-  feedback     String?
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
-}
-
-model AdCreative {
-  id           String   @id @default(cuid())
-  platform     String
-  platformAdId String
-  campaignName String
-  campaignId   String?
-  adGroupName  String?
-  adType       String
-  status       String
-  headlines    String?
-  descriptions String?
-  finalUrls    String?
-  images       String?
-  videos       String?
-  dimensions   String?
-  brandName    String?
-  cta          String?
-  metadata     String?
-  lastSyncedAt DateTime @default(now())
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
-
-  @@unique([platform, platformAdId])
-  @@index([campaignName])
-  @@index([platform])
-  @@index([status])
-}
-
-model ABMList {
-  id          String          @id @default(cuid())
-  name        String
-  createdAt   DateTime        @default(now())
-  count       Int             @default(0)
-  mode        String?
-  query       String?
-  source      String          @default("research-agent")
-  createdBy   String?
-  description String?
-  listType    String          @default("vertical")
-  status      String          @default("active")
-  updatedAt   DateTime        @default(now()) @updatedAt
-  jobs        ABMJob[]
-  members     ABMListMember[]
-}
-
-model ABMJob {
-  id         String    @id @default(cuid())
-  query      String
-  listId     String
-  status     String    @default("queued")
-  target     Int       @default(500)
-  found      Int       @default(0)
-  waves      Int       @default(0)
-  dryStreak  Int       @default(0)
-  error      String?
-  lastWaveAt DateTime?
-  createdAt  DateTime  @default(now())
-  updatedAt  DateTime  @updatedAt
-  createdBy  String?
-  jobType    String    @default("generate")
-  list       ABMList   @relation(fields: [listId], references: [id], onDelete: Cascade)
-}
-
-model Activity {
-  id         String   @id @default(cuid())
-  timestamp  DateTime @default(now())
-  actor      String
-  actorId    String?
-  action     String
-  entityType String
-  entityId   String?
-  entityName String?
-  details    String?
-}
-
-model SyncState {
-  id           String    @id @default(cuid())
-  platform     String    @unique
-  lastSyncedAt DateTime?
-  status       String    @default("idle")
-  error        String?
-  metadata     String?
-  updatedAt    DateTime  @updatedAt
-}
-
 model ABMAccount {
-  id              String          @id @default(cuid())
-  company         String          @default("Unknown")
-  domain          String?         @unique
-  vertical        String?
-  country         String?
-  region          String?
-  companySize     String?
-  tier            String?
-  status          String          @default("identified")
-  source          String?
-  notes           String?
-  contacts        String?
-  lastActivity    DateTime?
-  createdAt       DateTime        @default(now())
-  updatedAt       DateTime        @updatedAt
-  productFit      String?
-  currentProvider String?
-  inPipeline      Boolean         @default(false)
-  sfAccountId     String?
-  switchSignal    String?
-  industry        String?
-  clearbitTags    Json            @default("[]")
-  clearbitTech    Json            @default("[]")
-  clearbitDesc    String?
-  employeeCount   Int?
-  annualRevenue   String?
-  lastEnrichedAt  DateTime?
-  enrichmentSource String         @default("clearbit")
-  lists           ABMListMember[]
-
-  // @@unique([company, domain]) -- removed: domain is unique on its own now
-}
-
-model ABMListMember {
-  id        String     @id @default(cuid())
-  listId    String
-  accountId String
-  addedAt   DateTime   @default(now())
-  addedBy   String     @default("system")
-  reason    String?
-  status    String     @default("active")
-  account   ABMAccount @relation(fields: [accountId], references: [id], onDelete: Cascade)
-  list      ABMList    @relation(fields: [listId], references: [id], onDelete: Cascade)
-
-  @@unique([listId, accountId])
-}
-
-model Tracker {
-  id        String    @id @default(cuid())
-  category  String
-  title     String
-  status    String    @default("pending")
-  priority  String?
-  dueDate   DateTime?
-  assignee  String?
-  details   String?
-  metadata  String?
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-}
-
-model AutomationRun {
-  id          String    @id @default(cuid())
-  automation  String
-  status      String    @default("running")
-  summary     String?
-  details     String?
-  startedAt   DateTime  @default(now())
-  completedAt DateTime?
-  createdAt   DateTime  @default(now())
-}
-
-model CampaignChange {
-  id           String   @id @default(cuid())
-  campaignId   String?
-  campaignName String
-  platform     String
-  changeType   String
-  description  String
-  oldValue     String?
-  newValue     String?
-  source       String   @default("manual")
-  actor        String?
-  timestamp    DateTime @default(now())
-  createdAt    DateTime @default(now())
-  rollbackData Json?
-  agentRunId   String?
-  autoExecuted Boolean? @default(false)
-
-  @@index([campaignName])
-  @@index([platform])
-  @@index([timestamp])
-  @@index([campaignId, timestamp], map: "idx_campaign_change_daily")
-}
-
-model SFCampaign {
-  id               String          @id @default(cuid())
-  sfId             String          @unique
-  name             String
-  type             String?
-  status           String?
-  numberOfOpps     Int             @default(0)
-  totalAmount      Float           @default(0)
-  numberOfLeads    Int             @default(0)
-  numberOfContacts Int             @default(0)
-  lastSyncedAt     DateTime?
+  id               String          @id
+  company          String          @default("Unknown")
+  domain           String?         @unique
+  vertical         String?
+  country          String?
+  region           String?
+  companySize      String?
+  tier             String?
+  status           String          @default("identified")
+  source           String?
+  notes            String?
+  contacts         String?
+  lastActivity     DateTime?
   createdAt        DateTime        @default(now())
-  updatedAt        DateTime        @updatedAt
-  opportunities    SFOpportunity[]
-}
-
-model SFOpportunity {
-  id              String      @id @default(cuid())
-  sfId            String      @unique
-  name            String
-  amount          Float       @default(0)
-  stageName       String
-  closeDate       DateTime?
-  isClosed        Boolean     @default(false)
-  isWon           Boolean     @default(false)
-  leadSource      String?
-  campaignId      String?
-  createdDate     DateTime?
-  lastSyncedAt    DateTime?
-  createdAt       DateTime    @default(now())
-  updatedAt       DateTime    @updatedAt
-  accountDomain   String?
-  accountName     String?
-  accountSfId     String?
-  oppSource       String?
-  oppSourceDetail String?
-  oppType         String?
-  campaign        SFCampaign? @relation(fields: [campaignId], references: [id])
-
-  @@index([campaignId])
-  @@index([stageName])
-  @@index([createdDate])
-  @@index([accountDomain])
-  @@index([oppType])
-}
-
-/// This model contains an expression index which requires additional setup for migrations. Visit https://pris.ly/d/expression-indexes for more info.
-model AdImpression {
-  id           String    @id @default(cuid())
-  domain       String
-  campaignId   String
-  campaignName String
-  impressions  Int       @default(0)
-  clicks       Int       @default(0)
-  cost         Float     @default(0)
-  dateFrom     DateTime?
-  dateTo       DateTime?
-  lastSyncedAt DateTime?
-  createdAt    DateTime  @default(now())
-  updatedAt    DateTime  @updatedAt
-  platform     String?
-  conversions  Int?      @default(0)
-
-  @@index([domain])
-}
-
-model SFAccount {
-  id            String    @id @default(cuid())
-  sfId          String    @unique
-  name          String
-  domain        String?
-  cleanDomain   String?
-  website       String?
-  industry      String?
-  subIndustry   String?
-  employees     Int?
-  annualRevenue Float?
-  firmoTier     String?
-  salesSegment  String?
-  accountType   String?
-  abmSegment    String?
-  lastSyncedAt  DateTime?
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
-
-  @@index([cleanDomain])
-  @@index([domain])
-}
-
-model Agent {
-  id          String     @id @default(cuid())
-  slug        String     @default("unknown") @unique
-  name        String
-  description String?
-  model       String     @default("anthropic/claude-sonnet-4-20250514")
-  schedule    String?
-  level       Int        @default(0)
-  enabled     Boolean    @default(true)
-  config      String?
-  createdAt   DateTime   @default(now())
-  platform    String?
-  runs        AgentRun[]
-}
-
-model AgentRun {
-  id              String           @id @default(cuid())
-  agentId         String          @default("unknown")
-  workflowRunId   String?
-  status          String           @default("queued")
-  input           String?
-  output          String?
-  findingsCount   Int              @default(0)
-  recsCount       Int              @default(0)
-  error           String?
-  costUsd         Float?
-  metadata        Json?
-  startedAt       DateTime?
-  completedAt     DateTime?
-  createdAt       DateTime         @default(now())
-  agent           Agent            @relation(fields: [agentId], references: [id], onDelete: Cascade)
-  workflowRun     WorkflowRun?     @relation(fields: [workflowRunId], references: [id])
-  recommendations Recommendation[]
-}
-
-model Recommendation {
-  id           String    @id @default(cuid())
-  agentRunId   String
-  type         String
-  severity     String    @default("medium")
-  target       String?
-  targetId     String?
-  action       String          @default("review")
-  rationale    String          @default("")
-  impact       String?
-  status       String    @default("pending")
-  appliedAt    DateTime?
-  createdAt    DateTime  @default(now())
-  confidence   Int?
-  platform     String?
-  campaignId   String?
-  campaignName String?
-  callbackData String?
-  autoApplied  Boolean?  @default(false)
-  agentRun     AgentRun  @relation(fields: [agentRunId], references: [id], onDelete: Cascade)
-}
-
-model Workflow {
-  id          String        @id @default(cuid())
-  slug        String        @default("unknown") @unique
-  name        String
-  description String?
-  steps       String
-  trigger     String        @default("manual")
-  enabled     Boolean       @default(true)
-  createdAt   DateTime      @default(now())
-  runs        WorkflowRun[]
-}
-
-model WorkflowRun {
-  id          String     @id @default(cuid())
-  workflowId  String
-  status      String     @default("running")
-  context     String?
-  currentStep Int        @default(0)
-  startedAt   DateTime   @default(now())
-  completedAt DateTime?
-  agentRuns   AgentRun[]
-  workflow    Workflow   @relation(fields: [workflowId], references: [id], onDelete: Cascade)
-}
-
-model BudgetChange {
-  id          String    @id @default(cuid())
-  description String
-  fromChannel String?
-  toChannel   String?
-  fromRegion  String?
-  toRegion    String?
-  amount      Float
-  reason      String?
-  status      String    @default("proposed")
-  appliedAt   DateTime?
-  createdAt   DateTime  @default(now())
-}
-
-model LinkedInOrgMapping {
-  id            String    @id @default(cuid())
-  linkedinOrgId String    @unique
-  orgName       String?
-  cleanDomain   String?
-  vanityName    String?
-  vanityUrl     String?
-  resolvedAt    DateTime? @default(now())
-}
-
-model LinkedInVanityAttempt {
-  id          String    @id @default(cuid())
-  domain      String?
-  orgId       String?
-  attempted   DateTime? @default(now())
-  success     Boolean?  @default(false)
-  createdAt   DateTime? @default(now())
-}
-
-model WorkItem {
-  id          String           @id @default(cuid())
-  title       String
-  description String?
-  type        String
-  status      String           @default("backlog")
-  priority    String           @default("p1")
-  platform    String?
-  assignee    String?
-  source      String           @default("manual")
-  sourceRef   String?
-  dueDate     DateTime?
-  tags        String[]
-  parentId    String?
-  completedAt DateTime?
-  createdAt   DateTime         @default(now())
-  updatedAt   DateTime         @updatedAt
-  parent      WorkItem?        @relation("WorkItemChildren", fields: [parentId], references: [id])
-  children    WorkItem[]       @relation("WorkItemChildren")
-  updates     WorkItemUpdate[]
-
-  @@index([status])
-  @@index([type])
-  @@index([parentId])
-}
-
-model WorkItemUpdate {
-  id         String   @id @default(cuid())
-  workItemId String
-  author     String
-  type       String
-  content    String
-  metadata   String?
-  createdAt  DateTime @default(now())
-  workItem   WorkItem @relation(fields: [workItemId], references: [id], onDelete: Cascade)
-
-  @@index([workItemId])
-}
-
-model Strategy {
-  id          String       @id @default(uuid())
-  name        String
-  description String?
-  region      String?
-  status      String       @default("planning")
-  startDate   DateTime?
-  endDate     DateTime?
-  createdAt   DateTime     @default(now())
-  updatedAt   DateTime     @updatedAt
-  initiatives Initiative[]
-}
-
-model Initiative {
-  id          String               @id @default(uuid())
-  strategyId  String
-  name        String
-  description String?
-  brief       String?
-  region      String?
-  vertical    String?
-  product     String?
-  funnel      String?
-  objective   String?
-  status      String               @default("planning")
-  budget      Float?
-  budgetSpent Float?               @default(0)
-  goalType    String?
-  goalTarget  Float?
-  goalCurrent Float?               @default(0)
-  platforms   String[]
-  tags        String[]
-  startDate   DateTime?
-  endDate     DateTime?
-  aiSummary   String?
-  aiLastCheck DateTime?
-  createdAt   DateTime             @default(now())
-  updatedAt   DateTime             @updatedAt
-  strategy    Strategy             @relation(fields: [strategyId], references: [id])
-  campaigns   InitiativeCampaign[]
-  notes       InitiativeNote[]
-}
-
-model InitiativeCampaign {
-  id           String     @id @default(uuid())
-  initiativeId String
-  campaignId   String
-  autoLinked   Boolean    @default(false)
-  createdAt    DateTime   @default(now())
-  campaign     Campaign   @relation(fields: [campaignId], references: [id])
-  initiative   Initiative @relation(fields: [initiativeId], references: [id])
-
-  @@unique([initiativeId, campaignId])
-}
-
-model InitiativeNote {
-  id           String     @id @default(uuid())
-  initiativeId String
-  content      String
-  type         String     @default("note")
-  author       String?
-  createdAt    DateTime   @default(now())
-  initiative   Initiative @relation(fields: [initiativeId], references: [id])
-}
-
-model AgentGuardrail {
-  id        String   @id @default(cuid())
-  key       String   @unique
-  value     String
-  label     String
-  category  String
-  updatedAt DateTime @updatedAt
-  updatedBy String?
-}
-
-model RegionalPriority {
-  id        String   @id @default(cuid())
-  quarter   String
-  region    String
-  product   String
-  priority  String
-  protected Boolean  @default(false)
-  notes     String?
-  updatedAt DateTime @updatedAt
-  updatedBy String?
-
-  @@unique([quarter, region, product])
-}
-
-model CampaignAudience {
-  id           String    @id
-  campaignId   String
-  platform     String
-  audienceType String
-  name         String
-  value        String?
-  matchType    String?
-  status       String?
-  metadata     Json?
-  lastSyncedAt DateTime? @db.Timestamp(6)
-  createdAt    DateTime? @default(now()) @db.Timestamp(6)
-  updatedAt    DateTime? @default(now()) @db.Timestamp(6)
-  Campaign     Campaign  @relation(fields: [campaignId], references: [id], onDelete: NoAction, onUpdate: NoAction)
-
-  @@index([campaignId], map: "idx_campaign_audience_campaign")
-  @@index([audienceType], map: "idx_campaign_audience_type")
-}
-
-model BudgetAllocation {
-  id        String    @id @default(dbgenerated("(gen_random_uuid())::text"))
-  platform  String
-  year      Int
-  month     Int
-  planned   Float     @default(0)
-  actual    Float?    @default(0)
-  notes     String?
-  updatedAt DateTime? @default(now())
-  updatedBy String?
-
-  @@unique([platform, year, month])
-}
-
-model ABMExclusion {
-  id          String   @id @default(cuid())
-  domain     String
-  company    String?
-  country    String?
-  category   String   // reseller, agency, hospital, insurance, debt_collection, fintech, bpo, competitor, identity, dead_domain, too_large, bad_fit
-  reason     String
-  addedBy    String   @default("manual")
-  addedAt    DateTime @default(now())
-  notes      String?
-
-  @@index([domain])
-  @@index([category])
-}
-
-model ABMListRule {
-  id                String   @id @default(cuid())
-  listId            String?
-  product           String
-  variant           String?
-  verticals         Json     @default("[]")
-  regions           Json     @default("[]")
-  companySizeMin    Int?
-  companySizeMax    Int?
-  productFit        String?
-  excludeVerticals  Json     @default("[]")
-  excludeCompetitors Json    @default("[]")
-  useCaseKeywords   Json     @default("[]")
-  descriptionKeywords Json  @default("[]")
-  competitorNames   Json    @default("[]")
-  targetAudienceSize Int?
-  createdAt         DateTime @default(now())
-  updatedAt         DateTime @updatedAt
-
-  @@index([product])
-  @@index([product, variant])
+  updatedAt        DateTime
+  productFit       String?
+  currentProvider  String?
+  inPipeline       Boolean         @default(false)
+  sfAccountId      String?
+  switchSignal     String?
+  annualRevenue    String?
+  clearbitDesc     String?
+  clearbitTags     Json            @default("[]")
+  clearbitTech     Json            @default("[]")
+  employeeCount    Int?
+  enrichmentSource String          @default("clearbit")
+  industry         String?
+  lastEnrichedAt   DateTime?
+  pushedToSa       Boolean?        @default(false)
+  saPushedAt       DateTime?       @db.Timestamptz(6)
+  ABMListMember    ABMListMember[]
 }
 
 model ABMCampaignSegment {
-  id              String    @id @default(cuid())
+  id              String    @id @default(dbgenerated("(gen_random_uuid())::text"))
   campaignId      String
   campaignName    String
   campaignStatus  String
@@ -672,13 +68,619 @@ model ABMCampaignSegment {
   healthFlags     Json      @default("[]")
   lastSyncedAt    DateTime?
   createdAt       DateTime  @default(now())
-  updatedAt       DateTime  @updatedAt
-
-  campaign        Campaign  @relation(fields: [campaignId], references: [id], onDelete: Cascade)
+  updatedAt       DateTime
+  Campaign        Campaign  @relation(fields: [campaignId], references: [id], onDelete: Cascade)
 
   @@unique([campaignId, segmentId, platform])
+  @@index([healthFlags])
+  @@index([parsedProduct])
   @@index([platform])
   @@index([segmentId])
-  @@index([parsedProduct])
-  @@index([healthFlags])
+}
+
+model ABMExclusion {
+  id           String    @id
+  domain       String
+  reason       String
+  addedAt      DateTime  @default(now())
+  addedBy      String    @default("manual")
+  category     String
+  company      String?
+  country      String?
+  notes        String?
+  pushedToSa   Boolean?  @default(false)
+  saPushedAt   DateTime? @db.Timestamptz(6)
+  saAudienceId String?
+
+  @@index([category])
+  @@index([domain])
+}
+
+model ABMJob {
+  id         String    @id
+  listId     String
+  status     String    @default("queued")
+  query      String
+  error      String?
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime
+  target     Int       @default(500)
+  createdBy  String?
+  dryStreak  Int       @default(0)
+  found      Int       @default(0)
+  jobType    String    @default("generate")
+  lastWaveAt DateTime?
+  waves      Int       @default(0)
+  ABMList    ABMList   @relation(fields: [listId], references: [id], onDelete: Cascade)
+}
+
+model ABMList {
+  id            String          @id
+  name          String
+  createdAt     DateTime        @default(now())
+  count         Int             @default(0)
+  mode          String?
+  query         String?
+  source        String          @default("research-agent")
+  createdBy     String?
+  description   String?
+  listType      String          @default("vertical")
+  status        String          @default("active")
+  updatedAt     DateTime        @default(now())
+  ABMJob        ABMJob[]
+  ABMListMember ABMListMember[]
+}
+
+model ABMListMember {
+  id         String     @id
+  listId     String
+  accountId  String
+  addedAt    DateTime   @default(now())
+  addedBy    String     @default("system")
+  reason     String?
+  status     String     @default("active")
+  ABMAccount ABMAccount @relation(fields: [accountId], references: [id], onDelete: Cascade)
+  ABMList    ABMList    @relation(fields: [listId], references: [id], onDelete: Cascade)
+
+  @@unique([listId, accountId])
+  @@unique([listId, accountId], map: "ABMListMember_list_account_unique")
+}
+
+model ABMListRule {
+  id                  String   @id
+  listId              String?
+  product             String
+  variant             String?
+  verticals           Json     @default("[]")
+  regions             Json     @default("[]")
+  companySizeMin      Int?
+  companySizeMax      Int?
+  productFit          String?
+  excludeVerticals    Json     @default("[]")
+  excludeCompetitors  Json     @default("[]")
+  useCaseKeywords     Json     @default("[]")
+  descriptionKeywords Json     @default("[]")
+  competitorNames     Json     @default("[]")
+  targetAudienceSize  Int?
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime
+
+  @@index([product])
+  @@index([product, variant])
+}
+
+model Activity {
+  id         String   @id
+  timestamp  DateTime @default(now())
+  actor      String
+  action     String
+  entityType String
+  entityName String?
+  details    String?
+  actorId    String?
+  entityId   String?
+}
+
+model AdCopy {
+  id           String   @id
+  status       String   @default("draft")
+  createdAt    DateTime @default(now())
+  campaignId   String?
+  descriptions String?
+  feedback     String?
+  headlines    String?
+  name         String?
+  updatedAt    DateTime
+}
+
+model AdCreative {
+  id           String   @id
+  platform     String
+  status       String
+  metadata     String?
+  createdAt    DateTime @default(now())
+  campaignId   String?
+  updatedAt    DateTime
+  lastSyncedAt DateTime @default(now())
+  platformAdId String
+  campaignName String
+  adGroupName  String?
+  adType       String
+  headlines    String?
+  descriptions String?
+  finalUrls    String?
+  images       String?
+  videos       String?
+  dimensions   String?
+  brandName    String?
+  cta          String?
+
+  @@unique([platform, platformAdId])
+  @@index([campaignName])
+  @@index([platform])
+  @@index([status])
+}
+
+model AdImpression {
+  id           String    @id
+  campaignId   String
+  platform     String?
+  impressions  Int       @default(0)
+  clicks       Int       @default(0)
+  conversions  Int?      @default(0)
+  createdAt    DateTime  @default(now())
+  domain       String
+  campaignName String
+  dateFrom     DateTime?
+  dateTo       DateTime?
+  updatedAt    DateTime
+  lastSyncedAt DateTime?
+  cost         Float     @default(0)
+
+  @@index([domain])
+}
+
+model Agent {
+  id          String     @id
+  name        String
+  description String?
+  config      String?
+  slug        String     @unique @default("unknown")
+  createdAt   DateTime   @default(now())
+  enabled     Boolean    @default(true)
+  level       Int        @default(0)
+  model       String     @default("anthropic/claude-sonnet-4-20250514")
+  platform    String?
+  schedule    String?
+  AgentRun    AgentRun[]
+}
+
+model AgentGuardrail {
+  id        String   @id
+  category  String
+  key       String   @unique
+  label     String
+  updatedAt DateTime
+  updatedBy String?
+  value     String
+}
+
+model AgentRun {
+  id             String           @id
+  status         String           @default("queued")
+  startedAt      DateTime?
+  completedAt    DateTime?
+  error          String?
+  agentId        String           @default("unknown")
+  costUsd        Float?
+  createdAt      DateTime         @default(now())
+  findingsCount  Int              @default(0)
+  input          String?
+  output         String?
+  recsCount      Int              @default(0)
+  workflowRunId  String?
+  metadata       Json?
+  Agent          Agent            @relation(fields: [agentId], references: [id], onDelete: Cascade)
+  WorkflowRun    WorkflowRun?     @relation(fields: [workflowRunId], references: [id])
+  Recommendation Recommendation[]
+}
+
+model AutomationRun {
+  id          String    @id
+  status      String    @default("running")
+  startedAt   DateTime  @default(now())
+  completedAt DateTime?
+  automation  String
+  createdAt   DateTime  @default(now())
+  details     String?
+  summary     String?
+}
+
+model BudgetAllocation {
+  id        String    @id @default(dbgenerated("(gen_random_uuid())::text"))
+  platform  String
+  actual    Float?    @default(0)
+  month     Int
+  notes     String?
+  planned   Float     @default(0)
+  updatedAt DateTime? @default(now())
+  updatedBy String?
+  year      Int
+
+  @@unique([platform, year, month])
+}
+
+model BudgetChange {
+  id          String    @id
+  reason      String?
+  createdAt   DateTime  @default(now())
+  amount      Float
+  appliedAt   DateTime?
+  description String
+  fromChannel String?
+  fromRegion  String?
+  status      String    @default("proposed")
+  toChannel   String?
+  toRegion    String?
+}
+
+model Campaign {
+  id                 String               @id
+  name               String
+  status             String
+  platform           String
+  budget             Float?
+  parsedProduct      String?
+  parsedVariant      String?
+  parsedIntent       String?
+  createdAt          DateTime             @default(now())
+  updatedAt          DateTime
+  platformId         String?
+  servingStatus      String?
+  spend              Float?
+  impressions        Int?
+  clicks             Int?
+  conversions        Int?
+  channel            String?
+  startDate          DateTime?
+  endDate            DateTime?
+  metadata           String?
+  lastSyncedAt       DateTime?
+  parsedDate         String?
+  parsedRegion       String?
+  parsedAdType       String?
+  parseConfidence    String?
+  funnelStage        String?
+  region             String?
+  ABMCampaignSegment ABMCampaignSegment[]
+  CampaignAudience   CampaignAudience[]
+  InitiativeCampaign InitiativeCampaign[]
+}
+
+model CampaignAudience {
+  id           String    @id
+  campaignId   String
+  platform     String
+  name         String
+  createdAt    DateTime? @default(now()) @db.Timestamp(6)
+  metadata     Json?
+  audienceType String
+  value        String?
+  matchType    String?
+  status       String?
+  lastSyncedAt DateTime? @db.Timestamp(6)
+  updatedAt    DateTime? @default(now()) @db.Timestamp(6)
+  Campaign     Campaign  @relation(fields: [campaignId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@index([campaignId], map: "idx_campaign_audience_campaign")
+  @@index([audienceType], map: "idx_campaign_audience_type")
+}
+
+model CampaignChange {
+  id           String   @id
+  campaignId   String?
+  oldValue     String?
+  newValue     String?
+  createdAt    DateTime @default(now())
+  actor        String?
+  agentRunId   String?
+  autoExecuted Boolean? @default(false)
+  campaignName String
+  changeType   String
+  description  String
+  platform     String
+  rollbackData Json?
+  source       String   @default("manual")
+  timestamp    DateTime @default(now())
+
+  @@index([campaignName])
+  @@index([platform])
+  @@index([timestamp])
+  @@index([campaignId, timestamp], map: "idx_campaign_change_daily")
+}
+
+model Initiative {
+  id                 String               @id
+  name               String
+  description        String?
+  status             String               @default("planning")
+  createdAt          DateTime             @default(now())
+  aiLastCheck        DateTime?
+  aiSummary          String?
+  brief              String?
+  budget             Float?
+  budgetSpent        Float?               @default(0)
+  endDate            DateTime?
+  funnel             String?
+  goalCurrent        Float?               @default(0)
+  goalTarget         Float?
+  goalType           String?
+  objective          String?
+  platforms          String[]
+  product            String?
+  region             String?
+  startDate          DateTime?
+  strategyId         String
+  tags               String[]
+  updatedAt          DateTime
+  vertical           String?
+  Strategy           Strategy             @relation(fields: [strategyId], references: [id])
+  InitiativeCampaign InitiativeCampaign[]
+  InitiativeNote     InitiativeNote[]
+}
+
+model InitiativeCampaign {
+  id           String     @id
+  initiativeId String
+  campaignId   String
+  autoLinked   Boolean    @default(false)
+  createdAt    DateTime   @default(now())
+  Campaign     Campaign   @relation(fields: [campaignId], references: [id])
+  Initiative   Initiative @relation(fields: [initiativeId], references: [id])
+
+  @@unique([initiativeId, campaignId])
+}
+
+model InitiativeNote {
+  id           String     @id
+  initiativeId String
+  content      String
+  author       String?
+  createdAt    DateTime   @default(now())
+  type         String     @default("note")
+  Initiative   Initiative @relation(fields: [initiativeId], references: [id])
+}
+
+model LinkedInOrgMapping {
+  orgName       String?
+  cleanDomain   String?
+  vanityName    String?
+  linkedinOrgId String    @unique
+  resolvedAt    DateTime? @default(now())
+  id            String    @id
+  vanityUrl     String?
+}
+
+model LinkedInVanityAttempt {
+  id        String    @id
+  orgId     String?
+  success   Boolean?  @default(false)
+  createdAt DateTime? @default(now())
+  domain    String?
+  attempted DateTime? @default(now())
+}
+
+model Recommendation {
+  id           String    @id
+  type         String
+  confidence   Int?
+  status       String    @default("pending")
+  createdAt    DateTime  @default(now())
+  action       String    @default("review")
+  agentRunId   String
+  rationale    String    @default("")
+  appliedAt    DateTime?
+  autoApplied  Boolean?  @default(false)
+  callbackData String?
+  campaignId   String?
+  campaignName String?
+  impact       String?
+  platform     String?
+  severity     String    @default("medium")
+  target       String?
+  targetId     String?
+  AgentRun     AgentRun  @relation(fields: [agentRunId], references: [id], onDelete: Cascade)
+}
+
+model RegionalPriority {
+  id        String   @id
+  region    String
+  priority  String
+  notes     String?
+  product   String
+  protected Boolean  @default(false)
+  quarter   String
+  updatedAt DateTime
+  updatedBy String?
+
+  @@unique([quarter, region, product])
+}
+
+model SFAccount {
+  id            String    @id
+  name          String
+  domain        String?
+  industry      String?
+  employees     Int?
+  sfId          String    @unique
+  subIndustry   String?
+  firmoTier     String?
+  salesSegment  String?
+  accountType   String?
+  abmSegment    String?
+  lastSyncedAt  DateTime?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime
+  cleanDomain   String?
+  website       String?
+  annualRevenue Float?
+
+  @@index([cleanDomain])
+  @@index([domain])
+}
+
+model SFCampaign {
+  id               String          @id
+  name             String
+  status           String?
+  type             String?
+  sfId             String          @unique
+  numberOfOpps     Int             @default(0)
+  totalAmount      Float           @default(0)
+  numberOfLeads    Int             @default(0)
+  numberOfContacts Int             @default(0)
+  lastSyncedAt     DateTime?
+  createdAt        DateTime        @default(now())
+  updatedAt        DateTime
+  SFOpportunity    SFOpportunity[]
+}
+
+model SFOpportunity {
+  id              String      @id
+  name            String
+  amount          Float       @default(0)
+  closeDate       DateTime?
+  sfId            String      @unique
+  leadSource      String?
+  createdDate     DateTime?
+  lastSyncedAt    DateTime?
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime
+  isClosed        Boolean     @default(false)
+  isWon           Boolean     @default(false)
+  accountDomain   String?
+  stageName       String
+  accountName     String?
+  oppSource       String?
+  oppSourceDetail String?
+  oppType         String?
+  accountSfId     String?
+  campaignId      String?
+  SFCampaign      SFCampaign? @relation(fields: [campaignId], references: [id])
+
+  @@index([accountDomain])
+  @@index([campaignId])
+  @@index([createdDate])
+  @@index([oppType])
+  @@index([stageName])
+}
+
+model Strategy {
+  id          String       @id
+  name        String
+  description String?
+  status      String       @default("planning")
+  createdAt   DateTime     @default(now())
+  endDate     DateTime?
+  region      String?
+  startDate   DateTime?
+  updatedAt   DateTime
+  Initiative  Initiative[]
+}
+
+model SyncState {
+  id           String    @id
+  lastSyncedAt DateTime?
+  status       String    @default("idle")
+  metadata     String?
+  platform     String    @unique
+  error        String?
+  updatedAt    DateTime
+}
+
+model Tracker {
+  id        String    @id
+  metadata  String?
+  createdAt DateTime  @default(now())
+  assignee  String?
+  category  String
+  details   String?
+  dueDate   DateTime?
+  priority  String?
+  status    String    @default("pending")
+  title     String
+  updatedAt DateTime
+}
+
+model User {
+  id        String   @id
+  email     String   @unique
+  name      String?
+  role      String   @default("user")
+  createdAt DateTime @default(now())
+  password  String
+  updatedAt DateTime
+}
+
+model WorkItem {
+  id             String           @id
+  title          String
+  description    String?
+  status         String           @default("backlog")
+  priority       String           @default("p1")
+  assignee       String?
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime
+  parentId       String?
+  completedAt    DateTime?
+  dueDate        DateTime?
+  platform       String?
+  source         String           @default("manual")
+  sourceRef      String?
+  tags           String[]
+  type           String
+  WorkItem       WorkItem?        @relation("WorkItemToWorkItem", fields: [parentId], references: [id])
+  other_WorkItem WorkItem[]       @relation("WorkItemToWorkItem")
+  WorkItemUpdate WorkItemUpdate[]
+
+  @@index([parentId])
+  @@index([status])
+  @@index([type])
+}
+
+model WorkItemUpdate {
+  id         String   @id
+  workItemId String
+  content    String
+  author     String
+  createdAt  DateTime @default(now())
+  metadata   String?
+  type       String
+  WorkItem   WorkItem @relation(fields: [workItemId], references: [id], onDelete: Cascade)
+
+  @@index([workItemId])
+}
+
+model Workflow {
+  id          String        @id
+  name        String
+  createdAt   DateTime      @default(now())
+  description String?
+  enabled     Boolean       @default(true)
+  slug        String        @unique @default("unknown")
+  steps       String
+  trigger     String        @default("manual")
+  WorkflowRun WorkflowRun[]
+}
+
+model WorkflowRun {
+  id          String     @id
+  workflowId  String
+  status      String     @default("running")
+  startedAt   DateTime   @default(now())
+  completedAt DateTime?
+  context     String?
+  currentStep Int        @default(0)
+  AgentRun    AgentRun[]
+  Workflow    Workflow   @relation(fields: [workflowId], references: [id], onDelete: Cascade)
 }

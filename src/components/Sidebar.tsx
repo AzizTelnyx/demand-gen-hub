@@ -8,6 +8,8 @@ import {
   Sword, Crosshair, History, Image, TrendingUp,
   Sun, Moon, PanelLeftClose, PanelLeftOpen, Bot, Workflow,
   ClipboardList, Target, Radar, Activity, HeartPulse,
+  Users, ShieldX, ListPlus, FlaskConical, Zap,
+  ChevronDown, ChevronRight,
 } from "lucide-react";
 import { useTheme } from "./ThemeProvider";
 
@@ -17,7 +19,13 @@ const navItems = [
   { id: "pipeline", label: "Pipeline", icon: TrendingUp, href: "/pipeline" },
   { id: "ads", label: "Ads Library", icon: Image, href: "/ads" },
   { id: "budget", label: "Budget & Spend", icon: Wallet, href: "/budget" },
-  { id: "abm", label: "ABM", icon: Crosshair, href: "/abm" },
+  { id: "abm", label: "ABM", icon: Crosshair, href: "/abm/domains", subItems: [
+    { id: "abm-domains", label: "Domains", href: "/abm/domains" },
+    { id: "abm-campaigns", label: "Campaigns", href: "/abm/campaigns" },
+    { id: "abm-exclusions", label: "Exclusions", href: "/abm/exclusions" },
+    { id: "abm-agents", label: "Agent Activity", href: "/abm/agents" },
+    { id: "abm-builder", label: "List Builder", href: "/abm/builder" },
+  ]},
   { id: "agents", label: "Agents", icon: Bot, href: "/agents" },
   { id: "activity", label: "Activity Log", icon: Activity, href: "/activity" },
   { id: "health", label: "System Health", icon: HeartPulse, href: "/health" },
@@ -67,22 +75,53 @@ export default function Sidebar() {
       </div>
 
       {/* Navigation */}
-      <nav className="flex-1 px-2 py-4">
+      <nav className="flex-1 px-2 py-4 overflow-y-auto">
         <ul className="space-y-0.5">
           {navItems.map((item) => {
             const Icon = item.icon;
             const active = isActive(item.href);
+            const hasSubItems = 'subItems' in item && item.subItems;
+            const isExpanded = hasSubItems && pathname.startsWith('/abm');
+
             return (
               <li key={item.id}>
                 <Link href={item.href} title={collapsed ? item.label : undefined}
                   className={`w-full flex items-center gap-3 ${collapsed ? 'justify-center px-2' : 'px-3'} py-2.5 rounded-lg text-[13px] font-medium transition-all duration-150 ${
-                    active
+                    active && !hasSubItems
                       ? "sidebar-active"
+                      : hasSubItems && isExpanded
+                      ? "text-[var(--text-primary)] bg-[var(--bg-primary)]"
                       : "text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-primary)]"
                   }`}>
                   <Icon size={16} strokeWidth={active ? 2 : 1.5} className="shrink-0" />
                   {!collapsed && <span>{item.label}</span>}
+                  {!collapsed && hasSubItems && (
+                    <span className="ml-auto">
+                      {isExpanded ? <ChevronDown size={14} /> : <ChevronRight size={14} />}
+                    </span>
+                  )}
                 </Link>
+
+                {/* Sub-items for ABM */}
+                {!collapsed && hasSubItems && isExpanded && (
+                  <ul className="mt-1 ml-6 space-y-0.5 border-l border-[var(--border-primary)] pl-3">
+                    {item.subItems.map((sub) => {
+                      const subActive = pathname === sub.href;
+                      return (
+                        <li key={sub.id}>
+                          <Link href={sub.href}
+                            className={`block py-1.5 px-2 text-[12px] rounded transition-colors ${
+                              subActive
+                                ? "text-[var(--accent)] font-medium"
+                                : "text-[var(--text-muted)] hover:text-[var(--text-secondary)]"
+                            }`}>
+                            {sub.label}
+                          </Link>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                )}
               </li>
             );
           })}

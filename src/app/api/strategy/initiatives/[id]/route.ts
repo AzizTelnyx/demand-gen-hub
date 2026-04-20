@@ -7,9 +7,9 @@ export async function GET(_req: NextRequest, { params }: { params: Promise<{ id:
     const initiative = await prisma.initiative.findUnique({
       where: { id },
       include: {
-        strategy: { select: { id: true, name: true } },
-        campaigns: { include: { campaign: true } },
-        notes: { orderBy: { createdAt: "desc" } },
+        Strategy: { select: { id: true, name: true } },
+        InitiativeCampaign: { include: { Campaign: true } },
+        InitiativeNote: { orderBy: { createdAt: "desc" } },
       },
     });
     if (!initiative) return NextResponse.json({ error: "Not found" }, { status: 404 });

@@ -336,7 +336,7 @@ function handleStrategyStreaming(
       if (result.plan) {
         writer.write({
           type: "artifact",
-          data: {
+          data: { id: crypto.randomUUID(),
             type: "strategy_plan",
             phase: "STRATEGY",
             plan: result.plan,
@@ -861,7 +861,7 @@ function handleFollowUpAgentExecution(
       // Send execution summary artifact
       writer.write({
         type: "artifact",
-        data: {
+        data: { id: crypto.randomUUID(),
           type: "execution_summary",
           agents: results.map(r => ({ agent: r.agent, summary: r.output.summary })),
         },
@@ -872,7 +872,7 @@ function handleFollowUpAgentExecution(
         const agent = await prisma.agent.findUnique({ where: { slug: r.agent } });
         if (agent) {
           await prisma.agentRun.create({
-            data: {
+            data: { id: crypto.randomUUID(),
               agentId: agent.id, status: "done",
               input: JSON.stringify({ taskId, followUp: true, message }),
               output: JSON.stringify(r.output),
@@ -942,7 +942,7 @@ function handleStrategyFollowUpStreaming(
         // Send execution summary as artifact
         writer.write({
           type: "artifact",
-          data: {
+          data: { id: crypto.randomUUID(),
             type: "execution_summary",
             agents: agentResults.map(r => ({ agent: r.agent, summary: r.output.summary })),
           },
@@ -1009,7 +1009,7 @@ function handlePlanExecutionStreaming(taskId: string, plan: any, userId?: string
         const agent = await prisma.agent.findUnique({ where: { slug: r.agent } });
         if (agent) {
           const run = await prisma.agentRun.create({
-            data: {
+            data: { id: crypto.randomUUID(),
               agentId: agent.id, status: "done",
               input: JSON.stringify({ taskId, plan: plan.summary }),
               output: JSON.stringify(r.output),
@@ -1020,7 +1020,7 @@ function handlePlanExecutionStreaming(taskId: string, plan: any, userId?: string
           });
           for (const rec of r.output.recommendations) {
             await prisma.recommendation.create({
-              data: {
+              data: { id: crypto.randomUUID(),
                 agentRunId: run.id, type: rec.type, severity: rec.severity,
                 target: rec.target, targetId: rec.targetId,
                 action: rec.action, rationale: rec.rationale, impact: rec.impact,
@@ -1039,7 +1039,7 @@ function handlePlanExecutionStreaming(taskId: string, plan: any, userId?: string
       // Send structured summary to artifact panel
       writer.write({
         type: "artifact",
-        data: {
+        data: { id: crypto.randomUUID(),
           type: "execution_summary",
           agents: agentResults.map(r => ({ agent: r.agent, summary: r.output.summary })),
         },
@@ -1102,7 +1102,7 @@ async function handleRecAction(
     data: { status: newStatus, appliedAt: newStatus === "approved" ? new Date() : undefined },
   });
   await prisma.activity.create({
-    data: {
+    data: { id: crypto.randomUUID(),
       actor: userId || "user", action: newStatus, entityType: "recommendation",
       entityId: recId, details: JSON.stringify({ feedback: message }),
     },
@@ -1116,19 +1116,19 @@ async function handleRejectAll(taskId: string, userId?: string, tracker?: any): 
   const agentSlug = tracker?.assignee || trackerDetails.agentType;
 
   const recentRun = await prisma.agentRun.findFirst({
-    where: { agent: { slug: agentSlug } },
+    where: { Agent: { slug: agentSlug } },
     orderBy: { createdAt: "desc" },
-    include: { recommendations: true },
+    include: { Recommendation: true },
   });
 
-  const pendingRecs = recentRun?.recommendations.filter((r) => r.status === "pending") || [];
+  const pendingRecs = recentRun?.Recommendation.filter((r) => r.status === "pending") || [];
   for (const rec of pendingRecs) {
     await prisma.recommendation.update({ where: { id: rec.id }, data: { status: "rejected" } });
   }
 
   await updateTrackerStatus(taskId, "completed", { actionTaken: "reject_all" });
   await prisma.activity.create({
-    data: {
+    data: { id: crypto.randomUUID(),
       actor: userId || "user", action: "rejected", entityType: "task",
       entityId: taskId, entityName: tracker?.title || undefined,
       details: JSON.stringify({ count: pendingRecs.length }),
@@ -1148,12 +1148,12 @@ async function handleExecuteApproved(
   const agentSlug = tracker.assignee || trackerDetails.agentType;
 
   const recentRun = await prisma.agentRun.findFirst({
-    where: { agent: { slug: agentSlug } },
+    where: { Agent: { slug: agentSlug } },
     orderBy: { createdAt: "desc" },
-    include: { recommendations: true },
+    include: { Recommendation: true },
   });
 
-  const approvedRecs = recentRun?.recommendations.filter((r) => r.status === "approved") || [];
+  const approvedRecs = recentRun?.Recommendation.filter((r) => r.status === "approved") || [];
   if (approvedRecs.length === 0) {
     return NextResponse.json({
       taskId, action: "execute", status: "error",
@@ -1171,7 +1171,7 @@ async function handleExecuteApproved(
 
   await updateTrackerStatus(taskId, "completed", { executed: approvedRecs.length });
   await prisma.activity.create({
-    data: {
+    data: { id: crypto.randomUUID(),
       actor: userId || "user", action: "executed", entityType: "task",
       entityId: taskId, entityName: tracker.title || undefined,
       details: JSON.stringify({ count: approvedRecs.length }),

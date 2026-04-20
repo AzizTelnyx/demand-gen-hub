@@ -1,6 +1,6 @@
 name: abm-pruner
 description: |
-  ABM Pruner — Biweekly cleanup of ABM account targeting.
+  ABM Pruner — Weekly cleanup of ABM account targeting.
   Identifies and excludes accounts with low relevance or zero engagement.
   Safety gates: SF pipeline protection, 14-day learning period, auto-execute limit (≤10).
   Fully deterministic — no LLM steps.
@@ -19,5 +19,5 @@ steps:
     condition: $approve.approved
 
   - id: push-stackadapt
-    command: cd /Users/azizalsinafi/.openclaw/workspace/demand-gen-hub && /Users/azizalsinafi/.venv/bin/python3 scripts/abm_push_to_stackadapt.py --pruner
+    command: cd /Users/azizalsinafi/.openclaw/workspace/demand-gen-hub && /Users/azizalsinafi/.venv/bin/python3 scripts/abm_exclusion_push.py --all
     condition: $approve.approved

@@ -15,8 +15,8 @@ export async function GET(request: NextRequest) {
     orderBy: { createdAt: "desc" },
     take: limit,
     include: {
-      agentRun: {
-        select: { id: true, createdAt: true, agent: { select: { slug: true, name: true } } },
+      AgentRun: {
+        select: { id: true, createdAt: true, Agent: { select: { slug: true, name: true } } },
       },
     },
   });
@@ -49,7 +49,7 @@ export async function POST(request: NextRequest) {
     const dbAgent = await prisma.agent.findUnique({ where: { slug: "ad-copy-generator" } });
     if (dbAgent) {
       const run = await prisma.agentRun.create({
-        data: {
+        data: { id: crypto.randomUUID(),
           agentId: dbAgent.id,
           status: "done",
           input: JSON.stringify(body),
@@ -64,7 +64,7 @@ export async function POST(request: NextRequest) {
       // Save recommendations
       for (const rec of result.recommendations) {
         await prisma.recommendation.create({
-          data: {
+          data: { id: crypto.randomUUID(),
             agentRunId: run.id,
             type: rec.type,
             severity: rec.severity,
@@ -107,7 +107,7 @@ export async function PATCH(request: NextRequest) {
 
     const rec = await prisma.recommendation.update({
       where: { id: recommendationId },
-      data: {
+      data: { id: crypto.randomUUID(),
         status: newStatus,
         appliedAt: action === "approve" ? new Date() : undefined,
       },

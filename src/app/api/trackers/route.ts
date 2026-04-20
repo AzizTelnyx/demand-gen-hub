@@ -32,7 +32,7 @@ export async function POST(request: NextRequest) {
     }
 
     const tracker = await prisma.tracker.create({
-      data: {
+      data: { id: crypto.randomUUID(), updatedAt: new Date(),
         category,
         title,
         status: status || "pending",

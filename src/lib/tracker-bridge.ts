@@ -17,7 +17,7 @@ export type TrackerStatus =
 
 export async function createTracker(input: TrackerCreateInput): Promise<string> {
   const tracker = await prisma.tracker.create({
-    data: {
+    data: { id: crypto.randomUUID(), updatedAt: new Date(),
       category: "agent-task",
       title: input.title,
       status: "pending",
@@ -44,9 +44,9 @@ export async function updateTrackerStatus(
   await prisma.tracker.update({
     where: { id: trackerId },
     data: {
+      updatedAt: new Date(),
       status,
       details: JSON.stringify({ ...currentDetails, ...details }),
-      updatedAt: new Date(),
     },
   });
 }

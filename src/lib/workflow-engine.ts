@@ -47,7 +47,7 @@ export async function startWorkflow(
   }
 
   const run = await prisma.workflowRun.create({
-    data: {
+    data: { id: crypto.randomUUID(),
       workflowId: workflow.id,
       status: "running",
       context: JSON.stringify({ ...initialContext, trackerId }),
@@ -76,7 +76,7 @@ export async function resumeWorkflow(
 ): Promise<WorkflowState> {
   const run = await prisma.workflowRun.findUnique({
     where: { id: workflowRunId },
-    include: { workflow: true },
+    include: { Workflow: true },
   });
   if (!run) throw new Error("Workflow run not found");
   if (run.status !== "running") throw new Error(`Workflow is ${run.status}, not resumable`);
@@ -113,7 +113,7 @@ export async function resumeWorkflow(
     phaseResults: context._phaseResults || [],
   };
 
-  return executeWorkflow(state, run.workflow);
+  return executeWorkflow(state, run.Workflow);
 }
 
 /** Internal: execute workflow steps until gate or completion */
@@ -217,7 +217,7 @@ async function executeStep(
   const agent = await prisma.agent.findUnique({ where: { slug: step.agentSlug } });
 
   const agentRun = await prisma.agentRun.create({
-    data: {
+    data: { id: crypto.randomUUID(),
       agentId: agent?.id || "unknown",
       workflowRunId: state.workflowRunId,
       status: "running",
@@ -231,7 +231,7 @@ async function executeStep(
 
     await prisma.agentRun.update({
       where: { id: agentRun.id },
-      data: {
+      data: { id: crypto.randomUUID(),
         status: "done",
         output: JSON.stringify(output),
         findingsCount: output.findings.length,
@@ -258,7 +258,7 @@ async function persistState(
 ): Promise<void> {
   await prisma.workflowRun.update({
     where: { id: state.workflowRunId },
-    data: {
+    data: { id: crypto.randomUUID(),
       status: dbStatus || state.status,
       context: JSON.stringify(state.context),
       currentStep: state.currentPhase * 100 + state.currentStep, // Encode phase+step
@@ -277,10 +277,10 @@ export async function getWorkflowState(workflowRunId: string): Promise<{
   const run = await prisma.workflowRun.findUnique({
     where: { id: workflowRunId },
     include: {
-      workflow: true,
-      agentRuns: {
+      Workflow: true,
+      AgentRun: {
         orderBy: { createdAt: "asc" },
-        include: { agent: true },
+        include: { Agent: true },
       },
     },
   });
@@ -290,7 +290,7 @@ export async function getWorkflowState(workflowRunId: string): Promise<{
   const context = JSON.parse(run.context || "{}");
   const pendingApproval = context._pendingApproval || null;
 
-  return { run, workflow: run.workflow, agentRuns: run.agentRuns, pendingApproval };
+  return { run, workflow: run.Workflow, agentRuns: run.AgentRun, pendingApproval };
 }
 
 /** List active workflow runs */
@@ -298,8 +298,8 @@ export async function listWorkflowRuns(status?: string, limit = 20) {
   return prisma.workflowRun.findMany({
     where: status ? { status } : undefined,
     include: {
-      workflow: true,
-      agentRuns: { orderBy: { createdAt: "desc" }, take: 1 },
+      Workflow: true,
+      AgentRun: { include: { Agent: { select: { name: true } } }, orderBy: { createdAt: "desc" }, take: 1 },
     },
     orderBy: { startedAt: "desc" },
     take: limit,

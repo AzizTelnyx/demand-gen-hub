@@ -17,15 +17,15 @@ export async function GET(request: NextRequest) {
   const where: any = {};
   if (status) where.status = status;
   if (type) where.type = type;
-  if (agentSlug) where.agentRun = { agent: { slug: agentSlug } };
+  if (agentSlug) where.AgentRun = { Agent: { slug: agentSlug } };
 
   const recs = await prisma.recommendation.findMany({
     where,
     include: {
-      agentRun: {
+      AgentRun: {
         select: {
           id: true,
-          agent: { select: { name: true, slug: true } },
+          Agent: { select: { name: true, slug: true } },
           completedAt: true,
           output: true,
         },
@@ -41,7 +41,7 @@ export async function GET(request: NextRequest) {
     try { metadata = JSON.parse(r.impact || "{}"); } catch {}
     
     let runStats: any = {};
-    try { runStats = JSON.parse(r.agentRun?.output || "{}"); } catch {}
+    try { runStats = JSON.parse(r.AgentRun?.output || "{}"); } catch {}
 
     return {
       id: r.id,
@@ -56,10 +56,10 @@ export async function GET(request: NextRequest) {
       createdAt: r.createdAt,
       metadata,
       actionType: getActionType(r.type),
-      agentName: r.agentRun?.agent?.name || "Unknown",
-      agentSlug: r.agentRun?.agent?.slug || "",
-      runId: r.agentRun?.id,
-      runDate: r.agentRun?.completedAt,
+      agentName: r.AgentRun?.Agent?.name || "Unknown",
+      agentSlug: r.AgentRun?.Agent?.slug || "",
+      runId: r.AgentRun?.id,
+      runDate: r.AgentRun?.completedAt,
     };
   });
 
@@ -69,7 +69,7 @@ export async function GET(request: NextRequest) {
     _count: true,
     where: {
       ...(type ? { type } : {}),
-      ...(agentSlug ? { agentRun: { agent: { slug: agentSlug } } } : {}),
+      ...(agentSlug ? { AgentRun: { Agent: { slug: agentSlug } } } : {}),
     },
   });
 

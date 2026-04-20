@@ -35,26 +35,26 @@ export async function GET(request: NextRequest) {
     const members = await prisma.aBMListMember.findMany({
       where: { ...memberWhere, account: accountWhere },
       include: {
-        account: true,
-        list: { select: { name: true } },
+        ABMAccount: true,
+        ABMList: { select: { name: true } },
       },
-      orderBy: { account: { company: "asc" } },
+      orderBy: { ABMAccount: { company: "asc" } },
     });
 
     if (format === "json") {
       return NextResponse.json({
-        list: members[0]?.list?.name || "Unknown",
+        list: members[0]?.ABMList?.name || "Unknown",
         count: members.length,
         accounts: members.map(m => ({
-          company: m.account.company,
-          domain: m.account.domain,
-          vertical: m.account.vertical,
-          country: m.account.country,
-          region: m.account.region,
-          companySize: m.account.companySize,
-          tier: m.account.tier,
-          productFit: m.account.productFit,
-          currentProvider: m.account.currentProvider,
+          company: m.ABMAccount.company,
+          domain: m.ABMAccount.domain,
+          vertical: m.ABMAccount.vertical,
+          country: m.ABMAccount.country,
+          region: m.ABMAccount.region,
+          companySize: m.ABMAccount.companySize,
+          tier: m.ABMAccount.tier,
+          productFit: m.ABMAccount.productFit,
+          currentProvider: m.ABMAccount.currentProvider,
           status: m.status,
           addedBy: m.addedBy,
           addedAt: m.addedAt.toISOString(),
@@ -70,15 +70,15 @@ export async function GET(request: NextRequest) {
     ];
 
     const rows = members.map(m => [
-      csvEscape(m.account.company),
-      csvEscape(m.account.domain || ""),
-      csvEscape(m.account.vertical || ""),
-      csvEscape(m.account.country || ""),
-      csvEscape(m.account.region || ""),
-      csvEscape(m.account.companySize || ""),
-      csvEscape(m.account.tier || ""),
-      csvEscape(m.account.productFit || ""),
-      csvEscape(m.account.currentProvider || ""),
+      csvEscape(m.ABMAccount.company),
+      csvEscape(m.ABMAccount.domain || ""),
+      csvEscape(m.ABMAccount.vertical || ""),
+      csvEscape(m.ABMAccount.country || ""),
+      csvEscape(m.ABMAccount.region || ""),
+      csvEscape(m.ABMAccount.companySize || ""),
+      csvEscape(m.ABMAccount.tier || ""),
+      csvEscape(m.ABMAccount.productFit || ""),
+      csvEscape(m.ABMAccount.currentProvider || ""),
       m.status,
       m.addedBy,
       m.addedAt.toISOString().split("T")[0],
@@ -87,7 +87,7 @@ export async function GET(request: NextRequest) {
     const csv = [headers.join(","), ...rows].join("\n");
     // Get list name from DB directly (don't depend on members array)
     const list = await prisma.aBMList.findUnique({ where: { id: listId }, select: { name: true } });
-    const listName = list?.name || members[0]?.list?.name || "abm-export";
+    const listName = list?.name || members[0]?.ABMList?.name || "abm-export";
     const safeName = listName.replace(/[^a-zA-Z0-9-_ ]/g, "").replace(/\s+/g, "-").toLowerCase();
     const dateStr = new Date().toISOString().split("T")[0];
 

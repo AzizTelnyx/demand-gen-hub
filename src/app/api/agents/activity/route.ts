@@ -18,8 +18,8 @@ export async function GET(request: NextRequest) {
       const run = await prisma.agentRun.findUnique({
         where: { id: runId },
         include: {
-          agent: { select: { name: true, slug: true } },
-          recommendations: {
+          Agent: { select: { name: true, slug: true } },
+          Recommendation: {
             orderBy: { createdAt: "desc" },
           },
         },
@@ -34,8 +34,8 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({
         run: {
           id: run.id,
-          agentName: run.agent?.name || "Unknown",
-          agentSlug: run.agent?.slug || "",
+          agentName: run.Agent?.name || "Unknown",
+          agentSlug: run.Agent?.slug || "",
           status: run.status,
           input,
           output,
@@ -44,7 +44,7 @@ export async function GET(request: NextRequest) {
           error: run.error,
           startedAt: run.startedAt,
           completedAt: run.completedAt,
-          recommendations: run.recommendations.map(r => ({
+          recommendations: run.Recommendation.map(r => ({
             id: r.id,
             type: r.type,
             severity: r.severity,
@@ -72,11 +72,11 @@ export async function GET(request: NextRequest) {
       where: {
         status: statusFilter ? { equals: statusFilter } : { in: ["done", "failed"] },
         ...(agentFilter ? {
-          agent: { slug: agentFilter },
+          Agent: { slug: agentFilter },
         } : !showAll ? {
           OR: [
             // Campaign orchestrator runs (launches)
-            { agent: { slug: { in: significantAgents } } },
+            { Agent: { slug: { in: significantAgents } } },
             // Cron/system triggered runs
             { input: { contains: '"triggeredBy":"cron"' } },
             { input: { contains: '"triggeredBy":"system"' } },
@@ -91,8 +91,8 @@ export async function GET(request: NextRequest) {
         } : {}),
       },
       include: {
-        agent: { select: { name: true, slug: true, model: true } },
-        recommendations: {
+        Agent: { select: { name: true, slug: true, model: true } },
+        Recommendation: {
           where: { status: "pending" },
           select: { id: true },
         },
@@ -108,15 +108,15 @@ export async function GET(request: NextRequest) {
         const input = r.input ? JSON.parse(r.input) : null;
         return {
           id: r.id,
-          agentName: r.agent?.name || "Unknown",
-          agentSlug: r.agent?.slug || "",
-          model: r.agent?.model || "",
+          agentName: r.Agent?.name || "Unknown",
+          agentSlug: r.Agent?.slug || "",
+          model: r.Agent?.model || "",
           status: r.status,
           task: input?.message || input?.task || output?.summary?.slice(0, 100) || "Agent run",
           summary: output?.summary || null,
           findingsCount: r.findingsCount,
           recsCount: r.recsCount,
-          pendingRecs: r.recommendations.length,
+          pendingRecs: r.Recommendation.length,
           error: r.error,
           startedAt: r.startedAt,
           completedAt: r.completedAt,

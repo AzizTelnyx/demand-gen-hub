@@ -9,7 +9,7 @@ import { prisma } from "@/lib/prisma";
 export async function POST(request: NextRequest) {
   try {
     const { query, status: statusFilter, platform: platformFilter, adType: adTypeFilter } = await request.json();
-    if (!query) return NextResponse.json({ error: "query required" }, { status: 400 });
+    if (query === undefined || query === null) return NextResponse.json({ error: "query required" }, { status: 400 });
 
     // Build search conditions — all terms must match (AND logic)
     const stopWords = new Set(['the', 'a', 'an', 'our', 'my', 'all', 'show', 'me', 'find', 'search', 'for', 'in', 'on', 'with', 'and', 'or', 'ads', 'ad', 'creatives', 'creative']);

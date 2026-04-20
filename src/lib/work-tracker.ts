@@ -41,7 +41,7 @@ export interface AddUpdateInput {
  */
 export async function createWorkItem(input: CreateWorkItemInput) {
   const item = await prisma.workItem.create({
-    data: {
+    data: { id: crypto.randomUUID(), updatedAt: new Date(),
       title: input.title,
       type: input.type,
       description: input.description || null,
@@ -54,8 +54,9 @@ export async function createWorkItem(input: CreateWorkItemInput) {
       dueDate: input.dueDate || null,
       tags: input.tags || [],
       parentId: input.parentId || null,
-      updates: input.initialNote ? {
+      WorkItemUpdate: input.initialNote ? {
         create: {
+          id: crypto.randomUUID(),
           author: input.author || input.source,
           type: 'note',
           content: input.initialNote,
@@ -71,7 +72,7 @@ export async function createWorkItem(input: CreateWorkItemInput) {
  */
 export async function addWorkItemUpdate(input: AddUpdateInput) {
   const update = await prisma.workItemUpdate.create({
-    data: {
+    data: { id: crypto.randomUUID(),
       workItemId: input.workItemId,
       author: input.author,
       type: input.type,
@@ -97,7 +98,7 @@ export async function findWorkItem(titleContains: string, status?: WorkItemStatu
       title: { contains: titleContains, mode: 'insensitive' },
       ...(status ? { status } : {}),
     },
-    include: { updates: { orderBy: { createdAt: 'desc' }, take: 3 } },
+    include: { WorkItemUpdate: { orderBy: { createdAt: 'desc' }, take: 3 } },
   });
 }
 

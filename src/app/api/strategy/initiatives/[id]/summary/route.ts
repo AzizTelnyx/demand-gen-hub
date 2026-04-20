@@ -13,13 +13,13 @@ export async function POST(_req: NextRequest, { params }: { params: Promise<{ id
     const initiative = await prisma.initiative.findUnique({
       where: { id },
       include: {
-        campaigns: { include: { campaign: true } },
-        notes: { orderBy: { createdAt: "desc" }, take: 10 },
+        InitiativeCampaign: { include: { Campaign: true } },
+        InitiativeNote: { orderBy: { createdAt: "desc" }, take: 10 },
       },
     });
     if (!initiative) return NextResponse.json({ error: "Not found" }, { status: 404 });
 
-    const campaigns = initiative.campaigns.map((ic) => ic.campaign);
+    const campaigns = initiative.InitiativeCampaign.map((ic) => ic.Campaign);
     const totalSpend = campaigns.reduce((a, c) => a + (c.spend || 0), 0);
     const totalClicks = campaigns.reduce((a, c) => a + (c.clicks || 0), 0);
     const totalImpressions = campaigns.reduce((a, c) => a + (c.impressions || 0), 0);
@@ -52,7 +52,7 @@ export async function POST(_req: NextRequest, { params }: { params: Promise<{ id
             totalImpressions,
             totalConversions,
             platforms: initiative.platforms,
-            recentNotes: initiative.notes.slice(0, 5).map((n) => n.content),
+            recentNotes: initiative.InitiativeNote.slice(0, 5).map((n) => n.content),
           }),
         },
       ],
@@ -68,7 +68,7 @@ export async function POST(_req: NextRequest, { params }: { params: Promise<{ id
 
     // Also create a note
     await prisma.initiativeNote.create({
-      data: { initiativeId: id, content: summary, type: "ai_summary", author: "ai" },
+      data: { id: crypto.randomUUID(), initiativeId: id, content: summary, type: "ai_summary", author: "ai" },
     });
 
     return NextResponse.json({ summary });

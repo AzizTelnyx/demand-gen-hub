@@ -40,7 +40,7 @@ export async function POST(request: NextRequest) {
       const newStatus = approved ? "approved" : "rejected";
       await prisma.recommendation.update({
         where: { id: recommendationId },
-        data: {
+        data: { id: crypto.randomUUID(),
           status: newStatus,
           appliedAt: approved ? new Date() : undefined,
         },
@@ -48,7 +48,7 @@ export async function POST(request: NextRequest) {
 
       // Log to activity
       await prisma.activity.create({
-        data: {
+        data: { id: crypto.randomUUID(),
           actor: "user",
           action: approved ? "approved" : "rejected",
           entityType: "recommendation",

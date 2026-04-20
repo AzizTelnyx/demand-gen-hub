@@ -9,10 +9,10 @@ export async function GET(req: NextRequest) {
 
   const items = await prisma.workItem.findMany({
     include: {
-      updates: { orderBy: { createdAt: 'asc' } },
-      children: {
+      WorkItemUpdate: { orderBy: { createdAt: 'asc' } },
+      other_WorkItem: {
         include: {
-          updates: { orderBy: { createdAt: 'asc' } },
+          WorkItemUpdate: { orderBy: { createdAt: 'asc' } },
         },
       },
     },
@@ -25,7 +25,7 @@ export async function GET(req: NextRequest) {
       i.platform || '', i.assignee || '', i.source,
       i.tags.join(';'), i.dueDate?.toISOString() || '',
       i.createdAt.toISOString(), i.completedAt?.toISOString() || '',
-      i.updates.length,
+      i.WorkItemUpdate.length,
     ].join('\t'));
 
     const header = 'id\ttitle\ttype\tstatus\tpriority\tplatform\tassignee\tsource\ttags\tdueDate\tcreatedAt\tcompletedAt\tupdateCount';

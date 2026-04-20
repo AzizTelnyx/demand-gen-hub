@@ -138,7 +138,7 @@ export const reporting: AgentHandler = {
     const recentRuns = await prisma.agentRun.findMany({
       orderBy: { createdAt: "desc" },
       take: 10,
-      include: { agent: true },
+      include: { Agent: true },
     });
 
     // ── Pipeline data (if available) ──────────────────────────
@@ -225,7 +225,7 @@ ${pipelineData ? `Pipeline: ${pipelineData.openOpps} open opps, $${pipelineData.
         pipeline: pipelineData,
         narrative,
         recentAgentRuns: recentRuns.map((r) => ({
-          agent: r.agent?.name,
+          agent: r.Agent?.name,
           status: r.status,
           findings: r.findingsCount,
           recs: r.recsCount,

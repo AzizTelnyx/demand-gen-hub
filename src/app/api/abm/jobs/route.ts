@@ -10,7 +10,7 @@ export async function GET(request: NextRequest) {
 
   const jobs = await prisma.aBMJob.findMany({
     where,
-    include: { list: { select: { id: true, name: true } } },
+    include: { ABMList: { select: { id: true, name: true } } },
     orderBy: { createdAt: "desc" },
     take: 50,
   });
@@ -53,11 +53,11 @@ export async function POST(request: NextRequest) {
   const listName = query.length > 60 ? query.slice(0, 57) + "..." : query;
 
   const list = await prisma.aBMList.create({
-    data: { name: listName, query, source: "research-agent", count: 0 },
+    data: { id: crypto.randomUUID(), name: listName, query, source: "research-agent", count: 0 },
   });
 
   const job = await prisma.aBMJob.create({
-    data: { query, listId: list.id, target: clampedTarget, status: "queued" },
+    data: { id: crypto.randomUUID(), query, listId: list.id, target: clampedTarget, status: "queued", updatedAt: new Date() },
   });
 
   return NextResponse.json({ ok: true, job: { ...job, listId: list.id, listName: list.name } });

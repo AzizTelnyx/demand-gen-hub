@@ -94,7 +94,7 @@ Respond with ONLY a JSON object (no markdown, no code fences) containing:
     const response = JSON.parse(responseText);
 
     const budgetChange = await prisma.budgetChange.create({
-      data: {
+      data: { id: crypto.randomUUID(),
         description: instruction,
         fromChannel: response.changes?.find((c: any) => c.type === "decrease")?.channel,
         toChannel: response.changes?.find((c: any) => c.type === "increase")?.channel,
@@ -132,7 +132,7 @@ export async function PUT(req: NextRequest) {
 
     const change = await prisma.budgetChange.update({
       where: { id: changeId },
-      data: {
+      data: { id: crypto.randomUUID(),
         status: apply ? "approved" : "rejected",
         appliedAt: apply ? new Date() : null,
       },

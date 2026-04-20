@@ -49,8 +49,8 @@ export async function GET(request: NextRequest) {
       orderBy: { createdAt: "desc" },
       take: 100,
       include: {
-        agentRun: {
-          select: { id: true, status: true, startedAt: true, agent: { select: { slug: true, name: true } } },
+        AgentRun: {
+          select: { id: true, status: true, startedAt: true, Agent: { select: { slug: true, name: true } } },
         },
       },
     });
@@ -67,8 +67,8 @@ export async function GET(request: NextRequest) {
       status: r.status,
       appliedAt: r.appliedAt?.toISOString() ?? null,
       createdAt: r.createdAt.toISOString(),
-      agentName: r.agentRun?.agent?.name ?? null,
-      agentSlug: r.agentRun?.agent?.slug ?? null,
+      agentName: r.AgentRun?.Agent?.name ?? null,
+      agentSlug: r.AgentRun?.Agent?.slug ?? null,
       agentRunId: r.agentRunId,
     }));
 
@@ -108,7 +108,7 @@ export async function POST(request: NextRequest) {
     }
 
     const change = await prisma.campaignChange.create({
-      data: {
+      data: { id: crypto.randomUUID(),
         campaignName,
         platform,
         changeType,

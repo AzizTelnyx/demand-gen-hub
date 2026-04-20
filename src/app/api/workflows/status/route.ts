@@ -36,7 +36,7 @@ export async function GET(request: NextRequest) {
         pendingApproval: state.pendingApproval,
         agentRuns: state.agentRuns.map((r: any) => ({
           id: r.id,
-          agent: r.agent?.name || r.agentId,
+          agent: r.Agent?.name || r.agentId,
           status: r.status,
           findingsCount: r.findingsCount,
           recsCount: r.recsCount,
@@ -57,14 +57,14 @@ export async function GET(request: NextRequest) {
         const context = JSON.parse(r.context || "{}");
         return {
           id: r.id,
-          workflowName: r.workflow.name,
+          workflowName: r.Workflow.name,
           status: r.status,
           currentStep: r.currentStep,
           pendingApproval: context._pendingApproval || null,
-          latestAgentRun: r.agentRuns[0]
+          latestAgentRun: r.AgentRun[0]
             ? {
-                agent: (r.agentRuns[0] as any).agent?.name,
-                status: r.agentRuns[0].status,
+                agent: r.AgentRun[0].Agent?.name,
+                status: r.AgentRun[0].status,
               }
             : null,
           startedAt: r.startedAt,

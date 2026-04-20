@@ -57,21 +57,21 @@ async function loadABMListForTargeting(listName: string) {
   const list = await prisma.aBMList.findFirst({
     where: { name: { contains: listName, mode: 'insensitive' } },
     include: {
-      members: { include: { account: true } },
+      ABMListMember: { include: { ABMAccount: true } },
     },
   });
   if (!list) return null;
   return {
     listName: list.name,
-    accountCount: list.members.length,
-    companies: list.members.map(m => ({
-      name: m.account.company,
-      domain: m.account.domain,
-      vertical: m.account.vertical,
-      productFit: m.account.productFit,
+    accountCount: list.ABMListMember.length,
+    companies: list.ABMListMember.map(m => ({
+      name: m.ABMAccount.company,
+      domain: m.ABMAccount.domain,
+      vertical: m.ABMAccount.vertical,
+      productFit: m.ABMAccount.productFit,
     })),
-    companyNames: list.members.map(m => m.account.company),
-    domains: list.members.map(m => m.account.domain).filter(Boolean) as string[],
+    companyNames: list.ABMListMember.map(m => m.ABMAccount.company),
+    domains: list.ABMListMember.map(m => m.ABMAccount.domain).filter(Boolean) as string[],
   };
 }
 

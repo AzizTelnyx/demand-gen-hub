@@ -5,7 +5,7 @@ export async function GET() {
   try {
     // Get latest hub-doctor run
     const latestRun = await prisma.agentRun.findFirst({
-      where: { agent: { slug: 'hub-doctor' } },
+      where: { Agent: { slug: 'hub-doctor' } },
       orderBy: { createdAt: 'desc' },
       select: { id: true, output: true, status: true, completedAt: true, createdAt: true },
     });

@@ -19,7 +19,7 @@ export async function POST(request: NextRequest) {
 
     if (jobId) {
       // Process specific job
-      const job = await prisma.aBMJob.findUnique({ where: { id: jobId }, include: { list: true } });
+      const job = await prisma.aBMJob.findUnique({ where: { id: jobId }, include: { ABMList: true } });
       if (!job) return NextResponse.json({ error: "Job not found" }, { status: 404 });
       if (job.status !== "queued") return NextResponse.json({ error: `Job is ${job.status}, not queued` }, { status: 400 });
 
@@ -31,7 +31,7 @@ export async function POST(request: NextRequest) {
       // Process all queued jobs
       const jobs = await prisma.aBMJob.findMany({
         where: { status: "queued" },
-        include: { list: true },
+        include: { ABMList: true },
         orderBy: { createdAt: "asc" },
       });
 
@@ -47,7 +47,7 @@ export async function POST(request: NextRequest) {
     // Default: pick up next queued job
     const nextJob = await prisma.aBMJob.findFirst({
       where: { status: "queued" },
-      include: { list: true },
+      include: { ABMList: true },
       orderBy: { createdAt: "asc" },
     });
 
@@ -68,7 +68,7 @@ export async function GET(request: NextRequest) {
   try {
     const jobs = await prisma.aBMJob.findMany({
       where: { status: "queued" },
-      include: { list: true },
+      include: { ABMList: true },
       orderBy: { createdAt: "asc" },
     });
 
@@ -126,7 +126,7 @@ async function processJob(job: any): Promise<{
     if (job.jobType === "expand") {
       const existing = await prisma.aBMListMember.findMany({
         where: { listId: job.listId },
-        include: { account: { select: { company: true } } },
+        include: { ABMAccount: { select: { company: true } } },
       });
       existingCompanies = existing.map((m: any) => m.account.company.toLowerCase());
     }
@@ -181,7 +181,7 @@ async function processJob(job: any): Promise<{
             });
             if (!existingMember) {
               await prisma.aBMListMember.create({
-                data: { listId: job.listId, accountId: existingWithName.id, addedBy: "research-agent", reason: `Wave ${waveNum}` },
+                data: { id: crypto.randomUUID(), listId: job.listId, accountId: existingWithName.id, addedBy: "research-agent", reason: `Wave ${waveNum}` },
               });
               existingCompanies.push(company.name.toLowerCase());
               waveAdded++;
@@ -195,6 +195,8 @@ async function processJob(job: any): Promise<{
           const account = await prisma.aBMAccount.upsert({
             where: { domain: company.domain || `${company.name.toLowerCase().replace(/[^a-z0-9]/g, '')}.unknown` },
             create: {
+              id: crypto.randomUUID(),
+              updatedAt: new Date(),
               company: company.name,
               domain: company.domain || null,
               vertical: company.vertical || criteria.vertical || null,
@@ -218,7 +220,7 @@ async function processJob(job: any): Promise<{
           // Add to list (skip if already member)
           try {
             await prisma.aBMListMember.create({
-              data: {
+              data: { id: crypto.randomUUID(),
                 listId: job.listId,
                 accountId: account.id,
                 addedBy: "research-agent",
@@ -244,7 +246,7 @@ async function processJob(job: any): Promise<{
       // Update job progress
       await prisma.aBMJob.update({
         where: { id: job.id },
-        data: {
+        data: { id: crypto.randomUUID(),
           found: job.found + totalAdded,
           waves: waveNum,
           dryStreak,

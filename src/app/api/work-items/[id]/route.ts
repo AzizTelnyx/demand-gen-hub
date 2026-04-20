@@ -12,16 +12,16 @@ export async function GET(
   const item = await prisma.workItem.findUnique({
     where: { id },
     include: {
-      updates: { orderBy: { createdAt: 'desc' } },
-      children: {
+      WorkItemUpdate: { orderBy: { createdAt: 'desc' } },
+      other_WorkItem: {
         include: {
-          updates: { orderBy: { createdAt: 'desc' }, take: 3 },
-          _count: { select: { children: true } },
+          WorkItemUpdate: { orderBy: { createdAt: 'desc' }, take: 3 },
+          _count: { select: { other_WorkItem: true } },
         },
         orderBy: { createdAt: 'desc' },
       },
-      parent: true,
-      _count: { select: { children: true } },
+      WorkItem: true,
+      _count: { select: { other_WorkItem: true } },
     },
   });
 
@@ -68,14 +68,14 @@ export async function PATCH(
       where: { id },
       data,
       include: {
-        updates: { orderBy: { createdAt: 'desc' }, take: 5 },
-        _count: { select: { children: true } },
+        WorkItemUpdate: { orderBy: { createdAt: 'desc' }, take: 5 },
+        _count: { select: { other_WorkItem: true } },
       },
     });
 
     if (update) {
       await tx.workItemUpdate.create({
-        data: {
+        data: { id: crypto.randomUUID(),
           workItemId: id,
           author: update.author || 'system',
           type: update.type || 'note',

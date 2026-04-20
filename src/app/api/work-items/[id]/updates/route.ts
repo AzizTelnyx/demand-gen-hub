@@ -17,7 +17,7 @@ export async function POST(
   }
 
   const update = await prisma.workItemUpdate.create({
-    data: {
+    data: { id: crypto.randomUUID(),
       workItemId: id,
       author: author || 'system',
       type: type || 'note',

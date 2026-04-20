@@ -62,7 +62,7 @@ Be concise and specific. No filler.`,
 
     // Log activity
     await prisma.activity.create({
-      data: {
+      data: { id: crypto.randomUUID(),
         actor: "Ares",
         action: "deep_dive",
         entityType: "campaign",

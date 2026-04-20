@@ -31,7 +31,7 @@ export async function GET(request: NextRequest) {
     const agentRecord = await prisma.agent.findUnique({ where: { slug: "spend-report" } });
     if (agentRecord) {
       await prisma.agentRun.create({
-        data: {
+        data: { id: crypto.randomUUID(),
           agentId: agentRecord.id,
           status: "done",
           input: JSON.stringify({ from: dateFrom, to: dateTo }),

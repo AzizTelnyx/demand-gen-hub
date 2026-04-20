@@ -10,7 +10,7 @@ export async function GET(
     const agent = await prisma.agent.findUnique({
       where: { slug },
       include: {
-        runs: {
+        AgentRun: {
           orderBy: { createdAt: 'desc' },
           take: 1,
           select: { id: true, status: true, completedAt: true, output: true, findingsCount: true, recsCount: true },

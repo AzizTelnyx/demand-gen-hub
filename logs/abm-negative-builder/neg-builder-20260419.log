@@ -21650,3 +21650,74 @@ DETAIL:  Failing row contains (null, thefederalsavingsbank.com, Very low relevan
 [2026-04-19 18:27:16 UTC] [INFO]   SMS: 272
 [2026-04-19 18:27:16 UTC] [INFO]   Voice API: 274
 [2026-04-19 18:27:17 UTC] [INFO] Posted summary to Telegram
+[2026-04-19 23:08:32 UTC] [INFO] === ABM Negative Builder starting (dry_run=True) ===
+[2026-04-19 23:08:32 UTC] [INFO] Existing exclusions: 3800
+[2026-04-19 23:08:32 UTC] [INFO] Total accounts to scan: 2555
+[2026-04-19 23:08:32 UTC] [INFO] Found 1 junk domains to exclude globally
+[2026-04-19 23:08:32 UTC] [INFO] Accounts with data: 2555
+[2026-04-19 23:08:32 UTC] [INFO] Products found: ['AI Agent', 'IoT SIM', 'SIP', 'SMS', 'Voice API']
+[2026-04-19 23:08:32 UTC] [INFO] Product 'AI Agent': 1053 irrelevant domains
+[2026-04-19 23:08:32 UTC] [INFO] Product 'IoT SIM': 1075 irrelevant domains
+[2026-04-19 23:08:32 UTC] [INFO] Product 'SIP': 1075 irrelevant domains
+[2026-04-19 23:08:32 UTC] [INFO] Product 'SMS': 1070 irrelevant domains
+[2026-04-19 23:08:32 UTC] [INFO] Product 'Voice API': 1066 irrelevant domains
+[2026-04-19 23:08:32 UTC] [INFO] New exclusions to add: 1540 (after dedup)
+[2026-04-19 23:08:32 UTC] [INFO] DRY RUN — no changes made
+[2026-04-19 23:08:32 UTC] [INFO]   Would exclude: simplii.net (category=AI Agent, reason=Very low relevance (0.00) to AI Agent)
+[2026-04-19 23:08:32 UTC] [INFO]   Would exclude: theofficegurus.com (category=AI Agent, reason=Very low relevance (0.00) to AI Agent)
+[2026-04-19 23:08:32 UTC] [INFO]   Would exclude: modsquad.com (category=AI Agent, reason=Very low relevance (0.00) to AI Agent)
+[2026-04-19 23:08:32 UTC] [INFO]   Would exclude: vouched.id (category=AI Agent, reason=Very low relevance (0.00) to AI Agent)
+[2026-04-19 23:08:32 UTC] [INFO]   Would exclude: uniglobe.com (category=AI Agent, reason=Very low relevance (0.00) to AI Agent)
+[2026-04-19 23:08:32 UTC] [INFO]   Would exclude: revolutionmortgage.com (category=AI Agent, reason=Very low relevance (0.00) to AI Agent)
+[2026-04-19 23:08:32 UTC] [INFO]   Would exclude: vacatia.com (category=AI Agent, reason=Very low relevance (0.00) to AI Agent)
+[2026-04-19 23:08:32 UTC] [INFO]   Would exclude: stokescounseling.com (category=AI Agent, reason=Very low relevance (0.00) to AI Agent)
+[2026-04-19 23:08:32 UTC] [INFO]   Would exclude: telemed2u.com (category=AI Agent, reason=Very low relevance (0.00) to AI Agent)
+[2026-04-19 23:08:32 UTC] [INFO]   Would exclude: uiowa.edu (category=AI Agent, reason=Very low relevance (0.00) to AI Agent)
+[2026-04-19 23:08:32 UTC] [INFO]   Would exclude: nhcare.org (category=AI Agent, reason=Very low relevance (0.00) to AI Agent)
+[2026-04-19 23:08:32 UTC] [INFO]   Would exclude: myhealthonsite.com (category=AI Agent, reason=Very low relevance (0.00) to AI Agent)
+[2026-04-19 23:08:32 UTC] [INFO]   Would exclude: itgholding.com (category=AI Agent, reason=Very low relevance (0.00) to AI Agent)
+[2026-04-19 23:08:32 UTC] [INFO]   Would exclude: telehealthrecovery.com (category=AI Agent, reason=Very low relevance (0.00) to AI Agent)
+[2026-04-19 23:08:32 UTC] [INFO]   Would exclude: msvhome.org (category=AI Agent, reason=Very low relevance (0.00) to AI Agent)
+[2026-04-19 23:08:32 UTC] [INFO]   Would exclude: threeoaksbehavioralhealth.com (category=AI Agent, reason=Very low relevance (0.00) to AI Agent)
+[2026-04-19 23:08:32 UTC] [INFO]   Would exclude: mindpathcare.com (category=AI Agent, reason=Very low relevance (0.00) to AI Agent)
+[2026-04-19 23:08:32 UTC] [INFO]   Would exclude: simplyhealth.co.uk (category=AI Agent, reason=Very low relevance (0.00) to AI Agent)
+[2026-04-19 23:08:32 UTC] [INFO]   Would exclude: nrl.com (category=AI Agent, reason=Very low relevance (0.00) to AI Agent)
+[2026-04-19 23:08:32 UTC] [INFO]   Would exclude: transdevna.com (category=AI Agent, reason=Very low relevance (0.00) to AI Agent)
+[2026-04-19 23:08:32 UTC] [INFO]   Would exclude: pharos.com (category=AI Agent, reason=Very low relevance (0.00) to AI Agent)
+[2026-04-19 23:08:32 UTC] [INFO]   Would exclude: journeybizsolutions.com (category=AI Agent, reason=Very low relevance (0.00) to AI Agent)
+[2026-04-19 23:08:32 UTC] [INFO]   Would exclude: obsglobal.com (category=AI Agent, reason=Very low relevance (0.00) to AI Agent)
+[2026-04-19 23:08:32 UTC] [INFO]   Would exclude: masspay.io (category=AI Agent, reason=Very low relevance (0.00) to AI Agent)
+[2026-04-19 23:08:32 UTC] [INFO]   Would exclude: netrio.com (category=AI Agent, reason=Very low relevance (0.00) to AI Agent)
+[2026-04-19 23:08:32 UTC] [INFO]   Would exclude: opaortho.com (category=AI Agent, reason=Very low relevance (0.00) to AI Agent)
+[2026-04-19 23:08:32 UTC] [INFO]   Would exclude: specialisttelemed.com (category=AI Agent, reason=Very low relevance (0.00) to AI Agent)
+[2026-04-19 23:08:32 UTC] [INFO]   Would exclude: mapfreinsurance.com (category=AI Agent, reason=Very low relevance (0.00) to AI Agent)
+[2026-04-19 23:08:32 UTC] [INFO]   Would exclude: wfhcenter.org (category=AI Agent, reason=Very low relevance (0.00) to AI Agent)
+[2026-04-19 23:08:32 UTC] [INFO]   Would exclude: plazahomemortgage.com (category=AI Agent, reason=Very low relevance (0.00) to AI Agent)
+[2026-04-19 23:08:32 UTC] [INFO]   Would exclude: sbmoffshore.com (category=AI Agent, reason=Very low relevance (0.00) to AI Agent)
+[2026-04-19 23:08:32 UTC] [INFO]   Would exclude: jabra.com (category=AI Agent, reason=Very low relevance (0.00) to AI Agent)
+[2026-04-19 23:08:32 UTC] [INFO]   Would exclude: westlake.com (category=AI Agent, reason=Very low relevance (0.00) to AI Agent)
+[2026-04-19 23:08:32 UTC] [INFO]   Would exclude: loadingdocksystems.com (category=AI Agent, reason=Very low relevance (0.00) to AI Agent)
+[2026-04-19 23:08:32 UTC] [INFO]   Would exclude: orthosc.org (category=AI Agent, reason=Very low relevance (0.00) to AI Agent)
+[2026-04-19 23:08:32 UTC] [INFO]   Would exclude: mnhc.org (category=AI Agent, reason=Very low relevance (0.00) to AI Agent)
+[2026-04-19 23:08:32 UTC] [INFO]   Would exclude: posteitaliane.it (category=AI Agent, reason=Very low relevance (0.00) to AI Agent)
+[2026-04-19 23:08:32 UTC] [INFO]   Would exclude: mymdconnect.com (category=AI Agent, reason=Very low relevance (0.00) to AI Agent)
+[2026-04-19 23:08:32 UTC] [INFO]   Would exclude: sherwin-williams.com (category=AI Agent, reason=Very low relevance (0.00) to AI Agent)
+[2026-04-19 23:08:32 UTC] [INFO]   Would exclude: schlep.it (category=AI Agent, reason=Very low relevance (0.00) to AI Agent)
+[2026-04-19 23:08:32 UTC] [INFO]   Would exclude: mana.md (category=AI Agent, reason=Very low relevance (0.00) to AI Agent)
+[2026-04-19 23:08:32 UTC] [INFO]   Would exclude: virtuox.net (category=AI Agent, reason=Very low relevance (0.00) to AI Agent)
+[2026-04-19 23:08:32 UTC] [INFO]   Would exclude: redlobster.com (category=AI Agent, reason=Very low relevance (0.00) to AI Agent)
+[2026-04-19 23:08:32 UTC] [INFO]   Would exclude: parallelmarkets.com (category=AI Agent, reason=Very low relevance (0.00) to AI Agent)
+[2026-04-19 23:08:32 UTC] [INFO]   Would exclude: telehealthsolution.com (category=AI Agent, reason=Very low relevance (0.00) to AI Agent)
+[2026-04-19 23:08:32 UTC] [INFO]   Would exclude: newrest.eu (category=AI Agent, reason=Very low relevance (0.00) to AI Agent)
+[2026-04-19 23:08:32 UTC] [INFO]   Would exclude: sensaphone.com (category=AI Agent, reason=Very low relevance (0.00) to AI Agent)
+[2026-04-19 23:08:32 UTC] [INFO]   Would exclude: theimagroup.com (category=AI Agent, reason=Very low relevance (0.00) to AI Agent)
+[2026-04-19 23:08:32 UTC] [INFO]   Would exclude: cpl.com (category=AI Agent, reason=Very low relevance (0.00) to AI Agent)
+[2026-04-19 23:08:32 UTC] [INFO]   Would exclude: orbitz.com (category=AI Agent, reason=Very low relevance (0.00) to AI Agent)
+[2026-04-19 23:08:32 UTC] [INFO]   ... and 1490 more
+[2026-04-19 23:08:32 UTC] [INFO] 
+=== Negative Builder Summary ===
+[2026-04-19 23:08:32 UTC] [INFO] Junk domains: 1
+[2026-04-19 23:08:32 UTC] [INFO] Product-categoryd irrelevant: 5339
+[2026-04-19 23:08:32 UTC] [INFO] Already excluded: 3799
+[2026-04-19 23:08:32 UTC] [INFO] New exclusions: 0
+[2026-04-19 23:08:33 UTC] [INFO] Posted summary to Telegram

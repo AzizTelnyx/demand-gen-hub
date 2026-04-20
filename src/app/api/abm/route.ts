@@ -36,14 +36,14 @@ export async function GET(request: NextRequest) {
       const memberWhere: any = { listId };
       if (memberStatus) memberWhere.status = memberStatus;
       if (addedAfter) memberWhere.addedAt = { gte: new Date(addedAfter) };
-      where.lists = { some: memberWhere };
+      where.ABMListMember = { some: memberWhere };
     }
 
     const accounts = await prisma.aBMAccount.findMany({
       where,
       include: {
-        lists: {
-          include: { list: { select: { id: true, name: true, listType: true } } },
+        ABMListMember: {
+          include: { ABMList: { select: { id: true, name: true, listType: true } } },
         },
       },
       orderBy: [{ tier: "asc" }, { company: "asc" }],
@@ -58,8 +58,8 @@ export async function GET(request: NextRequest) {
       where: listWhere,
       orderBy: { createdAt: "desc" },
       include: {
-        _count: { select: { members: true } },
-        members: {
+        _count: { select: { ABMListMember: true } },
+        ABMListMember: {
           select: { status: true, addedAt: true },
         },
       },
@@ -94,24 +94,24 @@ export async function GET(request: NextRequest) {
       accounts: accounts.map(a => ({
         ...a,
         contacts: a.contacts ? JSON.parse(a.contacts) : [],
-        listNames: a.lists.map(l => l.list.name),
-        listIds: a.lists.map(l => l.listId),
-        listTypes: a.lists.map(l => l.list.listType),
-        memberAddedAt: a.lists.reduce((acc, l) => ({ ...acc, [l.listId]: l.addedAt.toISOString() }), {}),
-        memberAddedBy: a.lists.reduce((acc, l) => ({ ...acc, [l.listId]: l.addedBy }), {}),
+        listNames: a.ABMListMember.map(l => l.ABMList.name),
+        listIds: a.ABMListMember.map(l => l.listId),
+        listTypes: a.ABMListMember.map(l => l.ABMList.listType),
+        memberAddedAt: a.ABMListMember.reduce((acc, l) => ({ ...acc, [l.listId]: l.addedAt.toISOString() }), {}),
+        memberAddedBy: a.ABMListMember.reduce((acc, l) => ({ ...acc, [l.listId]: l.addedBy }), {}),
         lastActivity: a.lastActivity?.toISOString(),
         createdAt: a.createdAt.toISOString(),
         updatedAt: a.updatedAt.toISOString(),
       })),
       lists: lists.map(l => {
-        const activeCount = l.members.filter(m => m.status === "active").length;
-        const pendingCount = l.members.filter(m => m.status === "pending").length;
-        const recentCount = l.members.filter(m => m.addedAt >= weekAgo).length;
+        const activeCount = l.ABMListMember.filter(m => m.status === "active").length;
+        const pendingCount = l.ABMListMember.filter(m => m.status === "pending").length;
+        const recentCount = l.ABMListMember.filter(m => m.addedAt >= weekAgo).length;
         return {
           id: l.id, name: l.name, query: l.query, listType: l.listType,
           description: l.description, mode: l.mode, source: l.source,
           status: l.status, createdBy: l.createdBy,
-          count: l._count.members, activeCount, pendingCount, recentCount,
+          count: l._count.ABMListMember, activeCount, pendingCount, recentCount,
           createdAt: l.createdAt.toISOString(), updatedAt: l.updatedAt.toISOString(),
         };
       }),
@@ -135,7 +135,7 @@ export async function POST(request: NextRequest) {
       if (!name) return NextResponse.json({ error: "name required" }, { status: 400 });
 
       const list = await prisma.aBMList.create({
-        data: { name, listType, description, createdBy, source: "manual" },
+        data: { id: crypto.randomUUID(), name, listType, description, createdBy, source: "manual" },
       });
       return NextResponse.json({ ok: true, list });
     }
@@ -181,7 +181,7 @@ export async function POST(request: NextRequest) {
       for (const m of sourceMembers) {
         try {
           await prisma.aBMListMember.create({
-            data: { listId: targetListId, accountId: m.accountId, addedBy: "merge", status: m.status },
+            data: { id: crypto.randomUUID(), listId: targetListId, accountId: m.accountId, addedBy: "merge", status: m.status },
           });
           moved++;
         } catch {} // already exists
@@ -227,7 +227,7 @@ export async function POST(request: NextRequest) {
       for (const accountId of accountIds) {
         try {
           await prisma.aBMListMember.create({
-            data: { listId, accountId, addedBy },
+            data: { id: crypto.randomUUID(), listId, accountId, addedBy },
           });
           added++;
         } catch {} // already exists
@@ -257,12 +257,12 @@ export async function POST(request: NextRequest) {
       // Find accounts that appear in multiple of the given lists
       const members = await prisma.aBMListMember.findMany({
         where: { listId: { in: listIds } },
-        include: { account: { select: { id: true, company: true, domain: true } } },
+        include: { ABMAccount: { select: { id: true, company: true, domain: true } } },
       });
       const accountListMap: Record<string, { account: any; lists: string[] }> = {};
       for (const m of members) {
         if (!accountListMap[m.accountId]) {
-          accountListMap[m.accountId] = { account: m.account, lists: [] };
+          accountListMap[m.accountId] = { account: m.ABMAccount, lists: [] };
         }
         accountListMap[m.accountId].lists.push(m.listId);
       }

@@ -23,8 +23,8 @@ export async function POST(request: NextRequest) {
     const run = await prisma.agentRun.findUnique({
       where: { id: runId },
       include: {
-        agent: { select: { name: true, slug: true } },
-        recommendations: true,
+        Agent: { select: { name: true, slug: true } },
+        Recommendation: true,
       },
     });
 
@@ -48,9 +48,9 @@ export async function POST(request: NextRequest) {
       }
 
       // Recommendations
-      if (run.recommendations.length > 0) {
+      if (run.Recommendation.length > 0) {
         rows.push(["Type", "Severity", "Target", "Action", "Rationale", "Impact", "Status"]);
-        for (const r of run.recommendations) {
+        for (const r of run.Recommendation) {
           rows.push([r.type, r.severity, r.target || "", r.action, r.rationale || "", r.impact || "", r.status]);
         }
       }
@@ -86,7 +86,7 @@ export async function POST(request: NextRequest) {
       return new NextResponse(csv, {
         headers: {
           "Content-Type": "text/csv",
-          "Content-Disposition": `attachment; filename="${run.agent?.slug || "agent"}-${new Date().toISOString().slice(0, 10)}.csv"`,
+          "Content-Disposition": `attachment; filename="${run.Agent?.slug || "agent"}-${new Date().toISOString().slice(0, 10)}.csv"`,
         },
       });
     }
@@ -101,11 +101,11 @@ export async function POST(request: NextRequest) {
           {
             role: "user",
             content: JSON.stringify({
-              agent: run.agent?.name,
+              agent: run.Agent?.name,
               task: input.message || input.task,
               summary: output.summary,
               findings: output.findings,
-              recommendations: run.recommendations.map(r => ({
+              recommendations: run.Recommendation.map(r => ({
                 severity: r.severity,
                 target: r.target,
                 action: r.action,
@@ -128,7 +128,7 @@ export async function POST(request: NextRequest) {
       // Return structured rows for Google Sheets
       const rows: any[][] = [];
 
-      rows.push(["Agent Report", run.agent?.name || "", new Date().toISOString().slice(0, 10)]);
+      rows.push(["Agent Report", run.Agent?.name || "", new Date().toISOString().slice(0, 10)]);
       rows.push([]);
 
       if (output.summary) {
@@ -144,9 +144,9 @@ export async function POST(request: NextRequest) {
         rows.push([]);
       }
 
-      if (run.recommendations.length > 0) {
+      if (run.Recommendation.length > 0) {
         rows.push(["RECOMMENDATIONS", "Severity", "Target", "Action", "Impact", "Status"]);
-        for (const r of run.recommendations) {
+        for (const r of run.Recommendation) {
           rows.push(["", r.severity, r.target || "", r.action, r.impact || "", r.status]);
         }
       }

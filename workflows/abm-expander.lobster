@@ -1,16 +1,15 @@
 name: abm-expander
 description: |
-  ABM Expander — Deal-informed expansion of ABM segments.
-  Reads closed-won deal patterns from SF → AI research for lookalikes →
-  Clearbit validate → SF cross-check → relevance score → add to audiences.
-  After DB write, pushes new domains to live StackAdapt audiences.
+  ABM Expander — AI-powered discovery of new qualified accounts.
+  Researches companies matching Telnyx ICP, scores relevance, and adds to ABM audiences.
+  Pushes new domains to StackAdapt targeting audiences after approval.
 
 steps:
   - id: preview
     command: cd /Users/azizalsinafi/.openclaw/workspace/demand-gen-hub && /Users/azizalsinafi/.venv/bin/python3 scripts/abm-expander-agent.py --dry-run
 
   - id: approve
-    command: echo "Review candidate additions above. Approve to execute + push to StackAdapt."
+    command: echo "Review newly discovered accounts. Approve to add to audiences + push to StackAdapt."
     approval: required
 
   - id: execute

@@ -20,11 +20,12 @@ export async function POST(request: NextRequest) {
       }
 
       const job = await prisma.aBMJob.create({
-        data: {
+        data: { id: crypto.randomUUID(),
           query,
           listId,
           target: clampedTarget,
           status: "queued",
+          updatedAt: new Date(),
           jobType: "expand",
           createdBy,
         },
@@ -55,7 +56,7 @@ export async function POST(request: NextRequest) {
     const listName = query.length > 80 ? query.slice(0, 77) + "..." : query;
 
     const list = await prisma.aBMList.create({
-      data: {
+      data: { id: crypto.randomUUID(),
         name: listName,
         query,
         listType,
@@ -66,13 +67,14 @@ export async function POST(request: NextRequest) {
     });
 
     const job = await prisma.aBMJob.create({
-      data: {
+      data: { id: crypto.randomUUID(),
         query,
         listId: list.id,
         target: clampedTarget,
         status: "queued",
         jobType: "generate",
         createdBy,
+        updatedAt: new Date(),
       },
     });
 

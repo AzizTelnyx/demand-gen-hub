@@ -10,9 +10,9 @@ export async function GET() {
       orderBy: { name: 'asc' },
       include: {
         _count: {
-          select: { runs: true },
+          select: { AgentRun: true },
         },
-        runs: {
+        AgentRun: {
           orderBy: { createdAt: 'desc' },
           take: 1,
           select: {
@@ -37,8 +37,8 @@ export async function GET() {
       model: a.model,
       enabled: a.enabled,
       config: a.config,
-      totalRuns: a._count.runs,
-      lastRun: a.runs[0] || null,
+      totalRuns: a._count.AgentRun,
+      lastRun: a.AgentRun[0] || null,
       createdAt: a.createdAt,
       updatedAt: (a as any).updatedAt || a.createdAt,
     }));
@@ -63,7 +63,7 @@ export async function POST(request: Request) {
     }
 
     const agent = await prisma.agent.create({
-      data: {
+      data: { id: crypto.randomUUID(),
         slug,
         name,
         description: description || '',

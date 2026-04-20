@@ -297,3 +297,233 @@ LINE 1: ...id, "agentId", status, "startedAt", "completedAt", metadata)
 [2026-04-19 18:26:08 UTC] [INFO] Already excluded: 0
 [2026-04-19 18:26:08 UTC] [INFO] Auto-excluded: 0
 [2026-04-19 18:26:08 UTC] [INFO] Flagged for review: 0
+[2026-04-19 23:46:06 UTC] [INFO] === ABM Pruner Agent starting (dry_run=True) ===
+[2026-04-19 23:46:06 UTC] [INFO] Safety gate: 0 accounts with active SF pipeline — will NOT prune
+[2026-04-19 23:46:06 UTC] [INFO] Existing exclusions: 3786
+[2026-04-19 23:46:06 UTC] [INFO] Found 10 product/variant combinations from active campaigns
+[2026-04-19 23:46:06 UTC] [INFO] Accounts to evaluate: 2555
+[2026-04-19 23:46:06 UTC] [INFO] 
+--- Evaluating: AI Agent/Contact Center ---
+[2026-04-19 23:46:06 UTC] [INFO]   0 exclusion candidates (< 0.2)
+[2026-04-19 23:46:06 UTC] [INFO]   0 review candidates (0.2-0.4)
+[2026-04-19 23:46:06 UTC] [INFO] 
+--- Evaluating: AI Agent/ElevenLabs+Vapi ---
+[2026-04-19 23:46:06 UTC] [INFO]   0 exclusion candidates (< 0.2)
+[2026-04-19 23:46:06 UTC] [INFO]   0 review candidates (0.2-0.4)
+[2026-04-19 23:46:06 UTC] [INFO] 
+--- Evaluating: AI Agent/Fintech ---
+[2026-04-19 23:46:06 UTC] [INFO]   0 exclusion candidates (< 0.2)
+[2026-04-19 23:46:06 UTC] [INFO]   0 review candidates (0.2-0.4)
+[2026-04-19 23:46:06 UTC] [INFO] 
+--- Evaluating: AI Agent/Healthcare ---
+[2026-04-19 23:46:06 UTC] [INFO]   0 exclusion candidates (< 0.2)
+[2026-04-19 23:46:06 UTC] [INFO]   0 review candidates (0.2-0.4)
+[2026-04-19 23:46:06 UTC] [INFO] 
+--- Evaluating: AI Agent/Sabre ---
+[2026-04-19 23:46:06 UTC] [INFO]   0 exclusion candidates (< 0.2)
+[2026-04-19 23:46:06 UTC] [INFO]   0 review candidates (0.2-0.4)
+[2026-04-19 23:46:06 UTC] [INFO] 
+--- Evaluating: AI Agent/Social Boost ---
+[2026-04-19 23:46:06 UTC] [INFO]   0 exclusion candidates (< 0.2)
+[2026-04-19 23:46:06 UTC] [INFO]   0 review candidates (0.2-0.4)
+[2026-04-19 23:46:06 UTC] [INFO] 
+--- Evaluating: AI Agent/STT API ---
+[2026-04-19 23:46:06 UTC] [INFO]   0 exclusion candidates (< 0.2)
+[2026-04-19 23:46:06 UTC] [INFO]   0 review candidates (0.2-0.4)
+[2026-04-19 23:46:06 UTC] [INFO] 
+--- Evaluating: AI Agent/Travel ---
+[2026-04-19 23:46:06 UTC] [INFO]   0 exclusion candidates (< 0.2)
+[2026-04-19 23:46:06 UTC] [INFO]   0 review candidates (0.2-0.4)
+[2026-04-19 23:46:06 UTC] [INFO] 
+--- Evaluating: AI Agent/TTS API ---
+[2026-04-19 23:46:06 UTC] [INFO]   0 exclusion candidates (< 0.2)
+[2026-04-19 23:46:06 UTC] [INFO]   0 review candidates (0.2-0.4)
+[2026-04-19 23:46:06 UTC] [INFO] 
+--- Evaluating: AI Agent/generic ---
+[2026-04-19 23:46:06 UTC] [INFO]   0 exclusion candidates (< 0.2)
+[2026-04-19 23:46:06 UTC] [INFO]   0 review candidates (0.2-0.4)
+[2026-04-19 23:46:06 UTC] [INFO] 
+=== Pruner Summary ===
+[2026-04-19 23:46:06 UTC] [INFO] Accounts checked: 2555
+[2026-04-19 23:46:06 UTC] [INFO] Product/variant combos: 10
+[2026-04-19 23:46:06 UTC] [INFO] SF pipeline protected: 0
+[2026-04-19 23:46:06 UTC] [INFO] Learning period protected: 25550
+[2026-04-19 23:46:06 UTC] [INFO] Already excluded: 0
+[2026-04-19 23:46:06 UTC] [INFO] Auto-excluded: 0
+[2026-04-19 23:46:06 UTC] [INFO] Flagged for review: 0
+[2026-04-19 23:46:19 UTC] [INFO] === ABM Pruner Agent starting (dry_run=True) ===
+[2026-04-19 23:46:19 UTC] [INFO] Safety gate: 0 accounts with active SF pipeline — will NOT prune
+[2026-04-19 23:46:19 UTC] [INFO] Existing exclusions: 3786
+[2026-04-19 23:46:19 UTC] [INFO] Found 10 product/variant combinations from active campaigns
+[2026-04-19 23:46:19 UTC] [INFO] Accounts to evaluate: 2555
+[2026-04-19 23:46:19 UTC] [INFO] 
+--- Evaluating: AI Agent/Contact Center ---
+[2026-04-19 23:46:20 UTC] [INFO]   1631 exclusion candidates (< 0.2)
+[2026-04-19 23:46:20 UTC] [INFO]   69 review candidates (0.2-0.4)
+[2026-04-19 23:46:20 UTC] [INFO]   🚫 1631 exclusions need human approval (>10)
+[2026-04-19 23:46:20 UTC] [INFO] 
+--- Evaluating: AI Agent/ElevenLabs+Vapi ---
+[2026-04-19 23:46:20 UTC] [INFO]   1684 exclusion candidates (< 0.2)
+[2026-04-19 23:46:20 UTC] [INFO]   19 review candidates (0.2-0.4)
+[2026-04-19 23:46:20 UTC] [INFO]   🚫 1684 exclusions need human approval (>10)
+[2026-04-19 23:46:20 UTC] [INFO] 
+--- Evaluating: AI Agent/Fintech ---
+[2026-04-19 23:46:20 UTC] [INFO]   1684 exclusion candidates (< 0.2)
+[2026-04-19 23:46:20 UTC] [INFO]   19 review candidates (0.2-0.4)
+[2026-04-19 23:46:20 UTC] [INFO]   🚫 1684 exclusions need human approval (>10)
+[2026-04-19 23:46:20 UTC] [INFO] 
+--- Evaluating: AI Agent/Healthcare ---
+[2026-04-19 23:46:20 UTC] [INFO]   1467 exclusion candidates (< 0.2)
+[2026-04-19 23:46:20 UTC] [INFO]   209 review candidates (0.2-0.4)
+[2026-04-19 23:46:20 UTC] [INFO]   🚫 1467 exclusions need human approval (>10)
+[2026-04-19 23:46:20 UTC] [INFO] 
+--- Evaluating: AI Agent/Sabre ---
+[2026-04-19 23:46:20 UTC] [INFO]   1684 exclusion candidates (< 0.2)
+[2026-04-19 23:46:20 UTC] [INFO]   19 review candidates (0.2-0.4)
+[2026-04-19 23:46:20 UTC] [INFO]   🚫 1684 exclusions need human approval (>10)
+[2026-04-19 23:46:20 UTC] [INFO] 
+--- Evaluating: AI Agent/Social Boost ---
+[2026-04-19 23:46:20 UTC] [INFO]   1684 exclusion candidates (< 0.2)
+[2026-04-19 23:46:20 UTC] [INFO]   19 review candidates (0.2-0.4)
+[2026-04-19 23:46:20 UTC] [INFO]   🚫 1684 exclusions need human approval (>10)
+[2026-04-19 23:46:20 UTC] [INFO] 
+--- Evaluating: AI Agent/STT API ---
+[2026-04-19 23:46:20 UTC] [INFO]   1684 exclusion candidates (< 0.2)
+[2026-04-19 23:46:20 UTC] [INFO]   19 review candidates (0.2-0.4)
+[2026-04-19 23:46:20 UTC] [INFO]   🚫 1684 exclusions need human approval (>10)
+[2026-04-19 23:46:20 UTC] [INFO] 
+--- Evaluating: AI Agent/Travel ---
+[2026-04-19 23:46:20 UTC] [INFO]   1624 exclusion candidates (< 0.2)
+[2026-04-19 23:46:20 UTC] [INFO]   72 review candidates (0.2-0.4)
+[2026-04-19 23:46:20 UTC] [INFO]   🚫 1624 exclusions need human approval (>10)
+[2026-04-19 23:46:20 UTC] [INFO] 
+--- Evaluating: AI Agent/TTS API ---
+[2026-04-19 23:46:20 UTC] [INFO]   1684 exclusion candidates (< 0.2)
+[2026-04-19 23:46:20 UTC] [INFO]   19 review candidates (0.2-0.4)
+[2026-04-19 23:46:20 UTC] [INFO]   🚫 1684 exclusions need human approval (>10)
+[2026-04-19 23:46:20 UTC] [INFO] 
+--- Evaluating: AI Agent/generic ---
+[2026-04-19 23:46:20 UTC] [INFO]   1684 exclusion candidates (< 0.2)
+[2026-04-19 23:46:20 UTC] [INFO]   19 review candidates (0.2-0.4)
+[2026-04-19 23:46:20 UTC] [INFO]   🚫 1684 exclusions need human approval (>10)
+[2026-04-19 23:46:20 UTC] [INFO] 
+=== Pruner Summary ===
+[2026-04-19 23:46:20 UTC] [INFO] Accounts checked: 2555
+[2026-04-19 23:46:20 UTC] [INFO] Product/variant combos: 10
+[2026-04-19 23:46:20 UTC] [INFO] SF pipeline protected: 0
+[2026-04-19 23:46:20 UTC] [INFO] Learning period protected: 1040
+[2026-04-19 23:46:20 UTC] [INFO] Already excluded: 7450
+[2026-04-19 23:46:20 UTC] [INFO] Auto-excluded: 0
+[2026-04-19 23:46:20 UTC] [INFO] Flagged for review: 16993
+[2026-04-19 23:46:20 UTC] [INFO] Posted 16993 review candidates to Telegram
+[2026-04-19 23:46:51 UTC] [INFO] === ABM Pruner Agent starting (dry_run=True) ===
+[2026-04-19 23:46:51 UTC] [INFO] Safety gate: 0 accounts with active SF pipeline — will NOT prune
+[2026-04-19 23:46:51 UTC] [INFO] Existing exclusions: 3786
+[2026-04-19 23:46:51 UTC] [INFO] Found 10 product/variant combinations from active campaigns
+[2026-04-19 23:46:51 UTC] [INFO] Accounts to evaluate: 2555
+[2026-04-19 23:46:51 UTC] [INFO] 
+--- Evaluating: AI Agent/Contact Center ---
+[2026-04-19 23:46:51 UTC] [INFO]   1631 exclusion candidates (< 0.2)
+[2026-04-19 23:46:51 UTC] [INFO]   69 review candidates (0.2-0.4)
+[2026-04-19 23:46:51 UTC] [INFO]   🚫 1631 exclusions need human approval (>10)
+[2026-04-19 23:46:51 UTC] [INFO] 
+--- Evaluating: AI Agent/ElevenLabs+Vapi ---
+[2026-04-19 23:46:51 UTC] [INFO]   0 exclusion candidates (< 0.2)
+[2026-04-19 23:46:51 UTC] [INFO]   0 review candidates (0.2-0.4)
+[2026-04-19 23:46:51 UTC] [INFO] 
+--- Evaluating: AI Agent/Fintech ---
+[2026-04-19 23:46:51 UTC] [INFO]   0 exclusion candidates (< 0.2)
+[2026-04-19 23:46:52 UTC] [INFO]   0 review candidates (0.2-0.4)
+[2026-04-19 23:46:52 UTC] [INFO] 
+--- Evaluating: AI Agent/Healthcare ---
+[2026-04-19 23:46:52 UTC] [INFO]   0 exclusion candidates (< 0.2)
+[2026-04-19 23:46:52 UTC] [INFO]   0 review candidates (0.2-0.4)
+[2026-04-19 23:46:52 UTC] [INFO] 
+--- Evaluating: AI Agent/Sabre ---
+[2026-04-19 23:46:52 UTC] [INFO]   0 exclusion candidates (< 0.2)
+[2026-04-19 23:46:52 UTC] [INFO]   0 review candidates (0.2-0.4)
+[2026-04-19 23:46:52 UTC] [INFO] 
+--- Evaluating: AI Agent/Social Boost ---
+[2026-04-19 23:46:52 UTC] [INFO]   0 exclusion candidates (< 0.2)
+[2026-04-19 23:46:52 UTC] [INFO]   0 review candidates (0.2-0.4)
+[2026-04-19 23:46:52 UTC] [INFO] 
+--- Evaluating: AI Agent/STT API ---
+[2026-04-19 23:46:52 UTC] [INFO]   0 exclusion candidates (< 0.2)
+[2026-04-19 23:46:52 UTC] [INFO]   0 review candidates (0.2-0.4)
+[2026-04-19 23:46:52 UTC] [INFO] 
+--- Evaluating: AI Agent/Travel ---
+[2026-04-19 23:46:52 UTC] [INFO]   0 exclusion candidates (< 0.2)
+[2026-04-19 23:46:52 UTC] [INFO]   0 review candidates (0.2-0.4)
+[2026-04-19 23:46:52 UTC] [INFO] 
+--- Evaluating: AI Agent/TTS API ---
+[2026-04-19 23:46:52 UTC] [INFO]   0 exclusion candidates (< 0.2)
+[2026-04-19 23:46:52 UTC] [INFO]   0 review candidates (0.2-0.4)
+[2026-04-19 23:46:52 UTC] [INFO] 
+--- Evaluating: AI Agent/generic ---
+[2026-04-19 23:46:52 UTC] [INFO]   0 exclusion candidates (< 0.2)
+[2026-04-19 23:46:52 UTC] [INFO]   0 review candidates (0.2-0.4)
+[2026-04-19 23:46:52 UTC] [INFO] 
+=== Pruner Summary ===
+[2026-04-19 23:46:52 UTC] [INFO] Accounts checked: 2555
+[2026-04-19 23:46:52 UTC] [INFO] Product/variant combos: 10
+[2026-04-19 23:46:52 UTC] [INFO] SF pipeline protected: 0
+[2026-04-19 23:46:52 UTC] [INFO] Learning period protected: 104
+[2026-04-19 23:46:52 UTC] [INFO] Already excluded: 745
+[2026-04-19 23:46:52 UTC] [INFO] Auto-excluded: 0
+[2026-04-19 23:46:52 UTC] [INFO] Flagged for review: 1700
+[2026-04-19 23:46:52 UTC] [INFO] Posted 1700 review candidates to Telegram
+[2026-04-19 23:47:07 UTC] [INFO] === ABM Pruner Agent starting (dry_run=True) ===
+[2026-04-19 23:47:07 UTC] [INFO] Safety gate: 0 accounts with active SF pipeline — will NOT prune
+[2026-04-19 23:47:07 UTC] [INFO] Existing exclusions: 3786
+[2026-04-19 23:47:07 UTC] [INFO] Found 10 product/variant combinations from active campaigns
+[2026-04-19 23:47:07 UTC] [INFO] Last successful run: 2026-04-19 11:26:08.639000. Only evaluating accounts added since then.
+[2026-04-19 23:47:07 UTC] [INFO] Accounts to evaluate: 0
+[2026-04-19 23:47:07 UTC] [INFO] 
+--- Evaluating: AI Agent/Contact Center ---
+[2026-04-19 23:47:07 UTC] [INFO]   0 exclusion candidates (< 0.2)
+[2026-04-19 23:47:07 UTC] [INFO]   0 review candidates (0.2-0.4)
+[2026-04-19 23:47:07 UTC] [INFO] 
+--- Evaluating: AI Agent/ElevenLabs+Vapi ---
+[2026-04-19 23:47:07 UTC] [INFO]   0 exclusion candidates (< 0.2)
+[2026-04-19 23:47:07 UTC] [INFO]   0 review candidates (0.2-0.4)
+[2026-04-19 23:47:07 UTC] [INFO] 
+--- Evaluating: AI Agent/Fintech ---
+[2026-04-19 23:47:07 UTC] [INFO]   0 exclusion candidates (< 0.2)
+[2026-04-19 23:47:07 UTC] [INFO]   0 review candidates (0.2-0.4)
+[2026-04-19 23:47:07 UTC] [INFO] 
+--- Evaluating: AI Agent/Healthcare ---
+[2026-04-19 23:47:07 UTC] [INFO]   0 exclusion candidates (< 0.2)
+[2026-04-19 23:47:07 UTC] [INFO]   0 review candidates (0.2-0.4)
+[2026-04-19 23:47:07 UTC] [INFO] 
+--- Evaluating: AI Agent/Sabre ---
+[2026-04-19 23:47:07 UTC] [INFO]   0 exclusion candidates (< 0.2)
+[2026-04-19 23:47:07 UTC] [INFO]   0 review candidates (0.2-0.4)
+[2026-04-19 23:47:07 UTC] [INFO] 
+--- Evaluating: AI Agent/Social Boost ---
+[2026-04-19 23:47:07 UTC] [INFO]   0 exclusion candidates (< 0.2)
+[2026-04-19 23:47:07 UTC] [INFO]   0 review candidates (0.2-0.4)
+[2026-04-19 23:47:07 UTC] [INFO] 
+--- Evaluating: AI Agent/STT API ---
+[2026-04-19 23:47:07 UTC] [INFO]   0 exclusion candidates (< 0.2)
+[2026-04-19 23:47:07 UTC] [INFO]   0 review candidates (0.2-0.4)
+[2026-04-19 23:47:07 UTC] [INFO] 
+--- Evaluating: AI Agent/Travel ---
+[2026-04-19 23:47:07 UTC] [INFO]   0 exclusion candidates (< 0.2)
+[2026-04-19 23:47:07 UTC] [INFO]   0 review candidates (0.2-0.4)
+[2026-04-19 23:47:07 UTC] [INFO] 
+--- Evaluating: AI Agent/TTS API ---
+[2026-04-19 23:47:07 UTC] [INFO]   0 exclusion candidates (< 0.2)
+[2026-04-19 23:47:07 UTC] [INFO]   0 review candidates (0.2-0.4)
+[2026-04-19 23:47:07 UTC] [INFO] 
+--- Evaluating: AI Agent/generic ---
+[2026-04-19 23:47:07 UTC] [INFO]   0 exclusion candidates (< 0.2)
+[2026-04-19 23:47:07 UTC] [INFO]   0 review candidates (0.2-0.4)
+[2026-04-19 23:47:07 UTC] [INFO] 
+=== Pruner Summary ===
+[2026-04-19 23:47:07 UTC] [INFO] Accounts checked: 0
+[2026-04-19 23:47:07 UTC] [INFO] Product/variant combos: 10
+[2026-04-19 23:47:07 UTC] [INFO] SF pipeline protected: 0
+[2026-04-19 23:47:07 UTC] [INFO] Learning period protected: 0
+[2026-04-19 23:47:07 UTC] [INFO] Already excluded: 0
+[2026-04-19 23:47:07 UTC] [INFO] Auto-excluded: 0
+[2026-04-19 23:47:07 UTC] [INFO] Flagged for review: 0

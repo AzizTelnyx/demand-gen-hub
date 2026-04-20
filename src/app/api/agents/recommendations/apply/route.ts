@@ -131,7 +131,7 @@ async function handleNegativeKeyword(rec: any, metadata: any) {
   if (result.success) {
     await prisma.recommendation.update({
       where: { id: rec.id },
-      data: {
+      data: { id: crypto.randomUUID(),
         status: "applied",
         appliedAt: new Date(),
         impact: JSON.stringify({ ...metadata, resource_name: result.resourceName }),

@@ -21,7 +21,7 @@ export async function GET(request: NextRequest) {
 
     const runs = await prisma.agentRun.findMany({
       where,
-      include: { agent: { select: { name: true, slug: true } } },
+      include: { Agent: { select: { name: true, slug: true } } },
       orderBy: { createdAt: 'desc' },
       take: limit,
     });
@@ -37,8 +37,8 @@ export async function GET(request: NextRequest) {
         id: run.id,
         kind: 'run',
         timestamp: run.completedAt || run.startedAt || run.createdAt,
-        agentName: run.agent?.name || 'Unknown',
-        agentSlug: run.agent?.slug || '',
+        agentName: run.Agent?.name || 'Unknown',
+        agentSlug: run.Agent?.slug || '',
         status: run.status,
         summary,
         findingsCount: run.findingsCount,
@@ -61,8 +61,8 @@ export async function GET(request: NextRequest) {
     const recs = await prisma.recommendation.findMany({
       where: recWhere,
       include: {
-        agentRun: {
-          select: { agent: { select: { name: true, slug: true } } },
+        AgentRun: {
+          select: { Agent: { select: { name: true, slug: true } } },
         },
       },
       orderBy: { createdAt: 'desc' },
@@ -79,8 +79,8 @@ export async function GET(request: NextRequest) {
         id: rec.id,
         kind: itemKind,
         timestamp: rec.createdAt,
-        agentName: rec.agentRun?.agent?.name || 'Unknown',
-        agentSlug: rec.agentRun?.agent?.slug || '',
+        agentName: rec.AgentRun?.Agent?.name || 'Unknown',
+        agentSlug: rec.AgentRun?.Agent?.slug || '',
         type: rec.type,
         actionType: getActionType(rec.type),
         action: rec.action,

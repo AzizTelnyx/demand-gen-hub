@@ -33,6 +33,7 @@ export async function PUT(req: NextRequest) {
         updatedBy: body.updatedBy || null,
       },
       create: {
+        id: crypto.randomUUID(),
         quarter: body.quarter,
         region: body.region,
         product: body.product,
@@ -40,6 +41,7 @@ export async function PUT(req: NextRequest) {
         protected: body.protected ?? false,
         notes: body.notes,
         updatedBy: body.updatedBy || null,
+        updatedAt: new Date(),
       },
     });
     return NextResponse.json({ ok: true, priority: updated });

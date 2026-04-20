@@ -12,8 +12,8 @@ export async function GET() {
     const strategies = await prisma.strategy.findMany({
       where: { status: { in: ["planning", "active"] } },
       include: {
-        initiatives: {
-          include: { campaigns: { include: { campaign: true } } },
+        Initiative: {
+          include: { InitiativeCampaign: { include: { Campaign: true } } },
         },
       },
     });
@@ -22,7 +22,7 @@ export async function GET() {
       name: s.name,
       region: s.region,
       status: s.status,
-      initiatives: s.initiatives.map((i) => ({
+      initiatives: s.Initiative.map((i) => ({
         name: i.name,
         status: i.status,
         region: i.region,
@@ -32,9 +32,9 @@ export async function GET() {
         goalType: i.goalType,
         goalTarget: i.goalTarget,
         goalCurrent: i.goalCurrent,
-        campaignCount: i.campaigns.length,
-        totalSpend: i.campaigns.reduce((a, ic) => a + (ic.campaign.spend || 0), 0),
-        totalConversions: i.campaigns.reduce((a, ic) => a + (ic.campaign.conversions || 0), 0),
+        campaignCount: i.InitiativeCampaign.length,
+        totalSpend: i.InitiativeCampaign.reduce((a, ic) => a + (ic.Campaign.spend || 0), 0),
+        totalConversions: i.InitiativeCampaign.reduce((a, ic) => a + (ic.Campaign.conversions || 0), 0),
       })),
     }));
 

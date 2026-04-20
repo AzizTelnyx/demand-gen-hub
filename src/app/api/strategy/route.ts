@@ -11,9 +11,9 @@ export async function GET() {
   try {
     const strategies = await prisma.strategy.findMany({
       include: {
-        initiatives: {
+        Initiative: {
           include: {
-            campaigns: { include: { campaign: true } },
+            InitiativeCampaign: { include: { Campaign: true } },
           },
         },
       },
@@ -21,14 +21,14 @@ export async function GET() {
     });
 
     const result = strategies.map((s) => {
-      const inits = s.initiatives;
+      const inits = s.Initiative;
       const totalBudget = inits.reduce((a, i) => a + (i.budget || 0), 0);
       const totalSpent = inits.reduce((a, i) => a + (i.budgetSpent || 0), 0);
-      const totalCampaigns = inits.reduce((a, i) => a + i.campaigns.length, 0);
+      const totalCampaigns = inits.reduce((a, i) => a + i.InitiativeCampaign.length, 0);
       const liveInitiatives = inits.filter((i) => i.status === "live").length;
       return {
         ...s,
-        initiatives: undefined,
+        Initiative: undefined,
         initiativeCount: inits.length,
         liveInitiatives,
         totalBudget,
@@ -65,7 +65,8 @@ export async function POST(request: NextRequest) {
       });
       const parsed = JSON.parse(completion.choices[0]?.message?.content || "{}");
       const strategy = await prisma.strategy.create({
-        data: {
+        data: { id: crypto.randomUUID(),
+          updatedAt: new Date(),
           name: parsed.name || brief.slice(0, 60),
           description: parsed.description || brief,
           region: parsed.region || null,
@@ -78,7 +79,8 @@ export async function POST(request: NextRequest) {
     }
 
     const strategy = await prisma.strategy.create({
-      data: {
+      data: { id: crypto.randomUUID(),
+        updatedAt: new Date(),
         name,
         description: description || null,
         region: region || null,

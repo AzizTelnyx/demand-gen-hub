@@ -24,7 +24,8 @@
     "linkedin-v2": "tsx scripts/linkedin-v2.ts",
     "dynamic": "tsx scripts/dynamic-banner.ts",
     "smart": "tsx scripts/smart-banner.ts",
-    "square": "tsx scripts/square-1080.ts"
+    "square": "tsx scripts/square-1080.ts",
+    "banner": "tsx scripts/generate-banner.ts"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.72.1",

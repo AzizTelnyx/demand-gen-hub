@@ -63,18 +63,34 @@ JUNK_PATTERNS = [
 PRODUCT_KEYWORDS = {
     "AI Agent": ["ai agent", "ai voice", "voice ai", "conversational ai", "llm", "chatbot",
                  "voicebot", "virtual agent", "autonomous agent",
-                 "ivr", "voip", "voice", "telephony", "sms", "communication",
-                 "messaging", "phone", "cpaas", "uccas", "ccas", "call center",
-                 "contact center"],
-    "Voice API": ["voice api", "voip", "sip", "pbx", "call routing", "ivr", "telephony", "cpaas",
-                   "voice", "communication", "phone", "messaging", "call center",
-                   "contact center", "uccas", "ccas"],
-    "SMS": ["sms api", "messaging", "text messaging", "a2p", "messaging api",
-             "communication", "voice", "phone", "cpaas"],
+                 "virtual assistant", "intelligent virtual assistant",
+                 "natural language", "voice recognition",
+                 "speech ai", "voice automation",
+                 "conversational platform", "ai-powered customer service",
+                 "ai calling", "ai dialer", "predictive dialer",
+                 "agent assist", "generative ai",
+                 "contact center ai", "call center ai"],
+    "Voice API": ["voice api", "voip", "sip", "pbx", "call routing", "ivr", "telephony",
+                   "voice platform", "voice gateway", "sip trunking",
+                   "cloud voice", "business voice", "voip service",
+                   "voice communication", "session border controller",
+                   "voice termination", "origination", "voice over ip"],
+    "SMS": ["sms api", "messaging api", "text messaging", "a2p", "sms gateway",
+             "bulk sms", "sms platform", "programmable sms",
+             "sms notification", "otp sms", "two-factor authentication",
+             "sms marketing", "mms api", "communication api"],
     "SIP": ["sip trunk", "sip trunking", "voip gateway", "pbx", "unified communications",
-             "voice", "telephony", "communication", "call center", "uccas"],
+             "sip provider", "sip gateway", "sip connection",
+             "cloud pbx", "hosted pbx", "uc platform",
+             "voip provider", "sip termination", "business phone system",
+             "telephony provider", "session border controller"],
     "IoT SIM": ["iot sim", "iot connectivity", "cellular iot", "m2m", "esim",
-                 "connectivity", "cellular", "telematics", "sensor"],
+                 "iot platform", "iot device management", "industrial iot",
+                 "asset tracking", "fleet tracking", "telematics",
+                 "remote monitoring", "connected device", "cellular connectivity",
+                 "logistics", "supply chain", "fleet management",
+                 "emergency response", "field operations",
+                 "cold chain", "smart meter", "connected vehicle"],
 }
 
 
@@ -148,13 +164,18 @@ def compute_relevance_for_product(account, product):
         if any(t in industry for t in tech_industries):
             score += 0.3
     
-    # Telecom/comm override — if description has strong telecom signals,
-    # don't let "E-commerce" or other waste industry labels tank the score
-    telecom_signals = ["voice", "voip", "ivr", "sms", "telephony", "sip",
-                        "communication", "cpaas", "call center", "contact center",
-                        "messaging", "phone", "pbx"]
-    if desc and any(t in desc for t in telecom_signals):
-        score = max(score, 0.35)  # Floor for companies with telecom signals
+    # Telecom/comm override — if description has strong telecom PROVIDER signals,
+    # they need infrastructure (Voice/SIP), not AI Agent
+    telecom_provider_signals = ["telecommunications provider", "telecom company",
+                                "wireless carrier", "network operator", "isp",
+                                "cell tower", "wireless infrastructure",
+                                "network infrastructure", "fiber optic",
+                                "broadband provider", "cable operator"]
+    if desc and any(t in desc for t in telecom_provider_signals):
+        if product in ("SIP", "Voice API"):
+            score = max(score, 0.5)
+        elif product == "AI Agent":
+            score *= 0.3  # Telecom providers need infra, not AI Agent
     
     return min(score, 1.0)
 

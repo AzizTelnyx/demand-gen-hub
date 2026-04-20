@@ -219,6 +219,22 @@ def main():
         )
         products_to_push = [row[0] for row in cur.fetchall() if row[0] != "*"]
 
+    # Handle wildcard (*) exclusions — push to ALL product audiences
+    has_wildcard = False
+    cur.execute(
+        """
+        SELECT count(*) FROM "ABMExclusion"
+        WHERE category = '*' AND ("pushedToSa" = false OR "pushedToSa" IS NULL)
+        """
+    )
+    wildcard_count = cur.fetchone()[0]
+    if wildcard_count > 0:
+        has_wildcard = True
+        ALL_PRODUCTS = ["AI Agent", "Voice API", "SMS", "SIP", "IoT SIM"]
+        for p in ALL_PRODUCTS:
+            if p not in products_to_push:
+                products_to_push.append(p)
+
     print(f"Products to push: {products_to_push}")
     print(f"Mode: {'DRY RUN' if args.dry_run else 'LIVE'}")
     print()
@@ -235,7 +251,7 @@ def main():
             """
             SELECT id, domain, category, reason, company
             FROM "ABMExclusion"
-            WHERE category = %s
+            WHERE (category = %s OR category = '*')
               AND ("pushedToSa" = false OR "pushedToSa" IS NULL)
             ORDER BY domain
         """,

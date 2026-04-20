@@ -140,10 +140,42 @@ TELECOM_PROVIDER_SIGNALS = [
 # WASTE industries — these should score LOW for all products unless
 # the description has specific telecom/iot signals
 WASTE_INDUSTRIES = [
-    "e-commerce", "retail", "fashion", "food & beverage",
-    "hospitality", "entertainment", "real estate", "construction",
-    "restaurants", "gambling", "cosmetics", "apparel",
-    "travel", "tourism", "leisure",
+    # Hospitals / Healthcare providers
+    "health care", "healthcare", "medical care", "medical center", "hospital",
+    "ambulance", "dental care", "dentists", "optometrists", "psychiatric",
+    "addiction treatment", "elderly", "home healthcare", "health practitioners",
+    "special needs", "health & wellness", "health and wellness", "health",
+    # Government
+    "government", "b2g", "public admin", "public assistance", "social advocacy",
+    # Agencies
+    "advertising", "marketing & advertising", "advertising management",
+    "digital marketing", "public relations", "agency",
+    # Consulting
+    "consulting", "consulting & professional services", "administrative consulting",
+    "professional services", "business management and planning",
+    # Media
+    "publishing", "broadcasting", "sound recording", "performing arts",
+    "entertainment & recreation", "video games", "printing",
+    # Legal
+    "legal services",
+    # Banking / Insurance
+    "banking", "banking & mortgages", "insurance", "credit",
+    "credit intermediation", "lending services", "debt management",
+    "sales financing", "financial vehicles",
+    # Finance consulting
+    "financial transactions", "financial services", "financial investment",
+    "financial contracts", "investment banking", "investing",
+    "savings & investing", "capital markets", "asset management", "finance",
+    "accounting", "tax services", "exchanges",
+    # Real estate
+    "real estate", "home ownership", "residential", "property management",
+    "home improvement", "construction",
+    # Hospitality / Travel
+    "hotel accommodations", "hotels & resorts", "hotel management",
+    "hospitality", "travel & tourism", "travel & leisure",
+    "tours and sightseeing", "restaurants",
+    # E-commerce / Retail
+    "e-commerce", "retail", "luxury goods", "food",
 ]
 
 
@@ -221,11 +253,26 @@ def score_product_fit(account: dict) -> dict:
             if tech_matches > 0:
                 score += 0.05 * min(tech_matches / 2.0, 1.0)
 
-        # Waste industry penalty
-        if industry and not desc:
-            for w in WASTE_INDUSTRIES:
-                if w in industry:
-                    score *= 0.3  # Heavy penalty
+        # Waste industry penalty (with rescue for mislabeled tech companies)
+        # Many companies have wrong Clearbit industry (e.g., Rasa = "E-commerce")
+        # Only penalize if description ALSO confirms waste category
+        if industry:
+            is_waste = any(w in industry for w in WASTE_INDUSTRIES)
+            if is_waste:
+                # Rescue: if description has strong tech/product signals, skip penalty
+                rescue_signals = [
+                    "api", "platform", "software", "saas", "cloud", "ai-powered",
+                    "automation", "digital", "fintech", "proptech", "govtech",
+                    "healthtech", "legaltech", "conversational ai", "voice ai",
+                    "messaging", "contact center", "communication platform",
+                    "marketplace platform", "comparison platform", "banking as a service",
+                    "embedded finance", "neobank", "open banking",
+                ]
+                desc_has_rescue = desc and any(s in desc for s in rescue_signals)
+                if desc_has_rescue:
+                    pass  # Tech company mislabeled — don't penalize
+                else:
+                    score *= 0.3  # Heavy penalty for genuine waste industry
                     break
 
         # Telecom provider override: if company IS a telecom provider,

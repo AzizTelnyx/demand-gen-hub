@@ -113,8 +113,18 @@ VARIANT_TAGS = {
 
 # Competitor domains to seed in ABMExclusion (Gap #12)
 COMPETITOR_DOMAINS = [
+    # CPaaS / telecom carriers
     "twilio.com", "vonage.com", "bandwidth.com", "plivo.com",
     "signalwire.com", "messagebird.com", "infobip.com", "sinch.com",
+    # Conversational AI / voice agent platforms (compete with Telnyx AI Agent)
+    "kore.ai", "cognigy.com", "gupshup.io", "yellow.ai", "amplify.ai",
+    "onereach.ai", "poly.ai", "voiceflow.com", "botsplash.com",
+    # Contact center / CCaaS (compete with Telnyx Contact Center)
+    "five9.com", "genesys.com", "nice.com", "talkdesk.com",
+    "dialpad.com", "ringcentral.com", "8x8.com", "aircall.io",
+    "callrail.com", "avaya.com",
+    # CPaaS also-rans
+    "telnyx.com",  # don't target ourselves
 ]
 
 # SF account types to SKIP (Gap #1) — only these are truly not targets
@@ -327,7 +337,7 @@ For each company, provide:
 RULES:
 - Only include REAL companies you are confident exist
 - Prefer mid-market companies (50-5000 employees)
-- Exclude telecom carriers, ISPs, and CPaaS platforms (they are competitors or infrastructure)
+- Exclude telecom carriers, ISPs, CPaaS platforms, and conversational AI/voice agent platforms (they are competitors: Twilio, Vonage, Kore.ai, Cognigy, Gupshup, Yellow.ai, Dialpad, Five9, Genesys, Nice, TalkDesk, Aircall, etc.)
 - Exclude companies that are purely end-users (e.g., a hospital) without a software/AI product
 - For competitive variants, find companies currently using {competitors}
 - CRITICAL: Read the FULL campaign name above. A 'Travel' variant campaign targets travel companies,
@@ -712,7 +722,10 @@ def is_shared_segment(cur, segment_id, product, variant):
 
 
 def is_excluded(cur, domain, product=None):
-    """Check if domain is in ABMExclusion."""
+    """Check if domain is in ABMExclusion or is a known competitor."""
+    # Fast in-memory check for known competitors
+    if domain.lower() in COMPETITOR_DOMAINS:
+        return True
     cur.execute("""
         SELECT id, category FROM "ABMExclusion"
         WHERE domain = %s

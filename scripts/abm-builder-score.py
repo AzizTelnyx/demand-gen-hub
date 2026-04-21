@@ -15,11 +15,12 @@ import os
 import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from abm_builder_lib import relevance_score, PRODUCT_MAP
+from abm_builder_lib import relevance_score, PRODUCT_MAP, is_competitor
 
 
 def main():
     parser = argparse.ArgumentParser(description="ABM Builder: Relevance scoring")
+    parser.add_argument("--input-file", help="Read JSON from file instead of --arg")
     parser.add_argument("--accounts-json", required=True, help="JSON array of enriched accounts")
     parser.add_argument("--products", required=True, help="JSON array of productFit values (e.g. [\"voice-ai\"])")
     parser.add_argument("--min-score", type=float, default=0.15, help="Minimum score to keep (default: 0.15)")
@@ -48,7 +49,21 @@ def main():
     auto_accepted = 0
     needs_validation = 0
 
+    competitor_rejected = 0
+
     for account in accounts:
+        domain = account.get("domain", "")
+
+        # Auto-reject competitors
+        if is_competitor(domain):
+            account["score"] = 0
+            account["scored_product"] = "competitor"
+            account["verdict"] = "drop"
+            account["drop_reason"] = "competitor_domain"
+            scored.append(account)
+            competitor_rejected += 1
+            continue
+
         # Build fake clearbit_data structure for scorer
         clearbit_data = {
             "description": account.get("description", ""),
@@ -87,7 +102,7 @@ def main():
 
         scored.append(account)
 
-    print(f"Scored: {len(scored)} | Auto-accept: {auto_accepted} | Needs validation: {needs_validation} | Dropped: {dropped}", file=sys.stderr)
+    print(f"Scored: {len(scored)} | Auto-accept: {auto_accepted} | Needs validation: {needs_validation} | Dropped: {dropped} | Competitors: {competitor_rejected}", file=sys.stderr)
 
     # Only output non-dropped accounts
     kept = [a for a in scored if a["verdict"] != "drop"]

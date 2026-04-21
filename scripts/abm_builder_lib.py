@@ -27,7 +27,7 @@ CLEARBIT_URL = "https://company.clearbit.com/v2/companies/find"
 LITELLM_URL = "http://litellm-aiswe.query.prod.telnyx.io:4000/v1/chat/completions"
 LITELLM_KEY = "sk-JcJEnHgGiRKTnIdkGfv3Rw"
 
-BRAVE_API_KEY = os.environ.get("BRAVE_API_KEY", "")
+BRAVE_API_KEY = os.environ.get("BRAVE_API_KEY", "BSAsk8vZjTl-aldJt4FA2jxxd3tvYmA")
 BRAVE_URL = "https://api.search.brave.com/res/v1/web/search"
 
 # Relevance scoring weights (same as Expander)
@@ -35,6 +35,26 @@ W_DESCRIPTION = 0.40
 W_TAGS = 0.30
 W_TECH = 0.15
 W_SIZE = 0.15
+
+# ─── Competitor Domains ─────────────────────────────────
+# Domains we conquest-target (run competitor campaigns against) — NOT ABM targets.
+# These must be auto-excluded from Builder research results.
+COMPETITOR_DOMAINS = {
+    # CPaaS / telecom carriers
+    "twilio.com", "vonage.com", "bandwidth.com", "plivo.com", "sinch.com",
+    "messagebird.com", "telnyx.com",  # our own domain
+    # Voice AI agent platforms
+    "vapi.ai", "retellai.com", "bland.ai", "voiceflow.com", "bolna.ai",
+    "vocs.ai", "synthflow.ai", "agentvoice.com",
+    # CCaaS / contact center platforms
+    "nice.com", "genesys.com", "five9.com", "talkdesk.com", "avaya.com",
+    "ringcentral.com", "8x8.com", "dialpad.com",
+}
+
+
+def is_competitor(domain: str) -> bool:
+    """Check if domain is a known competitor (auto-exclude from ABM)."""
+    return domain.lower().strip() in COMPETITOR_DOMAINS
 
 # ─── DB ────────────────────────────────────────────────
 
@@ -262,38 +282,62 @@ def relevance_score(clearbit_data: dict, product_name: str) -> tuple[float, dict
 
 # ─── Brave Search ──────────────────────────────────────
 
+def ddg_search(query: str, count: int = 20) -> list[dict]:
+    """Fallback: DuckDuckGo search via ddgs library."""
+    try:
+        from ddgs import DDGS
+        ddgs = DDGS()
+        results = list(ddgs.text(query, max_results=count))
+        # Normalize to Brave format
+        normalized = []
+        for r in results:
+            normalized.append({
+                "title": r.get("title", ""),
+                "url": r.get("href", ""),
+                "description": r.get("body", ""),
+            })
+        return normalized
+    except ImportError:
+        print("  ddgs not installed, install with: pip install ddgs")
+        return []
+    except Exception as e:
+        print(f"  DuckDuckGo failed: {e}")
+        return []
+
 def brave_search(query: str, count: int = 20) -> list[dict]:
-    """Search Brave API and return results."""
-    if not BRAVE_API_KEY:
-        # Fallback: try env var from OpenClaw
+    """Search Brave API and return results. Falls back to DuckDuckGo."""
+    api_key = BRAVE_API_KEY
+    if not api_key:
         brave_key_path = os.path.expanduser("~/.config/brave/api_key")
         if os.path.exists(brave_key_path):
             with open(brave_key_path) as f:
-                global BRAVE_API_KEY
-                BRAVE_API_KEY = f.read().strip()
-        else:
-            print("ERROR: No BRAVE_API_KEY set")
-            return []
+                api_key = f.read().strip()
 
-    try:
-        resp = requests.get(
-            BRAVE_URL,
-            params={"q": query, "count": count},
-            headers={
-                "Accept": "application/json",
-                "Accept-Encoding": "gzip",
-                "X-Subscription-Token": BRAVE_API_KEY,
-            },
-            timeout=15,
-        )
-        if resp.status_code != 200:
-            print(f"Brave search error: {resp.status_code}")
-            return []
-        data = resp.json()
-        return data.get("web", {}).get("results", [])
-    except Exception as e:
-        print(f"Brave search failed: {e}")
-        return []
+    # Try Brave first
+    if api_key:
+        try:
+            resp = requests.get(
+                BRAVE_URL,
+                params={"q": query, "count": count},
+                headers={
+                    "Accept": "application/json",
+                    "Accept-Encoding": "gzip",
+                    "X-Subscription-Token": api_key,
+                },
+                timeout=15,
+            )
+            if resp.status_code == 200:
+                data = resp.json()
+                return data.get("web", {}).get("results", [])
+            elif resp.status_code == 429:
+                print("  Brave rate limited, falling back to DuckDuckGo")
+            else:
+                print(f"  Brave error: {resp.status_code}")
+        except Exception as e:
+            print(f"  Brave failed: {e}")
+
+    # Fallback: DuckDuckGo
+    return ddg_search(query, count)
 
 
 def extract_domains_from_results(results: list[dict]) -> list[dict]:
@@ -368,6 +412,7 @@ Research criteria: {criteria.get('targetCompanyProfile', criteria.get('descripti
 
 Telnyx provides cloud communications: Voice API, SIP Trunking, SMS API, IoT SIM, AI voice agents.
 We target companies that BUILD or DEPLOY telecom/voice solutions, not pure end-users.
+We also do NOT target competitors — companies that offer competing CPaaS, voice AI agent platforms, or CCaaS/contact center products (e.g. Twilio, Vonage, Vapi, Retell AI, Bland AI, Voiceflow, NICE, Genesys, Talkdesk, etc). Those are conquest campaign targets, not ABM targets.
 
 Answer ONLY with:
 APPROVE - [one sentence reason]

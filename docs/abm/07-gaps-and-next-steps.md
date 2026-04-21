@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |--------|-------|
-| Total accounts in ABM | 2,555 |
-| Accounts with product fit | 938 (37%) |
-| Accounts with null product fit | 1,617 (63%) |
+| Total accounts in ABM | 11,524 |
+| Accounts with product fit | 938 (8%) |
+| Accounts with null product fit | 10,586 (92%) — includes 8,969 LinkedIn impression targets pending scoring |
 | Pipeline accounts (active SF opps) | 41 |
 | Domains excluded from targeting | 771 |
 | Total exclusion records (incl. per-product) | 3,922 |
@@ -55,18 +55,20 @@
 
 ---
 
-## 🔴 Blocked
+## 🟢 Recently Unblocked
 
-### LinkedIn Attribution (blocked since 2026-03-12)
-- **Problem:** 97.2% of LinkedIn impressions have `li_org:` IDs, can't match to SF accounts
-- **Impact:** ~$580K pipeline from only 36 deals (tiny fraction of actual LI contribution)
-- **Blocker:** Community Management API approval stalled. Created separate app as LinkedIn required. Still not approved.
-- **Next:** Escalate with LinkedIn support (Josh B, ticket #66960)
-- **Doc:** https://docs.google.com/document/d/1-kyOmmGPtpEO7okaa4Gt_dU_v7mX0TMohVDtFx3Mo5Q/edit
+### LinkedIn Attribution (partially solved 2026-04-21)
+- **Previous problem:** 97.2% of LinkedIn impressions had `li_org:` IDs, couldn't match to SF accounts
+- **Breakthrough:** Existing Ads API token has `r_organization` scope — resolved via `adTargetingEntities` + `MEMBER_COMPANY` pivot
+- **Results:** 9,535 companies extracted, 9,463 resolved to names, 517 matched to SF, 8,969 net-new ABM prospects
+- **Script:** `scripts/linkedin-org-resolver.py`
+- **Remaining gap:** `adTargetingEntities` only returns company names (not domains). Need Clearbit autocomplete or CM API for domain resolution.
+- **Still blocked:** CM API app approval (Josh B, ticket #66960) — would unlock full org profiles with website URLs
+- **CM API doc:** https://docs.google.com/document/d/1-kyOmmGPtpEO7okaa4Gt_dU_v7mX0TMohVDtFx3Mo5Q/edit
 
 ### LinkedIn Ads Ops Agent
-- **Problem:** Blocked on same API approval. Can't automate LI campaign ops.
-- **Status:** Designed, can't build until API access granted.
+- **Problem:** Still blocked on CM API for domain upload automation. Can't programmatically add targeting audiences.
+- **Status:** Designed, can't build domain-upload features until API access granted.
 
 ---
 

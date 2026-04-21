@@ -66,36 +66,49 @@ Agent runs → DB changes (ABMExclusion/ABMAccount)
 
 ---
 
-## LinkedIn — ⚠️ BLOCKED
+## LinkedIn — ⚠️ PARTIALLY UNBLOCKED (2026-04-21)
 
 ### What Works
 
-| Method | Status |
-|--------|--------|
-| Create COMPANY type DMP segments | ✅ |
-| Attach/detach segments to campaigns | ✅ |
-| Read segment sizes | ✅ |
-| Archive segments | ✅ |
+| Method | Status | Notes |
+|--------|--------|-------|
+| Create COMPANY type DMP segments | ✅ | |
+| Attach/detach segments to campaigns | ✅ | |
+| Read segment sizes | ✅ | |
+| Archive segments | ✅ | |
+| Resolve org URNs to company names | ✅ | `adTargetingEntities` API — batch of 20 |
+| Fetch company-level impressions | ✅ | `MEMBER_COMPANY` pivot in analytics API |
+| Match companies to Salesforce | ✅ | 517 matched, 8,969 net-new |
 
-### What's Blocked
+### What's Still Blocked
 
 **Populating segments with domains** — upload endpoint undocumented. Workaround: create via API, populate via Campaign Manager UI.
 
-**Resolving li_org: to company names** — Community Management API approval stalled since 2026-03-12. Would unlock 8,338 domains.
+**Organization Lookup API (full profile)** — Community Management API approval stalled since 2026-03-12. Would give website, vanity URL, and full org profile. Currently we only get company name from `adTargetingEntities`.
 
-### The li_org: Problem
+### The li_org: Problem — SOLVED (2026-04-21)
 
-97.2% of LinkedIn impressions have account IDs in `li_org:XXXX` format instead of domain names. We can't match these to Salesforce accounts.
+**Previous state:** 97.2% of LinkedIn impressions had `li_org:XXXX` IDs that couldn't be matched to Salesforce.
 
-- 743,101 impressions with `li_org:` prefix (unresolvable)
-- Only 21,469 impressions with resolvable domains (2.8%)
-- Currently attributing ~$580K pipeline from 36 deals (tiny fraction)
+**Breakthrough:** The existing LinkedIn Ads API token already has `r_organization` scope. Two endpoints unlock org resolution:
 
-**Solution path:** Community Management API → Organization Lookup API → company name + website → match to SF domains.
+1. **`GET /rest/adAnalytics?q=analytics&pivot=MEMBER_COMPANY`** — returns company-level impressions with `urn:li:organization:XXXX` URNs per campaign
+2. **`GET /rest/adTargetingEntities?q=urns&urns=List(...)`** — resolves URNs to company names (batch of 20)
 
-**Blocker:** LinkedIn required a separate app for Community Management API (legal/security). Created ✅. Approval stalled.
+**Results (full run across 19 active campaigns):**
+- 9,535 unique companies extracted from LinkedIn impressions
+- 9,463 org IDs resolved to company names (99.2%)
+- 517 matched to existing Salesforce accounts
+- 8,969 net-new companies pushed to ABMAccount as prospects
+- 473,914 total impressions now attributable
 
-**Support contact:** Josh B, ticket #66960
+**Script:** `scripts/linkedin-org-resolver.py` — handles seeding, resolution, SF matching, and ABM push.
+
+### Remaining LinkedIn Attribution Gaps
+
+- **Domains from org IDs:** `adTargetingEntities` only returns names, not domains. Need Clearbit autocomplete or CM API for domain resolution.
+- **Domain upload to campaigns:** Can't programmatically add targeting audiences via API.
+- **CM API app approval:** Still stalled (Josh B, ticket #66960). Would unlock Organization Lookup API (full profile with website URL).
 
 ---
 

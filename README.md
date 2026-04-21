@@ -58,8 +58,10 @@ All agents follow the same framework: `BaseAgent` for guardrails + DB logging, L
 - 🔶 ABM Negative Builder — updated keywords, needs re-run with corrected productFit
 
 ### What's Next
+- ✅ LinkedIn org resolution — 9,535 companies extracted, 9,463 resolved to names, 517 matched to SF, 8,969 net-new ABM prospects
 - 🆕 Attach exclusion audiences to remaining SA campaigns
-- 🆕 LinkedIn attribution fix (blocked on Community Management API approval)
+- 🆕 Enrich 8,969 LinkedIn-sourced ABM accounts (Clearbit domains + scoring)
+- 🟡 LinkedIn domain upload automation (still blocked on CM API)
 - 🆕 Attribution query — connect ad impressions → SF pipeline
 - 🆕 Google Ads Customer Match for ABM audiences
 - 🆕 DomainSlideOut in Hub UI — show SF pipeline + opp data per account
@@ -71,7 +73,7 @@ All agents follow the same framework: `BaseAgent` for guardrails + DB logging, L
 | **Google Ads** | ✅ Active | Sync campaigns/creatives, negative keywords, bid management |
 | **StackAdapt** | ✅ Active | Sync campaigns/creatives, ABM audience create/update/push, exclusion audiences |
 | **Reddit** | ✅ Active | Sync campaigns/creatives |
-| **LinkedIn** | 🔴 Blocked | Ads API works, but attribution needs Community Management API (stalled) |
+| **LinkedIn** | 🟡 Partial | Ads API works. Org resolution via adTargetingEntities ✅. Domain upload still blocked on CM API |
 | **Salesforce** | ✅ Active | Account matching, pipeline data, opp stages |
 
 ## Tech Stack

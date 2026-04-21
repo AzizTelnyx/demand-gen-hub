@@ -17,7 +17,7 @@ Closed-loop ABM: automatically grow, clean, and optimize target account lists ac
 
 | Table | Count | Notes |
 |-------|-------|-------|
-| ABMAccount | 2,555 | 2,375 with country (93%), 2,344 with description |
+| ABMAccount | 11,524 | 2,375 with country (93%), 2,344 with description + 8,969 LinkedIn-sourced pending enrichment |
 | ABMExclusion | 3,810 | Competitors, ISPs, hospitals, irrelevant verticals |
 | ABMCampaignSegment | 287 | With 30d performance data + health flags |
 | ABMListRule | 8 | 5 AI Agent variants + Voice/SMS/SIP/IoT |
@@ -29,7 +29,7 @@ Closed-loop ABM: automatically grow, clean, and optimize target account lists ac
 | Platform | Domain-Level Data | Can Push Changes | Status |
 |----------|------------------|-----------------|--------|
 | **StackAdapt** | ✅ 2,555 domains, 1.55M imps, $12.5K spend | ✅ Connector built, 5 exclusion audiences + 13 campaigns attached | Done |
-| **LinkedIn** | ❌ 97% li_org: IDs, only 12 resolved domains | ⚠️ Create segment works, populate doesn't | Blocked on API |
+| **LinkedIn** | ✅ 9,535 companies resolved, 517 matched to SF, 8,969 net-new | ⚠️ Create segment works, populate doesn't. Name-only resolution (no domains from API). | Partially Unblocked |
 | **Google Ads** | ❌ Aggregate only | ❌ Out of scope | Deferred |
 
 ---

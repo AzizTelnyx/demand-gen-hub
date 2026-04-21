@@ -20,6 +20,7 @@ from abm_builder_lib import llm_validate
 
 def main():
     parser = argparse.ArgumentParser(description="ABM Builder: AI validation of borderline accounts")
+    parser.add_argument("--input-file", help="Read JSON from file instead of --arg")
     parser.add_argument("--accounts-json", required=True, help="JSON array of scored accounts")
     parser.add_argument("--criteria-json", required=True, help="JSON criteria from interpret step")
     args = parser.parse_args()

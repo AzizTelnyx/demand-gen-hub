@@ -21,6 +21,7 @@ from abm_builder_lib import get_db, salesforce_should_skip, PRODUCT_MAP
 
 def main():
     parser = argparse.ArgumentParser(description="ABM Builder: Commit accounts to DB")
+    parser.add_argument("--input-file", help="Read JSON from file instead of --arg")
     parser.add_argument("--accounts-json", required=True, help="JSON array of validated accounts")
     parser.add_argument("--list-name", required=True, help="Name for the ABM list")
     parser.add_argument("--criteria-json", required=True, help="JSON criteria from interpret step")

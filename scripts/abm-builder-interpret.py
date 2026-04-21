@@ -17,7 +17,7 @@ import urllib.request
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from abm_builder_lib import LITELLM_URL, LITELLM_KEY
 
-MODEL = "gemini/gemini-2.0-flash"
+MODEL = "gpt-4.1-mini"  # Gemini Flash rate limited on LiteLLM; fallback to mini
 
 SYSTEM_PROMPT = """You are an ABM research brief interpreter for Telnyx (cloud communications: Voice API, SIP, SMS, IoT SIM, AI voice agents).
 

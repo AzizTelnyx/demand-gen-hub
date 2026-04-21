@@ -1,6 +1,6 @@
 # ABM System — Status, Gaps & Next Steps
 
-> **Last updated:** 2026-04-20 by Ares
+> **Last updated:** 2026-04-21 by Ares
 > **Owner:** Aziz (Head of Demand Gen, Telnyx)
 
 ---
@@ -46,6 +46,13 @@
 - **Budget page** — pacing and allocation
 - **Dashboard** — high-level metrics
 
+### Builder Research Pipeline
+- **6-step Lobster workflow** — Interpret → Search → Enrich → Score → Validate → Commit
+- **Real data only** — Brave Search for discovery, Clearbit for enrichment, deterministic scoring for filtering
+- **AI = interpreter + edge validator, never source** — Gemini Flash (interpret) + gpt-4.1-mini (validate)
+- **5 thin scripts** + shared `abm_builder_lib.py` (reuses Expander's Clearbit, scoring, hallucination, SF logic)
+- **Lobster workflow:** `workflows/abm-builder-research.lobster` with approval gate before commit
+
 ---
 
 ## 🔴 Blocked
@@ -86,23 +93,28 @@
 
 ## 🟠 Gaps to Close
 
-### 1. Hub UI — DomainSlideOut missing SF data
+### 1. Builder Research — first live run
+- **What:** Pipeline is built but hasn't been tested end-to-end with real data
+- **Test:** Run with brief "Find AI agent companies in APAC" → verify all 6 steps work, review output quality
+- **Effort:** ~1 hour
+
+### 2. Hub UI — DomainSlideOut missing SF data
 - **Problem:** Click a domain → slide-out shows empty pipeline/opp/switch fields
 - **Fix:** Wire component to query SFAccount + SFOpportunity tables
 - **Shows:** Pipeline status, opp stage, amount, switchSignal, currentProvider
 - **Effort:** ~2 hours
 
-### 2. SF Sync not croned
+### 3. SF Sync not croned
 - **Problem:** `sync_salesforce.py` runs manually → stale pipeline data
 - **Fix:** Add to cron (daily 5 AM, before ABM Sync at 6 AM)
 - **Effort:** ~15 minutes
 
-### 3. ABMExclusion.saAudienceId backfill
+### 4. ABMExclusion.saAudienceId backfill
 - **Problem:** All exclusion rows have `saAudienceId = NULL`. Push script works around it but tracking is fragile.
 - **Fix:** Backfill from known audience IDs (2502446-2502450, 2502525)
 - **Effort:** ~30 minutes
 
-### 4. 1,617 null-productFit accounts
+### 5. 1,617 null-productFit accounts
 - **Problem:** 63% of accounts have no product fit. Most are genuinely irrelevant (pharmacies, food, fashion).
 - **Options:**
   - (A) Let Pruner handle them — slow but safe
@@ -110,43 +122,50 @@
   - (C) Looser thresholds — risks false positives
 - **Recommendation:** Option A. Pruner will systematically remove waste. Don't force-classify.
 
-### 5. Expander positive audience push
+### 6. Expander positive audience push
 - **Problem:** Expander finds new domains but doesn't push them to SA targeting audiences yet
 - **Fix:** Wire `createAbmAudience` + `updateAbmAudienceWithDomainsList` into Expander push flow
 - **Note:** SA connector methods already exist in `scripts/platforms/stackadapt.py`
 - **Effort:** ~3 hours
 
-### 6. Cosmetic log bug
+### 7. Cosmetic log bug
 - **Problem:** Expander logs show "v2 v3" instead of just "v3" (likely stale AGENT_NAME variable)
 - **Effort:** ~10 minutes
 
 ---
 
+### 8. Builder UI integration
+- **Problem:** Builder research pipeline runs via Lobster/CLI, not wired to Hub UI `/abm/builder` page
+- **Fix:** Hub UI research form → POST to API → triggers Lobster workflow → polls status
+- **Effort:** ~3 hours
+
 ## 🔵 Future / Low Priority
 
 | # | Item | Description | Effort |
 |---|------|-------------|--------|
-| 7 | Attribution dashboard | SQL + UI showing segment → domains → SQOs → pipeline | ~1 day |
-| 8 | Detach exclusion audiences | `detachAudienceFromCampaign` not built in SA connector | ~2 hours |
-| 9 | currentProvider detection | Detect competitor usage from SF/Clearbit/AI research for conquesting | ~1 day |
-| 10 | Google Ads Customer Match | Upload ABM audiences to Google. Zero code. Deferred until LI+SA automated. | ~1 day |
-| 11 | Segment Engine | Dynamic segment creation based on rules (industry + tech + geo) | ~2 days |
-| 12 | Hub UI — Attach exclusion audiences to campaigns | UI to connect SA audiences to specific campaigns | ~3 hours |
+| 9 | Attribution dashboard | SQL + UI showing segment → domains → SQOs → pipeline | ~1 day |
+| 10 | Detach exclusion audiences | `detachAudienceFromCampaign` not built in SA connector | ~2 hours |
+| 11 | currentProvider detection | Detect competitor usage from SF/Clearbit/AI research for conquesting | ~1 day |
+| 12 | Google Ads Customer Match | Upload ABM audiences to Google. Zero code. Deferred until LI+SA automated. | ~1 day |
+| 13 | Segment Engine | Dynamic segment creation based on rules (industry + tech + geo) | ~2 days |
+| 14 | Hub UI — Attach exclusion audiences to campaigns | UI to connect SA audiences to specific campaigns | ~3 hours |
 
 ---
 
 ## Build Priority Order (recommended)
 
-1. ⬜ **Cron SF sync** (15 min, unblocks fresh pipeline data)
-2. ⬜ **Negative Builder re-run** (1 hr, cleans up exclusion lists)
-3. ⬜ **Live Expander validation** (1 hr, confirms end-to-end push works)
-4. ⬜ **Live Pruner validation** (30 min, confirms cleanup works)
-5. ⬜ **DomainSlideOut SF wiring** (2 hrs, makes Hub actually useful for pipeline review)
-6. ⬜ **ABMExclusion.saAudienceId backfill** (30 min, data hygiene)
-7. ⬜ **Expander positive audience push** (3 hrs, actually targets new domains)
-8. ⬜ **Escalate LinkedIn API** (ongoing)
-9. ⬜ **Attribution dashboard** (1 day)
-10. ⬜ **Google Ads Customer Match** (1 day, after LI+SA fully automated)
+1. ⬜ **Builder Research first live run** (1 hr, validate end-to-end pipeline)
+2. ⬜ **Cron SF sync** (15 min, unblocks fresh pipeline data)
+3. ⬜ **Negative Builder re-run** (1 hr, cleans up exclusion lists)
+4. ⬜ **Live Expander validation** (1 hr, confirms end-to-end push works)
+5. ⬜ **Live Pruner validation** (30 min, confirms cleanup works)
+6. ⬜ **Builder UI integration** (3 hrs, wire pipeline to Hub UI)
+7. ⬜ **DomainSlideOut SF wiring** (2 hrs, makes Hub actually useful for pipeline review)
+8. ⬜ **ABMExclusion.saAudienceId backfill** (30 min, data hygiene)
+9. ⬜ **Expander positive audience push** (3 hrs, actually targets new domains)
+10. ⬜ **Escalate LinkedIn API** (ongoing)
+11. ⬜ **Attribution dashboard** (1 day)
+12. ⬜ **Google Ads Customer Match** (1 day, after LI+SA fully automated)
 
 ---
 
@@ -158,3 +177,4 @@
 - **Pipeline accounts are ALWAYS protected from exclusion** — 41 domains never excluded regardless of industry
 - **Competitor domains include CPaaS + conversational AI + CCaaS** — Kore.ai, Cognigy, Five9, TalkDesk, Dialpad, etc. excluded from Expander targeting
 - **Pipeline-driven expansion is primary mode** — Expander v3 uses SF opps to find lookalikes (MOFU thresholds). Segment-size is fallback for products without pipeline seeds.
+- **Builder research uses real data, not AI generation** — Brave Search discovers real companies, Clearbit enriches, deterministic scoring filters, AI only interprets briefs and validates edge cases. Every company comes from web results, not training data.

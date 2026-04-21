@@ -1,12 +1,12 @@
 # Agent Fleet
 
-> **Last updated:** 2026-04-20
+> **Last updated:** 2026-04-21
 
 ---
 
-## 5 Agents
+## 6 Agents
 
-All agents use Lobster workflows for deterministic steps. Only the Expander uses LLM.
+All agents use Lobster workflows for deterministic steps. Two agents use LLM (Expander + Builder).
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
@@ -24,6 +24,13 @@ All agents use Lobster workflows for deterministic steps. Only the Expander uses
 │               │ (weekly)  │   │ (monthly)    │           │
 │               │ LLM: 0   │   │ LLM: 0      │           │
 │               └───────────┘   └──────────────┘           │
+│                                                             │
+│  ┌──────────────────────────────────────────────┐          │
+│  │  BUILDER RESEARCH (on-demand)                │          │
+│  │  Interpret → Search → Enrich → Score →      │          │
+│  │  Validate → Commit                            │          │
+│  │  LLM: 2 steps (interpret + validate edges)   │          │
+│  └──────────────────────────────────────────────┘          │
 │                                                             │
 │  All → Platform Connectors (SA/LI) → Live campaigns        │
 └─────────────────────────────────────────────────────────────┘
@@ -133,6 +140,53 @@ All agents use Lobster workflows for deterministic steps. Only the Expander uses
 
 ---
 
+## 6. ABM Builder Research — On-Demand
+
+**What:** Find real companies matching a research brief (e.g. "find AI agent companies in APAC").
+
+**LLM steps:** 2 — interpret (Gemini Flash) + validate edge cases (gpt-4.1-mini). Everything else is deterministic.
+
+**Key principle:** AI is scorer and interpreter, NEVER the source. Every company comes from real web results (Brave Search), verified by Clearbit.
+
+**Pipeline:**
+
+```
+Interpret → Search → Enrich → Score → Validate → Review → Commit
+   LLM      API     API     determ    LLM        gate     DB
+  (Flash)  (Brave) (Clear) (0 LLM)  (mini)     (human)  (write)
+```
+
+| Step | Script | LLM? | What it does |
+|------|--------|-------|-------------|
+| interpret | `abm-builder-interpret.py` | Gemini Flash | Parse brief → structured criteria + search queries |
+| search | `abm-builder-search.py` | No | Brave Search API → extract company domains |
+| enrich | `abm-builder-enrich.py` | No | Clearbit v2 firmographics + hallucination check |
+| score | `abm-builder-score.py` | No | Deterministic relevance (desc 40%, tags 30%, tech 15%, size 15%). Drop < 0.15. |
+| validate | `abm-builder-validate.py` | gpt-4.1-mini | AI validates borderline (0.15–0.6). Auto-accepts > 0.6. |
+| commit | `abm-builder-commit.py` | No | Upsert to ABMAccount + ABMListMember |
+
+**Shared library:** `abm_builder_lib.py` — reusable functions (Clearbit, scoring, hallucination check, SF cross-check, Brave search) extracted from Expander.
+
+**Lobster workflow:** `workflows/abm-builder-research.lobster` — chains all 6 steps with approval gate before commit.
+
+**How to run:**
+```bash
+# Via Lobster (preferred)
+node skills/lobster/bin/lobster.js run --mode tool --file workflows/abm-builder-research.lobster
+
+# Or individual steps for debugging
+python3 scripts/abm-builder-interpret.py --brief "Find AI agent companies in APAC"
+python3 scripts/abm-builder-search.py --criteria-json '<interpret output>'
+python3 scripts/abm-builder-enrich.py --domains-json '<search output>'
+python3 scripts/abm-builder-score.py --accounts-json '<enrich output>' --products '["voice-ai"]'
+python3 scripts/abm-builder-validate.py --accounts-json '<score output>' --criteria-json '<interpret output>'
+python3 scripts/abm-builder-commit.py --accounts-json '<validate output>' --list-name 'AI Agent APAC' --criteria-json '<interpret output>'
+```
+
+**Status:** ✅ Built (2026-04-21). Awaiting first live run.
+
+---
+
 ## Cron Schedule
 
 | Agent | Schedule | Cron ID |
@@ -143,6 +197,7 @@ All agents use Lobster workflows for deterministic steps. Only the Expander uses
 | Expander | Tue 6 AM | `a02e0a21` |
 | Pruner | Sun 5 AM | `4d9f1337` |
 | Negative Builder | 1st of month 4 AM | `492ac827` |
+| Builder Research | On-demand | — |
 
 ---
 

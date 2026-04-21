@@ -1,6 +1,6 @@
 # ABM Lifecycle Engine — System Documentation
 
-> **Last updated:** 2026-04-20
+> **Last updated:** 2026-04-21
 > **Repo:** https://github.com/AzizTelnyx/demand-gen-hub
 > **Hub UI:** https://telnyx-dg-hub.ngrok.app/abm/domains
 
@@ -94,3 +94,21 @@ npm run build && pm2 restart dg-hub
 5. [Salesforce Integration](./05-salesforce-integration.md) — Account linking, pipeline, attribution
 6. [Hub UI](./06-hub-ui.md) — Pages, API routes, write actions
 7. [Gaps & Next Steps](./07-gaps-and-next-steps.md) — Prioritized list of what's missing
+
+---
+
+## Builder Research Pipeline
+
+The `/abm/builder` page creates new ABM domain lists from natural language briefs (e.g. "Find AI agent companies in APAC"). The research pipeline runs via Lobster:
+
+```
+Interpret → Search → Enrich → Score → Validate → Review → Commit
+   LLM      API     API     determ    LLM        gate     DB
+  (Flash)  (Brave) (Clear) (0 LLM)  (mini)     (human)  (write)
+```
+
+**Key principle:** AI = scorer and interpreter, NEVER the source. Every company comes from real web results (Brave Search), verified by Clearbit enrichment. Deterministic scoring filters 80% of junk with zero LLM cost.
+
+**Scripts:** `abm-builder-interpret.py`, `abm-builder-search.py`, `abm-builder-enrich.py`, `abm-builder-score.py`, `abm-builder-validate.py`, `abm-builder-commit.py`
+**Shared lib:** `abm_builder_lib.py` (reuses Expander's Clearbit, scoring, hallucination, SF logic)
+**Workflow:** `workflows/abm-builder-research.lobster`

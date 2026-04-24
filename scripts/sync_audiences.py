@@ -147,7 +147,7 @@ def sync_google_ads_audiences(conn):
         """
         try:
             kw_count = 0
-            for row in ga.search(customer_id=GOOGLE_ADS_CUSTOMER_ID, query=kw_query, page_size=1000):
+            for row in ga.search(customer_id=GOOGLE_ADS_CUSTOMER_ID, query=kw_query):
                 cid = str(row.campaign.id)
                 db_id = camp_map.get(cid)
                 if not db_id:
@@ -181,7 +181,7 @@ def sync_google_ads_audiences(conn):
         """
         try:
             geo_count = 0
-            for row in ga.search(customer_id=GOOGLE_ADS_CUSTOMER_ID, query=geo_query, page_size=1000):
+            for row in ga.search(customer_id=GOOGLE_ADS_CUSTOMER_ID, query=geo_query):
                 cid = str(row.campaign.id)
                 db_id = camp_map.get(cid)
                 if not db_id:
@@ -211,7 +211,7 @@ def sync_google_ads_audiences(conn):
         """
         try:
             aud_count = 0
-            for row in ga.search(customer_id=GOOGLE_ADS_CUSTOMER_ID, query=aud_query, page_size=1000):
+            for row in ga.search(customer_id=GOOGLE_ADS_CUSTOMER_ID, query=aud_query):
                 cid = str(row.campaign.id)
                 db_id = camp_map.get(cid)
                 if not db_id:

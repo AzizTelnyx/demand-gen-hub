@@ -12,7 +12,35 @@ import json
 import os
 import sys
 import uuid
+import signal
+import time
 from datetime import datetime, timezone
+
+# Default timeout per platform audience sync (seconds)
+SYNC_TIMEOUT = int(os.environ.get("AUDIENCE_SYNC_TIMEOUT", "600"))  # 10 min default
+
+
+def _timeout_handler(signum, frame):
+    raise TimeoutError(f"Audience sync exceeded {SYNC_TIMEOUT}s timeout")
+
+
+def with_timeout(func, timeout_seconds=None):
+    """Run a sync function with a timeout. Returns 0 on timeout."""
+    secs = timeout_seconds or SYNC_TIMEOUT
+    old_handler = signal.signal(signal.SIGALRM, _timeout_handler)
+    signal.alarm(secs)
+    try:
+        result = func()
+        signal.alarm(0)
+        return result
+    except TimeoutError as e:
+        print(f"  ⏱ {e}")
+        return 0
+    except Exception as e:
+        signal.alarm(0)
+        raise
+    finally:
+        signal.signal(signal.SIGALRM, old_handler)
 
 # Use the local venv
 VENV_SITE = os.path.expanduser("~/.venv/lib")
@@ -119,7 +147,7 @@ def sync_google_ads_audiences(conn):
         """
         try:
             kw_count = 0
-            for row in ga.search(customer_id=GOOGLE_ADS_CUSTOMER_ID, query=kw_query):
+            for row in ga.search(customer_id=GOOGLE_ADS_CUSTOMER_ID, query=kw_query, page_size=1000):
                 cid = str(row.campaign.id)
                 db_id = camp_map.get(cid)
                 if not db_id:
@@ -135,6 +163,8 @@ def sync_google_ads_audiences(conn):
                                "negative_keyword" if is_negative else "keyword",
                                kw_text, match_type=match_type, status=status)
                 kw_count += 1
+                if kw_count % 5000 == 0:
+                    print(f"    ...{kw_count} keywords so far")
             total += kw_count
             print(f"    {kw_count} keywords")
         except Exception as e:
@@ -151,7 +181,7 @@ def sync_google_ads_audiences(conn):
         """
         try:
             geo_count = 0
-            for row in ga.search(customer_id=GOOGLE_ADS_CUSTOMER_ID, query=geo_query):
+            for row in ga.search(customer_id=GOOGLE_ADS_CUSTOMER_ID, query=geo_query, page_size=1000):
                 cid = str(row.campaign.id)
                 db_id = camp_map.get(cid)
                 if not db_id:
@@ -181,7 +211,7 @@ def sync_google_ads_audiences(conn):
         """
         try:
             aud_count = 0
-            for row in ga.search(customer_id=GOOGLE_ADS_CUSTOMER_ID, query=aud_query):
+            for row in ga.search(customer_id=GOOGLE_ADS_CUSTOMER_ID, query=aud_query, page_size=1000):
                 cid = str(row.campaign.id)
                 db_id = camp_map.get(cid)
                 if not db_id:
@@ -613,10 +643,32 @@ def sync_all_audiences(conn=None):
         conn = get_db()
 
     totals = {}
-    totals["google_ads"] = sync_google_ads_audiences(conn)
-    totals["linkedin"] = sync_linkedin_audiences(conn)
-    totals["reddit"] = sync_reddit_audiences(conn)
-    totals["stackadapt"] = sync_stackadapt_audiences(conn)
+    # Each platform gets its own timeout so one hang doesn't block the rest
+    try:
+        totals["google_ads"] = with_timeout(lambda: sync_google_ads_audiences(conn))
+    except Exception as e:
+        print(f"  Google Ads audience sync failed: {e}")
+        totals["google_ads"] = 0
+
+    try:
+        totals["linkedin"] = with_timeout(lambda: sync_linkedin_audiences(conn))
+    except Exception as e:
+        print(f"  LinkedIn audience sync failed: {e}")
+        totals["linkedin"] = 0
+
+    try:
+        totals["reddit"] = with_timeout(lambda: sync_reddit_audiences(conn))
+    except Exception as e:
+        print(f"  Reddit audience sync failed: {e}")
+        totals["reddit"] = 0
+
+    try:
+        totals["stackadapt"] = with_timeout(lambda: sync_stackadapt_audiences(conn))
+    except Exception as e:
+        print(f"  StackAdapt audience sync failed: {e}")
+        totals["stackadapt"] = 0
+
+    # Inference doesn't call external APIs, no timeout needed
     totals["stackadapt_inferred"] = infer_stackadapt_audiences(conn)
 
     if own_conn:

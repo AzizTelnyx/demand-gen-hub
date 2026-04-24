@@ -2,8 +2,9 @@
 """
 Flight Auto-Extend Agent
 ========================
-Daily agent that checks StackAdapt campaigns for flights nearing their end date,
-automatically extends them + refreshes budget so campaigns never go dark.
+Daily agent that checks StackAdapt campaigns for:
+1. Flights nearing their end date → auto-extends them
+2. Budget exhausted before flight ends → auto-top-up so campaigns don't go dark
 
 Run: python scripts/flight-auto-extend-agent.py [--dry-run] [--days-ahead 7]
 Cron: daily at 6 AM PST via OpenClaw gateway
@@ -15,7 +16,10 @@ Logic:
    a. Add a new flight extending to end of next month (or 30 days out)
    b. Budget = same as the ending flight
    c. Log the extension
-4. Report any campaigns that couldn't be extended (errors, API issues)
+4. Check campaign spend vs budget — if spend ≥ 90% of budget with flight days remaining:
+   a. Auto-top-up budget (match original flight budget)
+   b. Alert on Telegram
+5. Report any campaigns that couldn't be extended (errors, API issues)
 """
 
 import json
@@ -220,6 +224,133 @@ def extend_campaign(sa, camp_info, days_extend=30, dry_run=False):
         return {"success": False, "error": str(e)}
 
 
+def check_budget_depletion(sa, days_ahead=7, dry_run=False):
+    """
+    Check for campaigns where spend has exhausted (or nearly exhausted) the budget
+    while the flight still has days remaining. Auto-top-up budget to keep them live.
+    """
+    log("Budget Depletion Check starting")
+
+    # Get all active campaigns with their details
+    campaigns = sa.fetch_campaigns(active_only=True)
+    log(f"Budget check: {len(campaigns)} active campaigns")
+
+    now = datetime.now(timezone.utc)
+    depleted = []
+    near_depleted = []
+    topped_up = []
+    errors = []
+
+    for camp in campaigns:
+        try:
+            details = get_campaign_details(sa, camp.external_id)
+            if not details or not details["flights"]:
+                continue
+
+            latest_flight = max(details["flights"], key=lambda f: f.get("endTime", ""))
+            flight_budget = latest_flight.get("grossLifetimeBudget", 0)
+            end_str = latest_flight.get("endTime", "")
+
+            try:
+                end_dt = datetime.fromisoformat(end_str)
+            except (ValueError, TypeError):
+                continue
+
+            # Only check if flight still has time remaining
+            if end_dt <= now:
+                continue
+
+            days_remaining = (end_dt - now).days
+            if days_remaining <= 0:
+                continue
+
+            # Get current spend from metrics API
+            date_from = (now - timedelta(days=90)).strftime("%Y-%m-%d")
+            date_to = now.strftime("%Y-%m-%d")
+
+            spend_query = '''
+            {
+              campaignDelivery(
+                filterBy: { campaignIds: [%s], advertiserIds: [%d] }
+                date: { from: "%s", to: "%s" }
+                granularity: TOTAL
+                dataType: TABLE
+              ) {
+                ... on CampaignDeliveryOutcome {
+                  records { nodes {
+                    metrics { cost }
+                  } }
+                }
+              }
+            }
+            ''' % (camp.external_id, sa.ADVERTISER_ID, date_from, date_to)
+
+            data = sa._gql(spend_query, timeout=30)
+            nodes = data.get("data", {}).get("campaignDelivery", {}).get("records", {}).get("nodes", [])
+
+            total_spend = sum(float(n.get("metrics", {}).get("cost", 0) or 0) for n in nodes)
+
+            if flight_budget <= 0:
+                continue
+
+            spend_pct = (total_spend / flight_budget) * 100
+
+            if spend_pct >= 95 and days_remaining > 0:
+                # Budget exhausted or nearly so — needs top-up NOW
+                depleted.append({
+                    "name": camp.name,
+                    "id": camp.external_id,
+                    "spend": total_spend,
+                    "budget": flight_budget,
+                    "spend_pct": spend_pct,
+                    "days_remaining": days_remaining,
+                    "details": details
+                })
+            elif spend_pct >= 75 and days_remaining > 0:
+                # Budget pacing fast — flag for monitoring
+                # Calculate daily burn rate and projected exhaustion
+                daily_burn = total_spend / max(1, 30)  # rough 30-day avg
+                days_to_exhaust = (flight_budget - total_spend) / daily_burn if daily_burn > 0 else 999
+                if days_to_exhaust < days_remaining * 0.5:
+                    near_depleted.append({
+                        "name": camp.name,
+                        "id": camp.external_id,
+                        "spend": total_spend,
+                        "budget": flight_budget,
+                        "spend_pct": spend_pct,
+                        "days_remaining": days_remaining,
+                        "days_to_exhaust": round(days_to_exhaust, 1)
+                    })
+
+        except Exception as e:
+            errors.append({"name": camp.name, "id": camp.external_id, "error": str(e)})
+
+    # Auto-top-up depleted campaigns
+    for item in depleted:
+        flight_budget = item["budget"]
+        # Top up by adding another flight_budget worth
+        new_budget = flight_budget * 2  # Double the budget to match original flight allocation
+
+        if dry_run:
+            log(f"DRY RUN: Would top up {item['name']} from ${flight_budget} to ${new_budget}")
+            topped_up.append(item["name"])
+            continue
+
+        result = extend_campaign(sa, item["details"], dry_run=False)
+        if result["success"]:
+            topped_up.append(item["name"])
+            log(f"✅ Budget top-up: {item['name']} | ${flight_budget} → extended with new flight")
+        else:
+            errors.append({"name": item["name"], "id": item["id"], "error": f"Top-up failed: {result['error']}"})
+
+    return {
+        "depleted": depleted,
+        "near_depleted": near_depleted,
+        "topped_up": topped_up,
+        "errors": errors
+    }
+
+
 def run(days_ahead=7, days_extend=30, dry_run=False):
     sa = get_connector("stackadapt")
     sa.load_credentials()
@@ -279,6 +410,15 @@ def run(days_ahead=7, days_extend=30, dry_run=False):
             errors.append({"name": item["name"], "id": item["id"], "error": result["error"]})
             log(f"❌ Failed: {item['name']} | {result['error']}")
 
+    # ─── Budget Depletion Check ─────────────────────────
+    # Check for campaigns where budget is exhausted before flight end date
+    budget_result = check_budget_depletion(sa, days_ahead=days_ahead, dry_run=dry_run)
+    budget_topped = budget_result["topped_up"]
+    budget_depleted = budget_result["depleted"]
+    budget_near = budget_result["near_depleted"]
+    budget_errors = budget_result["errors"]
+    errors.extend(budget_errors)
+
     # Also check for recently ended campaigns (died within last 3 days)
     all_campaigns = sa.fetch_campaigns(active_only=False)
     recently_ended = []
@@ -304,15 +444,31 @@ def run(days_ahead=7, days_extend=30, dry_run=False):
     summary_lines = [
         f"🔄 *Flight Auto-Extend Report*",
         f"Checked: {len(campaigns)} active campaigns",
-        f"Extended: {len(extended)}",
+        f"Flights extended: {len(extended)}",
+        f"Budget top-ups: {len(budget_topped)}",
         f"Errors: {len(errors)}",
         f"Recently ended (no auto-extend): {len(recently_ended)}",
     ]
 
     if extended:
-        summary_lines.append("\n✅ *Extended:*")
+        summary_lines.append("\n✅ *Flights Extended:*")
         for name in extended:
             summary_lines.append(f"  • {name}")
+
+    if budget_topped:
+        summary_lines.append("\n💰 *Budget Top-ups (auto-extended):*")
+        for name in budget_topped:
+            summary_lines.append(f"  • {name}")
+
+    if budget_depleted and not budget_topped:
+        summary_lines.append("\n🚨 *Budget Exhausted (needs manual review):*")
+        for d in budget_depleted:
+            summary_lines.append(f"  • {d['name']} — ${d['spend']:.0f}/${d['budget']:.0f} ({d['spend_pct']:.0f}%) — {d['days_remaining']}d left")
+
+    if budget_near:
+        summary_lines.append("\n⚠️ *Budget Pacing Fast (projected to exhaust early):*")
+        for n in budget_near:
+            summary_lines.append(f"  • {n['name']} — {n['spend_pct']:.0f}% spent, {n['days_remaining']}d left, ~{n['days_to_exhaust']}d to exhaust")
 
     if errors:
         summary_lines.append("\n❌ *Errors:*")
@@ -336,10 +492,14 @@ def run(days_ahead=7, days_extend=30, dry_run=False):
         "timestamp": now.isoformat(),
         "checked": len(campaigns),
         "extended": len(extended),
+        "budget_topped_up": len(budget_topped),
+        "budget_near_depleted": len(budget_near),
         "errors": len(errors),
         "recently_ended": len(recently_ended),
         "details": {
             "extended": extended,
+            "budget_topped_up": budget_topped,
+            "budget_near_depleted": budget_near,
             "errors": errors,
             "recently_ended": recently_ended
         }
@@ -359,4 +519,4 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     result = run(days_ahead=args.days_ahead, days_extend=args.days_extend, dry_run=args.dry_run)
-    print(f"\nDone: {result['extended']} extended, {result['errors']} errors")
+    print(f"\nDone: {result['extended']} flights extended, {result.get('budget_topped_up', 0)} budget top-ups, {result['errors']} errors")

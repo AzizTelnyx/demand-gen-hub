@@ -32,6 +32,15 @@ THREAD_ID = 164
 
 CONFIDENCE_THRESHOLD = 80
 
+# ─── Guardrail Config ─────────────────────────────────
+BATCH_CAP = 15                     # Max auto-fixes per run
+CONQUEST_CONFIDENCE_PENALTY = 30   # Subtract from confidence for conquest campaign keywords
+PROTECTED_PRODUCT_TERMS = [        # Never auto-pause keywords containing these
+    "telnyx", "sip trunk", "sip trunking", "sms api", "voice api",
+    "call control", "phone number", "iot sim", "webrtc",
+    "programmable voice", "10dlc", "a2p",
+]
+
 # ─── Competitor & Category Lists ──────────────────────
 
 COMPETITORS = [
@@ -758,12 +767,33 @@ def auto_fix_high_confidence(client, keywords, issues, dry_run=True):
     # Collect junk keywords
     junk = [kw for kw in keywords if is_junk_keyword(kw["keyword"])]
 
-    # Collect high-confidence issues
-    high_conf_issues = [
-        i for i in issues
-        if i.get("confidence", 0) >= CONFIDENCE_THRESHOLD
-        and i.get("type") in ("misalignment", "blocked_intent", "new_keyword_misaligned")
-    ]
+    # Collect high-confidence issues — WITH GUARDRAILS
+    guarded_issues = []
+    for i in issues:
+        if i.get("confidence", 0) < CONFIDENCE_THRESHOLD:
+            continue
+        if i.get("type") not in ("misalignment", "blocked_intent", "new_keyword_misaligned"):
+            continue
+
+        kw_lower = i["keyword"].lower()
+        campaign_lower = i["campaign"].lower()
+
+        # Guardrail 1: Protected product terms — never auto-pause
+        if any(prot in kw_lower for prot in PROTECTED_PRODUCT_TERMS):
+            print(f"  🛡️ GUARDRAIL: Skipping protected product term '{i['keyword']}' in {i['campaign']}")
+            continue
+
+        # Guardrail 2: Conquest campaign penalty — reduce confidence
+        if "conquest" in campaign_lower or "competitor" in campaign_lower:
+            adjusted = i["confidence"] - CONQUEST_CONFIDENCE_PENALTY
+            if adjusted < CONFIDENCE_THRESHOLD:
+                print(f"  🛡️ GUARDRAIL: Conquest penalty drops '{i['keyword']}' from {i['confidence']}% to {adjusted}% (below {CONFIDENCE_THRESHOLD}%)")
+                continue
+            i["confidence"] = adjusted
+
+        guarded_issues.append(i)
+
+    high_conf_issues = guarded_issues
 
     # Build set of criterion IDs to fix (avoid duplicates)
     to_fix = {}  # criterion_key -> issue_dict
@@ -795,7 +825,13 @@ def auto_fix_high_confidence(client, keywords, issues, dry_run=True):
         return []
 
     fixed_list = list(to_fix.values())
-    print(f"  Found {len(fixed_list)} high-confidence issues to fix")
+
+    # Guardrail 3: Batch cap — never auto-fix more than BATCH_CAP keywords per run
+    if len(fixed_list) > BATCH_CAP:
+        print(f"  🛡️ GUARDRAIL: Batch cap — would fix {len(fixed_list)}, capping at {BATCH_CAP} (remaining need review)")
+        fixed_list = fixed_list[:BATCH_CAP]
+
+    print(f"  Found {len(to_fix)} issues, applying {len(fixed_list)} (batch cap: {BATCH_CAP})")
     print(f"    - {len(junk)} junk keywords")
     print(f"    - {len(high_conf_issues)} misalignment/blocked issues")
 
